@@ -1,11 +1,11 @@
 # water-availability
 
-## Required Software
+### Required Software
 - [node.js](http://nodejs.org)
-    - >=0.10.0 (last used: 20.11.0)
+    - `>=0.10.0` (last used: `20.11.0`)
 - [git](https://git-scm.com/)
 
-## Installation
+### Installation
 
 [Clone the repository](https://learn.hibbittsdesign.org/gitlab-githubdesktop/cloning-a-gitlab-repo)
 
@@ -29,7 +29,7 @@ Inside of your project folder (after clone):
 npm install
 ```
 
-## Building and testing
+### Building and testing
 
 Serve files locally:
 
@@ -52,7 +52,7 @@ npm run start
 
 Local site: http://localhost:5173/visualizations/water-availability/
 
-## Development Workflow
+### Development Workflow
 
 An issue will be assigned to you via GitLab. Your workflow begins after assignment:
 
@@ -75,7 +75,7 @@ An issue will be assigned to you via GitLab. Your workflow begins after assignme
 6. Once your Merge Request is reviewed, address any feedback that needs to be addressed. Once you have addressed feedback, click the button to re-request review.
 7. Upon approval of the Merge Request, your issue will be merged into the `dev` branch and you can start on a new issue.
 
-## Built With
+### Built With
 
 - [Vue.js](https://vuejs.org/) - The main web framework used
 - [NPM](https://www.npmjs.com/) - Dependency Management
