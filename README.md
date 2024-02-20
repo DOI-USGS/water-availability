@@ -54,26 +54,26 @@ Local site: http://localhost:5173/visualizations/water-availability/
 
 ### Development Workflow
 
-An issue will be assigned to you via GitLab. Your workflow begins after assignment:
+Document development issues via GitLab, and use to steer your workflow:
 
-1. Create a branch based on the `main` branch titled with your initials followed by the issue number (e.g. MJ-104): `git checkout -b MJ-3`
+1. Create a branch based on the `main` branch using a descriptive branch name.
 2. Work on the issue on your branch.
    1. Run a live version of the app while you work: `npm run dev`
    2. Add your changes with the command `git add .`
-   3. Frequently commit your changes to your local branch with a short, descriptive message, led with a verb that indicates the natures of your changes. Include the issue number to easily reference commit history from the issue page. Example: `git commit -m "#3 Adds README"`
-   4. Frequently push your local changes to the remote repository in GitLab `git push origin MJ-3`
+   3. Frequently commit your changes to your local branch with a short, descriptive message. Include the issue number to easily reference commit history from the issue page. Example: `git commit -m "#3 Adds README"`
+   4. Frequently push your local changes to the remote repository in GitLab `git push origin branchname`
 4. Ensure your code is synced with the latest version of the `main` branch before submitting a [Merge Request](https://code.usgs.gov/wma/vizlab/water-availability/-/merge_requests):
    1. Use the command `git pull origin main`
    2. If there are no merge conflicts, the updates made to the `main` branch will be incorporated into your local branch automatically.
    3. If there are merge conflicts, you will need to resolve these manually. Please be careful with this step so that no code is lost. Once complete, you will need to add your changes: `git add .` and then commit again: `git commit -m "add message here"`
-   4. Push any changes to GitLab: `git push origin MJ-3`
+   4. Push any changes to GitLab: `git push origin branchname`
 5. Submit a [Merge Request](https://code.usgs.gov/wma/vizlab/water-availability/-/merge_requests):
    1. Request that your branch be merged into the `main` branch.
    2. Name the Merge Request in this format: "Fixes #5 - Issue Description".
    3. Use [keywords](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#:~:text=To%20automatically%20close%20an%20issue,fix%2C%20fixes%2C%20fixed%2C%20fixing) to automatically close issues (e.g. "Closes #5).
    4. Assign a developer to review the Merge Request.
 6. Once your Merge Request is reviewed, address any feedback that needs to be addressed. Once you have addressed feedback, click the button to re-request review.
-7. Upon approval of the Merge Request, your issue will be merged into the `dev` branch and you can start on a new issue.
+7. Upon approval of the Merge Request, your issue will be merged into the `main` branch and you can start on a new issue.
 
 ### Built With
 
