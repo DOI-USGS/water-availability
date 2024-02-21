@@ -30,7 +30,5 @@ Rplots*.pdf
 .Rprofile
 *.DS_Store*
 
-
-
 node_modules
 .Rproj.user
