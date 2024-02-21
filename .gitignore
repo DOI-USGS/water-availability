@@ -1,0 +1,36 @@
+# Targets files
+_targets
+
+# Ignore intermediate pipeline files
+*/in/*
+*/tmp/*
+*/out/*
+
+# Eventually ignore images (can build locally with R and then put on S3)
+# for now, commit them.
+#src/assets/images/*
+
+# ignore pdf files output by graphics device when generating svgs
+Rplots*.pdf
+
+# Allow the `.empty` files to be committed
+!*/in/.empty
+!*/tmp/.empty
+!*/out/.empty
+
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+
+# User-specific files
+.Ruserdata
+.Rprofile
+*.DS_Store*
+
+
+
+node_modules
+.Rproj.user
