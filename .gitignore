@@ -29,6 +29,7 @@ Rplots*.pdf
 .Ruserdata
 .Rprofile
 *.DS_Store*
+.Renviron
 
 node_modules
 .Rproj.user
