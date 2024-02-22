@@ -1,0 +1,14 @@
+## NOTE: Requires sbtools v1.3.0 or newer
+library(sbtools)
+source("0_config/src/sb_cache.R")
+
+# Following DSP manual, instructions for using ScienceBase programatically, 
+# as of 2/21/2024
+
+## NOTE: Requires sbtools v1.3.0 or newer
+
+initialize_and_cache_sb(
+  sb_username = "username@usgs.gov", # Change to your ScienceBase login
+  renviron_file = ".Renviron",
+  override_login = FALSE
+) 
