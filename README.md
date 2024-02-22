@@ -1,9 +1,13 @@
 # water-availability
 
+
+
 ### Required Software
 - [node.js](http://nodejs.org)
     - `>=0.10.0` (last used: `20.11.0`)
 - [git](https://git-scm.com/)
+- [R](https://cran.r-project.org/bin/windows/base/)
+- [R package targets](https://books.ropensci.org/targets/)
 
 ### Installation
 
@@ -23,7 +27,19 @@ OR
 git clone https://code.usgs.gov/wma/vizlab/water-availability.git
 ```
 
-Inside of your project folder (after clone):
+## To build the figures in R Pipeline
+
+To run this pipeline:
+
+1. Verify that you have read access to the ScienceBase repository at: https://www.sciencebase.gov/catalog/item/643706ffd34ee8d4addcc593
+2. If you don't have access to that site, contact Anthony Martinez for read-access
+3. Once you have access, open `0_config.R` and run the code after changing out your username. Please do not commit this change. This will ask you to provide your username, and then an API token. Make sure you don't have pop-ups blocking this process and that you're connected to VPN.
+4. Then, `targets::tar_make()` should produce two svg files, which are located in the `src/assets/svgs/` folder. Please open those in a web browser or Illustrator and verify that they look like this:
+
+
+## To build website
+
+Inside of your project folder (after clone and building the pipeline):
 
 ```bash
 npm install
