@@ -10,6 +10,7 @@ _targets
 # for now, commit them.
 #src/assets/images/*
 src/assets/svgs/*
+src/assets/images/*
 
 # ignore pdf files output by graphics device when generating svgs
 Rplots*.pdf
