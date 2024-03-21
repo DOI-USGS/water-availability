@@ -1,4 +1,5 @@
 source("3_visualize/src/svg_helpers.R")
+source("3_visualize/src/viz_dumbbell.R")
 
 p3_targets <- list(
   # Color theme
@@ -31,5 +32,28 @@ p3_targets <- list(
                                 identifier = "Region_nam_nospace",
                                 width = 6, height = 9,
                                 file_out = "src/assets/svgs/Regions.svg"),
+             format = "file"),
+  
+  ########################
+  # Dumbbell charts to show gw versus sw by region and west/east
+  tar_target(p3_ps_source_dumbbell_png,
+             dumbbell_gw_v_sw(in_sf = p2_mainstem_HUC8_sf,
+                              in_CONUS = p2_mainstem_HUC8_sf,
+                              stacked_from_zeroL = FALSE, 
+                              color_scheme = p3_colors_website,
+                              width = 6,
+                              height = 4,
+                              png_out = "src/assets/images/ws_ps_dumbbell_centered_CONUS.png"),
+             format = "file"),
+  tar_target(p3_ps_source_dumbbell_AggReg_png,
+             dumbbell_gw_v_sw(in_sf = p2_mainstem_HUC8_AggRegionGroup_sf,
+                              in_CONUS = p2_mainstem_HUC8_sf,
+                              stacked_from_zeroL = FALSE, 
+                              color_scheme = p3_colors_website,
+                              width = 6,
+                              height = 4,
+                              png_out = sprintf("src/assets/images/ws_ps_dumbbell_centered_%s.png",
+                                                unique(p2_mainstem_HUC8_AggRegionGroup_sf$AggRegion_nam))),
+             pattern = p2_mainstem_HUC8_AggRegionGroup_sf,
              format = "file")
 )

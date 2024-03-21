@@ -1,4 +1,6 @@
 source("2_process/src/process_region_shp.R")
+source("2_process/src/process_WBD_GDB.R")
+source("2_process/src/process_ps_dumbbell.R")
 
 p2_targets <- list(
   # Master tibbles for cross-referencing region names, numbers
@@ -21,15 +23,85 @@ p2_targets <- list(
                               "Northeast through Midwest", "High Plains", 
                               "High Plains", "High Plains", "Western", "Western",
                               "Western", "Western", "Western", "Western"),
-               AggReg_nam_nospace = stringr::str_replace_all(AggReg_nam, pattern = " ", replacement = "_")
+               AggReg_nam_nospace = stringr::str_replace_all(AggReg_nam, 
+                                                             pattern = " ", 
+                                                             replacement = "_")
                               )
              ),
+  # Master crosswalk at the HUC12 level
+  tar_target(p2_vm_crosswalk_HUC12_df,
+             readr::read_csv(p1_vm_crosswalk, skip = 1)|>
+               filter(AggRegion_nam != "NULL")),
+  # Master crosswalk at the HUC8 level
+  tar_target(p2_vm_crosswalk_HUC8_df,
+             p2_vm_crosswalk_HUC12_df |>
+               group_by(HUC8) |>
+               reframe(AggRegion_nam = unique(AggRegion_nam),
+                       Region_nam = unique(Region_nam))),
   
+  
+  ########################
   # Create regions sf, simplified
   tar_target(p2_Region_sf,
              regions_to_sf(in_shp = p1_regions_shp) |>
                left_join(p2_region_name_xwalk, by = "Region")),
   tar_target(p2_AggRegion_sf,
              p2_Region_sf |> group_by(AggReg_nam) |> summarize() |>
-               left_join(p2_region_name_xwalk, by = "AggReg_nam"))
+               left_join(p2_region_name_xwalk, by = "AggReg_nam")),
+  
+  # Shapefiles for plotting
+  tar_target(p2_mainstem_HUC8_raw,
+             prep_sf(huc_path = p1_mainstem_zip,
+                     layer = "WBDHU8", 
+                     crs_out = p1_usgs_crs,
+                     exclude_non_plot_hucs = TRUE)),
+  tar_target(p2_mainstem_HUC8_sf,
+             p2_mainstem_HUC8_raw |> 
+               mutate(
+                 HUC2 = str_sub(HUC, 1, 2),
+                 region_group = case_when(
+                   HUC2 == "19" ~ "AK",
+                   HUC2 == "20" ~ "HI",
+                   HUC2 == "21" ~ "PR",
+                   HUC2 == "22" ~ "other",
+                   .default = "CONUS"
+                 )
+               ) |> 
+               rename(HUC8 = HUC) |>
+               # remove everything outside of CONUS for now
+               filter(region_group == "CONUS") |>
+               # add in region names
+               left_join(p2_vm_crosswalk_HUC8_df, by = "HUC8") |>
+             # add in public supply water use data 
+               left_join(p2_ps_gw_wy2020_HUC8, by = "HUC8") 
+  ),
+  tar_target(p2_mainstem_HUC8_AggRegionGroup_sf,
+             p2_mainstem_HUC8_sf |> 
+               group_by(AggRegion_nam) |>
+               tar_group(),
+             iteration = "group"),
+  
+  ########################
+  # Calculate public supply source
+  # summary by HUC 8
+  
+  # raw format: row for each HUC12 and columns for every month, plus
+  #     source, use, huc12 name, region name, and aggregated region name
+  tar_target(p2_ps_gw_raw,
+             readr::read_csv(p1_ps_gw_csv,
+                             show_col_types = FALSE) |>
+               filter(AggRegion_nam != "NULL") |>
+               mutate(use = "Public Supply")),
+  tar_target(p2_ps_sw_raw,
+             readr::read_csv(p1_ps_sw_csv,
+                             show_col_types = FALSE) |>
+               filter(AggRegion_nam != "NULL") |>
+               mutate(use = "Public Supply")),
+  tar_target(p2_ps_gw_wy2020_HUC8,
+             prep_for_dumbbell(raw_gw_in = p2_ps_gw_raw,
+                               raw_sw_in = p2_ps_sw_raw,
+                               water_year = 2020) 
+  )
+  
+
 )
