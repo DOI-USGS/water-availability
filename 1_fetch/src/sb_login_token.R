@@ -3,12 +3,13 @@
 #' @param sb_id chr; ScienceBase ID
 #' @param names chr; names of files to download from ScienceBase
 #' @param destinations  chr; write path location for downloaded files
+#' @param overwrite_destinationL logical, do you want to overwrite file?
 #' @param renviron_file chr; path to .Renviron file where credentials are cached
 #' @param ... additional arguments passed to `sbtools::item_file_download()`
 #'
 #' @return chr; path to downloaded files
 #' 
-sb_initialize_and_download <- function(sb_id, names, destinations,
+sb_initialize_and_download <- function(sb_id, names, destinations, overwrite_fileL,
                                        renviron_file = ".Renviron", ...) {
   
   # Initialize ScienceBase session
@@ -19,6 +20,7 @@ sb_initialize_and_download <- function(sb_id, names, destinations,
     sb_id = sb_id,
     names = names,
     destinations = destinations,
+    overwrite_file = overwrite_fileL,
     ...
   )
   
