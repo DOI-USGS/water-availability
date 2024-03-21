@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import VisualizationView from '../views/VisualizationView.vue'
+import ExampleRouter from '../views/ExampleRouter.vue'
 import WaterUseRouter from '../views/WaterUseRouter.vue'
 import WaterSupplyRouter from '../views/WaterSupplyRouter.vue'
 import RegionalPatternsRouter from '../views/RegionalPatternsRouter.vue'
@@ -17,6 +18,11 @@ const router = createRouter({
       path: '/index.html',
       name: 'Index',
       component: VisualizationView
+    },
+    {
+      path: '/example-component',
+      name: 'Example Template',
+      component: ExampleRouter
     },
     {
       path: '/water-use',
