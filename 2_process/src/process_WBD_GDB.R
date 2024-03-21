@@ -1,0 +1,236 @@
+## Spatial processing
+prep_sf <- function(huc_path,
+                    layer, #ex "WBDHU8"
+                    crs_out,
+                    exclude_non_plot_hucs = TRUE){
+  
+  gdb_file <- unzip_files(
+    zip_files = huc_path,
+    path_out = tempdir(),
+    file_out_pattern = ".."
+  )
+  
+  temp_file <- tempfile(fileext = ".gpkg")
+  
+  sf::gdal_utils(util = "vectortranslate", 
+                 source = gdb_file, 
+                 destination = temp_file, 
+                 options = c(layer, "-nlt", "MULTIPOLYGON"))
+  
+  huc_sf <- read_sf(temp_file, layer = layer) |>
+    select(-TNMID, -METASOURCEID, -SOURCEDATADESC, -SOURCEORIGINATOR,
+           -SOURCEFEATUREID, -LOADDATE, -GLOBALID
+    ) |>
+    rename_with(.cols = starts_with("huc"), function(.){
+      "HUC"
+    })
+  
+  # Remove great lakes and shorelines
+  if(exclude_non_plot_hucs) {
+    
+    huc_exclusions <- c(
+      # Great lakes
+      "041800000200", "041900000200", "042400000200", "042600000200",
+      "041502000200",
+      "04180000", "04190000", "04240000", "04260000",  "04150200",
+      
+      # Great Salt Lake
+      "160203100200",
+      "16020310",
+      
+      # Great Lakes shorelines
+      "041505000000", "042701010000", "041502000100", "041506000000",
+      "042600000101", "041800000101", "041800000102", "090300091423",
+      "041503090407", "042400000102", "042400000101", "042600000102"
+    )
+    
+    huc_sf <- huc_sf |> 
+      filter(
+        ! STATES %in% c("MX", "CN"),
+        ! HUC %in% huc_exclusions
+      )
+    
+    ######################################
+    # Merge polygons with duplicate HUCS #
+    ######################################
+    # Identify duplicate HUCs
+    dup_hucs <- huc_sf %>%
+      filter(duplicated(HUC)) %>%
+      pull(HUC)
+    
+    if (length(dup_hucs) == 0) {
+      
+      # return(huc_sf)
+      huc_out <- huc_sf
+      
+    } else {
+      dup_data <- huc_sf %>%
+        filter(HUC %in% dup_hucs) %>%
+        group_by(HUC)
+      
+      # Error if data from duplicate HUCS differs
+      duplicate_huc_count <- dup_data %>%
+        st_drop_geometry() %>%
+        summarise(across(where(~ !is.numeric(.x)), ~ n_distinct(.x))) %>%
+        dplyr::select(where(is.numeric)) %>%
+        as.matrix() %>%
+        min()
+      
+      if (duplicate_huc_count > 1) {
+        stop("Rows with duplicate HUCs contain data that differs")
+      }
+      
+      # Merge duplicate HUC geometries
+      merged_geom <- dup_data %>%
+        summarize() %>%
+        st_geometry()
+      
+      # Aggregate WBD data and set the geometry
+      # Numeric data is summed; the first observation is used for non-numeric data
+      merged_data <- dup_data %>%
+        st_drop_geometry() %>%
+        summarise(
+          across(where(is.numeric), ~ sum(.x, na.rm = TRUE)),
+          across(where(~ !is.numeric(.x)), ~ first(.x))
+        ) %>%
+        dplyr::select(colnames(st_drop_geometry(huc_sf))) %>%
+        st_set_geometry(merged_geom) %>%
+        rename(SHAPE = geometry)
+      
+      # Add merged duplicates back into full dataset
+      huc_out <- huc_sf %>%
+        filter(!HUC %in% dup_hucs) %>%
+        bind_rows(merged_data) %>%
+        arrange(HUC)
+    }
+    
+    
+    
+  }
+  # Ensure consistent geometry
+  huc_out <- sf::st_cast(huc_out, "MULTIPOLYGON")
+  
+  # Transform data
+  if(is.null(crs_out)) crs_out <- st_crs(huc_out)
+  
+  if(st_crs(huc_out) != st_crs(crs_out)) {
+    
+    message("Reprojecting `huc_path` to `crs_out`")
+    
+    huc_out <- terra::vect(huc_out) |> 
+      terra::project(y = crs_out) |> 
+      st_as_sf()
+    
+  }
+  
+  return(huc_out)
+  
+  
+}
+
+#' Unzip zip files and return file paths
+#'
+#' @param zip_files character; vector of zip file paths to unzip
+#' @param path_out character; string of the path to unzip files to
+#' @param unzip_file_pattern character; REGEX pattern used to identify the files
+#'   in each zip file that should be unzipped. If NULL, all files returned.
+#' @param file_out_pattern character; REGEX pattern used to identify which
+#'   unzipped files should be listed in the output vector. To return the parent
+#'   directory of the output files (useful for .gdb geodatabase files), use
+#'    `".."`.
+#'
+#' @return A character vector of  files paths (or a subset of them if
+#'   file_out_pattern is specified) of unzipped files
+#'
+unzip_files <- function(zip_files, path_out, unzip_file_pattern = NULL,
+                        file_out_pattern = "|") {
+  # List files that should be unzipped
+  files_to_unzip <- purrr::map(
+    zip_files,
+    ~ index_zipped_files(.x, unzip_file_pattern)
+  )
+  
+  # Unzip files
+  files_out <- purrr::map2(
+    zip_files,
+    files_to_unzip,
+    ~ archive::archive_extract(
+      archive = .x,
+      dir = path_out,
+      files = .y
+    )
+  )
+  
+  # Output only the those unzipped files that are specified with
+  #   file_out_pattern argument
+  if (file_out_pattern == "..") {
+    
+    out <- file.path(path_out, str_remove(files_out[[1]][1], "/[^ ]+$"))
+    
+  } else {
+    
+    out <- file.path(path_out, str_subset(unlist(files_out), file_out_pattern))
+    
+  }
+  
+  return(out)
+  
+}
+
+#' Get index files matching pattern within archive
+#' 
+#' Helper for `unzip_files`
+#'
+#' @param zip_files character; vector of zip file paths to unzip
+#' @param unzip_file_pattern character; REGEX pattern used to identify the files
+#'   in each zip file that should be unzipped. If NULL, NULL is returned.
+#'
+#' @return num; index of files matching pattern within archive
+#' 
+index_zipped_files <- function(zip_files, unzip_file_pattern = NULL) {
+  if(is.null(unzip_file_pattern)) return(NULL)
+  
+  archive::archive(zip_files)$path |> 
+    str_detect(unzip_file_pattern) |> 
+    which()
+}
+
+# Set up non-spatial data for merging with spatial (total water use, ternary plot, etc)
+total_wu_proportions <- function(ps_gw_in, ps_sw_in, ir_gw_in, ir_sw_in, te_gw_in, te_sw_in,
+                                 column_name_to_group,
+                                 color_scheme){
+  df_out <- purrr::reduce(list(ps_gw_in, ps_sw_in,
+                               ir_gw_in, ir_sw_in,
+                               te_gw_in, te_sw_in),
+                          dplyr::full_join, by = column_name_to_group) |>
+    rowwise() |>
+    mutate(ps_total_wu = sum(ps_gw_total_wu, ps_sw_total_wu, na.rm = TRUE),
+           ir_total_wu = sum(ir_gw_total_wu, ir_sw_total_wu, na.rm = TRUE),
+           te_total_wu = sum(te_gw_total_wu, te_sw_total_wu, na.rm = TRUE)) |>
+    mutate(total_wu = sum(ps_total_wu, ir_total_wu, te_total_wu, na.rm = TRUE)) |>
+    mutate(ps_prop = ps_total_wu / total_wu,
+           ir_prop = ir_total_wu / total_wu,
+           te_prop = te_total_wu / total_wu) |>
+    mutate(category = case_when(ps_prop >= 0.67 ~ 1,
+                                te_prop >= 0.67 ~ 5,
+                                ir_prop >= 0.67 ~ 9,
+                                ps_prop >= 0.34 & te_prop >= 0.34 ~ 2,
+                                ps_prop >= 0.34 & te_prop < 0.34 & ir_prop < 0.34 ~ 3,
+                                ps_prop >= 0.34 & ir_prop >= 0.34 ~ 4,
+                                te_prop >= 0.34 & ir_prop >= 0.34 ~ 7,
+                                te_prop >= 0.34 & ir_prop < 0.34 & ps_prop < 0.34 ~ 6,
+                                ir_prop >= 0.34 & te_prop < 0.34 & ps_prop < 0.34 ~ 8,
+                                TRUE ~ NA),
+           color = case_when(category == 1 ~ color_scheme$ps_gw_main,
+                             category == 5 ~ color_scheme$te_gw_main,
+                             category == 9 ~ color_scheme$ir_gw_main,
+                             category == 2 ~ color_scheme$tern_2,
+                             category == 3 ~ color_scheme$tern_3,
+                             category == 4 ~ color_scheme$tern_4,
+                             category == 6 ~ color_scheme$tern_6,
+                             category == 7 ~ color_scheme$tern_7,
+                             category == 8 ~ color_scheme$tern_8,
+                             TRUE ~ "#cccccc"))
+  
+  return(df_out)
+}
