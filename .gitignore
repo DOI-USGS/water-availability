@@ -19,6 +19,7 @@ Rplots*.pdf
 !*/in/.empty
 !*/tmp/.empty
 !*/out/.empty
+!*/images/.empty
 
 # History files
 .Rhistory
