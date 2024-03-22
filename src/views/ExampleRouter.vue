@@ -3,7 +3,10 @@
         EXAMPLE<br>
         <router-link to="/">Home</router-link>
         <div class="container">
-        <AggReg></AggReg>
+        <AggReg class="agg-reg-svg"></AggReg>
+        <p1 class="dumbbell-label">Public Supply Sourced From:</p1>
+        <p1 class="dumbbell-label">Groundwater &nbsp; &nbsp; Surface water</p1>
+
         <img
             id="dumbbells"
             src="@/assets/images/ws_ps_dumbbell_centered_CONUS.png"
@@ -22,6 +25,19 @@ import AggReg from "@/assets/svgs/AggReg.svg";
 
 
 <style scoped>
+.agg-reg-svg {
+    width: 20%;
+    height: auto;
+}
+
+.dumbbell-label {
+    transform: rotate(-90deg);
+    width: 35px;
+    white-space: nowrap;
+    margin-bottom: -160px;
+}
+
+
 .container {
     display: flex;
     align-items: center;
@@ -29,7 +45,7 @@ import AggReg from "@/assets/svgs/AggReg.svg";
 }
 
 img {
-    width: 50%
+    width: 35%
 }
 
 </style>
