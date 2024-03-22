@@ -16,9 +16,33 @@
     </section>
 </template>
 
-<script setup>
+<script>
+import * as d3Base from 'd3';
 import AggReg from "@/assets/svgs/AggReg.svg";
-//add in a {{  }} to replace CONUS in png path - follow structure of regionDescriptions in drought-timeline
+export default {
+    components: {
+        AggReg
+    },
+    mounted() {
+        this.addInteractions();
+    },
+    methods: {
+        addInteractions() {
+            const self = this;
+            const mapSVG = d3Base.select('.agg-reg-svg')
+        mapSVG.selectAll('.AggReg_nam_nospace')
+            .on("mouseover", (event) => self.mouseoverMap(event))
+            .on("mouseout", (event) => self.mouseoutMap(event))
+        },
+        mouseoverMap(event) {
+            let regionID = event.target.id
+            console.log(regionID)
+        },
+        mouseoutMap(event) {
+            console.log('out')
+        }
+    }
+};
 
 </script>
 
