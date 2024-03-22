@@ -3,13 +3,13 @@
         EXAMPLE<br>
         <router-link to="/">Home</router-link>
         <div class="container">
-        <AggReg class="agg-reg-svg"></AggReg>
+        <AggReg class="agg-reg-svg" style="fill: #dad6ca"></AggReg>
         <p1 class="dumbbell-label">Public Supply Sourced From:</p1>
         <p1 class="dumbbell-label">Groundwater &nbsp; &nbsp; Surface water</p1>
 
         <img
             id="dumbbells"
-            src="@/assets/images/ws_ps_dumbbell_centered_CONUS.png"
+            :src="imgSrc"
             alt=""
         >    
     </div>
@@ -23,10 +23,22 @@ export default {
     components: {
         AggReg
     },
+    data() {
+        return {
+            imgSrc: '@/assets/images/ws_ps_dumbbell_centered_CONUS.png'
+        };
+    },
     mounted() {
+        this.setDefaultImgSrc();
         this.addInteractions();
     },
     methods: {
+        setDefaultImgSrc() {
+            //Sets default dumbbell chart to full CONUS
+            import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
+                this.imgSrc = imgSrc.default; 
+            }); 
+        },
         addInteractions() {
             const self = this;
             const mapSVG = d3Base.select('.agg-reg-svg')
@@ -35,20 +47,32 @@ export default {
             .on("mouseout", (event) => self.mouseoutMap(event))
         },
         mouseoverMap(event) {
-            const self = this;
             let regionID = event.target.id
-            console.log(regionID)
+            //d3Base.select('.agg-reg-svg').selectAll('.AggReg_nam_nospace') //Modified the whole SVG
+                //.style("fill", "#dad6ca")
 
+            //Updates color of region
             d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`)
-                .style("fill", "#5e7789")
+                .style("fill", "#5e7789") //updates color of region that is being hovered on
 
-            //d3Base.select(`#${regionID}`).style("fill", "red");
+            let formattedRegionID = regionID.replace(/_/g, ' '); //png titles have spaces not underscores
+            
+            //Update dumbbells charts to specific region
+            import(`@/assets/images/ws_ps_dumbbell_centered_${formattedRegionID}.png`).then(imgSrc => {
+                this.imgSrc = imgSrc.default;
+            });       
         },
         mouseoutMap(event) {
             let regionID = event.target.id
-            console.log('out')
+
+            //Updates region back to default
             d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`)
-                .style("fill", "");
+                .style("fill", ""); 
+
+            //Updates dumbbell chart back to full CONUS
+            import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
+                this.imgSrc = imgSrc.default; 
+            }); 
         }
     }
 };
@@ -58,9 +82,10 @@ export default {
 
 
 <style scoped>
-.agg-reg-svg {
+.agg-reg-svg svg * {
     width: 20%;
     height: auto;
+    fill: #dad6ca !important;
 }
 
 .dumbbell-label {
