@@ -1,11 +1,14 @@
 <template>
-    <section>
+    <section class="main-container">
         EXAMPLE<br>
         <router-link to="/">Home</router-link>
-        <div class="container">
-        <AggReg class="agg-reg-svg" style="fill: #dad6ca"></AggReg>
-        <p1 class="dumbbell-label">Public Supply Sourced From:</p1>
-        <p1 class="dumbbell-label">Groundwater &nbsp; &nbsp; Surface water</p1>
+        <div class="viz-container">
+        <AggReg class="agg-reg-svg"></AggReg>
+        <h3 class="dumbbell-header">Public Supply Sourced From:</h3>
+        <div class="axis-labels">
+            <h3 class="groundwater">Groundwater</h3>
+            <h3 class="surface-water"> Surface Water</h3>
+        </div>
 
         <img
             id="dumbbells"
@@ -76,30 +79,48 @@ export default {
         }
     }
 };
-
 </script>
 
-
-
 <style scoped>
-.agg-reg-svg svg * {
-    width: 20%;
+.agg-reg-svg {
+    width: 15%;
     height: auto;
     fill: #dad6ca !important;
 }
-
-.dumbbell-label {
+.axis-labels {
     transform: rotate(-90deg);
     width: 35px;
     white-space: nowrap;
-    margin-bottom: -160px;
+    margin-bottom: -270px;
+    margin-right: -15px;
 }
 
+.dumbbell-header {
+    transform: rotate(-90deg);
+    width: 35px;
+    white-space: nowrap;
+    margin-bottom: -260px;
+    color: #2d2b2a;
+    font-size: 1.2em;
+}
+.groundwater {
+    display: inline;
+    margin-right: 15px;
+    color: #e9830d;
+    font-size: 1.2em;
+}
+.surface-water {
+    display: inline;
+    margin-left: 15px;
+    color: #2b5d69;
+    font-size: 1.2em;
+}
 
-.container {
+.viz-container {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 75vh;
 }
 
 img {
