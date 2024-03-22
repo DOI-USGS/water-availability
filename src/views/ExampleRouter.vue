@@ -35,11 +35,20 @@ export default {
             .on("mouseout", (event) => self.mouseoutMap(event))
         },
         mouseoverMap(event) {
+            const self = this;
             let regionID = event.target.id
             console.log(regionID)
+
+            d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`)
+                .style("fill", "#5e7789")
+
+            //d3Base.select(`#${regionID}`).style("fill", "red");
         },
         mouseoutMap(event) {
+            let regionID = event.target.id
             console.log('out')
+            d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`)
+                .style("fill", "");
         }
     }
 };
