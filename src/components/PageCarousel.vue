@@ -15,9 +15,11 @@
 </template>
 
 <script>  
+import pageLinks from '@/components/pagelinks.js';
 export default {
     data() {
         return {
+            pageLinks: pageLinks.pageLinks,
             lowNumber: 4,
             highNumber: 6,
             lowRoute: "/page4",
@@ -31,21 +33,30 @@ export default {
         setDefaultCarousel() {
             this.lowNumber = 4;
             this.highNumber = 6;
+            let lowIndex = this.lowNumber - 1;
+            let highIndex = this.highNumber - 1;
+            this.lowRoute = this.pageLinks[lowIndex].route;
+            this.highRoute = this.pageLinks[highIndex].route;
+            console.log(this.lowRoute, this.highRoute)
         },
         moveLeft() {
             if (this.lowNumber > 1) {
                 this.lowNumber--;
                 this.highNumber--;
-                this.lowRoute = "/page" + this.lowNumber;
-                this.highRoute = "/page" + this.highNumber;
+                let lowIndex = this.lowNumber - 1;
+                let highIndex = this.highNumber - 1;
+                this.lowRoute = this.pageLinks[lowIndex].route;
+                this.highRoute = this.pageLinks[highIndex].route;
             }
         },
         moveRight() {
-            if (this.highNumber < 10) { // Assuming a maximum of 10 pages
+            if (this.highNumber < 10) {
                 this.lowNumber++;
                 this.highNumber++;
-                this.lowRoute = "/page" + this.lowNumber;
-                this.highRoute = "/page" + this.highNumber;
+                let lowIndex = this.lowNumber - 1;
+                let highIndex = this.highNumber - 1;
+                this.lowRoute = this.pageLinks[lowIndex].route;
+                this.highRoute = this.pageLinks[highIndex].route;
             }
         }
     }
@@ -74,7 +85,6 @@ export default {
     justify-content: center;
     align-items: center; */
     padding-top: -10px;
-    text-decoration: none !important; /* Remove underline */
 }
 
 .nav-button:hover {
