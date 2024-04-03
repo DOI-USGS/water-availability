@@ -37,6 +37,12 @@ footer, header, main, nav, div {
 .tmp-container:after {
     clear: both;
 }
+.viz-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 65vh;
+}
 
 hr {
 	width: 100%; 

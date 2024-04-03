@@ -5,7 +5,10 @@
             <button class="nav-button">{{ lowNumber }}</button>
         </router-link>
         <router-link to="/">
-            <button class="home-button">RETURN TO MAIN</button>
+            <button v-if="showHomeButton" class="home-button">RETURN TO MAIN</button>
+        </router-link>
+        <router-link :to="middleRoute">
+            <button v-if="!showHomeButton" class="nav-button">{{ middleNumber }}</button>
         </router-link>
         <router-link :to="highRoute">
             <button class="nav-button">{{ highNumber }}</button>
@@ -20,10 +23,14 @@ export default {
     data() {
         return {
             pageLinks: pageLinks.pageLinks,
-            lowNumber: 4,
-            highNumber: 6,
-            lowRoute: "/page4",
-            highRoute: "/page6"
+            lowNumber: 0,
+            middleNumber: 0,
+            highNumber: 0,
+            lowRoute: "",
+            middleRoute: "",
+            highRoute: "",
+            defaultId: "",
+            showHomeButton: true
         };
     },
     mounted() {
@@ -31,32 +38,55 @@ export default {
     },
     methods: {
         setDefaultCarousel() {
-            this.lowNumber = 4;
-            this.highNumber = 6;
-            let lowIndex = this.lowNumber - 1;
-            let highIndex = this.highNumber - 1;
+            const currentRoute = this.$route.path; // Get current route
+            const currentPageIndex = this.pageLinks.findIndex(link => link.route === currentRoute);
+            let lowIndex = currentPageIndex - 1;
+            let middleIndex = currentPageIndex;
+            let highIndex = currentPageIndex + 1;
             this.lowRoute = this.pageLinks[lowIndex].route;
+            this.middleRoute = this.pageLinks[middleIndex].route;
             this.highRoute = this.pageLinks[highIndex].route;
-            console.log(this.lowRoute, this.highRoute)
+            this.defaultId = this.pageLinks[middleIndex].id;
+            this.lowNumber = this.pageLinks[lowIndex].id;
+            this.middleNumber = this.pageLinks[middleIndex].id;
+            this.highNumber = this.pageLinks[highIndex].id;
         },
         moveLeft() {
             if (this.lowNumber > 1) {
                 this.lowNumber--;
+                this.middleNumber--;
                 this.highNumber--;
                 let lowIndex = this.lowNumber - 1;
+                let middleIndex = this.middleNumber - 1;
                 let highIndex = this.highNumber - 1;
                 this.lowRoute = this.pageLinks[lowIndex].route;
+                this.middleRoute = this.pageLinks[middleIndex].route;
                 this.highRoute = this.pageLinks[highIndex].route;
             }
+            if (this.middleNumber === this.defaultId) {
+                this.showHomeButton = true;
+            } else {
+                this.showHomeButton = false;
+            }
+
         },
         moveRight() {
             if (this.highNumber < 10) {
                 this.lowNumber++;
+                this.middleNumber++;
                 this.highNumber++;
                 let lowIndex = this.lowNumber - 1;
+                let middleIndex = this.middleNumber - 1;
                 let highIndex = this.highNumber - 1;
                 this.lowRoute = this.pageLinks[lowIndex].route;
+                this.middleRoute = this.pageLinks[middleIndex].route;
                 this.highRoute = this.pageLinks[highIndex].route;
+                this.showHomeButton = false;
+            }
+            if (this.middleNumber === this.defaultId) {
+                this.showHomeButton = true;
+            } else {
+                this.showHomeButton = false;
             }
         }
     }
@@ -81,10 +111,9 @@ export default {
     font-size: 50px;
     text-align: center;
     line-height: 0;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     padding-top: -10px;
+    margin: 0 20px 0 20px;
+
 }
 
 .nav-button:hover {
@@ -100,7 +129,6 @@ export default {
     letter-spacing: 1px;
     font-size: 20px;
     border-width: 0px;
-    margin: 0 20px 0 20px;
     font-weight: bold;
 }
 
@@ -119,7 +147,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 20px 0 20px;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace
 }

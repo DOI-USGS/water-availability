@@ -120,12 +120,6 @@ export default {
     font-size: 1.2em;
 }
 
-.viz-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 65vh;
-}
 
 .nav-container {
     display: flex;
