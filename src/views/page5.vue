@@ -16,36 +16,27 @@
             alt=""
         >    
         </div>
-        <div class="nav-container">
-            <button class="arrow-button" @click="moveLeft()"><</button>
-                <button class="nav-button">{{ this.lowNumber }}</button>
-                <router-link to="/">
-                    <button class="home-button">RETURN TO MAIN</button>
-                </router-link>
-                <button class="nav-button">{{ this.highNumber }}</button>
-            <button class="arrow-button" @click="moveRight()">></button>
-        </div>
+        <PageCarousel></PageCarousel>
     </section>
 </template>
 
 <script>
 import * as d3Base from 'd3';
 import AggReg from "@/assets/svgs/AggReg.svg";
+import PageCarousel from '../components/PageCarousel.vue';
 export default {
     components: {
-        AggReg
+        AggReg,
+        PageCarousel
     },
     data() {
         return {
-            imgSrc: '@/assets/images/ws_ps_dumbbell_centered_CONUS.png',
-            lowNumber: 4,
-            highNumber: 6
+            imgSrc: '@/assets/images/ws_ps_dumbbell_centered_CONUS.png'
         };
     },
     mounted() {
         this.setDefaultImgSrc();
         this.addInteractions();
-        this.setDefaultCarousel();
     },
     methods: {
         setDefaultImgSrc() {
@@ -53,10 +44,6 @@ export default {
             import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
-        },
-        setDefaultCarousel() {
-            this.lowNumber = 4;
-            this.highNumber = 6;
         },
         addInteractions() {
             const self = this;
@@ -92,14 +79,6 @@ export default {
             import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
-        },
-        moveLeft() {
-            this.lowNumber --;
-            this.highNumber --;
-        },
-        moveRight() {
-            this.lowNumber ++;
-            this.highNumber ++;
         }
     }
 };
