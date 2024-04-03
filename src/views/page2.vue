@@ -1,6 +1,6 @@
 <template>
     <section>
-        WATER SUPPLY<br>
+        Page 2<br>
         <router-link to="/">Home</router-link>
     </section>
 </template>

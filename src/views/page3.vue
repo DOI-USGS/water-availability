@@ -1,6 +1,6 @@
 <template>
     <section>
-        REGIONAL PATTERNS<br>
+        Page 3<br>
         <router-link to="/">Home</router-link>
     </section>
 </template>

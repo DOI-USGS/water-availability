@@ -1,6 +1,6 @@
 <template>
     <section>
-        WATER USE<br>
+        Page 1<br>
         <router-link to="/">Home</router-link>
     </section>
 </template>

@@ -1,6 +1,6 @@
 <template>
     <section class="main-container">
-        EXAMPLE<br>
+        PAGE 5<br>
         <router-link to="/">Home</router-link>
         <div class="viz-container">
         <AggReg class="agg-reg-svg"></AggReg>
@@ -15,7 +15,16 @@
             :src="imgSrc"
             alt=""
         >    
-    </div>
+        </div>
+        <div class="nav-container">
+            <button class="arrow-button" @click="moveLeft()"><</button>
+                <button class="nav-button">{{ this.lowNumber }}</button>
+                <router-link to="/">
+                    <button class="home-button">RETURN TO MAIN</button>
+                </router-link>
+                <button class="nav-button">{{ this.highNumber }}</button>
+            <button class="arrow-button" @click="moveRight()">></button>
+        </div>
     </section>
 </template>
 
@@ -28,12 +37,15 @@ export default {
     },
     data() {
         return {
-            imgSrc: '@/assets/images/ws_ps_dumbbell_centered_CONUS.png'
+            imgSrc: '@/assets/images/ws_ps_dumbbell_centered_CONUS.png',
+            lowNumber: 4,
+            highNumber: 6
         };
     },
     mounted() {
         this.setDefaultImgSrc();
         this.addInteractions();
+        this.setDefaultCarousel();
     },
     methods: {
         setDefaultImgSrc() {
@@ -41,6 +53,10 @@ export default {
             import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
+        },
+        setDefaultCarousel() {
+            this.lowNumber = 4;
+            this.highNumber = 6;
         },
         addInteractions() {
             const self = this;
@@ -76,6 +92,14 @@ export default {
             import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
+        },
+        moveLeft() {
+            this.lowNumber --;
+            this.highNumber --;
+        },
+        moveRight() {
+            this.lowNumber ++;
+            this.highNumber ++;
         }
     }
 };
@@ -83,9 +107,10 @@ export default {
 
 <style scoped>
 .agg-reg-svg {
-    width: 15%;
+    width: 20%;
     height: auto;
     fill: #dad6ca !important;
+    margin-right: 20px;
 }
 .axis-labels {
     transform: rotate(-90deg);
@@ -120,11 +145,76 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 75vh;
+    height: 65vh;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+}
+
+.nav-button {
+    height: 50px;
+    width: 50px;
+    background-color: #9FCACB;
+    border-width: 0px;
+    border-radius: 50%;
+    color: #edeadf;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-button:hover {
+    background-color: #5e7789;
+    cursor: pointer;
+}
+
+.home-button {
+    background-color: #edeadf;
+    height: 50px;
+    width: 100px;
+    color: #5e7789;
+    letter-spacing: 1px;
+    font-size: 20px;
+    border-width: 0px;
+    margin: 0 20px 0 20px;
+    font-weight: bold;
+}
+
+.home-button:hover {
+    color: #9FCACB;
+    cursor: pointer;
+}
+
+.arrow-button {
+    height: 50px;
+    width: 50px;
+    background-color: #edeadf;
+    border-width: 0px;
+    color: #5e7789;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px 0 20px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace
+}
+
+.arrow-button:hover {
+    color: #9FCACB;
+    cursor: pointer;
 }
 
 img {
     width: 35%
 }
+/* .main-container {
+  background-color: #edeadf;
+} */
 
 </style>
