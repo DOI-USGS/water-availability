@@ -1,19 +1,25 @@
 <template>
     <div class="nav-container">
-        <button class="arrow-button" @click="moveLeft()"><</button>
+        <button v-if="showLeftArrow" class="arrow-button" @click="moveLeft()"><</button>
+        <router-link to="/">
+            <button v-if="showHomeButtonLeft" class="home-button">RETURN TO MAIN</button>
+        </router-link>
         <router-link :to="lowRoute">
-            <button class="nav-button">{{ lowNumber }}</button>
+            <button v-if="!showHomeButtonLeft" class="nav-button">{{ lowNumber }}</button>
         </router-link>
         <router-link to="/">
-            <button v-if="showHomeButton" class="home-button">RETURN TO MAIN</button>
+            <button v-if="showHomeButtonMiddle" class="home-button">RETURN TO MAIN</button>
         </router-link>
         <router-link :to="middleRoute">
-            <button v-if="!showHomeButton" class="nav-button">{{ middleNumber }}</button>
+            <button v-if="!showHomeButtonMiddle" class="nav-button">{{ middleNumber }}</button>
+        </router-link>
+        <router-link to="/">
+            <button v-if="showHomeButtonRight" class="home-button">RETURN TO MAIN</button>
         </router-link>
         <router-link :to="highRoute">
-            <button class="nav-button">{{ highNumber }}</button>
+            <button v-if="!showHomeButtonRight" class="nav-button">{{ highNumber }}</button>
         </router-link>
-        <button class="arrow-button" @click="moveRight()">></button>
+        <button v-if="showRightArrow" class="arrow-button" @click="moveRight()">></button>
     </div>
 </template>
 
@@ -30,7 +36,11 @@ export default {
             middleRoute: "",
             highRoute: "",
             defaultId: "",
-            showHomeButton: true
+            showHomeButtonLeft: false,
+            showHomeButtonMiddle: true,
+            showHomeButtonRight: false,
+            showLeftArrow: true,
+            showRightArrow: true
         };
     },
     mounted() {
@@ -43,13 +53,19 @@ export default {
             let lowIndex = currentPageIndex - 1;
             let middleIndex = currentPageIndex;
             let highIndex = currentPageIndex + 1;
-            this.lowRoute = this.pageLinks[lowIndex].route;
+            this.lowRoute = this.pageLinks[lowIndex].route; //need to handle page 1 and page 10 since they will be the lowest and the highest
             this.middleRoute = this.pageLinks[middleIndex].route;
             this.highRoute = this.pageLinks[highIndex].route;
-            this.defaultId = this.pageLinks[middleIndex].id;
+            this.defaultId = this.pageLinks[middleIndex].id; // default id might not actually be middle index if it's page 1 or page 10
             this.lowNumber = this.pageLinks[lowIndex].id;
             this.middleNumber = this.pageLinks[middleIndex].id;
             this.highNumber = this.pageLinks[highIndex].id;
+            if (this.highNumber === 10) {
+                this.showRightArrow = false
+            }
+            if (this.lowNumber === 1) {
+                this.showLeftArrow = false
+            }
         },
         moveLeft() {
             if (this.lowNumber > 1) {
@@ -63,12 +79,36 @@ export default {
                 this.middleRoute = this.pageLinks[middleIndex].route;
                 this.highRoute = this.pageLinks[highIndex].route;
             }
-            if (this.middleNumber === this.defaultId) {
-                this.showHomeButton = true;
+            if (this.lowNumber === this.defaultId) {
+                this.showHomeButtonLeft = true;
+                
             } else {
-                this.showHomeButton = false;
+                this.showHomeButtonLeft = false;
             }
-
+            if (this.middleNumber === this.defaultId) {
+                this.showHomeButtonMiddle = true;
+                
+            } else {
+                this.showHomeButtonMiddle = false;
+            }
+            if (this.highNumber === this.defaultId) {
+                console.log('here')
+                this.showHomeButtonRight = true;
+                
+            } else {
+                this.showHomeButtonRight = false;
+            }
+            if (this.highNumber === 10) {
+                this.showRightArrow = false
+            } else {
+                this.showRightArrow = true
+            }
+            if (this.lowNumber === 1) {
+                this.showLeftArrow = false
+            } else {
+                this.showLeftArrow = true
+            }
+            console.log(this.lowNumber, this.highNumber, this.showHomeButtonLeft, this.showHomeButtonRight, this.defaultId)
         },
         moveRight() {
             if (this.highNumber < 10) {
@@ -81,12 +121,34 @@ export default {
                 this.lowRoute = this.pageLinks[lowIndex].route;
                 this.middleRoute = this.pageLinks[middleIndex].route;
                 this.highRoute = this.pageLinks[highIndex].route;
-                this.showHomeButton = false;
+            }
+            if (this.lowNumber === this.defaultId) {
+                this.showHomeButtonLeft = true;
+                
+            } else {
+                this.showHomeButtonLeft = false;
             }
             if (this.middleNumber === this.defaultId) {
-                this.showHomeButton = true;
+                this.showHomeButtonMiddle = true;
+                
             } else {
-                this.showHomeButton = false;
+                this.showHomeButtonMiddle = false;
+            }
+            if (this.highNumber === this.defaultId) {
+                this.showHomeButtonRight = true;
+                
+            } else {
+                this.showHomeButtonRight = false;
+            }
+            if (this.highNumber === 10) {
+                this.showRightArrow = false
+            } else {
+                this.showRightArrow = true
+            }
+            if (this.lowNumber === 1) {
+                this.showLeftArrow = false
+            } else {
+                this.showLeftArrow = true
             }
         }
     }
@@ -108,7 +170,7 @@ export default {
     border-width: 0px;
     border-radius: 50%;
     color: #edeadf;
-    font-size: 50px;
+    font-size: 40px;
     text-align: center;
     line-height: 0;
     padding-top: -10px;
