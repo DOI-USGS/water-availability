@@ -1,6 +1,7 @@
 <template>
     <div class="nav-container">
         <button v-if="showLeftArrow" class="arrow-button" @click="moveLeft()"><</button>
+        <button v-if="!showLeftArrow" class="arrow-button-hidden"><</button>
         <router-link to="/">
             <button v-if="showHomeButtonLeft" class="home-button">RETURN TO MAIN</button>
         </router-link>
@@ -20,6 +21,7 @@
             <button v-if="!showHomeButtonRight" class="nav-button">{{ highNumber }}</button>
         </router-link>
         <button v-if="showRightArrow" class="arrow-button" @click="moveRight()">></button>
+        <button v-if="!showRightArrow" class="arrow-button-hidden">></button>
     </div>
 </template>
 
@@ -35,7 +37,7 @@ export default {
             lowRoute: "",
             middleRoute: "",
             highRoute: "",
-            defaultId: "",
+            currentRouteId: "",
             showHomeButtonLeft: false,
             showHomeButtonMiddle: true,
             showHomeButtonRight: false,
@@ -54,7 +56,7 @@ export default {
             let middleIndex = currentPageIndex;
             let highIndex = currentPageIndex + 1;
             console.log(middleIndex)
-            this.defaultId = this.pageLinks[middleIndex].id;
+            this.currentRouteId = this.pageLinks[middleIndex].id;
             if (middleIndex > 0 && middleIndex < 9) {
             this.lowRoute = this.pageLinks[lowIndex].route; //need to handle page 1 and page 10 since they will be the lowest and the highest
             this.middleRoute = this.pageLinks[middleIndex].route;
@@ -73,9 +75,9 @@ export default {
                 this.showHomeButtonLeft = true;
                 this.showLeftArrow = false
                 this.showHomeButtonMiddle = false;
-                this.lowNumber = this.defaultId;
-                this.middleNumber = this.defaultId + 1;
-                this.highNumber = this.defaultId + 2;
+                this.lowNumber = this.currentRouteId;
+                this.middleNumber = this.currentRouteId + 1;
+                this.highNumber = this.currentRouteId + 2;
                 this.lowRoute = this.pageLinks[middleIndex].route;
                 this.middleRoute = this.pageLinks[highIndex].route;
                 this.highRoute = this.pageLinks[highIndex +1].route;
@@ -84,9 +86,9 @@ export default {
                 this.showHomeButtonMiddle = false;
                 this.showHomeButtonRight = true;
                 this.showRightArrow = false;
-                this.highNumber = this.defaultId;
-                this.middleNumber = this.defaultId - 1;
-                this.lowNumber = this.defaultId - 2;
+                this.highNumber = this.currentRouteId;
+                this.middleNumber = this.currentRouteId - 1;
+                this.lowNumber = this.currentRouteId - 2;
                 this.lowRoute = this.pageLinks[lowIndex - 1].route;
                 this.middleRoute = this.pageLinks[lowIndex].route;
                 this.highRoute = this.pageLinks[middleIndex].route;
@@ -104,22 +106,20 @@ export default {
                 this.middleRoute = this.pageLinks[middleIndex].route;
                 this.highRoute = this.pageLinks[highIndex].route;
             }
-            if (this.lowNumber === this.defaultId) {
+            if (this.lowNumber === this.currentRouteId) {
                 this.showHomeButtonLeft = true;
                 
             } else {
                 this.showHomeButtonLeft = false;
             }
-            if (this.middleNumber === this.defaultId) {
+            if (this.middleNumber === this.currentRouteId) {
                 this.showHomeButtonMiddle = true;
                 
             } else {
                 this.showHomeButtonMiddle = false;
             }
-            if (this.highNumber === this.defaultId) {
-                console.log('here')
+            if (this.highNumber === this.currentRouteId) {
                 this.showHomeButtonRight = true;
-                
             } else {
                 this.showHomeButtonRight = false;
             }
@@ -146,19 +146,19 @@ export default {
                 this.middleRoute = this.pageLinks[middleIndex].route;
                 this.highRoute = this.pageLinks[highIndex].route;
             }
-            if (this.lowNumber === this.defaultId) {
+            if (this.lowNumber === this.currentRouteId) {
                 this.showHomeButtonLeft = true;
                 
             } else {
                 this.showHomeButtonLeft = false;
             }
-            if (this.middleNumber === this.defaultId) {
+            if (this.middleNumber === this.currentRouteId) {
                 this.showHomeButtonMiddle = true;
                 
             } else {
                 this.showHomeButtonMiddle = false;
             }
-            if (this.highNumber === this.defaultId) {
+            if (this.highNumber === this.currentRouteId) {
                 this.showHomeButtonRight = true;
                 
             } else {
@@ -184,7 +184,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 10vh;
+    height: 12vh;
 }
 
 .nav-button {
@@ -229,6 +229,19 @@ export default {
     background-color: #edeadf;
     border-width: 0px;
     color: #5e7789;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace
+}
+.arrow-button-hidden {
+    height: 50px;
+    width: 50px;
+    background-color: #edeadf;
+    border-width: 0px;
+    color: #edeadf;
     font-size: 50px;
     display: flex;
     justify-content: center;

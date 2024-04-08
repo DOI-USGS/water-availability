@@ -41,7 +41,7 @@ footer, header, main, nav, div {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 65vh;
+    height: 70vh;
 }
 
 hr {

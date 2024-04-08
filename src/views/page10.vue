@@ -1,7 +1,5 @@
 <template>
     <section class="main-container">
-        PAGE 10<br>
-        <router-link to="/">Home</router-link>
         <div class="viz-container">
 
         </div>

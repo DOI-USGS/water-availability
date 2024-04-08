@@ -1,9 +1,7 @@
 <template>
     <section class="main-container">
-        PAGE 1<br>
-        <router-link to="/">Home</router-link>
         <div class="viz-container">
-
+            
         </div>
         <PageCarousel></PageCarousel>
     </section>

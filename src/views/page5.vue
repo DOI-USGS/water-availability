@@ -1,7 +1,5 @@
 <template>
     <section class="main-container">
-        PAGE 5<br>
-        <router-link to="/">Home</router-link>
         <div class="viz-container">
         <AggReg class="agg-reg-svg"></AggReg>
         <h3 class="dumbbell-header">Public Supply Sourced From:</h3>
@@ -118,69 +116,6 @@ export default {
     margin-left: 15px;
     color: #2b5d69;
     font-size: 1.2em;
-}
-
-
-.nav-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 10vh;
-}
-
-.nav-button {
-    height: 50px;
-    width: 50px;
-    background-color: #9FCACB;
-    border-width: 0px;
-    border-radius: 50%;
-    color: #edeadf;
-    font-size: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav-button:hover {
-    background-color: #5e7789;
-    cursor: pointer;
-}
-
-.home-button {
-    background-color: #edeadf;
-    height: 50px;
-    width: 100px;
-    color: #5e7789;
-    letter-spacing: 1px;
-    font-size: 20px;
-    border-width: 0px;
-    margin: 0 20px 0 20px;
-    font-weight: bold;
-}
-
-.home-button:hover {
-    color: #9FCACB;
-    cursor: pointer;
-}
-
-.arrow-button {
-    height: 50px;
-    width: 50px;
-    background-color: #edeadf;
-    border-width: 0px;
-    color: #5e7789;
-    font-size: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 20px 0 20px;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace
-}
-
-.arrow-button:hover {
-    color: #9FCACB;
-    cursor: pointer;
 }
 
 img {
