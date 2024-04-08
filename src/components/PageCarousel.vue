@@ -53,10 +53,12 @@ export default {
             let lowIndex = currentPageIndex - 1;
             let middleIndex = currentPageIndex;
             let highIndex = currentPageIndex + 1;
+            console.log(middleIndex)
+            this.defaultId = this.pageLinks[middleIndex].id;
+            if (middleIndex > 0 && middleIndex < 9) {
             this.lowRoute = this.pageLinks[lowIndex].route; //need to handle page 1 and page 10 since they will be the lowest and the highest
             this.middleRoute = this.pageLinks[middleIndex].route;
             this.highRoute = this.pageLinks[highIndex].route;
-            this.defaultId = this.pageLinks[middleIndex].id; // default id might not actually be middle index if it's page 1 or page 10
             this.lowNumber = this.pageLinks[lowIndex].id;
             this.middleNumber = this.pageLinks[middleIndex].id;
             this.highNumber = this.pageLinks[highIndex].id;
@@ -65,6 +67,29 @@ export default {
             }
             if (this.lowNumber === 1) {
                 this.showLeftArrow = false
+            }
+            }
+            if (middleIndex === 0) {
+                this.showHomeButtonLeft = true;
+                this.showLeftArrow = false
+                this.showHomeButtonMiddle = false;
+                this.lowNumber = this.defaultId;
+                this.middleNumber = this.defaultId + 1;
+                this.highNumber = this.defaultId + 2;
+                this.lowRoute = this.pageLinks[middleIndex].route;
+                this.middleRoute = this.pageLinks[highIndex].route;
+                this.highRoute = this.pageLinks[highIndex +1].route;
+            }
+            if (middleIndex === 9) {
+                this.showHomeButtonMiddle = false;
+                this.showHomeButtonRight = true;
+                this.showRightArrow = false;
+                this.highNumber = this.defaultId;
+                this.middleNumber = this.defaultId - 1;
+                this.lowNumber = this.defaultId - 2;
+                this.lowRoute = this.pageLinks[lowIndex - 1].route;
+                this.middleRoute = this.pageLinks[lowIndex].route;
+                this.highRoute = this.pageLinks[middleIndex].route;
             }
         },
         moveLeft() {
@@ -108,7 +133,6 @@ export default {
             } else {
                 this.showLeftArrow = true
             }
-            console.log(this.lowNumber, this.highNumber, this.showHomeButtonLeft, this.showHomeButtonRight, this.defaultId)
         },
         moveRight() {
             if (this.highNumber < 10) {
