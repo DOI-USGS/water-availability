@@ -48,6 +48,10 @@ export default {
             import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
+            d3Base.select('.agg-reg-svg').selectAll('.AggReg_nam_nospace') //Modified the whole SVG
+                .style("fill", "#d1cdc0")
+                .style("stroke", "#edeadf")
+                .style("stroke-width", "0.5%")
         },
         addInteractions() {
             const self = this;
@@ -58,8 +62,7 @@ export default {
         },
         mouseoverMap(event) {
             let regionID = event.target.id
-            //d3Base.select('.agg-reg-svg').selectAll('.AggReg_nam_nospace') //Modified the whole SVG
-                //.style("fill", "#dad6ca")
+
 
             //Updates color of region
             d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`)
@@ -77,7 +80,7 @@ export default {
 
             //Updates region back to default
             d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`)
-                .style("fill", ""); 
+                .style("fill", "#d1cdc0"); 
 
             //Updates dumbbell chart back to full CONUS
             import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
@@ -92,7 +95,6 @@ export default {
 .agg-reg-svg {
     width: 20%;
     height: auto;
-    fill: #dad6ca !important;
     margin-right: 20px;
 }
 .axis-labels {
@@ -127,8 +129,5 @@ export default {
 img {
     width: 35%
 }
-/* .main-container {
-  background-color: #edeadf;
-} */
 
 </style>

@@ -2,7 +2,7 @@
     <section class="main-container">
         <div class="wavy-container">
             <div class="key-message-container">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
                 <h2>Key Message #9</h2>
             </div>
         </div>
