@@ -1,11 +1,6 @@
 <template>
     <section class="main-container">
-        <div class="wavy-container">
-            <div class="key-message-container">
-                <p>The source of public supply water use varies from west to east across the country.</p>
-                <h2>Key Message #5</h2>
-            </div>
-        </div>
+        <KeyMessages></KeyMessages>
         <div class="viz-container">
         <AggReg class="agg-reg-svg"></AggReg>
         <h3 class="dumbbell-header">Public Supply Sourced From:</h3>
@@ -28,10 +23,12 @@
 import * as d3Base from 'd3';
 import AggReg from "@/assets/svgs/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
+import KeyMessages from '../components/KeyMessages.vue';
 export default {
     components: {
         AggReg,
-        PageCarousel
+        PageCarousel,
+        KeyMessages
     },
     data() {
         return {

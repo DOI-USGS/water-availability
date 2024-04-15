@@ -1,11 +1,6 @@
 <template>
     <section class="main-container">
-        <div class="wavy-container">
-            <div class="key-message-container">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
-                <h2>Key Message #8</h2>
-            </div>
-        </div>
+        <KeyMessages></KeyMessages>
         <div class="viz-container">
             Interactive viz goes here
         </div>
@@ -15,9 +10,11 @@
 
 <script>
 import PageCarousel from '../components/PageCarousel.vue';
+import KeyMessages from '../components/KeyMessages.vue'
 export default {
     components: {
-        PageCarousel
+        PageCarousel,
+        KeyMessages
     }
 }
 </script>

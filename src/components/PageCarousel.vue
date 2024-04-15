@@ -55,7 +55,6 @@ export default {
             let lowIndex = currentPageIndex - 1;
             let middleIndex = currentPageIndex;
             let highIndex = currentPageIndex + 1;
-            console.log(middleIndex)
             this.currentRouteId = this.pageLinks[middleIndex].id;
             if (middleIndex > 0 && middleIndex < 9) {
             this.lowRoute = this.pageLinks[lowIndex].route; //need to handle page 1 and page 10 since they will be the lowest and the highest
@@ -184,7 +183,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 12vh;
+    height: 250px;
+    position: sticky;
+    bottom: 0;
 }
 
 .nav-button {
@@ -254,4 +255,22 @@ export default {
     color: #9FCACB;
     cursor: pointer;
 }
+
+
+@media screen and (max-width: 790px) {
+    .nav-container {
+        height: 300px;
+    }
+}  
+  @media screen and (max-width: 490px) {
+    .nav-container {
+        height: 350px;
+    }
+}  
+
+@media screen and (max-width: 418px) {
+    .nav-container {
+        height: 370px;
+    }
+} 
 </style>
