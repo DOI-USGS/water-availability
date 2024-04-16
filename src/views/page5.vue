@@ -127,4 +127,48 @@ img {
     width: 35%
 }
 
+@media only screen and (max-width: 768px) {
+    .viz-container {
+        flex-direction: column;
+    }
+    .dumbbell-header {
+        /* display: none; */
+        transform: rotate(0deg);
+        margin: 0px;
+        text-align: center; /* Center text */
+        font-size: 0.9em;
+        margin-left: -190px;
+
+    }
+    .axis-labels {
+        /* display: none */
+        transform: rotate(0deg);
+        margin: 0px;
+        margin-left: -210px;
+    }
+
+    .groundwater {
+    font-size: 0.9em;
+    }   
+    .surface-water {
+    display: inline;
+    margin-left: 15px;
+    color: #2b5d69;
+    font-size: 0.9em;
+    }
+    .agg-reg-svg {
+    width: 40%;
+    height: auto;
+    margin-right: 0px;
+    margin-bottom: -80px;
+    margin-top: -50px;
+    }
+
+    img {
+    width: 50%;
+    margin-top: 20px;
+    }
+
+}
+
 </style>

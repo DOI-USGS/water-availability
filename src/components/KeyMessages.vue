@@ -1,9 +1,9 @@
 <template>
     <div class="wavy-container">
-        <div class="key-message-container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
-            <h2>Key Message #1</h2>
-        </div>
+        <div class="key-message-container" v-for="(message, index) in filteredMessages" :key="index">
+            <p>{{ message.keyMessage }}</p>
+            <h2>Key Message #{{ message.page }}</h2>        
+    </div>
     </div>
 
 </template>
@@ -11,21 +11,19 @@
 <script>
 import KeyMessages from '@/components/KeyMessages.js';
 
-// export default {
-//     data() {
-//         return {
-//             KeyMessages: keyMessages.KeyMessage
-//         };
-//     },
-//     mounted() {
-//         this.setDefault();
-//     },
-//     methods: {
-//         setDefault() {
-//             console.log('here', KeyMessages)
-//         }
-//     }
-// }
+export default {
+    data() {
+        return {
+            KeyMessages: KeyMessages
+        };
+    },
+    computed: {
+    filteredMessages() {
+        const currentRoute = this.$route.path; // Get current route
+        return this.KeyMessages.KeyMessages.filter(message => message.route === currentRoute);
+    }
+    }
+}
 
 </script>
 
@@ -33,8 +31,8 @@ import KeyMessages from '@/components/KeyMessages.js';
 
 /* text box within the wavy container which houses key messages */
 .key-message-container {
-    height: 15vh;
-    width: 45vh;
+    height: 70%;
+    width: 40%;
     background-color: #3899B1;
     color: #edeadf;
     padding: 15px;
@@ -43,4 +41,17 @@ import KeyMessages from '@/components/KeyMessages.js';
     font-size: 20px;
     border-radius: 5px;
 }
+
+@media only screen and (max-width: 768px) {
+    .key-message-container {
+        height: 70%;
+        width: 60%;
+        background-color: #3899B1;
+        color: #edeadf;
+        padding: 15px;
+        align-items: center;
+        font-size: 18px;
+    }
+}
+
 </style>

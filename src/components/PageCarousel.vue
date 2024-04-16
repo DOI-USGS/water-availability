@@ -186,6 +186,7 @@ export default {
     height: 250px;
     position: sticky;
     bottom: 0;
+    /* background-color: #edeadf; */
 }
 
 .nav-button {
@@ -262,7 +263,7 @@ export default {
         height: 300px;
     }
 }  
-  @media screen and (max-width: 490px) {
+@media screen and (max-width: 490px) {
     .nav-container {
         height: 350px;
     }
