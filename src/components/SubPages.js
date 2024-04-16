@@ -1,5 +1,5 @@
 export default {
-    KeyMessages: [
+    SubPages: [
         {
             page: 1,
             route: '/page1',

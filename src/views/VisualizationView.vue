@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="raindrop-container">
-      <div class="key-message-item" v-for="(message, index) in KeyMessages.KeyMessages" :key="index">
+      <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
         <router-link :to="message.route">
           <button class="raindrop"><span class="raindrop-text"> {{ message.page }}</span></button>
         </router-link><br>
@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-  import KeyMessages from '@/components/KeyMessages.js';
+  import SubPages from '@/components/SubPages.js';
 </script>
 
 <style scoped>

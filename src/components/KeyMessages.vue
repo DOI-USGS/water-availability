@@ -9,18 +9,18 @@
 </template>
 
 <script>
-import KeyMessages from '@/components/KeyMessages.js';
+import SubPages from '@/components/SubPages.js';
 
 export default {
     data() {
         return {
-            KeyMessages: KeyMessages
+            SubPages: SubPages
         };
     },
     computed: {
     filteredMessages() {
         const currentRoute = this.$route.path; // Get current route
-        return this.KeyMessages.KeyMessages.filter(message => message.route === currentRoute);
+        return this.SubPages.SubPages.filter(message => message.route === currentRoute);
     }
     }
 }

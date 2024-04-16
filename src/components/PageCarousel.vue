@@ -26,11 +26,11 @@
 </template>
 
 <script>  
-import pageLinks from '@/components/pagelinks.js';
+import SubPages from '@/components/SubPages.js';
 export default {
     data() {
         return {
-            pageLinks: pageLinks.pageLinks,
+            SubPages: SubPages.SubPages,
             lowNumber: 0,
             middleNumber: 0,
             highNumber: 0,
@@ -51,18 +51,18 @@ export default {
     methods: {
         setDefaultCarousel() {
             const currentRoute = this.$route.path; // Get current route
-            const currentPageIndex = this.pageLinks.findIndex(link => link.route === currentRoute);
+            const currentPageIndex = this.SubPages.findIndex(link => link.route === currentRoute);
             let lowIndex = currentPageIndex - 1;
             let middleIndex = currentPageIndex;
             let highIndex = currentPageIndex + 1;
-            this.currentRouteId = this.pageLinks[middleIndex].id;
+            this.currentRouteId = this.SubPages[middleIndex].page;
             if (middleIndex > 0 && middleIndex < 9) {
-            this.lowRoute = this.pageLinks[lowIndex].route; //need to handle page 1 and page 10 since they will be the lowest and the highest
-            this.middleRoute = this.pageLinks[middleIndex].route;
-            this.highRoute = this.pageLinks[highIndex].route;
-            this.lowNumber = this.pageLinks[lowIndex].id;
-            this.middleNumber = this.pageLinks[middleIndex].id;
-            this.highNumber = this.pageLinks[highIndex].id;
+            this.lowRoute = this.SubPages[lowIndex].route; //need to handle page 1 and page 10 since they will be the lowest and the highest
+            this.middleRoute = this.SubPages[middleIndex].route;
+            this.highRoute = this.SubPages[highIndex].route;
+            this.lowNumber = this.SubPages[lowIndex].page;
+            this.middleNumber = this.SubPages[middleIndex].page;
+            this.highNumber = this.SubPages[highIndex].page;
             if (this.highNumber === 10) {
                 this.showRightArrow = false
             }
@@ -77,9 +77,9 @@ export default {
                 this.lowNumber = this.currentRouteId;
                 this.middleNumber = this.currentRouteId + 1;
                 this.highNumber = this.currentRouteId + 2;
-                this.lowRoute = this.pageLinks[middleIndex].route;
-                this.middleRoute = this.pageLinks[highIndex].route;
-                this.highRoute = this.pageLinks[highIndex +1].route;
+                this.lowRoute = this.SubPages[middleIndex].route;
+                this.middleRoute = this.SubPages[highIndex].route;
+                this.highRoute = this.SubPages[highIndex +1].route;
             }
             if (middleIndex === 9) {
                 this.showHomeButtonMiddle = false;
@@ -88,9 +88,9 @@ export default {
                 this.highNumber = this.currentRouteId;
                 this.middleNumber = this.currentRouteId - 1;
                 this.lowNumber = this.currentRouteId - 2;
-                this.lowRoute = this.pageLinks[lowIndex - 1].route;
-                this.middleRoute = this.pageLinks[lowIndex].route;
-                this.highRoute = this.pageLinks[middleIndex].route;
+                this.lowRoute = this.SubPages[lowIndex - 1].route;
+                this.middleRoute = this.SubPages[lowIndex].route;
+                this.highRoute = this.SubPages[middleIndex].route;
             }
         },
         moveLeft() {
@@ -101,9 +101,9 @@ export default {
                 let lowIndex = this.lowNumber - 1;
                 let middleIndex = this.middleNumber - 1;
                 let highIndex = this.highNumber - 1;
-                this.lowRoute = this.pageLinks[lowIndex].route;
-                this.middleRoute = this.pageLinks[middleIndex].route;
-                this.highRoute = this.pageLinks[highIndex].route;
+                this.lowRoute = this.SubPages[lowIndex].route;
+                this.middleRoute = this.SubPages[middleIndex].route;
+                this.highRoute = this.SubPages[highIndex].route;
             }
             if (this.lowNumber === this.currentRouteId) {
                 this.showHomeButtonLeft = true;
@@ -141,9 +141,9 @@ export default {
                 let lowIndex = this.lowNumber - 1;
                 let middleIndex = this.middleNumber - 1;
                 let highIndex = this.highNumber - 1;
-                this.lowRoute = this.pageLinks[lowIndex].route;
-                this.middleRoute = this.pageLinks[middleIndex].route;
-                this.highRoute = this.pageLinks[highIndex].route;
+                this.lowRoute = this.SubPages[lowIndex].route;
+                this.middleRoute = this.SubPages[middleIndex].route;
+                this.highRoute = this.SubPages[highIndex].route;
             }
             if (this.lowNumber === this.currentRouteId) {
                 this.showHomeButtonLeft = true;
