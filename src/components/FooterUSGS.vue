@@ -86,4 +86,8 @@
 ul {
   margin-top: 15px;
 }
+.footer {
+  position: fixed;
+  bottom: 0;
+}
 </style>

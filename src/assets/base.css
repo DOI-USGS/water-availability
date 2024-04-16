@@ -31,10 +31,29 @@
   /* font-weight: normal; */
 }
 
+/* this is where each page's viz will go */
+.viz-container { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
+
+/* container for the top of each page with key message */
+.wavy-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: #9FCACB;
+  position: sticky;
+}
+
+
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background);
+  background: #edeadf;
   transition:
     color 0.5s,
     background-color 0.5s;
@@ -47,6 +66,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 h1 {
   font-size: 2.5rem;
   font-weight: 500;
