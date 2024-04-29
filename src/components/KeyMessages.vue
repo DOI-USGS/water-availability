@@ -1,8 +1,9 @@
 <template>
     <div class="wavy-container">
         <div class="key-message-container" v-for="(message, index) in filteredMessages" :key="index">
+            <h2>Key Message #{{ message.page }}</h2>      
             <p>{{ message.keyMessage }}</p>
-            <h2>Key Message #{{ message.page }}</h2>        
+  
     </div>
     </div>
 
@@ -33,9 +34,8 @@ export default {
 .key-message-container {
     height: 70%;
     width: 40%;
-    background-color: #3899B1;
-    color: #edeadf;
-    padding: 15px;
+    color: rgb(0, 38, 76);
+    padding: 10px;
     align-items: center;
     justify-content: center;
     font-size: 20px;
@@ -46,7 +46,6 @@ export default {
     .key-message-container {
         height: 70%;
         width: 60%;
-        background-color: #3899B1;
         color: #edeadf;
         padding: 15px;
         align-items: center;

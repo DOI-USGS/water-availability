@@ -29,20 +29,21 @@
 }
 
 .raindrop-container {
-  height: 900px;
+  min-height: 1000px;
 }
 
 .key-message-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .key-message-item-text {
   margin-left: 20px;
-  color: #5e7789;
-  width: 75%;
+  color: rgb(0, 38, 76);
+  width: 70%;
+  font-size: 2.5rem;
 }
 
 .raindrop {
