@@ -2,7 +2,7 @@
   <section>
     <div class="wavy-container">
       <div class="key-message-container">
-        <p>2024 National Integrated Water Availability Assessments</p>
+        <h1>2024 National Integrated Water Availability Assessments</h1>
         <h2>Key Messages</h2>
       </div>
     </div>
@@ -57,7 +57,16 @@
 
 .raindrop:hover {
   cursor: pointer;
-  background-color: #C4C0B4;
+  background:
+    repeating-conic-gradient( var(--dodger-blue) 0 3%, #DAD6CA 0 11%),
+    repeating-conic-gradient(#DAD6CA 0 5%, var(--dodger-blue) 0 7%) 50% / 60% 60%,
+    repeating-conic-gradient(#DAD6CA 0 7%, var(--dodger-blue) 0 9%) 50% / 70% 70%,
+    repeating-conic-gradient(#DAD6CA 0 11%, var(--dodger-blue) 0 13%) 50% / 80% 80%,
+    radial-gradient(var(--dodger-blue) 22%, #DAD6CA 0),
+    #9FCACB;
+  background-repeat: no-repeat;
+  filter: blur(2px) contrast(80);
+  box-shadow: 0 0 0 2px #fff;
 }
 
 .raindrop-text {
