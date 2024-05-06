@@ -45,10 +45,6 @@ export default {
             import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
-            d3Base.select('.agg-reg-svg').selectAll('.AggReg_nam_nospace') //Modified the whole SVG
-                .style("fill", "#d1cdc0")
-                .style("stroke", "#edeadf")
-                .style("stroke-width", "0.5%")
         },
         addInteractions() {
             const self = this;

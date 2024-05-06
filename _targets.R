@@ -5,7 +5,8 @@ tar_option_set(packages = c("sbtools",
                             "sf",
                             "rmapshaper",
                             "nngeo",
-                            "stringr"))
+                            "stringr",
+                            "gridSVG"))
 
 # Phase target makefiles
 #   NEED to run 0_config.R first unless you've already fetched SB items

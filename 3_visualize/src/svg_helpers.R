@@ -8,14 +8,17 @@ create_svg_for_web <- function(in_sf,
                                identifier,
                                width, 
                                height, 
-                               file_out){
+                               file_out,
+                               color_scheme){
   
   in_sf <- in_sf %>%
     sf::st_cast("MULTIPOLYGON") %>%
     sf::st_cast("POLYGON") |>
     mutate(identifier = !! sym(identifier))
   
-  p <- ggplot(in_sf) + geom_sf() + theme_void()
+  p <- ggplot(in_sf) + geom_sf(fill = color_scheme$svg_fill_default, 
+                               color = color_scheme$svg_col_default,
+                               linewidth = 1.4) + theme_void()
   
   # gridSVG approach modified from 
   # https://gist.github.com/jimjam-slam/1d988451ae15882c889f49cf20b99a64

@@ -17,7 +17,11 @@ p3_targets <- list(
                tern_4 = "#FEB4A6",
                tern_6 = "#3FBAD2",
                tern_7 = "#85CAC3",
-               tern_8 = "#FEFFA7"
+               tern_8 = "#FEFFA7",
+               wu_sw = "#065867",
+               wu_gw = "#F09300",
+               svg_fill_default = "#d1cdc0",
+               svg_col_default = "#edeadf" # background color of page
              )),
   ########################
   # SVG to overlay maps for website
@@ -25,13 +29,15 @@ p3_targets <- list(
              create_svg_for_web(in_sf = p2_AggRegion_sf,
                                 identifier = "AggReg_nam_nospace",
                                 width = 6, height = 9,
-                                file_out = "src/assets/svgs/AggReg.svg"),
+                                file_out = "src/assets/svgs/AggReg.svg",
+                                color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_svg,
              create_svg_for_web(in_sf = p2_Region_sf,
                                 identifier = "Region_nam_nospace",
                                 width = 6, height = 9,
-                                file_out = "src/assets/svgs/Regions.svg"),
+                                file_out = "src/assets/svgs/Regions.svg",
+                                color_scheme = p3_colors_website),
              format = "file"),
   
   ########################
