@@ -3,6 +3,10 @@ source("2_process/src/process_WBD_GDB.R")
 source("2_process/src/process_ps_dumbbell.R")
 
 p2_targets <- list(
+  ##############################################
+  # 
+  #           GLOBAL DATA
+  # 
   # Master tibbles for cross-referencing region names, numbers
   tar_target(p2_region_name_xwalk,
              tibble(
@@ -29,29 +33,32 @@ p2_targets <- list(
                               )
              ),
   # Master crosswalk at the HUC12 level
-  tar_target(p2_vm_crosswalk_HUC12_df,
-             readr::read_csv(p1_vm_crosswalk, skip = 1)|>
+  tar_target(p1_CONUS_crosswalk_HUC12_df,
+             readr::read_csv(p1_CONUS_crosswalk, skip = 1)|>
                filter(AggRegion_nam != "NULL")),
   # Master crosswalk at the HUC8 level
-  tar_target(p2_vm_crosswalk_HUC8_df,
-             p2_vm_crosswalk_HUC12_df |>
+  tar_target(p1_CONUS_crosswalk_HUC8_df,
+             p1_CONUS_crosswalk_HUC12_df |>
                group_by(HUC8) |>
                reframe(AggRegion_nam = unique(AggRegion_nam),
                        Region_nam = unique(Region_nam))),
   
   
-  ########################
+  ##############################################
+  # 
+  #           SPATIAL DATA
+  # 
   # Create regions sf, simplified
-  tar_target(p2_Region_sf,
-             regions_to_sf(in_shp = p1_regions_shp) |>
+  tar_target(p2_Reg_sf,
+             regions_to_sf(in_shp = p1_Reg_shp) |>
                left_join(p2_region_name_xwalk, by = "Region")),
-  tar_target(p2_AggRegion_sf,
-             p2_Region_sf |> group_by(AggReg_nam) |> summarize() |>
+  tar_target(p2_AggReg_sf,
+             p2_Reg_sf |> group_by(AggReg_nam) |> summarize() |>
                left_join(p2_region_name_xwalk, by = "AggReg_nam")),
   
   # Shapefiles for plotting
   tar_target(p2_mainstem_HUC8_raw_sf,
-             prep_sf(huc_path = p1_mainstem_zip,
+             prep_sf(huc_path = p1_CONUS_mainstem_zip,
                      layer = "WBDHU8", 
                      crs_out = p1_usgs_crs,
                      exclude_non_plot_hucs = TRUE)),
@@ -71,14 +78,19 @@ p2_targets <- list(
                # remove everything outside of CONUS for now
                filter(region_group == "CONUS") |>
                # add in region names
-               left_join(p2_vm_crosswalk_HUC8_df, by = "HUC8")
+               left_join(p1_CONUS_crosswalk_HUC8_df, by = "HUC8")
   ),
+  
+  ##############################################
+  # 
+  #           WATER USE DATA
+  # 
   tar_target(p2_mainstem_HUC8_sf,
              p2_mainstem_HUC8_simple_sf |>
              # add in public supply water use data 
-               left_join(p2_ps_gw_wy2020_HUC8, by = "HUC8") 
+               left_join(p2_wu_ps_gw_wy2020_HUC8, by = "HUC8") 
   ),
-  tar_target(p2_mainstem_HUC8_AggRegionGroup_sf,
+  tar_target(p2_mainstem_HUC8_AggRegGroup_sf,
              p2_mainstem_HUC8_sf |> 
                group_by(AggRegion_nam) |>
                tar_group(),
@@ -93,19 +105,19 @@ p2_targets <- list(
   # Calculate public supply source summary by HUC 8
   # raw format: row for each HUC12 and columns for every month, plus
   #     source, use, huc12 name, region name, and aggregated region name
-  tar_target(p2_ps_gw_raw,
-             readr::read_csv(p1_ps_gw_csv,
+  tar_target(p2_wu_ps_gw_raw,
+             readr::read_csv(p1_wu_ps_gw_csv,
                              show_col_types = FALSE) |>
                filter(AggRegion_nam != "NULL") |>
                mutate(use = "Public Supply")),
-  tar_target(p2_ps_sw_raw,
-             readr::read_csv(p1_ps_sw_csv,
+  tar_target(p2_wu_ps_sw_raw,
+             readr::read_csv(p1_wu_ps_sw_csv,
                              show_col_types = FALSE) |>
                filter(AggRegion_nam != "NULL") |>
                mutate(use = "Public Supply")),
-  tar_target(p2_ps_gw_wy2020_HUC8,
-             prep_for_dumbbell(raw_gw_in = p2_ps_gw_raw,
-                               raw_sw_in = p2_ps_sw_raw,
+  tar_target(p2_wu_ps_gw_wy2020_HUC8,
+             prep_for_dumbbell(raw_gw_in = p2_wu_ps_gw_raw,
+                               raw_sw_in = p2_wu_ps_sw_raw,
                                water_year = 2020) 
   )
   

@@ -26,14 +26,14 @@ p3_targets <- list(
   ########################
   # SVG to overlay maps for website
   tar_target(p3_AggReg_svg,
-             create_svg_for_web(in_sf = p2_AggRegion_sf,
+             create_svg_for_web(in_sf = p2_AggReg_sf,
                                 identifier = "AggReg_nam_nospace",
                                 width = 6, height = 9,
                                 file_out = "src/assets/svgs/AggReg.svg",
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_svg,
-             create_svg_for_web(in_sf = p2_Region_sf,
+             create_svg_for_web(in_sf = p2_Reg_sf,
                                 identifier = "Region_nam_nospace",
                                 width = 6, height = 9,
                                 file_out = "src/assets/svgs/Regions.svg",
@@ -42,7 +42,7 @@ p3_targets <- list(
   
   ########################
   # Dumbbell charts to show gw versus sw by region and west/east
-  tar_target(p3_ps_source_dumbbell_png,
+  tar_target(p3_wu_ps_source_dumbbell_png,
              dumbbell_gw_v_sw(in_sf = p2_mainstem_HUC8_sf,
                               in_CONUS = p2_mainstem_HUC8_sf,
                               stacked_from_zeroL = FALSE, 
@@ -51,15 +51,15 @@ p3_targets <- list(
                               height = 4,
                               png_out = "src/assets/images/ws_ps_dumbbell_centered_CONUS.png"),
              format = "file"),
-  tar_target(p3_ps_source_dumbbell_AggReg_png,
-             dumbbell_gw_v_sw(in_sf = p2_mainstem_HUC8_AggRegionGroup_sf,
+  tar_target(p3_wu_ps_source_dumbbell_AggReg_png,
+             dumbbell_gw_v_sw(in_sf = p2_mainstem_HUC8_AggRegGroup_sf,
                               in_CONUS = p2_mainstem_HUC8_sf,
                               stacked_from_zeroL = FALSE, 
                               color_scheme = p3_colors_website,
                               width = 6,
                               height = 4,
                               png_out = sprintf("src/assets/images/ws_ps_dumbbell_centered_%s.png",
-                                                unique(p2_mainstem_HUC8_AggRegionGroup_sf$AggRegion_nam))),
-             pattern = p2_mainstem_HUC8_AggRegionGroup_sf,
+                                                unique(p2_mainstem_HUC8_AggRegGroup_sf$AggRegion_nam))),
+             pattern = p2_mainstem_HUC8_AggRegGroup_sf,
              format = "file")
 )
