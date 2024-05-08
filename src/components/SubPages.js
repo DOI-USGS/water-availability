@@ -8,47 +8,47 @@ export default {
         {
             page: 2,
             route: '/page2',
-            keyMessage: 'At the national scale, water supply is larger than demand. At regional scales, demand is sometimes larger than supply.'
+            keyMessage: 'The steady rise in global temperature as a result of human activity is causing changes in the water cycle and water availability.'
         },
         {
             page: 3,
             route: '/page3',
-            keyMessage: 'Almost 10% of the nation (29.6 million people) live in areas of high or severe water stress.'
+            keyMessage: 'Almost 30 million people live in areas of high/severe water stress.'
         },
         {
             page: 4,
             route: '/page4',
-            keyMessage: 'The relative importance of public supply, crop irrigation, and thermoelectric water supply varies regionally.'
+            keyMessage: 'A high proportion of the population living in areas with water availability limitations are considered to be socially vulnerable.'
         },
         {
             page: 5,
             route: '/page5',
-            keyMessage: 'The source of public supply water use varies from west to east across the country.'
+            keyMessage: 'Human activities can affect water quality through inputs (e.g., organic chemicals), processes (e.g., dredging), or permanent landscape modifications (e.g., dams, urbanization).'
         },
         {
             page: 6,
             route: '/page6',
-            keyMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
+            keyMessage: 'Threats to water quality depend on what the water is used for (e.g., drinking water versus recreation) and where the water is coming from (e.g., surface water, groundwater).'
         },
         {
             page: 7,
             route: '/page7',
-            keyMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
+            keyMessage: 'About 225,000 million gallons of freshwater get used per day for crop irrigation, public supply, and thermoelectric power generation in the lower 48 states, and not all of this water gets returned directly to the local environment.'
         },
         {
             page: 8,
             route: '/page8',
-            keyMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
+            keyMessage: 'How we use water varies across the country, including the source of water (groundwater versus surface water) and the type of use (e.g., crop irrigation, public supply, or thermoelectric power generation).'
         },
         {
             page: 9,
             route: '/page9',
-            keyMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
+            keyMessage: 'Periods of low precipitation (snow, rain) can have cascading effects throughout the water budget, expanding areas of water stress and exacerbating water quality issues.'
         },
         {
             page: 10,
             route: '/page10',
-            keyMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
+            keyMessage: 'Areas of the U.S. with limited surface water storage rely on groundwater, which can lead to declines in water levels.'
         }
     ]
 };

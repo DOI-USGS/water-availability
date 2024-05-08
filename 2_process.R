@@ -50,13 +50,13 @@ p2_targets <- list(
                left_join(p2_region_name_xwalk, by = "AggReg_nam")),
   
   # Shapefiles for plotting
-  tar_target(p2_mainstem_HUC8_raw,
+  tar_target(p2_mainstem_HUC8_raw_sf,
              prep_sf(huc_path = p1_mainstem_zip,
                      layer = "WBDHU8", 
                      crs_out = p1_usgs_crs,
                      exclude_non_plot_hucs = TRUE)),
-  tar_target(p2_mainstem_HUC8_sf,
-             p2_mainstem_HUC8_raw |> 
+  tar_target(p2_mainstem_HUC8_simple_sf,
+             p2_mainstem_HUC8_raw_sf |> 
                mutate(
                  HUC2 = str_sub(HUC, 1, 2),
                  region_group = case_when(
@@ -71,7 +71,10 @@ p2_targets <- list(
                # remove everything outside of CONUS for now
                filter(region_group == "CONUS") |>
                # add in region names
-               left_join(p2_vm_crosswalk_HUC8_df, by = "HUC8") |>
+               left_join(p2_vm_crosswalk_HUC8_df, by = "HUC8")
+  ),
+  tar_target(p2_mainstem_HUC8_sf,
+             p2_mainstem_HUC8_simple_sf |>
              # add in public supply water use data 
                left_join(p2_ps_gw_wy2020_HUC8, by = "HUC8") 
   ),
@@ -81,10 +84,13 @@ p2_targets <- list(
                tar_group(),
              iteration = "group"),
   
-  ########################
-  # Calculate public supply source
-  # summary by HUC 8
+  ##############################################
+  # 
+  #           WATER USE DATA
+  # 
+  # PUBLIC SUPPLY 
   
+  # Calculate public supply source summary by HUC 8
   # raw format: row for each HUC12 and columns for every month, plus
   #     source, use, huc12 name, region name, and aggregated region name
   tar_target(p2_ps_gw_raw,

@@ -7,6 +7,8 @@
   --black-soft: #151515;
   --dodger-blue: #1e90ff;
 
+  --blue-highlight:  #5E7789;
+
   font-size: 62.5%;
 }
 
@@ -68,6 +70,10 @@ body {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 500;
+}
+h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
 }
