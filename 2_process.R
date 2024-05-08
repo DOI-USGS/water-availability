@@ -81,13 +81,11 @@ p2_targets <- list(
                left_join(p1_CONUS_crosswalk_HUC8_df, by = "HUC8")
   ),
   
-  ##############################################
-  # 
-  #           WATER USE DATA
-  # 
+  ##################################################
+  # Join spatial data with water data 
   tar_target(p2_mainstem_HUC8_sf,
              p2_mainstem_HUC8_simple_sf |>
-             # add in public supply water use data 
+               # add in public supply water use data 
                left_join(p2_wu_ps_gw_wy2020_HUC8, by = "HUC8") 
   ),
   tar_target(p2_mainstem_HUC8_AggRegGroup_sf,
@@ -100,8 +98,6 @@ p2_targets <- list(
   # 
   #           WATER USE DATA
   # 
-  # PUBLIC SUPPLY 
-  
   # Calculate public supply source summary by HUC 8
   # raw format: row for each HUC12 and columns for every month, plus
   #     source, use, huc12 name, region name, and aggregated region name

@@ -42,7 +42,7 @@ export default {
     methods: {
         setDefaultImgSrc() {
             //Sets default dumbbell chart to full CONUS
-            import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
+            import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
         },
@@ -64,7 +64,7 @@ export default {
             let formattedRegionID = regionID.replace(/_/g, ' '); //png titles have spaces not underscores
             
             //Update dumbbells charts to specific region
-            import(`@/assets/images/ws_ps_dumbbell_centered_${formattedRegionID}.png`).then(imgSrc => {
+            import(`@/assets/images/k08_ws_ps_dumbbell_centered_${formattedRegionID}.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default;
             });       
         },
