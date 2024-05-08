@@ -46,7 +46,6 @@ export default {
     .key-message-container {
         height: 70%;
         width: 60%;
-        color: #edeadf;
         padding: 15px;
         align-items: center;
         font-size: 18px;
