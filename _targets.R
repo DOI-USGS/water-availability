@@ -1,4 +1,6 @@
 library(targets)
+library(tidyverse)
+library(sf)
 
 tar_option_set(packages = c("sbtools",
                             "tidyverse",
@@ -43,4 +45,4 @@ source("2_process.R")
 source("3_visualize.R")
 
 # Combined list of target outputs
-c(p1_targets, p2_targets, p3_targets)
+c(p1_targets, p2_targets)#, p3_targets)

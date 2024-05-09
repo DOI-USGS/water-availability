@@ -34,6 +34,8 @@ load_wu_data <- function(data_path, use_type, source_type) {
 mean_wu_HUC8 <- function(..., min_year, max_year) {
   data_in <- bind_rows(...)
   
+  temp_use <- unique(data_in$use_type)
+  
   data_in |>
     # Select only focal years
     filter(year >= min_year,
@@ -57,5 +59,7 @@ mean_wu_HUC8 <- function(..., min_year, max_year) {
     pivot_wider(names_from = source_type, values_from = mean_wu_mgd) |>
     # calculate percent gw and sw
     mutate(gw_pct = gw/total,
-           sw_pct = sw/total)
+           sw_pct = sw/total,
+            use_name = use_type) |>
+    rename_at(vars(-HUC8), ~ sprintf("%s_%s", temp_use, .))
 }

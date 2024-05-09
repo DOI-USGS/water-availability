@@ -84,13 +84,15 @@ p2_targets <- list(
   
   ##################################################
   # Join spatial data with water data 
-  tar_target(p2_mainstem_HUC8_sf,
+  tar_target(p2_HUC8_join_wu_sf,
              p2_mainstem_HUC8_simple_sf |>
-               # add in public supply water use data 
-               left_join(p2_wu_ps_gw_wy2020_HUC8, by = "HUC8") 
+               # add in mean water use data 
+               left_join(p2_wu_te_mean2000to2020_HUC8, by = "HUC8") |>
+               left_join(p2_wu_ps_mean2000to2020_HUC8, by = "HUC8") |>
+               left_join(p2_wu_ir_mean2000to2020_HUC8, by = "HUC8")
   ),
-  tar_target(p2_mainstem_HUC8_AggRegGroup_sf,
-             p2_mainstem_HUC8_sf |> 
+  tar_target(p2_HUC8_join_wu_AggRegGrp_sf,
+             p2_HUC8_join_wu_sf |> 
                group_by(AggRegion_nam) |>
                tar_group(),
              iteration = "group"),
@@ -102,17 +104,17 @@ p2_targets <- list(
   # Public water supply
   tar_target(p2_wu_ps_gw_raw,
              load_wu_data(data_path = p1_wu_ps_gw_csv,
-                          use_type = "Public Supply",
+                          use_type = "ps",
                           source_type = "gw") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_ps_sw_raw,
              load_wu_data(data_path = p1_wu_ps_sw_csv,
-                          use_type = "Public Supply",
+                          use_type = "ps",
                           source_type = "sw") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_ps_tot_raw,
              load_wu_data(data_path = p1_wu_ps_tot_csv,
-                          use_type = "Public Supply",
+                          use_type = "ps",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_ps_mean2000to2020_HUC8,
@@ -125,17 +127,17 @@ p2_targets <- list(
   # Irrigation
   tar_target(p2_wu_ir_gw_raw,
              load_wu_data(data_path = p1_wu_ir_gw_csv,
-                          use_type = "Crop Irrigation",
+                          use_type = "ir",
                           source_type = "gw") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_ir_sw_raw,
              load_wu_data(data_path = p1_wu_ir_sw_csv,
-                          use_type = "Crop Irrigation",
+                          use_type = "ir",
                           source_type = "sw") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_ir_tot_raw,
              load_wu_data(data_path = p1_wu_ir_tot_csv,
-                          use_type = "Crop Irrigation",
+                          use_type = "ir",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_ir_mean2000to2020_HUC8,
@@ -148,17 +150,17 @@ p2_targets <- list(
   # Thermoelectric
   tar_target(p2_wu_te_gw_raw,
              load_wu_data(data_path = p1_wu_te_gw_csv,
-                          use_type = "Thermoelectric",
+                          use_type = "te",
                           source_type = "gw") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_te_sw_raw,
              load_wu_data(data_path = p1_wu_te_sw_csv,
-                          use_type = "Thermoelectric",
+                          use_type = "te",
                           source_type = "sw") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_te_tot_raw,
              load_wu_data(data_path = p1_wu_te_tot_csv,
-                          use_type = "Thermoelectric",
+                          use_type = "te",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_te_mean2000to2020_HUC8,
