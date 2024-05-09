@@ -144,6 +144,29 @@ p2_targets <- list(
                           p2_wu_ir_tot_raw,
                           min_year = 2000,
                           max_year = 2020) 
+  ),
+  # Thermoelectric
+  tar_target(p2_wu_te_gw_raw,
+             load_wu_data(data_path = p1_wu_te_gw_csv,
+                          use_type = "Thermoelectric",
+                          source_type = "gw") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_te_sw_raw,
+             load_wu_data(data_path = p1_wu_te_sw_csv,
+                          use_type = "Thermoelectric",
+                          source_type = "sw") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_te_tot_raw,
+             load_wu_data(data_path = p1_wu_te_tot_csv,
+                          use_type = "Thermoelectric",
+                          source_type = "total") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_te_mean2000to2020_HUC8,
+             mean_wu_HUC8(p2_wu_te_gw_raw,
+                          p2_wu_te_sw_raw,
+                          p2_wu_te_tot_raw,
+                          min_year = 2000,
+                          max_year = 2020) 
   )
   
 
