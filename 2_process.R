@@ -1,6 +1,7 @@
 source("2_process/src/process_region_shp.R")
 source("2_process/src/process_WBD_GDB.R")
 source("2_process/src/process_ps_dumbbell.R")
+source("2_process/src/process_wu_data.R")
 
 p2_targets <- list(
   ##############################################
@@ -98,23 +99,51 @@ p2_targets <- list(
   # 
   #           WATER USE DATA
   # 
-  # Calculate public supply source summary by HUC 8
-  # raw format: row for each HUC12 and columns for every month, plus
-  #     source, use, huc12 name, region name, and aggregated region name
+  # Public water supply
   tar_target(p2_wu_ps_gw_raw,
-             readr::read_csv(p1_wu_ps_gw_csv,
-                             show_col_types = FALSE) |>
-               filter(AggRegion_nam != "NULL") |>
-               mutate(use = "Public Supply")),
+             load_wu_data(data_path = p1_wu_ps_gw_csv,
+                          use_type = "Public Supply",
+                          source_type = "gw") |>
+               filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_ps_sw_raw,
-             readr::read_csv(p1_wu_ps_sw_csv,
-                             show_col_types = FALSE) |>
-               filter(AggRegion_nam != "NULL") |>
-               mutate(use = "Public Supply")),
-  tar_target(p2_wu_ps_gw_wy2020_HUC8,
-             prep_for_dumbbell(raw_gw_in = p2_wu_ps_gw_raw,
-                               raw_sw_in = p2_wu_ps_sw_raw,
-                               water_year = 2020) 
+             load_wu_data(data_path = p1_wu_ps_sw_csv,
+                          use_type = "Public Supply",
+                          source_type = "sw") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_ps_tot_raw,
+             load_wu_data(data_path = p1_wu_ps_tot_csv,
+                          use_type = "Public Supply",
+                          source_type = "total") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_ps_mean2000to2020_HUC8,
+             mean_wu_HUC8(p2_wu_ps_gw_raw,
+                          p2_wu_ps_sw_raw,
+                          p2_wu_ps_tot_raw,
+                          min_year = 2000,
+                          max_year = 2020) 
+  ),
+  # Irrigation
+  tar_target(p2_wu_ir_gw_raw,
+             load_wu_data(data_path = p1_wu_ir_gw_csv,
+                          use_type = "Crop Irrigation",
+                          source_type = "gw") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_ir_sw_raw,
+             load_wu_data(data_path = p1_wu_ir_sw_csv,
+                          use_type = "Crop Irrigation",
+                          source_type = "sw") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_ir_tot_raw,
+             load_wu_data(data_path = p1_wu_ir_tot_csv,
+                          use_type = "Crop Irrigation",
+                          source_type = "total") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_ir_mean2000to2020_HUC8,
+             mean_wu_HUC8(p2_wu_ir_gw_raw,
+                          p2_wu_ir_sw_raw,
+                          p2_wu_ir_tot_raw,
+                          min_year = 2000,
+                          max_year = 2020) 
   )
   
 

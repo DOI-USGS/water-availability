@@ -6,7 +6,9 @@ tar_option_set(packages = c("sbtools",
                             "rmapshaper",
                             "nngeo",
                             "stringr",
-                            "gridSVG"))
+                            "gridSVG",
+                            "tidytable",
+                            "lubridate"))
 
 ### Naming conventions:
 # Water Supply = ws
