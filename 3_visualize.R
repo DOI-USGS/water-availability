@@ -100,27 +100,12 @@ p3_targets <- list(
   #             (e.g., crop irrigation, public supply, or 
   #             thermoelectric power generation).
   # 
-  # Dumbbell charts to show gw versus sw by region and west/east
-  tar_target(p3_k08_wu_ps_source_dumbbell_png,
-             dumbbell_gw_v_sw(in_sf = p2_mainstem_HUC8_sf,
-                              in_CONUS = p2_mainstem_HUC8_sf,
-                              stacked_from_zeroL = FALSE, 
-                              color_scheme = p3_colors_website,
-                              width = 6,
-                              height = 4,
-                              png_out = "src/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png"),
-             format = "file"),
-  tar_target(p3_k08_wu_ps_source_dumbbell_AggReg_png,
-             dumbbell_gw_v_sw(in_sf = p2_mainstem_HUC8_AggRegGroup_sf,
-                              in_CONUS = p2_mainstem_HUC8_sf,
-                              stacked_from_zeroL = FALSE, 
-                              color_scheme = p3_colors_website,
-                              width = 6,
-                              height = 4,
-                              png_out = sprintf("src/assets/images/k08_ws_ps_dumbbell_centered_%s.png",
-                                                unique(p2_mainstem_HUC8_AggRegGroup_sf$AggRegion_nam))),
-             pattern = p2_mainstem_HUC8_AggRegGroup_sf,
-             format = "file")
+  tar_target(p3_k8_ps_CONUS_wheatfield_png,
+             plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
+                             use_type = "ps",
+                             png_out = "3_visualize/out/k8_ps_wheatfield_CONUS.png",
+                             width = 6,
+                             height = 6))
   
   ##############################################
   # 

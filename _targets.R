@@ -2,6 +2,7 @@ library(targets)
 library(tidyverse)
 library(sf)
 
+# Note: also requires installing (but not loading) "tidytable"
 tar_option_set(packages = c("sbtools",
                             "tidyverse",
                             "sf",
@@ -9,7 +10,6 @@ tar_option_set(packages = c("sbtools",
                             "nngeo",
                             "stringr",
                             "gridSVG",
-                            "tidytable",
                             "lubridate"))
 
 ### Naming conventions:
@@ -45,4 +45,4 @@ source("2_process.R")
 source("3_visualize.R")
 
 # Combined list of target outputs
-c(p1_targets, p2_targets)#, p3_targets)
+c(p1_targets, p2_targets, p3_targets)
