@@ -31,33 +31,31 @@ p1_targets <- list(
     "EPSG:5070"
   ),
   tar_target(
-    p1_CONUS_mainstem_zip,
-    {sb_initialize_and_download_zipped(sb_id = "60cb5edfd34e86b938a373f4",
-                                       unzip_file_to_check = p1_mainstem_HUC8_raw_Rdata,
-                                       names = "WBD_National_GDB.zip",
-                                       destinations = sprintf("1_fetch/in/%s", "WBD_National_GDB.zip"),
-                                       overwrite_fileL = FALSE)
-      return("1_fetch/in/WBD_National_GDB.zip")},
+    p1_CONUS_mainstem_gdb,
+    sb_initialize_and_download_zipped(
+      sb_id = "60cb5edfd34e86b938a373f4",
+      unzip_file_to_check = "1_fetch/in/WBD_National_GDB/WBD_National_GDB.gdb",
+      names = "WBD_National_GDB.zip",
+      destinations = "1_fetch/in/WBD_National_GDB.zip",
+      overwrite_fileL = FALSE),
     format = "file"
   ),
-  tar_target(p1_mainstem_HUC8_raw_Rdata,
-             prep_sf(huc_path = p1_CONUS_mainstem_zip,
-                     sf_save_file = "CONUS_HUC8_fromGDB.Rdata",
-                     layer = "WBDHU8", 
+  tar_target(p1_mainstem_HUC8_raw_sf,
+             prep_sf(gdb_file = p1_CONUS_mainstem_gdb,
+                     layer = "WBDHU8",
                      crs_out = p1_usgs_crs,
-                     exclude_non_plot_hucs = TRUE),
-             format = "file"),
+                     exclude_non_plot_hucs = TRUE)
+             ),
   
   # Crosswalk between HUC12, AggReg, and Reg
   tar_target(
     p1_CONUS_crosswalk,
-    {sb_initialize_and_download(
+    sb_initialize_and_download(
       sb_id = "643706ffd34ee8d4addcc593",
       names = "HUC12_VanMetre_crosswalk_230509.csv",
       destinations = "1_fetch/out/HUC12_VanMetre_crosswalk_230509.csv",
       overwrite_fileL = FALSE
-    )
-      return("1_fetch/out/HUC12_VanMetre_crosswalk_230509.csv")},
+    ),
     format = "file"
   ),
   
@@ -67,97 +65,88 @@ p1_targets <- list(
   # 
   # PS = Public Supply water use data
   tar_target(p1_wu_ps_gw_csv, # Public supply withdrawal from groundwater
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "PS_HUC12_GW_2000_2020.csv",
                destinations = "1_fetch/in/PS_HUC12_GW_2000_2020.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/PS_HUC12_GW_2000_2020.csv")},
+             ),
              format = "file"
   ),
   tar_target(p1_wu_ps_sw_csv, # Public supply withdrawal from surface water
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "PS_HUC12_SW_2000_2020.csv",
                destinations = "1_fetch/in/PS_HUC12_SW_2000_2020.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/PS_HUC12_SW_2000_2020.csv")},
+             ),
              format = "file"
   ),
   tar_target(p1_wu_ps_tot_csv, # Public supply withdrawal (total)
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "PS_HUC12_Tot_2000_2020.csv",
                destinations = "1_fetch/in/PS_HUC12_Tot_2000_2020.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/PS_HUC12_Tot_2000_2020.csv")},
+             ),
              format = "file"
   ),
   
   # IR = Irrigation water use data
   tar_target(p1_wu_ir_gw_csv, # Irrigation withdrawal from groundwater
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "IR_HUC12_GW_2000_2020.csv",
                destinations = "1_fetch/in/IR_HUC12_GW_2000_2020.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/IR_HUC12_GW_2000_2020.csv")},
+             ),
              format = "file"
   ),
   tar_target(p1_wu_ir_sw_csv, # Irrigation withdrawal from surface water
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "IR_HUC12_SW_2000_2020.csv",
                destinations = "1_fetch/in/IR_HUC12_SW_2000_2020.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/IR_HUC12_SW_2000_2020.csv")},
+             ),
              format = "file"
   ),
   tar_target(p1_wu_ir_tot_csv, # Irrigation withdrawal (total)
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "IR_HUC12_Tot_2000_2020.csv",
                destinations = "1_fetch/in/IR_HUC12_Tot_2000_2020.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/IR_HUC12_Tot_2000_2020.csv")},
+             ),
              format = "file"
   ),
   
   # TE = thermoelectric water use data
   tar_target(p1_wu_te_gw_csv, # Irrigation withdrawal (total)
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "gw_fresh_wd_mgd.csv",
                destinations = "1_fetch/in/gw_fresh_wd_mgd.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/gw_fresh_wd_mgd.csv")},
+             ),
              format = "file"
   ),
   tar_target(p1_wu_te_sw_csv, # Irrigation withdrawal (total)
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "sw_fresh_wd_mgd.csv",
                destinations = "1_fetch/in/sw_fresh_wd_mgd.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/sw_fresh_wd_mgd.csv")},
+             ),
              format = "file"
   ),
   tar_target(p1_wu_te_tot_csv, # Irrigation withdrawal (total)
-             {sb_initialize_and_download(
+             sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "total_fresh_wd_mgd.csv",
                destinations = "1_fetch/in/total_fresh_wd_mgd.csv",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/total_fresh_wd_mgd.csv")},
+             ),
              format = "file"
   )
   

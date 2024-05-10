@@ -58,9 +58,8 @@ p2_targets <- list(
                left_join(p2_region_name_xwalk, by = "AggReg_nam")),
   
   # Shapefiles for plotting
-
   tar_target(p2_mainstem_HUC8_simple_sf,
-             p2_mainstem_HUC8_raw_sf |> 
+             sf::read_sf(p1_Reg_shp) |> 
                mutate(
                  HUC2 = str_sub(HUC, 1, 2),
                  region_group = case_when(
