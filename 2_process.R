@@ -58,11 +58,7 @@ p2_targets <- list(
                left_join(p2_region_name_xwalk, by = "AggReg_nam")),
   
   # Shapefiles for plotting
-  tar_target(p2_mainstem_HUC8_raw_sf,
-             prep_sf(huc_path = p1_CONUS_mainstem_zip,
-                     layer = "WBDHU8", 
-                     crs_out = p1_usgs_crs,
-                     exclude_non_plot_hucs = TRUE)),
+
   tar_target(p2_mainstem_HUC8_simple_sf,
              p2_mainstem_HUC8_raw_sf |> 
                mutate(

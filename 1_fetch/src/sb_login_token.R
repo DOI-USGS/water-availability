@@ -1,6 +1,7 @@
-#' Initialize ScienceBase session and download files
+#' Initialize ScienceBase session and download files (large zipped files only)
 #'
 #' @param sb_id chr; ScienceBase ID
+#' @param unzip_file_to_check chr; names of unzipped child targets to check against
 #' @param names chr; names of files to download from ScienceBase
 #' @param destinations  chr; write path location for downloaded files
 #' @param overwrite_destinationL logical, do you want to overwrite file?
@@ -9,22 +10,77 @@
 #'
 #' @return chr; path to downloaded files
 #' 
-sb_initialize_and_download <- function(sb_id, names, destinations, overwrite_fileL,
-                                       renviron_file = ".Renviron", ...) {
+sb_initialize_and_download_zipped <- function(sb_id, 
+                                              unzip_file_to_check, 
+                                              names, 
+                                              destinations, 
+                                              overwrite_fileL,
+                                              renviron_file = ".Renviron", ...) {
   
-  # Initialize ScienceBase session
-  sb_login_cached(renviron_file = renviron_file)
+  # Does destination file already exist?
+  does_file_exist <- file.exists(unzip_file_to_check)
   
-  # Download SB files
-  sbtools::item_file_download(
-    sb_id = sb_id,
-    names = names,
-    destinations = destinations,
-    overwrite_file = overwrite_fileL,
-    ...
-  )
+  # If the destination file does exist, check dates before downloading
+  if(does_file_exist){
+    
+    # Initialize ScienceBase session
+    sb_login_cached(renviron_file = renviron_file)
+    
+    item_metadata <- sbtools::item_get(sb_id)$files
+    
+    file_index <- purrr::map(item_metadata, `[`, "name") |>
+      unlist(use.names = FALSE) |>
+      purrr::map_lgl(~ .x == names) |>
+      which()
+    
+    file_metadata <- item_metadata[[file_index]]
+    
+    # If no hash is available check dates:
+    # Get upload date from SB
+    ul_time <- file_metadata$dateUploaded |>
+      as.POSIXct(format = "%Y-%m-%dT%T", tz = "UTC")
+    
+    # Get download date
+    dl_time <- file.info(unzip_file_to_check)$mtime |>
+      `attr<-`("tzone", "UTC")
+    
+    download_needed <- ul_time > dl_time
+    
+    if(download_needed){
+      # Download SB files
+      sbtools::item_file_download(
+        sb_id = sb_id,
+        names = names,
+        destinations = destinations,
+        overwrite_file = overwrite_fileL,
+        ...
+      )
+      
+      unzip(zipfile = destinations, 
+            overwrite = FALSE,
+            exdir = "1_fetch/in/HydrologicRegions/")
+      
+      file.remove("1_fetch/in/HydrologicRegions.zip")
+    }
+  } else {
+    # file doesn't yet exist, so download
+    sbtools::item_file_download(
+      sb_id = sb_id,
+      names = names,
+      destinations = destinations,
+      overwrite_file = overwrite_fileL,
+      ...
+    )
+    
+    unzip(zipfile = destinations, 
+          overwrite = FALSE,
+          exdir = "1_fetch/in/HydrologicRegions/")
+    
+    file.remove("1_fetch/in/HydrologicRegions.zip")
+  }
   
-  return(destinations)
+  return(unzip_file_to_check)
+
 }
 
 #' Login to ScienceBase using cached credentials

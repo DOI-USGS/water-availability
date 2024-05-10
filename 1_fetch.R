@@ -9,22 +9,20 @@ p1_targets <- list(
   # 
   # Download shapefiles of Van Metre regions from ScienceBase
   #   requires running 0_config.R first
-  tar_target(p1_Reg_zip,
-             {sb_initialize_and_download(
+  # tar_target(p1_Reg_zip,
+  #            {
+  #              return("1_fetch/in/HydrologicRegions.zip")},
+  #            format = "file"
+  # ),
+  # unzip file and point to region shapefile
+  tar_target(p1_Reg_shp,
+             sb_initialize_and_download_zipped(
                sb_id = "643706ffd34ee8d4addcc593",
+               unzip_file_to_check = "1_fetch/in/HydrologicRegions/HydrologicRegions.shp",
                names = "HydrologicRegions.zip",
                destinations = "1_fetch/in/HydrologicRegions.zip",
                overwrite_fileL = FALSE
-             )
-               return("1_fetch/in/HydrologicRegions.zip")},
-             format = "file"
-  ),
-  # unzip file and point to region shapefile
-  tar_target(p1_Reg_shp,
-             {unzip(zipfile = p1_Reg_zip, 
-                    overwrite = FALSE,
-                    exdir = "1_fetch/in/HydrologicRegions/")
-               return("1_fetch/in/HydrologicRegions/HydrologicRegions.shp")},
+             ),
              format = "file"
   ),
   # Spatial data
@@ -34,13 +32,21 @@ p1_targets <- list(
   ),
   tar_target(
     p1_CONUS_mainstem_zip,
-    {sb_initialize_and_download(sb_id = "60cb5edfd34e86b938a373f4",
-                                names = "WBD_National_GDB.zip",
-                                destinations = "1_fetch/in/WBD_National_GDB.zip",
-                                overwrite_fileL = FALSE)
+    {sb_initialize_and_download_zipped(sb_id = "60cb5edfd34e86b938a373f4",
+                                       unzip_file_to_check = p1_mainstem_HUC8_raw_Rdata,
+                                       names = "WBD_National_GDB.zip",
+                                       destinations = sprintf("1_fetch/in/%s", "WBD_National_GDB.zip"),
+                                       overwrite_fileL = FALSE)
       return("1_fetch/in/WBD_National_GDB.zip")},
     format = "file"
   ),
+  tar_target(p1_mainstem_HUC8_raw_Rdata,
+             prep_sf(huc_path = p1_CONUS_mainstem_zip,
+                     sf_save_file = "CONUS_HUC8_fromGDB.Rdata",
+                     layer = "WBDHU8", 
+                     crs_out = p1_usgs_crs,
+                     exclude_non_plot_hucs = TRUE),
+             format = "file"),
   
   # Crosswalk between HUC12, AggReg, and Reg
   tar_target(

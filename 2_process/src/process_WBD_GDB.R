@@ -2,6 +2,7 @@
 prep_sf <- function(huc_path,
                     layer, #ex "WBDHU8"
                     crs_out,
+                    sf_save_file,
                     exclude_non_plot_hucs = TRUE){
   
   gdb_file <- unzip_files(
@@ -123,7 +124,9 @@ prep_sf <- function(huc_path,
     
   }
   
-  return(huc_out)
+  save(list = huc_out, file = sf_save_file)
+  
+  return(sf_save_file)
   
   
 }
