@@ -13,7 +13,8 @@
 sb_initialize_and_download_zipped <- function(sb_id, 
                                               unzip_file_to_check, 
                                               names, 
-                                              destinations, 
+                                              destination_zip,
+                                              download_dir, 
                                               overwrite_fileL,
                                               renviron_file = ".Renviron", ...) {
   
@@ -51,32 +52,32 @@ sb_initialize_and_download_zipped <- function(sb_id,
       sbtools::item_file_download(
         sb_id = sb_id,
         names = names,
-        destinations = destinations,
+        destinations = destination_zip,
         overwrite_file = TRUE,
         ...
       )
       
-      unzip(zipfile = destinations, 
+      unzip(zipfile = destination_zip, 
             overwrite = FALSE,
-            exdir = "1_fetch/in/HydrologicRegions/")
+            exdir = download_dir)
       
-      file.remove("1_fetch/in/HydrologicRegions.zip")
+      file.remove(destination_zip)
     }
   } else {
     # file doesn't yet exist, so download
     sbtools::item_file_download(
       sb_id = sb_id,
       names = names,
-      destinations = destinations,
+      destinations = destination_zip,
       overwrite_file = overwrite_fileL,
       ...
     )
     
-    unzip(zipfile = destinations, 
+    unzip(zipfile = destination_zip, 
           overwrite = FALSE,
-          exdir = "1_fetch/in/HydrologicRegions/")
+          exdir = download_dir)
     
-    file.remove("1_fetch/in/HydrologicRegions.zip")
+    file.remove(destination_zip)
   }
   
   return(unzip_file_to_check)

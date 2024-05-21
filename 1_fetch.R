@@ -20,7 +20,8 @@ p1_targets <- list(
                sb_id = "643706ffd34ee8d4addcc593",
                unzip_file_to_check = "1_fetch/in/HydrologicRegions/HydrologicRegions.shp",
                names = "HydrologicRegions.zip",
-               destinations = "1_fetch/in/HydrologicRegions.zip",
+               destination_zip = "1_fetch/in/HydrologicRegions.zip",
+               download_dir = "1_fetch/in/HydrologicRegions/"
                overwrite_fileL = FALSE
              ),
              format = "file"
@@ -36,7 +37,8 @@ p1_targets <- list(
       sb_id = "60cb5edfd34e86b938a373f4",
       unzip_file_to_check = "1_fetch/in/WBD_National_GDB/WBD_National_GDB.gdb",
       names = "WBD_National_GDB.zip",
-      destinations = "1_fetch/in/WBD_National_GDB.zip",
+      destination_zip = "1_fetch/in/WBD_National_GDB.zip",
+      download_dir = "1_fetch/in/WBD_National_GDB/",
       overwrite_fileL = FALSE),
     format = "file"
   ),
