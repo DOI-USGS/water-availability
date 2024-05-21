@@ -59,7 +59,7 @@ p2_targets <- list(
   
   # Shapefiles for plotting
   tar_target(p2_mainstem_HUC8_simple_sf,
-             sf::read_sf(p1_Reg_shp) |> 
+             sf::read_sf(p1_mainstem_HUC8_raw_sf) |> 
                mutate(
                  HUC2 = str_sub(HUC, 1, 2),
                  region_group = case_when(
@@ -82,9 +82,9 @@ p2_targets <- list(
   tar_target(p2_HUC8_join_wu_sf,
              p2_mainstem_HUC8_simple_sf |>
                # add in mean water use data 
-               left_join(p2_wu_te_mean2000to2020_HUC8, by = "HUC8") |>
-               left_join(p2_wu_ps_mean2000to2020_HUC8, by = "HUC8") |>
-               left_join(p2_wu_ir_mean2000to2020_HUC8, by = "HUC8")
+               dplyr::left_join(p2_wu_te_mean2000to2020_HUC8, by = "HUC8") |>
+               dplyr::left_join(p2_wu_ps_mean2000to2020_HUC8, by = "HUC8") |>
+               dplyr::left_join(p2_wu_ir_mean2000to2020_HUC8, by = "HUC8") 
   ),
   tar_target(p2_HUC8_join_wu_AggRegGrp_sf,
              p2_HUC8_join_wu_sf |> 
