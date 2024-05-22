@@ -103,10 +103,31 @@ p3_targets <- list(
   # 
   tar_target(p3_k8_ps_CONUS_wheatfield_png,
              plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
+                             regions_sf = p2_Reg_sf,
                              use_type = "ps",
+                             color_scheme = p3_colors_website,
                              png_out = "3_visualize/out/k8_ps_wheatfield_CONUS.png",
                              width = 6,
-                             height = 6))
+                             height = 6),
+             format = "file"),
+  tar_target(p3_k8_ir_CONUS_wheatfield_png,
+             plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
+                             regions_sf = p2_Reg_sf,
+                             use_type = "ir",
+                             color_scheme = p3_colors_website,
+                             png_out = "3_visualize/out/k8_ir_wheatfield_CONUS.png",
+                             width = 6,
+                             height = 6),
+             format = "file"),
+  tar_target(p3_k8_te_CONUS_wheatfield_png,
+             plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
+                             regions_sf = p2_Reg_sf,
+                             use_type = "te",
+                             color_scheme = p3_colors_website,
+                             png_out = "3_visualize/out/k8_te_wheatfield_CONUS.png",
+                             width = 6,
+                             height = 6),
+             format = "file")
   
   ##############################################
   # 
