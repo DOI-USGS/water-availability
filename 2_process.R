@@ -59,8 +59,8 @@ p2_targets <- list(
   
   # Shapefiles for plotting
   tar_target(p2_mainstem_HUC8_simple_sf,
-             sf::read_sf(p1_mainstem_HUC8_raw_sf) |> 
-               mutate(
+             p1_mainstem_HUC8_raw_sf |> 
+               dplyr::mutate(
                  HUC2 = str_sub(HUC, 1, 2),
                  region_group = case_when(
                    HUC2 == "19" ~ "AK",
