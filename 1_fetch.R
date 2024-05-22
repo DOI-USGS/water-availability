@@ -21,7 +21,7 @@ p1_targets <- list(
                unzip_file_to_check = "1_fetch/in/HydrologicRegions/HydrologicRegions.shp",
                names = "HydrologicRegions.zip",
                destination_zip = "1_fetch/in/HydrologicRegions.zip",
-               download_dir = "1_fetch/in/HydrologicRegions/"
+               download_dir = "1_fetch/in/HydrologicRegions/",
                overwrite_fileL = FALSE
              ),
              format = "file"
