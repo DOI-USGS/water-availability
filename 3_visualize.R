@@ -26,8 +26,19 @@ p3_targets <- list(
                wu_sw = "#065867",
                wu_gw = "#F09300",
                svg_fill_default = "#d1cdc0",
-               svg_col_default = "#edeadf" # background color of page
+               svg_col_default = "#edeadf", # background color of page
+               shadow = "#926c68"
              )),
+  tar_target(p3_fonts_website,
+             tibble(
+               legend_font = "Source Sans Pro",
+               supporting_font = "Source Sans Pro"
+             )),
+  tar_target(p3_load_legend_font,
+             sysfonts::font_add_google(p3_fonts_website$legend_font)),
+  tar_target(p3_load_support_font,
+             sysfonts::font_add_google(p3_fonts_website$supporting_font)),
+  
   ########################
   # SVG to overlay maps for website
   tar_target(p3_AggReg_svg,
@@ -127,6 +138,11 @@ p3_targets <- list(
                              png_out = "3_visualize/out/k8_te_wheatfield_CONUS.png",
                              width = 6,
                              height = 6),
+             format = "file"),
+  tar_target(p3_k8_legend_png,
+             wheatfield_legend(
+               fonts = p3_fonts_website,
+               png_out = "3_visualize/out/k8_legend.png"),
              format = "file")
   
   ##############################################

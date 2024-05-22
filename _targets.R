@@ -12,7 +12,9 @@ tar_option_set(packages = c("sbtools",
                             "gridSVG",
                             "lubridate",
                             "ggfx",
-                            "scico"))
+                            "scico",
+                            "sysfonts",
+                            "magick"))
 
 ### Naming conventions:
 # Water Supply = ws

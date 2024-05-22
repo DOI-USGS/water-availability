@@ -43,7 +43,7 @@ plot_wheatfield <- function(data_in,
               color = color_scheme$svg_col_default, 
               fill = color_scheme$svg_fill_default, 
               size = 0.1),
-      colour = color_scheme$ps_gw_main,
+      colour = color_scheme$shadow,
       x_offset = 0,
       y_offset = 0,
       sigma = 12) +
@@ -60,6 +60,63 @@ plot_wheatfield <- function(data_in,
   
   ggsave(filename = png_out,
          width = width, height = height, dpi = 300)
+  
+  return(png_out)
+}
+
+
+############  CREATE LEGEND 
+
+wheatfield_legend <- function(png_out, fonts){
+  breaks <- c(25, 33, 66, 75)
+  pos <- 0.5
+  determinent <- "Water\nsource"
+  
+  require(ggplot2)
+  
+  get.poly <- function(a, b, r1 = 0.5, r2 = 0.75) {
+      th.start <- pi * (1 - a / 100)
+      th.end   <- pi * (1 - b / 100)
+      th       <- seq(th.start, th.end, length = 1000)
+      x        <- r1 * cos(th)
+      xend     <- r2 * cos(th)
+      y        <- r1 * sin(th)
+      yend     <- r2 * sin(th)
+      data.frame(x, y, xend, yend)
+  }
+  
+    
+  vertical_nudge <- 0.4
+    
+  ggplot() + 
+      geom_segment(data = get.poly(breaks[1],breaks[4]),
+                   aes(x = x, y = vertical_nudge + y, xend = xend, 
+                       yend = vertical_nudge + yend, color = xend)) +
+      scico::scale_color_scico(palette = 'broc', begin = 0.2, end = 0.8) +
+      geom_segment(data = get.poly(pos - 1, pos + 1, vertical_nudge),
+                   aes(x = x, y  = vertical_nudge + y, xend = x, 
+                       yend = vertical_nudge + yend)) +
+      geom_text(data = as.data.frame(breaks), size = 6, 
+                family = fonts$supporting_font, 
+                vjust = 0.5, hjust = 1,
+                aes(x = 0.7 * cos(pi * (1 - breaks / 100)),  y = 0.8), 
+                label = c('100%\nsurface water', '', '', "100%\ngroundwater"), 
+                angle = 90, lineheight = 0.8) +
+      annotate("text", x  = 0, y = 0.35,label = determinent, vjust = 0.35,
+               size = 10, family = fonts$legend_font, fontface = "bold", angle = 90, 
+               hjust = 0, lineheight = 0.8)+
+      coord_fixed()+
+      theme_bw()+
+      theme(axis.text=element_blank(),
+            axis.title=element_blank(),
+            axis.ticks=element_blank(),
+            panel.grid=element_blank(),
+            panel.border=element_blank(),
+            legend.position = "none",
+            panel.background = element_blank(),
+            plot.background = element_blank())
+
+  ggsave(png_out)
   
   return(png_out)
 }
