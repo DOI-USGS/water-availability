@@ -36,6 +36,9 @@ mean_wu_HUC8 <- function(..., min_year, max_year) {
   
   temp_use <- unique(data_in$use_type)
   
+  
+    
+  
   data_in |>
     # Select only focal years
     filter(year >= min_year,
@@ -57,6 +60,11 @@ mean_wu_HUC8 <- function(..., min_year, max_year) {
     tidytable::summarise(mean_wu_mgd = mean(wu_mgd, na.rm = TRUE)) |>
     # Pivot to wide format
     pivot_wider(names_from = source_type, values_from = mean_wu_mgd) |>
+    # Make sure that sw and gw are NOT NA if total != NA
+    mutate(sw = case_when(!is.na(total) & is.na(sw) ~ 0,
+                               TRUE ~ sw),
+           gw = case_when(!is.na(total) & is.na(gw) ~ 0,
+                          TRUE ~ gw)) |>
     # calculate percent gw and sw
     mutate(gw_pct = gw/total,
            sw_pct = sw/total,
