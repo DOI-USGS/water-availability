@@ -116,7 +116,7 @@ p2_targets <- list(
              mean_wu_HUC8(p2_wu_ps_gw_raw,
                           p2_wu_ps_sw_raw,
                           p2_wu_ps_tot_raw,
-                          min_year = 2000,
+                          min_year = 2010,
                           max_year = 2020) 
   ),
   # Irrigation
@@ -139,7 +139,7 @@ p2_targets <- list(
              mean_wu_HUC8(p2_wu_ir_gw_raw,
                           p2_wu_ir_sw_raw,
                           p2_wu_ir_tot_raw,
-                          min_year = 2000,
+                          min_year = 2010,
                           max_year = 2020) 
   ),
   # Thermoelectric
@@ -162,7 +162,7 @@ p2_targets <- list(
              mean_wu_HUC8(p2_wu_te_gw_raw,
                           p2_wu_te_sw_raw,
                           p2_wu_te_tot_raw,
-                          min_year = 2000,
+                          min_year = 2010,
                           max_year = 2020) 
   )
   
