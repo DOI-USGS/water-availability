@@ -1,5 +1,6 @@
 source("3_visualize/src/svg_helpers.R")
 source("3_visualize/src/viz_dumbbell.R")
+source("3_visualize/src/viz_wheatfield.R")
 
 p3_targets <- list(
   ##############################################
