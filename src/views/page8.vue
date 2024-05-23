@@ -1,6 +1,8 @@
 <template>
     <section class="main-container">
         <KeyMessages></KeyMessages>
+
+        <h4>Public supply use relies on more groundwater in the west, surface water in the east.</h4>
         <div class="viz-container">
         <AggReg class="agg-reg-svg"></AggReg>
         <h3 class="dumbbell-header">Public Supply Sourced From:</h3>
@@ -76,7 +78,7 @@ export default {
                 .style("fill", "#d1cdc0"); 
 
             //Updates dumbbell chart back to full CONUS
-            import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
+            import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
         }
