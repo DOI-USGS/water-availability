@@ -38,7 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50vh;
+  min-height: 50vh;
 }
 
 /* container for the top of each page with key message */
@@ -76,4 +76,8 @@ h1 {
 h2 {
   font-size: 3.5rem;
   font-weight: 800;
+}
+
+.viz-placeholder{
+  width: 50%;
 }
