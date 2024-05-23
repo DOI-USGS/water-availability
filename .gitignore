@@ -31,7 +31,8 @@ Rplots*.pdf
 # User-specific files
 .Ruserdata
 .Rprofile
-*.DS_Store*
+*/.DS_Store*
+src/assets/.DS_Store
 .Renviron
 
 node_modules
