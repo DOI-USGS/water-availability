@@ -3,14 +3,12 @@
         <KeyMessages></KeyMessages>
         <button id="image-toggle" class="toggle-button">Toggle Image</button>
         <div class="viz-container">
-            <div class="image-container">
                 <img 
                     id="first-image" 
-                    class="viz-placeholder visible" 
+                    class="viz-placeholder" 
                     :src="photo1" 
                     alt="xxx"
                 >
-            </div>
          </div>
         <PageCarousel></PageCarousel>
     </section>
@@ -48,27 +46,7 @@ onMounted(() => {
 <style scoped>
 
 
-.image-container{
-  position: relative;
-  width: 100%;
-  top: 0;
-  left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#first-image{
-    position: relative;
-    top: 0;
-    left: 0;
-    z-index: -2;
-}
-#second-image{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
+
 
 .toggle-button{
     background-color: blue;
@@ -85,16 +63,4 @@ onMounted(() => {
     color: white;
 }
 
-.hidden {
-  visibility: hidden;
-  display: none;
-  opacity: 0;
-  transition: visibility 0s 0.5s, opacity 0.5s linear;
-}
-.visible {
-  visibility: visible;
-  display: inline;
-  opacity: 1;
-  transition: fade 0.5s linear;
-}
 </style>
