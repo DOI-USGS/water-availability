@@ -1,13 +1,13 @@
 <template>
     <section class="main-container">
         <KeyMessages></KeyMessages>
+        <button id="image-toggle" class="toggle-button">Toggle Image</button>
         <div class="viz-container">
-            <button id="image-toggle" @mouseover="">Toggle Image</button>
             <div class="image-container">
                 <img id="first-image" class="viz-placeholder visible" src="@/assets/images/k06_wq_by_threat_all.png" alt="xxx">
                 <img id="second-image" class="viz-placeholder hidden" src="@/assets/images/k06_wq_by_threat_all_noUnimpaired.png" alt="xxx">
-            </div>            
-        </div>
+            </div>
+         </div>
         <PageCarousel></PageCarousel>
     </section>
 </template>
@@ -41,38 +41,42 @@ onMounted(() => {
 
 <style scoped>
 
+
 .image-container{
-    position:relative;
-    width:100%;
-    top: 0;
-    left: 0;
+  position: relative;
+  width: 100%;
+  top: 0;
+  left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #first-image{
     position: relative;
     top: 0;
     left: 0;
-    z-index: 0;
+    z-index: -2;
 }
 #second-image{
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 4;
+    z-index: -1;
 }
 
 .toggle-button{
-    background-color: #eee;
+    background-color: blue;
   color: #fff;
   cursor:pointer;
   padding: 18px;
-  width: 100%;
+  width: 100px;
   border: none;
   text-align: left;
   outline: none; 
 }
 .toggle-button:hover{
-    background-color: green;
-    color:red;
+    background-color: black;
+    color: white;
 }
 
 .hidden {
