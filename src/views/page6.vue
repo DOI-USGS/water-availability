@@ -4,8 +4,12 @@
         <button id="image-toggle" class="toggle-button">Toggle Image</button>
         <div class="viz-container">
             <div class="image-container">
-                <img id="first-image" class="viz-placeholder visible" src="@/assets/images/k06_wq_by_threat_all.png" alt="xxx">
-                <img id="second-image" class="viz-placeholder hidden" src="@/assets/images/k06_wq_by_threat_all_noUnimpaired.png" alt="xxx">
+                <img 
+                    id="first-image" 
+                    class="viz-placeholder visible" 
+                    :src="imgSrc" 
+                    alt="xxx"
+                >
             </div>
          </div>
         <PageCarousel></PageCarousel>
@@ -16,13 +20,28 @@
 import { onMounted } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import photo1 from "@/assets/images/k06_wq_by_threat_all.png";
+import photo2 from "@/assets/images/k06_wq_by_threat_all_noUnimpaired.png"
+
+
 
 
 onMounted(() => {
+
+    return {
+        imgSrc: '@/assets/images/k06_wq_by_threat_all.png'
+    };
+    this.setImgSrc();
     let firstImg = document.getElementById("first-image");
     let secondImg = document.getElementById("second-image");
     let imageToggle = document.getElementById("image-toggle");
 
+    function  setImgSrc() {
+            //Sets default dumbbell chart to full CONUS
+            import('@/assets/images/k06_wq_by_threat_all.png').then(imgSrc => {
+                this.imgSrc = imgSrc.default; 
+            }); 
+        };
   function toggleImg() {
     if(secondImg.getAttribute('class') === "viz-placeholder hidden") {
         secondImg.setAttribute('class', "viz-placeholder visible");
