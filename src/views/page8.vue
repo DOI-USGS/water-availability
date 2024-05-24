@@ -1,8 +1,7 @@
 <template>
     <section class="main-container">
         <KeyMessages></KeyMessages>
-
-        <h4>Public supply use relies on more groundwater in the west, surface water in the east.</h4>
+        
         <div class="viz-container">
         <AggReg class="agg-reg-svg"></AggReg>
         <h3 class="dumbbell-header">Public Supply Sourced From:</h3>
