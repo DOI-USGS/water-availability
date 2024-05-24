@@ -1,14 +1,8 @@
 ## Spatial processing
-prep_sf <- function(huc_path,
+prep_sf <- function(gdb_file,
                     layer, #ex "WBDHU8"
                     crs_out,
                     exclude_non_plot_hucs = TRUE){
-  
-  gdb_file <- unzip_files(
-    zip_files = huc_path,
-    path_out = tempdir(),
-    file_out_pattern = ".."
-  )
   
   temp_file <- tempfile(fileext = ".gpkg")
   
