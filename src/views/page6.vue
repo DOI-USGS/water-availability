@@ -7,6 +7,7 @@
                 <img 
                     id="first-image" 
                     class="viz-placeholder visible" 
+                    v-for="imgSrc in photoSrc"
                     :src="imgSrc" 
                     alt="xxx"
                 >
@@ -21,23 +22,28 @@ import { onMounted } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import photo1 from "@/assets/images/k06_wq_by_threat_all.png";
-import photo2 from "@/assets/images/k06_wq_by_threat_all_noUnimpaired.png"
+import photo2 from "@/assets/images/k06_wq_by_threat_all_noUnimpaired.png";
 
 
+
+const photoSrc = [photo1];
 
 
 onMounted(() => {
 
+
+
     let firstImg = document.getElementById("first-image");
-    let secondImg = document.getElementById("second-image");
+    //let secondImg = document.getElementById("second-image");
     let imageToggle = document.getElementById("image-toggle");
 
-    let imgSrc = photo1;
+    //let imgSrc = photo1;
 
   function toggleImg() {
     if(secondImg.getAttribute('class') === "viz-placeholder hidden") {
         secondImg.setAttribute('class', "viz-placeholder visible");
         firstImg.setAttribute('src', firstImg);
+        
         console.log("test");
     }
     else {
@@ -47,7 +53,7 @@ onMounted(() => {
   }
 
   imageToggle.addEventListener("click", toggleImg)
-});
+}); 
 
 </script>
 
