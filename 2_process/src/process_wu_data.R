@@ -69,5 +69,5 @@ mean_wu_HUC8 <- function(..., min_year, max_year) {
     mutate(gw_pct = gw/total,
            sw_pct = sw/total,
             use_name = use_type) |>
-    rename_at(vars(-HUC8), ~ sprintf("%s_%s", temp_use, .))
+    rename_with(~ sprintf("%s_%s", temp_use, .), .cols = !HUC8)
 }

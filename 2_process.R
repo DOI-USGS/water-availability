@@ -54,7 +54,9 @@ p2_targets <- list(
              regions_to_sf(in_shp = p1_Reg_shp) |>
                left_join(p2_region_name_xwalk, by = "Region")),
   tar_target(p2_AggReg_sf,
-             p2_Reg_sf |> group_by(AggReg_nam) |> summarize() |>
+             p2_Reg_sf |>
+               group_by(AggReg_nam) |>
+               summarize() |>
                left_join(p2_region_name_xwalk, by = "AggReg_nam")),
   
   # Shapefiles for plotting
