@@ -28,23 +28,16 @@ import photo2 from "@/assets/images/k06_wq_by_threat_all_noUnimpaired.png"
 
 onMounted(() => {
 
-    return {
-        imgSrc: '@/assets/images/k06_wq_by_threat_all.png'
-    };
-    this.setImgSrc();
     let firstImg = document.getElementById("first-image");
     let secondImg = document.getElementById("second-image");
     let imageToggle = document.getElementById("image-toggle");
 
-    function  setImgSrc() {
-            //Sets default dumbbell chart to full CONUS
-            import('@/assets/images/k06_wq_by_threat_all.png').then(imgSrc => {
-                this.imgSrc = imgSrc.default; 
-            }); 
-        };
+    let imgSrc = photo1;
+
   function toggleImg() {
     if(secondImg.getAttribute('class') === "viz-placeholder hidden") {
         secondImg.setAttribute('class', "viz-placeholder visible");
+        firstImg.setAttribute('src', firstImg);
         console.log("test");
     }
     else {
