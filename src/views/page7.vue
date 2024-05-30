@@ -2,7 +2,9 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="viz-container">
-            Interactive viz goes here
+            <img class="viz-placeholder"
+            src="@/assets/images/k07_wu_all.png"
+            >
         </div>
         <PageCarousel></PageCarousel>
     </section>

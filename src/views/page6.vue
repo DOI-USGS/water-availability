@@ -10,6 +10,7 @@
                     alt="xxx"
                 >
          </div>
+
         <PageCarousel></PageCarousel>
     </section>
 </template>
