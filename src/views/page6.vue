@@ -49,19 +49,5 @@ onMounted(() => {
 
 
 
-.toggle-button{
-    background-color: blue;
-  color: #fff;
-  cursor:pointer;
-  padding: 18px;
-  width: 100px;
-  border: none;
-  text-align: left;
-  outline: none; 
-}
-.toggle-button:hover{
-    background-color: black;
-    color: white;
-}
 
 </style>
