@@ -117,7 +117,7 @@ p3_targets <- list(
                              regions_sf = p2_Reg_sf,
                              use_type = "ps",
                              color_scheme = p3_colors_website,
-                             png_out = "3_visualize/out/k8_ps_wheatfield_CONUS.png",
+                             png_out = "src/assets/images/k08_ps_wheatfield_CONUS.png",
                              width = 6,
                              height = 6),
              format = "file"),
@@ -126,7 +126,7 @@ p3_targets <- list(
                              regions_sf = p2_Reg_sf,
                              use_type = "ir",
                              color_scheme = p3_colors_website,
-                             png_out = "3_visualize/out/k8_ir_wheatfield_CONUS.png",
+                             png_out = "src/assets/images/k08_ir_wheatfield_CONUS.png",
                              width = 6,
                              height = 6),
              format = "file"),
@@ -135,14 +135,14 @@ p3_targets <- list(
                              regions_sf = p2_Reg_sf,
                              use_type = "te",
                              color_scheme = p3_colors_website,
-                             png_out = "3_visualize/out/k8_te_wheatfield_CONUS.png",
+                             png_out = "src/assets/images/k08_te_wheatfield_CONUS.png",
                              width = 6,
                              height = 6),
              format = "file"),
   tar_target(p3_k8_legend_png,
              wheatfield_legend(
                fonts = p3_fonts_website,
-               png_out = "3_visualize/out/k8_legend.png"),
+               png_out = "src/assets/images/k08_legend.png"),
              format = "file")
   
   ##############################################

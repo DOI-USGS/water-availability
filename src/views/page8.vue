@@ -16,6 +16,15 @@
             alt=""
         >    
         </div>
+        <button id="image-toggle" class="toggle-button">Toggle Image</button>
+        <div class="viz-container">
+                <img 
+                    id="first-image" 
+                    class="viz-placeholder" 
+                    :src="photo1" 
+                    alt="xxx"
+                >
+         </div>
         <PageCarousel></PageCarousel>
     </section>
 </template>
@@ -83,6 +92,35 @@ export default {
         }
     }
 };
+</script>
+
+<script setup>
+import { onMounted } from 'vue';
+import PageCarousel from '../components/PageCarousel.vue';
+import KeyMessages from '../components/KeyMessages.vue';
+import photo1 from "@/assets/images/k08_ps_wheatfield_CONUS.png";
+import photo2 from "@/assets/images/k08_ir_wheatfield_CONUS.png";
+
+
+
+onMounted(() => {
+
+    let firstImg = document.getElementById("first-image");
+    let imageToggle = document.getElementById("image-toggle");
+
+
+  function toggleImg() {
+    if(firstImg.getAttribute('src') === photo1) {
+        firstImg.setAttribute('src', photo2);
+    }
+    else {
+        firstImg.setAttribute('src', photo1);
+    }
+  }
+
+  imageToggle.addEventListener("click", toggleImg)
+}); 
+
 </script>
 
 <style scoped>
