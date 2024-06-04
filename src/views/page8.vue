@@ -96,8 +96,6 @@ export default {
 
 <script setup>
     import { onMounted } from 'vue';
-    import PageCarousel from '../components/PageCarousel.vue';
-    import KeyMessages from '../components/KeyMessages.vue';
     import photo1 from "@/assets/images/k08_ps_wheatfield_CONUS.png";
     import photo2 from "@/assets/images/k08_ir_wheatfield_CONUS.png";
 
