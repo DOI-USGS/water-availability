@@ -182,7 +182,7 @@ export default {
 .nav-container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content:center;
     height: 250px;
     position: sticky;
     bottom: 0;

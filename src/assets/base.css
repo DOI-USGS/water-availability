@@ -44,17 +44,17 @@
 
 /* button for switching between images */
 .toggle-button{
-  background-color: blue;
-color: #fff;
-cursor:pointer;
-padding: 18px;
-width: 300px;
-border: none;
-text-align: left;
-outline: none; 
+  background-color:#5E7789;
+  color: #fff;
+  cursor:pointer;
+  padding: 18px;
+  width: 300px;
+  border: none;
+  text-align: left;
+  outline: none; 
 }
 .toggle-button:hover{
-  background-color: black;
+  background-color: #00264c;
   color: white;
 }
 
