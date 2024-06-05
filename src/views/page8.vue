@@ -42,7 +42,7 @@ export default {
     methods: {
         setDefaultImgSrc() {
             //Sets default dumbbell chart to full CONUS
-            import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
+            import(`@/assets/images/ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
                 this.imgSrc = imgSrc.default; 
             }); 
         },
