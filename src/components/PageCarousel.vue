@@ -66,8 +66,8 @@ export default {
             let middleIndex = currentPageIndex;
             let highIndex = currentPageIndex + 1;
             this.currentRouteId = this.SubPages[middleIndex].page;
-            if (middleIndex > 0 && middleIndex < 9) {
-            this.lowRoute = this.SubPages[lowIndex].route; //need to handle page 1 and page 10 since they will be the lowest and the highest
+            if (middleIndex > 0 && middleIndex < 9) { // this is more all the "normal" pages (not page 1 or 10)
+            this.lowRoute = this.SubPages[lowIndex].route; 
             this.middleRoute = this.SubPages[middleIndex].route;
             this.highRoute = this.SubPages[highIndex].route;
             this.lowNumber = this.SubPages[lowIndex].page;
@@ -116,6 +116,8 @@ export default {
                 this.middleRoute = this.SubPages[middleIndex].route;
                 this.highRoute = this.SubPages[highIndex].route;
             }
+
+            // where to put the home button
             if (this.lowNumber === this.currentRouteId) {
                 this.showHomeButtonLeft = true;
                 
@@ -136,6 +138,7 @@ export default {
                 this.showHomeButtonRight = false;
             }
 
+            // boolean for showing the left arrow
             if (this.highNumber === 10) {
                 this.showRightArrow = false
             } else {
@@ -161,9 +164,10 @@ export default {
                 this.middleRoute = this.SubPages[middleIndex].route;
                 this.highRoute = this.SubPages[highIndex].route;
             }
+
+            //where to put the home button
             if (this.lowNumber === this.currentRouteId) {
                 this.showHomeButtonLeft = true;
-                
             } else {
                 this.showHomeButtonLeft = false;
             }
@@ -182,6 +186,7 @@ export default {
                 this.showHomeButtonRight = false;
             }
 
+            // boolean for the arrows
             if (this.highNumber === 10) {
                 this.showRightArrow = false
             } else {
