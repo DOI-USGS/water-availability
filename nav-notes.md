@@ -10,7 +10,7 @@
 - `lowNumber` is the first number visible on the page
 - `middleNumber` is the center number (the current page you're on)
 - `highNumber` is the third and final number on the page
-(`highIndex`, `middleIndex`, and `highIndex` refer to the index of the object that should be pulled from `SubPages.js`)
+(`lowIndex`, `middleIndex`, and `highIndex` refer to the index of the object that should be pulled from `SubPages.js`)
 (same thing for `lowRoute`, `middleRoute`, and `highRoute`, but these correspond to the router links that will take you to the correct page)
 
 - `showLeftArrow` and `showRightArrow` are used to add or remove arrows if you're at page 1 or 10, since you don't need a left arrow on page 1 and you don't need a right arrow on page 10
