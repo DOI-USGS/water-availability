@@ -150,6 +150,19 @@ p1_targets <- list(
                overwrite_fileL = FALSE
              ),
              format = "file"
-  )
+  ),
   
+  ##############################################
+  # 
+  #           WATER BALANCE DATA
+  # 
+  # WATER STRESS INDEX "SURFACE WATER SUPPLY AND USE INDEX" SUI
+  tar_target(p1_sui_csv,
+             sb_initialize_and_download(
+               sb_id = "6622aa30d34e7eb9eb7f99b5",
+               names = "water_budget_sui_ensemble.csv",
+               destinations = "1_fetch/in/water_budget_sui_ensemble.csv",
+               overwrite_fileL = FALSE
+             ),
+             format = "file")
 )

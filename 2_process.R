@@ -2,6 +2,7 @@ source("2_process/src/process_region_shp.R")
 source("2_process/src/process_WBD_GDB.R")
 source("2_process/src/process_ps_dumbbell.R")
 source("2_process/src/process_wu_data.R")
+source("2_process/src/process_sui_data.R")
 
 p2_targets <- list(
   ##############################################
@@ -84,15 +85,24 @@ p2_targets <- list(
   tar_target(p2_HUC8_join_wu_sf,
              p2_mainstem_HUC8_simple_sf |>
                # add in mean water use data 
-               dplyr::left_join(p2_wu_te_mean2000to2020_HUC8, by = "HUC8") |>
-               dplyr::left_join(p2_wu_ps_mean2000to2020_HUC8, by = "HUC8") |>
-               dplyr::left_join(p2_wu_ir_mean2000to2020_HUC8, by = "HUC8") 
+               dplyr::left_join(p2_wu_te_mean2000to2020_HUC8, 
+                                by = "HUC8") |>
+               dplyr::left_join(p2_wu_ps_mean2000to2020_HUC8, 
+                                by = "HUC8") |>
+               dplyr::left_join(p2_wu_ir_mean2000to2020_HUC8, 
+                                by = "HUC8") 
   ),
   tar_target(p2_HUC8_join_wu_AggRegGrp_sf,
              p2_HUC8_join_wu_sf |> 
                group_by(AggRegion_nam) |>
                tar_group(),
              iteration = "group"),
+  tar_target(p2_HUC8_join_sui_sf,
+             p2_mainstem_HUC8_simple_sf |>
+               # add in mean water use data 
+               dplyr::left_join(p2_sui_yearly_HUC8, 
+                                by = "HUC8") 
+  ),
   
   ##############################################
   # 
@@ -166,7 +176,26 @@ p2_targets <- list(
                           p2_wu_te_tot_raw,
                           min_year = 2010,
                           max_year = 2020) 
-  )
+  ),
+  
+  ##############################################
+  # 
+  #           WATER BALANCE DATA
+  # 
+  # WATER STRESS INDEX "SURFACE WATER SUPPLY AND USE INDEX" SUI
+  tar_target(p2_sui_raw,
+             readr::read_csv(p1_sui_csv,
+                             show_col_types = FALSE)),
+  tar_target(p2_sui_mean_HUC8,
+             mean_sui(data_in = p2_sui_raw,
+                      min_year = 2010,
+                      max_year = 2020,
+                      HUC_level = 8)
+  ),
+  tar_target(p2_sui_yearly_HUC8,
+             mean_sui_by_year(data_in = p2_sui_raw,
+                              HUC_level = 8))
+             
   
 
 )
