@@ -10,15 +10,10 @@
     </section>
 </template>
 
-<script>
-import PageCarousel from '../components/PageCarousel.vue';
-import KeyMessages from '../components/KeyMessages.vue'
-export default {
-    components: {
-        PageCarousel,
-        KeyMessages
-    }
-}
+<script setup>
+    import PageCarousel from '../components/PageCarousel.vue';
+    import KeyMessages from '../components/KeyMessages.vue';
+
 </script>
 
 <style scoped>
