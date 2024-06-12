@@ -6,7 +6,7 @@
                 <img 
                     id="first-image" 
                     class="viz-placeholder" 
-                    :src="photo1" 
+                    :src="photoTN" 
                     alt="xxx"
                 >
          </div>
@@ -18,8 +18,8 @@
 import { onMounted } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import photo1 from "@/assets/images/k05_wq_tn_source.png";
-import photo2 from "@/assets/images/k05_wq_tp_source.png";
+import photoTN from "@/assets/images/k05_wq_tn_source.png";
+import photoTP from "@/assets/images/k05_wq_tp_source.png";
 
 onMounted(() => {
 
@@ -28,12 +28,12 @@ onMounted(() => {
 
 
     function toggleImg() {
-        if(firstImg.getAttribute('src') === photo1) {
-            firstImg.setAttribute('src', photo2);
+        if(firstImg.getAttribute('src') === photoTN) {
+            firstImg.setAttribute('src', photoTP);
             imageToggle.textContent = "Click for Total Nitrogen";
         }
         else {
-            firstImg.setAttribute('src', photo1);
+            firstImg.setAttribute('src', photoTN);
             imageToggle.textContent = "Click for Total Phosphorus";
         }
     }

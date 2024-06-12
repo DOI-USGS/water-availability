@@ -21,7 +21,7 @@
                 <img 
                     id="first-image" 
                     class="viz-placeholder" 
-                    :src="photo1" 
+                    :src="photoPublic" 
                     alt="xxx"
                 >
          </div>
@@ -35,8 +35,8 @@ import * as d3Base from 'd3';
 import AggReg from "@/assets/svgs/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import photo1 from "@/assets/images/k08_ps_wheatfield_CONUS.png";
-import photo2 from "@/assets/images/k08_ir_wheatfield_CONUS.png";
+import photoPublic from "@/assets/images/k08_ps_wheatfield_CONUS.png";
+import photoIrrigation from "@/assets/images/k08_ir_wheatfield_CONUS.png";
 
 const imgSrc = ref('@/assets/images/ws_ps_dumbbell_centered_CONUS.png');
 
@@ -78,11 +78,11 @@ onMounted(() => {
   const imageToggle = document.getElementById("image-toggle");
 
   const toggleImg = () => {
-    if (firstImg.getAttribute('src') === photo1) {
-      firstImg.setAttribute('src', photo2);
+    if (firstImg.getAttribute('src') === photoPublic) {
+      firstImg.setAttribute('src', photoIrrigation);
       imageToggle.textContent = "Switch to Public Supply";
     } else {
-      firstImg.setAttribute('src', photo1);
+      firstImg.setAttribute('src', photoPublic);
       imageToggle.textContent = "Switch to Irrigation";
     }
   };

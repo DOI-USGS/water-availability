@@ -6,7 +6,7 @@
                 <img 
                     id="first-image" 
                     class="viz-placeholder" 
-                    :src="photo1" 
+                    :src="photoNoLag" 
                     alt="xxx"
                 >
          </div>
@@ -18,8 +18,8 @@
 import { onMounted } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import photo1 from "@/assets/images/k09_precip_sf.png";
-import photo2 from "@/assets/images/k09_precip_sf_lag.png";
+import photoNoLag from "@/assets/images/k09_precip_sf.png";
+import photoLag from "@/assets/images/k09_precip_sf_lag.png";
 
 
 
@@ -30,12 +30,12 @@ let imageToggle = document.getElementById("image-toggle");
 
 
 function toggleImg() {
-if(firstImg.getAttribute('src') === photo1) {
-    firstImg.setAttribute('src', photo2);
+if(firstImg.getAttribute('src') === photoNoLag) {
+    firstImg.setAttribute('src', photoLag);
     imageToggle.textContent = "Remove lag";
 }
 else {
-    firstImg.setAttribute('src', photo1);
+    firstImg.setAttribute('src', photoNoLag);
     imageToggle.textContent = "Add lag"
 }
 }
