@@ -182,7 +182,7 @@ export default {
 .nav-container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content:center;
     height: 250px;
     position: sticky;
     bottom: 0;
@@ -192,7 +192,7 @@ export default {
 .nav-button {
     height: 50px;
     width: 50px;
-    background-color: #9FCACB;
+    /* background-color: #5e7789; */
     border-width: 0px;
     border-radius: 50%;
     color: #edeadf;
@@ -201,12 +201,21 @@ export default {
     line-height: 0;
     padding-top: -10px;
     margin: 0 20px 0 20px;
-
+    border: 0px;
+    background-color: rgb(159, 202, 203);
+    border: 0 solid;
+    box-shadow: inset 0 0 20px  #427388;
+    outline: 1px solid;
+    outline-color: rgba(255, 255, 255, .5);
+    outline-offset: 0px;
+    text-shadow: none;
 }
 
 .nav-button:hover {
-    background-color: #5e7789;
     cursor: pointer;
+  background-color:  #427388;
+  border: 1px solid;
+  text-shadow: 1px 1px 2px #427388; 
 }
 
 .home-button {
@@ -221,7 +230,7 @@ export default {
 }
 
 .home-button:hover {
-    color: #9FCACB;
+    color: #00264c;
     cursor: pointer;
 }
 
@@ -253,7 +262,7 @@ export default {
 }
 
 .arrow-button:hover {
-    color: #9FCACB;
+    color: #00264c;
     cursor: pointer;
 }
 

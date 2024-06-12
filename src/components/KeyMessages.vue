@@ -30,10 +30,10 @@ export default {
 
 <style lang="scss" scoped>
 
-/* text box within the wavy container which houses key messages */
+/* text box within the wavy container that houses key messages */
 .key-message-container {
     height: 70%;
-    width: 40%;
+    width: 50%;
     color: rgb(0, 38, 76);
     padding: 10px;
     align-items: center;
@@ -45,7 +45,7 @@ export default {
 @media only screen and (max-width: 768px) {
     .key-message-container {
         height: 70%;
-        width: 60%;
+        width: 90%;
         padding: 15px;
         align-items: center;
         font-size: 18px;

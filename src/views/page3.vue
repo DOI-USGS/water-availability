@@ -2,21 +2,18 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="viz-container">
-            Interactive viz goes here
+          <img class="viz-placeholder"
+            src="@/assets/images/k03_sui_popn.png"
+          >
         </div>
         <PageCarousel></PageCarousel>
     </section>
 </template>
 
-<script>
-import PageCarousel from '../components/PageCarousel.vue';
-import KeyMessages from '../components/KeyMessages.vue';
-export default {
-    components: {
-        PageCarousel,
-        KeyMessages
-    }
-}
+<script setup>
+    import PageCarousel from '../components/PageCarousel.vue';
+    import KeyMessages from '../components/KeyMessages.vue';
+
 </script>
 
 <style scoped>

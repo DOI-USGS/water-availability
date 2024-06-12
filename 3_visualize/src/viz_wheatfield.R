@@ -40,8 +40,8 @@ plot_wheatfield <- function(data_in,
   ggplot(regions_sf) + 
     ggfx::with_shadow(
       geom_sf(data = regions_sf, 
-              color = color_scheme$svg_col_default, 
-              fill = color_scheme$svg_fill_default, 
+              color = color_scheme$svg_fill_default, 
+              fill = color_scheme$svg_col_default, 
               size = 0.1),
       colour = color_scheme$shadow,
       x_offset = 0,
