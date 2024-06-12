@@ -29,99 +29,68 @@
     </section>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 import * as d3Base from 'd3';
 import AggReg from "@/assets/svgs/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-export default {
-    components: {
-        AggReg,
-        PageCarousel,
-        KeyMessages
-    },
-    data() {
-        return {
-            imgSrc: '@/assets/images/ws_ps_dumbbell_centered_CONUS.png'
-        };
-    },
-    mounted() {
-        this.setDefaultImgSrc();
-        this.addInteractions();
-    },
-    methods: {
-        setDefaultImgSrc() {
-            //Sets default dumbbell chart to full CONUS
-            import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
-                this.imgSrc = imgSrc.default; 
-            }); 
-        },
-        addInteractions() {
-            const self = this;
-            const mapSVG = d3Base.select('.agg-reg-svg')
-        mapSVG.selectAll('.AggReg_nam_nospace')
-            .on("mouseover", (event) => self.mouseoverMap(event))
-            .on("mouseout", (event) => self.mouseoutMap(event))
-        },
-        mouseoverMap(event) {
-            let regionID = event.target.id
+import photo1 from "@/assets/images/k08_ps_wheatfield_CONUS.png";
+import photo2 from "@/assets/images/k08_ir_wheatfield_CONUS.png";
 
+const imgSrc = ref('@/assets/images/ws_ps_dumbbell_centered_CONUS.png');
 
-            //Updates color of region
-            d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`)
-                .style("fill", "#5e7789") //updates color of region that is being hovered on
-
-            let formattedRegionID = regionID.replace(/_/g, ' '); //png titles have spaces not underscores
-            
-            //Update dumbbells charts to specific region
-            import(`@/assets/images/k08_ws_ps_dumbbell_centered_${formattedRegionID}.png`).then(imgSrc => {
-                this.imgSrc = imgSrc.default;
-            });       
-        },
-        mouseoutMap(event) {
-            let regionID = event.target.id
-
-            //Updates region back to default
-            d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`)
-                .style("fill", "#d1cdc0"); 
-
-            //Updates dumbbell chart back to full CONUS
-            import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(imgSrc => {
-                this.imgSrc = imgSrc.default; 
-            }); 
-        }
-    }
+const setDefaultImgSrc = () => {
+  import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(img => {
+    imgSrc.value = img.default;
+  });
 };
-</script>
 
-<script setup>
-    import { onMounted } from 'vue';
-    import photo1 from "@/assets/images/k08_ps_wheatfield_CONUS.png";
-    import photo2 from "@/assets/images/k08_ir_wheatfield_CONUS.png";
+const addInteractions = () => {
+  const mapSVG = d3Base.select('.agg-reg-svg');
+  mapSVG.selectAll('.AggReg_nam_nospace')
+    .on("mouseover", mouseoverMap)
+    .on("mouseout", mouseoutMap);
+};
 
+const mouseoverMap = (event) => {
+  const regionID = event.target.id;
+  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#5e7789");
+  const formattedRegionID = regionID.replace(/_/g, ' ');
+  import(`@/assets/images/k08_ws_ps_dumbbell_centered_${formattedRegionID}.png`).then(img => {
+    imgSrc.value = img.default;
+  });
+};
 
+const mouseoutMap = (event) => {
+  const regionID = event.target.id;
+  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
+  import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(img => {
+    imgSrc.value = img.default;
+  });
+};
 
-    onMounted(() => {
+onMounted(() => {
+  setDefaultImgSrc();
+  addInteractions();
 
-        let firstImg = document.getElementById("first-image");
-        let imageToggle = document.getElementById("image-toggle");
+  const firstImg = document.getElementById("first-image");
+  const imageToggle = document.getElementById("image-toggle");
 
-
-    function toggleImg() {
-        if(firstImg.getAttribute('src') === photo1) {
-            firstImg.setAttribute('src', photo2);
-            imageToggle.textContent = "Switch to Irrigation";
-        }
-        else {
-            firstImg.setAttribute('src', photo1);
-            imageToggle.textContent = "Switch to Public Supply";
-        }
+  const toggleImg = () => {
+    if (firstImg.getAttribute('src') === photo1) {
+      firstImg.setAttribute('src', photo2);
+      imageToggle.textContent = "Switch to Public Supply";
+    } else {
+      firstImg.setAttribute('src', photo1);
+      imageToggle.textContent = "Switch to Irrigation";
     }
+  };
 
-    imageToggle.addEventListener("click", toggleImg)
-    }); 
-
+  imageToggle.addEventListener("click", toggleImg);
+});
 </script>
+
 
 <style scoped>
 .agg-reg-svg {
