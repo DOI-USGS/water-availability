@@ -6,7 +6,7 @@
                 <img 
                     id="first-image" 
                     class="viz-placeholder" 
-                    :src="photo1" 
+                    :src="photoProportion" 
                     alt="xxx"
                 >
          </div>
@@ -19,8 +19,8 @@
 import { onMounted } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import photo1 from "@/assets/images/k06_wq_by_use.png";
-import photo2 from "@/assets/images/k06_wq_by_use_noImpaired.png";
+import photoProportion from "@/assets/images/k06_wq_by_use.png";
+import photoMiles from "@/assets/images/k06_wq_by_use_noImpaired.png";
 
 
 
@@ -31,12 +31,12 @@ onMounted(() => {
 
 
   function toggleImg() {
-    if(firstImg.getAttribute('src') === photo1) {
-        firstImg.setAttribute('src', photo2);
-        imageToggle.textContent = "Click to view river miles";
+    if(firstImg.getAttribute('src') === photoProportion) {
+        firstImg.setAttribute('src', photoMiles);
+        imageToggle.textContent = "Click to change view";
     }
     else {
-        firstImg.setAttribute('src', photo1);
+        firstImg.setAttribute('src', photoProportion);
         imageToggle.textContent = "Click to change view";
     }
   }
