@@ -92,16 +92,24 @@ p2_targets <- list(
                dplyr::left_join(p2_wu_ir_mean2000to2020_HUC8, 
                                 by = "HUC8") 
   ),
+  # Join with water use data
   tar_target(p2_HUC8_join_wu_AggRegGrp_sf,
              p2_HUC8_join_wu_sf |> 
                group_by(AggRegion_nam) |>
                tar_group(),
              iteration = "group"),
-  tar_target(p2_HUC8_join_sui_sf,
+  
+  # Join with SUI/water stress and SVI/vulnerability indices
+  tar_target(p2_HUC8_join_sui_svi_sf,
              p2_mainstem_HUC8_simple_sf |>
-               # add in mean water use data 
+               # add in mean SUI 
+               dplyr::left_join(p2_sui_mean_HUC8,
+                                by = "HUC8") |>
                dplyr::left_join(p2_sui_yearly_HUC8, 
-                                by = "HUC8") 
+                                by = "HUC8") |>
+               dplyr::left_join(p2_svi_mean_HUC8,
+                                by = "HUC8")
+               
   ),
   
   ##############################################
@@ -186,16 +194,39 @@ p2_targets <- list(
   tar_target(p2_sui_raw,
              readr::read_csv(p1_sui_csv,
                              show_col_types = FALSE)),
+  # mean by HUC8
   tar_target(p2_sui_mean_HUC8,
              mean_sui(data_in = p2_sui_raw,
                       min_year = 2010,
                       max_year = 2020,
                       HUC_level = 8)
   ),
+  # By HUC8 and Year
   tar_target(p2_sui_yearly_HUC8,
              mean_sui_by_year(data_in = p2_sui_raw,
-                              HUC_level = 8))
+                              HUC_level = 8)),
              
+  ##############################################
+  # 
+  #           EXTERNAL DATA SOURCES
+  # 
+  # Social Vulnerability Index 
+  tar_target(p2_svi_raw,
+             readr::read_csv(p1_svi_csv,
+                             show_col_types = FALSE)),
   
-
+  tar_target(p2_svi_mean_HUC8,
+             p2_svi_raw |> 
+               mutate(HUC8 = substr(HUC12, 1, 8)) |>
+               group_by(HUC8) |>
+               summarize(mean_svi = mean(overall_weighted_SVI, na.rm = TRUE),
+                         mean_svi_theme1 = mean(theme1_weighted_SVI, na.rm = TRUE),
+                         mean_svi_theme2 = mean(theme2_weighted_SVI, na.rm = TRUE),
+                         mean_svi_theme3 = mean(theme3_weighted_SVI, na.rm = TRUE),
+                         mean_svi_theme4 = mean(theme4_weighted_SVI, na.rm = TRUE))),
+  # Join SVI and SUI by category for tree map
+  tar_target(p2_sui_svi_HUC8_df,
+             join_svi_sui(sui_in = p2_sui_mean_HUC8,
+                          svi_in = p2_svi_mean_HUC8))
+  
 )
