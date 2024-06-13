@@ -14,13 +14,13 @@ p2_targets <- list(
              tibble(
                Region = 1:18,
                Region_nam = c("Northeast", "Atlantic Coast", "Florida", 
-                            "Great Lakes", "Midwest", "Tennessee-Missouri",  
-                            "Mississippi Embayment", "Gulf Coast",   
-                            "Souris-Red-Rainy", "Northern High Plains",
-                            "Central High Plains", "Southern High Plains",
-                            "Texas", "Columbia-Snake",
-                            "Central Rockies", "Southwest Desert",
-                            "Pacific Northwest", "California-Nevada"),
+                              "Great Lakes", "Midwest", "Tennessee-Missouri",  
+                              "Mississippi Embayment", "Gulf Coast",   
+                              "Souris-Red-Rainy", "Northern High Plains",
+                              "Central High Plains", "Southern High Plains",
+                              "Texas", "Columbia-Snake",
+                              "Central Rockies", "Southwest Desert",
+                              "Pacific Northwest", "California-Nevada"),
                Region_nam_nospace = stringr::str_replace_all(Region_nam, pattern = " ", replacement = "_"),
                AggRegion = as.factor(c(2, 3, 3, 2, 2, 3, 3, 3, 2, 1, 1, 1, 3, 4, 4, 4, 4, 4)),
                AggReg_nam = c("Northeast through Midwest", "Southeast", "Southeast",
@@ -32,8 +32,8 @@ p2_targets <- list(
                AggReg_nam_nospace = stringr::str_replace_all(AggReg_nam, 
                                                              pattern = " ", 
                                                              replacement = "_")
-                              )
-             ),
+             )
+  ),
   # Master crosswalk at the HUC12 level
   tar_target(p1_CONUS_crosswalk_HUC12_df,
              readr::read_csv(p1_CONUS_crosswalk, skip = 1)|>
@@ -77,7 +77,8 @@ p2_targets <- list(
                # remove everything outside of CONUS for now
                filter(region_group == "CONUS") |>
                # add in region names
-               left_join(p1_CONUS_crosswalk_HUC8_df, by = "HUC8")
+               inner_join(p1_CONUS_crosswalk_HUC8_df, by = "HUC8") |>
+               filter(! is.na(Region_nam)) 
   ),
   
   ##################################################
@@ -109,7 +110,7 @@ p2_targets <- list(
                                 by = "HUC8") |>
                dplyr::left_join(p2_svi_mean_HUC8,
                                 by = "HUC8")
-               
+             
   ),
   
   ##############################################
@@ -191,12 +192,18 @@ p2_targets <- list(
   #           WATER BALANCE DATA
   # 
   # WATER STRESS INDEX "SURFACE WATER SUPPLY AND USE INDEX" SUI
+  tar_target(p2_sui_thresholds,
+             tibble(
+               lower = 0.5, # 0.4 for 3 categories to match IWAAs
+               upper = 1.0, # 0.6 for 3 categories to match IWAAs
+             )),
   tar_target(p2_sui_raw,
              readr::read_csv(p1_sui_csv,
                              show_col_types = FALSE)),
   # mean by HUC8
   tar_target(p2_sui_mean_HUC8,
              mean_sui(data_in = p2_sui_raw,
+                      thresholds = p2_sui_thresholds,
                       min_year = 2010,
                       max_year = 2020,
                       HUC_level = 8)
@@ -205,12 +212,17 @@ p2_targets <- list(
   tar_target(p2_sui_yearly_HUC8,
              mean_sui_by_year(data_in = p2_sui_raw,
                               HUC_level = 8)),
-             
+  
   ##############################################
   # 
   #           EXTERNAL DATA SOURCES
   # 
   # Social Vulnerability Index 
+  tar_target(p2_svi_thresholds,
+             tibble(
+               lower = 0.5,
+               upper = 1.0
+             )),
   tar_target(p2_svi_raw,
              readr::read_csv(p1_svi_csv,
                              show_col_types = FALSE)),
@@ -223,7 +235,27 @@ p2_targets <- list(
                          mean_svi_theme1 = mean(theme1_weighted_SVI, na.rm = TRUE),
                          mean_svi_theme2 = mean(theme2_weighted_SVI, na.rm = TRUE),
                          mean_svi_theme3 = mean(theme3_weighted_SVI, na.rm = TRUE),
-                         mean_svi_theme4 = mean(theme4_weighted_SVI, na.rm = TRUE))),
+                         mean_svi_theme4 = mean(theme4_weighted_SVI, na.rm = TRUE)) |>
+               mutate(svi_category = case_when(mean_svi <= p2_svi_thresholds$lower ~ "Low SVI",
+                                               mean_svi <= p2_svi_thresholds$upper ~ "High SVI",
+                                               mean_svi <= 1.0 ~ "Severe SVI",
+                                               TRUE ~ NA),
+                      svi1_category = case_when(mean_svi_theme1 <= p2_svi_thresholds$lower ~ "Low SVI",
+                                                mean_svi_theme1 <= p2_svi_thresholds$upper ~ "High SVI",
+                                                mean_svi_theme1 <= 1.0 ~ "Severe SVI",
+                                                TRUE ~ NA),
+                      svi2_category = case_when(mean_svi_theme2 <= p2_svi_thresholds$lower ~ "Low SVI",
+                                                mean_svi_theme2 <= p2_svi_thresholds$upper ~ "High SVI",
+                                                mean_svi_theme2 <= 1.0 ~ "Severe SVI",
+                                                TRUE ~ NA),
+                      svi3_category = case_when(mean_svi_theme3 <= p2_svi_thresholds$lower ~ "Low SVI",
+                                                mean_svi_theme3 <= p2_svi_thresholds$upper ~ "High SVI",
+                                                mean_svi_theme3 <= 1.0 ~ "Severe SVI",
+                                                TRUE ~ NA),
+                      svi4_category = case_when(mean_svi_theme4 <= p2_svi_thresholds$lower ~ "Low SVI",
+                                                mean_svi_theme4 <= p2_svi_thresholds$upper ~ "High SVI",
+                                                mean_svi_theme4 <= 1.0 ~ "Severe SVI",
+                                                TRUE ~ NA))),
   # Join SVI and SUI by category for tree map
   tar_target(p2_sui_svi_HUC8_df,
              join_svi_sui(sui_in = p2_sui_mean_HUC8,

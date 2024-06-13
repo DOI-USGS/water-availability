@@ -171,6 +171,7 @@ p1_targets <- list(
   #           EXTERNAL DATA SOURCES
   # 
   # Social Vulnerability Index by HUC12
+  # https://www.atsdr.cdc.gov/placeandhealth/svi/at-a-glance_svi.html
   tar_target(p1_svi_csv,
              sb_initialize_and_download(
                sb_id = "643706ffd34ee8d4addcc593",

@@ -1,4 +1,5 @@
 mean_sui <- function(data_in, 
+                     thresholds,
                      min_year, 
                      max_year,
                      HUC_level){
@@ -21,6 +22,13 @@ mean_sui <- function(data_in,
       group_by(HUC8) |>
       summarize(mean_sui = mean(SUI, na.rm = TRUE))
   }
+  
+  out_df <- raw_mean |> 
+    mutate(sui_category = case_when(mean_sui <= thresholds$lower ~ "Low SUI",
+                                    mean_sui <= thresholds$upper ~ "Moderate SUI",
+                                    mean_sui <= 1.0 ~ "High SUI",
+                                    TRUE ~ NA))
+    
 }
 
 mean_sui_by_year <- function(data_in, 
@@ -35,48 +43,72 @@ mean_sui_by_year <- function(data_in,
   if(HUC_level == 12){
     raw_mean <- raw |>
       group_by(HUC12, year) |>
-      summarize(sui_mean = mean(SUI, na.rm = TRUE))
+      summarize(mean_sui = mean(SUI, na.rm = TRUE)) 
   } else if(HUC_level == 8){
     raw_mean <- raw |>
       group_by(HUC8, year) |>
-      summarize(sui_mean = mean(SUI, na.rm = TRUE))
+      summarize(mean_sui = mean(SUI, na.rm = TRUE)) 
   }
   
   raw_mean_wide <- raw_mean |>
     pivot_wider(names_from = year,
                 names_prefix = "sui_",
-                values_from = sui_mean)
+                values_from = mean_sui)
 }
 
 
 
 ## Join SVI and SUI by categories for treemap, proportional charts, etc
 join_svi_sui <- function(svi_in, sui_in){
+  
+  # thresholds that change the binning. 0.4/0.6 are what IWAAs uses
+  threshold_lower_sui <- 0.5 # 0.4 for IWAAs (three categories)
+  threshold_upper_sui <- 1.0 # 0.6 for IWAAs (three categories)
+  
   join_data <- sui_in |>
     inner_join(svi_in |> drop_na(), by = "HUC8") |>
-    mutate(svi_category = case_when(mean_svi <= 0.334 ~ "Low SVI",
-                                    mean_svi <= 0.667 ~ "Moderate SVI",
-                                    mean_svi <= 1.0 ~ "High SVI",
-                                    TRUE ~ NA),
-           sui_category = case_when(mean_sui <= 0.4 ~ "Low SUI",
-                                    mean_sui <= 0.6 ~ "Moderate SUI",
-                                    mean_sui <= 1.0 ~ "High SUI",
-                                    TRUE ~ NA),
-           join_category = sprintf("%s-%s", sui_category, svi_category))
+    mutate(join_category = sprintf("%s-%s", sui_category, svi_category),
+           join_category1 = sprintf("%s-%s", sui_category, svi1_category),
+           join_category2 = sprintf("%s-%s", sui_category, svi2_category),
+           join_category3 = sprintf("%s-%s", sui_category, svi3_category),
+           join_category4 = sprintf("%s-%s", sui_category, svi4_category))
+           
   
-  group_summary <- join_data |>
-    group_by(sui_category) |>
-    summarize(n_sui_cat = n())
   
-  # summary values for below
-  n_high_sui = group_summary$n_sui_cat[group_summary$sui_category == "High SUI"]
-  n_mod_sui = group_summary$n_sui_cat[group_summary$sui_category == "Moderate SUI"]
-  n_low_sui = group_summary$n_sui_cat[group_summary$sui_category == "Low SUI"]
-  
-  final_df <- join_data |>
+  overall_means_df <- join_data |>
     # now get n by SVIxSUI categories, plus proportions
-    group_by(join_category) |>
+    group_by(join_category, svi_category, sui_category) |>
     summarize(n_hucs = n())
   
+  theme1_means <- join_data |>
+    # now get n by SVIxSUI categories, plus proportions
+    group_by(join_category1) |>
+    summarize(n1_hucs = n()) |>
+    rename(join_category = join_category1)
+  
+  theme2_means <- join_data |>
+    # now get n by SVIxSUI categories, plus proportions
+    group_by(join_category2) |>
+    summarize(n2_hucs = n()) |>
+    rename(join_category = join_category2)
+  
+  theme3_means <- join_data |>
+    # now get n by SVIxSUI categories, plus proportions
+    group_by(join_category3) |>
+    summarize(n3_hucs = n()) |>
+    rename(join_category = join_category3)
+  
+  theme4_means <- join_data |>
+    # now get n by SVIxSUI categories, plus proportions
+    group_by(join_category4) |>
+    summarize(n4_hucs = n()) |>
+    rename(join_category = join_category4)
+  
+  out_df <- overall_means_df |>
+    left_join(theme1_means, by = "join_category") |>
+    left_join(theme2_means, by = "join_category") |>
+    left_join(theme3_means, by = "join_category") |>
+    left_join(theme4_means, by = "join_category") 
+    
   
 }

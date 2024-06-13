@@ -14,7 +14,8 @@ tar_option_set(packages = c("sbtools",
                             "ggfx",
                             "scico",
                             "sysfonts",
-                            "magick"))
+                            "magick",
+                            "cowplot"))
 
 ### Naming conventions:
 # Water Supply = ws

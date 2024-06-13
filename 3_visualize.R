@@ -75,10 +75,11 @@ p3_targets <- list(
   #
   tar_target(p3_treemap_sui_svi_png,
              viz_treemap(in_df = p2_sui_svi_HUC8_df,
+                         in_sf = p2_HUC8_join_sui_svi_sf,
                          color_scheme = p3_colors_website,
                          png_out = "src/assets/images/k04_sui_svi_treemap.png",
                          width = 6,
-                         height = 6),
+                         height = 5),
              format = "file"),
   
   ##############################################
