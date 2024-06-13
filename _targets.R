@@ -40,7 +40,7 @@ tar_option_set(packages = c("sbtools",
 #     # CONUS = conus
 #     # AggReg = Aggregated regions
 #     # Reg = hydrologic regions
-#     # sv = social vulnerability
+#     # svi = social vulnerability index
 
 # Phase target makefiles
 #   NEED to run 0_config.R first unless you've already fetched SB items

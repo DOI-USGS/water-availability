@@ -1,6 +1,7 @@
 source("3_visualize/src/svg_helpers.R")
 source("3_visualize/src/viz_dumbbell.R")
 source("3_visualize/src/viz_wheatfield.R")
+source("3_visualize/src/viz_treemap.R")
 
 p3_targets <- list(
   ##############################################
@@ -72,6 +73,13 @@ p3_targets <- list(
   #             are considered to be socially vulnerable.
   #
   #
+  tar_target(p3_treemap_sui_svi_png,
+             viz_treemap(in_df = p2_sui_svi_HUC8_df,
+                         color_scheme = p3_colors_website,
+                         png_out = "src/assets/images/k04_sui_svi_treemap.png",
+                         width = 6,
+                         height = 6),
+             format = "file"),
   
   ##############################################
   # 
