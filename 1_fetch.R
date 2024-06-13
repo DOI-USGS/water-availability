@@ -164,5 +164,19 @@ p1_targets <- list(
                destinations = "1_fetch/in/water_budget_sui_ensemble.csv",
                overwrite_fileL = FALSE
              ),
+             format = "file"),
+  
+  ##############################################
+  # 
+  #           EXTERNAL DATA SOURCES
+  # 
+  # Social Vulnerability Index by HUC12
+  tar_target(p1_svi_csv,
+             sb_initialize_and_download(
+               sb_id = "643706ffd34ee8d4addcc593",
+               names = "HUC12_SVI.csv",
+               destinations = "1_fetch/in/HUC12_SVI.csv",
+               overwrite_fileL = FALSE
+             ),
              format = "file")
 )
