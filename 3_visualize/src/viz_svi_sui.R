@@ -70,9 +70,9 @@ viz_svi_sui <- function(in_df,
     draw_text("Vulnerable populations in", x = 0, y = 0.33, 
               size = 12, hjust = 0) +
     draw_text("Dark Blue", x = 0.03, y = 0.28, size = 12, fontface = "bold",
-              color_scheme$wet_blue_dark, hjust = 0) +
+              color = color_scheme$wet_blue_dark, hjust = 0) +
     draw_text("Dark Red", x = 0.18, y = 0.28, size = 12, fontface = "bold",
-              hjust = 0) +
+              color = color_scheme$dry_red_dark, hjust = 0) +
     draw_line(x = c(0.13, 0.15), y = c(0.26, 0.23), 
               color = color_scheme$wet_blue_dark) +
     draw_line(x = c(0.22, 0.200), y = c(0.26, 0.08), 
