@@ -76,6 +76,7 @@ p2_targets <- list(
                rename(HUC8 = HUC) |>
                # remove everything outside of CONUS for now
                filter(region_group == "CONUS") |>
+               st_intersection(st_union(p2_Reg_sf)) |>
                # add in region names
                inner_join(p1_CONUS_crosswalk_HUC8_df, by = "HUC8") |>
                filter(! is.na(Region_nam)) 
