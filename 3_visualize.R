@@ -11,25 +11,38 @@ p3_targets <- list(
   # Color theme
   tar_target(p3_colors_website,
              tibble(
-               te_gw_main = "#01A0C7", #tern_5
-               te_sw_secondary = "#1687A5",
-               te_saline = "#01F9C6",
-               ir_gw_main = "#FDFF01", #tern_9
-               ir_sw_secondary = "#D0CB02",
-               ps_gw_main = "#F41A90", #tern_1
-               ps_secondary = "#C72873",
-               tern_2 = "#73A8D2",
-               tern_3 = "#FD7FBA",
-               tern_4 = "#FEB4A6",
-               tern_6 = "#3FBAD2",
-               tern_7 = "#85CAC3",
-               tern_8 = "#FEFFA7",
-               wu_sw = "#065867",
-               wu_gw = "#F09300",
+               # elements for website components, not category specific
                svg_fill_default = "#d1cdc0",
                svg_col_default = "#edeadf", # background color of page
                shadow = "#926c68"
              )),
+  tar_target(p3_colors_wu,
+             p3_colors_website |> bind_cols(
+               tibble(
+                 # Water Use
+                 te_gw_main = "#01A0C7", #tern_5
+                 te_sw_secondary = "#1687A5",
+                 te_saline = "#01F9C6",
+                 ir_gw_main = "#FDFF01", #tern_9
+                 ir_sw_secondary = "#D0CB02",
+                 ps_gw_main = "#F41A90", #tern_1
+                 ps_secondary = "#C72873",
+                 tern_2 = "#73A8D2",
+                 tern_3 = "#FD7FBA",
+                 tern_4 = "#FEB4A6",
+                 tern_6 = "#3FBAD2",
+                 tern_7 = "#85CAC3",
+                 tern_8 = "#FEFFA7"))),
+  tar_target(p3_colors_balance,
+             p3_colors_website |> bind_cols(
+               tibble(
+               # Water balance (wet/dry)
+               wet_blue_dark = "#39424f",
+               wet_blue_light = "#80909D",
+               dry_red_dark = "#965a5b",
+               dry_red_light = "#CFACAB"
+             ))),
+
   tar_target(p3_fonts_website,
              tibble(
                legend_font = "Source Sans Pro",
@@ -73,11 +86,21 @@ p3_targets <- list(
   #             are considered to be socially vulnerable.
   #
   #
-  tar_target(p3_treemap_sui_svi_png,
+  tar_target(p3_map_sui_svi_png,
              viz_svi_sui(in_df = p2_sui_svi_HUC8_df,
                          in_sf = p2_HUC8_join_sui_svi_sf,
-                         color_scheme = p3_colors_website,
+                         dry_onlyL = FALSE,
+                         color_scheme = p3_colors_balance,
                          png_out = "src/assets/images/k04_sui_svi_map.png",
+                         width = 6,
+                         height = 5),
+             format = "file"),
+  tar_target(p3_map_dry_sui_svi_png,
+             viz_svi_sui(in_df = p2_sui_svi_HUC8_df,
+                         in_sf = p2_HUC8_join_sui_svi_sf,
+                         dry_onlyL = TRUE,
+                         color_scheme = p3_colors_balance,
+                         png_out = "src/assets/images/k04_sui_svi_dry_map.png",
                          width = 6,
                          height = 5),
              format = "file"),
@@ -125,7 +148,7 @@ p3_targets <- list(
              plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
                              regions_sf = p2_Reg_sf,
                              use_type = "ps",
-                             color_scheme = p3_colors_website,
+                             color_scheme = p3_colors_wu,
                              png_out = "src/assets/images/k08_ps_wheatfield_CONUS.png",
                              width = 6,
                              height = 6),
@@ -134,7 +157,7 @@ p3_targets <- list(
              plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
                              regions_sf = p2_Reg_sf,
                              use_type = "ir",
-                             color_scheme = p3_colors_website,
+                             color_scheme = p3_colors_wu,
                              png_out = "src/assets/images/k08_ir_wheatfield_CONUS.png",
                              width = 6,
                              height = 6),
