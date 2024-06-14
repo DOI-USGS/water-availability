@@ -3,7 +3,7 @@
     <div class="wavy-container">
       <div class="key-message-container">
         <h1>2024 National Integrated Water Availability Assessments</h1>
-        <h2>Key Messages</h2>
+        <h2>Key Takeaways</h2>
       </div>
     </div>
     <div class="raindrop-container">
@@ -24,9 +24,9 @@
 </script>
 
 <style scoped>
-.section-header {
+/*.section-header {
   color: var(--dodger-blue);
-}
+}*/
 
 .raindrop-container {
   min-height: 1000px;
@@ -41,7 +41,7 @@
 
 .key-message-item-text {
   margin-left: 20px;
-  color: rgb(0, 38, 76);
+  color: ;
   width: 70%;
   font-size: 2.5rem;
 }
