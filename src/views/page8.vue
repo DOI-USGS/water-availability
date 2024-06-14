@@ -3,18 +3,12 @@
         <KeyMessages></KeyMessages>
         
         <div class="viz-container">
-        <AggReg class="agg-reg-svg"></AggReg>
-        <h3 class="dumbbell-header">Public Supply Sourced From:</h3>
-        <div class="axis-labels">
-            <h3 class="groundwater">Groundwater</h3>
-            <h3 class="surface-water"> Surface Water</h3>
-        </div>
-
-        <img
-            id="dumbbells"
-            :src="imgSrc"
-            alt=""
-        >    
+          <AggReg class="agg-reg-svg"></AggReg>
+          <img
+              id="dumbbells"
+              :src="imgSrc"
+              alt=""
+          >    
         </div>
         <button id="image-toggle" class="toggle-button">Switch to Irrigation</button>
         <div class="viz-container">
@@ -94,80 +88,15 @@ onMounted(() => {
 
 
 <style scoped>
-.agg-reg-svg {
-    width: 20%;
-    height: auto;
-    margin-right: 20px;
-}
-.axis-labels {
-    transform: rotate(-90deg);
-    width: 35px;
-    white-space: nowrap;
-    margin-bottom: -270px;
-    margin-right: -15px;
-}
 
-.dumbbell-header {
-    transform: rotate(-90deg);
-    width: 35px;
-    white-space: nowrap;
-    margin-bottom: -260px;
-    color: #2d2b2a;
-    font-size: 1.2em;
-}
-.groundwater {
-    display: inline;
-    margin-right: 15px;
-    color: #e9830d;
-    font-size: 1.2em;
-}
-.surface-water {
-    display: inline;
-    margin-left: 15px;
-    color: #2b5d69;
-    font-size: 1.2em;
-}
+
 
 img {
     width: 35%
 }
 
 @media only screen and (max-width: 768px) {
-    .viz-container {
-        flex-direction: column;
-    }
-    .dumbbell-header {
-        /* display: none; */
-        transform: rotate(0deg);
-        margin: 0px;
-        text-align: center; /* Center text */
-        font-size: 0.9em;
-        margin-left: -190px;
 
-    }
-    .axis-labels {
-        /* display: none */
-        transform: rotate(0deg);
-        margin: 0px;
-        margin-left: -210px;
-    }
-
-    .groundwater {
-    font-size: 0.9em;
-    }   
-    .surface-water {
-    display: inline;
-    margin-left: 15px;
-    color: #2b5d69;
-    font-size: 0.9em;
-    }
-    .agg-reg-svg {
-    width: 40%;
-    height: auto;
-    margin-right: 0px;
-    margin-bottom: -80px;
-    margin-top: -50px;
-    }
 
     img {
     width: 50%;
