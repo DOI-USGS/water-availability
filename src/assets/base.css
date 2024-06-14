@@ -46,7 +46,7 @@
 /* this is where each page's viz will go */
 .viz-container { 
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   min-height: 50vh;
