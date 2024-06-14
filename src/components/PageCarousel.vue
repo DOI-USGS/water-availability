@@ -220,7 +220,7 @@ export default {
     /* background-color: #5e7789; */
     border-width: 0px;
     border-radius: 50%;
-    color: #edeadf;
+    color: var(--page-bkg-col);
     font-size: 40px;
     text-align: center;
     line-height: 0;
@@ -244,7 +244,7 @@ export default {
 }
 
 .home-button {
-    background-color: #edeadf;
+    background-color: var(--page-bkg-col);
     height: 50px;
     width: 100px;
     color: #5e7789;
@@ -255,14 +255,14 @@ export default {
 }
 
 .home-button:hover {
-    color: #00264c;
+    color: var(--blue-text-col);
     cursor: pointer;
 }
 
 .arrow-button {
     height: 50px;
     width: 50px;
-    background-color: #edeadf;
+    background-color: var(--page-bkg-col);
     border-width: 0px;
     color: #5e7789;
     font-size: 50px;
@@ -275,9 +275,9 @@ export default {
 .arrow-button-hidden {
     height: 50px;
     width: 50px;
-    background-color: #edeadf;
+    background-color: var(--page-bkg-col);
     border-width: 0px;
-    color: #edeadf;
+    color: var(--page-bkg-col);
     font-size: 50px;
     display: flex;
     justify-content: center;
@@ -287,7 +287,7 @@ export default {
 }
 
 .arrow-button:hover {
-    color: #00264c;
+    color: var(--blue-text-col);
     cursor: pointer;
 }
 
