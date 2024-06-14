@@ -60,8 +60,8 @@ viz_svi_sui <- function(in_df,
   
   final_plot <- ggdraw() +
     draw_plot(map, x = 0, y = 0.1, width = 1, height = 1) +
-    draw_plot(legend_prop_hucs, x = 0, y = 0.05, width = 0.25, height = 0.25) +
-    draw_plot(legend_n_hucs, x = 0.5, y = 0.05, width = 0.25, height = 0.25) #+
+    draw_plot(legend_n_hucs, x = 0, y = 0.05, width = 0.25, height = 0.25) +
+    draw_plot(legend_prop_hucs, x = 0.5, y = 0.05, width = 0.25, height = 0.25) #+
     #draw_text("")
   
   ggsave(plot = final_plot,
