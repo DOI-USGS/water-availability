@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="viz-container">
             <img class="viz-placeholder"
-            src="@/assets/images/k04_sui_svi.png"
+            src="@/assets/images/k04_sui_svi_map.png"
           >
         </div>
         <PageCarousel></PageCarousel>

@@ -1,7 +1,7 @@
 source("3_visualize/src/svg_helpers.R")
 source("3_visualize/src/viz_dumbbell.R")
 source("3_visualize/src/viz_wheatfield.R")
-source("3_visualize/src/viz_treemap.R")
+source("3_visualize/src/viz_svi_sui.R")
 
 p3_targets <- list(
   ##############################################
@@ -74,10 +74,10 @@ p3_targets <- list(
   #
   #
   tar_target(p3_treemap_sui_svi_png,
-             viz_treemap(in_df = p2_sui_svi_HUC8_df,
+             viz_svi_sui(in_df = p2_sui_svi_HUC8_df,
                          in_sf = p2_HUC8_join_sui_svi_sf,
                          color_scheme = p3_colors_website,
-                         png_out = "src/assets/images/k04_sui_svi_treemap.png",
+                         png_out = "src/assets/images/k04_sui_svi_map.png",
                          width = 6,
                          height = 5),
              format = "file"),
