@@ -41,7 +41,7 @@
 
 .key-message-item-text {
   margin-left: 20px;
-  color: ;
+  color: var(--blue-text-col);
   width: 70%;
   font-size: 2.5rem;
 }
