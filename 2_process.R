@@ -4,6 +4,7 @@ source("2_process/src/process_ps_dumbbell.R")
 source("2_process/src/process_wu_data.R")
 source("2_process/src/process_sui_data.R")
 source("2_process/src/process_svi_data.R")
+source("2_process/src/process_popn_data.R")
 
 p2_targets <- list(
   ##############################################
@@ -237,6 +238,15 @@ p2_targets <- list(
   # Join SVI and SUI by category for tree map
   tar_target(p2_sui_svi_HUC8_df,
              join_svi_sui(sui_in = p2_sui_mean_HUC8,
-                          svi_in = p2_svi_mean_HUC8))
+                          svi_in = p2_svi_mean_HUC8)),
+  
+  # POPULATION DATA
+  tar_target(p2_popn_HUC8_df,
+             clean_popn_data(popn_in = p1_popn_csv,
+                             crosswalk_in = p1_wsa_crosswalk_csv)),
+  # join sui with population data
+  tar_target(p2_sui_popn_df,
+             join_popn_to_sui(sui_in = p2_sui_yearly_HUC8 |> filter(year == 2020),
+                              popn_in = p2_popn_HUC8_df))
   
 )
