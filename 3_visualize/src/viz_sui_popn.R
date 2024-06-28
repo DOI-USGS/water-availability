@@ -64,8 +64,8 @@ viz_popn_circles <- function(in_df,
                  color = "black", fill = "white", size = 3, label.size = NA)+
       geom_text(data = part_to_whole_prop,
                 aes(x = year, y = pos, label = sui_factor),
-                color = "black", size = 4,
-                hjust = 1.7)+
+                color = "black", size = 3,
+                hjust = -0, nudge_x = 0.28)+
       scale_fill_manual(values = col_pal, 
                         breaks = c("Severe", "High", "Moderate", "Low", "Very low/\nnone"))+
       scale_color_manual(values = col_pal, 
@@ -79,22 +79,16 @@ viz_popn_circles <- function(in_df,
          xlim = c(0, 1)) +
     # the main plot
     draw_plot(circle_plot,
-              x = 0.27, y = 0.04,
-              height = 0.8, width = 0.8) +
+              x = 0.14, y = 0.04,
+              height = 0.95, width = 0.95) +
     draw_plot(bar_plot,
-              x = 0.04, y = 0.01,
-              height = 0.94, width = 0.25) +
+              x = -0.1, y = 0.1,
+              height = 0.91, width = 0.35) +
     # explainer text
     draw_label("1 circle = 1 watershed (huc12)\nSize = population",
                fontfamily = fonts$handwriting_font,
-               x = 0.93, y = 0.73,
+               x = 0.93, y = 0.88,
                hjust = 1, vjust = 0,
-               color = "black", size = 15) +
-    # explainer text
-    draw_label("25.8 million people\nlive in areas with\nsevere/high water stress",
-               fontfamily = fonts$handwriting_font,
-               x = 0.29, y = 0.865,
-               hjust = 0, vjust = 0.5,
                color = "black", size = 15) 
   
   ggsave(filename = png_out, 
