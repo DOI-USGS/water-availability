@@ -7,56 +7,64 @@ viz_svi_sui <- function(in_df,
                         height){
   
   plot_df <- in_df |> 
-    mutate(svi_factor = factor(svi_category,
-                               levels = c("Low SVI", 
-                                          "Moderate SVI", 
-                                          "High SVI",
-                                          "Severe SVI")),
-           sui_factor = factor(sui_category,
+    mutate(sui_factor = factor(sui_category,
                                levels = c("Low SUI",
-                                          "Moderate SUI",
                                           "High SUI"),
-                               labels = c("Wet", "Dry", "Severe")))
+                               labels = c("Wet", "Dry")),
+           join_factor = factor(join_category,
+                                levels = c(
+                                  "High SUI-More Vulnerable",
+                                  "High SUI-Less Vulnerable",
+                                  "Low SUI-More Vulnerable",
+                                  "Low SUI-Less Vulnerable")))
   
   plot_sf <- in_sf |>
     filter( ! is.na(sui_category), ! is.na(svi_category)) |>
-    mutate(join_category = sprintf("%s-%s", sui_category, svi_category))
+    mutate(join_category = sprintf("%s-%s", sui_category, svi_category),
+           join_factor = factor(join_category,
+                                levels = c(
+                                  "High SUI-More Vulnerable",
+                                  "High SUI-Less Vulnerable",
+                                  "Low SUI-More Vulnerable",
+                                  "Low SUI-Less Vulnerable")))
   
   
   legend_n_hucs <- ggplot(plot_df,
-                          aes(y = n_hucs, x = sui_factor, fill = join_category)) +
+                          aes(y = n_hucs, x = sui_factor, fill = join_factor)) +
     geom_bar(position = "stack", stat = "identity") +
     ylab("Number") +
-    # same styles as belo
-    scale_fill_manual(values = c(color_scheme$wet_blue_dark, 
-                                 color_scheme$wet_blue_light,
-                                 color_scheme$dry_red_dark,
-                                 color_scheme$dry_red_light)) +
+    # same styles as below
+    scale_fill_manual(values = c(
+      color_scheme$dry_red_dark,
+      color_scheme$dry_red_light,
+      color_scheme$wet_blue_dark,
+      color_scheme$wet_blue_light)) +
     theme_minimal() +
     theme(legend.position = "none",
           axis.title.x = element_blank())
   
   legend_prop_hucs <- ggplot(plot_df,
-                             aes(y = n_hucs, x = sui_factor, fill = join_category)) +
+                             aes(y = n_hucs, x = sui_factor, fill = join_factor)) +
     geom_bar(position = "fill", stat = "identity") +
     ylab("Proportion") +
     # same styles as above
-    scale_fill_manual(values = c(color_scheme$wet_blue_dark, 
-                                 color_scheme$wet_blue_light,
-                                 color_scheme$dry_red_dark,
-                                 color_scheme$dry_red_light)) +
+    scale_fill_manual(values = c(
+      color_scheme$dry_red_dark,
+      color_scheme$dry_red_light,
+      color_scheme$wet_blue_dark,
+      color_scheme$wet_blue_light)) +
     theme_minimal() +
     theme(legend.position = "none",
           axis.title.x = element_blank())
   
    map <- ggplot(plot_sf) +
-    geom_sf(aes(fill = join_category),
+    geom_sf(aes(fill = join_factor),
             color = NA, size = 0)  +
     scale_fill_manual(values = c(
-      ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_dark),
-      ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_light),
       color_scheme$dry_red_dark,
-      color_scheme$dry_red_light)) +
+      color_scheme$dry_red_light,
+      ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_dark),
+      ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_light))) +
     theme_void() +
     theme(legend.position = "none")
   

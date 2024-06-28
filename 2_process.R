@@ -108,8 +108,6 @@ p2_targets <- list(
                # add in mean SUI 
                dplyr::left_join(p2_sui_mean_HUC8,
                                 by = "HUC8") |>
-               dplyr::left_join(p2_sui_yearly_HUC8, 
-                                by = "HUC8") |>
                dplyr::left_join(p2_svi_mean_HUC8,
                                 by = "HUC8")
              
