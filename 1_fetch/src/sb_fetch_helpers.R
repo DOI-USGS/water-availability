@@ -137,8 +137,7 @@ sb_initialize_and_download <- function(sb_id,
         sb_id = sb_id,
         names = names,
         destinations = destinations,
-        overwrite_file = TRUE,
-        ...
+        overwrite_file = TRUE
       )
       
     }
@@ -148,8 +147,7 @@ sb_initialize_and_download <- function(sb_id,
       sb_id = sb_id,
       names = names,
       destinations = destinations,
-      overwrite_file = overwrite_fileL,
-      ...
+      overwrite_file = overwrite_fileL
     )
   }
   

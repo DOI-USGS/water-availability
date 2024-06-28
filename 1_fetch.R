@@ -179,5 +179,18 @@ p1_targets <- list(
                destinations = "1_fetch/in/HUC12_SVI.csv",
                overwrite_fileL = FALSE
              ),
-             format = "file")
+             format = "file"),
+  
+  # Population data from water use modeling team
+  tar_target(p1_popn_csv,
+             sb_initialize_and_download(
+               sb_id = "6622aa30d34e7eb9eb7f99b5",
+               names = "PS_WSA_per_capita_2000_2020_LMadd_lead0.csv",
+               destinations = "1_fetch/in/PS_WSA_per_capita_2000_2020_LMadd_lead0.csv",
+               overwrite_file = overwrite_fileL
+             ),
+             format = "file"),
+  # Crosswalk to convert from water service area (wsa_agidf) to HUC12
+  tar_target(p1_wsa_crosswalk_csv,
+             "1_fetch/in/huc12_disaggregation.csv")
 )

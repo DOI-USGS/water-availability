@@ -14,6 +14,7 @@ tar_option_set(packages = c(
   "lubridate",
   "rmapshaper",
   "nngeo",
+  "prettyunits",
   # visualize
   "gridSVG",
   "scico",
@@ -46,6 +47,8 @@ tar_option_set(packages = c(
 #     # AggReg = Aggregated regions
 #     # Reg = hydrologic regions
 #     # svi = social vulnerability index
+#     # popn = population information from water use modeling team
+#     # wsa = water service area (census areas related to per capita water use)
 
 # Phase target makefiles
 #   NEED to run 0_config.R first unless you've already fetched SB items
