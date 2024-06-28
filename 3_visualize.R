@@ -2,6 +2,7 @@ source("3_visualize/src/svg_helpers.R")
 source("3_visualize/src/viz_dumbbell.R")
 source("3_visualize/src/viz_wheatfield.R")
 source("3_visualize/src/viz_svi_sui.R")
+source("3_visualize/src/viz_sui_popn.R")
 
 p3_targets <- list(
   ##############################################
@@ -36,22 +37,26 @@ p3_targets <- list(
   tar_target(p3_colors_balance,
              p3_colors_website |> bind_cols(
                tibble(
-               # Water balance (wet/dry)
-               wet_blue_dark = "#39424f",
-               wet_blue_light = "#80909D",
-               dry_red_dark = "#965a5b",
-               dry_red_light = "#CFACAB"
-             ))),
-
+                 # Water balance (wet/dry)
+                 wet_blue_dark = "#39424f",
+                 wet_blue_light = "#80909D",
+                 mid_cream = "#E8E8E3",
+                 dry_red_dark = "#965a5b",
+                 dry_red_light = "#CFACAB"
+               ))),
+  
   tar_target(p3_fonts_website,
              tibble(
                legend_font = "Source Sans Pro",
-               supporting_font = "Source Sans Pro"
+               supporting_font = "Source Sans Pro",
+               handwriting_font = "Caveat"
              )),
   tar_target(p3_load_legend_font,
              sysfonts::font_add_google(p3_fonts_website$legend_font)),
   tar_target(p3_load_support_font,
              sysfonts::font_add_google(p3_fonts_website$supporting_font)),
+  tar_target(p3_load_hw_font,
+             sysfonts::font_add_google(p3_fonts_website$handwriting_font)),
   
   ########################
   # SVG to overlay maps for website
@@ -77,6 +82,15 @@ p3_targets <- list(
   #             high/severe water stress.
   #
   #
+  tar_target(p2_popn_circles_CONUS_df,
+             viz_popn_circles(in_df = p2_sui_popn_df,
+                              npoints = 50,
+                              color_scheme = p3_colors_balance,
+                              fonts = p3_fonts_website,
+                              png_out = "src/assets/images/k03_sui_popn.png",
+                              width = 6,
+                              height = 6),
+             format = "file"),
   
   ##############################################
   # 

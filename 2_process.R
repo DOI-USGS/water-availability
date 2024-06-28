@@ -37,12 +37,12 @@ p2_targets <- list(
              )
   ),
   # Master crosswalk at the HUC12 level
-  tar_target(p1_CONUS_crosswalk_HUC12_df,
+  tar_target(p2_CONUS_crosswalk_HUC12_df,
              readr::read_csv(p1_CONUS_crosswalk, skip = 1)|>
                filter(AggRegion_nam != "NULL")),
   # Master crosswalk at the HUC8 level
-  tar_target(p1_CONUS_crosswalk_HUC8_df,
-             p1_CONUS_crosswalk_HUC12_df |>
+  tar_target(p2_CONUS_crosswalk_HUC8_df,
+             p2_CONUS_crosswalk_HUC12_df |>
                group_by(HUC8) |>
                reframe(AggRegion_nam = unique(AggRegion_nam),
                        Region_nam = unique(Region_nam))),
@@ -80,7 +80,7 @@ p2_targets <- list(
                filter(region_group == "CONUS") |>
                st_intersection(st_union(p2_Reg_sf)) |>
                # add in region names
-               inner_join(p1_CONUS_crosswalk_HUC8_df, by = "HUC8") |>
+               inner_join(p2_CONUS_crosswalk_HUC8_df, by = "HUC8") |>
                filter(! is.na(Region_nam)) 
   ),
   
@@ -247,6 +247,7 @@ p2_targets <- list(
   # join sui with population data
   tar_target(p2_sui_popn_df,
              join_popn_to_sui(sui_in = p2_sui_yearly_HUC8 |> filter(year == 2020),
-                              popn_in = p2_popn_HUC8_df))
+                              popn_in = p2_popn_HUC8_df,
+                              region_xwalk = p2_CONUS_crosswalk_HUC8_df))
   
 )

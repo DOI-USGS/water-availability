@@ -20,7 +20,8 @@ tar_option_set(packages = c(
   "scico",
   "sysfonts",
   "magick",
-  "cowplot"))
+  "cowplot",
+  "packcircles"))
 
 ### Naming conventions:
 # Water Supply = ws

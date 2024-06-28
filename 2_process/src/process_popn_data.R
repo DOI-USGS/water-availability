@@ -29,7 +29,7 @@ clean_popn_data <- function(popn_in,
 }
 
 
-join_popn_to_sui <- function(sui_in, popn_in){
+join_popn_to_sui <- function(sui_in, popn_in, region_xwalk){
   
   # join data sets
   sui_popn_join <- sui_in |>
@@ -46,5 +46,8 @@ join_popn_to_sui <- function(sui_in, popn_in){
     # prepare for bubble packing
     arrange(sui_factor) |>
     mutate(label_pop = ifelse(popn_huc > 1500000, pretty_num(popn_huc), NA))
+  
+  sui_popn_AggReg <- sui_popn_join |>
+    inner_join(region_xwalk, by = "HUC8")
   
 }
