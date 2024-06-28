@@ -3,6 +3,7 @@ source("2_process/src/process_WBD_GDB.R")
 source("2_process/src/process_ps_dumbbell.R")
 source("2_process/src/process_wu_data.R")
 source("2_process/src/process_sui_data.R")
+source("2_process/src/process_svi_data.R")
 
 p2_targets <- list(
   ##############################################
@@ -204,15 +205,18 @@ p2_targets <- list(
   # mean by HUC8
   tar_target(p2_sui_mean_HUC8,
              mean_sui(data_in = p2_sui_raw,
+                      HUC_level = 8,
                       thresholds = p2_sui_thresholds,
                       min_year = 2010,
                       max_year = 2020,
-                      HUC_level = 8)
+                      by_yearL = FALSE)
   ),
   # By HUC8 and Year
   tar_target(p2_sui_yearly_HUC8,
-             mean_sui_by_year(data_in = p2_sui_raw,
-                              HUC_level = 8)),
+             mean_sui(data_in = p2_sui_raw,
+                      thresholds = p2_sui_thresholds,
+                      HUC_level = 8,
+                      by_yearL = TRUE)),
   
   ##############################################
   # 
@@ -229,34 +233,9 @@ p2_targets <- list(
                              show_col_types = FALSE)),
   
   tar_target(p2_svi_mean_HUC8,
-             p2_svi_raw |> 
-               mutate(HUC8 = substr(HUC12, 1, 8)) |>
-               group_by(HUC8) |>
-               summarize(mean_svi = mean(overall_weighted_SVI, na.rm = TRUE),
-                         mean_svi_theme1 = mean(theme1_weighted_SVI, na.rm = TRUE),
-                         mean_svi_theme2 = mean(theme2_weighted_SVI, na.rm = TRUE),
-                         mean_svi_theme3 = mean(theme3_weighted_SVI, na.rm = TRUE),
-                         mean_svi_theme4 = mean(theme4_weighted_SVI, na.rm = TRUE)) |>
-               mutate(svi_category = case_when(mean_svi <= p2_svi_thresholds$lower ~ "Low SVI",
-                                               mean_svi <= p2_svi_thresholds$upper ~ "High SVI",
-                                               mean_svi <= 1.0 ~ "Severe SVI",
-                                               TRUE ~ NA),
-                      svi1_category = case_when(mean_svi_theme1 <= p2_svi_thresholds$lower ~ "Low SVI",
-                                                mean_svi_theme1 <= p2_svi_thresholds$upper ~ "High SVI",
-                                                mean_svi_theme1 <= 1.0 ~ "Severe SVI",
-                                                TRUE ~ NA),
-                      svi2_category = case_when(mean_svi_theme2 <= p2_svi_thresholds$lower ~ "Low SVI",
-                                                mean_svi_theme2 <= p2_svi_thresholds$upper ~ "High SVI",
-                                                mean_svi_theme2 <= 1.0 ~ "Severe SVI",
-                                                TRUE ~ NA),
-                      svi3_category = case_when(mean_svi_theme3 <= p2_svi_thresholds$lower ~ "Low SVI",
-                                                mean_svi_theme3 <= p2_svi_thresholds$upper ~ "High SVI",
-                                                mean_svi_theme3 <= 1.0 ~ "Severe SVI",
-                                                TRUE ~ NA),
-                      svi4_category = case_when(mean_svi_theme4 <= p2_svi_thresholds$lower ~ "Low SVI",
-                                                mean_svi_theme4 <= p2_svi_thresholds$upper ~ "High SVI",
-                                                mean_svi_theme4 <= 1.0 ~ "Severe SVI",
-                                                TRUE ~ NA))),
+             mean_svi(data_in = p2_svi_raw,
+                      HUC_level = 8,
+                      thresholds = p2_svi_thresholds)),
   # Join SVI and SUI by category for tree map
   tar_target(p2_sui_svi_HUC8_df,
              join_svi_sui(sui_in = p2_sui_mean_HUC8,
