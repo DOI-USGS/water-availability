@@ -3,19 +3,23 @@ library(tidyverse)
 library(sf)
 
 # Note: also requires installing (but not loading) "tidytable"
-tar_option_set(packages = c("sbtools",
-                            "tidyverse",
-                            "sf",
-                            "rmapshaper",
-                            "nngeo",
-                            "stringr",
-                            "gridSVG",
-                            "lubridate",
-                            "ggfx",
-                            "scico",
-                            "sysfonts",
-                            "magick",
-                            "cowplot"))
+tar_option_set(packages = c(
+  # global
+  "tidyverse",
+  "sf",
+  # fetch
+  "sbtools",
+  # process
+  "stringr",
+  "lubridate",
+  "rmapshaper",
+  "nngeo",
+  # visualize
+  "gridSVG",
+  "scico",
+  "sysfonts",
+  "magick",
+  "cowplot"))
 
 ### Naming conventions:
 # Water Supply = ws

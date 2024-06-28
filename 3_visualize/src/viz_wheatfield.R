@@ -38,15 +38,8 @@ plot_wheatfield <- function(data_in,
       y_end = y + y_dif)
   
   ggplot(regions_sf) + 
-    ggfx::with_shadow(
-      geom_sf(data = regions_sf, 
-              color = color_scheme$svg_fill_default, 
-              fill = color_scheme$svg_col_default, 
-              size = 0.1),
-      colour = color_scheme$shadow,
-      x_offset = 0,
-      y_offset = 0,
-      sigma = 12) +
+    geom_sf(fill = color_scheme$svg_col_default,
+            color = NA, size = 0)  +
     geom_segment(data = plot_data, 
                  aes(col = shifted_pct, 
                      x = x, y = y, 

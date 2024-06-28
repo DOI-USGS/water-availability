@@ -34,8 +34,6 @@ import photoIrrigation from "@/assets/images/k08_ir_wheatfield_CONUS.png";
 
 const imgSrc = ref('@/assets/images/ws_ps_dumbbell_centered_CONUS.png');
 
-const imgSrc = ref('@/assets/images/ws_ps_dumbbell_centered_CONUS.png');
-
 const setDefaultImgSrc = () => {
   import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(img => {
     imgSrc.value = img.default;
