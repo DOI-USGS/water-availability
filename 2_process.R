@@ -45,7 +45,8 @@ p2_targets <- list(
              p2_CONUS_crosswalk_HUC12_df |>
                group_by(HUC8) |>
                reframe(AggRegion_nam = unique(AggRegion_nam),
-                       Region_nam = unique(Region_nam))),
+                       Region_nam = unique(Region_nam)) |>
+               left_join(p2_region_name_xwalk, by = "Region_nam")),
   
   
   ##############################################

@@ -82,15 +82,22 @@ p3_targets <- list(
   #             high/severe water stress.
   #
   #
-  tar_target(p2_popn_circles_CONUS_df,
-             viz_popn_circles(in_df = p2_sui_popn_df,
-                              npoints = 50,
-                              color_scheme = p3_colors_balance,
-                              fonts = p3_fonts_website,
-                              png_out = "src/assets/images/k03_sui_popn.png",
-                              width = 6,
-                              height = 6),
-             format = "file"),
+  # Use static branching
+  tar_map(
+    values = tibble(
+      AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
+      ),
+    tar_target(p2_popn_circles_CONUS_df,
+               viz_popn_circles(in_df = p2_sui_popn_df,
+                                region = AggReg,
+                                color_scheme = p3_colors_balance,
+                                fonts = p3_fonts_website,
+                                png_out = sprintf("src/assets/images/k03_sui_popn_%s.png", AggReg),
+                                width = 6,
+                                height = 6),
+               format = "file")
+  ),
+
   
   ##############################################
   # 

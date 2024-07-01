@@ -1,5 +1,5 @@
 viz_popn_circles <- function(in_df,
-                             npoints = 50,
+                             region,
                              color_scheme,
                              fonts,
                              png_out,
@@ -10,8 +10,9 @@ viz_popn_circles <- function(in_df,
   packing <- packcircles::circleProgressiveLayout(in_df$popn_huc, 
                                                   sizetype = "area")
   circle_pack_data <- cbind(in_df, packing)
-  dat.gg <- circleLayoutVertices(packing, npoints = npoints)
+  dat.gg <- circleLayoutVertices(packing, npoints = 50)
   dat.gg$value <- rep(in_df$sui_category, each = 51)
+  dat.gg$AggReg <- rep(in_df$AggReg_nam_nospace, each = 51)
   
   # prep data for proportion bar (summed to each SUI class)
   part_to_whole_summed <- in_df |>
@@ -34,24 +35,52 @@ viz_popn_circles <- function(in_df,
                "Very low/\nnone" = color_scheme$wet_blue_dark)
   
   # circle packing plot
-  (circle_plot <- ggplot() + 
-      geom_polygon(data = dat.gg, aes(x, y, group = id, fill = as.factor(value)), 
-                   linewidth = 0.1,
-                   colour = "black") + 
-      scale_fill_manual(values = col_pal, 
-                        breaks = c("Severe", "High", "Moderate", "Low", "Very low/\nnone"), 
-                        name = "Water Stress Level") +
-      geom_text(data = subset(circle_pack_data, 
-                              sui_factor %in% c("High", "Moderate", "Low")), 
-                aes(x, y, label = label_pop), size = 3, color = "black")+
-      geom_text(data = subset(circle_pack_data, 
-                              sui_factor %in% c("Severe", "Very low/\nnone")), 
-                aes(x, y, label = label_pop), size = 3, color = "white")+
-      theme_void() + 
-      theme(legend.position="none", 
-            plot.margin = unit(c(1,1,1,1),"cm")) + 
-      coord_equal()
-  )
+  if(region != "CONUS") {
+    (circle_plot <- ggplot() + 
+       geom_polygon(data = dat.gg, 
+                    aes(x, y, group = id, fill = as.factor(value)), 
+                    linewidth = 0.1,
+                    colour = "black", alpha = 0.3) + 
+       geom_polygon(data = dat.gg |> filter(AggReg == region), 
+                    aes(x, y, group = id, fill = as.factor(value)), 
+                    linewidth = 0.1,
+                    colour = "black") + 
+       scale_fill_manual(values = col_pal, 
+                         breaks = c("Severe", "High", "Moderate", "Low", "Very low/\nnone"), 
+                         name = "Water Stress Level") +
+       geom_text(data = subset(circle_pack_data, 
+                               sui_factor %in% c("High", "Moderate", "Low")), 
+                 aes(x, y, label = label_pop), size = 3, color = "black")+
+       geom_text(data = subset(circle_pack_data, 
+                               sui_factor %in% c("Severe", "Very low/\nnone")), 
+                 aes(x, y, label = label_pop), size = 3, color = "white")+
+       theme_void() + 
+       theme(legend.position="none", 
+             plot.margin = unit(c(1,1,1,1),"cm")) + 
+       coord_equal()
+    )
+  } else {
+    # circle packing plot
+    (circle_plot <- ggplot() + 
+       geom_polygon(data = dat.gg, aes(x, y, group = id, fill = as.factor(value)), 
+                    linewidth = 0.1,
+                    colour = "black") + 
+       scale_fill_manual(values = col_pal, 
+                         breaks = c("Severe", "High", "Moderate", "Low", "Very low/\nnone"), 
+                         name = "Water Stress Level") +
+       geom_text(data = subset(circle_pack_data, 
+                               sui_factor %in% c("High", "Moderate", "Low")), 
+                 aes(x, y, label = label_pop), size = 3, color = "black")+
+       geom_text(data = subset(circle_pack_data, 
+                               sui_factor %in% c("Severe", "Very low/\nnone")), 
+                 aes(x, y, label = label_pop), size = 3, color = "white")+
+       theme_void() + 
+       theme(legend.position="none", 
+             plot.margin = unit(c(1,1,1,1),"cm")) + 
+       coord_equal()
+    )
+  }
+
   
   # stacked bar
   (bar_plot <- ggplot() +
