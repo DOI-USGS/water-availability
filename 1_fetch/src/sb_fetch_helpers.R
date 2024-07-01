@@ -106,10 +106,11 @@ sb_initialize_and_download <- function(sb_id,
   # Does destination file already exist?
   does_file_exist <- file.exists(destinations)
   
+  # Initialize ScienceBase session
+  sb_login_cached(renviron_file = renviron_file)
+  
   if(does_file_exist){
-    
-    # Initialize ScienceBase session
-    sb_login_cached(renviron_file = renviron_file)
+
     
     item_metadata <- sbtools::item_get(sb_id)$files
     
@@ -132,6 +133,9 @@ sb_initialize_and_download <- function(sb_id,
     download_needed <- ul_time > dl_time
     
     if(download_needed){
+      
+
+      
       # Download SB files
       sbtools::item_file_download(
         sb_id = sb_id,
@@ -142,6 +146,7 @@ sb_initialize_and_download <- function(sb_id,
       
     }
   } else {
+    
     # file doesn't yet exist, so download
     sbtools::item_file_download(
       sb_id = sb_id,
