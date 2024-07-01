@@ -20,10 +20,9 @@ clean_popn_data <- function(popn_in,
   
   # summarize by HUC8
   popn_huc8 <- popn_join |>
-    mutate(HUC8 = substr(HUC12, 1, 8)) |>
-    group_by(HUC8) |>
+    group_by(HUC12) |>
     summarize(popn_huc = sum(popn, na.rm = TRUE)) |>
-    select(HUC8, popn_huc)
+    select(HUC12, popn_huc)
   
   return(popn_huc8)
 }
@@ -33,7 +32,7 @@ join_popn_to_sui <- function(sui_in, popn_in, region_xwalk){
   
   # join data sets
   sui_popn_join <- sui_in |>
-    inner_join(popn_in, by = "HUC8") |>
+    inner_join(popn_in, by = "HUC12") |>
     # reclassify water stress
     mutate(sui_category = case_when(mean_sui >= 0 & mean_sui < 0.2 ~ "Very low/\nnone",
                                  mean_sui >= 0.2 & mean_sui < 0.4 ~ "Low",
@@ -48,6 +47,6 @@ join_popn_to_sui <- function(sui_in, popn_in, region_xwalk){
     mutate(label_pop = ifelse(popn_huc > 1500000, pretty_num(popn_huc), NA))
   
   sui_popn_AggReg <- sui_popn_join |>
-    inner_join(region_xwalk, by = "HUC8")
+    inner_join(region_xwalk, by = "HUC12")
   
 }

@@ -39,14 +39,14 @@ p2_targets <- list(
   # Master crosswalk at the HUC12 level
   tar_target(p2_CONUS_crosswalk_HUC12_df,
              readr::read_csv(p1_CONUS_crosswalk, skip = 1)|>
-               filter(AggRegion_nam != "NULL")),
+               filter(AggRegion_nam != "NULL") |>
+               left_join(p2_region_name_xwalk, by = "Region_nam")),
   # Master crosswalk at the HUC8 level
   tar_target(p2_CONUS_crosswalk_HUC8_df,
              p2_CONUS_crosswalk_HUC12_df |>
                group_by(HUC8) |>
                reframe(AggRegion_nam = unique(AggRegion_nam),
-                       Region_nam = unique(Region_nam)) |>
-               left_join(p2_region_name_xwalk, by = "Region_nam")),
+                       Region_nam = unique(Region_nam)) ),
   
   
   ##############################################
@@ -212,11 +212,13 @@ p2_targets <- list(
                       by_yearL = FALSE)
   ),
   # By HUC8 and Year
-  tar_target(p2_sui_yearly_HUC8,
+  tar_target(p2_sui_2020_HUC12,
              mean_sui(data_in = p2_sui_raw,
                       thresholds = p2_sui_thresholds,
-                      HUC_level = 8,
-                      by_yearL = TRUE)),
+                      HUC_level = 12,
+                      min_year = 2020,
+                      max_year = 2020,
+                      by_yearL = FALSE)),
   
   ##############################################
   # 
@@ -242,13 +244,13 @@ p2_targets <- list(
                           svi_in = p2_svi_mean_HUC8)),
   
   # POPULATION DATA
-  tar_target(p2_popn_HUC8_df,
+  tar_target(p2_popn_HUC12_df,
              clean_popn_data(popn_in = p1_popn_csv,
                              crosswalk_in = p1_wsa_crosswalk_csv)),
   # join sui with population data
   tar_target(p2_sui_popn_df,
-             join_popn_to_sui(sui_in = p2_sui_yearly_HUC8 |> filter(year == 2020),
-                              popn_in = p2_popn_HUC8_df,
-                              region_xwalk = p2_CONUS_crosswalk_HUC8_df))
+             join_popn_to_sui(sui_in = p2_sui_2020_HUC12,
+                              popn_in = p2_popn_HUC12_df,
+                              region_xwalk = p2_CONUS_crosswalk_HUC12_df))
   
 )
