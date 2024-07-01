@@ -81,14 +81,15 @@ viz_popn_circles <- function(in_df,
                aes(x = year, 
                    y = sum_pop, 
                    fill = sui_factor),
-               width = 0.4) +
+               width = 0.35) +
       geom_text(data = reg_part_to_whole_prop,
                 aes(x = year, y = pos, label = label_pop),
-                color = "black", size = 3)+
+                color = "black", size = 3,
+                hjust = 1, nudge_x = -0.23) +
       geom_text(data = reg_part_to_whole_prop,
                 aes(x = year, y = pos, label = sui_factor),
                 color = "black", size = 3,
-                hjust = -0, nudge_x = 0.28)+
+                hjust = 0, nudge_x = 0.23)+
       scale_fill_manual(values = col_pal, 
                         breaks = c("Severe", "High", "Moderate", "Low", "Very low/\nnone"))+
       ylim(c(0, total_bar_height + 10000)) +
@@ -101,10 +102,10 @@ viz_popn_circles <- function(in_df,
          xlim = c(0, 1)) +
     # the main plot
     draw_plot(circle_plot,
-              x = 0.14, y = 0.04,
+              x = 0.15, y = 0.04,
               height = 0.95, width = 0.95) +
     draw_plot(bar_plot,
-              x = -0.1, y = 0.1,
+              x = -0.02, y = 0.1,
               height = 0.91, width = 0.35) +
     # explainer text
     draw_label("1 circle = 1 watershed (huc12)\nSize = population",
