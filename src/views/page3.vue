@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="viz-container">
           <img class="viz-placeholder"
-            src="@/assets/images/k03_sui_popn.png"
+            src="@/assets/images/k03_sui_popn_CONUS.png"
           >
         </div>
         <PageCarousel></PageCarousel>
