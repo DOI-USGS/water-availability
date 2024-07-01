@@ -108,7 +108,7 @@ viz_popn_circles <- function(in_df,
               x = -0.02, y = 0.1,
               height = 0.91, width = 0.35) +
     # explainer text
-    draw_label("1 circle = 1 watershed (huc12)\nSize = population",
+    draw_label("1 circle = 1 watershed (huc12)\nColor = water stress\nSize = population",
                fontfamily = fonts$handwriting_font,
                x = 0.93, y = 0.88,
                hjust = 1, vjust = 0,
