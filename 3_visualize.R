@@ -78,7 +78,7 @@ p3_targets <- list(
   ##############################################
   # 
   #           KEY TAKEAWAY 3: 
-  #             Almost 30 million people live in areas of 
+  #             More than 30 million people live in areas of 
   #             high/severe water stress.
   #
   #
