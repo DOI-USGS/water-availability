@@ -246,11 +246,10 @@ p2_targets <- list(
   # POPULATION DATA
   tar_target(p2_popn_HUC12_df,
              clean_popn_data(popn_in = p1_popn_csv,
-                             crosswalk_in = p1_wsa_crosswalk_csv)),
+                             crosswalk_in = p2_CONUS_crosswalk_HUC12_df)),
   # join sui with population data
   tar_target(p2_sui_popn_df,
              join_popn_to_sui(sui_in = p2_sui_2020_HUC12,
-                              popn_in = p2_popn_HUC12_df,
-                              region_xwalk = p2_CONUS_crosswalk_HUC12_df))
+                              popn_in = p2_popn_HUC12_df))
   
 )

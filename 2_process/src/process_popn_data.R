@@ -1,34 +1,22 @@
 clean_popn_data <- function(popn_in,
                             crosswalk_in){
   
-  # Clean crosswalk data
-  crosswalk_clean <- read_csv(crosswalk_in, show_col_types = FALSE) |>
-    rename(sys_id = wsa_agidf,
-           HUC12 = huc12) |>
-    distinct(sys_id, .keep_all = TRUE)
-  
   # Clean population data
   popn_raw <- readr::read_csv(popn_in,
                               show_col_types = FALSE) |>
-    rename(popn = pop)
+    rename(HUC12 = WBDHU12_HUC12,
+           popn = UStracts_csv_P1_001N)
   
   # Join crosswalk to population data
   popn_join <- popn_raw |>
-    left_join(crosswalk_clean, by = "sys_id") |>
-    filter(Year == 2020) |>
-    select(-wu_frac, -est_per_capita, -sys_id, -Year) 
+    inner_join(crosswalk_in, by = "HUC12") |>
+    select(-WBDHU12_NAME, OID_) 
   
-  # summarize by HUC8
-  popn_huc8 <- popn_join |>
-    group_by(HUC12) |>
-    summarize(popn_huc = sum(popn, na.rm = TRUE)) |>
-    select(HUC12, popn_huc)
-  
-  return(popn_huc8)
+  return(popn_join)
 }
 
 
-join_popn_to_sui <- function(sui_in, popn_in, region_xwalk){
+join_popn_to_sui <- function(sui_in, popn_in){
   
   # join data sets
   sui_popn_join <- sui_in |>
@@ -44,9 +32,8 @@ join_popn_to_sui <- function(sui_in, popn_in, region_xwalk){
                                           "Low", "Very low/\nnone"))) |>
     # prepare for bubble packing
     arrange(sui_factor) |>
-    mutate(label_pop = ifelse(popn_huc > 1500000, pretty_num(popn_huc), NA))
+    mutate(label_pop = ifelse(popn > 1500000, pretty_num(popn), NA))
   
-  sui_popn_AggReg <- sui_popn_join |>
-    inner_join(region_xwalk, by = "HUC12")
+  return(sui_popn_join)
   
 }

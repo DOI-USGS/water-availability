@@ -7,21 +7,21 @@ viz_popn_circles <- function(in_df,
                              height){
   
   # process data for circle packing
-  packing <- packcircles::circleProgressiveLayout(in_df$popn_huc, 
+  packing <- packcircles::circleProgressiveLayout(in_df$popn, 
                                                   sizetype = "area")
   circle_pack_data <- cbind(in_df, packing)
-  dat.gg <- circleLayoutVertices(packing, npoints = 50)
+  dat.gg <- packcircles::circleLayoutVertices(packing, npoints = 50)
   dat.gg$value <- rep(in_df$sui_category, each = 51)
   dat.gg$AggReg <- rep(in_df$AggReg_nam_nospace, each = 51)
   
 
   # prep data for proportion bar (summed to each SUI class)
-  total_bar_height = sum(in_df$popn_huc, na.rm = TRUE)
+  total_bar_height = sum(in_df$popn, na.rm = TRUE)
   
   reg_part_to_whole_summed <- in_df |>
     filter(if(region == "CONUS") TRUE else AggReg_nam_nospace == region) |>
     group_by(sui_factor) |>
-    summarize(sum_pop = sum(popn_huc, na.rm = TRUE)) |>
+    summarize(sum_pop = sum(popn, na.rm = TRUE)) |>
     ungroup() |>
     mutate(year = "2020") 
   
@@ -30,7 +30,7 @@ viz_popn_circles <- function(in_df,
     mutate(pos = cumsum(sum_pop) - sum_pop/2,
            ymax = cumsum(sum_pop)) |>
     arrange(sui_factor) |>
-    mutate(label_pop = pretty_num(sum_pop))
+    mutate(label_pop = prettyunits::pretty_num(sum_pop))
   
   
   ## select data for plot type
@@ -89,7 +89,7 @@ viz_popn_circles <- function(in_df,
       geom_text(data = reg_part_to_whole_prop,
                 aes(x = year, y = pos, label = sui_factor),
                 color = "black", size = 3,
-                hjust = 0, nudge_x = 0.23)+
+                hjust = 0, nudge_x = 0.21)+
       scale_fill_manual(values = col_pal, 
                         breaks = c("Severe", "High", "Moderate", "Low", "Very low/\nnone"))+
       ylim(c(0, total_bar_height + 10000)) +
@@ -106,7 +106,7 @@ viz_popn_circles <- function(in_df,
               height = 0.95, width = 0.95) +
     draw_plot(bar_plot,
               x = -0.02, y = 0.1,
-              height = 0.91, width = 0.35) +
+              height = 0.91, width = 0.31) +
     # explainer text
     draw_label("1 circle = 1 watershed (HUC12)\nColor = water stress\nSize = population",
                fontfamily = fonts$handwriting_font,

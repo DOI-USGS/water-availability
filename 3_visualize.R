@@ -87,7 +87,7 @@ p3_targets <- list(
     values = tibble(
       AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
       ),
-    tar_target(p2_popn_circles_CONUS_df,
+    tar_target(p3_popn_circles_CONUS_df,
                viz_popn_circles(in_df = p2_sui_popn_df,
                                 region = AggReg,
                                 color_scheme = p3_colors_balance,
