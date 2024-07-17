@@ -7,6 +7,7 @@ viz_popn_circles <- function(in_df,
                              height){
   
   # process data for circle packing
+  in_df <- in_df |> arrange(-mean_sui, AggRegion_nam)
   packing <- packcircles::circleProgressiveLayout(in_df$popn, 
                                                   sizetype = "area")
   circle_pack_data <- cbind(in_df, packing)
@@ -102,10 +103,10 @@ viz_popn_circles <- function(in_df,
          xlim = c(0, 1)) +
     # the main plot
     draw_plot(circle_plot,
-              x = 0.15, y = 0.04,
+              x = 0.155, y = 0.04,
               height = 0.95, width = 0.95) +
     draw_plot(bar_plot,
-              x = -0.02, y = 0.1,
+              x = -0.025, y = 0.1,
               height = 0.91, width = 0.31) +
     # explainer text
     draw_label("1 circle = 1 watershed (HUC12)\nColor = water stress\nSize = population",

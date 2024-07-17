@@ -2,16 +2,12 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
 
+
         <div class="viz-container">
-          <img class="viz-placeholder"
-            src="@/assets/images/k03_sui_popn_CONUS.png"
-          >
-        </div>
-        <div class="viz-container">
-          <p>Hover over the map</p>
+
           <AggReg class="agg-reg-svg"></AggReg>
           <img
-              id="smallerCircles"
+              id="circles"
               :src="imgSrc"
               alt=""
           >    
