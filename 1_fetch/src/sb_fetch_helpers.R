@@ -58,7 +58,7 @@ sb_initialize_and_download_zipped <- function(sb_id,
       )
       
       unzip(zipfile = destination_zip, 
-            overwrite = FALSE,
+            overwrite = overwrite_fileL,
             exdir = download_dir)
       
       file.remove(destination_zip)
@@ -74,7 +74,7 @@ sb_initialize_and_download_zipped <- function(sb_id,
     )
     
     unzip(zipfile = destination_zip, 
-          overwrite = FALSE,
+          overwrite = overwrite_fileL,
           exdir = download_dir)
     
     file.remove(destination_zip)
