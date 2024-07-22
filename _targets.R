@@ -1,20 +1,28 @@
 library(targets)
+library(tarchetypes)
 library(tidyverse)
 library(sf)
 
 # Note: also requires installing (but not loading) "tidytable"
-tar_option_set(packages = c("sbtools",
-                            "tidyverse",
-                            "sf",
-                            "rmapshaper",
-                            "nngeo",
-                            "stringr",
-                            "gridSVG",
-                            "lubridate",
-                            "ggfx",
-                            "scico",
-                            "sysfonts",
-                            "magick"))
+tar_option_set(packages = c(
+  # global
+  "tidyverse",
+  "sf",
+  # fetch
+  "sbtools",
+  # process
+  "stringr",
+  "lubridate",
+  "rmapshaper",
+  "nngeo",
+  "prettyunits",
+  # visualize
+  "gridSVG",
+  "scico",
+  "sysfonts",
+  "magick",
+  "cowplot",
+  "packcircles"))
 
 ### Naming conventions:
 # Water Supply = ws
@@ -40,7 +48,9 @@ tar_option_set(packages = c("sbtools",
 #     # CONUS = conus
 #     # AggReg = Aggregated regions
 #     # Reg = hydrologic regions
-#     # sv = social vulnerability
+#     # svi = social vulnerability index
+#     # popn = population information from water use modeling team
+#     # wsa = water service area (census areas related to per capita water use)
 
 # Phase target makefiles
 #   NEED to run 0_config.R first unless you've already fetched SB items

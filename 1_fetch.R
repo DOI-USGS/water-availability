@@ -48,6 +48,12 @@ p1_targets <- list(
                      crs_out = p1_usgs_crs,
                      exclude_non_plot_hucs = TRUE)
              ),
+  tar_target(p1_mainstem_HUC12_raw_sf,
+             prep_sf(gdb_file = p1_CONUS_mainstem_gdb,
+                     layer = "WBDHU12",
+                     crs_out = p1_usgs_crs,
+                     exclude_non_plot_hucs = TRUE)
+  ),
   
   # Crosswalk between HUC12, AggReg, and Reg
   tar_target(
@@ -150,6 +156,47 @@ p1_targets <- list(
                overwrite_fileL = FALSE
              ),
              format = "file"
-  )
+  ),
   
+  ##############################################
+  # 
+  #           WATER BALANCE DATA
+  # 
+  # WATER STRESS INDEX "SURFACE WATER SUPPLY AND USE INDEX" SUI
+  tar_target(p1_sui_csv,
+             sb_initialize_and_download(
+               sb_id = "6622aa30d34e7eb9eb7f99b5",
+               names = "water_budget_sui_ensemble.csv",
+               destinations = "1_fetch/in/water_budget_sui_ensemble.csv",
+               overwrite_fileL = FALSE
+             ),
+             format = "file"),
+  
+  ##############################################
+  # 
+  #           EXTERNAL DATA SOURCES
+  # 
+  # Social Vulnerability Index by HUC12
+  # https://www.atsdr.cdc.gov/placeandhealth/svi/at-a-glance_svi.html
+  tar_target(p1_svi_csv,
+             sb_initialize_and_download(
+               sb_id = "643706ffd34ee8d4addcc593",
+               names = "HUC12_SVI.csv",
+               destinations = "1_fetch/in/HUC12_SVI.csv",
+               overwrite_fileL = FALSE
+             ),
+             format = "file"),
+  
+  # Population data from water availability team (Ted Stets)
+  tar_target(p1_popn_csv,
+             sb_initialize_and_download(
+               sb_id = "6622aa30d34e7eb9eb7f99b5",
+               names = "USpopHUC12Export.csv",
+               destinations = "1_fetch/in/USpopHUC12Export.csv",
+               overwrite_fileL = FALSE
+             ),
+             format = "file"),
+  # Crosswalk to convert from water service area (wsa_agidf) to HUC12
+  tar_target(p1_wsa_crosswalk_csv,
+             "1_fetch/in/huc12_disaggregation.csv")
 )

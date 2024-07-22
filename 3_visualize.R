@@ -1,6 +1,8 @@
 source("3_visualize/src/svg_helpers.R")
 source("3_visualize/src/viz_dumbbell.R")
 source("3_visualize/src/viz_wheatfield.R")
+source("3_visualize/src/viz_svi_sui.R")
+source("3_visualize/src/viz_sui_popn.R")
 
 p3_targets <- list(
   ##############################################
@@ -10,34 +12,55 @@ p3_targets <- list(
   # Color theme
   tar_target(p3_colors_website,
              tibble(
-               te_gw_main = "#01A0C7", #tern_5
-               te_sw_secondary = "#1687A5",
-               te_saline = "#01F9C6",
-               ir_gw_main = "#FDFF01", #tern_9
-               ir_sw_secondary = "#D0CB02",
-               ps_gw_main = "#F41A90", #tern_1
-               ps_secondary = "#C72873",
-               tern_2 = "#73A8D2",
-               tern_3 = "#FD7FBA",
-               tern_4 = "#FEB4A6",
-               tern_6 = "#3FBAD2",
-               tern_7 = "#85CAC3",
-               tern_8 = "#FEFFA7",
-               wu_sw = "#065867",
-               wu_gw = "#F09300",
+               # elements for website components, not category specific
                svg_fill_default = "#d1cdc0",
                svg_col_default = "#edeadf", # background color of page
                shadow = "#926c68"
              )),
+  tar_target(p3_colors_wu,
+             p3_colors_website |> bind_cols(
+               tibble(
+                 # Water Use
+                 te_gw_main = "#01A0C7", #tern_5
+                 te_sw_secondary = "#1687A5",
+                 te_saline = "#01F9C6",
+                 ir_gw_main = "#FDFF01", #tern_9
+                 ir_sw_secondary = "#D0CB02",
+                 ps_gw_main = "#F41A90", #tern_1
+                 ps_secondary = "#C72873",
+                 tern_2 = "#73A8D2",
+                 tern_3 = "#FD7FBA",
+                 tern_4 = "#FEB4A6",
+                 tern_6 = "#3FBAD2",
+                 tern_7 = "#85CAC3",
+                 tern_8 = "#FEFFA7"))),
+  tar_target(p3_colors_balance,
+             p3_colors_website |> bind_cols(
+               tibble(
+                 # Water balance (wet/dry)
+                 wet_blue_dark = "#39424f",
+                 wet_blue_light = "#80909D",
+                 wet_blue_vlight = "#9EABB3",
+                 mid_vdark = "#796E58",
+                 mid_dark = "#A0937D",
+                 mid_cream = "#C3C3AC",
+                 dry_red_vdark = "#492525",
+                 dry_red_dark = "#965a5b",
+                 dry_red_light = "#CFACAB"
+               ))),
+  
   tar_target(p3_fonts_website,
              tibble(
                legend_font = "Source Sans Pro",
-               supporting_font = "Source Sans Pro"
+               supporting_font = "Source Sans Pro",
+               handwriting_font = "Caveat"
              )),
   tar_target(p3_load_legend_font,
              sysfonts::font_add_google(p3_fonts_website$legend_font)),
   tar_target(p3_load_support_font,
              sysfonts::font_add_google(p3_fonts_website$supporting_font)),
+  tar_target(p3_load_hw_font,
+             sysfonts::font_add_google(p3_fonts_website$handwriting_font)),
   
   ########################
   # SVG to overlay maps for website
@@ -59,10 +82,26 @@ p3_targets <- list(
   ##############################################
   # 
   #           KEY TAKEAWAY 3: 
-  #             Almost 30 million people live in areas of 
+  #             More than 30 million people live in areas of 
   #             high/severe water stress.
   #
   #
+  # Use static branching
+  tar_map(
+    values = tibble(
+      AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
+    ),
+    tar_target(p3_popn_circles_png,
+               viz_popn_circles(in_df = p2_sui_popn_df,
+                                region = AggReg,
+                                color_scheme = p3_colors_balance,
+                                fonts = p3_fonts_website,
+                                png_out = sprintf("src/assets/images/k03_sui_popn_%s.png", AggReg),
+                                width = 6,
+                                height = 6),
+               format = "file")
+  ),
+  
   
   ##############################################
   # 
@@ -72,6 +111,44 @@ p3_targets <- list(
   #             are considered to be socially vulnerable.
   #
   #
+  tar_target(p3_map_sui_svi_grob,
+             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
+                         dry_onlyL = FALSE,
+                         color_scheme = p3_colors_balance)),
+  tar_target(p3_map_dry_sui_svi_grob,
+             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
+                         dry_onlyL = TRUE,
+                         color_scheme = p3_colors_balance)),
+  tar_target(p3_legend_n_grob,
+             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
+                                legend_type = "Number",
+                                color_scheme = p3_colors_balance)),
+  tar_target(p3_legend_prop_grob,
+             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
+                                legend_type = "Proportion",
+                                color_scheme = p3_colors_balance)),
+  tar_target(p3_legend_explainer_grob,
+             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
+                                legend_type = "Explainer",
+                                color_scheme = p3_colors_balance)),
+  tar_target(p3_map_sui_svi_png,
+             compose_svi_plot(in_map = p3_map_sui_svi_grob,
+                              legend_n = p3_legend_n_grob,
+                              legend_prop = p3_legend_prop_grob,
+                              legend_explain = p3_legend_explainer_grob,
+                              png_out = "src/assets/images/k04_sui_svi_map.png",
+                              width = 6, 
+                              height = 5),
+             format = "file"),
+  tar_target(p3_map_dry_sui_svi_png,
+             compose_svi_plot(in_map = p3_map_dry_sui_svi_grob,
+                              legend_n = p3_legend_n_grob,
+                              legend_prop = p3_legend_prop_grob,
+                              legend_explain = p3_legend_explainer_grob,
+                              png_out = "src/assets/images/k04_sui_svi_dry_map.png",
+                              width = 6,
+                              height = 5),
+             format = "file"),
   
   ##############################################
   # 
@@ -116,19 +193,19 @@ p3_targets <- list(
              plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
                              regions_sf = p2_Reg_sf,
                              use_type = "ps",
-                             color_scheme = p3_colors_website,
+                             color_scheme = p3_colors_wu,
                              png_out = "src/assets/images/k08_ps_wheatfield_CONUS.png",
                              width = 6,
-                             height = 6),
+                             height = 5),
              format = "file"),
   tar_target(p3_k8_ir_CONUS_wheatfield_png,
              plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
                              regions_sf = p2_Reg_sf,
                              use_type = "ir",
-                             color_scheme = p3_colors_website,
+                             color_scheme = p3_colors_wu,
                              png_out = "src/assets/images/k08_ir_wheatfield_CONUS.png",
                              width = 6,
-                             height = 6),
+                             height = 5),
              format = "file"),
   tar_target(p3_k8_te_CONUS_wheatfield_png,
              plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,

@@ -1,13 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;500;600;700;800&display=swap');
 
+/* Style sheet for shared assets across pages, including
+   Color settings, page layout, etc 
+
+   Add any shared style components to this document */
+
+
 :root {
   --white: #ffffff;
   --white-soft: #F0F0F0;
 
-  --black-soft: #151515;
-  --dodger-blue: #1e90ff;
+  --banner-col: #9DC6D7; /* #9FCACB; */
+  --blue-highlight-col:  #728393; /* #5E7789; */ 
+  --blue-text-col:  #363E4A; /* #00264C; */
 
-  --blue-highlight:  #5E7789;
+  --page-bkg-col: #FEFAF6;/* #edeadf; */
+
+  --black-soft: #151515;
+
 
   font-size: 62.5%;
 }
@@ -36,16 +46,44 @@
 /* this is where each page's viz will go */
 .viz-container { 
   display: flex;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
-  min-height: 50vh;
+  min-height: 20vh;
+}
+@media only screen and (max-width: 768px) {
+  .viz-container {
+      flex-direction: column;
+  }
 }
 
 
+/* text box within the wavy container that houses key messages */
+.key-message-container {
+  height: 70%;
+  width: 50%;
+  color: var(--blue-text-col);
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .key-message-container {
+      height: 70%;
+      width: 90%;
+      padding: 15px;
+      align-items: center;
+      font-size: 18px;
+  }
+}
+
 /* button for switching between images */
 .toggle-button{
-  background-color:#5E7789;
-  color: #fff;
+  background-color: var(--blue-highlight-col);
+  color: var(--white-soft);
   cursor:pointer;
   padding: 18px;
   width: 300px;
@@ -54,8 +92,8 @@
   outline: none; 
 }
 .toggle-button:hover{
-  background-color: #00264c;
-  color: white;
+  background-color: var(--blue-text-col);
+  color: var(--white-soft);
 }
 
 /* container for the top of each page with key message */
@@ -64,7 +102,7 @@
   align-items: center;
   justify-content: center;
   height: 200px;
-  background-color: #9FCACB;
+  background-color: var(--banner-col);
   position: sticky;
 }
 
@@ -72,7 +110,7 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: #edeadf;
+  background: var(--page-bkg-col);
   transition:
     color 0.5s,
     background-color 0.5s;
@@ -101,5 +139,22 @@ h2 {
 @media only screen and (max-width:490px) {
   .viz-placeholder {
     width: 100%;
+  }
+}
+
+/* Settings for the interactive svgs with hover effects */
+.agg-reg-svg {
+  width: 20%;
+  height: auto;
+  margin-right: 20px;
+}
+
+@media only screen and (max-width:490px) {
+  .agg-reg-svg {
+  width: 40%;
+  height: auto;
+  margin-right: 0px;
+  margin-bottom: -80px;
+  margin-top: -50px;
   }
 }

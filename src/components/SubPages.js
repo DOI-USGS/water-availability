@@ -13,7 +13,7 @@ export default {
         {
             page: 3,
             route: '/page3',
-            keyMessage: 'Almost 30 million people live in areas of high/severe water stress.'
+            keyMessage: 'More than 30 million people live in areas of high/severe water stress.'
         },
         {
             page: 4,
