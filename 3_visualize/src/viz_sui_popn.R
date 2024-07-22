@@ -12,7 +12,7 @@ viz_popn_circles <- function(in_df,
                                                   sizetype = "area")
   circle_pack_data <- cbind(in_df, packing)
   dat.gg <- packcircles::circleLayoutVertices(packing, npoints = 50)
-  dat.gg$value <- rep(in_df$sui_category, each = 51)
+  dat.gg$value <- rep(in_df$sui_category_5, each = 51)
   dat.gg$AggReg <- rep(in_df$AggReg_nam_nospace, each = 51)
   
 

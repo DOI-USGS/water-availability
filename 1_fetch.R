@@ -48,6 +48,12 @@ p1_targets <- list(
                      crs_out = p1_usgs_crs,
                      exclude_non_plot_hucs = TRUE)
              ),
+  tar_target(p1_mainstem_HUC12_raw_sf,
+             prep_sf(gdb_file = p1_CONUS_mainstem_gdb,
+                     layer = "WBDHU12",
+                     crs_out = p1_usgs_crs,
+                     exclude_non_plot_hucs = TRUE)
+  ),
   
   # Crosswalk between HUC12, AggReg, and Reg
   tar_target(

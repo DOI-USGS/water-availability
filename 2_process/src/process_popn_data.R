@@ -21,13 +21,7 @@ join_popn_to_sui <- function(sui_in, popn_in){
   # join data sets
   sui_popn_join <- sui_in |>
     inner_join(popn_in, by = "HUC12") |>
-    # reclassify water stress
-    mutate(sui_category = case_when(mean_sui >= 0 & mean_sui < 0.2 ~ "Very low/\nnone",
-                                 mean_sui >= 0.2 & mean_sui < 0.4 ~ "Low",
-                                 mean_sui >= 0.4 & mean_sui < 0.6 ~ "Moderate",
-                                 mean_sui >= 0.6 & mean_sui < 0.8 ~ "High",
-                                 mean_sui >= 0.8 & mean_sui <= 1 ~ "Severe"),
-           sui_factor = factor(sui_category,
+    mutate(sui_factor = factor(sui_category_5,
                                levels = c("Severe", "High", "Moderate", 
                                           "Low", "Very low/\nnone"))) |>
     # prepare for bubble packing

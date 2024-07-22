@@ -40,7 +40,11 @@ p3_targets <- list(
                  # Water balance (wet/dry)
                  wet_blue_dark = "#39424f",
                  wet_blue_light = "#80909D",
-                 mid_cream = "#E8E8E3",
+                 wet_blue_vlight = "#9EABB3",
+                 mid_vdark = "#796E58",
+                 mid_dark = "#A0937D",
+                 mid_cream = "#C3C3AC",
+                 dry_red_vdark = "#492525",
                  dry_red_dark = "#965a5b",
                  dry_red_light = "#CFACAB"
                ))),
@@ -86,7 +90,7 @@ p3_targets <- list(
   tar_map(
     values = tibble(
       AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
-      ),
+    ),
     tar_target(p3_popn_circles_png,
                viz_popn_circles(in_df = p2_sui_popn_df,
                                 region = AggReg,
@@ -97,7 +101,7 @@ p3_targets <- list(
                                 height = 6),
                format = "file")
   ),
-
+  
   
   ##############################################
   # 
@@ -107,23 +111,43 @@ p3_targets <- list(
   #             are considered to be socially vulnerable.
   #
   #
-  tar_target(p3_map_sui_svi_png,
-             viz_svi_sui(in_df = p2_sui_svi_HUC8_df,
-                         in_sf = p2_HUC8_join_sui_svi_sf,
+  tar_target(p3_map_sui_svi_grob,
+             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
                          dry_onlyL = FALSE,
-                         color_scheme = p3_colors_balance,
-                         png_out = "src/assets/images/k04_sui_svi_map.png",
-                         width = 6,
-                         height = 5),
+                         color_scheme = p3_colors_balance)),
+  tar_target(p3_map_dry_sui_svi_grob,
+             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
+                         dry_onlyL = TRUE,
+                         color_scheme = p3_colors_balance)),
+  tar_target(p3_legend_n_grob,
+             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
+                                legend_type = "Number",
+                                color_scheme = p3_colors_balance)),
+  tar_target(p3_legend_prop_grob,
+             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
+                                legend_type = "Proportion",
+                                color_scheme = p3_colors_balance)),
+  tar_target(p3_legend_explainer_grob,
+             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
+                                legend_type = "Explainer",
+                                color_scheme = p3_colors_balance)),
+  tar_target(p3_map_sui_svi_png,
+             compose_svi_plot(in_map = p3_map_sui_svi_grob,
+                              legend_n = p3_legend_n_grob,
+                              legend_prop = p3_legend_prop_grob,
+                              legend_explain = p3_legend_explainer_grob,
+                              png_out = "src/assets/images/k04_sui_svi_map.png",
+                              width = 6, 
+                              height = 5),
              format = "file"),
   tar_target(p3_map_dry_sui_svi_png,
-             viz_svi_sui(in_df = p2_sui_svi_HUC8_df,
-                         in_sf = p2_HUC8_join_sui_svi_sf,
-                         dry_onlyL = TRUE,
-                         color_scheme = p3_colors_balance,
-                         png_out = "src/assets/images/k04_sui_svi_dry_map.png",
-                         width = 6,
-                         height = 5),
+             compose_svi_plot(in_map = p3_map_dry_sui_svi_grob,
+                              legend_n = p3_legend_n_grob,
+                              legend_prop = p3_legend_prop_grob,
+                              legend_explain = p3_legend_explainer_grob,
+                              png_out = "src/assets/images/k04_sui_svi_dry_map.png",
+                              width = 6,
+                              height = 5),
              format = "file"),
   
   ##############################################

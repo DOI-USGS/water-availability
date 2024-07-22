@@ -23,26 +23,30 @@ mean_svi <- function(data_in,
   
   # add categories
   out_categorized <- out_mean |>
-    mutate(svi_category = case_when(mean_svi <= thresholds$lower ~ "Less Vulnerable",
-                                    mean_svi <= thresholds$upper ~ "More Vulnerable",
+    mutate(svi_category = case_when(mean_svi <= thresholds$lower ~ "Low SVI",
+                                    mean_svi <= thresholds$upper ~ "Moderate SVI",
+                                    mean_svi <= 1.0 ~ "High SVI",
                                     TRUE ~ NA)) 
 
   return(out_categorized)
 }
 
 ## Join SVI and SUI by categories for treemap, proportional charts, etc
-join_svi_sui <- function(svi_in, sui_in){
+join_svi_sui <- function(svi_in, sui_in, HUC_level){
+  
+  # create joining variables
+  temp_HUC_colname <- sprintf("HUC%s", HUC_level)
   
   # establish categories
   join_data <- sui_in |>
-    inner_join(svi_in |> drop_na(), by = "HUC8") |>
-    mutate(join_category = sprintf("%s-%s", sui_category, svi_category))
+    inner_join(svi_in |> drop_na(), by = temp_HUC_colname) |>
+    mutate(join_category = sprintf("%s-%s", sui_category_3, svi_category))
   
   
   
   overall_means_df <- join_data |>
     # now get n by SVIxSUI categories, plus proportions
-    group_by(join_category, svi_category, sui_category) |>
+    group_by(join_category, svi_category, sui_category_3) |>
     summarize(n_hucs = n())
   
   return(overall_means_df)

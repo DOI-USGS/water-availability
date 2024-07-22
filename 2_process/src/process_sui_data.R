@@ -1,6 +1,5 @@
 mean_sui <- function(data_in,
                      HUC_level, 
-                     thresholds,
                      min_year = NULL, 
                      max_year = NULL,
                      by_yearL = FALSE){
@@ -34,9 +33,15 @@ mean_sui <- function(data_in,
   
   # add categories
   out_categorized <- out_mean |>
-    mutate(sui_category = case_when(mean_sui <= thresholds$lower ~ "Low SUI",
-                                    mean_sui <= thresholds$upper ~ "High SUI",
-                                    TRUE ~ NA)) 
+    mutate(sui_category_5  = case_when(mean_sui >= 0 & mean_sui < 0.2 ~ "Very low/\nnone",
+                                       mean_sui >= 0.2 & mean_sui < 0.4 ~ "Low",
+                                       mean_sui >= 0.4 & mean_sui < 0.6 ~ "Moderate",
+                                       mean_sui >= 0.6 & mean_sui < 0.8 ~ "High",
+                                       mean_sui >= 0.8 & mean_sui <= 1 ~ "Severe"),
+           sui_category_3 = case_when(mean_sui <= 0.4 ~ "Low SUI",
+                                      mean_sui <= 0.6 ~ "Medium SUI",
+                                      mean_sui <= 1.0 ~ "High SUI",
+                                      TRUE ~ NA)) 
 
   return(out_categorized)
 }

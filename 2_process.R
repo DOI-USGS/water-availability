@@ -84,6 +84,26 @@ p2_targets <- list(
                inner_join(p2_CONUS_crosswalk_HUC8_df, by = "HUC8") |>
                filter(! is.na(Region_nam)) 
   ),
+  tar_target(p2_mainstem_HUC12_simple_sf,
+             p1_mainstem_HUC12_raw_sf |> 
+               dplyr::mutate(
+                 HUC2 = str_sub(HUC, 1, 2),
+                 region_group = case_when(
+                   HUC2 == "19" ~ "AK",
+                   HUC2 == "20" ~ "HI",
+                   HUC2 == "21" ~ "PR",
+                   HUC2 == "22" ~ "other",
+                   .default = "CONUS"
+                 )
+               ) |> 
+               rename(HUC12 = HUC) |>
+               # remove everything outside of CONUS for now
+               filter(region_group == "CONUS") |>
+               st_intersection(st_union(p2_Reg_sf)) |>
+               # add in region names
+               inner_join(p2_CONUS_crosswalk_HUC12_df, by = "HUC12") |>
+               filter(! is.na(Region_nam)) 
+  ),
   
   ##################################################
   # Join spatial data with water data 
@@ -105,13 +125,13 @@ p2_targets <- list(
              iteration = "group"),
   
   # Join with SUI/water stress and SVI/vulnerability indices
-  tar_target(p2_HUC8_join_sui_svi_sf,
-             p2_mainstem_HUC8_simple_sf |>
+  tar_target(p2_HUC12_join_sui_svi_sf,
+             p2_mainstem_HUC12_simple_sf |>
                # add in mean SUI 
-               dplyr::left_join(p2_sui_mean_HUC8,
-                                by = "HUC8") |>
-               dplyr::left_join(p2_svi_mean_HUC8,
-                                by = "HUC8")
+               dplyr::left_join(p2_sui_2020_HUC12,
+                                by = "HUC12") |>
+               dplyr::left_join(p2_svi_mean_HUC12,
+                                by = "HUC12")
              
   ),
   
@@ -194,27 +214,13 @@ p2_targets <- list(
   #           WATER BALANCE DATA
   # 
   # WATER STRESS INDEX "SURFACE WATER SUPPLY AND USE INDEX" SUI
-  tar_target(p2_sui_thresholds,
-             tibble(
-               lower = 0.5, # 0.4 for 3 categories to match IWAAs
-               upper = 1.0, # 0.6 for 3 categories to match IWAAs
-             )),
   tar_target(p2_sui_raw,
              readr::read_csv(p1_sui_csv,
                              show_col_types = FALSE)),
-  # mean by HUC8
-  tar_target(p2_sui_mean_HUC8,
-             mean_sui(data_in = p2_sui_raw,
-                      HUC_level = 8,
-                      thresholds = p2_sui_thresholds,
-                      min_year = 2010,
-                      max_year = 2020,
-                      by_yearL = FALSE)
-  ),
-  # By HUC8 and Year
+
+  # By HUC12 and Year
   tar_target(p2_sui_2020_HUC12,
              mean_sui(data_in = p2_sui_raw,
-                      thresholds = p2_sui_thresholds,
                       HUC_level = 12,
                       min_year = 2020,
                       max_year = 2020,
@@ -227,21 +233,22 @@ p2_targets <- list(
   # Social Vulnerability Index 
   tar_target(p2_svi_thresholds,
              tibble(
-               lower = 0.5,
-               upper = 1.0
+               lower = 0.4,
+               upper = 0.6
              )),
   tar_target(p2_svi_raw,
              readr::read_csv(p1_svi_csv,
                              show_col_types = FALSE)),
   
-  tar_target(p2_svi_mean_HUC8,
+  tar_target(p2_svi_mean_HUC12,
              mean_svi(data_in = p2_svi_raw,
-                      HUC_level = 8,
+                      HUC_level = 12,
                       thresholds = p2_svi_thresholds)),
   # Join SVI and SUI by category for tree map
-  tar_target(p2_sui_svi_HUC8_df,
-             join_svi_sui(sui_in = p2_sui_mean_HUC8,
-                          svi_in = p2_svi_mean_HUC8)),
+  tar_target(p2_sui_svi_HUC12_df,
+             join_svi_sui(sui_in = p2_sui_2020_HUC12,
+                          svi_in = p2_svi_mean_HUC12,
+                          HUC_level = 12)),
   
   # POPULATION DATA
   tar_target(p2_popn_HUC12_df,
