@@ -2,8 +2,8 @@
   <section>
     <div class="wavy-container">
       <div class="key-message-container">
-        <h1>2024 National Integrated Water Availability Assessments</h1>
-        <h2>Key Takeaways</h2>
+        <h1>The Status of Water Availability in the United States</h1>
+        <h2>Key Findings</h2>
       </div>
     </div>
     <div class="raindrop-container">

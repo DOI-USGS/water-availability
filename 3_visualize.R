@@ -81,9 +81,18 @@ p3_targets <- list(
   
   ##############################################
   # 
-  #           KEY TAKEAWAY 3: 
+  #           KEY TAKEAWAY 1: 
+  #             A quarter of our daily water budget leaves the U.S. 
+  #             through streamflow to Canada, the Atlantic and Pacific 
+  #             Oceans, or the Gulf of Mexico.
+  #
+  #
+  
+  ##############################################
+  # 
+  #           KEY TAKEAWAY 2: 
   #             More than 30 million people live in areas of 
-  #             high/severe water stress.
+  #             high/severe water imbalance
   #
   #
   # Use static branching
@@ -105,7 +114,7 @@ p3_targets <- list(
   
   ##############################################
   # 
-  #           KEY TAKEAWAY 4: 
+  #           KEY TAKEAWAY 3: 
   #             A high proportion of the population living 
   #             in areas with water availability limitations 
   #             are considered to be socially vulnerable.
@@ -149,6 +158,16 @@ p3_targets <- list(
                               width = 6,
                               height = 5),
              format = "file"),
+  
+  
+  ##############################################
+  # 
+  #           KEY TAKEAWAY 4: 
+  #             Periods of low precipitation can have cascading 
+  #             effects throughout the water cycle, expanding areas of 
+  #             water stress and exacerbating water quality issues 
+  #
+  #
   
   ##############################################
   # 
@@ -225,17 +244,15 @@ p3_targets <- list(
   ##############################################
   # 
   #           KEY TAKEAWAY 9: 
-  #             Periods of low precipitation (snow, rain) can have 
-  #             cascading effects throughout the water budget, 
-  #             expanding areas of water stress and exacerbating 
-  #             water quality issues.
+  #             Not all the water withdrawn for human water use 
+  #             returns to the local environment.
   # 
   
   ##############################################
   # 
   #           KEY TAKEAWAY 10: 
-  #             Areas of the U.S. with limited surface water storage 
-  #             rely on groundwater, which can lead to declines in 
-  #             water levels.
-  # 
+  #             The top future threats to water availability in the 
+  #             US vary regionally and include increases in drought, 
+  #             flooding, and heavy precipitation along with declines in 
+  #             snow and ice.
 )
