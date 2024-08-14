@@ -1,0 +1,106 @@
+category,region_nam,aggregion_nam,total_load,percent,sum_total
+Atmospheric deposition,Atlantic Coast,Southeast,124177218.06465994,100,124177218.06465994
+Atmospheric deposition,California-Nevada,Western,20240455.50333174,100,20240455.50333174
+Atmospheric deposition,Central High Plains,High Plains,12294186.953777779,100,12294186.953777779
+Atmospheric deposition,Central Rockies,Western,8158219.0468278825,100,8158219.0468278825
+Atmospheric deposition,Columbia-Snake,Western,17027211.460004304,100,17027211.460004304
+Atmospheric deposition,Florida,Southeast,22580148.716027815,99.99999999999999,22580148.716027815
+Atmospheric deposition,Great Lakes,Northeast through Midwest,105989232.29883003,100,105989232.29883003
+Atmospheric deposition,Gulf Coast,Southeast,94717312.04973334,99.99999999999999,94717312.04973334
+Atmospheric deposition,Midwest,Northeast through Midwest,246926277.33390135,100,246926277.33390135
+Atmospheric deposition,Mississippi Embayment,Southeast,27579280.812104046,99.99999999999999,27579280.812104046
+Atmospheric deposition,Northeast,Northeast through Midwest,148392389.49265575,100,148392389.49265575
+Atmospheric deposition,Northern High Plains,High Plains,15210932.338846501,100,15210932.338846501
+Atmospheric deposition,Pacific Northwest,Western,28597155.855126705,100,28597155.855126705
+Atmospheric deposition,Souris-Red-Rainy,Northeast through Midwest,36835061.40403995,100,36835061.40403995
+Atmospheric deposition,Southern High Plains,High Plains,33454224.269719005,100,33454224.269719005
+Atmospheric deposition,Southwest Desert,Western,3036277.944865465,100,3036277.944865465
+Atmospheric deposition,Tennessee-Missouri,Southeast,216597186.3831298,100,216597186.3831298
+Atmospheric deposition,Texas,Southeast,10635081.196444906,100,10635081.196444906
+Developed,Atlantic Coast,Southeast,12529206.352669269,99.99999999999999,12529206.352669269
+Developed,California-Nevada,Western,4846459.17616611,100,4846459.17616611
+Developed,Central High Plains,High Plains,424658.0109689482,99.99999999999999,424658.0109689482
+Developed,Central Rockies,Western,112565.62465049358,100,112565.62465049358
+Developed,Columbia-Snake,Western,1791514.5927123888,100,1791514.5927123888
+Developed,Florida,Southeast,3638226.8215655657,100,3638226.8215655657
+Developed,Great Lakes,Northeast through Midwest,6379785.604041135,100,6379785.604041135
+Developed,Gulf Coast,Southeast,9649104.643012596,100,9649104.643012596
+Developed,Midwest,Northeast through Midwest,16712096.643249284,100,16712096.643249284
+Developed,Mississippi Embayment,Southeast,1325928.9808242607,100,1325928.9808242607
+Developed,Northeast,Northeast through Midwest,33516993.49775743,100,33516993.49775743
+Developed,Northern High Plains,High Plains,390955.22405859584,100,390955.22405859584
+Developed,Pacific Northwest,Western,11148823.45175969,100.00000000000001,11148823.45175969
+Developed,Souris-Red-Rainy,Northeast through Midwest,1722954.8010774055,100,1722954.8010774055
+Developed,Southern High Plains,High Plains,1520904.3237949826,100,1520904.3237949826
+Developed,Southwest Desert,Western,124820.50837978009,100,124820.50837978009
+Developed,Tennessee-Missouri,Southeast,13620779.63974483,100,13620779.63974483
+Developed,Texas,Southeast,1475392.9668770903,100,1475392.9668770903
+Fertilizer and manure,Atlantic Coast,Southeast,52266021.71726711,100,52266021.71726711
+Fertilizer and manure,California-Nevada,Western,35740331.23088608,100,35740331.23088608
+Fertilizer and manure,Central High Plains,High Plains,18227378.17925577,100,18227378.17925577
+Fertilizer and manure,Central Rockies,Western,2679219.200677183,100,2679219.200677183
+Fertilizer and manure,Columbia-Snake,Western,25089794.292208485,100,25089794.292208485
+Fertilizer and manure,Florida,Southeast,11329498.48444948,100,11329498.48444948
+Fertilizer and manure,Great Lakes,Northeast through Midwest,84571620.8970835,100,84571620.8970835
+Fertilizer and manure,Gulf Coast,Southeast,49126955.33742229,99.99999999999999,49126955.33742229
+Fertilizer and manure,Midwest,Northeast through Midwest,456237318.92209417,100,456237318.92209417
+Fertilizer and manure,Mississippi Embayment,Southeast,26221561.24757721,100,26221561.24757721
+Fertilizer and manure,Northeast,Northeast through Midwest,89164649.28086509,100.00000000000001,89164649.28086509
+Fertilizer and manure,Northern High Plains,High Plains,11726937.588456025,100,11726937.588456025
+Fertilizer and manure,Pacific Northwest,Western,15328543.855144681,100,15328543.855144681
+Fertilizer and manure,Souris-Red-Rainy,Northeast through Midwest,71574001.78747721,100,71574001.78747721
+Fertilizer and manure,Southern High Plains,High Plains,36735822.526639245,100,36735822.526639245
+Fertilizer and manure,Southwest Desert,Western,1310251.3346347176,100,1310251.3346347176
+Fertilizer and manure,Tennessee-Missouri,Southeast,171195191.591092,100,171195191.591092
+Fertilizer and manure,Texas,Southeast,26013181.468675263,100.00000000000001,26013181.468675263
+Imports,California-Nevada,Western,0,NA,0
+Imports,Central High Plains,High Plains,0,NA,0
+Imports,Central Rockies,Western,59727.12617686898,100.00000000000001,59727.12617686898
+Imports,Columbia-Snake,Western,0,NA,0
+Imports,Great Lakes,Northeast through Midwest,0,NA,0
+Imports,Gulf Coast,Southeast,0,NA,0
+Imports,Midwest,Northeast through Midwest,0,NA,0
+Imports,Mississippi Embayment,Southeast,0,NA,0
+Imports,Northeast,Northeast through Midwest,0,NA,0
+Imports,Northern High Plains,High Plains,81781.4584971437,100,81781.4584971437
+Imports,Souris-Red-Rainy,Northeast through Midwest,29166.3003674443,100,29166.3003674443
+Imports,Southern High Plains,High Plains,0,NA,0
+Imports,Southwest Desert,Western,7713683.687138393,100,7713683.687138393
+Imports,Tennessee-Missouri,Southeast,0,NA,0
+Imports,Texas,Southeast,1757977.284075686,100,1757977.284075686
+Nitrogen fixation,Atlantic Coast,Southeast,3615044.3304623663,100,3615044.3304623663
+Nitrogen fixation,California-Nevada,Western,4093283.975892564,100,4093283.975892564
+Nitrogen fixation,Central High Plains,High Plains,5039401.149111972,100,5039401.149111972
+Nitrogen fixation,Central Rockies,Western,59897.619451804945,100,59897.619451804945
+Nitrogen fixation,Columbia-Snake,Western,8233872.740615738,100,8233872.740615738
+Nitrogen fixation,Great Lakes,Northeast through Midwest,40267204.745001756,100,40267204.745001756
+Nitrogen fixation,Gulf Coast,Southeast,3811526.750575564,100,3811526.750575564
+Nitrogen fixation,Midwest,Northeast through Midwest,243658727.999255,100,243658727.999255
+Nitrogen fixation,Mississippi Embayment,Southeast,25392228.04254274,100,25392228.04254274
+Nitrogen fixation,Northeast,Northeast through Midwest,31129676.098441806,100,31129676.098441806
+Nitrogen fixation,Northern High Plains,High Plains,3247575.634944493,100,3247575.634944493
+Nitrogen fixation,Pacific Northwest,Western,35165684.35885822,100,35165684.35885822
+Nitrogen fixation,Souris-Red-Rainy,Northeast through Midwest,38624218.47748575,100,38624218.47748575
+Nitrogen fixation,Southern High Plains,High Plains,6915382.904443927,100,6915382.904443927
+Nitrogen fixation,Tennessee-Missouri,Southeast,50116737.00437591,100,50116737.00437591
+Springs,California-Nevada,Western,0,NA,0
+Springs,Columbia-Snake,Western,15890168.952658402,100,15890168.952658402
+Springs,Pacific Northwest,Western,5343.7046409,100,5343.7046409
+Wastewater,Atlantic Coast,Southeast,29461612.180810343,100,29461612.180810343
+Wastewater,California-Nevada,Western,38920889.549528465,100,38920889.549528465
+Wastewater,Central High Plains,High Plains,3942114.6847192547,100,3942114.6847192547
+Wastewater,Central Rockies,Western,2557553.780381178,100,2557553.780381178
+Wastewater,Columbia-Snake,Western,7234536.674613564,100,7234536.674613564
+Wastewater,Florida,Southeast,2259594.47620026,100,2259594.47620026
+Wastewater,Great Lakes,Northeast through Midwest,10754026.022221966,100,10754026.022221966
+Wastewater,Gulf Coast,Southeast,52394233.733611494,100,52394233.733611494
+Wastewater,Midwest,Northeast through Midwest,52411703.79006397,100,52411703.79006397
+Wastewater,Mississippi Embayment,Southeast,1126210.9121006476,100,1126210.9121006476
+Wastewater,Northeast,Northeast through Midwest,97968546.20170572,100,97968546.20170572
+Wastewater,Northern High Plains,High Plains,874843.4222140823,100,874843.4222140823
+Wastewater,Pacific Northwest,Western,20372249.860178765,100,20372249.860178765
+Wastewater,Souris-Red-Rainy,Northeast through Midwest,2130758.089035241,100,2130758.089035241
+Wastewater,Southern High Plains,High Plains,4949395.779151832,100,4949395.779151832
+Wastewater,Southwest Desert,Western,5234763.014262735,100,5234763.014262735
+Wastewater,Tennessee-Missouri,Southeast,33920308.85069871,100,33920308.85069871
+Wastewater,Texas,Southeast,20225724.837914187,100,20225724.837914187
