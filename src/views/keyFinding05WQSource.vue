@@ -117,8 +117,13 @@ function createBarChart() {
         .range([containerWidth - margin.left, 0]);
 
     const xAxis = svg.append('g')
-        .call(d3.axisBottom(xScale))
+        .call(d3.axisBottom(xScale));
 
+    const barRects = svg.append('rect')
+        .attr('x', d => xScale(selectedDataSet.region_nam))
+        .attr('y', d => yScale(selectedDataSet.total_load))
+        .attr('width', 20)
+        .attr('height', d => containerHeight - yScale(selectedDataSet.total_load));
 }
 
 </script>
