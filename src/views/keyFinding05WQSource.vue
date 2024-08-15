@@ -32,16 +32,7 @@ const width = 800;
 const margin = { top: 40, right: 20, bottom: 40, left: 40 };
 
 
-// Set colors for bubble charts
-const dimensionColors = {
-  AtmosphericDeposition: "#092836",
-  Imports: "#1b695e",
-  Wastewater: "#7a5195",
-  Developed: "#2a468f",
-  NitrogenFixation: "#ef5675",
-  FertilizerAndManure: "#ff764a",
-  Springs: "#ffa600"
-};
+
 
 
 
@@ -50,9 +41,9 @@ onMounted(async () => {
         await loadDatasets();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
-        createBarChart();
+            createBarChart();
         } else {
-        console.error('Error loading data');
+            console.error('Error loading data');
         }
     } catch (error) {
         console.error('Error during component mounting', error);
@@ -72,9 +63,6 @@ async function loadDatasets() {
 async function loadData(fileName) {
   try {
     const data = await d3.csv(publicPath + fileName, d => { 
-      d.level_agreement = +(+d.level_agreement).toFixed(2); 
-      d.evidence_val = +d.evidence_val; 
-      d.sig_value = +d.sig_value; 
       return d;
     });
     return data;
@@ -101,6 +89,9 @@ function createBarChart() {
         .style('width', '80%')
         .style('height', 'auto');
 
+    const colorGroups = d3.map(data.value, d => d.category);
+    const regionGroups = d3.map(data.value, d => d.region_nam);
+
     const yScale = d3.scaleLinear()
         .domain([0, d3.max(data.value, d => d.total_load)])
         .range([containerHeight - margin.bottom, margin.top]);
@@ -112,6 +103,38 @@ function createBarChart() {
         .attr('stroke-width', 2)
         .attr('font-size', 18);
 
+    const xScale = d3.scaleBand()
+        .domain(regionGroups)
+        .range([0, width]);
+
+    const xAxis = svg.append('g')
+        .call(d3.axisBottom(xScale));
+
+    const color = d3.scaleOrdinal()
+        .domain(colorGroups)
+        .range(["#092836", "#1b695e", "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
+
+    const stackedData = d3.stack()
+        .keys(colorGroups)
+        (data.value)
+
+    // bar chart
+    svg.append('g')
+        .selectAll('g')
+        .data(data.value)
+        .enter().append('g')
+            .attr('fill', '#1b695e')
+            .selectAll('rect')
+                .data(data.value)
+                .enter().append('rect')
+                    .attr('x', d => xScale(data.value[0].region_nam))
+                    .attr('y', d => yScale(0))
+                    .attr('height', containerHeight - yScale(data.value[0].total_load))
+                    .attr('width', xScale.bandwidth);
+
+    console.log(data.value[0].region_nam)
+
+/*
     const xScale = d3.scaleOrdinal()
         .domain(["Atlantic Coast", "California-Nevada", "Central High Plains", "Central Rockies", "Columbia-Snake", "Florida", "Great Lakes", "Gulf Coast", "Midwest", "Mississippi Embayment", "Northeast", "Northern High Plains", "Pacific Northwest", "Souris-Red-Rainy", "Southern High Plains", "Southwest Desert", "Tennessee-Missouri", "Texas"])
         .range([containerWidth - margin.left, 0]);
@@ -123,7 +146,7 @@ function createBarChart() {
         .attr('x', d => xScale(selectedDataSet.region_nam))
         .attr('y', d => yScale(selectedDataSet.total_load))
         .attr('width', 20)
-        .attr('height', d => containerHeight - yScale(selectedDataSet.total_load));
+        .attr('height', d => containerHeight - yScale(selectedDataSet.total_load)); */
 }
 
 </script>
