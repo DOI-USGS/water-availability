@@ -89,11 +89,29 @@ function createBarChart() {
         .style('width', '80%')
         .style('height', 'auto');
 
-    const colorGroups = d3.map(data.value, d => d.category);
-    const regionGroups = d3.map(data.value, d => d.region_nam);
+    const colorGroups = d3.union(d3.map(data.value, d => d.category));
+    const regionGroups = d3.union(d3.map(data.value, d => d.region_nam));
+
+    const xScale = d3.scaleBand()
+        .domain(regionGroups)
+        .range([0, width]);
+
+    console.log(regionGroups)
+
+    const xAxis = svg.append('g')
+        .call(d3.axisBottom(xScale));
+
+    const color = d3.scaleOrdinal()
+        .domain(colorGroups)
+        .range(["#092836", "#1b695e"]);//, "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
+
+    const stackedData = d3.stack()
+        .keys(colorGroups)
+        .value(([, D], key) => D.get(key)['total_load']) // get value for each series key and stack
+        (d3.index(data.value, d => d.region_nam, d => d.category));
 
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(data.value, d => d.total_load)])
+        .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
         .range([containerHeight - margin.bottom, margin.top]);
 
     const yAxis = svg.append('g')
@@ -102,37 +120,24 @@ function createBarChart() {
             .tickFormat(d => d + 'kg/yr'))
         .attr('stroke-width', 2)
         .attr('font-size', 18);
-
-    const xScale = d3.scaleBand()
-        .domain(regionGroups)
-        .range([0, width]);
-
-    const xAxis = svg.append('g')
-        .call(d3.axisBottom(xScale));
-
-    const color = d3.scaleOrdinal()
-        .domain(colorGroups)
-        .range(["#092836", "#1b695e", "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
-
-    const stackedData = d3.stack()
-        .keys(colorGroups)
-        (data.value)
-
+    
     // bar chart
     svg.append('g')
-        .selectAll('g')
-        .data(data.value)
-        .enter().append('g')
-            .attr('fill', '#1b695e')
-            .selectAll('rect')
-                .data(data.value)
-                .enter().append('rect')
-                    .attr('x', d => xScale(data.value[0].region_nam))
-                    .attr('y', d => yScale(0))
-                    .attr('height', containerHeight - yScale(data.value[0].total_load))
-                    .attr('width', xScale.bandwidth);
+        .attr('id', 'wrapper')
+        .append('g')
+            .attr('id', 'rectangles')
+            .selectAll('g')
+            .data(stackedData, d => d.key)
+            .enter().append('g')
+                .selectAll('rect')
+                    .data(D => D.map(d => (d.key = D.key, d)))
+                    .enter().append('rect')
+                        .attr('x', d => xScale(d.data[0]))
+                        .attr('y', d => yScale(d[1]))
+                        .attr('height', d => yScale(d[0]) - yScale(d[1]))
+                        .attr('width', xScale.bandwidth());
 
-    console.log(data.value[0].region_nam)
+    console.log(stackedData[1].key)
 
 /*
     const xScale = d3.scaleOrdinal()
