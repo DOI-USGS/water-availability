@@ -74,84 +74,89 @@ async function loadData(fileName) {
 
 function createBarChart() {
     // Get dynamic dimensions to draw chart
-    const containerWidth = document.getElementById('barplot-container').offsetWidth;
-    const containerHeight = window.innerWidth <= 700 ? window.innerHeight * 0.5 : 600;
+    const containerWidth = 800//document.getElementById('barplot-container').offsetWidth;
+    const containerHeight = 600//window.innerWidth <= 700 ? window.innerHeight * 0.5 : 600;
     const margin = window.innerWidth <= 700 ? { top: 40, right: 10, bottom: 20, left: 10 } : { top: 40, right: 20, bottom: 40, left: 40 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
 
-    svg = d3
-        .select('#barplot-container')
+    // draw svg canvas for barplot
+    svg = d3.select('#barplot-container')
         .append('svg')
         .attr('class', 'barplotSVG')
         .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
         .attr('preserveAspectRatio', 'xMidYMid meet')
-        .style('width', '80%')
-        .style('height', 'auto');
+        .style('width', '100%')
+        .style('height', '100%');
 
-    const colorGroups = d3.union(d3.map(data.value, d => d.category));
+    // add group for bar chart bounds, translating by chart margins
+    const chartBounds = svg.append('g')
+        .attr('id', 'wrapper')
+        .style("transform", `translate(${
+          margin.left
+        }px, ${
+          margin.top
+        }px)`)
+
+    // get unique categories and regions
+    const categoryGroups = d3.union(d3.map(data.value, d => d.category));
     const regionGroups = d3.union(d3.map(data.value, d => d.region_nam));
 
+    // stack data for rectangles
+    const stackedData = d3.stack()
+        .keys(categoryGroups)
+        .value(([, D], key) => D.get(key)['total_load']) // get value for each series key and stack
+        (d3.index(data.value, d => d.region_nam, d => d.category));
+
+    // Set up x scale
     const xScale = d3.scaleBand()
         .domain(regionGroups)
         .range([0, width]);
 
-    console.log(regionGroups)
-
-    const xAxis = svg.append('g')
+    // add x axis
+    chartBounds.append('g')
+        .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(xScale));
 
-    const color = d3.scaleOrdinal()
-        .domain(colorGroups)
-        .range(["#092836", "#1b695e"]);//, "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
-
-    const stackedData = d3.stack()
-        .keys(colorGroups)
-        .value(([, D], key) => D.get(key)['total_load']) // get value for each series key and stack
-        (d3.index(data.value, d => d.region_nam, d => d.category));
-
+    // Set up y scale
     const yScale = d3.scaleLinear()
         .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-        .range([containerHeight - margin.bottom, margin.top]);
+        .range([height, 0]);
 
-    const yAxis = svg.append('g')
+    // add y axis
+    chartBounds.append('g')
         .call(d3.axisLeft(yScale)
             .ticks(5)
             .tickFormat(d => d + 'kg/yr'))
         .attr('stroke-width', 2)
         .attr('font-size', 18);
+
+    // set up color scale
+    const color = d3.scaleOrdinal()
+        .domain(categoryGroups)
+        .range(["#092836", "#1b695e"]);//, "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
     
-    // bar chart
-    svg.append('g')
-        .attr('id', 'wrapper')
+    // Add group to chart bounds to hold all chart rectangle groups
+    const rectGroup = chartBounds.append('g')
+        .attr('id', 'rectangle_group')
+
+    // Add subgroup for each category of data
+    const categoryRectGroups = rectGroup.selectAll('g')
+        .data(stackedData, d => d.key)
+        .enter()
         .append('g')
-            .attr('id', 'rectangles')
-            .selectAll('g')
-            .data(stackedData, d => d.key)
-            .enter().append('g')
-                .selectAll('rect')
-                    .data(D => D.map(d => (d.key = D.key, d)))
-                    .enter().append('rect')
-                        .attr('x', d => xScale(d.data[0]))
-                        .attr('y', d => yScale(d[1]))
-                        .attr('height', d => yScale(d[0]) - yScale(d[1]))
-                        .attr('width', xScale.bandwidth());
-
-    console.log(stackedData[1].key)
-
-/*
-    const xScale = d3.scaleOrdinal()
-        .domain(["Atlantic Coast", "California-Nevada", "Central High Plains", "Central Rockies", "Columbia-Snake", "Florida", "Great Lakes", "Gulf Coast", "Midwest", "Mississippi Embayment", "Northeast", "Northern High Plains", "Pacific Northwest", "Souris-Red-Rainy", "Southern High Plains", "Southwest Desert", "Tennessee-Missouri", "Texas"])
-        .range([containerWidth - margin.left, 0]);
-
-    const xAxis = svg.append('g')
-        .call(d3.axisBottom(xScale));
-
-    const barRects = svg.append('rect')
-        .attr('x', d => xScale(selectedDataSet.region_nam))
-        .attr('y', d => yScale(selectedDataSet.total_load))
-        .attr('width', 20)
-        .attr('height', d => containerHeight - yScale(selectedDataSet.total_load)); */
+        .attr("id", d => d.key.replace(" ", "_"))
+    
+    // Add rectangles for each region to each category group
+    categoryRectGroups.selectAll('rect')
+        .data(D => D.map(d => (d.key = D.key, d)))
+        .enter().append('rect')
+            .attr("class", d => d.key.replace(" ", "_") + ' ' + d.data[0].replace(" ", "_"))
+            .attr('x', d => xScale(d.data[0]))
+            .attr('y', d => yScale(d[1]))
+            .attr('height', d => yScale(d[0]) - yScale(d[1]))
+            .attr('width', xScale.bandwidth())
+            .style("fill", d => color(d.key));
 }
 
 </script>
