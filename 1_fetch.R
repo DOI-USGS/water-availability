@@ -69,6 +69,21 @@ p1_targets <- list(
   
   ##############################################
   # 
+  #           WATER QUALITY DATA
+  # 
+  # TN = TOTAL NITROGEN (EXTRACTED FROM ELMERA'S SOFTWARE RELEASE)
+  tar_map(
+    values = tibble(nutrient = c("tn", "tp", "ss")),
+    tar_target(p1_wq_Reg_csv,
+               sprintf("1_fetch/in/p2_load_%s.csv", nutrient),
+               format = "file"),
+    tar_target(p1_wq_Reg_df,
+               readr::read_csv(p1_wq_Reg_csv,
+                               show_col_types = FALSE)),
+    names = nutrient),
+  
+  ##############################################
+  # 
   #           WATER USE DATA
   # 
   # PS = Public Supply water use data

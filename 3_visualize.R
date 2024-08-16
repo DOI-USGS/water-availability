@@ -3,6 +3,7 @@ source("3_visualize/src/viz_dumbbell.R")
 source("3_visualize/src/viz_wheatfield.R")
 source("3_visualize/src/viz_svi_sui.R")
 source("3_visualize/src/viz_sui_popn.R")
+source("3_visualize/src/viz_wq.R")
 
 p3_targets <- list(
   ##############################################
@@ -105,7 +106,7 @@ p3_targets <- list(
                                 region = AggReg,
                                 color_scheme = p3_colors_balance,
                                 fonts = p3_fonts_website,
-                                png_out = sprintf("src/assets/images/k03_sui_popn_%s.png", AggReg),
+                                png_out = sprintf("src/assets/images/k02_sui_popn_%s.png", AggReg),
                                 width = 6,
                                 height = 6),
                format = "file")
@@ -145,7 +146,7 @@ p3_targets <- list(
                               legend_n = p3_legend_n_grob,
                               legend_prop = p3_legend_prop_grob,
                               legend_explain = p3_legend_explainer_grob,
-                              png_out = "src/assets/images/k04_sui_svi_map.png",
+                              png_out = "src/assets/images/k03_sui_svi_map.png",
                               width = 6, 
                               height = 5),
              format = "file"),
@@ -154,7 +155,7 @@ p3_targets <- list(
                               legend_n = p3_legend_n_grob,
                               legend_prop = p3_legend_prop_grob,
                               legend_explain = p3_legend_explainer_grob,
-                              png_out = "src/assets/images/k04_sui_svi_dry_map.png",
+                              png_out = "src/assets/images/k03_sui_svi_dry_map.png",
                               width = 6,
                               height = 5),
              format = "file"),
@@ -178,7 +179,20 @@ p3_targets <- list(
   #             (e.g., dams, urbanization).
   #
   #
-  
+  tar_map(
+    values = tibble(
+      AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
+    ),
+    tar_target(p3_wq_tn_barchart_png,
+               viz_wq_circles(in_df = p1_wq_Reg_df_tn,
+                              region = AggReg,
+                              color_scheme = p3_colors_balance,
+                              fonts = p3_fonts_website,
+                              png_out = sprintf("src/assets/images/k05_wq_%s_bar_%s.png", nutrient, AggReg),
+                              width = 6,
+                              height = 6),
+               format = "file")
+  ),
   
   ##############################################
   # 
