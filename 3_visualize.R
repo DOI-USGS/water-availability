@@ -188,7 +188,7 @@ p3_targets <- list(
                               region = AggReg,
                               color_scheme = p3_colors_balance,
                               fonts = p3_fonts_website,
-                              png_out = sprintf("src/assets/images/k05_wq_%s_bar_%s.png", nutrient, AggReg),
+                              png_out = sprintf("src/assets/images/k05_wq_tn_bar_%s.png", AggReg),
                               width = 6,
                               height = 6),
                format = "file")
