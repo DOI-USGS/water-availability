@@ -109,32 +109,30 @@ function createBarChart() {
         (d3.index(data.value, d => d.region_nam, d => d.category));
 
     // Set up x scale
-    const xScale = d3.scaleBand()
-        .domain(regionGroups)
+    const xScale = d3.scaleLinear()
+        .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
         .range([0, width]);
 
     // add x axis
     chartBounds.append('g')
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(xScale));
+        .call(d3.axisTop(xScale)
+            .ticks(3)
+            .tickFormat(d => d + 'kg/yr'))
 
     // Set up y scale
-    const yScale = d3.scaleLinear()
-        .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
+    const yScale = d3.scaleBand()
+        .domain(regionGroups)
         .range([height, 0]);
 
     // add y axis
     chartBounds.append('g')
-        .call(d3.axisLeft(yScale)
-            .ticks(5)
-            .tickFormat(d => d + 'kg/yr'))
-        .attr('stroke-width', 2)
-        .attr('font-size', 18);
+        // breaking build? .attr("transform", `translate(0,${width})`)
+        .call(d3.axisLeft(yScale));
 
     // set up color scale
     const color = d3.scaleOrdinal()
         .domain(categoryGroups)
-        .range(["#092836", "#1b695e"]);//, "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
+        .range(["#FF9100", "#1b695e", "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
     
     // Add group to chart bounds to hold all chart rectangle groups
     const rectGroup = chartBounds.append('g')
@@ -147,15 +145,17 @@ function createBarChart() {
         .append('g')
         .attr("id", d => d.key.replace(" ", "_"))
     
+    console.log(stackedData[0])
+
     // Add rectangles for each region to each category group
     categoryRectGroups.selectAll('rect')
         .data(D => D.map(d => (d.key = D.key, d)))
         .enter().append('rect')
             .attr("class", d => d.key.replace(" ", "_") + ' ' + d.data[0].replace(" ", "_"))
-            .attr('x', d => xScale(d.data[0]))
-            .attr('y', d => yScale(d[1]))
-            .attr('height', d => yScale(d[0]) - yScale(d[1]))
-            .attr('width', xScale.bandwidth())
+            .attr('x', d => xScale(d[0]))
+            .attr('y', d => yScale(d.data[0]))
+            .attr('height', yScale.bandwidth())
+            .attr('width', d => xScale(d[1]) - xScale(d[0]))
             .style("fill", d => color(d.key));
 }
 
