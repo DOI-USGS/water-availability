@@ -52,8 +52,8 @@ onMounted(async () => {
 
 async function loadDatasets() {
   try {
-    dataSet1.value = await loadData('nitrogen_by_source.csv');
-    dataSet2.value = await loadData('phosphorus_by_source.csv');
+    dataSet1.value = await loadData('wq_sources_tn.csv');
+    dataSet2.value = await loadData('wq_sources_tp.csv');
     console.log('data in');
   } catch (error) {
     console.error('Error loading datasets', error);
@@ -101,6 +101,11 @@ function createBarChart() {
     // get unique categories and regions
     const categoryGroups = d3.union(d3.map(data.value, d => d.category));
     const regionGroups = d3.union(d3.map(data.value, d => d.region_nam));
+
+    //console.log(categoryGroups);
+    //console.log(regionGroups);
+    //console.log(data.value[1, 2])
+    
 
     // stack data for rectangles
     const stackedData = d3.stack()
@@ -156,7 +161,7 @@ function createBarChart() {
             .attr('y', d => yScale(d.data[0]))
             .attr('height', yScale.bandwidth())
             .attr('width', d => xScale(d[1]) - xScale(d[0]))
-            .style("fill", d => color(d.key));
+            .style("fill", d => color(d.key));  
 }
 
 </script>
