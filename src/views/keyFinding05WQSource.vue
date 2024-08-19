@@ -74,9 +74,9 @@ async function loadData(fileName) {
 
 function createBarChart() {
     // Get dynamic dimensions to draw chart
-    const containerWidth = 800//document.getElementById('barplot-container').offsetWidth;
-    const containerHeight = 600//window.innerWidth <= 700 ? window.innerHeight * 0.5 : 600;
-    const margin = window.innerWidth <= 700 ? { top: 40, right: 10, bottom: 20, left: 10 } : { top: 40, right: 20, bottom: 40, left: 40 };
+    const containerWidth = 1000;//document.getElementById('barplot-container').offsetWidth;
+    const containerHeight = window.innerWidth <= 700 ? window.innerHeight * 0.5 : 1600;
+    const margin = window.innerWidth <= 700 ? { top: 40, right: 10, bottom: 20, left: 10 } : { top: 40, right: 20, bottom: 40, left: 100 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
 
@@ -85,7 +85,7 @@ function createBarChart() {
         .append('svg')
         .attr('class', 'barplotSVG')
         .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
-        .attr('preserveAspectRatio', 'xMidYMid meet')
+        //.attr('preserveAspectRatio', 'xMidYMid meet')
         .style('width', '100%')
         .style('height', '100%');
 
@@ -123,6 +123,7 @@ function createBarChart() {
         .call(d3.axisTop(xScale)
             .ticks(3)
             .tickFormat(d => d + 'kg/yr'))
+        .attr('font-size', '5rem');
 
     // Set up y scale
     const yScale = d3.scaleBand()
@@ -132,7 +133,8 @@ function createBarChart() {
     // add y axis
     chartBounds.append('g')
         // breaking build? .attr("transform", `translate(0,${width})`)
-        .call(d3.axisLeft(yScale));
+        .call(d3.axisLeft(yScale))
+        .attr('font-size', '5rem');
 
     // set up color scale
     const color = d3.scaleOrdinal()
