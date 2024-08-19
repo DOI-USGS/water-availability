@@ -1,4 +1,5 @@
 source("1_fetch/src/sb_fetch_helpers.R")
+source("1_fetch/src/wq_fetch_process.R")
 
 
 
@@ -71,15 +72,18 @@ p1_targets <- list(
   # 
   #           WATER QUALITY DATA
   # 
-  # TN = TOTAL NITROGEN (EXTRACTED FROM ELMERA'S SOFTWARE RELEASE)
+  # EXTRACTED FROM ELMERA'S SOFTWARE RELEASE
   tar_map(
     values = tibble(nutrient = c("tn", "tp", "ss")),
     tar_target(p1_wq_Reg_csv,
                sprintf("1_fetch/in/p2_load_%s.csv", nutrient),
                format = "file"),
     tar_target(p1_wq_Reg_df,
-               readr::read_csv(p1_wq_Reg_csv,
-                               show_col_types = FALSE)),
+               process_wq_data(in_csv = p1_wq_Reg_csv,
+                               nutrient = nutrient)),
+    tar_target(p1_wq_Reg_d3_csv,
+               readr::write_csv(p1_wq_Reg_df,
+                                file = sprintf("public/wq_sources_%s.csv", nutrient))),
     names = nutrient),
   
   ##############################################
