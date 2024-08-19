@@ -100,12 +100,72 @@
 .wavy-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  flex-direction: column;
   height: 200px;
   background-color: var(--banner-col);
   position: sticky;
+  z-index: 1001;
 }
 
+/* container for waves */
+section{
+  position: relative;
+  width: 100%;
+}
+section .waves{
+  position: relative;
+}
+section .waves .wave{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background: url('wave.png');
+  background-size: 1000px 50px;
+}
+
+section .waves .wave#wave1{
+  opacity: 1;
+  bottom: 0; 
+  z-index: 1000;
+  animation: animate 6s linear infinite;
+}
+section .waves .wave#wave2{
+  opacity: 0.5;
+  bottom: 2px; 
+  z-index: 999;
+  animation: animate2 6s linear infinite;
+}
+section .waves .wave#wave3{
+  opacity: 0.2;
+  bottom: 5px; 
+  z-index: 998;
+  animation: animate 4s linear infinite;
+}
+section .waves .wave#wave4{
+  opacity: 0.7;
+  bottom: 10px; 
+  z-index: 999;
+  animation: animate2 4s linear infinite;
+}
+@keyframes animate {
+  0% {
+    background-position-x: 1000px;
+  }
+  100% {
+    background-position-x: 0px;
+  }
+}
+@keyframes animate2 {
+  0% {
+    background-position-x: 0px;
+  }
+  100% {
+    background-position-x: 1000px;
+  }
+}
 
 body {
   min-height: 100vh;

@@ -5,6 +5,14 @@
         <h1>The Status of Water Availability in the United States</h1>
         <h2>Key Findings</h2>
       </div>
+      <section>
+        <div class="waves">
+          <div class="wave" id="wave1"></div>
+          <div class="wave" id="wave2"></div>
+          <div class="wave" id="wave3"></div>
+          <div class="wave" id="wave4"></div>
+        </div>
+      </section>
     </div>
     <div class="raindrop-container">
       <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">

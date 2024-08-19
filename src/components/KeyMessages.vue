@@ -3,8 +3,7 @@
         <div class="key-message-container" v-for="(message, index) in filteredMessages" :key="index">
             <h4>Key Message #{{ message.page }}</h4>      
             <h3>{{ message.keyMessage }}</h3>
-  
-    </div>
+        </div>
     </div>
 
 </template>
