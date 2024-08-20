@@ -27,12 +27,18 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-const height = 600;
-const width = 800;
-const margin = { top: 40, right: 20, bottom: 40, left: 40 };
+//const height = 600;
+//const width = 800;
+//const margin = { top: 40, right: 20, bottom: 40, left: 40 };
 
 
-
+const categoryColors = {
+        'Agriculture': '#939185',
+        'Atmospheric deposition': '#C8ACD6',
+        'Other Human Sources': '#2E236C',
+        'Natural sources': '#EECEB9',
+        'Wastewater': '#478CCF'
+      }; 
 
 
 
@@ -139,7 +145,10 @@ function createBarChart() {
     // set up color scale
     const color = d3.scaleOrdinal()
         .domain(categoryGroups)
-        .range(["#FF9100", "#1b695e", "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
+        //.range(["#FF9100", "#1b695e", "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
+        //.range(categoryGroups.map(category => categoryColors[category]));
+        .range(Object.entries(categoryColors).map(([key, value]) => value));
+    //console.log(categoryColors.Agriculture);
     
     // Add group to chart bounds to hold all chart rectangle groups
     const rectGroup = chartBounds.append('g')
@@ -152,7 +161,7 @@ function createBarChart() {
         .append('g')
         .attr("id", d => d.key.replace(" ", "_"))
     
-    console.log(stackedData[0])
+    //console.log(stackedData[0])
 
     // Add rectangles for each region to each category group
     categoryRectGroups.selectAll('rect')
