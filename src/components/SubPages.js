@@ -23,7 +23,7 @@ export default {
         {
             page: 5,
             route: '/keyFinding05WQSource',
-            keyMessage: 'Human activities can affect water quality through inputs (e.g., organic chemicals), processes (e.g., dredging), or permanent landscape modifications (e.g., dams, urbanization).'
+            keyMessage: 'Water quality is affected by natural and human sources, including springs and streams, wastewater, land use activities, and air pollution.'
         },
         {
             page: 6,

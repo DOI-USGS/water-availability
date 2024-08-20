@@ -173,10 +173,9 @@ p3_targets <- list(
   ##############################################
   # 
   #           KEY TAKEAWAY 5: 
-  #             Human activities can affect water quality through 
-  #             inputs (e.g., organic chemicals), processes 
-  #             (e.g., dredging), or permanent landscape modifications 
-  #             (e.g., dams, urbanization).
+  #             Water quality is affected by natural and human sources, 
+  #             including springs and streams, land use activities, and 
+  #             air pollution.
   #
   #
   tar_map(
