@@ -79,7 +79,12 @@
     width: 90%;
   }
 }
-
+.button-container {
+  padding: 10px 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
 
 
 /* button for switching between images */
