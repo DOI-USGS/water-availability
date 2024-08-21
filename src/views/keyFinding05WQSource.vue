@@ -12,11 +12,11 @@
                 </p>
             </div>
             <div class="viz-container">
-        <div id="barplot-container" />    
-         </div>
-         <div class="viz-container">
+                <div id="barplot-container">    
+                </div>
+            </div>
+         <div class="text-container">
             <p>Nutrients have a range of natural and anthropogenic sources. Natural sources of nutrients in surface water include fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes. Anthropogenic sources of nutrients in surface water generally include nonpoint fertilizer and manure application, atmospheric deposition (which generally has anthropogenic origins), nitrogen fixation by crops, and point sources such as wastewater treatment plant discharge. Legacy nitrogen stored in groundwater can also be important sources to streams as well. Across the CONUS, primary sources vary spatially, and include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.</p>
-        
          </div>
          
          <PageCarousel></PageCarousel>

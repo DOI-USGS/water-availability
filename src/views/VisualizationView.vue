@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="wavy-container">
-      <div class="key-message-container">
+      <div class="title-message-container">
         <h1>The Status of Water Availability in the United States</h1>
         <h2>Key Findings</h2>
       </div>
@@ -36,31 +36,54 @@
   color: var(--dodger-blue);
 }*/
 
+/* text box within the wavy container that houses key messages */
+.title-message-container {
+  height: 200px;
+  width: 80vw;
+  color: var(--blue-text-col);
+  padding: 20px 0px 20px 0px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .title-message-container {
+      height: 200px;
+      width: 90vw;
+      padding: 5px;
+      align-items: center;
+  }
+}
+
 .raindrop-container {
-  min-height: 1000px;
+  width: 80vw;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 1rem;
 }
 
 .key-message-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 15px;
+  display: grid;
+  align-items:start;
+  justify-items: center;
+  grid-template-rows: 70px max-content;
 }
 
 .key-message-item-text {
-  margin-left: 20px;
   color: var(--blue-text-col);
-  width: 70%;
-  font-size: 2.5rem;
+  width: 90%;
+  font-size: 2rem;
 }
 
 .raindrop {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 0 50% 50% 50%;
   border: 0px;
   transform: rotate(45deg);
-  margin-top: 20px;
+  margin: 20px auto 0px auto;
   background-color: rgb(159, 202, 203);
   border: 0 solid;
   box-shadow: inset 0 0 20px  #427388;
@@ -90,23 +113,5 @@
   font-size: 40px;
   font-weight: bold;
 }
-
-@media screen and (max-width: 790px) {
-    .raindrop-container {
-        height: 940px;
-    }
-}  
-
-@media screen and (max-width: 452px) {
-    .raindrop-container {
-        height: 1020px;
-    }
-}  
-
-@media screen and (max-width: 400px) {
-    .raindrop-container {
-        height: 1060px;
-    }
-}  
 
 </style>
