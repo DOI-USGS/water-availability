@@ -206,12 +206,13 @@ export default {
 <style scoped>
 .nav-container {
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content:center;
-    height: 250px;
+    height: 160px;
+    padding: 10px 0 0 0;
     position: sticky;
     bottom: 0;
-    /* background-color: #edeadf; */
+    background-color: var(--page-bkg-col); 
 }
 
 .nav-button {
