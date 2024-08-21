@@ -49,12 +49,12 @@ export default {
     padding: 20px 0px 20px 0px;
     grid-template-columns: 140px auto;
     grid-gap: 1rem;
+    align-items: center;
 }
 
 @media only screen and (max-width: 768px) {
   .key-message-container {
     width: 90vw;
-    align-items: center;
     grid-template-columns: 50px auto;
     grid-gap: 1rem;
   }

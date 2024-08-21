@@ -70,7 +70,15 @@
       flex-direction: column;
   }
 }
-
+.text-container {
+  width: 60%;
+  margin: 0 auto;
+}
+@media only screen and (max-width: 768px) {
+  .text-container {
+    width: 90%;
+  }
+}
 
 
 
