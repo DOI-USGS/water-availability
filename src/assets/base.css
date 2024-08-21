@@ -43,6 +43,18 @@
   /* font-weight: normal; */
 }
 
+/* this holds the main content of each page, including text and viz */
+.content-container {
+  width: 80vw;
+  margin: 0 auto;
+  padding: 10px 0 10px 0;
+}
+@media only screen and (max-width: 768px) {
+  .content-container{
+    width: 90vw;
+  }
+}
+
 /* this is where each page's viz will go */
 .viz-container { 
   display: flex;
@@ -50,6 +62,8 @@
   align-items: center;
   justify-content: center;
   min-height: 20vh;
+  width: 100%;
+  padding: 10px 0 10px 0;
 }
 @media only screen and (max-width: 768px) {
   .viz-container {
@@ -183,12 +197,7 @@ h3 {
 }
 
 .viz-placeholder{
-  width: 50%;
-}
-@media only screen and (max-width:490px) {
-  .viz-placeholder {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 /* Settings for the interactive svgs with hover effects */
