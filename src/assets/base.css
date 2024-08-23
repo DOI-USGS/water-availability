@@ -13,7 +13,7 @@
   --banner-col: #9DC6D7; /* #9FCACB; */
   --blue-highlight-col:  #728393; /* #5E7789; */ 
   --blue-text-col: #00264C;/* #363E4A; */ /* #00264C; */
-
+  --grey-blue: #5e7789;
   --page-bkg-col: #FEFAF6;/* #edeadf; */
 
   --black-soft: #151515;
@@ -190,6 +190,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 100px; /* to make room for footer */
 }
 
 h1 {
