@@ -141,26 +141,26 @@ function createBarChart(currentSummaryType) {
         .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
         (d3.index(data.value, d => d.region_nam, d => d.category));
 
-    // Set up x scale
-    const loadScale = d3.scaleLinear()
+    // Set up nutrient scale
+    const nutrientScale = d3.scaleLinear()
         .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-        .range([0, width]);
+        .range(mobileView ? [0, width] : [height, 0])
 
-    // add x axis
+    // add nutrient axis
     chartBounds.append('g')
-        .call(d3.axisTop(loadScale)
+        .call(mobileView ? d3.axisTop(nutrientScale): d3.axisLeft(nutrientScale)
             .ticks(3)
             .tickFormat(d => currentSummaryType === 'Count' ? d + 'kg/yr' : d + '%'))
         .attr('font-size', mobileView ? '1.8rem' : '2rem');
 
-    // Set up y scale
+    // Set up region scale
     const regionScale = d3.scaleBand()
         .domain(regionGroups)
-        .range([height, 0]);
+        .range(mobileView ? [height, 0] : [0, width]);
 
-    // add y axis
+    // add region axis
     chartBounds.append('g')
-        .call(d3.axisLeft(regionScale))
+        .call(mobileView ? d3.axisLeft(regionScale) : d3.axisTop(regionScale))
         .attr('font-size', mobileView ? '1.8rem' : '2rem')
         .selectAll(".tick text")
           .call(wrap, 80);
@@ -188,10 +188,10 @@ function createBarChart(currentSummaryType) {
         .data(D => D.map(d => (d.key = D.key, d)))
         .enter().append('rect')
             .attr("class", d => d.key.replace(" ", "_") + ' ' + d.data[0].replace(" ", "_"))
-            .attr('x', d => loadScale(d[0]))
-            .attr('y', d => regionScale(d.data[0]))
-            .attr('height', regionScale.bandwidth())
-            .attr('width', d => loadScale(d[1]) - loadScale(d[0]))
+            .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
+            .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[1]))
+            .attr('height', d => mobileView ? regionScale.bandwidth() : nutrientScale(d[0]) - nutrientScale(d[1]))
+            .attr('width', d => mobileView ? nutrientScale(d[1]) - nutrientScale(d[0]) : regionScale.bandwidth() )
             .style("fill", d => color(d.key));  
 };
 
