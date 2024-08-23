@@ -32,6 +32,11 @@ import { onMounted, ref } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import { isMobile } from 'mobile-device-detect';
+
+// use for mobile logic
+const mobileView = isMobile;
+console.log(mobileView)
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -95,11 +100,12 @@ async function loadData(fileName) {
 function createBarChart(currentSummaryType) {
 
     // Get dynamic dimensions to draw chart
-    const containerWidth = 1000;//document.getElementById('barplot-container').offsetWidth;
-    const containerHeight = window.innerWidth <= 700 ? window.innerHeight * 0.5 : 1600;
-    const margin = window.innerWidth <= 700 ? { top: 40, right: 10, bottom: 20, left: 10 } : { top: 40, right: 20, bottom: 40, left: 100 };
+    const containerWidth = document.getElementById('barplot-container').offsetWidth;
+    const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
+    const margin = mobileView ? { top: 60, right: 10, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 20 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
+    console.log(containerWidth)
 
     // draw svg canvas for barplot
     svg = d3.select('#barplot-container')
@@ -107,8 +113,8 @@ function createBarChart(currentSummaryType) {
         .attr('class', 'barplotSVG')
         .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
         //.attr('preserveAspectRatio', 'xMidYMid meet')
-        .style('width', '100%')
-        .style('height', '100%');
+        .style('width', width)
+        .style('height', height);
 
     // add group for bar chart bounds, translating by chart margins
     const chartBounds = svg.append('g')
@@ -137,35 +143,33 @@ function createBarChart(currentSummaryType) {
         (d3.index(data.value, d => d.region_nam, d => d.category));
 
     // Set up x scale
-    const xScale = d3.scaleLinear()
+    const loadScale = d3.scaleLinear()
         .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
         .range([0, width]);
 
     // add x axis
     chartBounds.append('g')
-        .call(d3.axisTop(xScale)
+        .call(d3.axisTop(loadScale)
             .ticks(3)
             .tickFormat(d => currentSummaryType === 'Count' ? d + 'kg/yr' : d + '%'))
-        .attr('font-size', '5rem');
+        .attr('font-size', d => mobileView ? '1.8rem' : '2rem');
 
     // Set up y scale
-    const yScale = d3.scaleBand()
+    const regionScale = d3.scaleBand()
         .domain(regionGroups)
         .range([height, 0]);
 
     // add y axis
     chartBounds.append('g')
-        // breaking build? .attr("transform", `translate(0,${width})`)
-        .call(d3.axisLeft(yScale))
-        .attr('font-size', '5rem');
+        .call(d3.axisLeft(regionScale))
+        .attr('font-size', d => mobileView ? '1.8rem' : '2rem')
+        .selectAll(".tick text")
+          .call(wrap, 80);
 
     // set up color scale
     const color = d3.scaleOrdinal()
         .domain(categoryGroups)
-        //.range(["#FF9100", "#1b695e", "#7a5195", "#2a468f", "#ef5675", "#ff764a", "#ffa600"]);
-        //.range(categoryGroups.map(category => categoryColors[category]));
         .range(Object.entries(categoryColors).map(([key, value]) => value));
-    //console.log(categoryColors.Agriculture);
     
     // Add group to chart bounds to hold all chart rectangle groups
     const rectGroup = chartBounds.append('g')
@@ -185,18 +189,43 @@ function createBarChart(currentSummaryType) {
         .data(D => D.map(d => (d.key = D.key, d)))
         .enter().append('rect')
             .attr("class", d => d.key.replace(" ", "_") + ' ' + d.data[0].replace(" ", "_"))
-            .attr('x', d => xScale(d[0]))
-            .attr('y', d => yScale(d.data[0]))
-            .attr('height', yScale.bandwidth())
-            .attr('width', d => xScale(d[1]) - xScale(d[0]))
+            .attr('x', d => loadScale(d[0]))
+            .attr('y', d => regionScale(d.data[0]))
+            .attr('height', regionScale.bandwidth())
+            .attr('width', d => loadScale(d[1]) - loadScale(d[0]))
             .style("fill", d => color(d.key));  
-}
+};
+
+// https://gist.github.com/mbostock/7555321
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+    words = text.text().split(/\s|-+/).reverse(),
+    word,
+    line = [],
+    lineNumber = 0,
+    lineHeight = 0.2, // ems
+    y = text.attr("y"),
+    dy = parseFloat(text.attr("dy")),
+    tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+        }
+    }
+  }
+)};
 
 </script>
 
 <style scoped lang="scss">
 #barplot-container{
-  width: 50vw;
+  width: 100%;
 }
 
 .highlight {
