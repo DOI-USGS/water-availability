@@ -102,10 +102,9 @@ function createBarChart(currentSummaryType) {
     // Get dynamic dimensions to draw chart
     const containerWidth = document.getElementById('barplot-container').offsetWidth;
     const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-    const margin = mobileView ? { top: 60, right: 10, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 20 };
+    const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 20 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
-    console.log(containerWidth)
 
     // draw svg canvas for barplot
     svg = d3.select('#barplot-container')
@@ -113,8 +112,8 @@ function createBarChart(currentSummaryType) {
         .attr('class', 'barplotSVG')
         .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
         //.attr('preserveAspectRatio', 'xMidYMid meet')
-        .style('width', width)
-        .style('height', height);
+        .style('width', containerWidth)
+        .style('height', containerHeight);
 
     // add group for bar chart bounds, translating by chart margins
     const chartBounds = svg.append('g')
@@ -152,7 +151,7 @@ function createBarChart(currentSummaryType) {
         .call(d3.axisTop(loadScale)
             .ticks(3)
             .tickFormat(d => currentSummaryType === 'Count' ? d + 'kg/yr' : d + '%'))
-        .attr('font-size', d => mobileView ? '1.8rem' : '2rem');
+        .attr('font-size', mobileView ? '1.8rem' : '2rem');
 
     // Set up y scale
     const regionScale = d3.scaleBand()
@@ -162,7 +161,7 @@ function createBarChart(currentSummaryType) {
     // add y axis
     chartBounds.append('g')
         .call(d3.axisLeft(regionScale))
-        .attr('font-size', d => mobileView ? '1.8rem' : '2rem')
+        .attr('font-size', mobileView ? '1.8rem' : '2rem')
         .selectAll(".tick text")
           .call(wrap, 80);
 
@@ -225,7 +224,12 @@ function wrap(text, width) {
 
 <style scoped lang="scss">
 #barplot-container{
-  width: 100%;
+  width: 80vw;
+}
+@media only screen and (max-width: 768px) {
+  #barplot-container{
+    width: 90vw;
+  }
 }
 
 .highlight {
