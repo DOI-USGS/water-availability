@@ -102,7 +102,7 @@ function createBarChart(currentSummaryType) {
     // Get dynamic dimensions to draw chart
     const containerWidth = document.getElementById('barplot-container').offsetWidth;
     const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-    const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 20 };
+    const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
 
@@ -135,7 +135,7 @@ function createBarChart(currentSummaryType) {
     
 
     // stack data for rectangles
-    const expressed = currentSummaryType === 'Count' ? 'total_load' : 'percent_load';
+    const expressed = currentSummaryType === 'Count' ? 'load_1kMg' : 'percent_load';
     const stackedData = d3.stack()
         .keys(categoryGroups)
         .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
@@ -148,9 +148,9 @@ function createBarChart(currentSummaryType) {
 
     // add nutrient axis
     chartBounds.append('g')
-        .call(mobileView ? d3.axisTop(nutrientScale): d3.axisLeft(nutrientScale)
-            .ticks(3)
-            .tickFormat(d => currentSummaryType === 'Count' ? d + 'kg/yr' : d + '%'))
+        .call(mobileView ? d3.axisTop(nutrientScale).ticks(3).tickFormat(
+          d => currentSummaryType === 'Count' ? d + ' Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
+            d => currentSummaryType === 'Count' ? d + ' Mg/yr' : d + "%"))
         .attr('font-size', mobileView ? '1.8rem' : '2rem');
 
     // Set up region scale
