@@ -2,14 +2,50 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-          <div class="text-container">
+            <div class="text-container">
                 <p>Sources of excess nutrients in our water include   
-                    <span :class="['highlight', 'Agriculture']"> agriculture </span>,
-                    <span :class="['highlight', 'Atmosphericdeposition']"> air pollution </span>,
-                    <span :class="['highlight', 'Wastewater']"> wastewater  </span>,
-                    <span :class="['highlight', 'Otherhumansources']"> other human sources </span>, and
-                    <span :class="['highlight', 'Naturalsources']"> natural sources </span>.
+                    <span class="highlight" id="Agriculture"> agriculture </span>,
+                    <span class="highlight" id="Atmosphericdeposition"> air pollution </span>,
+                    <span class="highlight" id="Wastewater"> wastewater  </span>,
+                    <span class="highlight" id="Otherhumansources"> other human sources </span>, and
+                    <span class="highlight" id="Naturalsources"> natural sources </span>.
                 </p>
+            </div>
+            <div
+            id="toggle-container"
+            class="text-container"
+            aria-hidden="true"
+            >
+              <div class="graph-buttons-switch">
+                <input
+                  id="id_Count"
+                  type="radio"
+                  class="graph-buttons-switch-input"
+                  name="CountPercent"
+                  value="Count"
+                  checked
+                >
+                  <label
+                    id="Count"
+                    for="id_Count"
+                    tabindex="0"
+                    class="graph-buttons-switch-label graph-buttons-switch-label-off"
+                  >Count</label>
+                  <input
+                    id="id_Percent"
+                    type="radio"
+                    class="graph-buttons-switch-input"
+                    name="CountPercent"
+                    value="Percent"
+                  >
+                  <label
+                    id="Percent"
+                    for="id_Percent"
+                    tabindex="0"
+                    class="graph-buttons-switch-label graph-buttons-switch-label-on"
+                  >Percent</label>
+                  <span class="graph-buttons-switch-selection" />
+              </div>
             </div>
             <div class="viz-container">
                 <div id="barplot-container">    
@@ -66,6 +102,7 @@ onMounted(async () => {
         await loadDatasets();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
+            addToggle();
             createBarChart(summaryType);
         } else {
             console.error('Error loading data');
@@ -149,8 +186,8 @@ function createBarChart(currentSummaryType) {
     // add nutrient axis
     chartBounds.append('g')
         .call(mobileView ? d3.axisTop(nutrientScale).ticks(3).tickFormat(
-          d => currentSummaryType === 'Count' ? d + ' Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
-            d => currentSummaryType === 'Count' ? d + ' Mg/yr' : d + "%"))
+          d => currentSummaryType === 'Count' ? d + 'k Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
+            d => currentSummaryType === 'Count' ? d + 'k Mg/yr' : d + "%"))
         .attr('font-size', mobileView ? '1.8rem' : '2rem');
 
     // Set up region scale
@@ -220,6 +257,93 @@ function wrap(text, width) {
   }
 )};
 
+function addToggle() {
+  // https://codepen.io/meijer3/pen/WzweRo
+
+  const toggleLabels = d3.selectAll('.graph-buttons-switch label').on("mousedown touchstart", function(event) {
+    const dragger = d3.select(self.parentNode)
+    let startx = 0;
+    let touchEndX = 0;
+    
+    dragger
+      // The touchstart and touchmove events allow the white box to be dragged within the toggle on mobile
+      .on("touchstart", function(event) {
+        // only triggered on mobile
+        startx = d3.pointer(event.touches[0])[0]
+        // If start on right, correct
+        startx = (startx < dragger.select('label').node().getBoundingClientRect().width)? startx : startx - (dragger.select('label').node().getBoundingClientRect().width)
+      })
+      .on("touchmove", function(event) {
+        // only triggered on mobile
+        let xcoord = d3.pointer(event.touches[0])[0] - startx
+
+        xcoord = ( xcoord > dragger.select('label').node().getBoundingClientRect().width) ? dragger.select('label').node().getBoundingClientRect().width : xcoord
+        xcoord = ( xcoord < 0) ? 2 : xcoord
+        dragger.select('.graph-buttons-switch-selection').attr('style','left:' + xcoord + 'px;');
+        touchEndX = xcoord
+      })
+      .on("touchend", function (event) {
+        // only triggered on mobile
+        dragger.on("mousedown touchstart", null)
+        dragger.on("touchmove mousemove", null) 
+        dragger.on("mouseup touchend", null)
+        
+        // Get x coordinate of pointer event
+        const xcoord = touchEndX
+
+        //  coordinate over width of first label? 0 left | 1 right
+        const id = (xcoord < dragger.select('label').node().getBoundingClientRect().width) ? 0 : 1;
+        const altID = id === 0 ? 1 : 0
+
+        const chos = dragger.selectAll('input').filter(function(d, i) { return i == id; })
+        chos.node().checked = true;
+        
+        //remove styling
+        dragger.select('.graph-buttons-switch-selection').attr('style','');
+        
+        // Do action
+        drawBarplot(chos.node().value)
+      })
+      .on("mouseup", function (event) {
+        // triggered on desktop and mobile
+        dragger.on("mousedown touchstart", null)
+        dragger.on("touchmove mousemove", null) 
+        dragger.on("mouseup touchend", null)
+
+        // Get x coordinate of pointer event
+        const xcoord = self.d3.pointer(event)[0]
+
+        //  coordinate over width of first label? 0 left | 1 right
+        const id = (xcoord < dragger.select('label').node().getBoundingClientRect().width) ? 0 : 1;
+        const altID = id === 0 ? 1 : 0
+
+        const chos = dragger.selectAll('input').filter(function(d, i) { return i == id; })
+        chos.node().checked = true;
+        
+        //remove styling
+        dragger.select('.graph-buttons-switch-selection').attr('style','');
+        
+        // Do action
+        createBarChart(chos.node().value)
+      });          
+  });
+
+  toggleLabels.each(function() {
+    addEventListener("keypress", function(event) {
+        if (event.key === 'Enter') {
+          let targetId = event.target.id
+
+          // Shift toggle
+          const chos = document.getElementById("id_" + targetId)
+          chos.checked = true;
+
+          // Do action
+          createBarChart(targetId);
+        }
+    })
+  })
+};
+
 </script>
 
 <style scoped lang="scss">
@@ -241,26 +365,99 @@ function wrap(text, width) {
   cursor: pointer;
   transition: all 0.1s;
 
-  &.Agriculture {
+  &#Agriculture {
     background-color: #939185;
   }
 
-  &.Atmosphericdeposition {
+  &#Atmosphericdeposition {
     background-color: #C8ACD6;
   }
 
-  &.Otherhumansources {
+  &#Otherhumansources {
     background-color: #2E236C;
   }
 
-  &.Wastewater {
+  &#Wastewater {
     background-color: #478CCF;
   }
 
-  &.Naturalsources {
+  &#Naturalsources {
     background-color: #EECEB9;
   }
 }
+$switchWidth: 7.9rem;
+.graph-buttons-switch {
+  display: flex;
+  height: 2.8rem;
+  width: $switchWidth * 2.03;
+  border-radius: 0.2rem;
+  position: relative;
+  margin: 0rem 0.5rem 0rem 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1), 0 0.1remx rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1), 0 0.1rem rgba(255, 255, 255, 0.1);
 
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+  @media screen and (max-width: 600px) {
+    height: 2.6rem;
+  }
+}
+.graph-buttons-switch-label {
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: $switchWidth;
+  line-height: 2.4rem;
+  text-align: center;
+  cursor: pointer;
+  @media screen and (max-width: 600px) {
+    line-height: 2.2rem;
+    width: $switchWidth * 1.02;
+  }
+}
+.graph-buttons-switch-label-off {
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+.graph-buttons-switch-label-on {
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+.graph-buttons-switch-input {display: none;}
+.graph-buttons-switch-input:checked + .graph-buttons-switch-label {
+  font-weight: bold;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+.graph-buttons-switch-input:checked + .graph-buttons-switch-label-on ~ .graph-buttons-switch-selection {left: $switchWidth;}
+.graph-buttons-switch-selection {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: $switchWidth;
+  height: 2.4rem;
+  background: rgba(255, 255, 255,1);
+  border-radius: 0.2rem;
+  -webkit-box-shadow: inset 0 0.1rem rgba(255, 255, 255,0.6), 0 0 0.2rem rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0.1rem rgba(255, 255, 255,0.6), 0 0 0.2rem rgba(0, 0, 0, 0.3);
+  -webkit-transition: left 0.3s ease-out,background 0.3s;
+  -moz-transition: left 0.3s ease-out,background 0.3s;
+  -o-transition: left 0.3s ease-out,background 0.3s;
+  transition: left 0.3s ease-out,background 0.3s ;
+/* 	transition: background 0.3s ; */
+  @media screen and (max-width: 600px) {
+    height: 2.2rem;
+  }
+}
 
 </style>
