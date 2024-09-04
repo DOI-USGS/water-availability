@@ -30,14 +30,16 @@ process_wq_data <- function(in_csv, nutrient){
     dplyr::group_by(category, region_nam) |> 
     dplyr::summarize(total_load = sum(total_load, na.rm = TRUE),
                      # also in 1000 Mg units
-                     load_1kMg = total_load/1000000) |>
-    ungroup()
+                     load_1kMg = case_when(total_load == 0 ~ 0,
+                                           total_load > 0 ~ total_load/1000000)) |>
+    ungroup() 
   
   
   # d3 errors if any category-region combination is missing (0 load for a category)
   # so going to add zeros in when that happens
   out_complete <- out_mean |>
-    complete(category, region_nam, fill = list(total_load = 0))
+    complete(category, region_nam, fill = list(total_load = 0,
+                                               load_1kMg = 0))
   
   # Calculate percent load
   out_pct <- out_complete |>
