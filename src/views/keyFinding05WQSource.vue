@@ -81,9 +81,17 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-//const height = 600;
-//const width = 800;
-//const margin = { top: 40, right: 20, bottom: 40, left: 40 };
+const containerWidth = window.innerWidth * 0.8;
+const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
+const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
+const width = containerWidth - margin.left - margin.right;
+const height = containerHeight - margin.top - margin.bottom;
+console.log(containerWidth);
+let chartBounds;
+let rectGroup;
+let nutrientScale;
+let nutrientAxis;
+
 
 // Colors for bar chart (need to be updated along with CSS below!)
 const categoryColors = {
@@ -97,13 +105,32 @@ const categoryColors = {
 // Set default summaryType
 const summaryType = 'Count'
 
+
+
 onMounted(async () => {
     try {
         await loadDatasets();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
+            // get unique categories and regions
+            const categoryGroups = d3.union(d3.map(data.value, d => d.category));
+            const regionGroups = d3.union(d3.map(data.value, d => d.region_nam));
+
+            //console.log(regionGroups);
+
             addToggle();
-            createBarChart(summaryType);
+            initBarChart({
+              containerWidth: containerWidth,
+              containerHeight: containerHeight,
+              margin: margin,
+              width: width,
+              height: height
+            });
+            createBarChart({
+              currentSummaryType: summaryType,
+              categoryGroups: categoryGroups,
+              regionGroups: regionGroups
+            });
         } else {
             console.error('Error loading data');
         }
@@ -134,42 +161,43 @@ async function loadData(fileName) {
   }
 };
 
-function createBarChart(currentSummaryType) {
 
-    // Get dynamic dimensions to draw chart
-    const containerWidth = document.getElementById('barplot-container').offsetWidth;
-    const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-    const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
-    const width = containerWidth - margin.left - margin.right;
-    const height = containerHeight - margin.top - margin.bottom;
+function initBarChart({
+  containerWidth,
+              containerHeight,
+              margin,
+              width,
+              height
+}) {
 
     // draw svg canvas for barplot
     svg = d3.select('#barplot-container')
-        .append('svg')
-        .attr('class', 'barplotSVG')
-        .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
-        //.attr('preserveAspectRatio', 'xMidYMid meet')
-        .style('width', containerWidth)
-        .style('height', containerHeight);
+      .append('svg')
+      .attr('class', 'barplotSVG')
+      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+      //.attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('width', containerWidth)
+      .style('height', containerHeight);
 
     // add group for bar chart bounds, translating by chart margins
-    const chartBounds = svg.append('g')
-        .attr('id', 'wrapper')
-        .style("transform", `translate(${
-          margin.left
-        }px, ${
-          margin.top
-        }px)`)
+    chartBounds = svg.append('g')
+      .attr('id', 'wrapper')
+      .style("transform", `translate(${
+        margin.left
+      }px, ${
+        margin.top
+      }px)`)
 
-    
-    // get unique categories and regions
-    const categoryGroups = d3.union(d3.map(data.value, d => d.category));
-    const regionGroups = d3.union(d3.map(data.value, d => d.region_nam));
+    // Add group to chart bounds to hold all chart rectangle groups
+    rectGroup = chartBounds.append('g')
+      .attr('id', 'rectangle_group')
 
-    //console.log(categoryGroups);
-    //console.log(regionGroups);
-    //console.log(data.value[1, 2])
-    
+}
+function createBarChart({
+    currentSummaryType, //left off sept 4 here, don't know how to pass the nutrientScale from init() to create() fxns
+    categoryGroups,
+    regionGroups
+  }) {
 
     // stack data for rectangles
     const expressed = currentSummaryType === 'Count' ? 'load_1kMg' : 'percent_load';
@@ -178,10 +206,129 @@ function createBarChart(currentSummaryType) {
         .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
         (d3.index(data.value, d => d.region_nam, d => d.category));
 
+    // Set up region scale (xScale in water-bottling site)
+    const regionScale = d3.scaleBand()
+        .domain(regionGroups)
+        .range(mobileView ? [height, 0] : [0, width]); 
+
+    // add region axis
+    const regionAxis = chartBounds.append('g')
+        .call(mobileView ? d3.axisLeft(regionScale) : d3.axisTop(regionScale))
+        .attr('font-size', mobileView ? '1.8rem' : '2rem')
+        .selectAll(".tick text")
+          .call(wrap, 80);
+
+    regionAxis
+      .select(".domain").remove();
+
+    // Set up dynamic nutrient axis (y on desktop, x on mobile)
+    // scale for nutrient scale
+    nutrientScale = d3.scaleLinear()
+        .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
+        .range(mobileView ? [0, width] : [height, 0]);
+
+    // create nutrient axis generator
+    nutrientAxis = chartBounds.append('g')
+        .call(mobileView ? d3.axisTop(nutrientScale) : d3.axisLeft(nutrientScale));
+
+
+    chartBounds.append("g")
+        .attr("class", "y-axis")
+        // On mobile, translate y axis in negative x direction by the left margin
+        //.attr("transform", mobileView ? `translate(-${chartBounds.margin - 4},0)` : "translate(0,0)")
+        .attr("role", "presentation")
+        .attr("aria-hidden", true)
+/*         .append("text") //from water bottling
+          .attr("class", "y-axis axis-title")
+          .attr("x", -this.barplotDimensions.boundedHeight / 2)
+          .attr("transform", "rotate(-90)")
+          .style("text-anchor", "middle")
+          .attr("role", "presentation")
+          .attr("aria-hidden", true) */
+
+    // Update domain of nutrientScale
+    //nutrientScale
+    //    .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
+
+    // Redefine scale of y axis
+    //nutrientAxis.scale(nutrientScale)
+
+    //const rectGroup = d3.select('#rectangle_group')
+
+    // Set up transition.
+    const dur = 1000;
+    const t = d3.transition().duration(dur);
+
+    // set up color scale
+    const colorScale = d3.scaleOrdinal()
+        .domain(categoryGroups)
+        .range(Object.entries(categoryColors).map(([key, value]) => value));
+
+    // Update groups for bars, assigning data
+    const categoryRectGroups = rectGroup.selectAll('g')
+        .data(stackedData, d => d.key)
+        //.enter()
+        //.append('g')
+        .attr("id", d => d.key.replace(" ", "_"))
+        .join(
+          enter => enter
+              .append("g")
+              .attr("class", d => d.key),
+          
+          null, // no update function
+
+          exit => {
+            exit
+              .transition()
+              .duration(dur / 2)
+              .style("fill-opacity", 0)
+              .remove();
+          }
+        )
+
+    // Update bars within groups
+    categoryRectGroups.selectAll('rect')
+      .data(D => D.map(d => (d.key = D.key, d)))
+      .join(
+          enter => enter
+            .append("rect")
+            .attr("class", d => d.key.replace(" ", "_") + ' ' + d.data[0].replace(" ", "_"))
+            .attr("role", "listitem")
+            .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
+            .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[0]))
+            .attr('height', d => mobileView ? regionScale.bandwidth() : 0)
+            .attr('width', d => mobileView ? 0 : regionScale.bandwidth() )
+            .style("fill", d => colorScale(d.key))
+          ,
+          null,
+          exit => {
+            exit
+              .transition()
+              .duration(dur / 2)
+              .style("fill-opacity", 0)
+              .remove();
+          }
+        )
+      //this is all after build
+      .transition(t)
+      .delay((d, i) => i * 20)
+      .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
+      .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[1]))
+      .attr('height', d => mobileView ? regionScale.bandwidth() : nutrientScale(d[0]) - nutrientScale(d[1]))
+      .attr('width', d => mobileView ? nutrientScale(d[1]) - nutrientScale(d[0]) : regionScale.bandwidth() )
+      .style('fill', d => colorScale(d.key))
+/* 
+     // Set up region scale
+    const regionScale = d3.scaleBand()
+        .domain(regionGroups)
+        .range(mobileView ? [height, 0] : [0, width]); 
+
+
+    
     // Set up nutrient scale
     const nutrientScale = d3.scaleLinear()
-        .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-        .range(mobileView ? [0, width] : [height, 0])
+      .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
+      .range(mobileView ? [0, width] : [height, 0])
 
     // add nutrient axis
     chartBounds.append('g')
@@ -190,35 +337,12 @@ function createBarChart(currentSummaryType) {
             d => currentSummaryType === 'Count' ? d + 'k Mg/yr' : d + "%"))
         .attr('font-size', mobileView ? '1.8rem' : '2rem');
 
-    // Set up region scale
-    const regionScale = d3.scaleBand()
-        .domain(regionGroups)
-        .range(mobileView ? [height, 0] : [0, width]);
+            // Add subgroup for each category of data
 
-    // add region axis
-    chartBounds.append('g')
-        .call(mobileView ? d3.axisLeft(regionScale) : d3.axisTop(regionScale))
-        .attr('font-size', mobileView ? '1.8rem' : '2rem')
-        .selectAll(".tick text")
-          .call(wrap, 80);
-
-    // set up color scale
-    const color = d3.scaleOrdinal()
-        .domain(categoryGroups)
-        .range(Object.entries(categoryColors).map(([key, value]) => value));
-    
-    // Add group to chart bounds to hold all chart rectangle groups
-    const rectGroup = chartBounds.append('g')
-        .attr('id', 'rectangle_group')
-
-    // Add subgroup for each category of data
-    const categoryRectGroups = rectGroup.selectAll('g')
-        .data(stackedData, d => d.key)
-        .enter()
-        .append('g')
-        .attr("id", d => d.key.replace(" ", "_"))
     
     //console.log(stackedData[0])
+
+
 
     // Add rectangles for each region to each category group
     categoryRectGroups.selectAll('rect')
@@ -229,7 +353,8 @@ function createBarChart(currentSummaryType) {
             .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[1]))
             .attr('height', d => mobileView ? regionScale.bandwidth() : nutrientScale(d[0]) - nutrientScale(d[1]))
             .attr('width', d => mobileView ? nutrientScale(d[1]) - nutrientScale(d[0]) : regionScale.bandwidth() )
-            .style("fill", d => color(d.key));  
+            .style("fill", d => color(d.key));   */
+
 };
 
 // https://gist.github.com/mbostock/7555321
@@ -261,7 +386,7 @@ function addToggle() {
   // https://codepen.io/meijer3/pen/WzweRo
 
   const toggleLabels = d3.selectAll('.graph-buttons-switch label').on("mousedown touchstart", function(event) {
-    const dragger = d3.select(self.parentNode)
+    const dragger = d3.select(parentNode)
     let startx = 0;
     let touchEndX = 0;
     
@@ -302,7 +427,7 @@ function addToggle() {
         dragger.select('.graph-buttons-switch-selection').attr('style','');
         
         // Do action
-        drawBarplot(chos.node().value)
+        createBarChart(chos.node().value)
       })
       .on("mouseup", function (event) {
         // triggered on desktop and mobile
@@ -311,7 +436,7 @@ function addToggle() {
         dragger.on("mouseup touchend", null)
 
         // Get x coordinate of pointer event
-        const xcoord = self.d3.pointer(event)[0]
+        const xcoord = d3.pointer(event)[0]
 
         //  coordinate over width of first label? 0 left | 1 right
         const id = (xcoord < dragger.select('label').node().getBoundingClientRect().width) ? 0 : 1;
@@ -324,7 +449,11 @@ function addToggle() {
         dragger.select('.graph-buttons-switch-selection').attr('style','');
         
         // Do action
-        createBarChart(chos.node().value)
+        createBarChart({
+            currentSummaryType: chos.node().value,
+            categoryGroups: categoryGroups,
+            regionGroups: regionGroups
+            })
       });          
   });
 
@@ -348,7 +477,7 @@ function addToggle() {
 
 <style scoped lang="scss">
 #barplot-container{
-  width: 80vw;
+  width: 80vw; /* sync with container width in js */
 }
 @media only screen and (max-width: 768px) {
   #barplot-container{
