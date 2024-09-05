@@ -175,7 +175,6 @@ function initBarChart({
       .append('svg')
       .attr('class', 'barplotSVG')
       .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
-      //.attr('preserveAspectRatio', 'xMidYMid meet')
       .style('width', containerWidth)
       .style('height', containerHeight);
 
@@ -194,7 +193,7 @@ function initBarChart({
 
 }
 function createBarChart({
-    currentSummaryType, //left off sept 4 here, don't know how to pass the nutrientScale from init() to create() fxns
+    currentSummaryType, 
     categoryGroups,
     regionGroups
   }) {
@@ -234,26 +233,9 @@ function createBarChart({
 
     chartBounds.append("g")
         .attr("class", "y-axis")
-        // On mobile, translate y axis in negative x direction by the left margin
-        //.attr("transform", mobileView ? `translate(-${chartBounds.margin - 4},0)` : "translate(0,0)")
         .attr("role", "presentation")
         .attr("aria-hidden", true)
-/*         .append("text") //from water bottling
-          .attr("class", "y-axis axis-title")
-          .attr("x", -this.barplotDimensions.boundedHeight / 2)
-          .attr("transform", "rotate(-90)")
-          .style("text-anchor", "middle")
-          .attr("role", "presentation")
-          .attr("aria-hidden", true) */
 
-    // Update domain of nutrientScale
-    //nutrientScale
-    //    .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-
-    // Redefine scale of y axis
-    //nutrientAxis.scale(nutrientScale)
-
-    //const rectGroup = d3.select('#rectangle_group')
 
     // Set up transition.
     const dur = 1000;
@@ -267,8 +249,6 @@ function createBarChart({
     // Update groups for bars, assigning data
     const categoryRectGroups = rectGroup.selectAll('g')
         .data(stackedData, d => d.key)
-        //.enter()
-        //.append('g')
         .attr("id", d => d.key.replace(" ", "_"))
         .join(
           enter => enter
@@ -317,43 +297,6 @@ function createBarChart({
       .attr('height', d => mobileView ? regionScale.bandwidth() : nutrientScale(d[0]) - nutrientScale(d[1]))
       .attr('width', d => mobileView ? nutrientScale(d[1]) - nutrientScale(d[0]) : regionScale.bandwidth() )
       .style('fill', d => colorScale(d.key))
-/* 
-     // Set up region scale
-    const regionScale = d3.scaleBand()
-        .domain(regionGroups)
-        .range(mobileView ? [height, 0] : [0, width]); 
-
-
-    
-    // Set up nutrient scale
-    const nutrientScale = d3.scaleLinear()
-      .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-      .range(mobileView ? [0, width] : [height, 0])
-
-    // add nutrient axis
-    chartBounds.append('g')
-        .call(mobileView ? d3.axisTop(nutrientScale).ticks(3).tickFormat(
-          d => currentSummaryType === 'Count' ? d + 'k Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
-            d => currentSummaryType === 'Count' ? d + 'k Mg/yr' : d + "%"))
-        .attr('font-size', mobileView ? '1.8rem' : '2rem');
-
-            // Add subgroup for each category of data
-
-    
-    //console.log(stackedData[0])
-
-
-
-    // Add rectangles for each region to each category group
-    categoryRectGroups.selectAll('rect')
-        .data(D => D.map(d => (d.key = D.key, d)))
-        .enter().append('rect')
-            .attr("class", d => d.key.replace(" ", "_") + ' ' + d.data[0].replace(" ", "_"))
-            .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
-            .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[1]))
-            .attr('height', d => mobileView ? regionScale.bandwidth() : nutrientScale(d[0]) - nutrientScale(d[1]))
-            .attr('width', d => mobileView ? nutrientScale(d[1]) - nutrientScale(d[0]) : regionScale.bandwidth() )
-            .style("fill", d => color(d.key));   */
 
 };
 
