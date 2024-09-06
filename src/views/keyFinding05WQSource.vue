@@ -16,36 +16,19 @@
             class="text-container"
             aria-hidden="true"
             >
-              <div class="graph-buttons-switch">
-                <input
-                  id="id_Count"
-                  type="radio"
-                  class="graph-buttons-switch-input"
-                  name="CountPercent"
-                  value="Count"
-                  checked
-                >
-                  <label
-                    id="Count"
-                    for="id_Count"
-                    tabindex="0"
-                    class="graph-buttons-switch-label graph-buttons-switch-label-off"
-                  >Count</label>
-                  <input
-                    id="id_Percent"
-                    type="radio"
-                    class="graph-buttons-switch-input"
-                    name="CountPercent"
-                    value="Percent"
+              <p>
+                <span>
+                  <button
+                  aria-pressed="!scalePercent" 
+                  class="button"
+                  :text="scaleType"
+                  @click="toggleScale"
                   >
-                  <label
-                    id="Percent"
-                    for="id_Percent"
-                    tabindex="0"
-                    class="graph-buttons-switch-label graph-buttons-switch-label-on"
-                  >Percent</label>
-                  <span class="graph-buttons-switch-selection" />
-              </div>
+                    {{ scaleType }}
+                  </button>
+                </span>
+              </p>
+
             </div>
             <div class="viz-container">
                 <div id="barplot-container">    
@@ -64,7 +47,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -89,8 +72,11 @@ const height = containerHeight - margin.top - margin.bottom;
 console.log(containerWidth);
 let chartBounds;
 let rectGroup;
+let categoryGroups;
+let regionGroups;
 let nutrientScale;
 let nutrientAxis;
+const scalePercent = ref(false);
 
 
 // Colors for bar chart (need to be updated along with CSS below!)
@@ -102,10 +88,13 @@ const categoryColors = {
         'Wastewater': '#478CCF'
       }; 
 
-// Set default summaryType
-const summaryType = 'Count'
 
 
+    // set up filtered chart data as computed property
+    const scaleType = computed(() => {
+        return scalePercent.value ? 'percent change' : 'total load'
+    });
+    
 
 onMounted(async () => {
     try {
@@ -113,12 +102,11 @@ onMounted(async () => {
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
             // get unique categories and regions
-            const categoryGroups = d3.union(d3.map(data.value, d => d.category));
-            const regionGroups = d3.union(d3.map(data.value, d => d.region_nam));
+            categoryGroups = d3.union(d3.map(data.value, d => d.category));
+            regionGroups = d3.union(d3.map(data.value, d => d.region_nam));
 
             //console.log(regionGroups);
 
-            addToggle();
             initBarChart({
               containerWidth: containerWidth,
               containerHeight: containerHeight,
@@ -127,9 +115,9 @@ onMounted(async () => {
               height: height
             });
             createBarChart({
-              currentSummaryType: summaryType,
               categoryGroups: categoryGroups,
-              regionGroups: regionGroups
+              regionGroups: regionGroups, 
+              scalePercent: scalePercent.value
             });
         } else {
             console.error('Error loading data');
@@ -161,6 +149,16 @@ async function loadData(fileName) {
   }
 };
 
+function toggleScale() {
+        scalePercent.value = !scalePercent.value
+
+        console.log(scalePercent.value + 'test')
+        createBarChart({
+              categoryGroups: categoryGroups,
+              regionGroups: regionGroups, 
+              scalePercent: scalePercent.value
+    })
+  }
 
 function initBarChart({
   containerWidth,
@@ -193,13 +191,14 @@ function initBarChart({
 
 }
 function createBarChart({
-    currentSummaryType, 
     categoryGroups,
-    regionGroups
+    regionGroups,
+    scalePercent
   }) {
 
+
     // stack data for rectangles
-    const expressed = currentSummaryType === 'Count' ? 'load_1kMg' : 'percent_load';
+    const expressed = scalePercent ? 'percent_load' : 'load_1kMg';
     const stackedData = d3.stack()
         .keys(categoryGroups)
         .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
@@ -325,96 +324,7 @@ function wrap(text, width) {
   }
 )};
 
-function addToggle() {
-  // https://codepen.io/meijer3/pen/WzweRo
 
-  const toggleLabels = d3.selectAll('.graph-buttons-switch label').on("mousedown touchstart", function(event) {
-    const dragger = d3.select(parentNode)
-    let startx = 0;
-    let touchEndX = 0;
-    
-    dragger
-      // The touchstart and touchmove events allow the white box to be dragged within the toggle on mobile
-      .on("touchstart", function(event) {
-        // only triggered on mobile
-        startx = d3.pointer(event.touches[0])[0]
-        // If start on right, correct
-        startx = (startx < dragger.select('label').node().getBoundingClientRect().width)? startx : startx - (dragger.select('label').node().getBoundingClientRect().width)
-      })
-      .on("touchmove", function(event) {
-        // only triggered on mobile
-        let xcoord = d3.pointer(event.touches[0])[0] - startx
-
-        xcoord = ( xcoord > dragger.select('label').node().getBoundingClientRect().width) ? dragger.select('label').node().getBoundingClientRect().width : xcoord
-        xcoord = ( xcoord < 0) ? 2 : xcoord
-        dragger.select('.graph-buttons-switch-selection').attr('style','left:' + xcoord + 'px;');
-        touchEndX = xcoord
-      })
-      .on("touchend", function (event) {
-        // only triggered on mobile
-        dragger.on("mousedown touchstart", null)
-        dragger.on("touchmove mousemove", null) 
-        dragger.on("mouseup touchend", null)
-        
-        // Get x coordinate of pointer event
-        const xcoord = touchEndX
-
-        //  coordinate over width of first label? 0 left | 1 right
-        const id = (xcoord < dragger.select('label').node().getBoundingClientRect().width) ? 0 : 1;
-        const altID = id === 0 ? 1 : 0
-
-        const chos = dragger.selectAll('input').filter(function(d, i) { return i == id; })
-        chos.node().checked = true;
-        
-        //remove styling
-        dragger.select('.graph-buttons-switch-selection').attr('style','');
-        
-        // Do action
-        createBarChart(chos.node().value)
-      })
-      .on("mouseup", function (event) {
-        // triggered on desktop and mobile
-        dragger.on("mousedown touchstart", null)
-        dragger.on("touchmove mousemove", null) 
-        dragger.on("mouseup touchend", null)
-
-        // Get x coordinate of pointer event
-        const xcoord = d3.pointer(event)[0]
-
-        //  coordinate over width of first label? 0 left | 1 right
-        const id = (xcoord < dragger.select('label').node().getBoundingClientRect().width) ? 0 : 1;
-        const altID = id === 0 ? 1 : 0
-
-        const chos = dragger.selectAll('input').filter(function(d, i) { return i == id; })
-        chos.node().checked = true;
-        
-        //remove styling
-        dragger.select('.graph-buttons-switch-selection').attr('style','');
-        
-        // Do action
-        createBarChart({
-            currentSummaryType: chos.node().value,
-            categoryGroups: categoryGroups,
-            regionGroups: regionGroups
-            })
-      });          
-  });
-
-  toggleLabels.each(function() {
-    addEventListener("keypress", function(event) {
-        if (event.key === 'Enter') {
-          let targetId = event.target.id
-
-          // Shift toggle
-          const chos = document.getElementById("id_" + targetId)
-          chos.checked = true;
-
-          // Do action
-          createBarChart(targetId);
-        }
-    })
-  })
-};
 
 </script>
 
