@@ -16,10 +16,10 @@
             class="text-container"
             aria-hidden="true"
             >
-              <p>
+              <p>These bars represent the 
                 <span>
                   <button
-                  aria-pressed="!scalePercent" 
+                  aria-pressed="scaleLoad" 
                   class="button"
                   :text="scaleType"
                   @click="toggleScale"
@@ -27,8 +27,19 @@
                     {{ scaleType }}
                   </button>
                 </span>
+              of 
+              <span>
+                  <button
+                  aria-pressed="showNitrogen" 
+                  class="button"
+                  :text="showNutrientType"
+                  @click="toggleNutrient"
+                  >
+                    {{ showNutrientType }}
+                  </button>
+                </span>
+                entering water by source and aggregated region of the U.S.A.
               </p>
-
             </div>
             <div class="viz-container">
                 <div id="barplot-container">    
@@ -76,7 +87,8 @@ let categoryGroups;
 let regionGroups;
 let nutrientScale;
 let nutrientAxis;
-const scalePercent = ref(false);
+const scaleLoad = ref(true);
+const showNitrogen = ref(true);
 
 
 // Colors for bar chart (need to be updated along with CSS below!)
@@ -90,20 +102,22 @@ const categoryColors = {
 
 
 
-    // set up filtered chart data as computed property
-    const scaleType = computed(() => {
-        return scalePercent.value ? 'percent change' : 'total load'
-    });
+// set up filtered chart data as computed property
+const scaleType = computed(() => {
+    return scaleLoad.value ? 'total load' : 'percent of total load'
+});
     
+// set up filtered chart data as computed property
+const showNutrientType = computed(() => {
+    return showNitrogen.value ? 'nitrogen' : 'phosphorus'
+});
 
 onMounted(async () => {
     try {
         await loadDatasets();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
-            // get unique categories and regions
-            categoryGroups = d3.union(d3.map(data.value, d => d.category));
-            regionGroups = d3.union(d3.map(data.value, d => d.region_nam));
+
 
             //console.log(regionGroups);
 
@@ -115,9 +129,10 @@ onMounted(async () => {
               height: height
             });
             createBarChart({
+              dataset: data.value,
               categoryGroups: categoryGroups,
               regionGroups: regionGroups, 
-              scalePercent: scalePercent.value
+              scaleLoad: scaleLoad.value
             });
         } else {
             console.error('Error loading data');
@@ -150,13 +165,24 @@ async function loadData(fileName) {
 };
 
 function toggleScale() {
-        scalePercent.value = !scalePercent.value
+  scaleLoad.value = !scaleLoad.value
 
-        console.log(scalePercent.value + 'test')
         createBarChart({
-              categoryGroups: categoryGroups,
-              regionGroups: regionGroups, 
-              scalePercent: scalePercent.value
+          dataset: data.value,
+          categoryGroups: categoryGroups,
+          regionGroups: regionGroups, 
+          scaleLoad: scaleLoad.value
+    })
+  }
+
+function toggleNutrient() {
+  showNitrogen.value = !showNitrogen.value
+  data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
+    createBarChart({
+      dataset: data.value,
+      categoryGroups: categoryGroups,
+      regionGroups: regionGroups, 
+      scaleLoad: scaleLoad.value
     })
   }
 
@@ -191,18 +217,22 @@ function initBarChart({
 
 }
 function createBarChart({
+    dataset,
     categoryGroups,
     regionGroups,
-    scalePercent
+    scaleLoad
   }) {
 
+    // get unique categories and regions
+    categoryGroups = d3.union(d3.map(dataset, d => d.category));
+    regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
     // stack data for rectangles
-    const expressed = scalePercent ? 'percent_load' : 'load_1kMg';
+    const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
     const stackedData = d3.stack()
         .keys(categoryGroups)
         .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
-        (d3.index(data.value, d => d.region_nam, d => d.category));
+        (d3.index(dataset, d => d.region_nam, d => d.category));
 
     // Set up region scale (xScale in water-bottling site)
     const regionScale = d3.scaleBand()
