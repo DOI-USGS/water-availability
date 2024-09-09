@@ -83,8 +83,6 @@ const height = containerHeight - margin.top - margin.bottom;
 console.log(containerWidth);
 let chartBounds;
 let rectGroup;
-let categoryGroups;
-let regionGroups;
 let nutrientScale;
 let nutrientAxis;
 const scaleLoad = ref(true);
@@ -130,8 +128,6 @@ onMounted(async () => {
             });
             createBarChart({
               dataset: data.value,
-              categoryGroups: categoryGroups,
-              regionGroups: regionGroups, 
               scaleLoad: scaleLoad.value
             });
         } else {
@@ -169,8 +165,6 @@ function toggleScale() {
 
         createBarChart({
           dataset: data.value,
-          categoryGroups: categoryGroups,
-          regionGroups: regionGroups, 
           scaleLoad: scaleLoad.value
     })
   }
@@ -180,8 +174,6 @@ function toggleNutrient() {
   data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
     createBarChart({
       dataset: data.value,
-      categoryGroups: categoryGroups,
-      regionGroups: regionGroups, 
       scaleLoad: scaleLoad.value
     })
   }
@@ -218,14 +210,12 @@ function initBarChart({
 }
 function createBarChart({
     dataset,
-    categoryGroups,
-    regionGroups,
     scaleLoad
   }) {
 
     // get unique categories and regions
-    categoryGroups = d3.union(d3.map(dataset, d => d.category));
-    regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
+    const categoryGroups = d3.union(d3.map(dataset, d => d.category));
+    const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
     // stack data for rectangles
     const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
@@ -242,7 +232,7 @@ function createBarChart({
     // add region axis
     const regionAxis = chartBounds.append('g')
         .call(mobileView ? d3.axisLeft(regionScale) : d3.axisTop(regionScale))
-        .attr('font-size', mobileView ? '1.8rem' : '2rem')
+        .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
         .selectAll(".tick text")
           .call(wrap, 80);
 
@@ -255,11 +245,15 @@ function createBarChart({
         .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
         .range(mobileView ? [0, width] : [height, 0]);
 
+    // set tick format for region axis (y on mobile, x on desktop)
+    const regionTickFormat = d => scaleLoad ? d + 'k Mg/yr' : d + '%';
+
     // create nutrient axis generator
     nutrientAxis = chartBounds.append('g')
-        .call(mobileView ? d3.axisTop(nutrientScale) : d3.axisLeft(nutrientScale));
-
-
+      .call(mobileView ? d3.axisTop(nutrientScale).ticks(3).tickFormat(
+            d => scaleLoad ? d + 'k Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
+              d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
+    
     chartBounds.append("g")
         .attr("class", "y-axis")
         .attr("role", "presentation")
@@ -337,7 +331,7 @@ function wrap(text, width) {
     word,
     line = [],
     lineNumber = 0,
-    lineHeight = 0.2, // ems
+    lineHeight = mobileView ? 0.6 : 0.8, // ems
     y = text.attr("y"),
     dy = parseFloat(text.attr("dy")),
     tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
