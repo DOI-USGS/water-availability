@@ -1,10 +1,10 @@
-viz_wq_circles <- function(in_df,
-                           region,
-                           color_scheme,
-                           fonts,
-                           png_out,
-                           width,
-                           height){
+viz_wq_bars <- function(in_df,
+                        region,
+                        color_scheme,
+                        fonts,
+                        png_out,
+                        width,
+                        height){
   
   plot_df <- in_df |> filter(aggregion_nam == region)
   # stacked bar

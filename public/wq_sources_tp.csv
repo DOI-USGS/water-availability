@@ -17,6 +17,24 @@ Agriculture,Southern High Plains,10663872.718926154,10.663872718926154,16342744.
 Agriculture,Southwest Desert,117698.29772689188,0.11769829772689187,3320337.283167065,3.3203372831670652,3.5447693318260343,tp,Western
 Agriculture,Tennessee-Missouri,37989653.92143833,37.98965392143833,83017045.34473562,83.01704534473562,45.76126958467738,tp,Southeast
 Agriculture,Texas,4399971.6569065675,4.399971656906567,7753837.743111556,7.753837743111556,56.745727763203,tp,Southeast
+Atmospheric deposition,Atlantic Coast,0,0,22913112.787890945,22.913112787890945,0,tp,Southeast
+Atmospheric deposition,California-Nevada,0,0,20035205.530364633,20.03520553036463,0,tp,Western
+Atmospheric deposition,Central High Plains,0,0,8547738.641257012,8.547738641257013,0,tp,High Plains
+Atmospheric deposition,Central Rockies,0,0,2550314.462653735,2.550314462653735,0,tp,Western
+Atmospheric deposition,Columbia-Snake,0,0,11543802.21297748,11.54380221297748,0,tp,Western
+Atmospheric deposition,Florida,0,0,5880469.512021162,5.880469512021161,0,tp,Southeast
+Atmospheric deposition,Great Lakes,0,0,19057030.87284318,19.05703087284318,0,tp,Northeast through Midwest
+Atmospheric deposition,Gulf Coast,0,0,36222164.723018974,36.22216472301898,0,tp,Southeast
+Atmospheric deposition,Midwest,0,0,91752225.60325061,91.75222560325061,0,tp,Northeast through Midwest
+Atmospheric deposition,Mississippi Embayment,0,0,20314194.118060827,20.314194118060826,0,tp,Southeast
+Atmospheric deposition,Northeast,0,0,34216994.40902099,34.21699440902099,0,tp,Northeast through Midwest
+Atmospheric deposition,Northern High Plains,0,0,7611969.97190128,7.61196997190128,0,tp,High Plains
+Atmospheric deposition,Pacific Northwest,0,0,18908001.9985521,18.9080019985521,0,tp,Western
+Atmospheric deposition,Souris-Red-Rainy,0,0,16130055.564633183,16.13005556463318,0,tp,Northeast through Midwest
+Atmospheric deposition,Southern High Plains,0,0,16342744.507749872,16.342744507749874,0,tp,High Plains
+Atmospheric deposition,Southwest Desert,0,0,3320337.283167065,3.3203372831670652,0,tp,Western
+Atmospheric deposition,Tennessee-Missouri,0,0,83017045.34473562,83.01704534473562,0,tp,Southeast
+Atmospheric deposition,Texas,0,0,7753837.743111556,7.753837743111556,0,tp,Southeast
 Natural sources,Atlantic Coast,9610688.239061331,9.610688239061332,22913112.787890945,22.913112787890945,41.94405329397392,tp,Southeast
 Natural sources,California-Nevada,3574114.1503854697,3.5741141503854696,20035205.530364633,20.03520553036463,17.839168881839875,tp,Western
 Natural sources,Central High Plains,1802734.7115483223,1.8027347115483223,8547738.641257012,8.547738641257013,21.090194579033312,tp,High Plains

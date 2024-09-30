@@ -34,6 +34,17 @@ process_wq_data <- function(in_csv, nutrient){
                                            total_load > 0 ~ total_load/1000000)) |>
     ungroup() 
   
+  # Add Atmospheric deposition = 0 for phosphorus, only have to add one region
+  # because complete step will fill in for the rest of the regions
+  if(nutrient == "tp") {
+    out_mean <- out_mean |>
+      bind_rows(tibble(
+        category = "Atmospheric deposition",
+        region_nam = "Florida",
+        total_load = 0,
+        load_1kMg = 0
+      ))
+  }
   
   # d3 errors if any category-region combination is missing (0 load for a category)
   # so going to add zeros in when that happens

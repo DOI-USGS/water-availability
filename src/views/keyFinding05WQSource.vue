@@ -84,6 +84,7 @@ console.log(containerWidth);
 let chartBounds;
 let rectGroup;
 let nutrientScale;
+let nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
