@@ -84,7 +84,6 @@ console.log(containerWidth);
 let chartBounds;
 let rectGroup;
 let nutrientScale;
-let nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
@@ -181,9 +180,7 @@ function toggleNutrient() {
 function initBarChart({
   containerWidth,
               containerHeight,
-              margin,
-              width,
-              height
+              margin
 }) {
 
     // draw svg canvas for barplot
@@ -245,9 +242,6 @@ function createBarChart({
         .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
         .range(mobileView ? [0, width] : [height, 0]);
 
-    // set tick format for region axis (y on mobile, x on desktop)
-    const regionTickFormat = d => scaleLoad ? d + 'k Mg/yr' : d + '%';
-
     // create nutrient axis generator
     nutrientAxis = chartBounds.append('g')
       .call(mobileView ? d3.axisTop(nutrientScale).ticks(3).tickFormat(
@@ -267,7 +261,7 @@ function createBarChart({
     // set up color scale
     const colorScale = d3.scaleOrdinal()
         .domain(categoryGroups)
-        .range(Object.entries(categoryColors).map(([key, value]) => value));
+        .range(Object.values(categoryColors));
 
     // Update groups for bars, assigning data
     const categoryRectGroups = rectGroup.selectAll('g')
@@ -299,8 +293,8 @@ function createBarChart({
             .attr("role", "listitem")
             .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
             .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[0]))
-            .attr('height', d => mobileView ? regionScale.bandwidth() : 0)
-            .attr('width', d => mobileView ? 0 : regionScale.bandwidth() )
+            .attr('height', mobileView ? regionScale.bandwidth() : 0)
+            .attr('width', mobileView ? 0 : regionScale.bandwidth() )
             .style("fill", d => colorScale(d.key))
           ,
           null,
@@ -335,7 +329,7 @@ function wrap(text, width) {
     y = text.attr("y"),
     dy = parseFloat(text.attr("dy")),
     tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-    while (word = words.pop()) {
+    while ((word = words.pop())) {
       line.push(word);
       tspan.text(line.join(" "));
         if (tspan.node().getComputedTextLength() > width) {
