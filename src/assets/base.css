@@ -12,8 +12,8 @@
 
   --banner-col: #9DC6D7; /* #9FCACB; */
   --blue-highlight-col:  #728393; /* #5E7789; */ 
-  --blue-text-col:  #363E4A; /* #00264C; */
-
+  --blue-text-col: #00264C;/* #363E4A; */ /* #00264C; */
+  --grey-blue: #5e7789;
   --page-bkg-col: #FEFAF6;/* #edeadf; */
 
   --black-soft: #151515;
@@ -43,6 +43,18 @@
   /* font-weight: normal; */
 }
 
+/* this holds the main content of each page, including text and viz */
+.content-container {
+  width: 80vw;
+  margin: 0 auto;
+  padding: 10px 0 10px 0;
+}
+@media only screen and (max-width: 768px) {
+  .content-container{
+    width: 90vw;
+  }
+}
+
 /* this is where each page's viz will go */
 .viz-container { 
   display: flex;
@@ -50,35 +62,30 @@
   align-items: center;
   justify-content: center;
   min-height: 20vh;
+  width: 100%;
+  padding: 10px 0 10px 0;
 }
 @media only screen and (max-width: 768px) {
   .viz-container {
       flex-direction: column;
   }
 }
-
-
-/* text box within the wavy container that houses key messages */
-.key-message-container {
-  height: 70%;
-  width: 50%;
-  color: var(--blue-text-col);
-  padding: 10px;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  border-radius: 5px;
+.text-container {
+  width: 60%;
+  margin: 0 auto;
 }
-
 @media only screen and (max-width: 768px) {
-  .key-message-container {
-      height: 70%;
-      width: 90%;
-      padding: 15px;
-      align-items: center;
-      font-size: 18px;
+  .text-container {
+    width: 90%;
   }
 }
+.button-container {
+  padding: 10px 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
 
 /* button for switching between images */
 .toggle-button{
@@ -100,12 +107,73 @@
 .wavy-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 200px;
+  justify-content: flex-end;
+  flex-direction: column;
+  max-height: max-content;
+  min-height: 60px;
   background-color: var(--banner-col);
   position: sticky;
+  z-index: 1001;
 }
 
+/* container for waves */
+section{
+  position: relative;
+  width: 100%;
+}
+section .waves{
+  position: relative;
+}
+section .waves .wave{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background: url('wave.png');
+  background-size: 1000px 50px;
+}
+
+section .waves .wave#wave1{
+  opacity: 1;
+  bottom: 0; 
+  z-index: 1000;
+  animation: animate 6s linear infinite;
+}
+section .waves .wave#wave2{
+  opacity: 0.5;
+  bottom: 2px; 
+  z-index: 999;
+  animation: animate2 6s linear infinite;
+}
+section .waves .wave#wave3{
+  opacity: 0.2;
+  bottom: 5px; 
+  z-index: 998;
+  animation: animate 4s linear infinite;
+}
+section .waves .wave#wave4{
+  opacity: 0.7;
+  bottom: 10px; 
+  z-index: 999;
+  animation: animate2 4s linear infinite;
+}
+@keyframes animate {
+  0% {
+    background-position-x: 1000px;
+  }
+  100% {
+    background-position-x: 0px;
+  }
+}
+@keyframes animate2 {
+  0% {
+    background-position-x: 0px;
+  }
+  100% {
+    background-position-x: 1000px;
+  }
+}
 
 body {
   min-height: 100vh;
@@ -122,6 +190,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 100px; /* to make room for footer */
 }
 
 h1 {
@@ -132,14 +201,17 @@ h2 {
   font-size: 3.5rem;
   font-weight: 800;
 }
+h3 {
+  font-size: 3.5rem;
+}
+@media only screen and (max-width: 768px) {
+  h3 {
+    font-size: 2rem;
+  }
+}
 
 .viz-placeholder{
-  width: 50%;
-}
-@media only screen and (max-width:490px) {
-  .viz-placeholder {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 /* Settings for the interactive svgs with hover effects */

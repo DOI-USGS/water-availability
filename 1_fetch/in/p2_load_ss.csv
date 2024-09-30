@@ -1,0 +1,110 @@
+category,region_nam,aggregion_nam,total_load,percent,sum_total
+Agricultural lands,Atlantic Coast,Southeast,3826065.837275709,100,3826065.837275709
+Agricultural lands,California-Nevada,Western,5594138.125521966,100,5594138.125521966
+Agricultural lands,Central High Plains,High Plains,8983121.696424786,100,8983121.696424786
+Agricultural lands,Central Rockies,Western,1603861.7541465713,100,1603861.7541465713
+Agricultural lands,Columbia-Snake,Western,3360712.383923041,100,3360712.383923041
+Agricultural lands,Florida,Southeast,92459.82632934333,99.99999999999999,92459.82632934333
+Agricultural lands,Great Lakes,Northeast through Midwest,9173765.8220963,100,9173765.8220963
+Agricultural lands,Gulf Coast,Southeast,24377497.487192765,100,24377497.487192765
+Agricultural lands,Midwest,Northeast through Midwest,98752032.76397893,99.99999999999999,98752032.76397893
+Agricultural lands,Mississippi Embayment,Southeast,23929450.986920036,100,23929450.986920036
+Agricultural lands,Northeast,Northeast through Midwest,12306264.382347101,100,12306264.382347101
+Agricultural lands,Northern High Plains,High Plains,13436828.102016289,100,13436828.102016289
+Agricultural lands,Pacific Northwest,Western,1350189.9183580014,100,1350189.9183580014
+Agricultural lands,Souris-Red-Rainy,Northeast through Midwest,16869190.931168433,100,16869190.931168433
+Agricultural lands,Southern High Plains,High Plains,24801993.635143507,100,24801993.635143507
+Agricultural lands,Southwest Desert,Western,157861.51828916377,100,157861.51828916377
+Agricultural lands,Tennessee-Missouri,Southeast,46250055.06017158,100,46250055.06017158
+Agricultural lands,Texas,Southeast,7295379.624273643,100.00000000000001,7295379.624273643
+Developed,Atlantic Coast,Southeast,3099344.7812547944,100,3099344.7812547944
+Developed,California-Nevada,Western,4651100.227480742,100,4651100.227480742
+Developed,Central High Plains,High Plains,952178.1426421356,100,952178.1426421356
+Developed,Central Rockies,Western,1735966.4793140425,100.00000000000001,1735966.4793140425
+Developed,Columbia-Snake,Western,926607.427543848,100,926607.427543848
+Developed,Florida,Southeast,208109.13755549781,100,208109.13755549781
+Developed,Great Lakes,Northeast through Midwest,1578324.3763026227,100.00000000000001,1578324.3763026227
+Developed,Gulf Coast,Southeast,13914162.874267757,100,13914162.874267757
+Developed,Midwest,Northeast through Midwest,10488749.977008801,100,10488749.977008801
+Developed,Mississippi Embayment,Southeast,1453641.14447369,100,1453641.14447369
+Developed,Northeast,Northeast through Midwest,4389695.799327756,100,4389695.799327756
+Developed,Northern High Plains,High Plains,1034075.5553130218,100,1034075.5553130218
+Developed,Pacific Northwest,Western,3387636.284859199,100,3387636.284859199
+Developed,Souris-Red-Rainy,Northeast through Midwest,983660.7488941321,100,983660.7488941321
+Developed,Southern High Plains,High Plains,4462885.5671488345,100,4462885.5671488345
+Developed,Southwest Desert,Western,557042.4157228841,100,557042.4157228841
+Developed,Tennessee-Missouri,Southeast,13108585.731718644,100,13108585.731718644
+Developed,Texas,Southeast,4315812.132819918,100,4315812.132819918
+Forests,Atlantic Coast,Southeast,2743565.1391532556,100.00000000000001,2743565.1391532556
+Forests,California-Nevada,Western,12001528.112110965,100,12001528.112110965
+Forests,Central Rockies,Western,43150820.942639664,100,43150820.942639664
+Forests,Columbia-Snake,Western,9277659.884786747,100,9277659.884786747
+Forests,Florida,Southeast,110768.91603997399,100.00000000000001,110768.91603997399
+Forests,Gulf Coast,Southeast,57796110.91959634,100,57796110.91959634
+Forests,Northeast,Northeast through Midwest,3.2996665416999997,100,3.2996665416999997
+Forests,Pacific Northwest,Western,30713578.004229877,100.00000000000001,30713578.004229877
+Forests,Southern High Plains,High Plains,99592.1415189011,100,99592.1415189011
+Forests,Southwest Desert,Western,10082560.255893866,100,10082560.255893866
+Forests,Tennessee-Missouri,Southeast,1047865.1587699656,100,1047865.1587699656
+Forests,Texas,Southeast,9032290.262938458,100,9032290.262938458
+Geologic sources,California-Nevada,Western,11022390.758204753,100.00000000000001,11022390.758204753
+Geologic sources,Central Rockies,Western,1283043.994896962,100,1283043.994896962
+Geologic sources,Columbia-Snake,Western,77000.64731435778,100,77000.64731435778
+Geologic sources,Gulf Coast,Southeast,1579280.6863188138,100,1579280.6863188138
+Geologic sources,Southern High Plains,High Plains,190318.37990475196,100,190318.37990475196
+Geologic sources,Southwest Desert,Western,4640061.831897636,100,4640061.831897636
+Geologic sources,Texas,Southeast,1540761.798947437,100.00000000000001,1540761.798947437
+Imports,Central High Plains,High Plains,0,NA,0
+Imports,Central Rockies,Western,0,NA,0
+Imports,Columbia-Snake,Western,0,NA,0
+Imports,Great Lakes,Northeast through Midwest,0,NA,0
+Imports,Gulf Coast,Southeast,0,NA,0
+Imports,Midwest,Northeast through Midwest,0,NA,0
+Imports,Mississippi Embayment,Southeast,0,NA,0
+Imports,Northeast,Northeast through Midwest,0,NA,0
+Imports,Northern High Plains,High Plains,10032.479269320898,100,10032.479269320898
+Imports,Souris-Red-Rainy,Northeast through Midwest,34750.877345104505,100,34750.877345104505
+Imports,Southern High Plains,High Plains,0,NA,0
+Imports,Tennessee-Missouri,Southeast,0,NA,0
+Other land use,Atlantic Coast,Southeast,128244.00402299355,100,128244.00402299355
+Other land use,Central High Plains,High Plains,6552205.373150212,100,6552205.373150212
+Other land use,Central Rockies,Western,549268.1168296274,100,549268.1168296274
+Other land use,Columbia-Snake,Western,208552.21926424274,99.99999999999999,208552.21926424274
+Other land use,Great Lakes,Northeast through Midwest,3796872.6307116197,100,3796872.6307116197
+Other land use,Gulf Coast,Southeast,11903927.866539594,99.99999999999999,11903927.866539594
+Other land use,Midwest,Northeast through Midwest,10860965.125140334,100,10860965.125140334
+Other land use,Mississippi Embayment,Southeast,2454184.8665187242,100,2454184.8665187242
+Other land use,Northeast,Northeast through Midwest,3659871.3240956576,100,3659871.3240956576
+Other land use,Northern High Plains,High Plains,16297079.506847465,100,16297079.506847465
+Other land use,Souris-Red-Rainy,Northeast through Midwest,1282513.865202959,100,1282513.865202959
+Other land use,Southern High Plains,High Plains,12046849.362153718,100,12046849.362153718
+Other land use,Tennessee-Missouri,Southeast,24678551.131056704,100,24678551.131056704
+Shrub lands,Atlantic Coast,Southeast,2621915.1634314987,100,2621915.1634314987
+Shrub lands,California-Nevada,Western,12269064.027814379,100,12269064.027814379
+Shrub lands,Central Rockies,Western,15203964.794646595,100,15203964.794646595
+Shrub lands,Columbia-Snake,Western,655132.0254855679,100,655132.0254855679
+Shrub lands,Florida,Southeast,121083.1215636988,100,121083.1215636988
+Shrub lands,Gulf Coast,Southeast,3387909.834081332,100,3387909.834081332
+Shrub lands,Northeast,Northeast through Midwest,1351.8162996197,100,1351.8162996197
+Shrub lands,Southern High Plains,High Plains,501142.97210509074,100,501142.97210509074
+Shrub lands,Southwest Desert,Western,7418165.935975762,100,7418165.935975762
+Shrub lands,Tennessee-Missouri,Southeast,744392.8092679153,100,744392.8092679153
+Shrub lands,Texas,Southeast,2605036.649809498,100,2605036.649809498
+Stream channel,Atlantic Coast,Southeast,3014716.916523964,100.00000000000001,3014716.916523964
+Stream channel,California-Nevada,Western,22536076.412389636,100,22536076.412389636
+Stream channel,Central High Plains,High Plains,2006814.3323299037,100,2006814.3323299037
+Stream channel,Central Rockies,Western,31657991.467426617,100,31657991.467426617
+Stream channel,Columbia-Snake,Western,7401980.065236024,100,7401980.065236024
+Stream channel,Florida,Southeast,204435.10037931622,100,204435.10037931622
+Stream channel,Great Lakes,Northeast through Midwest,6373944.488571855,100,6373944.488571855
+Stream channel,Gulf Coast,Southeast,21263613.79828325,100,21263613.79828325
+Stream channel,Midwest,Northeast through Midwest,10986125.847972946,100,10986125.847972946
+Stream channel,Mississippi Embayment,Southeast,2445827.395344534,100,2445827.395344534
+Stream channel,Northeast,Northeast through Midwest,17124263.64261602,100,17124263.64261602
+Stream channel,Northern High Plains,High Plains,3313949.256199776,99.99999999999999,3313949.256199776
+Stream channel,Pacific Northwest,Western,1586722.050512482,100,1586722.050512482
+Stream channel,Souris-Red-Rainy,Northeast through Midwest,2574466.5805764,100,2574466.5805764
+Stream channel,Southern High Plains,High Plains,3190725.911843802,100,3190725.911843802
+Stream channel,Southwest Desert,Western,8440789.534984665,100,8440789.534984665
+Stream channel,Tennessee-Missouri,Southeast,12072982.754767176,99.99999999999999,12072982.754767176
+Stream channel,Texas,Southeast,14449112.577226387,100.00000000000001,14449112.577226387

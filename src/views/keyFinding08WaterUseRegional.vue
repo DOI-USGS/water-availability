@@ -1,24 +1,30 @@
 <template>
     <section class="main-container">
         <KeyMessages></KeyMessages>
-        
-        <div class="viz-container">
-          <AggReg class="agg-reg-svg"></AggReg>
-          <img
-              id="dumbbells"
-              :src="imgSrc"
-              alt=""
-          >    
-        </div>
-        <button id="image-toggle" class="toggle-button">Switch to Irrigation</button>
-        <div class="viz-container">
+        <div class="content-container">
+          <div class="text-container">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
+          </div>
+          <div class="viz-container">
+            <AggReg class="agg-reg-svg"></AggReg>
+            <img
+                id="dumbbells"
+                :src="imgSrc"
+                alt=""
+            >    
+          </div>
+          <div class="button-container">
+            <button id="image-toggle" class="toggle-button">Switch to Irrigation</button>
+          </div>
+          <div class="viz-container">
                 <img 
                     id="first-image" 
                     class="viz-placeholder" 
                     :src="photoPublic" 
                     alt="xxx"
                 >
-         </div>
+          </div>
+        </div>
         <PageCarousel></PageCarousel>
     </section>
 </template>

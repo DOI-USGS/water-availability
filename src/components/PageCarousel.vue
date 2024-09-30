@@ -1,232 +1,149 @@
 <template>
     <div class="nav-container">
-        <!-- Left Arrow -->
-        <button v-if="showLeftArrow" class="arrow-button" @click="moveLeft()"><</button>
-        <button v-if="!showLeftArrow" class="arrow-button-hidden"><</button>
+        <div class="nav-wrapper">
+            <div class="nav-carousel" data-target="carousel">
+                <div 
+                    class="nav-card" 
+                    v-for="(message, index) in SubPages.SubPages" 
+                    :key="index"
+                    data-target="card">
+                        <div class="nav-card-content">
+                            <router-link :to="message.route">
+                            <button class="nav-card-button"><span class="nav-card-button-text"> {{ message.page }}</span></button>
+                            </router-link>
+                            <div class="nav-card-text">
+                                {{ message.keyMessage }}
+                            </div>
+                        </div>
+                </div>
+            </div>
 
-        <!-- First Button -->
-        <router-link to="/">
-            <button v-if="showHomeButtonLeft" class="home-button">RETURN TO MAIN</button>
-        </router-link>
-        <router-link :to="lowRoute">
-            <button v-if="!showHomeButtonLeft" class="nav-button">{{ lowNumber }}</button>
-        </router-link>
-
-        <!-- Middle Button -->
-        <router-link to="/">
-            <button v-if="showHomeButtonMiddle" class="home-button">RETURN TO MAIN</button>
-        </router-link>
-        <router-link :to="middleRoute">
-            <button v-if="!showHomeButtonMiddle" class="nav-button">{{ middleNumber }}</button>
-        </router-link>
-        
-        <!-- Right Button -->
-        <router-link to="/">
-            <button v-if="showHomeButtonRight" class="home-button">RETURN TO MAIN</button>
-        </router-link>
-        <router-link :to="highRoute">
-            <button v-if="!showHomeButtonRight" class="nav-button">{{ highNumber }}</button>
-        </router-link>
-
-        <!-- Right Arrow -->
-        <button v-if="showRightArrow" class="arrow-button" @click="moveRight()">></button>
-        <button v-if="!showRightArrow" class="arrow-button-hidden">></button>
+        </div>
+        <div class="nav-page-button-wrapper">
+                <button class="nav-page-button" data-action="slideLeft"><</button>
+                <button class="nav-page-button" data-action="slideRight">></button>
+        </div>
     </div>
 </template>
 
-<script>  
-// See nav-notes.md for details on logic
-import SubPages from '@/components/SubPages.js';
-export default {
-    data() {
-        return {
-            SubPages: SubPages.SubPages,
-            lowNumber: 0,
-            middleNumber: 0,
-            highNumber: 0,
-            lowRoute: "",
-            middleRoute: "",
-            highRoute: "",
-            currentRouteId: "",
-            showHomeButtonLeft: false,
-            showHomeButtonMiddle: true,
-            showHomeButtonRight: false,
-            showLeftArrow: true,
-            showRightArrow: true
-        };
-    },
-    mounted() {
-        this.setDefaultCarousel();
-    },
-    methods: {
-        setDefaultCarousel() {
-            const currentRoute = this.$route.path; // Get current route
-            const currentPageIndex = this.SubPages.findIndex(link => link.route === currentRoute); // the index value uses to pull from SubPages.js for the current page
-            let lowIndex = currentPageIndex - 1;
-            let middleIndex = currentPageIndex;
-            let highIndex = currentPageIndex + 1;
-            this.currentRouteId = this.SubPages[middleIndex].page;
-            if (middleIndex > 0 && middleIndex < 9) { // this is more all the "normal" pages (not page 1 or 10)
-            this.lowRoute = this.SubPages[lowIndex].route; 
-            this.middleRoute = this.SubPages[middleIndex].route;
-            this.highRoute = this.SubPages[highIndex].route;
-            this.lowNumber = this.SubPages[lowIndex].page;
-            this.middleNumber = this.SubPages[middleIndex].page;
-            this.highNumber = this.SubPages[highIndex].page;
-            if (this.highNumber === 10) { // we don't want the right arrow to show in this case since there is nothing right of page 10
-                this.showRightArrow = false
-            }
-            if (this.lowNumber === 1) { // we don't want the left arrow to show in this case since there is nothing left of page 1
-                this.showLeftArrow = false
-            }
-            }
-            if (middleIndex === 0) { // Index 0 is page 1 -- if adding or removing pages, change this to the first index
-                this.showHomeButtonLeft = true; // we want the Return to Main (home) button to be on the left instead of the middle since there's nothing left of page 1
-                this.showLeftArrow = false
-                this.showHomeButtonMiddle = false;
-                this.lowNumber = this.currentRouteId;
-                this.middleNumber = this.currentRouteId + 1;
-                this.highNumber = this.currentRouteId + 2;
-                this.lowRoute = this.SubPages[middleIndex].route;
-                this.middleRoute = this.SubPages[highIndex].route;
-                this.highRoute = this.SubPages[highIndex +1].route;
-            }
-            if (middleIndex === 9) { // Index 9 is page 10 -- if adding or removing pages, change this to the final index
-                this.showHomeButtonMiddle = false; // we want the Return to Main (home) button to be on the right instead of the middle since there's nothing right of page 10
-                this.showHomeButtonRight = true;
-                this.showRightArrow = false;
-                this.highNumber = this.currentRouteId;
-                this.middleNumber = this.currentRouteId - 1;
-                this.lowNumber = this.currentRouteId - 2;
-                this.lowRoute = this.SubPages[lowIndex - 1].route;
-                this.middleRoute = this.SubPages[lowIndex].route;
-                this.highRoute = this.SubPages[middleIndex].route;
-            }
-        },
-        moveLeft() {
-            if (this.lowNumber > 1) {
-                // Here, we're basically subtracting a number from each number shown, assigning the correct index, and getting the route from SubPages.js
-                this.lowNumber--;
-                this.middleNumber--;
-                this.highNumber--;
-                let lowIndex = this.lowNumber - 1; // these are just because the index value is always one less than the page number (0-indexed)
-                let middleIndex = this.middleNumber - 1;
-                let highIndex = this.highNumber - 1;
-                this.lowRoute = this.SubPages[lowIndex].route;
-                this.middleRoute = this.SubPages[middleIndex].route;
-                this.highRoute = this.SubPages[highIndex].route;
-            }
+<script setup>
+    import { ref, onMounted } from 'vue';
+    import SubPages from '@/components/SubPages.js';
+    
+    onMounted(() => {
+        // https://medium.com/@magyarn/simple-carousel-with-vanilla-js-3dd10a143ff2
+        // Select the carousel you'll need to manipulate and the buttons you'll add events to
+        const carousel = document.querySelector("[data-target='carousel']");
+        const card = carousel.querySelector("[data-target='card']");
+        const leftButton = document.querySelector("[data-action='slideLeft']");
+        const rightButton = document.querySelector("[data-action='slideRight']");
 
-            // where to put the home button
-            if (this.lowNumber === this.currentRouteId) {
-                this.showHomeButtonLeft = true;
-                
-            } else {
-                this.showHomeButtonLeft = false;
-            }
+        // Prepare to limit the direction in which the carousel can slide, 
+        // and to control how much the carousel advances by each time.
+        // In order to slide the carousel so that only three cards are perfectly visible each time,
+        // you need to know the carousel width, and the margin placed on a given card in the carousel
+        const carouselWidth = carousel.offsetWidth;
+        const cardStyle = card.currentStyle || window.getComputedStyle(card)
+        const cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0]);
 
-            if (this.middleNumber === this.currentRouteId) {
-                this.showHomeButtonMiddle = true;
-                
-            } else {
-                this.showHomeButtonMiddle = false;
-            }
+        // Count the number of total cards you have
+        const cardCount = carousel.querySelectorAll("[data-target='card']").length;
 
-            if (this.highNumber === this.currentRouteId) {
-                this.showHomeButtonRight = true;
-            } else {
-                this.showHomeButtonRight = false;
-            }
+        // Define an offset property to dynamically update by clicking the button controls
+        // as well as a maxX property so the carousel knows when to stop at the upper limit
+        let offset = 0;
+        const maxX = -((cardCount / 3) * carouselWidth + 
+                    (cardMarginRight * (cardCount / 3)) - 
+                    carouselWidth - cardMarginRight);
 
-            // boolean for showing the left arrow
-            if (this.highNumber === 10) {
-                this.showRightArrow = false
-            } else {
-                this.showRightArrow = true
-            }
 
-            if (this.lowNumber === 1) {
-                this.showLeftArrow = false
-            } else {
-                this.showLeftArrow = true
+        // Add the click events
+        leftButton.addEventListener("click", function() {
+        if (offset !== 0) {
+            offset += carouselWidth + cardMarginRight;
+            carousel.style.transform = `translateX(${offset}px)`;
             }
-        },
-        moveRight() {
-            if (this.highNumber < 10) {
-                // Here, we're basically adding a number to each number shown, assigning the correct index, and getting the route from SubPages.js
-                this.lowNumber++;
-                this.middleNumber++;
-                this.highNumber++;
-                let lowIndex = this.lowNumber - 1; // these are just because the index value is always one less than the page number (0-indexed)
-                let middleIndex = this.middleNumber - 1;
-                let highIndex = this.highNumber - 1;
-                this.lowRoute = this.SubPages[lowIndex].route;
-                this.middleRoute = this.SubPages[middleIndex].route;
-                this.highRoute = this.SubPages[highIndex].route;
-            }
-
-            //where to put the home button
-            if (this.lowNumber === this.currentRouteId) {
-                this.showHomeButtonLeft = true;
-            } else {
-                this.showHomeButtonLeft = false;
-            }
-
-            if (this.middleNumber === this.currentRouteId) {
-                this.showHomeButtonMiddle = true;
-                
-            } else {
-                this.showHomeButtonMiddle = false;
-            }
-
-            if (this.highNumber === this.currentRouteId) {
-                this.showHomeButtonRight = true;
-                
-            } else {
-                this.showHomeButtonRight = false;
-            }
-
-            // boolean for the arrows
-            if (this.highNumber === 10) {
-                this.showRightArrow = false
-            } else {
-                this.showRightArrow = true
-            }
-
-            if (this.lowNumber === 1) {
-                this.showLeftArrow = false
-            } else {
-                this.showLeftArrow = true
-            }
+        })
+        
+        rightButton.addEventListener("click", function() {
+        if (offset !== maxX) {
+            offset -= carouselWidth + cardMarginRight;
+            carousel.style.transform = `translateX(${offset}px)`;
         }
-    }
-};
+        })
+    });
+
+
+    
+
+    
 </script>
 
 <style scoped>
+
 .nav-container {
-    display: flex;
-    align-items: center;
-    justify-content:center;
+    position: relative;
     height: 250px;
-    position: sticky;
-    bottom: 0;
-    /* background-color: #edeadf; */
+    width: 1000px; 
+    margin: 0 auto 0 auto;
+    display: flex;
+    align-items: top;
 }
 
-.nav-button {
-    height: 50px;
-    width: 50px;
-    /* background-color: #5e7789; */
-    border-width: 0px;
-    border-radius: 50%;
-    color: var(--page-bkg-col);
-    font-size: 40px;
-    text-align: center;
-    line-height: 0;
-    padding-top: -10px;
-    margin: 0 20px 0 20px;
+.nav-wrapper {
+    height: 250px;
+    width: 750px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+@media screen and (max-width: 790px) {
+    .nav-container {
+        width: 300px;
+    }
+    .nav-wrapper {
+        width: 250px;
+    }
+}  
+
+.nav-carousel {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    display: flex;
+    position: absolute;
+    left: 0;
+    transition: all 1s ease;
+}
+
+.nav-card {
+    min-width: 250px;
+    height: 200px;
+    display: inline-block;
+}
+
+.nav-card-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 15px;
+    position: relative;
+    z-index: 100;
+}
+@media screen and (max-width: 790px) {
+    .nav-card-content {
+        padding: 0 25px;
+    }
+}
+
+.nav-card-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 0 50% 50% 50%;
     border: 0px;
+    transform: rotate(45deg);
+    margin: 20px auto 0px auto;
     background-color: rgb(159, 202, 203);
     border: 0 solid;
     box-shadow: inset 0 0 20px  #427388;
@@ -234,78 +151,70 @@ export default {
     outline-color: rgba(255, 255, 255, .5);
     outline-offset: 0px;
     text-shadow: none;
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.nav-button:hover {
+.nav-card-button:hover {
     cursor: pointer;
-  background-color:  #427388;
-  border: 1px solid;
-  text-shadow: 1px 1px 2px #427388; 
+    background-color:  #427388;
+    border: 1px solid;
+    text-shadow: 1px 1px 2px #427388; 
 }
 
-.home-button {
-    background-color: var(--page-bkg-col);
-    height: 50px;
-    width: 100px;
-    color: #5e7789;
-    letter-spacing: 1px;
-    font-size: 20px;
-    border-width: 0px;
+.nav-card-button-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    color: var(--white-soft);
+    font-size: 35px;
     font-weight: bold;
 }
 
-.home-button:hover {
-    color: var(--blue-text-col);
-    cursor: pointer;
-}
-
-.arrow-button {
-    height: 50px;
-    width: 50px;
-    background-color: var(--page-bkg-col);
-    border-width: 0px;
-    color: #5e7789;
-    font-size: 50px;
+.nav-card-text {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace
-}
-.arrow-button-hidden {
-    height: 50px;
-    width: 50px;
-    background-color: var(--page-bkg-col);
-    border-width: 0px;
-    color: var(--page-bkg-col);
-    font-size: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace
-}
-
-.arrow-button:hover {
+    font-size: 1.8rem;
     color: var(--blue-text-col);
-    cursor: pointer;
+    padding-top: 10px;
 }
-
-
 @media screen and (max-width: 790px) {
-    .nav-container {
-        height: 300px;
+    .nav-card-text {
+        font-size: 1.4rem;
     }
-}  
-@media screen and (max-width: 490px) {
-    .nav-container {
-        height: 350px;
-    }
-}  
+}
 
-@media screen and (max-width: 418px) {
-    .nav-container {
-        height: 370px;
-    }
-} 
+
+.nav-page-button-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+}
+
+.nav-page-button {
+    height: 50px;
+    width: 50px;
+    border-width: 0px;
+    color: var(--grey-blue);
+    background-color: transparent;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    opacity: 0.2;
+}
+
+.nav-page-button:hover {
+    color: var(--blue-text-col);
+    cursor: pointer;
+    background-color: var(--blue-highlight-col);
+    opacity: 0.6;
+}
+
 </style>

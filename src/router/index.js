@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import VisualizationView from '../views/VisualizationView.vue'
-import page1 from '../views/page1.vue'
-import page2 from '../views/page2.vue'
-import page3 from '../views/page3.vue'
-import page4 from '../views/page4.vue'
-import page5 from '../views/page5.vue'
-import page6 from '../views/page6.vue'
-import page7 from '../views/page7.vue'
-import page8 from '../views/page8.vue'
-import page9 from '../views/page9.vue'
-import page10 from '../views/page10.vue'
+import page1 from '../views/keyFinding01Budget.vue'
+import page2 from '../views/keyFinding02SUIPopn.vue'
+import page3 from '../views/keyFinding03SUISVI.vue'
+import page4 from '../views/keyFinding04Drought.vue'
+import page5 from '../views/keyFinding05WQSource.vue'
+import page6 from '../views/keyFinding06WQThreats.vue'
+import page7 from '../views/keyFinding07WaterUse.vue'
+import page8 from '../views/keyFinding08WaterUseRegional.vue'
+import page9 from '../views/keyFinding09WaterUseConsumption.vue'
+import page10 from '../views/keyFinding10FutureWater.vue'
 
 
 const router = createRouter({
@@ -26,52 +26,52 @@ const router = createRouter({
       component: VisualizationView
     },
     {
-      path: '/page1',
+      path: '/keyFinding01Budget',
       name: 'Page 1',
       component: page1
     },
     {
-      path: '/page2',
+      path: '/keyFinding02SUIPopn',
       name: 'Page 2',
       component: page2
     },
     {
-      path: '/page3',
+      path: '/keyFinding03SUISVI',
       name: 'Page 3',
       component: page3
     },
     {
-      path: '/page4',
+      path: '/keyFinding04Drought',
       name: 'Page 4',
       component: page4
     },
     {
-      path: '/page5',
+      path: '/keyFinding05WQSource',
       name: 'Page 5',
       component: page5
     },
     {
-      path: '/page6',
+      path: '/keyFinding06WQThreats',
       name: 'Page 6',
       component: page6
     },
     {
-      path: '/page7',
+      path: '/keyFinding07WaterUse',
       name: 'Page 7',
       component: page7
     },
     {
-      path: '/page8',
+      path: '/keyFinding08WaterUseRegional',
       name: 'Page 8',
       component: page8
     },
     {
-      path: '/page9',
+      path: '/keyFinding09WaterUseConsumption',
       name: 'Page 9',
       component: page9
     },
     {
-      path: '/page10',
+      path: '/keyFinding10FutureWater',
       name: 'Page 10',
       component: page10
     }

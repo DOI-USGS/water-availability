@@ -9,7 +9,7 @@ data_pivot_long <- function(data) {
                  values_to = 'wu_mgd')
 }
 
-# Add Source (gw or sw) and Use (te, ps, or ir)0
+# Add Source (gw or sw) and Use (te, ps, or ir)
 data_add_source_use_type <- function(data, use_type, source_type) {
   data %>%
     mutate(use_type = use_type, source_type = source_type)

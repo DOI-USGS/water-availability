@@ -3,6 +3,7 @@ source("3_visualize/src/viz_dumbbell.R")
 source("3_visualize/src/viz_wheatfield.R")
 source("3_visualize/src/viz_svi_sui.R")
 source("3_visualize/src/viz_sui_popn.R")
+source("3_visualize/src/viz_wq.R")
 
 p3_targets <- list(
   ##############################################
@@ -81,9 +82,18 @@ p3_targets <- list(
   
   ##############################################
   # 
-  #           KEY TAKEAWAY 3: 
+  #           KEY TAKEAWAY 1: 
+  #             A quarter of our daily water budget leaves the U.S. 
+  #             through streamflow to Canada, the Atlantic and Pacific 
+  #             Oceans, or the Gulf of Mexico.
+  #
+  #
+  
+  ##############################################
+  # 
+  #           KEY TAKEAWAY 2: 
   #             More than 30 million people live in areas of 
-  #             high/severe water stress.
+  #             high/severe water imbalance
   #
   #
   # Use static branching
@@ -96,7 +106,7 @@ p3_targets <- list(
                                 region = AggReg,
                                 color_scheme = p3_colors_balance,
                                 fonts = p3_fonts_website,
-                                png_out = sprintf("src/assets/images/k03_sui_popn_%s.png", AggReg),
+                                png_out = sprintf("src/assets/images/k02_sui_popn_%s.png", AggReg),
                                 width = 6,
                                 height = 6),
                format = "file")
@@ -105,7 +115,7 @@ p3_targets <- list(
   
   ##############################################
   # 
-  #           KEY TAKEAWAY 4: 
+  #           KEY TAKEAWAY 3: 
   #             A high proportion of the population living 
   #             in areas with water availability limitations 
   #             are considered to be socially vulnerable.
@@ -136,7 +146,7 @@ p3_targets <- list(
                               legend_n = p3_legend_n_grob,
                               legend_prop = p3_legend_prop_grob,
                               legend_explain = p3_legend_explainer_grob,
-                              png_out = "src/assets/images/k04_sui_svi_map.png",
+                              png_out = "src/assets/images/k03_sui_svi_map.png",
                               width = 6, 
                               height = 5),
              format = "file"),
@@ -145,21 +155,43 @@ p3_targets <- list(
                               legend_n = p3_legend_n_grob,
                               legend_prop = p3_legend_prop_grob,
                               legend_explain = p3_legend_explainer_grob,
-                              png_out = "src/assets/images/k04_sui_svi_dry_map.png",
+                              png_out = "src/assets/images/k03_sui_svi_dry_map.png",
                               width = 6,
                               height = 5),
              format = "file"),
   
+  
   ##############################################
   # 
-  #           KEY TAKEAWAY 5: 
-  #             Human activities can affect water quality through 
-  #             inputs (e.g., organic chemicals), processes 
-  #             (e.g., dredging), or permanent landscape modifications 
-  #             (e.g., dams, urbanization).
+  #           KEY TAKEAWAY 4: 
+  #             Periods of low precipitation can have cascading 
+  #             effects throughout the water cycle, expanding areas of 
+  #             water stress and exacerbating water quality issues 
   #
   #
   
+  ##############################################
+  # 
+  #           KEY TAKEAWAY 5: 
+  #             Water quality is affected by natural and human sources, 
+  #             including springs and streams, land use activities, and 
+  #             air pollution.
+  #
+  #
+  tar_map(
+    values = tibble(
+      AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
+    ),
+    tar_target(p3_wq_tn_barchart_png,
+               viz_wq_bars(in_df = p1_wq_Reg_df_tn,
+                           region = AggReg,
+                           color_scheme = p3_colors_balance,
+                           fonts = p3_fonts_website,
+                           png_out = sprintf("src/assets/images/k05_wq_tn_bar_%s.png", AggReg),
+                           width = 6,
+                           height = 6),
+               format = "file")
+  ),
   
   ##############################################
   # 
@@ -225,17 +257,15 @@ p3_targets <- list(
   ##############################################
   # 
   #           KEY TAKEAWAY 9: 
-  #             Periods of low precipitation (snow, rain) can have 
-  #             cascading effects throughout the water budget, 
-  #             expanding areas of water stress and exacerbating 
-  #             water quality issues.
+  #             Not all the water withdrawn for human water use 
+  #             returns to the local environment.
   # 
   
   ##############################################
   # 
   #           KEY TAKEAWAY 10: 
-  #             Areas of the U.S. with limited surface water storage 
-  #             rely on groundwater, which can lead to declines in 
-  #             water levels.
-  # 
+  #             The top future threats to water availability in the 
+  #             US vary regionally and include increases in drought, 
+  #             flooding, and heavy precipitation along with declines in 
+  #             snow and ice.
 )
