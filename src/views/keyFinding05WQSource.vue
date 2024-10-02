@@ -166,7 +166,7 @@ function toggleScale() {
           dataset: data.value,
           scaleLoad: scaleLoad.value
     })
-  }
+};
 
 function toggleNutrient() {
   showNitrogen.value = !showNitrogen.value
@@ -175,7 +175,7 @@ function toggleNutrient() {
       dataset: data.value,
       scaleLoad: scaleLoad.value
     })
-  }
+};
 
 function initBarChart({
   containerWidth,
