@@ -72,7 +72,7 @@ p1_targets <- list(
   # 
   #           WATER QUALITY DATA
   # 
-  # EXTRACTED FROM ELMERA'S SOFTWARE RELEASE
+  # EXTRACTED FROM ELMERA'S SOFTWARE RELEASE, loads by source
   tar_map(
     values = tibble(nutrient = c("tn", "tp", "ss")),
     tar_target(p1_wq_Reg_csv,
@@ -85,6 +85,11 @@ p1_targets <- list(
                readr::write_csv(p1_wq_Reg_df,
                                 file = sprintf("public/wq_sources_%s.csv", nutrient))),
     names = nutrient),
+  
+  # EXTRACTED FROM ELMERA'S SOFTWARE RELEASE, threats by source
+  tar_target(p1_wq_threats_csv,
+             "1_fetch/in/WaterQuality_UsePercent_PlottingData.csv",
+             format = "file"),
   
   ##############################################
   # 

@@ -1,6 +1,7 @@
 source("2_process/src/process_region_shp.R")
 source("2_process/src/process_WBD_GDB.R")
 source("2_process/src/process_ps_dumbbell.R")
+source("2_process/src/process_wq_data.R")
 source("2_process/src/process_wu_data.R")
 source("2_process/src/process_sui_data.R")
 source("2_process/src/process_svi_data.R")
@@ -139,7 +140,24 @@ p2_targets <- list(
   # 
   #           WATER QUALITY DATA
   # 
+  tar_target(p2_wq_threats_df,
+             prep_wq_for_sankey(data_in = p1_wq_threats_csv,
+                                unimpair_miles = p2_wq_unimpair_river_miles_tibble)),
+  # Save to csv for d3
+  tar_target(p2_wq_threats_csv,
+             readr::write_csv(p2_wq_threats_df,
+                              file = "public/wq_threats.csv")),
   
+  # Need a table of unimpaired river miles by water use, not in original data
+  # but in a table from report
+  tar_target(p2_wq_unimpair_river_miles_tibble,
+             tribble(
+               ~use_name, ~Category, ~parameter, ~sum_watersize,
+               "Drinking Water Use", "Unimpaired", "Unimpaired", 111150,
+               "Ecological Use", "Unimpaired", "Unimpaired", 460958,
+               "Fish Consumption Use", "Unimpaired", "Unimpaired", 122198,
+               "Recreational Use", "Unimpaired", "Unimpaired", 30618,
+               "Other Use", "Unimpaired", "Unimpaired", 221585)),
   
   ##############################################
   # 
