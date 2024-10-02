@@ -20,6 +20,7 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue';
 import * as d3 from 'd3';
+import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import { isMobile } from 'mobile-device-detect';
@@ -28,7 +29,6 @@ import photoMiles from "@/assets/images/k06_wq_by_use_noImpaired.png";
 
 // use for mobile logic
 const mobileView = isMobile;
-console.log(mobileView)
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -41,6 +41,7 @@ const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { to
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 let chartBounds;
+let rectGroup;
 const scaleMiles = ref(true);
 const showDW = ref(true);
 
@@ -77,7 +78,18 @@ onMounted(async () => {
         await loadDatasets();
         data.value = dataSet.value;
         if (data.value.length > 0) {
-            console.log(data);
+            initSankey({
+              containerWidth: containerWidth,
+              containerHeight: containerHeight,
+              margin: margin,
+              width: width,
+              height: height
+            });
+            createSankey({
+              dataset: data.value,
+              use: showDW.value,
+              scaleMiles: scaleMiles.value
+            });
         } else {
             console.error('Error loading data');
         }
@@ -106,6 +118,85 @@ async function loadData(fileName) {
     return [];
   }
 };
+
+// Function to switch between total river miles and percent of river miles
+function toggleScale() {
+  scaleMiles.value = !scaleMiles.value
+        createSankey({
+          dataset: data.value,
+          use: showDW.value,
+          scaleMiles: scaleMiles.value
+    })
+};
+
+// Function to switch water use categories
+function toggleUse() {
+  showDW.value = !showDW.value
+    createSankey({
+        dataset: data.value,
+        use: showDW.value,
+        scaleMiles: scaleMiles.value
+    })
+};
+
+function initSankey({
+        containerWidth,
+        containerHeight,
+        margin
+    }) {
+
+    // draw svg canvas for sankey
+    svg = d3.select('#sankey-container')
+      .append('svg')
+      .attr('class', 'sankeySVG')
+      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+      .style('width', containerWidth)
+      .style('height', containerHeight);
+
+    // add group for bar chart bounds, translating by chart margins
+    chartBounds = svg.append('g')
+      .attr('id', 'wrapper')
+      .style("transform", `translate(${
+        margin.left
+      }px, ${
+        margin.top
+      }px)`)
+
+    // Add group to chart bounds to hold all chart rectangle groups
+    rectGroup = chartBounds.append('g')
+      .attr('id', 'rectangle_group')
+
+};
+
+function createSankey({
+    dataset,
+    use,
+    scaleMiles
+  }) {
+
+    // get unique categories and parameters
+    const categoryGroups = d3.union(d3.map(dataset, d => d.Category));
+    const parameterGroups = d3.union(d3.map(dataset, d => d.Parameter));
+    
+    // initialize sankey
+    const sankey = d3sankey.sankey()
+        .nodeSort(null)
+        .linkSort(null)
+        .nodeWidth(3)
+        .nodePadding(20)
+        .extent([[0, 5], [containerWidth, containerHeight - 5]])
+
+    // Set up color scale 
+    const colorScale = d3.scaleOrdinal()
+        .domain(categoryGroups)
+        .range(Object.values(categoryColors));
+
+    console.log(colorScale)
+
+
+
+};
+
 
 </script>
 
