@@ -80,7 +80,6 @@ const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
 const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
-console.log(containerWidth);
 let chartBounds;
 let rectGroup;
 let nutrientScale;
