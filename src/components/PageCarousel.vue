@@ -129,7 +129,7 @@
     align-items: center;
     padding: 0 15px;
     position: relative;
-    z-index: 100;
+    z-index: 0;
 }
 @media screen and (max-width: 790px) {
     .nav-card-content {

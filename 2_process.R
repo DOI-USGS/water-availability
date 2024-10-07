@@ -145,8 +145,10 @@ p2_targets <- list(
                                 unimpair_miles = p2_wq_unimpair_river_miles_tibble)),
   # Save to csv for d3
   tar_target(p2_wq_threats_csv,
-             readr::write_csv(p2_wq_threats_df,
-                              file = "public/wq_threats.csv")),
+             {readr::write_csv(p2_wq_threats_df,
+                              file = "public/wq_threats.csv")
+               return("public/wq_threats.csv")},
+             format = "file"),
   
   # Need a table of unimpaired river miles by water use, not in original data
   # but in a table from report

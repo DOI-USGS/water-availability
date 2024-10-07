@@ -5,8 +5,25 @@
             <div class="text-container">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
             </div>
-            <div class="button-container">
-                <button id="image-toggle" class="toggle-button">By Total River Miles</button>
+            <div
+            id="toggle-container"
+            class="text-container"
+            aria-hidden="true"
+            >
+              <p>These bars represent the 
+                <span>
+                  <button
+                  aria-pressed="scaleMiles" 
+                  class="button"
+                  :text="scaleType"
+                  @click="toggleScale"
+                  >
+                    {{ scaleType }}
+                  </button>
+                </span>
+              of Drinking water
+                threatening surface river water in the U.S.A.
+              </p>
             </div>
             <div class="viz-container">
                 <div id="sankey-container">    
@@ -52,8 +69,8 @@ const showDW = ref(true);
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 const categoryColors = {
-    'Impaired': 'orchid',
-    'Biotic Metals and Physical':  '#C8ACD6',
+    'Biotic': 'orchid',
+    'Metals and Physical':  '#C8ACD6',
     'Nutrients':  '#2E236C',
     'Organics':  '#478CCF', 
     'Salinity': '#EECEB9',
@@ -182,7 +199,7 @@ function createSankey({
         .nodeSort(null)
         .linkSort(null)
         .nodeWidth(3)
-        .nodePadding(20)
+        .nodePadding(10)
         .extent([[0, 5], [containerWidth, containerHeight - 5]])
 
     // Set up color scale 
@@ -190,10 +207,10 @@ function createSankey({
         .domain(categoryGroups)
         .range(Object.values(categoryColors));
 
-
-    
     // set up the nodes and links
-    var nodesLinks = graphNodes({data: dataset, showMiles: scaleMiles});
+    var nodesLinks = graphNodes({
+      data: dataset, 
+      showMiles: scaleMiles});
 
     const {nodes, links} = sankey({
       nodes: nodesLinks.nodes.map(d => Object.create(d)),
