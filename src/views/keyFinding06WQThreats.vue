@@ -6,7 +6,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
             </div>
             <div class="button-container">
-                <button id="image-toggle" class="toggle-button">Click to change view</button>
+                <button id="image-toggle" class="toggle-button">By Total River Miles</button>
             </div>
             <div class="viz-container">
                 <div id="sankey-container">    
@@ -24,8 +24,6 @@ import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import { isMobile } from 'mobile-device-detect';
-import photoProportion from "@/assets/images/k06_wq_by_use.png";
-import photoMiles from "@/assets/images/k06_wq_by_use_noImpaired.png";
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -274,7 +272,7 @@ function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-
   }
   
   
-  const expressed = showMiles ? data[0].riverMiles : data[0].totalMiles;
+  const expressed = showMiles ? data[0].riverMiles : data[0].percentMiles;
   console.log(expressed)
   //console.log(data[0].expressed)
   //([, D], key) => D.get(key)[expressed]
@@ -287,7 +285,8 @@ function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-
     const linkByKey = new d3.InternMap([], JSON.stringify);
     for (const d of data) {
       const names = prefix.map(k => d[k]);
-      const value = showMiles ? data[0].riverMiles : data[0].totalMiles; 
+      const value = showMiles ? d.riverMiles : d.percentMiles; 
+      console.log(value)
       let link = linkByKey.get(names);
       if (link) { link.value += value; continue; }
       link = {
