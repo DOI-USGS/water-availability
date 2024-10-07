@@ -54,6 +54,7 @@ const showDW = ref(true);
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 const categoryColors = {
+    'Impaired': 'orchid',
     'Biotic Metals and Physical':  '#C8ACD6',
     'Nutrients':  '#2E236C',
     'Organics':  '#478CCF', 
@@ -194,7 +195,7 @@ function createSankey({
 
     
     // set up the nodes and links
-    var nodesLinks = graphNodes({data: dataset});
+    var nodesLinks = graphNodes({data: dataset, showMiles: scaleMiles});
 
     const {nodes, links} = sankey({
       nodes: nodesLinks.nodes.map(d => Object.create(d)),
@@ -250,25 +251,35 @@ categoryRectGroups.selectAll("rect")
 };
 
 // set up the nodes and links
-function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collection=@d3/d3-sankey
-  let keys = data.columns.slice(0, -3);
+function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-sets?collection=@d3/d3-sankey
+  let keys = data.columns.slice(1, -4); // which columns for nodes
+  // columns are: Status, Category, Parameter, riverMiles, totalMiles, percentMiles, Use (from R pipeline)
   let index = -1;
   let nodes = [];
-  let nodeByKey = new d3.InternMap([], JSON.stringify);;
-  let indexByKey = new d3.InternMap([], JSON.stringify);;
+  let nodeByKey = new d3.InternMap([], JSON.stringify);
+  let indexByKey = new d3.InternMap([], JSON.stringify);
   let links = [];
 
+
+  // creates nodes for each column (keys)
   for (const k of keys) {
     for (const d of data) {
       const key = [k, d[k]];
       if (nodeByKey.has(key)) continue;
-      const node = {name: d[k]};
-      nodes.push(node);
-      nodeByKey.set(key, node);
-      indexByKey.set(key, ++index);
+        const node = {name: d[k]};
+        nodes.push(node);
+        nodeByKey.set(key, node);
+        indexByKey.set(key, ++index);
     }
   }
+  
+  
+  const expressed = showMiles ? data[0].riverMiles : data[0].totalMiles;
+  console.log(expressed)
+  //console.log(data[0].expressed)
+  //([, D], key) => D.get(key)[expressed]
 
+  // creates links between nodes
   for (let i = 1; i < keys.length; ++i) {
     const a = keys[i - 1];
     const b = keys[i];
@@ -276,7 +287,7 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
     const linkByKey = new d3.InternMap([], JSON.stringify);
     for (const d of data) {
       const names = prefix.map(k => d[k]);
-      const value = d.value || 1;
+      const value = showMiles ? data[0].riverMiles : data[0].totalMiles; 
       let link = linkByKey.get(names);
       if (link) { link.value += value; continue; }
       link = {

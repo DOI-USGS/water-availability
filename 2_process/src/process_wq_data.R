@@ -20,5 +20,12 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
            Parameter = parameter,
            riverMiles = sum_watersize,
            totalMiles = total_miles,
-           percentMiles = percent_miles)
+           percentMiles = percent_miles) |>
+    # add overall status as another link
+    mutate(Status = case_when(Category == "Unimpaired" ~ "Unimpaired",
+                              TRUE ~ "Impaired")) |>
+    # order the columns -- 
+    #     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #     NOTE: Changing these can affect the sankey plot in keyfinding06WQThreats.vue
+    select(Status, Category, Parameter, riverMiles, totalMiles, percentMiles, Use)
 }

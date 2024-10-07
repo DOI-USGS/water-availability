@@ -1,94 +1,20 @@
-Use,Category,Parameter,riverMiles,totalMiles,percentMiles
-Drinking Water Use,Biotic,Algal Growth,1499.2684,387963.249,0.3864459852484636
-Drinking Water Use,Nutrients,Ammonia,381.0572,387963.249,0.0982199218565674
-Drinking Water Use,Biotic,Biotoxins,1638.48,387963.249,0.422328662372863
-Drinking Water Use,Organics,Dioxins,845.1757,387963.249,0.21784942315502673
-Drinking Water Use,Metals and Physical,Mercury,5747.6398,387963.249,1.4814907893505138
-Drinking Water Use,Metals and Physical,Metals Other than Mercury,90942.8962,387963.249,23.441111093489166
-Drinking Water Use,Nutrients,Other Nutrients,15112.4252,387963.249,3.8953239099201378
-Drinking Water Use,Organics,Oil and Grease,91.428,387963.249,0.023566149689606294
-Drinking Water Use,Metals and Physical,Oxygen Depletion,15640.6763,387963.249,4.031483997598958
-Drinking Water Use,Biotic,Pathogens,20973.0173,387963.249,5.405928874464086
-Drinking Water Use,Organics,Pesticides,6364.7491,387963.249,1.6405546443910721
-Drinking Water Use,Metals and Physical,Acidity/pH,6887.7616,387963.249,1.775364449533208
-Drinking Water Use,Organics,PCBs,1998.3754,387963.249,0.5150939954108901
-Drinking Water Use,Sediment,Sediment,28630.9694,387963.249,7.3798148339560905
-Drinking Water Use,Salinity,Chlorides Sulfates,43045.8415,387963.249,11.095339986700647
-Drinking Water Use,Temp,Temperature,27253.0797,387963.249,7.024654982204255
-Drinking Water Use,Organics,Toxic Organics,427.3297,387963.249,0.11014695363580687
-Drinking Water Use,Sediment,Turbidity,9333.0785,387963.249,2.405660465019974
-Ecological Use,Biotic,Algal Growth,4804.7748,1278452.8528,0.37582729699236356
-Ecological Use,Nutrients,Ammonia,4859.3604,1278452.8528,0.3800969577687034
-Ecological Use,Biotic,Biotoxins,6389.29,1278452.8528,0.49976735442425696
-Ecological Use,Organics,Dioxins,2700.7391,1278452.8528,0.2112505826151495
-Ecological Use,Metals and Physical,Mercury,36388.9091,1278452.8528,2.8463239000408134
-Ecological Use,Metals and Physical,Metals Other than Mercury,92076.6677,1278452.8528,7.202195020202626
-Ecological Use,Nutrients,Other Nutrients,73178.2237,1278452.8528,5.723967335966196
-Ecological Use,Organics,Oil and Grease,800.289,1278452.8528,0.06259824116683296
-Ecological Use,Metals and Physical,Oxygen Depletion,75899.4573,1278452.8528,5.936820989039135
-Ecological Use,Biotic,Pathogens,108652.2925,1278452.8528,8.498732844315336
-Ecological Use,Organics,Pesticides,16794.3357,1278452.8528,1.3136452911202734
-Ecological Use,Metals and Physical,Acidity/pH,27765.8003,1278452.8528,2.171828256254332
-Ecological Use,Organics,PCBs,23675.8301,1278452.8528,1.8519126495862908
-Ecological Use,Sediment,Sediment,106045.3572,1278452.8528,8.294819552222442
-Ecological Use,Salinity,Chlorides Sulfates,32897.7417,1278452.8528,2.5732463757227415
-Ecological Use,Temp,Temperature,154623.206,1278452.8528,12.094556765339638
-Ecological Use,Organics,Toxic Organics,1802.7422,1278452.8528,0.14100967400180062
-Ecological Use,Sediment,Turbidity,48139.836,1278452.8528,3.765476051351184
-Fish Consumption Use,Biotic,Algal Growth,1731.7006,364467.8757,0.4751312023519444
-Fish Consumption Use,Nutrients,Ammonia,1996.5703,364467.8757,0.547804191567054
-Fish Consumption Use,Organics,Dioxins,4879.1113,364467.8757,1.3386944708444162
-Fish Consumption Use,Metals and Physical,Mercury,61057.8861,364467.8757,16.752611182187657
-Fish Consumption Use,Metals and Physical,Metals Other than Mercury,9237.9076,364467.8757,2.534628760424386
-Fish Consumption Use,Nutrients,Other Nutrients,5622.1815,364467.8757,1.5425725763078548
-Fish Consumption Use,Organics,Oil and Grease,137.02859999999998,364467.8757,0.03759689375553929
-Fish Consumption Use,Metals and Physical,Oxygen Depletion,8997.1232,364467.8757,2.468564117679796
-Fish Consumption Use,Biotic,Pathogens,37527.9768,364467.8757,10.296648704065744
-Fish Consumption Use,Organics,Pesticides,10480.5554,364467.8757,2.875577272721487
-Fish Consumption Use,Metals and Physical,Acidity/pH,6127.4488,364467.8757,1.681204080944465
-Fish Consumption Use,Organics,PCBs,72915.0918,364467.8757,20.0059035820259
-Fish Consumption Use,Sediment,Sediment,5590.9906,364467.8757,1.5340146478648902
-Fish Consumption Use,Salinity,Chlorides Sulfates,2055.2014,364467.8757,0.5638909591285003
-Fish Consumption Use,Temp,Temperature,6606.465,364467.8757,1.8126330029255855
-Fish Consumption Use,Organics,Toxic Organics,2278.9078,364467.8757,0.6252698665480767
-Fish Consumption Use,Sediment,Turbidity,5027.7289,364467.8757,1.379471068703573
-Other Use,Biotic,Algal Growth,2809.0285,291998.16359999997,0.9620021117146506
-Other Use,Nutrients,Ammonia,612.5465,291998.16359999997,0.20977751792956825
-Other Use,Organics,Dioxins,766.1273,291998.16359999997,0.26237401309464947
-Other Use,Metals and Physical,Mercury,2714.7262,291998.16359999997,0.9297066003876746
-Other Use,Metals and Physical,Metals Other than Mercury,7295.1549,291998.16359999997,2.498356431444352
-Other Use,Nutrients,Other Nutrients,3623.1669,291998.16359999997,1.2408183857496016
-Other Use,Organics,Oil and Grease,287.1753,291998.16359999997,0.0983483239961034
-Other Use,Metals and Physical,Oxygen Depletion,5741.3291,291998.16359999997,1.9662209615348418
-Other Use,Biotic,Pathogens,7851.2613,291998.16359999997,2.6888050264436667
-Other Use,Organics,Pesticides,2272.4961,291998.16359999997,0.7782569835312485
-Other Use,Metals and Physical,Acidity/pH,3981.1791,291998.16359999997,1.3634260746426148
-Other Use,Organics,PCBs,1711.7236,291998.16359999997,0.5862103990300576
-Other Use,Sediment,Sediment,6341.6654,291998.16359999997,2.1718168778236797
-Other Use,Salinity,Chlorides Sulfates,10593.7166,291998.16359999997,3.6280079536774186
-Other Use,Temp,Temperature,7090.0662,291998.16359999997,2.4281201335610048
-Other Use,Organics,Toxic Organics,397.6301,291998.16359999997,0.13617554819444078
-Other Use,Sediment,Turbidity,6324.1705,291998.16359999997,2.1658254360336673
-Recreational Use,Biotic,Algal Growth,3637.5654,488449.6346,0.744716577171537
-Recreational Use,Nutrients,Ammonia,1736.1245,488449.6346,0.3554357249999261
-Recreational Use,Biotic,Biotoxins,6389.29,488449.6346,1.3080754999913762
-Recreational Use,Organics,Dioxins,2494.836,488449.6346,0.5107662742020608
-Recreational Use,Metals and Physical,Mercury,19025.5097,488449.6346,3.8950811613525564
-Recreational Use,Metals and Physical,Metals Other than Mercury,27457.4756,488449.6346,5.621352470144729
-Recreational Use,Nutrients,Other Nutrients,36698.4418,488449.6346,7.513249923925729
-Recreational Use,Organics,Oil and Grease,525.1777,488449.6346,0.10751931474574186
-Recreational Use,Metals and Physical,Oxygen Depletion,32085.152,488449.6346,6.56877387701909
-Recreational Use,Biotic,Pathogens,200090.1693,488449.6346,40.964340051939516
-Recreational Use,Organics,Pesticides,11004.5706,488449.6346,2.2529591221849996
-Recreational Use,Metals and Physical,Acidity/pH,8127.0292,488449.6346,1.6638418015514265
-Recreational Use,Organics,PCBs,26710.2362,488449.6346,5.468370597077728
-Recreational Use,Sediment,Sediment,24351.7745,488449.6346,4.9855241513164605
-Recreational Use,Salinity,Chlorides Sulfates,12387.3985,488449.6346,2.5360646466946912
-Recreational Use,Temp,Temperature,23334.4203,488449.6346,4.777241837658241
-Recreational Use,Organics,Toxic Organics,1157.1934,488449.6346,0.23691150899266128
-Recreational Use,Sediment,Turbidity,20619.2699,488449.6346,4.221370728813316
-Drinking Water Use,Unimpaired,Unimpaired,111150,387963.249,28.64962088200266
-Ecological Use,Unimpaired,Unimpaired,460958,1278452.8528,36.05592486186989
-Fish Consumption Use,Unimpaired,Unimpaired,122198,364467.8757,33.52778341995314
-Recreational Use,Unimpaired,Unimpaired,30618,488449.6346,6.268404730218218
-Other Use,Unimpaired,Unimpaired,221585,291998.16359999997,75.88575122121077
+Status,Category,Parameter,riverMiles,totalMiles,percentMiles,Use
+Impaired,Biotic,Algal Growth,1499.2684,387963.249,0.3864459852484636,Drinking Water Use
+Impaired,Nutrients,Ammonia,381.0572,387963.249,0.0982199218565674,Drinking Water Use
+Impaired,Biotic,Biotoxins,1638.48,387963.249,0.422328662372863,Drinking Water Use
+Impaired,Organics,Dioxins,845.1757,387963.249,0.21784942315502673,Drinking Water Use
+Impaired,Metals and Physical,Mercury,5747.6398,387963.249,1.4814907893505138,Drinking Water Use
+Impaired,Metals and Physical,Metals Other than Mercury,90942.8962,387963.249,23.441111093489166,Drinking Water Use
+Impaired,Nutrients,Other Nutrients,15112.4252,387963.249,3.8953239099201378,Drinking Water Use
+Impaired,Organics,Oil and Grease,91.428,387963.249,0.023566149689606294,Drinking Water Use
+Impaired,Metals and Physical,Oxygen Depletion,15640.6763,387963.249,4.031483997598958,Drinking Water Use
+Impaired,Biotic,Pathogens,20973.0173,387963.249,5.405928874464086,Drinking Water Use
+Impaired,Organics,Pesticides,6364.7491,387963.249,1.6405546443910721,Drinking Water Use
+Impaired,Metals and Physical,Acidity/pH,6887.7616,387963.249,1.775364449533208,Drinking Water Use
+Impaired,Organics,PCBs,1998.3754,387963.249,0.5150939954108901,Drinking Water Use
+Impaired,Sediment,Sediment,28630.9694,387963.249,7.3798148339560905,Drinking Water Use
+Impaired,Salinity,Chlorides Sulfates,43045.8415,387963.249,11.095339986700647,Drinking Water Use
+Impaired,Temp,Temperature,27253.0797,387963.249,7.024654982204255,Drinking Water Use
+Impaired,Organics,Toxic Organics,427.3297,387963.249,0.11014695363580687,Drinking Water Use
+Impaired,Sediment,Turbidity,9333.0785,387963.249,2.405660465019974,Drinking Water Use
+Unimpaired,Unimpaired,Unimpaired,111150,387963.249,28.64962088200266,Drinking Water Use
