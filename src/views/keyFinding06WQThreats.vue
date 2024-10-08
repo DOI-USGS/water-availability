@@ -21,7 +21,17 @@
                     {{ scaleType }}
                   </button>
                 </span>
-              of Drinking water
+              of 
+              <span>
+                  <button
+                  aria-pressed="showDW" 
+                  class="button"
+                  :text="showUseType"
+                  @click="toggleUse"
+                  >
+                    {{ showUseType }}
+                  </button>
+                </span>
                 threatening surface river water in the U.S.A.
               </p>
             </div>
@@ -62,7 +72,9 @@ const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { to
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 let chartBounds;
-let rectGroup;
+let nodeGroup;
+let linkGroup;
+let textGroup;
 const scaleMiles = ref(true);
 const showDW = ref(true);
 
@@ -93,7 +105,7 @@ const showUseType = computed(() => {
 
 // set up filtered chart data as computed property for text legend
 const scaleType = computed(() => {
-    return scaleMiles.value ? 'total miles' : 'percent of total miles'
+    return scaleMiles.value ? 'total river miles' : 'percent of total miles'
 });
 
 onMounted(async () => {
@@ -114,6 +126,7 @@ onMounted(async () => {
               use: showDW.value,
               scaleMiles: scaleMiles.value
             });
+
         } else {
             console.error('Error loading data');
         }
@@ -161,6 +174,7 @@ function toggleScale() {
 // Function to switch water use categories
 function toggleUse() {
   showDW.value = !showDW.value
+  data.value = showDW.value ? datasetDW.value : datasetFish.value;
     createSankey({
         dataset: data.value,
         use: showDW.value,
@@ -191,9 +205,16 @@ function initSankey({
         margin.top
       }px)`)
 
-    // Add group to chart bounds to hold all chart rectangle groups
-    rectGroup = chartBounds.append('g')
-      .attr('id', 'rectangle_group')
+    // Add group to chart bounds to hold all sankey path groups
+    nodeGroup = chartBounds.append('g')
+      .attr('id', 'node_group')
+    
+    linkGroup = chartBounds.append('g')
+      .attr('id', 'link_group')
+
+    textGroup = chartBounds.append('g')
+      .attr('id', 'text_group')
+    
 
 };
 
@@ -211,22 +232,16 @@ function createSankey({
     const sankey = d3sankey.sankey()
         .nodeSort(null)
         .linkSort(null)
-        .nodeWidth(3)
+        .nodeWidth(4)
         .nodePadding(10)
-        .extent([[0, 5], [containerWidth, containerHeight - 5]])
+        .extent([[0, 5], [width, height - 5]])
 
     // Set up color scale 
     const colorScale = d3.scaleOrdinal()
         .domain(categoryGroups)
         .range(Object.values(categoryColors));
 
-    //console.log(colorScale("Salinity"))
-    //console.log(categoryGroups)
-    //console.log(categoryColors)
-    //console.log(categoryColors['Metals and Physical'])
-    //console.log(colorScale(categoryColors[0]))
-    //console.log(Object.values(categoryColors))
-    console.log(dataset)
+    
     // set up the nodes and links
     var nodesLinks = graphNodes({
       data: dataset, 
@@ -242,46 +257,91 @@ function createSankey({
     const dur = 1000;
     const t = d3.transition().duration(dur);
 
+    console.log(links)
 
-    // Update groups for bars, assigning data
-    const categoryRectGroups = rectGroup.selectAll('g')
-
-    categoryRectGroups.selectAll("rect")
+    // Update nodes for sankey, assigning data
+    const sankeyNodesGroups = nodeGroup.selectAll('g')
       .data(nodes)
-      .join("rect")
-        .attr("x", d => d.x0)
-        .attr("y", d => d.y0)
-        .attr("height", d => d.y1 - d.y0)
-        .attr("width", d => d.x1 - d.x0)
-      .append("title")
-        .text(d => `${d.name}\n${d.value.toLocaleString()}`);
+      .join(
+        enter => enter
+          .append('rect')
+            .attr("x", d => d.x0)
+            .attr("y", d => d.y0)
+            .attr("height", d => d.y1 - d.y0)
+            .attr("width", d => d.x1 - d.x0)
+          .append("title")
+            .text(d => `${d.name}\n${d.value.toLocaleString()}`),
 
-        
-    svg.append("g")
-        .attr("fill", "none")
-      .selectAll("g")
+          null, // no update function
+
+          exit => {
+            exit
+              .transition()
+              .duration(dur / 2)
+              .style("fill-opacity", 0)
+              .remove();
+      });
+
+    // Update links for sankey, assigning data
+    const sankeyLinksGroups = linkGroup.selectAll('g')
       .data(links)
-      .join("path")
-        .attr("d", d3sankey.sankeyLinkHorizontal())
-        .attr("stroke", d => colorScale(d.names[0]))
-        .attr("stroke-width", d => d.width)
-        .style("mix-blend-mode", "multiply")
-      .append("title")
-        .text(d => `${d.names.join(" → ")}\n${d.value.toLocaleString()}`);
+      .join(
+        enter => {
+          enter 
+            .append("path")
+              .attr("d", d3sankey.sankeyLinkHorizontal())
+              .attr("stroke", d => colorScale(d.names[0]))
+              .attr("stroke-width", d => d.width)
+              .style("mix-blend-mode", "multiply")
+              .style('fill', "none")
+            .append("title")
+              .text(d => `${d.names.join(" → ")}\n${d.value.toLocaleString()}`)
+        },
 
-    svg.append("g")
-        .style("font", "10px sans-serif")
-      .selectAll("text")
-      .data(nodes)
-      .join("text")
-        .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
-        .attr("y", d => (d.y1 + d.y0) / 2)
-        .attr("dy", "0.35em")
-        .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
-        .text(d => d.name)
-      .append("tspan")
-        .attr("fill-opacity", 0.7)
-        .text(d => ` ${d.value.toLocaleString()}`);
+        null,
+
+        exit => {
+          exit
+            .transition()
+            .duration(dur / 2)
+            .style("fill-opacity", 0)
+            .style("stroke-width", 0)
+            .style("color-opacity", 0)
+            .remove();
+        }
+      );
+
+
+    // Update text for sankey, assigning data from nodes
+    const sankeyTextGroups = textGroup.selectAll('g')
+          .data(nodes)
+          .join(
+            enter => {
+              enter
+              .append("text")
+                .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr("y", d => (d.y1 + d.y0) / 2)
+                .attr("dy", "0.35em")
+                .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
+                .text(d => d.name)
+                .style("font", "10px sans-serif")
+              .append("tspan")
+                .attr("fill-opacity", 0.7)
+                .text(d => ` ${d.value.toLocaleString()}`)
+                .style("font", "10px sans-serif")
+            },
+            null,
+            exit => {
+              exit
+                .transition()
+                .duration(dur / 2)
+                .style("fill-opacity", 0)
+                .style("stroke-width", 0)
+                .style("color-opacity", 0)
+                .remove();
+            }
+          );
+    
 
 
 };
@@ -289,7 +349,7 @@ function createSankey({
 // set up the nodes and links
 function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-sets?collection=@d3/d3-sankey
   let keys = data.columns.slice(1, -5); // which columns for nodes
-  // columns are: Status, Category, Parameter, riverMiles, totalMiles, percentMiles, Use (from R pipeline)
+  // columns are: Status, Category, Parameter, riverMiles, totalMiles, percentMiles, Use, UseAbbr (from R pipeline)
   let index = -1;
   let nodes = [];
   let nodeByKey = new d3.InternMap([], JSON.stringify);
@@ -310,11 +370,6 @@ function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-
   }
   
   
-  const expressed = showMiles ? data[0].riverMiles : data[0].percentMiles;
-  //console.log(expressed)
-  //console.log(data[0].expressed)
-  //([, D], key) => D.get(key)[expressed]
-
   // creates links between nodes
   for (let i = 1; i < keys.length; ++i) {
     const a = keys[i - 1];
