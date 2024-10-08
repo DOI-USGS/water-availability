@@ -41,13 +41,19 @@ import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import { isMobile } from 'mobile-device-detect';
+import { color } from 'd3';
 
 // use for mobile logic
 const mobileView = isMobile;
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
-const dataSet = ref([]);
+const datasetDW = ref([]);
+const datasetFish = ref([]);
+const datasetEco = ref([]);
+const datasetOther = ref([]);
+const datasetRec = ref([]);
+const selectedDataset = ref('datasetDW');
 const data = ref([]);
 let svg;
 const containerWidth = window.innerWidth * 0.8;
@@ -69,15 +75,16 @@ const showDW = ref(true);
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 const categoryColors = {
-    'Biotic': 'orchid',
-    'Metals and Physical':  '#C8ACD6',
-    'Nutrients':  '#2E236C',
-    'Organics':  '#478CCF', 
-    'Salinity': '#EECEB9',
-    'Sediment': '#939185',
-    'Temp': '#F41A90',
-    'Unimpaired': '#1687A5',
-      }; 
+  'Biotic': '#EECEB9',
+  'Nutrients':  '#939185',
+  'Organics':  '#C8ACD6', 
+  'Metals and Physical':  '#80909D',
+  'Sediment': '#E8E8E3',
+  'Salinity': '#F3C623',
+  'Temp': '#FFB0B0',
+  'Unimpaired': '#478CCF',
+}; 
+
 
 // set up filtered chart data as computed property for text legend
 const showUseType = computed(() => {
@@ -92,7 +99,8 @@ const scaleType = computed(() => {
 onMounted(async () => {
     try {
         await loadDatasets();
-        data.value = dataSet.value;
+        data.value = selectedDataset.value === 'datasetDW' ? datasetDW.value : datasetEco.value;
+        
         if (data.value.length > 0) {
             initSankey({
               containerWidth: containerWidth,
@@ -116,7 +124,12 @@ onMounted(async () => {
 
 async function loadDatasets() { // Created from R pipeline
   try {
-    dataSet.value = await loadData('wq_threats.csv');
+    datasetDW.value = await loadData('wq_threats_DW.csv');
+    datasetEco.value = await loadData('wq_threats_Eco.csv');
+    datasetRec.value = await loadData('wq_threats_Rec.csv');
+    datasetFish.value = await loadData('wq_threats_Fish.csv');
+    datasetOther.value = await loadData('wq_threats_Other.csv');
+    console.log(datasetDW.value)
     console.log('data in');
   } catch (error) {
     console.error('Error loading datasets', error);
@@ -207,10 +220,18 @@ function createSankey({
         .domain(categoryGroups)
         .range(Object.values(categoryColors));
 
+    //console.log(colorScale("Salinity"))
+    //console.log(categoryGroups)
+    //console.log(categoryColors)
+    //console.log(categoryColors['Metals and Physical'])
+    //console.log(colorScale(categoryColors[0]))
+    //console.log(Object.values(categoryColors))
+    console.log(dataset)
     // set up the nodes and links
     var nodesLinks = graphNodes({
       data: dataset, 
-      showMiles: scaleMiles});
+      showMiles: scaleMiles
+    });
 
     const {nodes, links} = sankey({
       nodes: nodesLinks.nodes.map(d => Object.create(d)),
@@ -222,52 +243,52 @@ function createSankey({
     const t = d3.transition().duration(dur);
 
 
-// Update groups for bars, assigning data
-const categoryRectGroups = rectGroup.selectAll('g')
+    // Update groups for bars, assigning data
+    const categoryRectGroups = rectGroup.selectAll('g')
 
-categoryRectGroups.selectAll("rect")
-    .data(nodes)
-    .join("rect")
-      .attr("x", d => d.x0)
-      .attr("y", d => d.y0)
-      .attr("height", d => d.y1 - d.y0)
-      .attr("width", d => d.x1 - d.x0)
-    .append("title")
-      .text(d => `${d.name}\n${d.value.toLocaleString()}`);
+    categoryRectGroups.selectAll("rect")
+      .data(nodes)
+      .join("rect")
+        .attr("x", d => d.x0)
+        .attr("y", d => d.y0)
+        .attr("height", d => d.y1 - d.y0)
+        .attr("width", d => d.x1 - d.x0)
+      .append("title")
+        .text(d => `${d.name}\n${d.value.toLocaleString()}`);
 
-  svg.append("g")
-      .attr("fill", "none")
-    .selectAll("g")
-    .data(links)
-    .join("path")
-      .attr("d", d3sankey.sankeyLinkHorizontal())
-      .attr("stroke", d => colorScale(d.names[0]))
-      .attr("stroke-width", d => d.width)
-      .style("mix-blend-mode", "multiply")
-    .append("title")
-      .text(d => `${d.names.join(" → ")}\n${d.value.toLocaleString()}`);
+        
+    svg.append("g")
+        .attr("fill", "none")
+      .selectAll("g")
+      .data(links)
+      .join("path")
+        .attr("d", d3sankey.sankeyLinkHorizontal())
+        .attr("stroke", d => colorScale(d.names[0]))
+        .attr("stroke-width", d => d.width)
+        .style("mix-blend-mode", "multiply")
+      .append("title")
+        .text(d => `${d.names.join(" → ")}\n${d.value.toLocaleString()}`);
 
-  svg.append("g")
-      .style("font", "10px sans-serif")
-    .selectAll("text")
-    .data(nodes)
-    .join("text")
-      .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
-      .attr("y", d => (d.y1 + d.y0) / 2)
-      .attr("dy", "0.35em")
-      .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
-      .text(d => d.name)
-    .append("tspan")
-      .attr("fill-opacity", 0.7)
-      .text(d => ` ${d.value.toLocaleString()}`);
-
+    svg.append("g")
+        .style("font", "10px sans-serif")
+      .selectAll("text")
+      .data(nodes)
+      .join("text")
+        .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+        .attr("y", d => (d.y1 + d.y0) / 2)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
+        .text(d => d.name)
+      .append("tspan")
+        .attr("fill-opacity", 0.7)
+        .text(d => ` ${d.value.toLocaleString()}`);
 
 
 };
 
 // set up the nodes and links
 function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-sets?collection=@d3/d3-sankey
-  let keys = data.columns.slice(1, -4); // which columns for nodes
+  let keys = data.columns.slice(1, -5); // which columns for nodes
   // columns are: Status, Category, Parameter, riverMiles, totalMiles, percentMiles, Use (from R pipeline)
   let index = -1;
   let nodes = [];
@@ -290,7 +311,7 @@ function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-
   
   
   const expressed = showMiles ? data[0].riverMiles : data[0].percentMiles;
-  console.log(expressed)
+  //console.log(expressed)
   //console.log(data[0].expressed)
   //([, D], key) => D.get(key)[expressed]
 
@@ -303,7 +324,6 @@ function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-
     for (const d of data) {
       const names = prefix.map(k => d[k]);
       const value = showMiles ? d.riverMiles : d.percentMiles; 
-      console.log(value)
       let link = linkByKey.get(names);
       if (link) { link.value += value; continue; }
       link = {
@@ -317,6 +337,8 @@ function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-
     }
   }
 
+  console.log(links[0].names[0])
+  console.log(nodes)
   return {nodes, links};
 };
 

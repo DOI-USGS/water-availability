@@ -144,11 +144,19 @@ p2_targets <- list(
              prep_wq_for_sankey(data_in = p1_wq_threats_csv,
                                 unimpair_miles = p2_wq_unimpair_river_miles_tibble)),
   # Save to csv for d3
-  tar_target(p2_wq_threats_csv,
-             {readr::write_csv(p2_wq_threats_df,
-                              file = "public/wq_threats.csv")
-               return("public/wq_threats.csv")},
-             format = "file"),
+  tar_map(
+    values = tibble(useType = c("DW", "Eco", "Fish", "Rec", "Other")),
+    tar_target(p2_wq_threats_csv,
+               {path_out = sprintf("public/wq_threats_%s.csv", useType)
+                 readr::write_csv(p2_wq_threats_df |> dplyr::filter(UseAbbr == useType),
+                                file = path_out)
+                 return(path_out)},
+               format = "file")),
+  #tar_target(p2_wq_threats_csv,
+  #           {readr::write_csv(p2_wq_threats_df,
+  #                            file = "public/wq_threats.csv")
+  #             return("public/wq_threats.csv")},
+  #           format = "file"),
   
   # Need a table of unimpaired river miles by water use, not in original data
   # but in a table from report

@@ -1,0 +1,20 @@
+Status,Category,Parameter,riverMiles,totalMiles,percentMiles,Use,UseAbbr
+Impaired,Biotic,Algal Growth,4805,1278452.8528,0.4,Ecological Use,Eco
+Impaired,Nutrients,Ammonia,4859,1278452.8528,0.4,Ecological Use,Eco
+Impaired,Biotic,Biotoxins,6389,1278452.8528,0.5,Ecological Use,Eco
+Impaired,Organics,Dioxins,2701,1278452.8528,0.2,Ecological Use,Eco
+Impaired,Metals and Physical,Mercury,36389,1278452.8528,2.8,Ecological Use,Eco
+Impaired,Metals and Physical,Metals Other than Mercury,92077,1278452.8528,7.2,Ecological Use,Eco
+Impaired,Nutrients,Other Nutrients,73178,1278452.8528,5.7,Ecological Use,Eco
+Impaired,Organics,Oil and Grease,800,1278452.8528,0.1,Ecological Use,Eco
+Impaired,Metals and Physical,Oxygen Depletion,75899,1278452.8528,5.9,Ecological Use,Eco
+Impaired,Biotic,Pathogens,108652,1278452.8528,8.5,Ecological Use,Eco
+Impaired,Organics,Pesticides,16794,1278452.8528,1.3,Ecological Use,Eco
+Impaired,Metals and Physical,Acidity/pH,27766,1278452.8528,2.2,Ecological Use,Eco
+Impaired,Organics,PCBs,23676,1278452.8528,1.9,Ecological Use,Eco
+Impaired,Sediment,Sediment,106045,1278452.8528,8.3,Ecological Use,Eco
+Impaired,Salinity,Chlorides Sulfates,32898,1278452.8528,2.6,Ecological Use,Eco
+Impaired,Temp,Temperature,154623,1278452.8528,12.1,Ecological Use,Eco
+Impaired,Organics,Toxic Organics,1803,1278452.8528,0.1,Ecological Use,Eco
+Impaired,Sediment,Turbidity,48140,1278452.8528,3.8,Ecological Use,Eco
+Unimpaired,Unimpaired,Unimpaired,460958,1278452.8528,36.1,Ecological Use,Eco

@@ -1,0 +1,20 @@
+Status,Category,Parameter,riverMiles,totalMiles,percentMiles,Use,UseAbbr
+Impaired,Biotic,Algal Growth,1499,387963.249,0.4,Drinking Water Use,DW
+Impaired,Nutrients,Ammonia,381,387963.249,0.1,Drinking Water Use,DW
+Impaired,Biotic,Biotoxins,1638,387963.249,0.4,Drinking Water Use,DW
+Impaired,Organics,Dioxins,845,387963.249,0.2,Drinking Water Use,DW
+Impaired,Metals and Physical,Mercury,5748,387963.249,1.5,Drinking Water Use,DW
+Impaired,Metals and Physical,Metals Other than Mercury,90943,387963.249,23.4,Drinking Water Use,DW
+Impaired,Nutrients,Other Nutrients,15112,387963.249,3.9,Drinking Water Use,DW
+Impaired,Organics,Oil and Grease,91,387963.249,0,Drinking Water Use,DW
+Impaired,Metals and Physical,Oxygen Depletion,15641,387963.249,4,Drinking Water Use,DW
+Impaired,Biotic,Pathogens,20973,387963.249,5.4,Drinking Water Use,DW
+Impaired,Organics,Pesticides,6365,387963.249,1.6,Drinking Water Use,DW
+Impaired,Metals and Physical,Acidity/pH,6888,387963.249,1.8,Drinking Water Use,DW
+Impaired,Organics,PCBs,1998,387963.249,0.5,Drinking Water Use,DW
+Impaired,Sediment,Sediment,28631,387963.249,7.4,Drinking Water Use,DW
+Impaired,Salinity,Chlorides Sulfates,43046,387963.249,11.1,Drinking Water Use,DW
+Impaired,Temp,Temperature,27253,387963.249,7,Drinking Water Use,DW
+Impaired,Organics,Toxic Organics,427,387963.249,0.1,Drinking Water Use,DW
+Impaired,Sediment,Turbidity,9333,387963.249,2.4,Drinking Water Use,DW
+Unimpaired,Unimpaired,Unimpaired,111150,387963.249,28.6,Drinking Water Use,DW

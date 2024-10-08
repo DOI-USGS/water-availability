@@ -92,8 +92,8 @@ const showNitrogen = ref(true);
 const categoryColors = {
         'Agriculture': '#939185',
         'Atmospheric deposition': '#C8ACD6',
-        'Other Human Sources': '#2E236C',
         'Natural sources': '#EECEB9',
+        'Other Human Sources': '#2E236C',
         'Wastewater': '#478CCF'
       }; 
 
