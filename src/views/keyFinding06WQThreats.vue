@@ -10,30 +10,16 @@
             class="text-container"
             aria-hidden="true"
             >
-              <p>These bars represent the 
-                <span>
-                  <button
-                  aria-pressed="scaleMiles" 
-                  class="button"
-                  :text="scaleType"
-                  @click="toggleScale"
-                  >
-                    {{ scaleType }}
-                  </button>
-                </span>
-              of 
-              <span>
-                  <button
-                  aria-pressed="showDW" 
-                  class="button"
-                  :text="showUseType"
-                  @click="toggleUse"
-                  >
-                    {{ showUseType }}
-                  </button>
-                </span>
-                threatening surface river water in the U.S.A.
-              </p>
+              <p>This chart shows threats to the water quality of surface water in the U.S. by source and water use category. Sources include   
+                    <span class="highlight" id="Biotic"> biotic threats </span>,
+                    <span class="highlight" id="Nutrients"> nutrients </span>,
+                    <span class="highlight" id="Organics"> organics  </span>,
+                    <span class="highlight" id="Metals"> metal and physical sources </span>, 
+                    <span class="highlight" id="Sediment"> sediment </span>, 
+                    <span class="highlight" id="Salinity"> salinity </span>, and
+                    <span class="highlight" id="Temperature"> temperature </span>. Some areas of surface water are not threatened and are considered
+                    <span class="highlight" id="Unimpaired"> unimpaired </span>.
+                </p>
             </div>
             <div class="viz-container">
                 <div id="sankey-container">    
@@ -401,7 +387,47 @@ function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-
 
 <style scoped>
 
+.highlight {
+  color: black;
+  padding: 0.25px 5px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.1s;
 
+  &#Biotic {
+    background-color: #EECEB9;
+  }
+
+  &#Nutrients {
+    background-color: #939185;
+  }
+
+  &#Organics {
+    background-color: #C8ACD6;
+  }
+
+  &#Metals {
+    background-color: #80909D;
+  }
+
+  &#Sediment {
+    background-color: #E8E8E3;
+  }
+
+  &#Salinity {
+    background-color: #F3C623;
+  }
+
+  &#Temperature {
+    background-color: #FFB0B0;
+  }
+
+  &#Unimpaired {
+    background-color: #478CCF;
+  }
+}
 
 
 

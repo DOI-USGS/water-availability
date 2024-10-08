@@ -152,11 +152,11 @@ p2_targets <- list(
                                 file = path_out)
                  return(path_out)},
                format = "file")),
-  #tar_target(p2_wq_threats_csv,
-  #           {readr::write_csv(p2_wq_threats_df,
-  #                            file = "public/wq_threats.csv")
-  #             return("public/wq_threats.csv")},
-  #           format = "file"),
+  tar_target(p2_wq_threats_all_csv,
+             {readr::write_csv(p2_wq_threats_df,
+                              file = "public/wq_threats_all.csv")
+               return("public/wq_threats_all.csv")},
+             format = "file"),
   
   # Need a table of unimpaired river miles by water use, not in original data
   # but in a table from report
