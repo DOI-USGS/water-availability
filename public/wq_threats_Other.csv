@@ -1,19 +1,19 @@
-Status,Category,Parameter,riverMiles,totalMiles,percentMiles,Use,UseAbbr
-Impaired,Biotic,Algal Growth,2809,291998.16359999997,1,Other Use,Other
-Impaired,Nutrients,Ammonia,613,291998.16359999997,0.2,Other Use,Other
-Impaired,Organics,Dioxins,766,291998.16359999997,0.3,Other Use,Other
-Impaired,Metals and Physical,Mercury,2715,291998.16359999997,0.9,Other Use,Other
-Impaired,Metals and Physical,Metals Other than Mercury,7295,291998.16359999997,2.5,Other Use,Other
-Impaired,Nutrients,Other Nutrients,3623,291998.16359999997,1.2,Other Use,Other
-Impaired,Organics,Oil and Grease,287,291998.16359999997,0.1,Other Use,Other
-Impaired,Metals and Physical,Oxygen Depletion,5741,291998.16359999997,2,Other Use,Other
-Impaired,Biotic,Pathogens,7851,291998.16359999997,2.7,Other Use,Other
-Impaired,Organics,Pesticides,2272,291998.16359999997,0.8,Other Use,Other
-Impaired,Metals and Physical,Acidity/pH,3981,291998.16359999997,1.4,Other Use,Other
-Impaired,Organics,PCBs,1712,291998.16359999997,0.6,Other Use,Other
-Impaired,Sediment,Sediment,6342,291998.16359999997,2.2,Other Use,Other
-Impaired,Salinity,Chlorides Sulfates,10594,291998.16359999997,3.6,Other Use,Other
-Impaired,Temp,Temperature,7090,291998.16359999997,2.4,Other Use,Other
-Impaired,Organics,Toxic Organics,398,291998.16359999997,0.1,Other Use,Other
-Impaired,Sediment,Turbidity,6324,291998.16359999997,2.2,Other Use,Other
-Unimpaired,Unimpaired,Unimpaired,221585,291998.16359999997,75.9,Other Use,Other
+Use,Category,Parameter,riverMiles,UseAbbr
+Other Use,Unimpaired,Unimpaired,221585,Other
+Other Use,Salinity,Salinity,10594,Other
+Other Use,Biotic,Pathogens,7851,Other
+Other Use,Metals and Physical,Metals Other than Mercury,7295,Other
+Other Use,Temperature,Temperature,7090,Other
+Other Use,Sediment,Sediment,6342,Other
+Other Use,Sediment,Turbidity,6324,Other
+Other Use,Metals and Physical,Oxygen Depletion,5741,Other
+Other Use,Metals and Physical,Acidity/pH,3981,Other
+Other Use,Nutrients,Other Nutrients,3623,Other
+Other Use,Biotic,Algal Growth,2809,Other
+Other Use,Metals and Physical,Mercury,2715,Other
+Other Use,Organics,Pesticides,2272,Other
+Other Use,Organics,PCBs,1712,Other
+Other Use,Organics,Dioxins,766,Other
+Other Use,Nutrients,Ammonia,613,Other
+Other Use,Organics,Toxic Organics,398,Other
+Other Use,Organics,Oil and Grease,287,Other

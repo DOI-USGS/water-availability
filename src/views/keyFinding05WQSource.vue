@@ -2,13 +2,15 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
+          <div class="text-container">
+              <p>Nutrients have a range of natural and human sources. <span class="highlight" id="Naturalsources"> Natural sources </span> of nutrients in surface water include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.</p>
+              </div>
             <div class="text-container">
-                <p>Sources of excess nutrients in our water include   
-                    <span class="highlight" id="Agriculture"> agriculture </span>,
-                    <span class="highlight" id="Atmosphericdeposition"> air pollution </span>,
-                    <span class="highlight" id="Wastewater"> wastewater  </span>,
-                    <span class="highlight" id="Otherhumansources"> other human sources </span>, and
-                    <span class="highlight" id="Naturalsources"> natural sources </span>.
+              <p>Human sources of nutrients in surface water generally include nonpoint fertilizer and manure application for 
+                <span class="highlight" id="Agriculture"> agriculture </span> , atmospheric deposition or 
+                <span class="highlight" id="Atmosphericdeposition"> air pollution </span>, which generally has human origins, point sources such as 
+                <span class="highlight" id="Wastewater"> wastewater  </span> treatment plant discharge, and  
+                    <span class="highlight" id="Otherhumansources"> other human sources </span> such as mining, dams, and urbanization. Increased water demands and drought can aggravate water quality issues by altering groundwater chemistry.
                 </p>
             </div>
             <div
@@ -45,9 +47,7 @@
                 <div id="barplot-container">    
                 </div>
             </div>
-            <div class="text-container">
-              <p>Nutrients have a range of natural and anthropogenic sources. Natural sources of nutrients in surface water include fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes. Anthropogenic sources of nutrients in surface water generally include nonpoint fertilizer and manure application, atmospheric deposition (which generally has anthropogenic origins), nitrogen fixation by crops, and point sources such as wastewater treatment plant discharge. Legacy nitrogen stored in groundwater can also be important sources to streams as well. Across the CONUS, primary sources vary spatially, and include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.</p>
-            </div>
+
         </div>
 
 

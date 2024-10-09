@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
+                <p>Most Americans are provided with drinking water from public supplies. Low-income and minority-dominated communities and people with domestic wells as their drinking water source experience increased exposure to drinking water contamination. </p>
             </div>
             <div
             id="toggle-container"
@@ -21,10 +21,36 @@
                     <span class="highlight" id="Unimpaired"> unimpaired </span>.
                 </p>
             </div>
-            <div class="viz-container">
-                <div id="sankey-container">    
+            <section id="dw-viz">
+              <div class="text-container">
+                <h2>Top Threats to Drinking Water</h2>
+                <p>Most Americans are provided with drinking water from public supplies. Metal contamination, salinity, and sediments were identified as the main threats to streams and rivers used as a drinking-water source. Low-income and minority-dominated communities and people with domestic wells as their drinking water source experience increased exposure to drinking water contamination.</p>
+              </div>
+              <div class="viz-container">
+                <div id="DW-container">    
                 </div>
-            </div>
+              </div>
+            </section>
+            <section id="fish-viz">
+              <div class="text-container">
+                <h2>Top Threats to Fish Consumption</h2>
+                <p>Stream contaminants that threaten fish-consumption use by humans included primarily polychlorinated biphenyls and mercury.</p>
+              </div>
+              <div class="viz-container">
+                <div id="fish-container">    
+                </div>
+              </div>
+            </section>
+              <section id="rec-viz">
+                <div class="text-container">
+                  <h2>Top Threats to Recreational Water Use</h2>
+                  <p>Contaminants that threaten recreational use were mainly biotic pathogens.</p>
+                </div>
+                <div class="viz-container">
+                  <div id="rec-container">    
+                  </div>
+                </div>
+              </section>
         </div>
         <PageCarousel></PageCarousel>
     </section>
@@ -44,12 +70,13 @@ const mobileView = isMobile;
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
+const datasetAll = ref([]);
 const datasetDW = ref([]);
 const datasetFish = ref([]);
 const datasetEco = ref([]);
 const datasetOther = ref([]);
 const datasetRec = ref([]);
-const selectedDataset = ref('datasetDW');
+const selectedDataset = ref('datasetAll');
 const data = ref([]);
 let svg;
 const containerWidth = window.innerWidth * 0.8;
@@ -61,8 +88,6 @@ let chartBounds;
 let nodeGroup;
 let linkGroup;
 let textGroup;
-const scaleMiles = ref(true);
-const showDW = ref(true);
 
 // Abbreviations
 //  DW = Drinking Water Use
@@ -84,33 +109,48 @@ const categoryColors = {
 }; 
 
 
-// set up filtered chart data as computed property for text legend
-const showUseType = computed(() => {
-    return showDW.value ? 'drinking water' : 'fish consumption'
-});
-
-// set up filtered chart data as computed property for text legend
-const scaleType = computed(() => {
-    return scaleMiles.value ? 'total river miles' : 'percent of total miles'
-});
 
 onMounted(async () => {
     try {
         await loadDatasets();
-        data.value = selectedDataset.value === 'datasetDW' ? datasetDW.value : datasetEco.value;
         
+        data.value = datasetDW.value;
         if (data.value.length > 0) {
             initSankey({
               containerWidth: containerWidth,
               containerHeight: containerHeight,
               margin: margin,
               width: width,
-              height: height
+              height: height,
+              containerId: 'DW-container'
             });
             createSankey({
-              dataset: data.value,
-              use: showDW.value,
-              scaleMiles: scaleMiles.value
+              dataset: datasetDW.value,
+              containerId: 'DW-container'
+            });
+            initSankey({
+              containerWidth: containerWidth,
+              containerHeight: containerHeight,
+              margin: margin,
+              width: width,
+              height: height,
+              containerId: 'fish-container'
+            });
+            createSankey({
+              dataset: datasetFish.value,
+              containerId: 'fish-container'
+            });
+            initSankey({
+              containerWidth: containerWidth,
+              containerHeight: containerHeight,
+              margin: margin,
+              width: width,
+              height: height,
+              containerId: 'rec-container'
+            });
+            createSankey({
+              dataset: datasetRec.value,
+              containerId: 'rec-container'
             });
 
         } else {
@@ -123,12 +163,12 @@ onMounted(async () => {
 
 async function loadDatasets() { // Created from R pipeline
   try {
+    datasetAll.value = await loadData('wq_threats_all.csv');
     datasetDW.value = await loadData('wq_threats_DW.csv');
     datasetEco.value = await loadData('wq_threats_Eco.csv');
     datasetRec.value = await loadData('wq_threats_Rec.csv');
     datasetFish.value = await loadData('wq_threats_Fish.csv');
     datasetOther.value = await loadData('wq_threats_Other.csv');
-    console.log(datasetDW.value)
     console.log('data in');
   } catch (error) {
     console.error('Error loading datasets', error);
@@ -147,35 +187,15 @@ async function loadData(fileName) {
   }
 };
 
-// Function to switch between total river miles and percent of river miles
-function toggleScale() {
-  scaleMiles.value = !scaleMiles.value
-        createSankey({
-          dataset: data.value,
-          use: showDW.value,
-          scaleMiles: scaleMiles.value
-    })
-};
-
-// Function to switch water use categories
-function toggleUse() {
-  showDW.value = !showDW.value
-  data.value = showDW.value ? datasetDW.value : datasetFish.value;
-    createSankey({
-        dataset: data.value,
-        use: showDW.value,
-        scaleMiles: scaleMiles.value
-    })
-};
-
 function initSankey({
         containerWidth,
         containerHeight,
-        margin
+        margin,
+        containerId
     }) {
 
     // draw svg canvas for sankey
-    svg = d3.select('#sankey-container')
+    svg = d3.select('#' + containerId)
       .append('svg')
       .attr('class', 'sankeySVG')
       .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
@@ -206,8 +226,7 @@ function initSankey({
 
 function createSankey({
     dataset,
-    use,
-    scaleMiles
+    containerId
   }) {
 
     // get unique categories and parameters
@@ -219,8 +238,8 @@ function createSankey({
         .nodeSort(null)
         .linkSort(null)
         .nodeWidth(4)
-        .nodePadding(10)
-        .extent([[0, 5], [width, height - 5]])
+        .nodePadding(11)
+        .extent([[150, 5], [width - 300, height - 0]])
 
     // Set up color scale 
     const colorScale = d3.scaleOrdinal()
@@ -230,8 +249,7 @@ function createSankey({
     
     // set up the nodes and links
     var nodesLinks = graphNodes({
-      data: dataset, 
-      showMiles: scaleMiles
+      data: dataset
     });
 
     const {nodes, links} = sankey({
@@ -243,7 +261,7 @@ function createSankey({
     const dur = 1000;
     const t = d3.transition().duration(dur);
 
-    console.log(links)
+    console.log(nodes)
 
     // Update nodes for sankey, assigning data
     const sankeyNodesGroups = nodeGroup.selectAll('g')
@@ -305,16 +323,16 @@ function createSankey({
             enter => {
               enter
               .append("text")
-                .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr("x", d => d.x0 < width / 2 ? d.x1 -10 : d.x0 + 10) //checks for right-most labels
                 .attr("y", d => (d.y1 + d.y0) / 2)
                 .attr("dy", "0.35em")
-                .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
+                .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start") //checks for right-most labels
                 .text(d => d.name)
-                .style("font", "10px sans-serif")
+                .style("font", "14px sans-serif")
               .append("tspan")
                 .attr("fill-opacity", 0.7)
                 .text(d => ` ${d.value.toLocaleString()}`)
-                .style("font", "10px sans-serif")
+                .style("font", "14px sans-serif")
             },
             null,
             exit => {
@@ -333,9 +351,9 @@ function createSankey({
 };
 
 // set up the nodes and links
-function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-sets?collection=@d3/d3-sankey
-  let keys = data.columns.slice(1, -5); // which columns for nodes
-  // columns are: Status, Category, Parameter, riverMiles, totalMiles, percentMiles, Use, UseAbbr (from R pipeline)
+function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collection=@d3/d3-sankey
+  let keys = data.columns.slice(1, -2); // which columns for nodes
+  // columns are: Use, Category, Parameter, riverMiles, UseAbbr (from R pipeline)
   let index = -1;
   let nodes = [];
   let nodeByKey = new d3.InternMap([], JSON.stringify);
@@ -364,7 +382,7 @@ function graphNodes({data, showMiles}){ //https://observablehq.com/@d3/parallel-
     const linkByKey = new d3.InternMap([], JSON.stringify);
     for (const d of data) {
       const names = prefix.map(k => d[k]);
-      const value = showMiles ? d.riverMiles : d.percentMiles; 
+      const value = d.riverMiles; 
       let link = linkByKey.get(names);
       if (link) { link.value += value; continue; }
       link = {
