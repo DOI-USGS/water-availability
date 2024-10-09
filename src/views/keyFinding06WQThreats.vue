@@ -104,7 +104,7 @@ const categoryColors = {
   'Metals and Physical':  '#80909D',
   'Sediment': '#E8E8E3',
   'Salinity': '#F3C623',
-  'Temp': '#FFB0B0',
+  'Temperature': '#FFB0B0',
   'Unimpaired': '#478CCF',
 }; 
 
@@ -230,7 +230,7 @@ function createSankey({
   }) {
 
     // get unique categories and parameters
-    const categoryGroups = d3.union(d3.map(dataset, d => d.Category));
+    const categoryGroups = [... new Set(dataset.map(d => d.Category))];
     const parameterGroups = d3.union(d3.map(dataset, d => d.Parameter));
     
     // initialize sankey
@@ -244,7 +244,7 @@ function createSankey({
     // Set up color scale 
     const colorScale = d3.scaleOrdinal()
         .domain(categoryGroups)
-        .range(Object.values(categoryColors));
+        .range(Object.values(categoryGroups.map(item => categoryColors[item])));
 
     
     // set up the nodes and links

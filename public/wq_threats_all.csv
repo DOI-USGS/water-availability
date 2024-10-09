@@ -1,12 +1,13 @@
 Use,Category,Parameter,riverMiles,UseAbbr
-Ecological Use,Unimpaired,Unimpaired,460958,Eco
-Other Use,Unimpaired,Unimpaired,221585,Other
+Ecological Use,Unimpaired,Unimpaired,508816,Eco
+Other Use,Unimpaired,Unimpaired,487640,Other
+Recreational Use,Unimpaired,Unimpaired,323983,Rec
 Recreational Use,Biotic,Pathogens,200090,Rec
+Drinking Water Use,Unimpaired,Unimpaired,184652,DW
 Ecological Use,Temperature,Temperature,154623,Eco
-Fish Consumption Use,Unimpaired,Unimpaired,122198,Fish
-Drinking Water Use,Unimpaired,Unimpaired,111150,DW
 Ecological Use,Biotic,Pathogens,108652,Eco
 Ecological Use,Sediment,Sediment,106045,Eco
+Fish Consumption Use,Unimpaired,Unimpaired,98021,Fish
 Ecological Use,Metals and Physical,Metals Other than Mercury,92077,Eco
 Drinking Water Use,Metals and Physical,Metals Other than Mercury,90943,DW
 Ecological Use,Metals and Physical,Oxygen Depletion,75899,Eco
@@ -20,7 +21,6 @@ Recreational Use,Nutrients,Other Nutrients,36698,Rec
 Ecological Use,Metals and Physical,Mercury,36389,Eco
 Ecological Use,Salinity,Salinity,32898,Eco
 Recreational Use,Metals and Physical,Oxygen Depletion,32085,Rec
-Recreational Use,Unimpaired,Unimpaired,30618,Rec
 Drinking Water Use,Sediment,Sediment,28631,DW
 Ecological Use,Metals and Physical,Acidity/pH,27766,Eco
 Recreational Use,Metals and Physical,Metals Other than Mercury,27457,Rec
