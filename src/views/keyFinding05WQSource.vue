@@ -211,7 +211,7 @@ function createBarChart({
   }) {
 
     // get unique categories and regions
-    const categoryGroups = d3.union(d3.map(dataset, d => d.category));
+    const categoryGroups = [... new Set(dataset.map(d => d.category))];
     const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
     // stack data for rectangles
@@ -261,7 +261,7 @@ function createBarChart({
     // set up color scale
     const colorScale = d3.scaleOrdinal()
         .domain(categoryGroups)
-        .range(Object.values(categoryColors));
+        .range(categoryGroups.map(item => categoryColors[item]));
 
     // Update groups for bars, assigning data
     const categoryRectGroups = rectGroup.selectAll('g')
