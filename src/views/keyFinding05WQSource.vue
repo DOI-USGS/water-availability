@@ -66,7 +66,7 @@ import { isMobile } from 'mobile-device-detect';
 
 // use for mobile logic
 const mobileView = isMobile;
-console.log(mobileView)
+//console.log(mobileView)
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;

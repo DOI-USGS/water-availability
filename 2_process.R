@@ -159,15 +159,15 @@ p2_targets <- list(
              format = "file"),
   
   # Need a table of unimpaired river miles by water use, not in original data
-  # but in a table from report
+  # but in a table from report (Table 5)
   tar_target(p2_wq_unimpair_river_miles_tibble,
              tribble(
                ~use_name, ~Category, ~parameter, ~sum_watersize,
-               "Drinking Water Use", "Unimpaired", "Unimpaired", 111150,
-               "Ecological Use", "Unimpaired", "Unimpaired", 460958,
-               "Fish Consumption Use", "Unimpaired", "Unimpaired", 122198,
-               "Recreational Use", "Unimpaired", "Unimpaired", 30618,
-               "Other Use", "Unimpaired", "Unimpaired", 221585)),
+               "Drinking Water Use", "Unimpaired", "Unimpaired", 184652,
+               "Ecological Use", "Unimpaired", "Unimpaired", 508816,
+               "Fish Consumption Use", "Unimpaired", "Unimpaired", 98021,
+               "Recreational Use", "Unimpaired", "Unimpaired", 323983,
+               "Other Use", "Unimpaired", "Unimpaired", 487640)),
   
   ##############################################
   # 
