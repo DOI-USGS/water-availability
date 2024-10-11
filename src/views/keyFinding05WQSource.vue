@@ -221,6 +221,8 @@ function createBarChart({
         .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
         (d3.index(dataset, d => d.region_nam, d => d.category));
 
+        console.log(stackedData.keys())
+
     // Set up region scale (xScale in water-bottling site)
     const regionScale = d3.scaleBand()
         .domain(regionGroups)
@@ -248,11 +250,6 @@ function createBarChart({
             d => scaleLoad ? d + 'k Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
               d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
     
-    chartBounds.append("g")
-        .attr("class", "y-axis")
-        .attr("role", "presentation")
-        .attr("aria-hidden", true)
-
 
     // Set up transition.
     const dur = 1000;
@@ -270,7 +267,7 @@ function createBarChart({
         .join(
           enter => enter
               .append("g")
-              .attr("class", d => d.key),
+              .attr("class", d => d.key.replace(" ", "_")),
           
           null, // no update function
 
