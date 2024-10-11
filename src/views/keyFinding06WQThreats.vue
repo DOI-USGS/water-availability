@@ -3,14 +3,14 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Most Americans are provided with drinking water from public supplies. Low-income and minority-dominated communities and people with domestic wells as their drinking water source experience increased exposure to drinking water contamination. </p>
+                <p>Exposure to drinking water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source.</p>
             </div>
             <div
             id="toggle-container"
             class="text-container"
             aria-hidden="true"
             >
-              <p>This chart shows threats to the water quality of surface water in the U.S. by source and water use category. Sources include   
+              <p>Surface water quality differs by source and use. Broad sources of water contamination include   
                     <span class="highlight" id="Biotic"> biotic threats </span>,
                     <span class="highlight" id="Nutrients"> nutrients </span>,
                     <span class="highlight" id="Organics"> organics  </span>,
@@ -18,27 +18,36 @@
                     <span class="highlight" id="Sediment"> sediment </span>, 
                     <span class="highlight" id="Salinity"> salinity </span>, and
                     <span class="highlight" id="Temperature"> temperature </span>. Some areas of surface water are not threatened and are considered
-                    <span class="highlight" id="Unimpaired"> unimpaired </span>.
+                    <span class="highlight" id="Unimpaired"> unimpaired </span>. This chart shows threats to the water quality of surface water in the U.S. by source and water use category. The height of each ribbon in the chart represents the total river miles, and the broad categories on the left are broken out into their respective sources on the right. 
                 </p>
             </div>
             <section id="dw-viz">
               <div class="text-container">
                 <h2>Top Threats to Drinking Water</h2>
-                <p>Most Americans are provided with drinking water from public supplies. Metal contamination, salinity, and sediments were identified as the main threats to streams and rivers used as a drinking-water source. Low-income and minority-dominated communities and people with domestic wells as their drinking water source experience increased exposure to drinking water contamination.</p>
+                <p>Metal contamination, salinity, and sediments were identified as the main threats to streams and rivers used as a drinking-water source. </p>
               </div>
               <div class="viz-container">
                 <div id="DW-container">    
                 </div>
               </div>
+              <div class="text-container">
+                <p><br>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States. These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels. Human-derived metals may also be released in more toxic and mobile forms than natural sources. </p>
+                <p><br>Salinity effects on water availability are more spatially limited than nutrients, but salinity can cause considerable local issues for human beneficial uses and ecosystem needs. There has been a growing recognition of the threat that freshwater salinization (increasing salinity) of surface waters poses to water availability (Cañedo-Argüelles, 2020), with 37 percent of the drainage area of the CONUS having experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal and others, 2018; Cañedo-Argüelles, 2020). Trend assessments at individual sites across the United States show increasing salinity with time at many sites, particularly in urban areas, and at concentrations that indicate potential corrosion to drinking-water infrastructure. </p>
+              </div>
             </section>
             <section id="fish-viz">
               <div class="text-container">
                 <h2>Top Threats to Fish Consumption</h2>
-                <p>Stream contaminants that threaten fish-consumption use by humans included primarily polychlorinated biphenyls and mercury.</p>
+                <p>Water-quality problems that affect ecosystems may also affect people who rely on ecosystems for food. The top threats to fish consumption for human health include mercury and polychlorinated biphenyls (PCBs).
+                </p>
               </div>
               <div class="viz-container">
                 <div id="fish-container">    
                 </div>
+              </div>
+              <div class="text-container">
+                <p>Mercury can limit water availability for aquatic species and humans through consumption of aquatic species. Mercury has geogenic sources (volcanos, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and primarily coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. The methylated form of mercury, methylmercury, is highly bioavailable and can accumulate in higher trophic levels, such as fish, relative to lower trophic levels at concentrations that make fish consumption unhealthy for humans (Wentz and others, 2014). For example, Arctic Indigenous peoples have a traditional diet rich in marine mammals and fish, which are also a substantial source of mercury exposure. Young children and developing fetuses are particularly vulnerable to mercury exposure through movement across the placenta from mother to fetus. Stream contaminants that threaten fish-consumption use by humans included primarily polychlorinated biphenyls and mercury.</p>
+                <p><br>Polychlorinated biphenyls (PCBs) are endocrine-disrupting compounds, associated with cancers and a wide range of human-health risks, are generally stable and persistent in the environment, and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou and others, 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption (fig. 2). Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites (point sources) and hydrologically connected locations. About 30 percent of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou and others, 2022). </p>
               </div>
             </section>
               <section id="rec-viz">
