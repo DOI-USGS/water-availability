@@ -71,3 +71,60 @@ mean_wu_HUC8 <- function(..., min_year, max_year) {
             use_name = use_type) |>
     rename_with(~ sprintf("%s_%s", temp_use, .), .cols = !HUC8)
 }
+
+
+##############################################################################
+#
+#       total water use by year
+#
+total_wu_yearly <- function(...,
+                            min_year,
+                            max_year){
+  # combine three water use types
+  data_in <- bind_rows(...)
+  
+  
+  # filter by water years
+  years <- data_in |> 
+    mutate(water_year = case_when(month %in% 10:12 ~ year + 1,
+                                  month < 10 ~ year)) |>
+    filter(water_year >= min_year, 
+           water_year <= max_year)
+  
+  # calculate days per month
+  days_per_water_year <- tibble(
+    water_year = rep(2010:2020, each = 12),
+    month = rep(c(10:12,1:9), 11)
+  ) |>
+    mutate(day_count = lubridate::days_in_month(as.Date(sprintf("%s-%s-01", water_year, month)))) |>
+    group_by(water_year) |>
+    summarize(total_days_per_year = sum(day_count))
+    
+  # from mgd to mgm (monthly) by huc
+  monthly_mgm <- years |>
+    mutate(days_per_month = lubridate::days_in_month(as.Date(sprintf("%s-%s-01", water_year, month))),
+           mgm = wu_mgd * days_per_month) 
+  
+  # calculate total mgd by year and source/use
+  yearly_mgy_huc12 <- monthly_mgm |>
+    group_by(use_type, source_type, water_year, HUC) |>
+    summarize(mgy = sum(mgm, na.rm = TRUE))
+  
+  # add up across hucs
+  yearly_mgy <- yearly_mgy_huc12 |>
+    group_by(use_type, source_type, water_year) |>
+    summarize(total_wu_mgy = sum(mgy, na.rm = TRUE)) 
+  
+  # Divide by days per year to get mgd by year
+  yearly_mgd <- yearly_mgy |>
+    left_join(days_per_water_year, by = "water_year") |>
+    mutate(mgd = total_wu_mgy/total_days_per_year) |>
+    # prep for d3
+    mutate(Use = case_when(use_type == "ps" ~ "Public Supply",
+                           use_type == "ir" ~ "Irrigation", 
+                           source_type == "saline" ~ "Thermoelectric (saline)",
+                           TRUE ~ "Thermoelectric (fresh)"))
+  
+  return(yearly_mgd)
+  
+}
