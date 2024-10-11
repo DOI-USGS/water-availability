@@ -2,13 +2,15 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
+          <div class="text-container">
+              <p>Nutrients have a range of natural and human sources. <span class="highlight" id="Naturalsources"> Natural sources </span> of nutrients in surface water include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.</p>
+              </div>
             <div class="text-container">
-                <p>Sources of excess nutrients in our water include   
-                    <span class="highlight" id="Agriculture"> agriculture </span>,
-                    <span class="highlight" id="Atmosphericdeposition"> air pollution </span>,
-                    <span class="highlight" id="Wastewater"> wastewater  </span>,
-                    <span class="highlight" id="Otherhumansources"> other human sources </span>, and
-                    <span class="highlight" id="Naturalsources"> natural sources </span>.
+              <p>Human sources of nutrients in surface water generally include nonpoint fertilizer and manure application for 
+                <span class="highlight" id="Agriculture"> agriculture </span> , atmospheric deposition or 
+                <span class="highlight" id="Atmosphericdeposition"> air pollution </span>, which generally has human origins, point sources such as 
+                <span class="highlight" id="Wastewater"> wastewater  </span> treatment plant discharge, and  
+                    <span class="highlight" id="Otherhumansources"> other human sources </span> such as mining, dams, and urbanization. Increased water demands and drought can aggravate water quality issues by altering groundwater chemistry.
                 </p>
             </div>
             <div
@@ -45,9 +47,7 @@
                 <div id="barplot-container">    
                 </div>
             </div>
-            <div class="text-container">
-              <p>Nutrients have a range of natural and anthropogenic sources. Natural sources of nutrients in surface water include fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes. Anthropogenic sources of nutrients in surface water generally include nonpoint fertilizer and manure application, atmospheric deposition (which generally has anthropogenic origins), nitrogen fixation by crops, and point sources such as wastewater treatment plant discharge. Legacy nitrogen stored in groundwater can also be important sources to streams as well. Across the CONUS, primary sources vary spatially, and include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.</p>
-            </div>
+
         </div>
 
 
@@ -66,7 +66,7 @@ import { isMobile } from 'mobile-device-detect';
 
 // use for mobile logic
 const mobileView = isMobile;
-console.log(mobileView)
+//console.log(mobileView)
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -80,7 +80,6 @@ const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
 const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
-console.log(containerWidth);
 let chartBounds;
 let rectGroup;
 let nutrientScale;
@@ -93,8 +92,8 @@ const showNitrogen = ref(true);
 const categoryColors = {
         'Agriculture': '#939185',
         'Atmospheric deposition': '#C8ACD6',
-        'Other Human Sources': '#2E236C',
         'Natural sources': '#EECEB9',
+        'Other Human Sources': '#2E236C',
         'Wastewater': '#478CCF'
       }; 
 
@@ -167,7 +166,7 @@ function toggleScale() {
           dataset: data.value,
           scaleLoad: scaleLoad.value
     })
-  }
+};
 
 function toggleNutrient() {
   showNitrogen.value = !showNitrogen.value
@@ -176,7 +175,7 @@ function toggleNutrient() {
       dataset: data.value,
       scaleLoad: scaleLoad.value
     })
-  }
+};
 
 function initBarChart({
   containerWidth,
@@ -212,7 +211,7 @@ function createBarChart({
   }) {
 
     // get unique categories and regions
-    const categoryGroups = d3.union(d3.map(dataset, d => d.category));
+    const categoryGroups = [... new Set(dataset.map(d => d.category))];
     const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
     // stack data for rectangles
@@ -262,7 +261,7 @@ function createBarChart({
     // set up color scale
     const colorScale = d3.scaleOrdinal()
         .domain(categoryGroups)
-        .range(Object.values(categoryColors));
+        .range(categoryGroups.map(item => categoryColors[item]));
 
     // Update groups for bars, assigning data
     const categoryRectGroups = rectGroup.selectAll('g')
