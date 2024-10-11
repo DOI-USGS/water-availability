@@ -81,7 +81,9 @@ const data = ref([]);
 let svg;
 const containerWidth = window.innerWidth * 0.8;
 const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 50 } : { top: 80, right: 20, bottom: 40, left: 100 };
+const margin = mobileView 
+  ? { top: 60, right: 20, bottom: 20, left: 20 } 
+  : { top: 80, right: 50, bottom: 40, left: 150 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 const nodePadding = mobileView ? 24 : 11; // Increase node spacing for mobile
@@ -323,42 +325,33 @@ function createSankey({
         enter => {
           const textEnter = enter
             .append("text")
-            .attr("x", d => d.x0 < width / 2 ? d.x1 - 10 : d.x0 + 10) // right-most labels
+            .attr("x", d => d.x0 < width / 2 ? d.x0 - 10 : d.x1 + 10)  // Push left-side labels inside SVG bounds
             .attr("y", d => (d.y1 + d.y0) / 2)
-            .attr("dy", mobileView ? "-0.5em" : "0.35em") // Shift text upward on mobile
-            .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start") // adjust for side
+            .attr("dy", "0.35em")
+            .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")  // Left-side labels aligned to the end
             .style("font", mobileView ? "16px sans-serif" : "14px sans-serif");
 
-          // Add d.name and d.value on different lines for mobile
+          // Add label text (name and value)
           textEnter
             .append("tspan")
             .text(d => d.name);
-          
+
           if (mobileView) {
             textEnter
               .append("tspan")
-              .attr("x", d => d.x0 < width / 2 ? d.x1 - 10 : d.x0 + 10) // Align with name
-              .attr("dy", "1em") // Move second line down
+              .attr("x", d => d.x0 < width / 2 ? d.x0 - 10 : d.x1 + 10)  // Adjust x position for second line
+              .attr("dy", "1em")  // Move second line down
               .attr("fill-opacity", 0.7)
-              .text(d => ` ${d.value.toLocaleString()}`);
+              .text(d => `${d.value.toLocaleString()}`);
           } else {
             textEnter
               .append("tspan")
               .attr("fill-opacity", 0.7)
               .text(d => ` ${d.value.toLocaleString()}`);
           }
-        },
-        null,
-        exit => {
-          exit
-            .transition()
-            .duration(dur / 2)
-            .style("fill-opacity", 0)
-            .style("stroke-width", 0)
-            .remove();
         }
       );
-    
+
 
 
 };
