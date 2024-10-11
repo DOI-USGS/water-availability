@@ -154,7 +154,7 @@ p1_targets <- list(
   ),
   
   # TE = thermoelectric water use data
-  tar_target(p1_wu_te_gw_csv, # Irrigation withdrawal (total)
+  tar_target(p1_wu_te_gw_csv, # thermoelectric withdrawal (total)
              sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "gw_fresh_wd_mgd.csv",
@@ -163,7 +163,7 @@ p1_targets <- list(
              ),
              format = "file"
   ),
-  tar_target(p1_wu_te_sw_csv, # Irrigation withdrawal (total)
+  tar_target(p1_wu_te_sw_csv, # thermoelectric withdrawal (total)
              sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "sw_fresh_wd_mgd.csv",
@@ -172,11 +172,20 @@ p1_targets <- list(
              ),
              format = "file"
   ),
-  tar_target(p1_wu_te_tot_csv, # Irrigation withdrawal (total)
+  tar_target(p1_wu_te_tot_csv, # thermoelectric fresh withdrawal (total)
              sb_initialize_and_download(
                sb_id = "655e1bc9d34e3aa43a437141",
                names = "total_fresh_wd_mgd.csv",
                destinations = "1_fetch/in/total_fresh_wd_mgd.csv",
+               overwrite_fileL = FALSE
+             ),
+             format = "file"
+  ),
+  tar_target(p1_wu_te_tot_saline_csv, # thermoelectric saline withdrawal (total)
+             sb_initialize_and_download(
+               sb_id = "655e1bc9d34e3aa43a437141",
+               names = "sw_saline_wd_mgd.csv",
+               destinations = "1_fetch/in/sw_saline_wd_mgd.csv",
                overwrite_fileL = FALSE
              ),
              format = "file"
