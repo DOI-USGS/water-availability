@@ -44,7 +44,7 @@
   justify-content: center;
   align-items: center;
   padding: 120px 20px;
-  width: 80vw;
+  width: 90vw;
   color: var(--blue-text-col);
   border-radius: 5px;
   text-align: center;
@@ -67,7 +67,7 @@
 }
 
 .raindrop-container {
-  width: 80vw;
+  width: 90vw;
   padding-top: 50px;
   margin: 0 auto;
   display: grid;
@@ -76,25 +76,32 @@
 }
 
 .key-message-item {
-  display: grid;
-  align-items:start;
-  justify-items: center;
-  grid-template-rows: 70px max-content;
+  position: relative;
+  width: 90%;
+  margin: 5px auto;
+  padding: 12px;
+  background-color: var(--light-background);
+  border-radius: 10px;
+  display: block;
+  overflow: hidden;
 }
 
 .key-message-item-text {
   color: var(--blue-text-col);
   width: 90%;
   font-size: 2rem;
+  text-align: left;
 }
 
 .raindrop {
+  float: left;
   width: 60px;
   height: 60px;
   border-radius: 0 50% 50% 50%;
   border: 0px;
   transform: rotate(45deg);
-  margin: 20px auto 0px auto;
+  margin-right: 20px;
+  margin-bottom: 10px;
   background-color: rgb(159, 202, 203);
   border: 0 solid;
   box-shadow: inset 0 0 20px  #427388;
@@ -103,6 +110,8 @@
   outline-offset: 0px;
   text-shadow: none;
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  shape-outside: ellipse(50% 70% at 50% 35%);
+  clip-path: ellipse(65% 85% at 50% 35%);
 }
 
 
