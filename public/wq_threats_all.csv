@@ -8,22 +8,22 @@ Ecological Use,Temperature,Temperature,154623,Eco
 Ecological Use,Biotic,Pathogens,108652,Eco
 Ecological Use,Sediment,Sediment,106045,Eco
 Fish Consumption Use,Unimpaired,Unimpaired,98021,Fish
-Ecological Use,Metals and Physical,Metals Other than Mercury,92077,Eco
-Drinking Water Use,Metals and Physical,Metals Other than Mercury,90943,DW
-Ecological Use,Metals and Physical,Oxygen Depletion,75899,Eco
+Ecological Use,Metals,Metals Other than Mercury,92077,Eco
+Drinking Water Use,Metals,Metals Other than Mercury,90943,DW
+Ecological Use,Metals,Oxygen Depletion,75899,Eco
 Ecological Use,Nutrients,Other Nutrients,73178,Eco
 Fish Consumption Use,Organics,PCBs,72915,Fish
-Fish Consumption Use,Metals and Physical,Mercury,61058,Fish
+Fish Consumption Use,Metals,Mercury,61058,Fish
 Ecological Use,Sediment,Turbidity,48140,Eco
 Drinking Water Use,Salinity,Salinity,43046,DW
 Fish Consumption Use,Biotic,Pathogens,37528,Fish
 Recreational Use,Nutrients,Other Nutrients,36698,Rec
-Ecological Use,Metals and Physical,Mercury,36389,Eco
+Ecological Use,Metals,Mercury,36389,Eco
 Ecological Use,Salinity,Salinity,32898,Eco
-Recreational Use,Metals and Physical,Oxygen Depletion,32085,Rec
+Recreational Use,Metals,Oxygen Depletion,32085,Rec
 Drinking Water Use,Sediment,Sediment,28631,DW
-Ecological Use,Metals and Physical,Acidity/pH,27766,Eco
-Recreational Use,Metals and Physical,Metals Other than Mercury,27457,Rec
+Ecological Use,Metals,Acidity/pH,27766,Eco
+Recreational Use,Metals,Metals Other than Mercury,27457,Rec
 Drinking Water Use,Temperature,Temperature,27253,DW
 Recreational Use,Organics,PCBs,26710,Rec
 Recreational Use,Sediment,Sediment,24352,Rec
@@ -31,42 +31,42 @@ Ecological Use,Organics,PCBs,23676,Eco
 Recreational Use,Temperature,Temperature,23334,Rec
 Drinking Water Use,Biotic,Pathogens,20973,DW
 Recreational Use,Sediment,Turbidity,20619,Rec
-Recreational Use,Metals and Physical,Mercury,19026,Rec
+Recreational Use,Metals,Mercury,19026,Rec
 Ecological Use,Organics,Pesticides,16794,Eco
-Drinking Water Use,Metals and Physical,Oxygen Depletion,15641,DW
+Drinking Water Use,Metals,Oxygen Depletion,15641,DW
 Drinking Water Use,Nutrients,Other Nutrients,15112,DW
 Recreational Use,Salinity,Salinity,12387,Rec
 Recreational Use,Organics,Pesticides,11005,Rec
 Other Use,Salinity,Salinity,10594,Other
 Fish Consumption Use,Organics,Pesticides,10481,Fish
 Drinking Water Use,Sediment,Turbidity,9333,DW
-Fish Consumption Use,Metals and Physical,Metals Other than Mercury,9238,Fish
-Fish Consumption Use,Metals and Physical,Oxygen Depletion,8997,Fish
-Recreational Use,Metals and Physical,Acidity/pH,8127,Rec
+Fish Consumption Use,Metals,Metals Other than Mercury,9238,Fish
+Fish Consumption Use,Metals,Oxygen Depletion,8997,Fish
+Recreational Use,Metals,Acidity/pH,8127,Rec
 Other Use,Biotic,Pathogens,7851,Other
-Other Use,Metals and Physical,Metals Other than Mercury,7295,Other
+Other Use,Metals,Metals Other than Mercury,7295,Other
 Other Use,Temperature,Temperature,7090,Other
-Drinking Water Use,Metals and Physical,Acidity/pH,6888,DW
+Drinking Water Use,Metals,Acidity/pH,6888,DW
 Fish Consumption Use,Temperature,Temperature,6606,Fish
 Ecological Use,Biotic,Biotoxins,6389,Eco
 Recreational Use,Biotic,Biotoxins,6389,Rec
 Drinking Water Use,Organics,Pesticides,6365,DW
 Other Use,Sediment,Sediment,6342,Other
 Other Use,Sediment,Turbidity,6324,Other
-Fish Consumption Use,Metals and Physical,Acidity/pH,6127,Fish
-Drinking Water Use,Metals and Physical,Mercury,5748,DW
-Other Use,Metals and Physical,Oxygen Depletion,5741,Other
+Fish Consumption Use,Metals,Acidity/pH,6127,Fish
+Drinking Water Use,Metals,Mercury,5748,DW
+Other Use,Metals,Oxygen Depletion,5741,Other
 Fish Consumption Use,Nutrients,Other Nutrients,5622,Fish
 Fish Consumption Use,Sediment,Sediment,5591,Fish
 Fish Consumption Use,Sediment,Turbidity,5028,Fish
 Fish Consumption Use,Organics,Dioxins,4879,Fish
 Ecological Use,Nutrients,Ammonia,4859,Eco
 Ecological Use,Biotic,Algal Growth,4805,Eco
-Other Use,Metals and Physical,Acidity/pH,3981,Other
+Other Use,Metals,Acidity/pH,3981,Other
 Recreational Use,Biotic,Algal Growth,3638,Rec
 Other Use,Nutrients,Other Nutrients,3623,Other
 Other Use,Biotic,Algal Growth,2809,Other
-Other Use,Metals and Physical,Mercury,2715,Other
+Other Use,Metals,Mercury,2715,Other
 Ecological Use,Organics,Dioxins,2701,Eco
 Recreational Use,Organics,Dioxins,2495,Rec
 Fish Consumption Use,Organics,Toxic Organics,2279,Fish

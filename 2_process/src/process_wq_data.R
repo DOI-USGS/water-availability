@@ -29,6 +29,8 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
                                 TRUE ~ Category)) |>
     mutate(Parameter = case_when(Category == "Salinity" ~ "Salinity",
                                  TRUE ~ Parameter)) |>
+    mutate(Category = case_when(Category == "Metals and Physical" ~ "Metals",
+                                TRUE ~ Category)) |>
     # order the columns -- 
     #     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #     NOTE: Changing these can affect the sankey plot in keyfinding06WQThreats.vue

@@ -91,7 +91,7 @@ let svg;
 const containerWidth = window.innerWidth * 0.8;
 const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
 const margin = mobileView 
-  ? { top: 60, right: 20, bottom: 20, left: 20 } 
+  ? { top: 60, right: 40, bottom: 20, left: 10 } 
   : { top: 80, right: 50, bottom: 40, left: 150 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
@@ -113,7 +113,7 @@ const categoryColors = {
   'Biotic': '#EECEB9',
   'Nutrients':  '#939185',
   'Organics':  '#C8ACD6', 
-  'Metals and Physical':  '#80909D',
+  'Metals':  '#80909D',
   'Sediment': '#E8E8E3',
   'Salinity': '#F3C623',
   'Temperature': '#FFB0B0',
@@ -249,7 +249,9 @@ function createSankey({
     const sankey = d3sankey.sankey()
       .nodeWidth(4)
       .nodePadding(nodePadding) // Increase padding on mobile
-      .extent([[150, 5], [width - 300, height - 0]]);
+      .extent(mobileView 
+        ? [[75, 0], [width -50, height - 0]]
+        : [[150, 5], [width - 300, height - 0]]); //
 
 
     // Set up color scale 
@@ -338,7 +340,7 @@ function createSankey({
             .attr("y", d => (d.y1 + d.y0) / 2)
             .attr("dy", "0.35em")
             .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")  // Left-side labels aligned to the end
-            .style("font", mobileView ? "16px sans-serif" : "14px sans-serif");
+            .style("font", mobileView ? "14px sans-serif" : "14px sans-serif");
 
           // Add label text (name and value)
           textEnter

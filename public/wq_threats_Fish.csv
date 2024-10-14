@@ -1,13 +1,13 @@
 Use,Category,Parameter,riverMiles,UseAbbr
 Fish Consumption Use,Unimpaired,Unimpaired,98021,Fish
 Fish Consumption Use,Organics,PCBs,72915,Fish
-Fish Consumption Use,Metals and Physical,Mercury,61058,Fish
+Fish Consumption Use,Metals,Mercury,61058,Fish
 Fish Consumption Use,Biotic,Pathogens,37528,Fish
 Fish Consumption Use,Organics,Pesticides,10481,Fish
-Fish Consumption Use,Metals and Physical,Metals Other than Mercury,9238,Fish
-Fish Consumption Use,Metals and Physical,Oxygen Depletion,8997,Fish
+Fish Consumption Use,Metals,Metals Other than Mercury,9238,Fish
+Fish Consumption Use,Metals,Oxygen Depletion,8997,Fish
 Fish Consumption Use,Temperature,Temperature,6606,Fish
-Fish Consumption Use,Metals and Physical,Acidity/pH,6127,Fish
+Fish Consumption Use,Metals,Acidity/pH,6127,Fish
 Fish Consumption Use,Nutrients,Other Nutrients,5622,Fish
 Fish Consumption Use,Sediment,Sediment,5591,Fish
 Fish Consumption Use,Sediment,Turbidity,5028,Fish
