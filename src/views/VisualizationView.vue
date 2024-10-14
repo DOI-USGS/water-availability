@@ -71,7 +71,7 @@
   padding-top: 50px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 1rem;
 }
 
@@ -79,11 +79,11 @@
   position: relative;
   width: 90%;
   margin: 5px auto;
-  padding: 12px;
+  padding: 18px;
   background-color: var(--light-background);
   border-radius: 10px;
   display: block;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .key-message-item-text {
@@ -102,6 +102,7 @@
   transform: rotate(45deg);
   margin-right: 20px;
   margin-bottom: 10px;
+  margin-top: 35px;
   background-color: rgb(159, 202, 203);
   border: 0 solid;
   box-shadow: inset 0 0 20px  #427388;
@@ -110,8 +111,8 @@
   outline-offset: 0px;
   text-shadow: none;
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
-  shape-outside: ellipse(50% 70% at 50% 35%);
-  clip-path: ellipse(65% 85% at 50% 35%);
+  shape-outside: ellipse(65% 95% at 50% 25%);
+  clip-path: ellipse(65% 95% at 50% 25%);
 }
 
 
