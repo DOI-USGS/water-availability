@@ -40,29 +40,30 @@
 
 /* text box within the wavy container that houses key messages */
 .title-message-container {
-  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 20px;
   width: 80vw;
   color: var(--blue-text-col);
-  padding: 20px 20px 20px 0px;
-  align-items: center;
-  justify-content: center;
   border-radius: 5px;
+  text-align: center;
 }
-#main-title{
+#main-title {
   max-width: 700px;
   font-size: 8rem;
+  line-height: 1.2;
+  word-wrap: break-word;
 }
 @media only screen and (max-width: 768px) {
   .title-message-container {
-      height: 200px;
-      width: 90vw;
-      padding: 20px 5px;
-      align-items: center;
+    padding: 80px 10px;
+    width: 95vw;
   }
-  #main-title{
-  max-width: 700px;
-  font-size: 3.8rem;
-}
+  
+  #main-title {
+    font-size: 4rem;
+  }
 }
 
 .raindrop-container {
