@@ -2,16 +2,16 @@ Use,Category,Parameter,riverMiles,UseAbbr
 Recreational Use,Unimpaired,Unimpaired,323983,Rec
 Recreational Use,Biotic,Pathogens,200090,Rec
 Recreational Use,Nutrients,Other Nutrients,36698,Rec
-Recreational Use,Metals and Physical,Oxygen Depletion,32085,Rec
-Recreational Use,Metals and Physical,Metals Other than Mercury,27457,Rec
+Recreational Use,Metals,Oxygen Depletion,32085,Rec
+Recreational Use,Metals,Metals Other than Mercury,27457,Rec
 Recreational Use,Organics,PCBs,26710,Rec
 Recreational Use,Sediment,Sediment,24352,Rec
 Recreational Use,Temperature,Temperature,23334,Rec
 Recreational Use,Sediment,Turbidity,20619,Rec
-Recreational Use,Metals and Physical,Mercury,19026,Rec
+Recreational Use,Metals,Mercury,19026,Rec
 Recreational Use,Salinity,Salinity,12387,Rec
 Recreational Use,Organics,Pesticides,11005,Rec
-Recreational Use,Metals and Physical,Acidity/pH,8127,Rec
+Recreational Use,Metals,Acidity/pH,8127,Rec
 Recreational Use,Biotic,Biotoxins,6389,Rec
 Recreational Use,Biotic,Algal Growth,3638,Rec
 Recreational Use,Organics,Dioxins,2495,Rec
