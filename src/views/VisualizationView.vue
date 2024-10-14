@@ -2,8 +2,7 @@
   <section>
     <div class="wavy-container">
       <div class="title-message-container">
-        <h1>The Status of Water Availability in the United States</h1>
-        <h2>Key Findings</h2>
+        <h2 id="main-title">Water availability in the United States</h2>
       </div>
       <section>
         <div class="waves">
@@ -14,7 +13,9 @@
         </div>
       </section>
     </div>
-    <div class="raindrop-container">
+    <div id="findings-container">
+      <div class="raindrop-container">
+        <h2>Key Findings</h2>
       <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
         <router-link :to="message.route">
           <button class="raindrop"><span class="raindrop-text"> {{ message.page }}</span></button>
@@ -23,6 +24,7 @@
           {{ message.keyMessage }}
         </div>
       </div>
+    </div>
     </div>
   </section>
 </template>
@@ -38,26 +40,34 @@
 
 /* text box within the wavy container that houses key messages */
 .title-message-container {
-  height: 200px;
+  height: 300px;
   width: 80vw;
   color: var(--blue-text-col);
-  padding: 20px 0px 20px 0px;
+  padding: 20px 20px 20px 0px;
   align-items: center;
   justify-content: center;
   border-radius: 5px;
 }
-
+#main-title{
+  max-width: 700px;
+  font-size: 8rem;
+}
 @media only screen and (max-width: 768px) {
   .title-message-container {
       height: 200px;
       width: 90vw;
-      padding: 5px;
+      padding: 20px 5px;
       align-items: center;
   }
+  #main-title{
+  max-width: 700px;
+  font-size: 3.8rem;
+}
 }
 
 .raindrop-container {
   width: 80vw;
+  padding-top: 50px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -94,6 +104,7 @@
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+
 .raindrop:hover {
   cursor: pointer;
   background-color:  #427388;
@@ -104,12 +115,13 @@
   text-shadow: 1px 1px 2px #427388; 
 }
 
+
 .raindrop-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
-  color: var(--white-soft);
+  color: white;
   font-size: 40px;
   font-weight: bold;
 }
