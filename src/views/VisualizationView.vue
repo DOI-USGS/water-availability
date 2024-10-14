@@ -3,6 +3,12 @@
     <div class="wavy-container">
       <div class="title-message-container">
         <h2 id="main-title">Water availability in the United States</h2>
+
+      <div class="report-link-container">
+        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
+         <h3> Read the report</h3>
+        </a>
+        </div>
       </div>
       <section>
         <div class="waves">
@@ -26,6 +32,19 @@
       </div>
     </div>
     </div>
+    <section class="wavy-container bottom-wavy">
+      <section>
+        <div class="waves upside-down">
+          <div class="wave" id="wave1"></div>
+          <div class="wave" id="wave2"></div>
+          <div class="wave" id="wave3"></div>
+          <div class="wave" id="wave4"></div>
+        </div>
+      </section>
+      <div class="title-message-container">
+
+      </div>
+    </section>
   </section>
 </template>
 
@@ -41,9 +60,11 @@
 /* text box within the wavy container that houses key messages */
 .title-message-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 120px 20px;
+  padding: 100px 20px;
+  padding-bottom: 0px;
   width: 90vw;
   color: var(--blue-text-col);
   border-radius: 5px;
@@ -136,5 +157,25 @@
   font-size: 40px;
   font-weight: bold;
 }
+.report-link-container {
+  padding: 40px 20px;
+  text-align: center;
+  z-index:9999;
+}
 
+.report-link {
+  display: inline-block;
+  padding: 20px 40px;
+  font-size: 2rem;
+  color: var(--blue-text-col);
+  border: 2px solid var(--blue-text-col);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.report-link:hover {
+  background-color: var(--blue-text-col);
+  color: white;
+}
 </style>

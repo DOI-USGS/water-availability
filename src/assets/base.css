@@ -160,6 +160,9 @@ section .waves .wave#wave4{
   z-index: 999;
   animation: animate2 14s linear infinite;
 }
+.upside-down {
+  transform: scaleY(-1); /* Flip the waves upside down */
+}
 @keyframes animate {
   0% {
     background-position-x: 1000px;
