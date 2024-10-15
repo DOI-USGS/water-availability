@@ -15,6 +15,7 @@
   --blue-text-col: #00264C;/* #363E4A; */ /* #00264C; */
   --grey-blue: #5e7789;
   --page-bkg-col: #FEFAF6;/* #edeadf; */
+  --blue-bright: #0f52ba;
 
   --black-soft: #151515;
 
@@ -139,25 +140,28 @@ section .waves .wave#wave1{
   opacity: 1;
   bottom: 0; 
   z-index: 1000;
-  animation: animate 6s linear infinite;
+  animation: animate 12s linear infinite;
 }
 section .waves .wave#wave2{
   opacity: 0.5;
   bottom: 2px; 
   z-index: 999;
-  animation: animate2 6s linear infinite;
+  animation: animate2 19s linear infinite;
 }
 section .waves .wave#wave3{
   opacity: 0.2;
   bottom: 5px; 
   z-index: 998;
-  animation: animate 4s linear infinite;
+  animation: animate 14s linear infinite;
 }
 section .waves .wave#wave4{
   opacity: 0.7;
   bottom: 10px; 
   z-index: 999;
-  animation: animate2 4s linear infinite;
+  animation: animate2 14s linear infinite;
+}
+.upside-down {
+  transform: scaleY(-1); /* Flip the waves upside down */
 }
 @keyframes animate {
   0% {
@@ -188,6 +192,7 @@ body {
     Source Sans Pro,
     sans-serif;
   font-size: 2rem;
+  font-weight: 400;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

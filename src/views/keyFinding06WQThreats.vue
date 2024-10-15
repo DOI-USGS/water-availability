@@ -362,8 +362,6 @@ function createSankey({
         }
       );
 
-
-
 };
 
 // set up the nodes and links
