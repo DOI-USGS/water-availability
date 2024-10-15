@@ -39,6 +39,8 @@
         <div class="report-link-container">
         <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
          <h3> Read the report</h3>
+        </a>        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
+         <h3> Access the data</h3>
         </a>
         </div>
       </div>
@@ -164,6 +166,7 @@
 .report-link {
   display: inline-block;
   padding: 20px 40px;
+  margin: 5px;
   font-size: 2rem;
   color: var(--blue-text-col);
   border: 2px solid var(--blue-text-col);
