@@ -3,12 +3,6 @@
     <div class="wavy-container">
       <div class="title-message-container">
         <h2 id="main-title">Water availability in the United States</h2>
-
-      <div class="report-link-container">
-        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
-         <h3> Read the report</h3>
-        </a>
-        </div>
       </div>
       <section>
         <div class="waves">
@@ -42,7 +36,11 @@
         </div>
       </section>
       <div class="title-message-container">
-
+        <div class="report-link-container">
+        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
+         <h3> Read the report</h3>
+        </a>
+        </div>
       </div>
     </section>
   </section>
@@ -64,7 +62,7 @@
   justify-content: center;
   align-items: center;
   padding: 100px 20px;
-  padding-bottom: 0px;
+  padding-bottom: 100px;
   width: 90vw;
   color: var(--blue-text-col);
   border-radius: 5px;
