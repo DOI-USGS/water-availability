@@ -274,7 +274,6 @@ function createSankey({
     const dur = 1000;
     const t = d3.transition().duration(dur);
 
-    console.log(nodes)
 
     // Update nodes for sankey, assigning data
     const sankeyNodesGroups = nodeGroup.selectAll('g')
@@ -413,8 +412,8 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
     }
   }
 
-  console.log(links[0].names[0])
-  console.log(nodes)
+  //console.log(links[0].names[0])
+  //console.log(nodes)
   return {nodes, links};
 };
 
