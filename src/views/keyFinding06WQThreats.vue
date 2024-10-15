@@ -308,7 +308,7 @@ function createSankey({
             .append("path")
               .attr("d", d3sankey.sankeyLinkHorizontal())
               .attr("stroke", d => colorScale(d.names[0]))
-              .attr("stroke-width", d => d.width)
+              .attr("stroke-width", d => mobileView ? d.width + 1 : d.width + 0.5) // add buffer so we never lose the lines, even on mobile
               .style("mix-blend-mode", "multiply")
               .style('fill', "none")
             .append("title")
