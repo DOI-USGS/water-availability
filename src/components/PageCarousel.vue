@@ -97,17 +97,17 @@ const navigateRight = () => {
     width: 40px;
     height: 40px;
     border-radius: 0 50% 50% 50%;
-    border: 0px;
     transform: rotate(45deg);
     margin: 10px auto 0px auto;
-    background-color: rgb(159, 202, 203);
-    border: 0 solid;
-    box-shadow: inset 0 0 20px  #427388;
+    background-color: transparent;
+    border: 2px solid #427388;
+    //box-shadow: inset 0 0 20px  #427388;
     outline: 1px solid;
     outline-color: rgba(255, 255, 255, .5);
     outline-offset: 0px;
     text-shadow: none;
-    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 0ms cubic-bezier(0.19, 1, 0.22, 1);
+    color: #427388;
 }
 
 .nav-card-button:hover {
@@ -122,7 +122,7 @@ const navigateRight = () => {
     transform: translate(-50%, -50%) rotate(-45deg);
     font-size: 20px;
   font-weight: bold;
-  color: var(--white-soft);
+  color: #427388;
 }
 
 .active-page .nav-card-button {
