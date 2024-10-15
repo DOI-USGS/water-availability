@@ -341,6 +341,28 @@ function createSankey({
             .attr("dy", "0.35em")
             .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")  // Left-side labels aligned to the end
 
+          // Add label text (name and value)
+          textEnter
+            .append("tspan")
+            .text(d => d.name);
+
+          if (mobileView) {
+            textEnter
+              .append("tspan")
+              .attr("x", d => d.x0 < width / 2 ? d.x0 - 10 : d.x1 + 10)  // Adjust x position for second line
+              .attr("dy", "1em")  // Move second line down
+              .attr("fill-opacity", 0.7)
+              .text(d => `${d.value.toLocaleString()}`);
+          } else {
+            textEnter
+              .append("tspan")
+              .attr("fill-opacity", 0.7)
+              .text(d => ` ${d.value.toLocaleString()}`);
+          }
+        }
+      );
+
+
 
           // Add label text (name and value)
           textEnter
