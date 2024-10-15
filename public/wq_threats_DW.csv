@@ -1,16 +1,16 @@
 Use,Category,Parameter,riverMiles,UseAbbr
 Drinking Water Use,Unimpaired,Unimpaired,184652,DW
-Drinking Water Use,Metals and Physical,Metals Other than Mercury,90943,DW
+Drinking Water Use,Metals,Other Metals,90943,DW
 Drinking Water Use,Salinity,Salinity,43046,DW
 Drinking Water Use,Sediment,Sediment,28631,DW
 Drinking Water Use,Temperature,Temperature,27253,DW
 Drinking Water Use,Biotic,Pathogens,20973,DW
-Drinking Water Use,Metals and Physical,Oxygen Depletion,15641,DW
+Drinking Water Use,Metals,Oxygen Depletion,15641,DW
 Drinking Water Use,Nutrients,Other Nutrients,15112,DW
 Drinking Water Use,Sediment,Turbidity,9333,DW
-Drinking Water Use,Metals and Physical,Acidity/pH,6888,DW
+Drinking Water Use,Metals,Acidity/pH,6888,DW
 Drinking Water Use,Organics,Pesticides,6365,DW
-Drinking Water Use,Metals and Physical,Mercury,5748,DW
+Drinking Water Use,Metals,Mercury,5748,DW
 Drinking Water Use,Organics,PCBs,1998,DW
 Drinking Water Use,Biotic,Biotoxins,1638,DW
 Drinking Water Use,Biotic,Algal Growth,1499,DW

@@ -3,13 +3,13 @@ Ecological Use,Unimpaired,Unimpaired,508816,Eco
 Ecological Use,Temperature,Temperature,154623,Eco
 Ecological Use,Biotic,Pathogens,108652,Eco
 Ecological Use,Sediment,Sediment,106045,Eco
-Ecological Use,Metals and Physical,Metals Other than Mercury,92077,Eco
-Ecological Use,Metals and Physical,Oxygen Depletion,75899,Eco
+Ecological Use,Metals,Other Metals,92077,Eco
+Ecological Use,Metals,Oxygen Depletion,75899,Eco
 Ecological Use,Nutrients,Other Nutrients,73178,Eco
 Ecological Use,Sediment,Turbidity,48140,Eco
-Ecological Use,Metals and Physical,Mercury,36389,Eco
+Ecological Use,Metals,Mercury,36389,Eco
 Ecological Use,Salinity,Salinity,32898,Eco
-Ecological Use,Metals and Physical,Acidity/pH,27766,Eco
+Ecological Use,Metals,Acidity/pH,27766,Eco
 Ecological Use,Organics,PCBs,23676,Eco
 Ecological Use,Organics,Pesticides,16794,Eco
 Ecological Use,Biotic,Biotoxins,6389,Eco

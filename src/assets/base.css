@@ -216,6 +216,22 @@ h3 {
   }
 }
 
+/* Text for d3 chart axes, etc */
+.axis-text{
+  font-family:
+    Source Sans Pro,
+    sans-serif;
+  font-size: 18px;
+}
+@media only screen and (max-width:490px) {
+  .axis-text{
+    font-family:
+      Source Sans Pro,
+      sans-serif;
+    font-size: 16px;
+  }
+}
+
 .viz-placeholder{
   width: 100%;
 }
