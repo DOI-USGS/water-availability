@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -129,7 +129,7 @@ function createBarChart({
   }) {
 
     // get unique categories and regions
-    const categoryGroups = [... new Set(dataset.map(d => d.Use))];
+    const categoryGroups = ['Public Supply', 'Irrigation', 'Thermoelectric (fresh)', 'Thermoelectric (saline)'];
     const yearGroups = d3.union(d3.map(dataset, d => d.water_year));
 
     // stack data for rectangles
@@ -148,7 +148,7 @@ function createBarChart({
     yearAxis = chartBounds.append('g')
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(yearScale))
-        .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
+        .attr('class', 'axis-text')
 
     yearAxis
         .select(".domain").remove();
@@ -161,7 +161,7 @@ function createBarChart({
      // create nutrient axis generator
     useAxis = chartBounds.append('g')
       .call(d3.axisLeft(useScale).ticks(4).tickFormat( d => d + ' mgd'))
-      .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
+      .attr('class', 'axis-text')
     
     // set up color scale
     const colorScale = d3.scaleOrdinal()
