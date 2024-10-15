@@ -362,29 +362,6 @@ function createSankey({
         }
       );
 
-
-
-          // Add label text (name and value)
-          textEnter
-            .append("tspan")
-            .text(d => d.name);
-
-          if (mobileView) {
-            textEnter
-              .append("tspan")
-              .attr("x", d => d.x0 < width / 2 ? d.x0 - 10 : d.x1 + 10)  // Adjust x position for second line
-              .attr("dy", "1em")  // Move second line down
-              .attr("fill-opacity", 0.7)
-              .text(d => `${d.value.toLocaleString()}`);
-          } else {
-            textEnter
-              .append("tspan")
-              .attr("fill-opacity", 0.7)
-              .text(d => ` ${d.value.toLocaleString()}`);
-          }
-        }
-      );
-
 };
 
 // set up the nodes and links
