@@ -341,6 +341,7 @@ function createSankey({
             .attr("dy", "0.35em")
             .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")  // Left-side labels aligned to the end
 
+
           // Add label text (name and value)
           textEnter
             .append("tspan")
