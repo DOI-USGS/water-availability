@@ -88,14 +88,14 @@ const datasetRec = ref([]);
 const selectedDataset = ref('datasetAll');
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
+const containerWidth = mobileView ? window.innerWidth * 0.9 : window.innerWidth * 0.8;
+const containerHeight = mobileView ? window.innerHeight * 0.85 : 600;
 const margin = mobileView 
-  ? { top: 60, right: 40, bottom: 20, left: 10 } 
-  : { top: 80, right: 50, bottom: 40, left: 150 };
+  ? { top: 10, right: 0, bottom: 10, left: 10 } 
+  : { top: 10, right: 50, bottom: 10, left: 150 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
-const nodePadding = mobileView ? 24 : 11; // Increase node spacing for mobile
+const nodePadding = mobileView ? 24 : 14; // Increase node spacing for mobile
 let chartBounds;
 let nodeGroup;
 let linkGroup;
@@ -250,7 +250,7 @@ function createSankey({
       .nodeWidth(4)
       .nodePadding(nodePadding) // Increase padding on mobile
       .extent(mobileView 
-        ? [[75, 0], [width -50, height - 0]]
+        ? [[75, 0], [width -70, height - 0]]
         : [[150, 5], [width - 300, height - 0]]); //
 
 
@@ -274,7 +274,6 @@ function createSankey({
     const dur = 1000;
     const t = d3.transition().duration(dur);
 
-    console.log(nodes)
 
     // Update nodes for sankey, assigning data
     const sankeyNodesGroups = nodeGroup.selectAll('g')
@@ -308,7 +307,7 @@ function createSankey({
             .append("path")
               .attr("d", d3sankey.sankeyLinkHorizontal())
               .attr("stroke", d => colorScale(d.names[0]))
-              .attr("stroke-width", d => d.width)
+              .attr("stroke-width", d => mobileView ? d.width + 1 : d.width + 0.5) // add buffer so we never lose the lines, even on mobile
               .style("mix-blend-mode", "multiply")
               .style('fill', "none")
             .append("title")
@@ -336,11 +335,11 @@ function createSankey({
         enter => {
           const textEnter = enter
             .append("text")
-            .attr("x", d => d.x0 < width / 2 ? d.x0 - 10 : d.x1 + 10)  // Push left-side labels inside SVG bounds
+            .attr("class", "axis-text")
+            .attr("x", d => d.x0 < width / 2 ? d.x0 - 5 : d.x1 + 5)  // Push left-side labels inside SVG bounds
             .attr("y", d => (d.y1 + d.y0) / 2)
             .attr("dy", "0.35em")
             .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")  // Left-side labels aligned to the end
-            .style("font", mobileView ? "14px sans-serif" : "14px sans-serif");
 
           // Add label text (name and value)
           textEnter
@@ -362,8 +361,6 @@ function createSankey({
           }
         }
       );
-
-
 
 };
 
@@ -413,8 +410,8 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
     }
   }
 
-  console.log(links[0].names[0])
-  console.log(nodes)
+  //console.log(links[0].names[0])
+  //console.log(nodes)
   return {nodes, links};
 };
 
