@@ -88,11 +88,14 @@ const datasetRec = ref([]);
 const selectedDataset = ref('datasetAll');
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
+const containerWidth = mobileView ? window.innerWidth * 0.9 : window.innerWidth * 0.8;
+const containerHeight = mobileView ? window.innerHeight * 0.85 : 600;
+const margin = mobileView 
+  ? { top: 10, right: 0, bottom: 10, left: 10 } 
+  : { top: 10, right: 50, bottom: 10, left: 150 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
+const nodePadding = mobileView ? 24 : 14; // Increase node spacing for mobile
 let chartBounds;
 let nodeGroup;
 let linkGroup;
@@ -110,7 +113,7 @@ const categoryColors = {
   'Biotic': '#EECEB9',
   'Nutrients':  '#939185',
   'Organics':  '#C8ACD6', 
-  'Metals and Physical':  '#80909D',
+  'Metals':  '#80909D',
   'Sediment': '#E8E8E3',
   'Salinity': '#F3C623',
   'Temperature': '#FFB0B0',
@@ -208,8 +211,8 @@ function initSankey({
       .append('svg')
       .attr('class', 'sankeySVG')
       .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
-      .style('width', containerWidth)
-      .style('height', containerHeight);
+      .style('width', '100%')
+      .style('height', 'auto');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
@@ -244,11 +247,12 @@ function createSankey({
     
     // initialize sankey
     const sankey = d3sankey.sankey()
-        .nodeSort(null)
-        .linkSort(null)
-        .nodeWidth(4)
-        .nodePadding(14)
-        .extent([[150, 5], [width - 300, height - 0]])
+      .nodeWidth(4)
+      .nodePadding(nodePadding) // Increase padding on mobile
+      .extent(mobileView 
+        ? [[75, 0], [width -70, height - 0]]
+        : [[150, 5], [width - 300, height - 0]]); //
+
 
     // Set up color scale 
     const colorScale = d3.scaleOrdinal()
@@ -270,7 +274,6 @@ function createSankey({
     const dur = 1000;
     const t = d3.transition().duration(dur);
 
-    console.log(nodes)
 
     // Update nodes for sankey, assigning data
     const sankeyNodesGroups = nodeGroup.selectAll('g')
@@ -304,7 +307,7 @@ function createSankey({
             .append("path")
               .attr("d", d3sankey.sankeyLinkHorizontal())
               .attr("stroke", d => colorScale(d.names[0]))
-              .attr("stroke-width", d => d.width)
+              .attr("stroke-width", d => mobileView ? d.width + 1 : d.width + 0.5) // add buffer so we never lose the lines, even on mobile
               .style("mix-blend-mode", "multiply")
               .style('fill', "none")
             .append("title")
@@ -327,35 +330,37 @@ function createSankey({
 
     // Update text for sankey, assigning data from nodes
     const sankeyTextGroups = textGroup.selectAll('g')
-          .data(nodes)
-          .join(
-            enter => {
-              enter
-              .append("text")
-                .attr("x", d => d.x0 < width / 2 ? d.x1 -10 : d.x0 + 10) //checks for right-most labels
-                .attr("y", d => (d.y1 + d.y0) / 2)
-                .attr("dy", "0.35em")
-                .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start") //checks for right-most labels
-                .text(d => d.name)
-                .style("font", "14px sans-serif")
-              .append("tspan")
-                .attr("fill-opacity", 0.7)
-                .text(d => ` ${d.value.toLocaleString()}`)
-                .style("font", "14px sans-serif")
-            },
-            null,
-            exit => {
-              exit
-                .transition()
-                .duration(dur / 2)
-                .style("fill-opacity", 0)
-                .style("stroke-width", 0)
-                .style("color-opacity", 0)
-                .remove();
-            }
-          );
-    
+      .data(nodes)
+      .join(
+        enter => {
+          const textEnter = enter
+            .append("text")
+            .attr("class", "axis-text")
+            .attr("x", d => d.x0 < width / 2 ? d.x0 - 5 : d.x1 + 5)  // Push left-side labels inside SVG bounds
+            .attr("y", d => (d.y1 + d.y0) / 2)
+            .attr("dy", "0.35em")
+            .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")  // Left-side labels aligned to the end
 
+          // Add label text (name and value)
+          textEnter
+            .append("tspan")
+            .text(d => d.name);
+
+          if (mobileView) {
+            textEnter
+              .append("tspan")
+              .attr("x", d => d.x0 < width / 2 ? d.x0 - 10 : d.x1 + 10)  // Adjust x position for second line
+              .attr("dy", "1em")  // Move second line down
+              .attr("fill-opacity", 0.7)
+              .text(d => `${d.value.toLocaleString()}`);
+          } else {
+            textEnter
+              .append("tspan")
+              .attr("fill-opacity", 0.7)
+              .text(d => ` ${d.value.toLocaleString()}`);
+          }
+        }
+      );
 
 };
 
@@ -405,14 +410,37 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
     }
   }
 
-  console.log(links[0].names[0])
-  console.log(nodes)
+  //console.log(links[0].names[0])
+  //console.log(nodes)
   return {nodes, links};
 };
+
+window.addEventListener('resize', () => {
+  containerWidth = window.innerWidth * 0.8;
+  containerHeight = mobileView ? window.innerHeight * 0.9 : 600;
+  width = containerWidth - margin.left - margin.right;
+  height = containerHeight - margin.top - margin.bottom;
+  // Update the chart
+  initSankey({ containerWidth, containerHeight, margin, width, height, containerId: 'DW-container' });
+  createSankey({ dataset: datasetDW.value, containerId: 'DW-container' });
+});
+
+
 
 </script>
 
 <style scoped>
+.viz-container {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* Center align the chart */
+}
+
+#DW-container, #fish-container, #rec-container {
+  width: 100%;
+  height: 100%;
+}
 
 .highlight {
   color: black;

@@ -172,7 +172,22 @@ p2_targets <- list(
   ##############################################
   # 
   #           WATER USE DATA
-  # 
+  #
+  # Functions for all three uses
+  tar_target(p2_wu_yearly_df,
+             total_wu_yearly(p2_wu_ps_tot_raw,
+                             p2_wu_te_tot_raw,
+                             p2_wu_ir_tot_raw,
+                             p2_wu_te_tot_saline_raw,
+                             min_year = 2010,
+                             max_year = 2020)
+  ),
+  tar_target(p2_wu_yearly_csv,
+             {readr::write_csv(p2_wu_yearly_df,
+                               file = "public/wu_yearly.csv")
+               return("public/wu_yearly.csv")},
+             format = "file"),
+  
   # Public water supply
   tar_target(p2_wu_ps_gw_raw,
              load_wu_data(data_path = p1_wu_ps_gw_csv,
@@ -234,6 +249,11 @@ p2_targets <- list(
              load_wu_data(data_path = p1_wu_te_tot_csv,
                           use_type = "te",
                           source_type = "total") |>
+               filter(AggRegion_nam != "NULL")),
+  tar_target(p2_wu_te_tot_saline_raw,
+             load_wu_data(data_path = p1_wu_te_tot_saline_csv,
+                          use_type = "te",
+                          source_type = "saline") |>
                filter(AggRegion_nam != "NULL")),
   tar_target(p2_wu_te_mean2000to2020_HUC8,
              mean_wu_HUC8(p2_wu_te_gw_raw,
