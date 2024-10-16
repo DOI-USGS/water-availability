@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-        <button class="nav-page-button" data-action="slideRight" @click="navigateRight">&#9654</button>
+        <button class="nav-page-button" @click="navigateRight">&#9654</button>
         </div>
     </div>
   </template>
@@ -28,23 +28,23 @@
 
   <script setup>
   import { ref } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';  // Import Vue Router to access the active route
+  import { useRoute, useRouter } from 'vue-router';  // access the active route
   import SubPages from '@/components/SubPages.js';
   
   const route = useRoute(); // access the current route
   const router = useRouter(); // programmatically navigate
   const currentIndex = ref(SubPages.SubPages.findIndex((page) => page.route === route.path));
 
-  // Function to check if a route is the active route
+  // check if a route is the active route
   const isActivePage = (routeName) => {
     return route.path === routeName;
   };
   
-// Function to navigate to the previous page
+// navigate to the previous page
 const navigateLeft = () => {
   if (currentIndex.value > 0) {
     currentIndex.value--;
-    router.push(SubPages.SubPages[currentIndex.value].route); // Navigate to the previous page
+    router.push(SubPages.SubPages[currentIndex.value].route); // navigate to the previous page
   }
 };
 
@@ -52,8 +52,10 @@ const navigateLeft = () => {
 const navigateRight = () => {
   if (currentIndex.value < SubPages.SubPages.length - 1) {
     currentIndex.value++;
-    router.push(SubPages.SubPages[currentIndex.value].route); // Navigate to the next page
+  } else {
+    currentIndex.value = 0; // go to the first card if on the last
   }
+  router.push(SubPages.SubPages[currentIndex.value].route); // navigate to the page
 };
 
 </script>
