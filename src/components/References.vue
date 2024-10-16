@@ -16,8 +16,7 @@
                 <span v-html="reference.journal_name" class="journal-name"></span>
                 <span v-if="reference.journal_issue">, {{ reference.journal_issue }}</span>.
                 </span>
-                <span v-if="reference.doi" v-html="reference.doi"></span>
-                <span v-else v-html="reference.link"></span>
+                <span v-if="reference.doi">DOI: {{ reference.doi }}</span>
             </p>
         </div>
         <div class="report-link-container">
