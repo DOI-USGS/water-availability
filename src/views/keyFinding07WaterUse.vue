@@ -158,6 +158,7 @@ function updateChart() {
 // Transition the chart to a faceted view (split vertically)
 function transitionToFaceted() {
   const facetHeight = height / categoryGroups.length;
+  useAxis.transition().duration(500).style('opacity', 0).remove(); // Remove shared y-axis
 
   // Move each category to its own facet along the y-axis
   categoryGroups.forEach((group, i) => {
@@ -165,20 +166,11 @@ function transitionToFaceted() {
       .domain([0, d3.max(stackedData[i], d => d[1])])
       .range([facetHeight, 0]);
 
-      console.log(`#${sanitizeSelector(group)} x is at ${(4-i) * facetHeight}`)
-
-    d3.selectAll('rect')
+    d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
       .transition()
       .duration(1000)
-      .attr('y', d => groupScale(d[1]) - groupScale(d[0]))
-      .attr('height', d => groupScale(d[0]) - groupScale(d[1]));
-
-    d3.select(`g #${sanitizeSelector(group)}`)
-      .transition()
-      .duration(1000)
-      .attr('transform', `translate(0, ${i * facetHeight})`)
-      //.attr('y', d => groupScale(d[1]))
-      
+      .attr('y', d => groupScale(d[1])) // Adjust y using group scale
+      .attr('height', d => groupScale(d[0]) - groupScale(d[1]));      
 
     // Add a y-axis for each facet
     chartBounds.append('g')
@@ -187,11 +179,12 @@ function transitionToFaceted() {
       .call(d3.axisLeft(groupScale).ticks(4).tickFormat(d => d + ' mgd'));
   });
 
-  useAxis.transition().duration(500).style('opacity', 0).remove(); // Remove shared y-axis
 }
 
 // Transition the chart back to a stacked view
 function transitionToStacked() {
+  chartBounds.selectAll('.y-axis').remove(); // Clear previous y-axes
+
   useScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
     .range([height, 0]);
