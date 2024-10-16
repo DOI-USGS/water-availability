@@ -155,33 +155,39 @@ function updateChart() {
   }
 }
 
-// Transition the chart to a faceted view (split vertically)
+// transition chart to a faceted view (split vertically)
 function transitionToFaceted() {
   const facetHeight = height / categoryGroups.length;
-  useAxis.transition().duration(500).style('opacity', 0).remove(); // Remove shared y-axis
+  useAxis.transition().duration(500).style('opacity', 0).remove(); // remove shared y-axis
 
-  // Move each category to its own facet along the y-axis
+  // move each category to its own facet along the y-axis
   categoryGroups.forEach((group, i) => {
     const groupScale = d3.scaleLinear()
-      .domain([0, d3.max(stackedData[i], d => d[1])])
+      .domain([0, d3.max(stackedData[i], d => d[1])]) // Max value for each category group
       .range([facetHeight, 0]);
 
+    // move group to its own facet
+    d3.select(`g #${sanitizeSelector(group)}`)
+      .transition()
+      .duration(1000)
+      .attr('transform', `translate(0, ${i * facetHeight})`); // adjust each group's vertical position
+
+    // adjust the bars for the category group using the group-specific scale
     d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
       .transition()
       .duration(1000)
-      .attr('y', d => groupScale(d[1])) // Adjust y using group scale
-      .attr('height', d => groupScale(d[0]) - groupScale(d[1]));      
+      .attr('y', d => groupScale(d[1] - d[0])) // Base at 0, height from data value
+      .attr('height', d => facetHeight - groupScale(d[1] - d[0])); // Height proportional to the data
 
-    // Add a y-axis for each facet
+    // add y-axis to each facet
     chartBounds.append('g')
       .attr('class', 'y-axis')
       .attr('transform', `translate(0, ${i * facetHeight})`)
       .call(d3.axisLeft(groupScale).ticks(4).tickFormat(d => d + ' mgd'));
   });
-
 }
 
-// Transition the chart back to a stacked view
+// transition the chart back to a stacked view
 function transitionToStacked() {
   chartBounds.selectAll('.y-axis').remove(); // Clear previous y-axes
 
@@ -191,7 +197,7 @@ function transitionToStacked() {
 
   yearScale.range([0, width]);
 
-  // Transition the bars back to the stacked position
+  // transition the bars back to the stacked position
   categoryRectGroups.transition()
     .duration(1000)
     .attr('transform', 'translate(0, 0)')
