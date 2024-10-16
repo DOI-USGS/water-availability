@@ -1,10 +1,17 @@
 <template>
-    <div class="nav-container">
-        <div class="nav-page-button-wrapper">
-         <button class="nav-page-button" @click="navigateLeft">&#9664</button>
-        <div class="nav-wrapper">
+  <div class="nav-container">
+    <div class="nav-page-button-wrapper">
+      <button class="nav-page-button" @click="navigateLeft">&#9664</button>
+      <div class="nav-wrapper">
         <div class="nav-carousel" data-target="carousel">
-          <!-- cards for each page -->
+          <!-- Return to Home button as the first card -->
+          <button 
+            class="return-home-button" 
+            @click="returnToHome" 
+            :class="{ 'active-page': isActivePage('/') }">
+            Return to Home
+          </button>
+          <!-- Cards for each subpage -->
           <div
             class="nav-card"
             v-for="(message, index) in SubPages.SubPages"
@@ -20,10 +27,11 @@
           </div>
         </div>
       </div>
-        <button class="nav-page-button" @click="navigateRight">&#9654</button>
-        </div>
+      <button class="nav-page-button" @click="navigateRight">&#9654</button>
     </div>
-  </template>
+  </div>
+</template>
+
   
 
   <script setup>
@@ -33,7 +41,8 @@
   
   const route = useRoute(); // access the current route
   const router = useRouter(); // programmatically navigate
-  const currentIndex = ref(SubPages.SubPages.findIndex((page) => page.route === route.path));
+  // initialize currentIndex considering the home button as the first index (index 0)
+const currentIndex = ref(route.path === '/' ? 0 : SubPages.SubPages.findIndex((page) => page.route === route.path) + 1);
 
   // check if a route is the active route
   const isActivePage = (routeName) => {
@@ -44,18 +53,34 @@
 const navigateLeft = () => {
   if (currentIndex.value > 0) {
     currentIndex.value--;
-    router.push(SubPages.SubPages[currentIndex.value].route); // navigate to the previous page
+  } else {
+    currentIndex.value = SubPages.SubPages.length; // loop back to the last subpage
+  }
+  if (currentIndex.value === 0) {
+    returnToHome();
+  } else {
+    router.push(SubPages.SubPages[currentIndex.value - 1].route); // navigate to the previous subpage
   }
 };
 
-// Function to navigate to the next page
+// navigate to the next page
 const navigateRight = () => {
-  if (currentIndex.value < SubPages.SubPages.length - 1) {
+  if (currentIndex.value < SubPages.SubPages.length) {
     currentIndex.value++;
   } else {
-    currentIndex.value = 0; // go to the first card if on the last
+    currentIndex.value = 0;  // back to the home button
   }
-  router.push(SubPages.SubPages[currentIndex.value].route); // navigate to the page
+  if (currentIndex.value === 0) {
+    returnToHome();
+  } else {
+    router.push(SubPages.SubPages[currentIndex.value - 1].route); // navigate to the next subpage
+  }
+};
+
+// go home
+const returnToHome = () => {
+  currentIndex.value = 0;  // set index to 0 for home button
+  router.push("/");  // og home bb
 };
 
 </script>
@@ -90,7 +115,7 @@ const navigateRight = () => {
 
 .nav-card {
   flex: 1 0 auto; 
-  min-width: calc(100% / 10); 
+  min-width: calc(80% / 10); 
   display: inline-block;
   text-align: center;
 }
@@ -103,7 +128,6 @@ const navigateRight = () => {
     margin: 10px auto 0px auto;
     background-color: transparent;
     border: 2px solid #427388;
-    //box-shadow: inset 0 0 20px  #427388;
     outline: 1px solid;
     outline-color: rgba(255, 255, 255, .5);
     outline-offset: 0px;
@@ -160,5 +184,26 @@ const navigateRight = () => {
   opacity: 1;
 }
 
+.return-home-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.return-home-button {
+  padding: 10px 20px;
+  background-color: #427388;
+  color: white;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.return-home-button:hover {
+  background-color: var(--blue-text-col);
+}
 
 </style>
