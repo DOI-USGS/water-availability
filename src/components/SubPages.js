@@ -40,8 +40,8 @@ export default {
                   journal_name: "Environmental Pollution",
                   journal_issue: "173",
                   data_release: false,
-                  link: "https://doi.org/10.1016/j.envpol.2012.10.011",
-                  doi: "https://doi.org/10.1016/j.envpol.2012.10.011"
+                  link: "doi.org/10.1016/j.envpol.2012.10.011",
+                  doi: "doi.org/10.1016/j.envpol.2012.10.011"
                 },
                 {
                   reference: "Reference 2.",
@@ -49,12 +49,12 @@ export default {
                   authors: "Kaushal, S.S., Likens, G.E., Pace, M.L., Utz, R.M., Haq, S., Gorman, J., and Grese, M.",
                   year: "2018",
                   title: "Freshwater salinization syndrome on a continental scale",
-                  link: "https://doi.org/10.1007/s10533-021-00784-w",
+                  link: "doi.org/10.1007/s10533-021-00784-w",
                   journal: true,
                   journal_name: "Proceedings of the National Academy of Sciences",
                   journal_issue: "115",
                   data_release: false,
-                  doi: "https://doi.org/10.1007/s10533-021-00784-w"
+                  doi: "doi.org/10.1007/s10533-021-00784-w"
                 },
                 {
                   reference: "Reference 3.",
@@ -62,12 +62,12 @@ export default {
                   authors: "Ngoubeyou, P.S.K., Wolkersdorfer, C., Ndibewu, P.P., and Augustyn, W.",
                   year: "2022",
                   title: "Toxicity of polychlorinated biphenyls in aquatic environments – A review",
-                  link: "https://doi.org/10.1016/j.aquatox.2022.106284",
+                  link: "doi.org/10.1016/j.aquatox.2022.106284",
                   journal: true,
                   journal_name: "Aquatic Toxicology",
                   journal_issue: "251",
                   data_release: false,
-                  doi: "https://doi.org/10.1016/j.aquatox.2022.106284"
+                  doi: "doi.org/10.1016/j.aquatox.2022.106284"
                 },
                 {
                   reference: "Reference 4.",
@@ -79,7 +79,7 @@ export default {
                   journal_name: "",
                   journal_issue: "",
                   data_release: false,
-                  link: "https://www.epa.gov/waterdata/attains",
+                  link: "www.epa.gov/waterdata/attains",
                   doi: null
                 },
                 {
@@ -92,8 +92,8 @@ export default {
                   journal_name: "Journal of Environmental Management",
                   journal_issue: "246",
                   data_release: false,
-                  link: "https://doi.org/10.1016/j.jenvman.2019.05.126",
-                  doi: "https://doi.org/10.1016/j.jenvman.2019.05.126"
+                  link: "doi.org/10.1016/j.jenvman.2019.05.126",
+                  doi: "doi.org/10.1016/j.jenvman.2019.05.126"
                 },
                 {
                   reference: "Reference 6.",
@@ -101,12 +101,12 @@ export default {
                   authors: "Wentz, D.A., Brigham, M.E., Chasar, L.C., Lutz, M.A., and Krabbenhoft, D.P.",
                   year: "2014",
                   title: "Mercury in the nation's streams - Levels, trends and implications [Report]",
-                  link: "https://doi.org/10.3133/cir1395",
+                  link: "doi.org/10.3133/cir1395",
                   journal: false,
                   journal_name: "",
                   journal_issue: "",
                   data_release: false,
-                  doi: "https://doi.org/10.3133/cir1395"
+                  doi: "doi.org/10.3133/cir1395"
                 }
             ]
         },
