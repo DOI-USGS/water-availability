@@ -157,26 +157,5 @@
   font-size: 40px;
   font-weight: bold;
 }
-.report-link-container {
-  padding: 40px 20px;
-  text-align: center;
-  z-index:9999;
-}
 
-.report-link {
-  display: inline-block;
-  padding: 20px 40px;
-  margin: 5px;
-  font-size: 2rem;
-  color: var(--blue-text-col);
-  border: 2px solid var(--blue-text-col);
-  text-decoration: none;
-  border-radius: 10px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.report-link:hover {
-  background-color: var(--blue-text-col);
-  color: white;
-}
 </style>
