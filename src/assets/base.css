@@ -277,6 +277,11 @@ h3 {
   width: 30%;
   margin: 10px;
 }
+@media only screen and (max-width:490px) {
+  .viz-double-portrait{
+    width: 80%;
+  }
+}
 
 /* Settings for the interactive svgs with hover effects */
 .agg-reg-svg {
