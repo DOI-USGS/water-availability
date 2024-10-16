@@ -1,33 +1,26 @@
 # Targets files
 _targets
-
 # Ignore intermediate pipeline files
 */in/*
 */tmp/*
 */out/*
-
 # Eventually ignore images (can build locally with R and then put on S3)
 # for now, commit them.
 #src/assets/images/*
 src/assets/svgs/*
 src/assets/images/*
-
 # ignore pdf files output by graphics device when generating svgs
 Rplots*.pdf
-
 # Allow the `.empty` files to be committed
 !*/in/.empty
 !*/tmp/.empty
 !*/out/.empty
 !*/images/.empty
-
 # History files
 .Rhistory
 .Rapp.history
-
 # Session Data files
 .RData
-
 # User-specific files
 .Ruserdata
 .Rprofile
@@ -35,6 +28,6 @@ Rplots*.pdf
 src/assets/.DS_Store
 .Renviron
 workspace.R
-
 node_modules
 .Rproj.user
+soil_moisture_extremes_figure.R
