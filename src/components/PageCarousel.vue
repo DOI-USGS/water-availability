@@ -96,6 +96,19 @@ const returnToHome = () => {
 
 <style scoped>
 
+.nav-page-button-wrapper {
+  display: flex;
+  width: 40%;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+@media only screen and (max-width:490px) {
+  .nav-page-button-wrapper {
+  width: 100%;
+  }
+}
+
 .nav-container {
   position: relative;
   height: 70px; 
@@ -104,6 +117,11 @@ const returnToHome = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media only screen and (max-width:490px) {
+  .nav-container {
+  height: 160px; 
+  } 
 }
 
 .nav-wrapper {
@@ -163,13 +181,7 @@ const returnToHome = () => {
   background-color: #427388; /* highlight current page */
 }
 
-.nav-page-button-wrapper {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
-  align-items: center;
-}
+
 
 .nav-page-button {
   height: 50px;
