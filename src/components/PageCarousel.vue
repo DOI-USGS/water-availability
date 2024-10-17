@@ -4,24 +4,40 @@
       <button class="nav-page-button" @click="navigateLeft">&#9664</button>
       <div class="nav-wrapper">
         <div class="nav-carousel" data-target="carousel">
-          <!-- Return to Home button as the first card -->
-          <button 
-            class="return-home-button" 
-            @click="returnToHome" 
-            :class="{ 'active-page': isActivePage('/') }">
-            Return to Home
-          </button>
-          <!-- Cards for each subpage -->
+          <!-- Previous card -->
           <div
             class="nav-card"
-            v-for="(message, index) in SubPages.SubPages"
-            :key="index"
-            data-target="card"
-            :class="{ 'active-page': isActivePage(message.route) }"
+            v-if="currentIndex > 0"
+            :class="{ 'active-page': isActivePage(SubPages.SubPages[currentIndex - 1].route) }"
           >
-            <router-link :to="message.route">
+            <router-link :to="SubPages.SubPages[currentIndex - 1].route">
               <button class="nav-card-button">
-                <span class="nav-card-button-text">{{ message.page }}</span>
+                <span class="nav-card-button-text">{{ SubPages.SubPages[currentIndex - 1].page }}</span>
+              </button>
+            </router-link>
+          </div>
+          
+          <!-- Current card -->
+          <div
+            class="nav-card"
+            :class="{ 'active-page': isActivePage(SubPages.SubPages[currentIndex].route) }"
+          >
+            <router-link :to="SubPages.SubPages[currentIndex].route">
+              <button class="nav-card-button">
+                <span class="nav-card-button-text">{{ SubPages.SubPages[currentIndex].page }}</span>
+              </button>
+            </router-link>
+          </div>
+
+          <!-- Next card -->
+          <div
+            class="nav-card"
+            v-if="currentIndex < SubPages.SubPages.length - 1"
+            :class="{ 'active-page': isActivePage(SubPages.SubPages[currentIndex + 1].route) }"
+          >
+            <router-link :to="SubPages.SubPages[currentIndex + 1].route">
+              <button class="nav-card-button">
+                <span class="nav-card-button-text">{{ SubPages.SubPages[currentIndex + 1].page }}</span>
               </button>
             </router-link>
           </div>
@@ -32,6 +48,7 @@
   </div>
 </template>
 
+
   
 
   <script setup>
@@ -41,8 +58,7 @@
   
   const route = useRoute(); // access the current route
   const router = useRouter(); // programmatically navigate
-  // initialize currentIndex considering the home button as the first index (index 0)
-const currentIndex = ref(route.path === '/' ? 0 : SubPages.SubPages.findIndex((page) => page.route === route.path) + 1);
+  const currentIndex = ref(SubPages.SubPages.findIndex((page) => page.route === route.path));
 
   // check if a route is the active route
   const isActivePage = (routeName) => {
@@ -54,27 +70,19 @@ const navigateLeft = () => {
   if (currentIndex.value > 0) {
     currentIndex.value--;
   } else {
-    currentIndex.value = SubPages.SubPages.length; // loop back to the last subpage
+    currentIndex.value = SubPages.SubPages.length - 1;  // Loop back to the last card if at the beginning
   }
-  if (currentIndex.value === 0) {
-    returnToHome();
-  } else {
-    router.push(SubPages.SubPages[currentIndex.value - 1].route); // navigate to the previous subpage
-  }
+  router.push(SubPages.SubPages[currentIndex.value].route);
 };
 
 // navigate to the next page
 const navigateRight = () => {
-  if (currentIndex.value < SubPages.SubPages.length) {
+  if (currentIndex.value < SubPages.SubPages.length - 1) {
     currentIndex.value++;
   } else {
-    currentIndex.value = 0;  // back to the home button
+    currentIndex.value = 0;  // Loop back to the first card if at the end
   }
-  if (currentIndex.value === 0) {
-    returnToHome();
-  } else {
-    router.push(SubPages.SubPages[currentIndex.value - 1].route); // navigate to the next subpage
-  }
+  router.push(SubPages.SubPages[currentIndex.value].route);
 };
 
 // go home
