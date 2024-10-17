@@ -72,7 +72,7 @@ const navigateLeft = () => {
   } else {
     currentIndex.value = SubPages.SubPages.length - 1;  // Loop back to the last card if at the beginning
   }
-  router.push(SubPages.SubPages[currentIndex.value].route);
+  router.push(SubPages.SubPages[currentIndex.value].route).then(() => window.scrollTo(0, 0));
 };
 
 // navigate to the next page
@@ -82,7 +82,7 @@ const navigateRight = () => {
   } else {
     currentIndex.value = 0;  // Loop back to the first card if at the end
   }
-  router.push(SubPages.SubPages[currentIndex.value].route);
+  router.push(SubPages.SubPages[currentIndex.value].route).then(() => window.scrollTo(0, 0));
 };
 
 // go home
