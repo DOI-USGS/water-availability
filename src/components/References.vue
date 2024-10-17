@@ -55,8 +55,10 @@ console.log(References.key)
 console.log(refArray)
 
 // extract references that match the refID from global list
-//const theseReferences = References.key.find(ref => ref.refID === filteredReferences[1])
-//console.log(theseReferences)
+// PROBLEM: I can't figure out how to get all the matches from the refArray that are listed
+//    in the filteredReferences list
+const theseReferences = refArray.find(ref => ref.refID === filteredReferences[0])
+console.log(theseReferences)
 
 </script>
   
