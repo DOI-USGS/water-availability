@@ -6,7 +6,6 @@
     <div class="references-container">
         <div  v-for="reference in refArray">
           <div v-if="reference.refID === 'Canedo2013'"> 
-            <p> {{ reference.refID }}</p>
             <p>
                 <span v-html="reference.authors" /> (<span v-html="reference.year" />). <a
                 :href="reference.link"
