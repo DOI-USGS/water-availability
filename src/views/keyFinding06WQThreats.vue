@@ -76,6 +76,7 @@ import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -92,7 +93,7 @@ const data = ref([]);
 let svg;
 const chart = ref(null);
 let chartDimensions;
-const nodePadding = mobileView ? 24 : 14; // Increase node spacing for mobile
+const nodePadding = mobileView ? 24 : 20; // Increase node spacing for mobile
 let chartBounds;
 let nodeGroup;
 let linkGroup;
@@ -128,12 +129,12 @@ onMounted(async () => {
             // set up chart dimensions
             chartDimensions = {
                 width: chart.value.offsetWidth,
-                height: mobileView ? window.innerHeight * 0.85 : window.innerHeight * 0.6,
+                height: mobileView ? window.innerHeight : window.innerHeight * 0.6,
                 margin: {
                     top: 10,
-                    right: mobileView ? 80 : 150,
-                    bottom: 10,
-                    left: mobileView ? 125 : 250
+                    right: mobileView ? 145 : 200,
+                    bottom: mobileView ? 15 : 10,
+                    left: mobileView ? 92 : 170
                 },
             }
             chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
@@ -238,10 +239,6 @@ function createSankey({
       .nodeWidth(4)
       .nodePadding(nodePadding) // Increase padding on mobile
       .extent([[0, 0], [chartDimensions.boundedWidth, chartDimensions.boundedHeight]])
-      // .extent(mobileView 
-      //   ? [[75, 0], [width -70, height - 0]]
-      //   : [[150, 5], [width - 300, height - 0]]); //
-
 
     // Set up color scale 
     const colorScale = d3.scaleOrdinal()
@@ -316,6 +313,8 @@ function createSankey({
 
 
     // Update text for sankey, assigning data from nodes
+    const labelBuffer = 10;
+    const wrapBuffer = 5;
     textGroup.selectAll('g')
       .data(nodes)
       .join(
@@ -323,28 +322,29 @@ function createSankey({
           const textEnter = enter
             .append("text")
             .attr("class", "axis-text")
-            .attr("x", d => d.x0 < chartDimensions.boundedWidth / 2 ? d.x0 - 5 : d.x1 + 5)  // Push left-side labels inside SVG bounds
+            .attr("x", d => d.x0 < chartDimensions.boundedWidth / 2 ? d.x1 : d.x0)  // Push left-side labels inside SVG bounds
             .attr("y", d => (d.y1 + d.y0) / 2)
-            .attr("dy", "0.35em")
+            .attr("dominant-baseline", "central")
+            .attr("dy", "0em")
+            .attr("dx", d => d.x0 < chartDimensions.boundedWidth / 2 ? -labelBuffer : labelBuffer)
             .attr("text-anchor", d => d.x0 < chartDimensions.boundedWidth / 2 ? "end" : "start")  // Left-side labels aligned to the end
+            .attr("data-width", d => d.x0 < chartDimensions.boundedWidth / 2 ? chartDimensions.margin.left - wrapBuffer : chartDimensions.margin.right - wrapBuffer)
 
-          // Add label text (name and value)
+          // Add label name
           textEnter
             .append("tspan")
             .text(d => d.name);
 
-          if (mobileView) {
+          // Add label value
+          textEnter
+            .append("tspan")
+            .attr("class", "axis-value")
+            .text(d => ` ${d.value.toLocaleString()}`);
+
+          // wrap labels on mobile
+          if (mobileView) {              
             textEnter
-              .append("tspan")
-              .attr("x", d => d.x0 < chartDimensions.boundedWidth / 2 ? d.x0 - 10 : d.x1 + 10)  // Adjust x position for second line
-              .attr("dy", "1em")  // Move second line down
-              .attr("fill-opacity", 0.7)
-              .text(d => `${d.value.toLocaleString()}`);
-          } else {
-            textEnter
-              .append("tspan")
-              .attr("fill-opacity", 0.7)
-              .text(d => ` ${d.value.toLocaleString()}`);
+              .call(d => wrap(d));
           }
         }
       );
@@ -398,6 +398,50 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
   }
   return {nodes, links};
 };
+
+// https://gist.github.com/mbostock/7555321
+function wrap(text) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\s|-+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 0.95, // ems
+        width = text.attr("data-width"),
+        x = text.attr("x"),
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        dx = parseFloat(text.attr("dx")),
+        tspan = text.text(null).append("tspan").attr("y", y).attr("dy", dy + "em");
+
+        while ((word = words.pop())) {
+          const wordIsNumber = !isNaN(Number(word.replace(/,/g,'')))
+          let tspanClass = wordIsNumber ? 'axis-value' : ''
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("class", tspanClass).attr("x", x).attr("y", y).attr("dx", dx).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          } else if (tspan.node().getComputedTextLength() < width && wordIsNumber) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("class", tspanClass).text(' ' + word);
+          }
+        }
+
+        // https://stackoverflow.com/questions/60558291/wrapping-and-vertically-centering-text-using-d3-js
+        if (lineNumber > 0) {
+            const startDy = -(lineNumber * (lineHeight / 2));
+            text
+                .selectAll("tspan")
+                .attr("dy", (d, i) => startDy + lineHeight * i + "em");
+        }
+    }
+)};
 
 // Commenting this out b/c it's not functioning as intended
 // The dimension variables reference here are constant
@@ -472,6 +516,9 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
   }
 }
 
-
-
+</style>
+<style lang="scss">
+  .axis-value {
+    fill-opacity: 0.7;
+  }
 </style>
