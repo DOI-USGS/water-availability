@@ -131,7 +131,7 @@ onMounted(async () => {
             // set up chart dimensions
             chartDimensions = {
                 width: chart.value.offsetWidth,
-                height: mobileView ? window.innerHeight : window.innerHeight * 0.6,
+                height: mobileView ? window.innerHeight : window.innerHeight * 0.7,
                 margin: {
                     top: mobileView ? 60 : 50,
                     right: mobileView ? 145 : 200,
@@ -523,7 +523,7 @@ function wrap(text, {
 #DW-container, #fish-container, #rec-container {
   width: 100%;
   height: 100%;
-  max-width: 1000px;
+  max-width: 800px;
 }
 
 .highlight {
