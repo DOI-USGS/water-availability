@@ -69,7 +69,7 @@ export default {
             page: 5,
             route: '/keyFinding05WQSource',
             shortTitle: 'Sources of contamination',
-            keyMessage: 'Water quality is affected by natural and human source.'
+            keyMessage: 'Water quality is affected by natural and human sources.'
         },
         {
             page: 6,
