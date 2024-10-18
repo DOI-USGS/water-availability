@@ -4,8 +4,8 @@
         <h2>References</h2>
     </div>
     <div class="references-container">
-        <div  v-for="reference in refArray">
-          <div v-if="reference.refID === 'Canedo2013'"> 
+        <div  v-for="reference in theseReferences">
+          
             <p>
                 <span v-html="reference.authors" /> (<span v-html="reference.year" />). <a
                 :href="reference.link"
@@ -19,7 +19,6 @@
                 </span>
                 <span v-if="reference.doi">DOI: {{ reference.doi }}</span>
             </p>
-          </div> 
 
     </div>
         <div class="report-link-container">
@@ -57,7 +56,7 @@ console.log(refArray)
 // extract references that match the refID from global list
 // PROBLEM: I can't figure out how to get all the matches from the refArray that are listed
 //    in the filteredReferences list
-const theseReferences = refArray.find(ref => ref.refID === filteredReferences[0])
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
 console.log(theseReferences)
 
 </script>
