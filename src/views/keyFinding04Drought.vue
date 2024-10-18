@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <h2>The United State's water cycle</h2>
+                <h2>The United States' water cycle</h2>
                 <p>Water evaporates from the ocean and land into the atmosphere where its movement is driven by wind. In the atmosphere, it condenses to form precipitation which falls to the Earth's surface in the form of rain or snow. Precipitation that falls on land has many fates. It can be held temporally as snow or soil moisture, stored in lakes or reservoirs, return to the atmosphere through evaporation or transpiration (evapotranspiration), run off into streams and rivers eventually discharging into the ocean, or consumed by plants and animals. A small fraction of the precipitation that falls on land percolates more deeply to recharge groundwater. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.</p>
                 </div>
                 <div class="viz-container">
