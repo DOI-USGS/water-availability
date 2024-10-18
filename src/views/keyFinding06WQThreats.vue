@@ -518,6 +518,7 @@ function wrap(text, {
   overflow: hidden;
   display: flex;
   justify-content: center; /* Center align the chart */
+  margin-top: 2rem;
 }
 
 #DW-container, #fish-container, #rec-container {
