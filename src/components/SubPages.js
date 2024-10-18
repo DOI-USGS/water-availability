@@ -72,7 +72,14 @@ export default {
             page: 10,
             route: '/keyFinding10FutureWater',
             shortTitle: 'Future threats to water',
-            keyMessage: 'The top future threats to water availability in the U.S. vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.'
+            keyMessage: 'The top future threats to water availability in the U.S. vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
+            references: [
+                "Arias2021",
+                "Hicke2022",
+                "IPCC2022",
+                "Ranasinghe2021",
+                "Azadpour2024"
+            ]
         }
     ]
 };
