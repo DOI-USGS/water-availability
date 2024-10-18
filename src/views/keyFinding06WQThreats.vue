@@ -230,7 +230,7 @@ function initSankey({
     // add titles
     const leftTitle = svg.append("text")
       .attr("class", "axis-title")
-      .attr("x", chartDimensions.margin.left - labelBuffer - nodeWidth) // match spacing between sankey and labels
+      .attr("x", chartDimensions.margin.left - labelBuffer + nodeWidth) // match spacing between sankey and labels
       .attr("y", 0)
       .attr("dx", "0em")
       .attr("dy", "0em")
@@ -244,7 +244,7 @@ function initSankey({
 
     svg.append("text")
       .attr("class", "axis-text axis-value")
-      .attr("x", chartDimensions.margin.left - labelBuffer - nodeWidth) // match spacing between sankey and labels
+      .attr("x", chartDimensions.margin.left - labelBuffer + nodeWidth) // match spacing between sankey and labels
       .attr("y", 0)
       .attr("dx", "0em")
       .attr("dy", leftTitleLength > chartDimensions.margin.left ? "2.2em" : "1.1em")
