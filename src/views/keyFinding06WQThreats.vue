@@ -93,7 +93,9 @@ const data = ref([]);
 let svg;
 const chart = ref(null);
 let chartDimensions;
+const nodeWidth = 4;
 const nodePadding = mobileView ? 24 : 20; // Increase node spacing for mobile
+const labelBuffer = 10;
 let chartBounds;
 let nodeGroup;
 let linkGroup;
@@ -131,7 +133,7 @@ onMounted(async () => {
                 width: chart.value.offsetWidth,
                 height: mobileView ? window.innerHeight : window.innerHeight * 0.6,
                 margin: {
-                    top: 10,
+                    top: mobileView ? 60 : 50,
                     right: mobileView ? 145 : 200,
                     bottom: mobileView ? 15 : 10,
                     left: mobileView ? 92 : 170
@@ -225,6 +227,56 @@ function initSankey({
     textGroup = chartBounds.append('g')
       .attr('id', 'text_group')
 
+    // add titles
+    const leftTitle = svg.append("text")
+      .attr("class", "axis-title")
+      .attr("x", chartDimensions.margin.left - labelBuffer - nodeWidth) // match spacing between sankey and labels
+      .attr("y", 0)
+      .attr("dx", "0em")
+      .attr("dy", "0em")
+      .attr("data-width", chartDimensions.margin.left)
+      .attr("dominant-baseline", "text-before-edge")
+      .attr("text-anchor", "end")
+      .text("Threat Categories")
+      .call(d => mobileView ? wrap(d, {shift: false}) : d)
+
+    const leftTitleLength = leftTitle.node().getComputedTextLength()
+
+    svg.append("text")
+      .attr("class", "axis-text axis-value")
+      .attr("x", chartDimensions.margin.left - labelBuffer - nodeWidth) // match spacing between sankey and labels
+      .attr("y", 0)
+      .attr("dx", "0em")
+      .attr("dy", leftTitleLength > chartDimensions.margin.left ? "2.2em" : "1.1em")
+      .attr("data-width", chartDimensions.margin.left)
+      .attr("dominant-baseline", "text-before-edge")
+      .attr("text-anchor", "end")
+      .text("River miles")
+      .call(d => mobileView ? wrap(d, {shift: false}) : d)
+
+    svg.append("text")
+      .attr("class", "axis-title")
+      .attr("x", chartDimensions.width - chartDimensions.margin.right + labelBuffer - nodeWidth) // match spacing between sankey and labels
+      .attr("y", 0)
+      .attr("dx", "0em")
+      .attr("dy", "0em")
+      .attr("data-width", chartDimensions.margin.right)
+      .attr("dominant-baseline", "text-before-edge")
+      .attr("text-anchor", "start")
+      .text("Threats")
+
+    svg.append("text")
+      .attr("class", "axis-text axis-value")
+      .attr("x", chartDimensions.width - chartDimensions.margin.right + labelBuffer - nodeWidth) // match spacing between sankey and labels
+      .attr("y", 0)
+      .attr("dx", "0em")
+      .attr("dy", "1.1em")
+      .attr("data-width", chartDimensions.margin.right)
+      .attr("dominant-baseline", "text-before-edge")
+      .attr("text-anchor", "start")
+      .text("River miles")
+      .call(d => mobileView ? wrap(d, {shift: false}) : d)
+
 };
 
 function createSankey({
@@ -236,7 +288,7 @@ function createSankey({
     
     // initialize sankey
     const sankey = d3sankey.sankey()
-      .nodeWidth(4)
+      .nodeWidth(nodeWidth)
       .nodePadding(nodePadding) // Increase padding on mobile
       .extent([[0, 0], [chartDimensions.boundedWidth, chartDimensions.boundedHeight]])
 
@@ -245,7 +297,6 @@ function createSankey({
         .domain(categoryGroups)
         .range(Object.values(categoryGroups.map(item => categoryColors[item])));
 
-    
     // set up the nodes and links
     var nodesLinks = graphNodes({
       data: dataset
@@ -313,7 +364,6 @@ function createSankey({
 
 
     // Update text for sankey, assigning data from nodes
-    const labelBuffer = 10;
     const wrapBuffer = 5;
     textGroup.selectAll('g')
       .data(nodes)
@@ -344,7 +394,7 @@ function createSankey({
           // wrap labels on mobile
           if (mobileView) {              
             textEnter
-              .call(d => wrap(d));
+              .call(d => wrap(d, {shift: true}));
           }
         }
       );
@@ -400,7 +450,9 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
 };
 
 // https://gist.github.com/mbostock/7555321
-function wrap(text) {
+function wrap(text, {
+  shift = true
+}) {
     text.each(function() {
         var text = d3.select(this),
         words = text.text().split(/\s|-+/).reverse(),
@@ -434,7 +486,7 @@ function wrap(text) {
         }
 
         // https://stackoverflow.com/questions/60558291/wrapping-and-vertically-centering-text-using-d3-js
-        if (lineNumber > 0) {
+        if (lineNumber > 0 && shift) {
             const startDy = -(lineNumber * (lineHeight / 2));
             text
                 .selectAll("tspan")
