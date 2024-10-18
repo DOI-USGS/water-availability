@@ -16,7 +16,7 @@ export default {
             page: 3,
             route: '/keyFinding03SUISVI',
             shortTitle: 'Social vulnerability',
-            keyMessage: 'A high proportion of the population living in areas with water availability limitations are considered to be socially vulnerable.',
+            keyMessage: 'A high proportion of the population living in areas with water stress are considered to be socially vulnerable.',
             references: [ "Azadpour2024"]
         },
         {
