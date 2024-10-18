@@ -69,14 +69,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
-import { color } from 'd3';
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -89,7 +88,6 @@ const datasetFish = ref([]);
 const datasetEco = ref([]);
 const datasetOther = ref([]);
 const datasetRec = ref([]);
-const selectedDataset = ref('datasetAll');
 const data = ref([]);
 let svg;
 const containerWidth = mobileView ? window.innerWidth * 0.9 : window.innerWidth * 0.8;
@@ -241,13 +239,11 @@ function initSankey({
 };
 
 function createSankey({
-    dataset,
-    containerId
+    dataset
   }) {
 
     // get unique categories and parameters
     const categoryGroups = [... new Set(dataset.map(d => d.Category))];
-    const parameterGroups = d3.union(d3.map(dataset, d => d.Parameter));
     
     // initialize sankey
     const sankey = d3sankey.sankey()
@@ -276,11 +272,9 @@ function createSankey({
 
     // Set up transition.
     const dur = 1000;
-    const t = d3.transition().duration(dur);
-
 
     // Update nodes for sankey, assigning data
-    const sankeyNodesGroups = nodeGroup.selectAll('g')
+    nodeGroup.selectAll('g')
       .data(nodes)
       .join(
         enter => enter
@@ -303,7 +297,7 @@ function createSankey({
       });
 
     // Update links for sankey, assigning data
-    const sankeyLinksGroups = linkGroup.selectAll('g')
+    linkGroup.selectAll('g')
       .data(links)
       .join(
         enter => {
@@ -333,7 +327,7 @@ function createSankey({
 
 
     // Update text for sankey, assigning data from nodes
-    const sankeyTextGroups = textGroup.selectAll('g')
+    textGroup.selectAll('g')
       .data(nodes)
       .join(
         enter => {
@@ -413,21 +407,21 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
       linkByKey.set(names, link);
     }
   }
-
-  //console.log(links[0].names[0])
-  //console.log(nodes)
   return {nodes, links};
 };
 
-window.addEventListener('resize', () => {
-  containerWidth = window.innerWidth * 0.8;
-  containerHeight = mobileView ? window.innerHeight * 0.9 : 600;
-  width = containerWidth - margin.left - margin.right;
-  height = containerHeight - margin.top - margin.bottom;
-  // Update the chart
-  initSankey({ containerWidth, containerHeight, margin, width, height, containerId: 'DW-container' });
-  createSankey({ dataset: datasetDW.value, containerId: 'DW-container' });
-});
+// Commenting this out b/c it's not functioning as intended
+// The dimension variables reference here are constant
+// Also, as written, it appends a new svg on resize
+// window.addEventListener('resize', () => {
+//   containerWidth = window.innerWidth * 0.8;
+//   containerHeight = mobileView ? window.innerHeight * 0.9 : 600;
+//   width = containerWidth - margin.left - margin.right;
+//   height = containerHeight - margin.top - margin.bottom;
+//   // Update the chart
+//   initSankey({ containerWidth, containerHeight, margin, width, height, containerId: 'DW-container' });
+//   createSankey({ dataset: datasetDW.value, containerId: 'DW-container' });
+// });
 
 
 
