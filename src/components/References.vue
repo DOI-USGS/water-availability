@@ -47,15 +47,14 @@ const filteredMessages = SubPages.SubPages.filter(message => message.route === r
 // extract list of references for this page
 const filteredReferences = filteredMessages[0].references;
 //console.log(filteredMessages[0].references)
-console.log('filteredReferences ' + filteredReferences)
+//console.log('filteredReferences ' + filteredReferences)
 
-const refArray = References.key
-console.log(References.key)
-console.log(refArray)
+// Sort references
+const refArray = References.key.sort((a, b) => a.authors.localeCompare(b.authors));
+//console.log(References.key)
+//console.log(refArray)
 
 // extract references that match the refID from global list
-// PROBLEM: I can't figure out how to get all the matches from the refArray that are listed
-//    in the filteredReferences list
 const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
 console.log(theseReferences)
 
