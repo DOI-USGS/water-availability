@@ -2,58 +2,78 @@ export default {
     key: [
       // Journal article with single author
       {
-        reference: "Reference 1.",
-        num: "1",
-        authors: "Clow, D. W.",
-        year: "2010",
-        title: "Changes in the Timing of Snowmelt and Streamflow in Colorado: A Response to Recent Warming",
-        link: "https://pubs.er.usgs.gov/publication/70003325",
+        refID: "Canedo2013",
+        authors: "Cañedo-Argüelles, M., Kefford, B.J., Piscart, C., Prat, N., Schäfer, R.B., and Schulz, C.-J.",
+        year: "2013",
+        title: "Salinisation of rivers: An urgent ecological issue",
         journal: true,
-        journal_name: "Journal of Climate",
-        journal_issue: "23, 2293–2306",
+        journal_name: "Environmental Pollution",
+        journal_issue: "173",
         data_release: false,
-        doi: "https://doi.org/10.1175/2009JCLI2951.1"
+        link: "https://doi.org/10.1016/j.envpol.2012.10.011",
+        doi: "10.1016/j.envpol.2012.10.011"
       },
-      // USGS ScienceBase Data Release
       {
-        reference: "Reference 2.",
-        num: "2",
-        authors: "Simeone, C.",
+        refID: "Kaushal2018",
+        authors: "Kaushal, S.S., Likens, G.E., Pace, M.L., Utz, R.M., Haq, S., Gorman, J., and Grese, M.",
+        year: "2018",
+        title: "Freshwater salinization syndrome on a continental scale",
+        link: "https://doi.org/10.1007/s10533-021-00784-w",
+        journal: true,
+        journal_name: "Proceedings of the National Academy of Sciences",
+        journal_issue: "115",
+        data_release: false,
+        doi: "10.1007/s10533-021-00784-w"
+      },
+      {
+        refID: "Ngoubeyou2022",
+        authors: "Ngoubeyou, P.S.K., Wolkersdorfer, C., Ndibewu, P.P., and Augustyn, W.",
         year: "2022",
-        title: "Streamflow Drought Metrics for Select United States Geological Survey Streamgages for Three Different Time Periods from 1921 - 2020",
-        journal: false,
-        journal_name: "",
-        journal_issue: "",
-        data_release: true,
-        link: "https://www.sciencebase.gov/catalog/item/62793493d34e8d45aa6e3ba9",
-        doi: "https://doi.org/10.5066/P92FAASD"
+        title: "Toxicity of polychlorinated biphenyls in aquatic environments – A review",
+        link: "https://doi.org/10.1016/j.aquatox.2022.106284",
+        journal: true,
+        journal_name: "Aquatic Toxicology",
+        journal_issue: "251",
+        data_release: false,
+        doi: "10.1016/j.aquatox.2022.106284"
       },
-      // Website
       {
-        reference: "Reference 3.",
-        num: "3",
-        authors: "Smith, E.",
+        
+        refID: "EPA2023",
+        authors: "United States Environmental Protection Agency (US EPA)",
         year: "2023",
-        title: "Drought Prediction Science",
+        title: "Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS)",
         journal: false,
         journal_name: "",
         journal_issue: "",
         data_release: false,
-        link: "https://www.usgs.gov/mission-areas/water-resources/science/drought-prediction-science",
+        link: "https://www.epa.gov/waterdata/attains",
         doi: null
       },
-      // Journal article with multiple authors
       {
-        reference: "Reference 4.",
-        num: "4",
-        authors: "Viviroli, D., Dürr, H. H., Messerli, B., Meybeck, M. & Weingartner, R.",
-        year: "2007",
-        title: "Mountains of the world, water towers for humanity: Typology, mapping, and global significance",
-        link: "https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2006WR005653",
+        
+        refID: "Vareda2019",
+        authors: "Vareda, J.P., Valente, A.J.M., and Durães, L.",
+        year: "2019",
+        title: "Assessment of heavy metal pollution from anthropogenic activities and remediation strategies: A review:",
         journal: true,
-        journal_name: "Water Resources Research",
-        journal_issue: "43",
+        journal_name: "Journal of Environmental Management",
+        journal_issue: "246",
         data_release: false,
-        doi: "https://doi.org/10.1029/2006WR005653"
+        link: "https://doi.org/10.1016/j.jenvman.2019.05.126",
+        doi: "10.1016/j.jenvman.2019.05.126"
+      },
+      {
+        refID: "Wentz2014",
+        authors: "Wentz, D.A., Brigham, M.E., Chasar, L.C., Lutz, M.A., and Krabbenhoft, D.P.",
+        year: "2014",
+        title: "Mercury in the nation's streams - Levels, trends and implications [Report]",
+        link: "https://doi.org/10.3133/cir1395",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        doi: "10.3133/cir1395"
       }
-  };
+    ]
+}
