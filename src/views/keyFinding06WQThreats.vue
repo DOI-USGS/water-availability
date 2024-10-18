@@ -31,7 +31,7 @@
                 </div>
               </div>
               <div class="text-container">
-                <p><br>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States. These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels. Human-derived metals may also be released in more toxic and mobile forms than natural sources. </p>
+                <p><br>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels. Human-derived metals may also be released in more toxic and mobile forms than natural sources (Vareda et al., 2019). </p>
                 <p><br>Salinity effects on water availability are more spatially limited than nutrients, but salinity can cause considerable local issues for human beneficial uses and ecosystem needs. There has been a growing recognition of the threat that freshwater salinization (increasing salinity) of surface waters poses to water availability (Cañedo-Argüelles, 2020), with 37 percent of the drainage area of the CONUS having experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal and others, 2018; Cañedo-Argüelles, 2020). Trend assessments at individual sites across the United States show increasing salinity with time at many sites, particularly in urban areas, and at concentrations that indicate potential corrosion to drinking-water infrastructure. </p>
               </div>
             </section>
@@ -47,7 +47,7 @@
               </div>
               <div class="text-container">
                 <p>Mercury can limit water availability for aquatic species and humans through consumption of aquatic species. Mercury has geogenic sources (volcanos, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and primarily coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. The methylated form of mercury, methylmercury, is highly bioavailable and can accumulate in higher trophic levels, such as fish, relative to lower trophic levels at concentrations that make fish consumption unhealthy for humans (Wentz and others, 2014). For example, Arctic Indigenous peoples have a traditional diet rich in marine mammals and fish, which are also a substantial source of mercury exposure. Young children and developing fetuses are particularly vulnerable to mercury exposure through movement across the placenta from mother to fetus. Stream contaminants that threaten fish-consumption use by humans included primarily polychlorinated biphenyls and mercury.</p>
-                <p><br>Polychlorinated biphenyls (PCBs) are endocrine-disrupting compounds, associated with cancers and a wide range of human-health risks, are generally stable and persistent in the environment, and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou and others, 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption (fig. 2). Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites (point sources) and hydrologically connected locations. About 30 percent of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou and others, 2022). </p>
+                <p><br>Polychlorinated biphenyls (PCBs) are endocrine-disrupting compounds, associated with cancers and a wide range of human-health risks, are generally stable and persistent in the environment, and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou and others, 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption. Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites (point sources) and hydrologically connected locations. About 30 percent of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou and others, 2022). </p>
               </div>
             </section>
               <section id="rec-viz">
@@ -60,9 +60,12 @@
                   </div>
                 </div>
               </section>
+              <References></References>
         </div>
         <PageCarousel></PageCarousel>
     </section>
+
+
 </template>
 
 <script setup>
@@ -71,6 +74,7 @@ import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 import { color } from 'd3';
 
