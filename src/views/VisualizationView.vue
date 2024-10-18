@@ -15,13 +15,13 @@
     </div>
     <div id="findings-container">
       <div class="raindrop-container">
-        <h2>Key Findings</h2>
+        <h3>Key findings</h3>
       <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
         <router-link :to="message.route">
           <button class="raindrop"><span class="raindrop-text"> {{ message.page }}</span></button>
         </router-link><br>
         <div class="key-message-item-text">
-          {{ message.keyMessage }}
+          {{ message.mainTitle }}
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@
 .key-message-item-text {
   color: var(--blue-text-col);
   width: 90%;
-  font-size: 2rem;
+  font-size: 3rem;
   text-align: left;
 }
 
