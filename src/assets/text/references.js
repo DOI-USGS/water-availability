@@ -74,6 +74,18 @@ export default {
         journal_issue: "",
         data_release: false,
         doi: "10.3133/cir1395"
+      },
+      {
+        refID: "Harris2019",
+        authors: "Harris, M.A., and Diehl, T.H.",
+        year: "2019",
+        title: "Withdrawal and consumption of water by thermoelectric power plants in the United States, 2015 [USGS Scientific Investigation Report]",
+        link: "https://doi.org/10.3133/sir20195103",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        doi: "10.3133/sir20195103"
       }
     ]
 }
