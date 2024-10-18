@@ -27,7 +27,7 @@
                 <p>Metal contamination, salinity, and sediments were identified as the main threats to streams and rivers used as a drinking-water source. </p>
               </div>
               <div class="viz-container">
-                <div id="DW-container">    
+                <div id="DW-container" ref="chart">    
                 </div>
               </div>
               <div class="text-container">
@@ -90,13 +90,8 @@ const datasetOther = ref([]);
 const datasetRec = ref([]);
 const data = ref([]);
 let svg;
-const containerWidth = mobileView ? window.innerWidth * 0.9 : window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.85 : 600;
-const margin = mobileView 
-  ? { top: 10, right: 0, bottom: 10, left: 10 } 
-  : { top: 10, right: 50, bottom: 10, left: 150 };
-const width = containerWidth - margin.left - margin.right;
-const height = containerHeight - margin.top - margin.bottom;
+const chart = ref(null);
+let chartDimensions;
 const nodePadding = mobileView ? 24 : 14; // Increase node spacing for mobile
 let chartBounds;
 let nodeGroup;
@@ -130,41 +125,38 @@ onMounted(async () => {
         
         data.value = datasetDW.value;
         if (data.value.length > 0) {
+            // set up chart dimensions
+            chartDimensions = {
+                width: chart.value.offsetWidth,
+                height: mobileView ? window.innerHeight * 0.85 : window.innerHeight * 0.6,
+                margin: {
+                    top: 10,
+                    right: mobileView ? 80 : 150,
+                    bottom: 10,
+                    left: mobileView ? 125 : 250
+                },
+            }
+            chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
+            chartDimensions.boundedHeight = chartDimensions.height - chartDimensions.margin.top - chartDimensions.margin.bottom
+
+            // build charts
             initSankey({
-              containerWidth: containerWidth,
-              containerHeight: containerHeight,
-              margin: margin,
-              width: width,
-              height: height,
               containerId: 'DW-container'
             });
             createSankey({
               dataset: datasetDW.value,
-              containerId: 'DW-container'
             });
             initSankey({
-              containerWidth: containerWidth,
-              containerHeight: containerHeight,
-              margin: margin,
-              width: width,
-              height: height,
               containerId: 'fish-container'
             });
             createSankey({
               dataset: datasetFish.value,
-              containerId: 'fish-container'
             });
             initSankey({
-              containerWidth: containerWidth,
-              containerHeight: containerHeight,
-              margin: margin,
-              width: width,
-              height: height,
               containerId: 'rec-container'
             });
             createSankey({
               dataset: datasetRec.value,
-              containerId: 'rec-container'
             });
 
         } else {
@@ -202,9 +194,6 @@ async function loadData(fileName) {
 };
 
 function initSankey({
-        containerWidth,
-        containerHeight,
-        margin,
         containerId
     }) {
 
@@ -212,17 +201,17 @@ function initSankey({
     svg = d3.select('#' + containerId)
       .append('svg')
       .attr('class', 'sankeySVG')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+      .attr('viewBox', `0 0 ${chartDimensions.width} ${chartDimensions.height}`)
       .style('width', '100%')
-      .style('height', 'auto');
+      .style('height', '100%');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
       .style("transform", `translate(${
-        margin.left
+        chartDimensions.margin.left
       }px, ${
-        margin.top
+        chartDimensions.margin.top
       }px)`)
 
     // Add group to chart bounds to hold all sankey path groups
@@ -234,7 +223,6 @@ function initSankey({
 
     textGroup = chartBounds.append('g')
       .attr('id', 'text_group')
-    
 
 };
 
@@ -249,9 +237,10 @@ function createSankey({
     const sankey = d3sankey.sankey()
       .nodeWidth(4)
       .nodePadding(nodePadding) // Increase padding on mobile
-      .extent(mobileView 
-        ? [[75, 0], [width -70, height - 0]]
-        : [[150, 5], [width - 300, height - 0]]); //
+      .extent([[0, 0], [chartDimensions.boundedWidth, chartDimensions.boundedHeight]])
+      // .extent(mobileView 
+      //   ? [[75, 0], [width -70, height - 0]]
+      //   : [[150, 5], [width - 300, height - 0]]); //
 
 
     // Set up color scale 
@@ -334,10 +323,10 @@ function createSankey({
           const textEnter = enter
             .append("text")
             .attr("class", "axis-text")
-            .attr("x", d => d.x0 < width / 2 ? d.x0 - 5 : d.x1 + 5)  // Push left-side labels inside SVG bounds
+            .attr("x", d => d.x0 < chartDimensions.boundedWidth / 2 ? d.x0 - 5 : d.x1 + 5)  // Push left-side labels inside SVG bounds
             .attr("y", d => (d.y1 + d.y0) / 2)
             .attr("dy", "0.35em")
-            .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")  // Left-side labels aligned to the end
+            .attr("text-anchor", d => d.x0 < chartDimensions.boundedWidth / 2 ? "end" : "start")  // Left-side labels aligned to the end
 
           // Add label text (name and value)
           textEnter
@@ -347,7 +336,7 @@ function createSankey({
           if (mobileView) {
             textEnter
               .append("tspan")
-              .attr("x", d => d.x0 < width / 2 ? d.x0 - 10 : d.x1 + 10)  // Adjust x position for second line
+              .attr("x", d => d.x0 < chartDimensions.boundedWidth / 2 ? d.x0 - 10 : d.x1 + 10)  // Adjust x position for second line
               .attr("dy", "1em")  // Move second line down
               .attr("fill-opacity", 0.7)
               .text(d => `${d.value.toLocaleString()}`);
@@ -438,6 +427,7 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
 #DW-container, #fish-container, #rec-container {
   width: 100%;
   height: 100%;
+  max-width: 1000px;
 }
 
 .highlight {
