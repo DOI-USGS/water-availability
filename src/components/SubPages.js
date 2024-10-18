@@ -78,8 +78,8 @@ export default {
             keyMessage: 'Threats to water quality depend on what the water is used for and where the water is coming from.',
             references: [
                 "Canedo2013",
-                "Kaushal2018",
                 "Ngoubeyou2022",
+                "Kaushal2018",
                 "EPA2023",
                 "Vareda2019",
                 "Wentz2014"

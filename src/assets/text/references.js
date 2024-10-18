@@ -26,6 +26,30 @@ export default {
         doi: "10.1007/s10533-021-00784-w"
       },
       {
+        refID: "Wentz2014",
+        authors: "Wentz, D.A., Brigham, M.E., Chasar, L.C., Lutz, M.A., and Krabbenhoft, D.P.",
+        year: "2014",
+        title: "Mercury in the nation's streams - Levels, trends and implications [Report]",
+        link: "https://doi.org/10.3133/cir1395",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        doi: "10.3133/cir1395"
+      },
+      {
+        refID: "Harris2019",
+        authors: "Harris, M.A., and Diehl, T.H.",
+        year: "2019",
+        title: "Withdrawal and consumption of water by thermoelectric power plants in the United States, 2015 [USGS Scientific Investigation Report]",
+        link: "https://doi.org/10.3133/sir20195103",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        doi: "10.3133/sir20195103"
+      },
+      {
         refID: "Ngoubeyou2022",
         authors: "Ngoubeyou, P.S.K., Wolkersdorfer, C., Ndibewu, P.P., and Augustyn, W.",
         year: "2022",
@@ -62,30 +86,6 @@ export default {
         data_release: false,
         link: "https://doi.org/10.1016/j.jenvman.2019.05.126",
         doi: "10.1016/j.jenvman.2019.05.126"
-      },
-      {
-        refID: "Wentz2014",
-        authors: "Wentz, D.A., Brigham, M.E., Chasar, L.C., Lutz, M.A., and Krabbenhoft, D.P.",
-        year: "2014",
-        title: "Mercury in the nation's streams - Levels, trends and implications [Report]",
-        link: "https://doi.org/10.3133/cir1395",
-        journal: false,
-        journal_name: "",
-        journal_issue: "",
-        data_release: false,
-        doi: "10.3133/cir1395"
-      },
-      {
-        refID: "Harris2019",
-        authors: "Harris, M.A., and Diehl, T.H.",
-        year: "2019",
-        title: "Withdrawal and consumption of water by thermoelectric power plants in the United States, 2015 [USGS Scientific Investigation Report]",
-        link: "https://doi.org/10.3133/sir20195103",
-        journal: false,
-        journal_name: "",
-        journal_issue: "",
-        data_release: false,
-        doi: "10.3133/sir20195103"
       }
     ]
 }
