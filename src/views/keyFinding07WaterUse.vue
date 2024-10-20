@@ -33,7 +33,7 @@
       </div>
       <div class="text-container">
         <p>
-          Water use reflects human dependence on freshwater resources for public health and economic development.
+          Water use reflects human dependence on freshwater resources for public health and economic development. Water use has dual effects on water availability. On the one hand, ensuring safe, reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals decrease availability for downstream users and local stream ecosystems. Therefore, areas with more intense water use have higher needs and a higher tendency to degrade the resource than areas with less intense water use. 
         </p>
       </div>
     </div>
