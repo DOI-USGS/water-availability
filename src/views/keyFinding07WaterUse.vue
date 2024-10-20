@@ -7,10 +7,10 @@
           Around 90% of daily water use in the United States comes from public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for
           <span class="highlight" id="Irrigation">agriculture </span>
           followed by fresh water used in the process of creating energy from
-          <span class="highlight" id="Thermoelectric-fresh"> Thermoelectric power</span> plants. Along with
+          <span class="highlight" id="Thermoelectric_fresh"> Thermoelectric power</span> plants. Along with
           <span class="highlight" id="Public_Supply"> public supply </span>,
           these three uses of water add up to 225,000 million gallons of water used per day in the U.S.
-          <span class="highlight" id="Thermoelectric-saline"> Thermoelectric power (from saline water)</span>
+          <span class="highlight" id="Thermoelectric_saline"> Thermoelectric power (from saline water)</span>
           uses another approximately 21,000 mgd.
         </p>
       </div>
@@ -224,7 +224,7 @@ function updateChart() {
 }
 
 function transitionToFaceted() {
-  const facetPadding = 20; // padding between facets
+  const facetPadding = 40; // padding between facets
   const totalPadding = (categoryGroups.length - 1) * facetPadding; 
   const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
 
@@ -273,6 +273,16 @@ function transitionToFaceted() {
       .attr('height', d => facetHeight - groupScale(+d.mgd)) 
       .style('fill', categoryColors[group]); 
 
+    // add label for grouping
+    chartBounds.append('text')
+      .attr("class", "facet-label")
+      .attr('x', 5)       
+      .attr('y', i * (facetHeight + facetPadding))  
+      .attr('text-anchor', 'start')  
+      .attr('font-weight', '600')
+      .style('font-size', '1.5rem')   
+      .text(group);       
+
   });
 
 }
@@ -314,6 +324,12 @@ function transitionToStacked() {
       .call(d3.axisBottom(yearScale).tickSize(0))
       .selectAll('.tick line').remove();
   });
+
+  d3.selectAll('text.facet-label') 
+    .transition(t)
+    .style('opacity', 0) 
+    .remove();
+  
 }
 
 
@@ -385,10 +401,10 @@ onMounted(async () => {
   &#Irrigation {
     background-color: #E8B86D;
   }
-  &#Thermoelectric-fresh {
+  &#Thermoelectric_fresh {
     background-color: #0B2F9F;
   }
-  &#Thermoelectric-saline {
+  &#Thermoelectric_saline {
     background-color: #6CBEC7;
   }
 }
