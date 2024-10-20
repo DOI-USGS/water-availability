@@ -66,3 +66,25 @@ process_supply_v_demand <- function(data_path){
   return(out_data)
   
 }
+
+create_stats <- function(in_sf, out_csv){
+  
+  in_df <- in_sf |> 
+    sf::st_drop_geometry() 
+  
+  stress_by_reg <- in_df |> 
+    filter( ! is.na(sui_category_5)) |>
+    group_by(Region_nam, sui_category_5) |>
+    summarize(stress_by_reg = n()) 
+  
+  total_huc_by_reg <- in_df |>
+    filter( ! is.na(sui_category_5)) |>
+    group_by(Region_nam) |>
+    summarize(total_hucs = n())
+  
+  join_data <- stress_by_reg |>
+    left_join(total_huc_by_reg, by = "Region_nam") |>
+    mutate(percentage_stress = (stress_by_reg / total_hucs)*100) 
+  
+  readr::write_csv(join_data, file = out_csv)
+}
