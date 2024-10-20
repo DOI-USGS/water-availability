@@ -86,6 +86,102 @@ export default {
         data_release: false,
         link: "https://doi.org/10.1016/j.jenvman.2019.05.126",
         doi: "10.1016/j.jenvman.2019.05.126"
+      },
+      {
+        refID: "Bell2015",
+        authors: "Bell, J.E., Leeper, R.D., Palecki, M.A., Coopersmith, E., Wilson, T., Bilotta, R., and Embler, S.",
+        year: "2015",
+        title: "Evaluation of the 2012 Drought with a Newly Established National Soil Monitoring Network",
+        journal: true,
+        journal_name: "Vadose Zone Journal",
+        journal_issue: "14",
+        data_release: false,
+        link: "https://doi.org/10.2136/vzj2015.02.0023",
+        doi: "10.2136/vzj2015.02.0023"
+      },
+    {
+        refID: "Hoerling2014",
+        authors: "Hoerling, M., Eischeid, J., Kumar, A., Leung, R., Mariotti, A., Mo, K., Schubert, S., and Seager, R.",
+        year: "2014",
+        title: "Causes and Predictability of the 2012 Great Plains Drought",
+        journal: true,
+        journal_name: "Bulletin of the American Meteorological Society",
+        journal_issue: "95",
+        data_release: false,
+        link: "https://doi.org/10.1175/BAMS-D-13-00055.1",
+        doi: "10.1175/BAMS-D-13-00055.1"
+      },
+      {
+        refID: "Legates2011", 
+        authors: "Legates, D.R., Mahmood, R., Levia, D.F., DeLiberty, T.L., Quiring, S.M., Houser, C., and Nelson, F.E.",
+        year: "2011",
+        title: "Soil moisture: A central and unifying theme in physical geography",
+        journal: true,
+        journal_name: "Progress in Physical Geography: Earth and Environment",
+        journal_issue: "35",
+        data_release: false,
+        link: "https://doi.org/10.1177/0309133310386514",
+        doi: "10.1177/0309133310386514"
+      },
+      {
+        refID: "Azadpour2024", 
+        authors: "Azadpour, E., Clarke A., Carr, A., Drakes, O., Restrepo-Osario, D., Alanis, Y.A., Gonzales, P.R., and Nell, C.",
+        year: "2024",
+        title: "Unequal access to water: how societal factors shape vulnerability to water insecurity, U.S. [USGS Website]",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en",
+        doi: null
+      },
+      {
+        refID: "Arias2021", 
+        authors: "Arias, P.A., Bellouin, N., ..., and Zickfeld, K.",
+        year: "2021",
+        title: "Technical Summary, in Masson-Delmotte, V., Zhai, P., ... and Zhou, B., Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.1017/9781009157896.002",
+        doi: "10.1017/9781009157896.002"
+      },
+      {
+        refID: "Hicke2022", 
+        authors: "Hicke, J.A., Lucatello, S., ... and Miller, K.A.",
+        year: "2022",
+        title: "North America, in Pörtner, H.O., Roberts, D.C., ... and Rama, B., Sixth Assessment Report of the Intergovernmental Panel on Climate Change: Cambridge, United Kingdom and New York, NY, USA, Intergovernmental Panel on Climate Change, v. Working Group II: Impacts, Adaptation and Vulnerability",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.1017/9781009325844.016",
+        doi: "10.1017/9781009325844.016"
+      },
+      {
+        refID: "IPCC2022", 
+        authors: "IPCC-AR6-WG-II",
+        year: "2022",
+        title: "Climate Change 2022: Impacts, Adaptation, and Vulnerability, in Pörtner, H.-O., Roberts, D.C., ... and Rama, B., Contribution of Working Group II to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change Cambridge, UK and New York, NY, USA, Cambridge University Press",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.1017/9781009325844",
+        doi: "10.1017/9781009325844"
+      },
+      {
+        refID: "Ranasinghe2021", 
+        authors: "Ranasinghe, R., Ruane, A.C., ... and Zaaboul, R.",
+        year: "2021",
+        title: "Climate Change Information for Regional Impact and for Risk Assessment, in Masson-Delmotte, V., Zhai, P., ... and Zhou, B., Climate Change 2021: The Physical Science Basis, Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change: Cambridge, UK and New York, USA, Cambridge University Press",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.1017/9781009157896.014",
+        doi: "10.1017/9781009157896.014"
       }
     ]
 }
