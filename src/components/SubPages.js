@@ -11,8 +11,8 @@ export default {
             page: 2,
             route: '/02SUI',
             mainTitle: 'Living with water stress',
-            shortTitle: 'More than 30 million people in the U.S. live in areas of high or severe water stress',
-            keyMessage: 'On average, 6% of the lower 48 states by area experienced high or severe water stress during 2010-2020 and another 47% experienced low or moderate water stress.'
+            shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water stress',
+            keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.'
         },
         {
             page: 3,

@@ -3,18 +3,10 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>In many areas of the U.S., short-term water stress is reduced by water storage in local reservoirs or by switching sources during droughts. In the Western United States, snowpack serves as an important water source, which can help sustain ecosystems and human populations during dry summer and autumn seasons (Dettinger, 2005). In other areas, water is sometimes withdrawn from one area or watershed and transported to others. These types of inter-basin transfers can be used to supplement local water supplies either seasonally or year-round and are important in for meeting the water demands for people living in high water stress areas. Public water utilities in particular often rely on transferring water from other more pristine watersheds to provide high-quality water for their customers (Liu et al., 2022). However, relying on other watersheds can leave the receiving basin vulnerable in situations where the donor basin also has a water shortage. </p>
           </div>
           <div class="viz-container">
-            <AggReg class="agg-reg-svg"></AggReg>
-            <img
-                id="circles"
-                :src="imgSrc"
-                alt=""
-            >    
-          </div>
-          <div class="text-container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <img class="viz-portrait" src="../../public/images/k02_sui_popn_CONUS.png">
           </div>
         </div>
         <PageCarousel></PageCarousel>
