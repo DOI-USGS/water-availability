@@ -14,11 +14,24 @@
           uses another approximately 21,000 mgd. Combined, public supply, irrigation, and thermoelectric power generation comprise 90% of our daily water use budget.
         </p>
       </div>
+      <div class="toggle-buttons">
+        <button
+          :class="{ active: !isFaceted }"
+          @click="toggleToStacked"
+        >
+          Show annual water use
+        </button>
+        <button
+          :class="{ active: isFaceted }"
+          @click="toggleToFaceted"
+        >
+          Show by use type
+        </button>
+      </div>
       <div class="viz-container">
         <div id="barplot-container"></div>
       </div>
     </div>
-    <button @click="toggleFacetedView">Toggle View</button>
     <PageCarousel></PageCarousel>
   </section>
 </template>
@@ -50,7 +63,20 @@ const margin = mobileView
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 
+// Define toggle functions for switching between views
+function toggleToFaceted() {
+  if (!isFaceted.value) {
+    isFaceted.value = true;
+    transitionToFaceted();
+  }
+}
 
+function toggleToStacked() {
+  if (isFaceted.value) {
+    isFaceted.value = false;
+    transitionToStacked();
+  }
+}
 
 // Define colors for each category group
 const categoryColors = {
@@ -246,8 +272,6 @@ function transitionToFaceted() {
 
 }
 
-
-
 // transition the chart back to a stacked view
 function transitionToStacked() {
   const t = d3.transition().duration(1000);
@@ -307,6 +331,39 @@ onMounted(async () => {
   margin: auto;
   display: flex;
   justify-content: center;
+}
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.toggle-buttons button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: transparent; 
+  border: 1px solid;  
+  border-radius: 8px;  
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 300;
+  color: rgb(54, 53, 53);  
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease; 
+}
+
+.toggle-buttons button.active {
+  background-color: rgba(54, 53, 53, 0.1); 
+  border: 2px solid;  
+  color: rgb(54, 53, 53);  
+  border-color: rgb(54, 53, 53); 
+  font-weight: 700;  
+}
+
+/* Button hover effect */
+.toggle-buttons button:hover {
+  background-color: rgba(54, 53, 53, 0.05);  
+  border: 2px solid;  
+  border-color: rgb(54, 53, 53);  
 }
 
 .highlight {
