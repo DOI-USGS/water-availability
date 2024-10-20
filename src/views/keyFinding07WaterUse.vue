@@ -57,7 +57,7 @@ let categoryGroups, yearGroups, stackedData;
 let yearScale, useScale, categoryRectGroups;
 
 // Adjust margins to equalize space
-const labelWidth = 50; // Estimated width of the "mgd" label
+const labelWidth = 30; // Estimated width of the "mgd" label
 const containerWidth = Math.min(window.innerWidth * 0.8, 800); // Constrain to 700px max
 const containerHeight = mobileView ? window.innerHeight * 0.85 : 700;
 
@@ -201,7 +201,7 @@ function createBarChart({ dataset }) {
   // written out mgd label
   svg.append("text")
     .attr("class", "y-axis-label-explained")
-    .attr("x", (margin.left / 2) + labelWidth*1.2) 
+    .attr("x", (margin.left / 2) + labelWidth*2) 
     .attr("y", margin.top / 2)
     .attr("text-anchor", "left")
     .style("font-size", "2.5rem")
@@ -226,7 +226,7 @@ function updateChart() {
 }
 
 function transitionToFaceted() {
-  const facetPadding = 40; // padding between facets
+  const facetPadding = 30; // padding between facets
   const totalPadding = (categoryGroups.length - 1) * facetPadding; 
   const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
 
@@ -279,7 +279,7 @@ function transitionToFaceted() {
     chartBounds.append('text')
       .attr("class", "facet-label")
       .attr('x', 5)       
-      .attr('y', i * (facetHeight + facetPadding))  
+      .attr('y', i * (facetHeight + facetPadding + 5))  
       .attr('text-anchor', 'start')  
       .attr('font-weight', '600')
       .style('font-size', '1.5rem')   
