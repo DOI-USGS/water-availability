@@ -155,17 +155,28 @@ function updateChart() {
 }
 
 function transitionToFaceted() {
-  const totalPadding = (categoryGroups.length - 1) * 20; // Total padding between facets
-  const facetHeight = (height - totalPadding) / categoryGroups.length; // Adjust facet height to include padding
-  const facetPadding = 20; // Padding between facets
+  const totalPadding = (categoryGroups.length - 1) * 20; // total padding between facets
+  const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
+  const facetPadding = 20; // padding between facets
 
   // clean up
   useAxis.transition().duration(500).style('opacity', 0).remove(); // remove shared y-axis
   chartBounds.selectAll('.y-axis').remove();
+  chartBounds.selectAll('.x-axis').remove(); // ensure we remove any previous x-axes for a clean transition
+
+  // add the "mgd" label to the upper left
+  svg.selectAll(".y-axis-label").remove(); // clean up previous label
+  svg.append("text")
+    .attr("class", "y-axis-label")
+    .attr("x", margin.left / 2) // position to the upper left
+    .attr("y", margin.top / 2)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.5rem")
+    .style("font-weight", "bold")
+    .text("mgd");
 
   // move each category to its own facet along the y-axis
   categoryGroups.forEach((group, i) => {
-
     // use the original dataset
     const groupData = data.value.filter(d => d.Use === group);
 
@@ -175,7 +186,8 @@ function transitionToFaceted() {
     // get group-specific y-scale using max mgd
     const groupScale = d3.scaleLinear()
       .domain([0, groupMaxMgd]) 
-      .range([facetHeight, 0]); 
+      .nice(3)
+      .range([facetHeight, 0]);
 
     // move group to its own facet
     d3.select(`g #${sanitizeSelector(group)}`)
@@ -187,27 +199,30 @@ function transitionToFaceted() {
     d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
       .transition()
       .duration(1000)
-      .attr('y', d => groupScale(+d.data.mgd))
-      .attr('height', d => facetHeight - groupScale(+d.data.mgd));
+      .attr('y', d => groupScale(+d.mgd)) // use 'mgd' from the original dataset
+      .attr('height', d => facetHeight - groupScale(+d.mgd)); // height is based on 'mgd'
 
-    // y-axis for each facet
+    // y-axis for each facet 
     chartBounds.append('g')
       .attr('class', 'y-axis')
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`)
-      .call(d3.axisLeft(groupScale).ticks(4).tickFormat(d => d + ' mgd'));
+      .call(d3.axisLeft(groupScale)
+        .ticks(3) 
+        .tickFormat(d3.format("~s")) 
+      );
 
     // x-axis for each facet (adjusted for spacing)
     chartBounds.append('g')
       .attr('class', 'x-axis')
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding) + facetHeight})`)
-      .call(d3.axisBottom(yearScale).tickSize(0)) 
-      .selectAll('.tick line').remove(); 
-
+      .call(d3.axisBottom(yearScale).tickSize(0)) // remove ticks
+      .selectAll('.tick line').remove(); // remove tick lines but keep labels
   });
 
   // hide the main x-axis
   yearAxis.transition().duration(500).style('opacity', 0).remove();
 }
+
 
 
 // transition the chart back to a stacked view
