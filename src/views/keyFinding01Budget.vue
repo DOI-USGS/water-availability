@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water supply there is and how much water are we using. For most of the country, water supply is much higher than water demand, meaning there is more than enough water available to meet our needs. In some regions, however, the difference between water supply and demand is much smaller. Those regions are more likely to experience water stress, meaning there is not enough water available to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.</p>
+                <p>Water balance is the difference between how much clean water supply there is and how much water are we using. For most of the country, <span class="highlight" id="supply">water supply</span> is much higher than <span class="highlight" id="demand">water demand</span>, meaning there is more than enough water available to meet our needs. In some regions, however, the difference between water supply and demand is much smaller. Those regions are more likely to experience water stress, meaning there is not enough water available to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.</p>
             </div>
             <div class="viz-container">
                 <div id="dotplot-container">    
@@ -194,7 +194,7 @@ function createDotChart({
         .attr("r", 10)
         .attr("cx", d => xScale(xAccessorDemand(d)))
         .attr("cy", d => yScale(yAccessor(d)))
-        .attr("fill", "red")
+        .attr("fill", "#F87A53")
   
 }
 
@@ -202,5 +202,22 @@ function createDotChart({
 </script>
 
 <style scoped>
+.highlight {
+  color: white;
+  padding: 0.25px 5px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.1s;
 
+  &#supply {
+    background-color: #669999;
+  }
+
+  &#demand {
+    background-color: #F87A53;
+  }
+
+}
 </style>
