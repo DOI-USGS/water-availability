@@ -228,23 +228,12 @@ function transitionToFaceted() {
 function transitionToStacked() {
   const t = d3.transition().duration(1000);
 
-  // clear previous axes (from faceted view)
-  chartBounds.selectAll('.y-axis').remove(); 
-  chartBounds.selectAll('.x-axis').remove();
-
-  // re-calculate the use scale for the stacked bar chart
-  useScale = d3.scaleLinear()
-    .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))]) // stacked max value
-    .range([height, 0]);
-
-  yearScale.range([0, width]);
-
-  // transition the bars back to the stacked position
-  categoryRectGroups 
+   // transition the bars back to the stacked position
+   categoryRectGroups 
     .data(stackedData) // bind stacked data to groups
     .transition(t) 
     .attr('transform', 'translate(0, 0)'); // reset facet-specific transforms
-
+    
   categoryRectGroups.selectAll('rect') 
     .data(d => d) // re-bind the stacked data to the rects
     .transition(t) 
