@@ -176,11 +176,6 @@ function transitionToFaceted() {
 
   const t = d3.transition().duration(1000);
 
-  // clean up
-  useAxis.transition(t).style('opacity', 0).remove(); // remove shared y-axis
-  chartBounds.selectAll('.y-axis').remove();
-  chartBounds.selectAll('.x-axis').remove(); 
-
   // move each category to its own facet along the y-axis
   categoryGroups.forEach((group, i) => {
     // use the original dataset
@@ -209,7 +204,7 @@ function transitionToFaceted() {
     // ensure the data is properly bound to each rect
     d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
       .data(groupData)
-      .join(enter => enter.append('rect')) 
+      //.join(enter => enter.append('rect')) 
       .transition(t)
       .attr('x', d => yearScale(d.water_year)) 
       .attr('width', yearScale.bandwidth() - 10)
