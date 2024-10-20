@@ -94,7 +94,7 @@
   width: 90vw;
   padding-top: 30px;
   padding-bottom: 30px;
-  margin: 0 auto;
+  margin: 1rem auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 1rem;
@@ -106,7 +106,7 @@
   grid-gap: 0rem;
   position: relative;
   width: 90%;
-  margin: 5px auto;
+  margin: 0px;
   padding: 10px;
   background-color: var(--light-background);
   overflow: visible;

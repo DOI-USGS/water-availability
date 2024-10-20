@@ -26,52 +26,52 @@ const router = createRouter({
       component: VisualizationView
     },
     {
-      path: '/keyFinding01Budget',
+      path: '/01Budget',
       name: 'Page 1',
       component: page1
     },
     {
-      path: '/keyFinding02SUIPopn',
+      path: '/02SUI',
       name: 'Page 2',
       component: page2
     },
     {
-      path: '/keyFinding03SUISVI',
+      path: '/03SVI',
       name: 'Page 3',
       component: page3
     },
     {
-      path: '/keyFinding04Drought',
+      path: '/04Drought',
       name: 'Page 4',
       component: page4
     },
     {
-      path: '/keyFinding05WQSource',
+      path: '/05WQSource',
       name: 'Page 5',
       component: page5
     },
     {
-      path: '/keyFinding06WQThreats',
+      path: '/06WQThreats',
       name: 'Page 6',
       component: page6
     },
     {
-      path: '/keyFinding07WaterUse',
+      path: '/07WaterUse',
       name: 'Page 7',
       component: page7
     },
     {
-      path: '/keyFinding08WaterUseRegional',
+      path: '/08WaterUseRegional',
       name: 'Page 8',
       component: page8
     },
     {
-      path: '/keyFinding09WaterUseConsumption',
+      path: '/09Consumption',
       name: 'Page 9',
       component: page9
     },
     {
-      path: '/keyFinding10FutureWater',
+      path: '/10Future',
       name: 'Page 10',
       component: page10
     }
