@@ -12,7 +12,7 @@
             <p>Understanding limitations to water availability are evident when multiple types of stresses are examined together. Regions stressed by multiple factors, such as surface water and groundwater quality issues, water imbalance, or by alterations to ecological flow, are at additional risk for addressing issues of water supply in the future. None of the hydrologic regions in the U.S. have very low stress in all four categories. The ability to better describe the specific ways in which water-availability limitations interact is vital and presents an important path forward in improving future water-availability assessments. Nevertheless, our findings emphasize that high water demand for human activities combined with limited supply often co-occurs with elevated water stress from other factors.</p>
           </div>
           <div class="viz-container">
-            <img class="viz-portrait" src="../../public/images/kf2_stressType_maps.png">
+            <img class="viz-landscape" src="../../public/images/kf2_stressType_maps.png">
           </div>
           <References></References>
         </div>
