@@ -103,21 +103,27 @@ function createBarChart({ dataset }) {
   yearScale = d3.scaleBand()
     .domain(yearGroups)
     .range([0, width])
-    .padding(0.1);
+    .padding(0.05);
 
   yearAxis = chartBounds.append('g')
+    .attr('class', 'x-axis')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(yearScale))
-    .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
+    .call(d3.axisBottom(yearScale).tickSize(0))
+    .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
+    .selectAll('.tick line').remove();
 
-  // Y-axis (water use scale)
+  // y-axis (water use scale)
   useScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
     .range([height, 0]);
 
-  useAxis = chartBounds.append('g')
-    .call(d3.axisLeft(useScale).ticks(4).tickFormat(d => d + ' mgd'))
-    .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
+   // Create 4 identical y-axes (initially on top of each other)
+   categoryGroups.forEach((group, i) => {
+    chartBounds.append('g')
+      .attr('class', `y-axis y-axis-${i}`)
+      .call(d3.axisLeft(useScale).ticks(4).tickFormat(d3.format("~s")))
+      .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
+  });
 
   // Create color scale for the bars
   const colorScale = d3.scaleOrdinal()
@@ -168,8 +174,10 @@ function transitionToFaceted() {
   const totalPadding = (categoryGroups.length - 1) * facetPadding; 
   const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
 
+  const t = d3.transition().duration(1000);
+
   // clean up
-  useAxis.transition().duration(500).style('opacity', 0).remove(); // remove shared y-axis
+  useAxis.transition(t).style('opacity', 0).remove(); // remove shared y-axis
   chartBounds.selectAll('.y-axis').remove();
   chartBounds.selectAll('.x-axis').remove(); 
 
@@ -187,49 +195,44 @@ function transitionToFaceted() {
       .nice(3)
       .range([facetHeight, 0]);
 
+    // transition the y-axis into place for each category group
+    d3.select(`.y-axis-${i}`)
+      .transition(t)
+      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`)
+      .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")));
+
     // move group to its own facet
     const groupSelection = d3.select(`g #${sanitizeSelector(group)}`)
-      .transition()
-      .duration(1000)
+      .transition(t)
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`);
 
     // ensure the data is properly bound to each rect
     d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
       .data(groupData)
       .join(enter => enter.append('rect')) 
-      .transition()
-      .duration(1000)
+      .transition(t)
       .attr('x', d => yearScale(d.water_year)) 
       .attr('width', yearScale.bandwidth() - 10)
       .attr('y', d => groupScale(+d.mgd)) 
       .attr('height', d => facetHeight - groupScale(+d.mgd)) 
       .style('fill', categoryColors[group]); 
 
-    // y-axis for each facet 
-    chartBounds.append('g')
-      .attr('class', 'y-axis')
-      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`)
-      .call(d3.axisLeft(groupScale)
-        .ticks(3) 
-        .tickFormat(d3.format("~s")) 
-      );
-
-    // x-axis for each facet (adjusted for spacing)
-    chartBounds.append('g')
-      .attr('class', 'x-axis')
+   // transition the x-axis
+   d3.select('.x-axis')
+      .transition(t)
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding) + facetHeight})`)
-      .call(d3.axisBottom(yearScale).tickSize(0)) // remove ticks
-      .selectAll('.tick line').remove(); // remove tick lines but keep labels
+      .call(d3.axisBottom(yearScale).tickSize(0))
+      .selectAll('.tick line').remove();
   });
 
-  // hide the main x-axis
-  yearAxis.transition().duration(500).style('opacity', 0).remove();
 }
 
 
 
 // transition the chart back to a stacked view
 function transitionToStacked() {
+  const t = d3.transition().duration(1000);
+
   // clear previous axes (from faceted view)
   chartBounds.selectAll('.y-axis').remove(); 
   chartBounds.selectAll('.x-axis').remove();
@@ -242,32 +245,36 @@ function transitionToStacked() {
   yearScale.range([0, width]);
 
   // transition the bars back to the stacked position
-  categoryRectGroups // select the category groups
+  categoryRectGroups 
     .data(stackedData) // bind stacked data to groups
-    .transition() 
-    .duration(1000)
+    .transition(t) 
     .attr('transform', 'translate(0, 0)'); // reset facet-specific transforms
 
   categoryRectGroups.selectAll('rect') 
     .data(d => d) // re-bind the stacked data to the rects
-    .transition() 
-    .duration(1000)
+    .transition(t) 
     .attr('x', d => yearScale(d.data[0])) // re-position x
     .attr('y', d => useScale(d[1])) // stacked y-position (top of bar)
     .attr('height', d => useScale(d[0]) - useScale(d[1])) 
     .attr('width', yearScale.bandwidth() - 10); 
 
-  // re-add the shared x-axis 
-  yearAxis = chartBounds.append('g')
-    .attr('class', 'x-axis')
+  // transition the x-axis back to the bottom
+  d3.select('.x-axis')
+    .transition(t)
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(yearScale).tickSize(0)) 
-    .selectAll('.tick line').remove(); 
+    .call(d3.axisBottom(yearScale).tickSize(0))
+    .selectAll('.tick line').remove();
 
-  // re-add the shared y-axis
-  useAxis = chartBounds.append('g')
-    .call(d3.axisLeft(useScale).ticks(4).tickFormat(d => d + ' mgd'))
-    .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
+  // transition the 4 y-axes back to overlap on top of each other
+  categoryGroups.forEach((group, i) => {
+    d3.select(`.y-axis-${i}`)
+      .transition(t)
+      .attr('transform', 'translate(0, 0)')
+      .call(d3.axisLeft(useScale)
+        .ticks(4)
+        .tickFormat(d3.format("~s"))
+      );
+  });
 }
 
 
