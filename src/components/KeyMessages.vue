@@ -14,8 +14,14 @@
             <button class="raindrop-static"><span class="raindrop-static-text"> {{ message.page }}</span></button>    
         </div>
         <div class="page-title-container">
-            <h3>{{ message.keyMessage }}</h3>
+            <h1>{{ message.mainTitle }}</h1>
+            <h3> {{ message.shortTitle }}</h3>
         </div>   
+    </div>
+    <div class="content-container" v-for="(message, index) in filteredMessages" :key="index">
+        <div class="text-container">
+            <h4 class="subheading"> {{ message.keyMessage }}</h4>
+        </div>
     </div>
 
 </template>
