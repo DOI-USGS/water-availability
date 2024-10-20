@@ -46,3 +46,23 @@ mean_sui <- function(data_in,
   return(out_categorized)
 }
 
+process_supply_v_demand <- function(data_path){
+  
+  raw_data <- readr::read_csv(data_path,
+                              show_col_types = FALSE)
+  
+  out_data <- raw_data |>
+    group_by(Region_nam) |>
+    summarise(supply_mean = mean(regionSupply_mm),
+              supply_sd = sd(regionSupply_mm),
+              supply_lower = supply_mean - supply_sd,
+              supply_upper = supply_mean + supply_sd,
+              demand_mean = mean(regionDemand_mm),
+              demand_sd = sd(regionDemand_mm),
+              demand_lower = demand_mean - demand_sd,
+              demand_upper = demand_mean + demand_sd) |>
+    arrange(-supply_mean)
+  
+  return(out_data)
+  
+}

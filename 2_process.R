@@ -279,6 +279,14 @@ p2_targets <- list(
                       min_year = 2020,
                       max_year = 2020,
                       by_yearL = FALSE)),
+  # water supply and demand for each region from Ted
+  tar_target(p2_supply_v_demand_df,
+             process_supply_v_demand(data_path = p1_supply_v_demand_csv)),
+  tar_target(p2_supply_demand_csv,
+             {readr::write_csv(p2_supply_v_demand_df,
+                               file = "public/wa_supply_demand.csv")
+               return("public/wa_supply_demand.csv")},
+             format = "file"),
   
   ##############################################
   # 
