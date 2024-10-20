@@ -137,6 +137,15 @@ function createBarChart({ dataset }) {
       .attr('height', d => useScale(d[0]) - useScale(d[1]))
       .attr('width', yearScale.bandwidth() - 10)
       .style('fill', d => colorScale(d.key)));
+
+  svg.append("text")
+    .attr("class", "y-axis-label")
+    .attr("x", margin.left / 2) // position to the upper left
+    .attr("y", margin.top / 2)
+    .attr("text-anchor", "middle")
+    .style("font-size", "2.5rem")
+    .style("font-weight", "bold")
+    .text("mgd");
 }
 
 // Toggle between stacked and faceted views
@@ -155,25 +164,14 @@ function updateChart() {
 }
 
 function transitionToFaceted() {
-  const totalPadding = (categoryGroups.length - 1) * 20; // total padding between facets
-  const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
   const facetPadding = 20; // padding between facets
+  const totalPadding = (categoryGroups.length - 1) * facetPadding; 
+  const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
 
   // clean up
   useAxis.transition().duration(500).style('opacity', 0).remove(); // remove shared y-axis
   chartBounds.selectAll('.y-axis').remove();
-  chartBounds.selectAll('.x-axis').remove(); // ensure we remove any previous x-axes for a clean transition
-
-  // add the "mgd" label to the upper left
-  svg.selectAll(".y-axis-label").remove(); // clean up previous label
-  svg.append("text")
-    .attr("class", "y-axis-label")
-    .attr("x", margin.left / 2) // position to the upper left
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "middle")
-    .style("font-size", "1.5rem")
-    .style("font-weight", "bold")
-    .text("mgd");
+  chartBounds.selectAll('.x-axis').remove(); 
 
   // move each category to its own facet along the y-axis
   categoryGroups.forEach((group, i) => {
@@ -185,22 +183,27 @@ function transitionToFaceted() {
 
     // get group-specific y-scale using max mgd
     const groupScale = d3.scaleLinear()
-      .domain([0, groupMaxMgd]) 
+      .domain([0, groupMaxMgd])
       .nice(3)
       .range([facetHeight, 0]);
 
     // move group to its own facet
-    d3.select(`g #${sanitizeSelector(group)}`)
+    const groupSelection = d3.select(`g #${sanitizeSelector(group)}`)
       .transition()
       .duration(1000)
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`);
 
-    // adjust the bars for the category group using the group-specific scale
+    // ensure the data is properly bound to each rect
     d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
+      .data(groupData)
+      .join(enter => enter.append('rect')) 
       .transition()
       .duration(1000)
-      .attr('y', d => groupScale(+d.mgd)) // use 'mgd' from the original dataset
-      .attr('height', d => facetHeight - groupScale(+d.mgd)); // height is based on 'mgd'
+      .attr('x', d => yearScale(d.water_year)) 
+      .attr('width', yearScale.bandwidth() - 10)
+      .attr('y', d => groupScale(+d.mgd)) 
+      .attr('height', d => facetHeight - groupScale(+d.mgd)) 
+      .style('fill', categoryColors[group]); 
 
     // y-axis for each facet 
     chartBounds.append('g')
