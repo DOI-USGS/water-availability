@@ -18,7 +18,7 @@ export default {
             page: 3,
             route: '/keyFinding03SUISVI',
             mainTitle: 'Unequal access to water',
-            shortTitle: 'Social vulnerability and water in America',
+            shortTitle: 'Socially vulnerable Americans have a higher risk of water stress',
             keyMessage: 'A high proportion of the population living in areas with water stress are socially vulnerable',
             references: [ "Azadpour2024"]
         },
@@ -60,14 +60,14 @@ export default {
             page: 7,
             route: '/keyFinding07WaterUse',
             mainTitle: 'For farm, home, and energy',
-            shortTitle: 'The largest demands for water in the U.S. are for crop irrigation, public supply, and thermoelectric power',
+            shortTitle: 'The largest demands for water are for irrigation, public supply, and thermoelectric power',
             keyMessage: 'About 225,000 million gallons of freshwater get used per day for irrigation (48%), public supply (16%), and thermoelectric power (36%).'
         },
         {
             page: 8,
             route: '/keyFinding08WaterUseRegional',
             mainTitle: 'From sea to shining sea',
-            shortTitle: 'How we use water varies across the country, including the source of water and the type of use',
+            shortTitle: 'How we use water varies across the country',
             keyMessage: 'Regionally, irrigation is the largest use in the western US; thermoelectric power generation is the largest use in the central and eastern US; and public supply is the largest use in heavily populated eastern states such as New York, New Jersey, and Rhode Island.  '
         },
         {

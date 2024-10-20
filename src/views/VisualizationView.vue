@@ -15,15 +15,17 @@
     </div>
     <div id="findings-container">
       <div class="raindrop-container">
-        <h3>Key findings</h3>
-      <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
-        <router-link :to="message.route">
-          <button class="raindrop"><span class="raindrop-text"> {{ message.page }}</span></button>
-        </router-link><br>
-        <div class="key-message-item-text">
-          {{ message.mainTitle }}
+        <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
+            <div class="raindrop-button-container">
+              <router-link :to="message.route">
+                <button class="raindrop"><span class="raindrop-text"> {{ message.page }}</span></button>
+              </router-link><br>
+            </div>
+          <div class="key-message-item-text">
+            <h3> {{ message.mainTitle }} </h3>
+            <h4> {{ message.shortTitle }}</h4>
+          </div>
         </div>
-      </div>
     </div>
     </div>
     <section class="wavy-container bottom-wavy">
@@ -88,8 +90,10 @@
 }
 
 .raindrop-container {
+  max-width: 1000px;
   width: 90vw;
-  padding-top: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -97,19 +101,21 @@
 }
 
 .key-message-item {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 0rem;
   position: relative;
   width: 90%;
   margin: 5px auto;
-  padding: 18px;
+  padding: 10px;
   background-color: var(--light-background);
-  border-radius: 10px;
-  display: block;
   overflow: visible;
 }
 
+
 .key-message-item-text {
   color: var(--blue-text-col);
-  width: 90%;
+  width: 100%;
   font-size: 3rem;
   text-align: left;
 }

@@ -237,7 +237,7 @@ body {
 
 h1 {
   font-size: 5rem;
-  font-weight: 500;
+  font-weight: 800;
 }
 h2 {
   font-size: 3.5rem;
@@ -245,21 +245,42 @@ h2 {
 }
 h3 {
   font-size: 3.0rem;
-}
-@media only screen and (max-width: 768px) {
-  h3 {
-    font-size: 2.5rem;
-  }
+  font-weight: 700;
 }
 h4 {
   font-size: 2.5rem;
   font-weight: 400;
   font-style: italic;
 }
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+  }  
+  h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  }
+  h3 {
+    font-size: 2.4rem;
+    font-weight: 700;
+  }
+  h4 {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+}
 .subheading {
   border-left: 10px solid var(--banner-col);
   margin: 1.5em 20% 1.5em 0;
   padding: 0.5em 15px;
+}
+@media only screen and (max-width: 768px) {
+  .subheading {
+    border-left: 5px solid var(--banner-col);
+    margin: 1.5em 0 1.5em 0;
+    padding: 0.5em 0px 0.5em 14px;
+  }
 }
 
 /* Text for d3 chart axes, etc */
