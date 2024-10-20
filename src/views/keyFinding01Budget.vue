@@ -29,9 +29,9 @@ const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.7 : window.innerHeight * 1.5;
-let margin = { top: 60, right: 20, bottom: 50, left: 100 };
+const containerWidth = window.innerWidth * 0.5;
+const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.50;
+let margin = { top: 60, right: 20, bottom: 50, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
 let chartBounds, dotGroup;
@@ -146,6 +146,14 @@ function createDotChart() {
 </script>
 
 <style scoped>
+#viz-container {
+  width: 100vw;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+#dotplot-container{
+  width: 100%;
+}
 .highlight {
   color: white;
   padding: 0.25px 5px;
