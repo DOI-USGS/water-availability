@@ -62,7 +62,7 @@ const containerWidth = Math.min(window.innerWidth * 0.8, 800); // Constrain to 7
 const containerHeight = mobileView ? window.innerHeight * 0.85 : 700;
 
 const margin = mobileView
-  ? { top: 60, right: labelWidth + 20, bottom: 20, left: 100 } // Increased right margin
+  ? { top: 60, right: 0, bottom: 20, left: 40 } // Increased right margin
   : { top: 80, right: labelWidth + 20, bottom: 40, left: 100 }; // Match the left space for balance
 
 const width = containerWidth - margin.left - margin.right;
