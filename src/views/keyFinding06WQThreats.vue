@@ -31,7 +31,7 @@
                 </div>
               </div>
               <div class="text-container">
-                <p><br>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States. These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels. Human-derived metals may also be released in more toxic and mobile forms than natural sources. </p>
+                <p><br>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels. Human-derived metals may also be released in more toxic and mobile forms than natural sources (Vareda et al., 2019). </p>
                 <p><br>Salinity effects on water availability are more spatially limited than nutrients, but salinity can cause considerable local issues for human beneficial uses and ecosystem needs. There has been a growing recognition of the threat that freshwater salinization (increasing salinity) of surface waters poses to water availability (Cañedo-Argüelles, 2020), with 37 percent of the drainage area of the CONUS having experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal and others, 2018; Cañedo-Argüelles, 2020). Trend assessments at individual sites across the United States show increasing salinity with time at many sites, particularly in urban areas, and at concentrations that indicate potential corrosion to drinking-water infrastructure. </p>
               </div>
             </section>
@@ -47,7 +47,7 @@
               </div>
               <div class="text-container">
                 <p>Mercury can limit water availability for aquatic species and humans through consumption of aquatic species. Mercury has geogenic sources (volcanos, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and primarily coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. The methylated form of mercury, methylmercury, is highly bioavailable and can accumulate in higher trophic levels, such as fish, relative to lower trophic levels at concentrations that make fish consumption unhealthy for humans (Wentz and others, 2014). For example, Arctic Indigenous peoples have a traditional diet rich in marine mammals and fish, which are also a substantial source of mercury exposure. Young children and developing fetuses are particularly vulnerable to mercury exposure through movement across the placenta from mother to fetus. Stream contaminants that threaten fish-consumption use by humans included primarily polychlorinated biphenyls and mercury.</p>
-                <p><br>Polychlorinated biphenyls (PCBs) are endocrine-disrupting compounds, associated with cancers and a wide range of human-health risks, are generally stable and persistent in the environment, and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou and others, 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption (fig. 2). Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites (point sources) and hydrologically connected locations. About 30 percent of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou and others, 2022). </p>
+                <p><br>Polychlorinated biphenyls (PCBs) are endocrine-disrupting compounds, associated with cancers and a wide range of human-health risks, are generally stable and persistent in the environment, and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou and others, 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption. Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites (point sources) and hydrologically connected locations. About 30 percent of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou and others, 2022). </p>
               </div>
             </section>
               <section id="rec-viz">
@@ -60,9 +60,12 @@
                   </div>
                 </div>
               </section>
+              <References></References>
         </div>
         <PageCarousel></PageCarousel>
     </section>
+
+
 </template>
 
 <script setup>
@@ -71,6 +74,7 @@ import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 import { color } from 'd3';
 
@@ -88,11 +92,14 @@ const datasetRec = ref([]);
 const selectedDataset = ref('datasetAll');
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
+const containerWidth = mobileView ? window.innerWidth * 0.9 : window.innerWidth * 0.8;
+const containerHeight = mobileView ? window.innerHeight * 0.85 : 600;
+const margin = mobileView 
+  ? { top: 10, right: 0, bottom: 10, left: 10 } 
+  : { top: 10, right: 50, bottom: 10, left: 150 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
+const nodePadding = mobileView ? 24 : 14; // Increase node spacing for mobile
 let chartBounds;
 let nodeGroup;
 let linkGroup;
@@ -110,7 +117,7 @@ const categoryColors = {
   'Biotic': '#EECEB9',
   'Nutrients':  '#939185',
   'Organics':  '#C8ACD6', 
-  'Metals and Physical':  '#80909D',
+  'Metals':  '#80909D',
   'Sediment': '#E8E8E3',
   'Salinity': '#F3C623',
   'Temperature': '#FFB0B0',
@@ -208,8 +215,8 @@ function initSankey({
       .append('svg')
       .attr('class', 'sankeySVG')
       .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
-      .style('width', containerWidth)
-      .style('height', containerHeight);
+      .style('width', '100%')
+      .style('height', 'auto');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
@@ -244,11 +251,12 @@ function createSankey({
     
     // initialize sankey
     const sankey = d3sankey.sankey()
-        .nodeSort(null)
-        .linkSort(null)
-        .nodeWidth(4)
-        .nodePadding(14)
-        .extent([[150, 5], [width - 300, height - 0]])
+      .nodeWidth(4)
+      .nodePadding(nodePadding) // Increase padding on mobile
+      .extent(mobileView 
+        ? [[75, 0], [width -70, height - 0]]
+        : [[150, 5], [width - 300, height - 0]]); //
+
 
     // Set up color scale 
     const colorScale = d3.scaleOrdinal()
@@ -270,7 +278,6 @@ function createSankey({
     const dur = 1000;
     const t = d3.transition().duration(dur);
 
-    console.log(nodes)
 
     // Update nodes for sankey, assigning data
     const sankeyNodesGroups = nodeGroup.selectAll('g')
@@ -304,7 +311,7 @@ function createSankey({
             .append("path")
               .attr("d", d3sankey.sankeyLinkHorizontal())
               .attr("stroke", d => colorScale(d.names[0]))
-              .attr("stroke-width", d => d.width)
+              .attr("stroke-width", d => mobileView ? d.width + 1 : d.width + 0.5) // add buffer so we never lose the lines, even on mobile
               .style("mix-blend-mode", "multiply")
               .style('fill', "none")
             .append("title")
@@ -327,35 +334,37 @@ function createSankey({
 
     // Update text for sankey, assigning data from nodes
     const sankeyTextGroups = textGroup.selectAll('g')
-          .data(nodes)
-          .join(
-            enter => {
-              enter
-              .append("text")
-                .attr("x", d => d.x0 < width / 2 ? d.x1 -10 : d.x0 + 10) //checks for right-most labels
-                .attr("y", d => (d.y1 + d.y0) / 2)
-                .attr("dy", "0.35em")
-                .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start") //checks for right-most labels
-                .text(d => d.name)
-                .style("font", "14px sans-serif")
-              .append("tspan")
-                .attr("fill-opacity", 0.7)
-                .text(d => ` ${d.value.toLocaleString()}`)
-                .style("font", "14px sans-serif")
-            },
-            null,
-            exit => {
-              exit
-                .transition()
-                .duration(dur / 2)
-                .style("fill-opacity", 0)
-                .style("stroke-width", 0)
-                .style("color-opacity", 0)
-                .remove();
-            }
-          );
-    
+      .data(nodes)
+      .join(
+        enter => {
+          const textEnter = enter
+            .append("text")
+            .attr("class", "axis-text")
+            .attr("x", d => d.x0 < width / 2 ? d.x0 - 5 : d.x1 + 5)  // Push left-side labels inside SVG bounds
+            .attr("y", d => (d.y1 + d.y0) / 2)
+            .attr("dy", "0.35em")
+            .attr("text-anchor", d => d.x0 < width / 2 ? "end" : "start")  // Left-side labels aligned to the end
 
+          // Add label text (name and value)
+          textEnter
+            .append("tspan")
+            .text(d => d.name);
+
+          if (mobileView) {
+            textEnter
+              .append("tspan")
+              .attr("x", d => d.x0 < width / 2 ? d.x0 - 10 : d.x1 + 10)  // Adjust x position for second line
+              .attr("dy", "1em")  // Move second line down
+              .attr("fill-opacity", 0.7)
+              .text(d => `${d.value.toLocaleString()}`);
+          } else {
+            textEnter
+              .append("tspan")
+              .attr("fill-opacity", 0.7)
+              .text(d => ` ${d.value.toLocaleString()}`);
+          }
+        }
+      );
 
 };
 
@@ -405,14 +414,37 @@ function graphNodes({data}){ //https://observablehq.com/@d3/parallel-sets?collec
     }
   }
 
-  console.log(links[0].names[0])
-  console.log(nodes)
+  //console.log(links[0].names[0])
+  //console.log(nodes)
   return {nodes, links};
 };
+
+window.addEventListener('resize', () => {
+  containerWidth = window.innerWidth * 0.8;
+  containerHeight = mobileView ? window.innerHeight * 0.9 : 600;
+  width = containerWidth - margin.left - margin.right;
+  height = containerHeight - margin.top - margin.bottom;
+  // Update the chart
+  initSankey({ containerWidth, containerHeight, margin, width, height, containerId: 'DW-container' });
+  createSankey({ dataset: datasetDW.value, containerId: 'DW-container' });
+});
+
+
 
 </script>
 
 <style scoped>
+.viz-container {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* Center align the chart */
+}
+
+#DW-container, #fish-container, #rec-container {
+  width: 100%;
+  height: 100%;
+}
 
 .highlight {
   color: black;

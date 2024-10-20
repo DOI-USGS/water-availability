@@ -37,6 +37,7 @@ const mobileView = isMobile; // Detect mobile view for responsive design
 let svg, chartBounds, rectGroup, useAxis, yearAxis;
 let categoryGroups, yearGroups, stackedData;
 let yearScale, useScale, categoryRectGroups;
+
 const containerWidth = window.innerWidth * 0.8;
 const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
 const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
@@ -158,32 +159,44 @@ function updateChart() {
 // transition chart to a faceted view (split vertically)
 function transitionToFaceted() {
   const facetHeight = height / categoryGroups.length;
+
+  // clean up
   useAxis.transition().duration(500).style('opacity', 0).remove(); // remove shared y-axis
+  chartBounds.selectAll('.y-axis').remove();
 
   // move each category to its own facet along the y-axis
   categoryGroups.forEach((group, i) => {
-    const groupScale = d3.scaleLinear()
-      .domain([0, d3.max(stackedData[i], d => d[1])]) // Max value for each category group
-      .range([facetHeight, 0]);
 
-    // move group to its own facet
-    d3.select(`g #${sanitizeSelector(group)}`)
+    // use the original dataset
+    const groupData = data.value.filter(d => d.Use === group);
+
+    // find max mgd by group
+    const groupMaxMgd = d3.max(groupData, d => +d.mgd);
+
+    // get group-specific y-scale using max mgd
+    const groupScale = d3.scaleLinear()
+      .domain([0, groupMaxMgd]) 
+      .range([facetHeight, 0]); 
+
+   // move group to its own facet
+   d3.select(`g #${sanitizeSelector(group)}`)
       .transition()
       .duration(1000)
-      .attr('transform', `translate(0, ${i * facetHeight})`); // adjust each group's vertical position
+      .attr('transform', `translate(0, ${i * facetHeight})`);
 
-    // adjust the bars for the category group using the group-specific scale
+    // Adjust the bars for the category group using the group-specific scale
     d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
       .transition()
       .duration(1000)
-      .attr('y', d => groupScale(d[1] - d[0])) // Base at 0, height from data value
-      .attr('height', d => facetHeight - groupScale(d[1] - d[0])); // Height proportional to the data
+      .attr('y', d => groupScale(d[1] - d[0]))
+      .attr('height', d => facetHeight - groupScale(d[1] - d[0]));
 
-    // add y-axis to each facet
+    // Append the y-axis for each facet
     chartBounds.append('g')
       .attr('class', 'y-axis')
       .attr('transform', `translate(0, ${i * facetHeight})`)
       .call(d3.axisLeft(groupScale).ticks(4).tickFormat(d => d + ' mgd'));
+
   });
 }
 

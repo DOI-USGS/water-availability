@@ -15,6 +15,7 @@
   --blue-text-col: #00264C;/* #363E4A; */ /* #00264C; */
   --grey-blue: #5e7789;
   --page-bkg-col: #FEFAF6;/* #edeadf; */
+  --blue-bright: #0f52ba;
 
   --black-soft: #151515;
 
@@ -80,6 +81,19 @@
     width: 90%;
   }
 }
+.references-container {
+  width: 60%;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+.references-container p {
+  font-size: 18px;
+  line-height: 1.4;
+  padding-left: 20px;
+}
+.references-container p:first-letter {
+  margin-left: -20px;
+}
 .button-container {
   padding: 10px 0;
   margin: 0 auto;
@@ -87,6 +101,28 @@
   justify-content: center;
 }
 
+.report-link-container {
+  padding: 40px 20px;
+  text-align: center;
+  z-index:9999;
+}
+
+.report-link {
+  display: inline-block;
+  padding: 20px 40px;
+  margin: 5px;
+  font-size: 2rem;
+  color: var(--blue-text-col);
+  border: 2px solid var(--blue-text-col);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.report-link:hover {
+  background-color: var(--blue-text-col);
+  color: white;
+}
 
 /* button for switching between images */
 .toggle-button{
@@ -139,25 +175,28 @@ section .waves .wave#wave1{
   opacity: 1;
   bottom: 0; 
   z-index: 1000;
-  animation: animate 6s linear infinite;
+  animation: animate 12s linear infinite;
 }
 section .waves .wave#wave2{
   opacity: 0.5;
   bottom: 2px; 
   z-index: 999;
-  animation: animate2 6s linear infinite;
+  animation: animate2 19s linear infinite;
 }
 section .waves .wave#wave3{
   opacity: 0.2;
   bottom: 5px; 
   z-index: 998;
-  animation: animate 4s linear infinite;
+  animation: animate 14s linear infinite;
 }
 section .waves .wave#wave4{
   opacity: 0.7;
   bottom: 10px; 
   z-index: 999;
-  animation: animate2 4s linear infinite;
+  animation: animate2 14s linear infinite;
+}
+.upside-down {
+  transform: scaleY(-1); /* Flip the waves upside down */
 }
 @keyframes animate {
   0% {
@@ -188,6 +227,7 @@ body {
     Source Sans Pro,
     sans-serif;
   font-size: 2rem;
+  font-weight: 400;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -211,8 +251,36 @@ h3 {
   }
 }
 
+/* Text for d3 chart axes, etc */
+.axis-text{
+  font-family:
+    Source Sans Pro,
+    sans-serif;
+  font-size: 18px;
+}
+@media only screen and (max-width:490px) {
+  .axis-text{
+    font-family:
+      Source Sans Pro,
+      sans-serif;
+    font-size: 16px;
+  }
+}
+
 .viz-placeholder{
-  width: 100%;
+  width:80%;
+}
+.viz-double-portrait{
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  border-radius: 15px;
+  background-color: white;
+  width: 30%;
+  margin: 10px;
+}
+@media only screen and (max-width:490px) {
+  .viz-double-portrait{
+    width: 80%;
+  }
 }
 
 /* Settings for the interactive svgs with hover effects */
