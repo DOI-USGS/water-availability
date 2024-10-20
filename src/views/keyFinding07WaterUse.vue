@@ -110,8 +110,6 @@ function createBarChart({ dataset }) {
     .call(d3.axisBottom(yearScale))
     .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
 
-  yearAxis.select(".domain").remove();
-
   // Y-axis (water use scale)
   useScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
@@ -184,25 +182,37 @@ function transitionToFaceted() {
       .duration(1000)
       .attr('transform', `translate(0, ${i * facetHeight})`);
 
-    // Adjust the bars for the category group using the group-specific scale
+    // adjust the bars for the category group using the group-specific scale
     d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
       .transition()
       .duration(1000)
       .attr('y', d => groupScale(d[1] - d[0]))
       .attr('height', d => facetHeight - groupScale(d[1] - d[0]));
 
-    // Append the y-axis for each facet
+    // y-axis for each facet
     chartBounds.append('g')
       .attr('class', 'y-axis')
       .attr('transform', `translate(0, ${i * facetHeight})`)
       .call(d3.axisLeft(groupScale).ticks(4).tickFormat(d => d + ' mgd'));
 
+    // add x-axis
+    chartBounds.append('g')
+      .attr('class', 'x-axis')
+      .attr('transform', `translate(0, ${i * facetHeight + facetHeight})`)
+      .call(d3.axisBottom(yearScale).tickSize(0)) 
+      .selectAll('.tick line').remove(); 
+
   });
+
+  // hide the main x-axis
+  yearAxis.transition().duration(500).style('opacity', 0).remove();
 }
 
 // transition the chart back to a stacked view
 function transitionToStacked() {
-  chartBounds.selectAll('.y-axis').remove(); // Clear previous y-axes
+  // clear previous axes
+  chartBounds.selectAll('.y-axis').remove(); 
+  chartBounds.selectAll('.x-axis').remove();
 
   useScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
@@ -221,6 +231,14 @@ function transitionToStacked() {
     .attr('y', d => useScale(d[1]))
     .attr('height', d => useScale(d[0]) - useScale(d[1]));
 
+  // main x-axis
+  yearAxis = chartBounds.append('g')
+    .attr('class', 'x-axis')
+    .attr('transform', `translate(0, ${height})`)
+    .call(d3.axisBottom(yearScale).tickSize(0)) 
+    .selectAll('.tick line').remove();
+
+  // shared y-axis
   useAxis = chartBounds.append('g')
     .call(d3.axisLeft(useScale).ticks(4).tickFormat(d => d + ' mgd'))
     .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
