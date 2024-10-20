@@ -12,7 +12,8 @@ export default {
             route: '/02SUI',
             mainTitle: 'Living with water stress',
             shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water stress',
-            keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.'
+            keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.',
+            references: ["Liu2022", "Dettingher2005"]
         },
         {
             page: 3,

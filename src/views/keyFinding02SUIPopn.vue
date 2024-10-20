@@ -8,62 +8,26 @@
           <div class="viz-container">
             <img class="viz-portrait" src="../../public/images/k02_sui_popn_CONUS.png">
           </div>
+          <div class="text-container">
+            <p>Understanding limitations to water availability are evident when multiple types of stresses are examined together. Regions stressed by multiple factors, such as surface water and groundwater quality issues, water imbalance, or by alterations to ecological flow, are at additional risk for addressing issues of water supply in the future. None of the hydrologic regions in the U.S. have very low stress in all four categories. The ability to better describe the specific ways in which water-availability limitations interact is vital and presents an important path forward in improving future water-availability assessments. Nevertheless, our findings emphasize that high water demand for human activities combined with limited supply often co-occurs with elevated water stress from other factors.</p>
+          </div>
+          <div class="viz-container">
+            <img class="viz-portrait" src="../../public/images/kf2_stressType_maps.png">
+          </div>
+          <References></References>
         </div>
         <PageCarousel></PageCarousel>
     </section>
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue';
-  import * as d3Base from 'd3';
   import PageCarousel from '../components/PageCarousel.vue';
   import KeyMessages from '../components/KeyMessages.vue';
-  import AggReg from "@/assets/svgs/AggReg.svg";
+  import References from "../components/References.vue"
 
-  const imgSrc = ref('@/assets/images/k03_sui_popn_CONUS.png');
-
-  const setDefaultImgSrc = () => {
-    import(`@/assets/images/k03_sui_popn_CONUS.png`).then(img => {
-      imgSrc.value = img.default;
-    });
-  };
-
-  const addInteractions = () => {
-    const mapSVG = d3Base.select('.agg-reg-svg');
-    mapSVG.selectAll('.AggReg_nam_nospace')
-      .on("mouseover", mouseoverMap)
-      .on("mouseout", mouseoutMap);
-  };
-
-  const mouseoverMap = (event) => {
-    const regionID = event.target.id;
-    d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#5e7789");
-    const formattedRegionID = regionID.replace(/_/g, ' ');
-    import(`@/assets/images/k03_sui_popn_${regionID}.png`).then(img => {
-      imgSrc.value = img.default;
-    });
-  };
-
-  const mouseoutMap = (event) => {
-    const regionID = event.target.id;
-    d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
-    import(`@/assets/images/k03_sui_popn_CONUS.png`).then(img => {
-      imgSrc.value = img.default;
-    });
-  };
-
-  onMounted(() => {
-    setDefaultImgSrc();
-    addInteractions();
-  });
 
 </script>
 
 <style scoped>
-  #smallerCircles {
-      width: 30vw;
-  }
-  #circles {
-      width: 50vw;
-  }
+
 </style>
