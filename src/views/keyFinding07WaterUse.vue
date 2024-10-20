@@ -58,8 +58,8 @@ let yearScale, useScale, categoryRectGroups;
 
 // Adjust margins to equalize space
 const labelWidth = 50; // Estimated width of the "mgd" label
-const containerWidth = Math.min(window.innerWidth * 0.8, 900); // Constrain to 700px max
-const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
+const containerWidth = Math.min(window.innerWidth * 0.8, 800); // Constrain to 700px max
+const containerHeight = mobileView ? window.innerHeight * 0.85 : 700;
 
 const margin = mobileView
   ? { top: 60, right: labelWidth + 20, bottom: 20, left: 100 } // Increased right margin
@@ -142,7 +142,7 @@ function createBarChart({ dataset }) {
   yearScale = d3.scaleBand()
     .domain(yearGroups)
     .range([0, width])
-    .padding(0.05);
+    .padding(0.02);
 
   // y-axis (water use scale)
   useScale = d3.scaleLinear()
@@ -164,6 +164,8 @@ function createBarChart({ dataset }) {
       .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(yearScale).tickSize(0))
       .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
+      //.selectAll('.tick text')
+      //.attr('transform', `translate(${yearScale.bandwidth() / 4}, 0)`)
       .selectAll('.tick line').remove();
   });
 
@@ -183,7 +185,7 @@ function createBarChart({ dataset }) {
       .attr('x', d => yearScale(d.data[0]))
       .attr('y', d => useScale(d[1]))
       .attr('height', d => useScale(d[0]) - useScale(d[1]))
-      .attr('width', yearScale.bandwidth() - 10)
+      .attr('width', yearScale.bandwidth() - 5)
       .style('fill', d => colorScale(d.key)));
 
   // mgd label
@@ -268,7 +270,7 @@ function transitionToFaceted() {
       //.join(enter => enter.append('rect')) 
       .transition(t)
       .attr('x', d => yearScale(d.water_year)) 
-      .attr('width', yearScale.bandwidth() - 10)
+      .attr('width', yearScale.bandwidth() - 5)
       .attr('y', d => groupScale(+d.mgd)) 
       .attr('height', d => facetHeight - groupScale(+d.mgd)) 
       .style('fill', categoryColors[group]); 
@@ -303,7 +305,7 @@ function transitionToStacked() {
     .attr('x', d => yearScale(d.data[0])) // re-position x
     .attr('y', d => useScale(d[1])) // stacked y-position (top of bar)
     .attr('height', d => useScale(d[0]) - useScale(d[1])) 
-    .attr('width', yearScale.bandwidth() - 10); 
+    .attr('width', yearScale.bandwidth() - 5); 
 
   // transition the 4 y-axes back to overlap on top of each other
   categoryGroups.forEach((group, i) => {
@@ -332,8 +334,6 @@ function transitionToStacked() {
   
 }
 
-
-
 // On mounted loads data and initializes the chart
 onMounted(async () => {
   await loadDatasets();
@@ -347,7 +347,7 @@ onMounted(async () => {
 
 <style scoped>
 #barplot-container {
-  max-width: 900px;
+  max-width: 800px;
   width: 100%;
   margin: auto;
   display: flex;
