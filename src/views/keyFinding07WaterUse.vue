@@ -154,9 +154,10 @@ function updateChart() {
   }
 }
 
-// transition chart to a faceted view (split vertically)
 function transitionToFaceted() {
-  const facetHeight = height / categoryGroups.length;
+  const totalPadding = (categoryGroups.length - 1) * 20; // Total padding between facets
+  const facetHeight = (height - totalPadding) / categoryGroups.length; // Adjust facet height to include padding
+  const facetPadding = 20; // Padding between facets
 
   // clean up
   useAxis.transition().duration(500).style('opacity', 0).remove(); // remove shared y-axis
@@ -176,29 +177,29 @@ function transitionToFaceted() {
       .domain([0, groupMaxMgd]) 
       .range([facetHeight, 0]); 
 
-   // move group to its own facet
-   d3.select(`g #${sanitizeSelector(group)}`)
+    // move group to its own facet
+    d3.select(`g #${sanitizeSelector(group)}`)
       .transition()
       .duration(1000)
-      .attr('transform', `translate(0, ${i * facetHeight})`);
+      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`);
 
     // adjust the bars for the category group using the group-specific scale
     d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
       .transition()
       .duration(1000)
-      .attr('y', d => groupScale(d[1] - d[0]))
-      .attr('height', d => facetHeight - groupScale(d[1] - d[0]));
+      .attr('y', d => groupScale(+d.data.mgd))
+      .attr('height', d => facetHeight - groupScale(+d.data.mgd));
 
     // y-axis for each facet
     chartBounds.append('g')
       .attr('class', 'y-axis')
-      .attr('transform', `translate(0, ${i * facetHeight})`)
+      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`)
       .call(d3.axisLeft(groupScale).ticks(4).tickFormat(d => d + ' mgd'));
 
-    // add x-axis
+    // x-axis for each facet (adjusted for spacing)
     chartBounds.append('g')
       .attr('class', 'x-axis')
-      .attr('transform', `translate(0, ${i * facetHeight + facetHeight})`)
+      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding) + facetHeight})`)
       .call(d3.axisBottom(yearScale).tickSize(0)) 
       .selectAll('.tick line').remove(); 
 
@@ -207,6 +208,7 @@ function transitionToFaceted() {
   // hide the main x-axis
   yearAxis.transition().duration(500).style('opacity', 0).remove();
 }
+
 
 // transition the chart back to a stacked view
 function transitionToStacked() {
