@@ -221,7 +221,7 @@ function createBarChart({
         .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
         (d3.index(dataset, d => d.region_nam, d => d.category));
 
-        console.log(stackedData.keys())
+
 
     // Set up region scale (xScale in water-bottling site)
     const regionScale = d3.scaleBand()
@@ -231,7 +231,7 @@ function createBarChart({
     // add region axis
     const regionAxis = chartBounds.append('g')
         .call(mobileView ? d3.axisLeft(regionScale) : d3.axisTop(regionScale))
-        .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
+        .attr('class', 'axis-text')
         .selectAll(".tick text")
           .call(wrap, 80);
 
@@ -249,6 +249,7 @@ function createBarChart({
       .call(mobileView ? d3.axisTop(nutrientScale).ticks(3).tickFormat(
             d => scaleLoad ? d + 'k Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
               d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
+      .attr('class', 'axis-text')
     
 
     // Set up transition.
