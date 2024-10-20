@@ -4,14 +4,14 @@
     <div class="content-container">
       <div class="text-container">
         <p>
-          Most of our daily water use in the United States is for
-          <span class="highlight" id="Irrigation"> agriculture </span>,
+          Around 90% of daily water use in the United States comes from public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for
+          <span class="highlight" id="Irrigation">agriculture </span>
           followed by fresh water used in the process of creating energy from
-          <span class="highlight" id="Thermoelectric-fresh"> Thermoelectric Power Plants</span>. Along with
+          <span class="highlight" id="Thermoelectric-fresh"> Thermoelectric power</span> plants. Along with
           <span class="highlight" id="Public_Supply"> public supply </span>,
           these three uses of water add up to 225,000 million gallons of water used per day in the U.S.
-          <span class="highlight" id="Thermoelectric-saline"> Thermoelectric Power Generation (from saline water sources)</span>
-          uses another approximately 21,000 mgd. Combined, public supply, irrigation, and thermoelectric power generation comprise 90% of our daily water use budget.
+          <span class="highlight" id="Thermoelectric-saline"> Thermoelectric power (from saline water)</span>
+          uses another approximately 21,000 mgd.
         </p>
       </div>
       <div class="toggle-buttons">
@@ -19,7 +19,7 @@
           :class="{ active: !isFaceted }"
           @click="toggleToStacked"
         >
-          Show annual water use
+          Show total annual use
         </button>
         <button
           :class="{ active: isFaceted }"
@@ -30,6 +30,11 @@
       </div>
       <div class="viz-container">
         <div id="barplot-container"></div>
+      </div>
+      <div class="text-container">
+        <p>
+          Water use reflects human dependence on freshwater resources for public health and economic development.
+        </p>
       </div>
     </div>
     <PageCarousel></PageCarousel>
