@@ -230,39 +230,47 @@ function transitionToFaceted() {
 
 // transition the chart back to a stacked view
 function transitionToStacked() {
-  // clear previous axes
+  // clear previous axes (from faceted view)
   chartBounds.selectAll('.y-axis').remove(); 
   chartBounds.selectAll('.x-axis').remove();
 
+  // re-calculate the use scale for the stacked bar chart
   useScale = d3.scaleLinear()
-    .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
+    .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))]) // stacked max value
     .range([height, 0]);
 
   yearScale.range([0, width]);
 
   // transition the bars back to the stacked position
-  categoryRectGroups.transition()
+  categoryRectGroups // select the category groups
+    .data(stackedData) // bind stacked data to groups
+    .transition() 
     .duration(1000)
-    .attr('transform', 'translate(0, 0)')
-    .selectAll('rect')
-    .transition()
-    .duration(1000)
-    .attr('x', d => yearScale(d.data[0]))
-    .attr('y', d => useScale(d[1]))
-    .attr('height', d => useScale(d[0]) - useScale(d[1]));
+    .attr('transform', 'translate(0, 0)'); // reset facet-specific transforms
 
-  // main x-axis
+  categoryRectGroups.selectAll('rect') 
+    .data(d => d) // re-bind the stacked data to the rects
+    .transition() 
+    .duration(1000)
+    .attr('x', d => yearScale(d.data[0])) // re-position x
+    .attr('y', d => useScale(d[1])) // stacked y-position (top of bar)
+    .attr('height', d => useScale(d[0]) - useScale(d[1])) 
+    .attr('width', yearScale.bandwidth() - 10); 
+
+  // re-add the shared x-axis 
   yearAxis = chartBounds.append('g')
     .attr('class', 'x-axis')
     .attr('transform', `translate(0, ${height})`)
     .call(d3.axisBottom(yearScale).tickSize(0)) 
-    .selectAll('.tick line').remove();
+    .selectAll('.tick line').remove(); 
 
-  // shared y-axis
+  // re-add the shared y-axis
   useAxis = chartBounds.append('g')
     .call(d3.axisLeft(useScale).ticks(4).tickFormat(d => d + ' mgd'))
     .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
 }
+
+
 
 // On mounted loads data and initializes the chart
 onMounted(async () => {
