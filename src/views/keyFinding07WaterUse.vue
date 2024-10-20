@@ -105,13 +105,6 @@ function createBarChart({ dataset }) {
     .range([0, width])
     .padding(0.05);
 
-  yearAxis = chartBounds.append('g')
-    .attr('class', 'x-axis')
-    .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(yearScale).tickSize(0))
-    .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
-    .selectAll('.tick line').remove();
-
   // y-axis (water use scale)
   useScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
@@ -123,6 +116,16 @@ function createBarChart({ dataset }) {
       .attr('class', `y-axis y-axis-${i}`)
       .call(d3.axisLeft(useScale).ticks(4).tickFormat(d3.format("~s")))
       .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
+  });
+
+  // Create 4 identical x-axes (initially on top of each other)
+  categoryGroups.forEach((group, i) => {
+    chartBounds.append('g')
+      .attr('class', `x-axis x-axis-${i}`)
+      .attr('transform', `translate(0, ${height})`)
+      .call(d3.axisBottom(yearScale).tickSize(0))
+      .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
+      .selectAll('.tick line').remove();
   });
 
   // Create color scale for the bars
@@ -196,6 +199,13 @@ function transitionToFaceted() {
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`)
       .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")));
 
+       // transition the x-axis into place for each category group
+    d3.select(`.x-axis-${i}`)
+      .transition(t)
+      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding) + facetHeight})`)
+      .call(d3.axisBottom(yearScale).tickSize(0))
+      .selectAll('.tick line').remove();
+      
     // move group to its own facet
     const groupSelection = d3.select(`g #${sanitizeSelector(group)}`)
       .transition(t)
@@ -212,12 +222,6 @@ function transitionToFaceted() {
       .attr('height', d => facetHeight - groupScale(+d.mgd)) 
       .style('fill', categoryColors[group]); 
 
-   // transition the x-axis
-   d3.select('.x-axis')
-      .transition(t)
-      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding) + facetHeight})`)
-      .call(d3.axisBottom(yearScale).tickSize(0))
-      .selectAll('.tick line').remove();
   });
 
 }
@@ -233,7 +237,7 @@ function transitionToStacked() {
     .data(stackedData) // bind stacked data to groups
     .transition(t) 
     .attr('transform', 'translate(0, 0)'); // reset facet-specific transforms
-    
+
   categoryRectGroups.selectAll('rect') 
     .data(d => d) // re-bind the stacked data to the rects
     .transition(t) 
@@ -241,13 +245,6 @@ function transitionToStacked() {
     .attr('y', d => useScale(d[1])) // stacked y-position (top of bar)
     .attr('height', d => useScale(d[0]) - useScale(d[1])) 
     .attr('width', yearScale.bandwidth() - 10); 
-
-  // transition the x-axis back to the bottom
-  d3.select('.x-axis')
-    .transition(t)
-    .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(yearScale).tickSize(0))
-    .selectAll('.tick line').remove();
 
   // transition the 4 y-axes back to overlap on top of each other
   categoryGroups.forEach((group, i) => {
@@ -258,6 +255,15 @@ function transitionToStacked() {
         .ticks(4)
         .tickFormat(d3.format("~s"))
       );
+  });
+
+  // transition the 4 x-axes back to overlap on top of each other
+  categoryGroups.forEach((group, i) => {
+    d3.select(`.x-axis-${i}`)
+      .transition(t)
+      .attr('transform', `translate(0, ${height})`)
+      .call(d3.axisBottom(yearScale).tickSize(0))
+      .selectAll('.tick line').remove();
   });
 }
 
