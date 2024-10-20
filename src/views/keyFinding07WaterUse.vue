@@ -38,11 +38,19 @@ let svg, chartBounds, rectGroup, useAxis, yearAxis;
 let categoryGroups, yearGroups, stackedData;
 let yearScale, useScale, categoryRectGroups;
 
-const containerWidth = window.innerWidth * 0.8;
+// Adjust margins to equalize space
+const labelWidth = 50; // Estimated width of the "mgd" label
+const containerWidth = Math.min(window.innerWidth * 0.8, 900); // Constrain to 700px max
 const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
+
+const margin = mobileView
+  ? { top: 60, right: labelWidth + 20, bottom: 20, left: 100 } // Increased right margin
+  : { top: 80, right: labelWidth + 20, bottom: 40, left: 100 }; // Match the left space for balance
+
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
+
+
 
 // Define colors for each category group
 const categoryColors = {
@@ -147,14 +155,26 @@ function createBarChart({ dataset }) {
       .attr('width', yearScale.bandwidth() - 10)
       .style('fill', d => colorScale(d.key)));
 
+  // mgd label
   svg.append("text")
     .attr("class", "y-axis-label")
     .attr("x", margin.left / 2) // position to the upper left
     .attr("y", margin.top / 2)
-    .attr("text-anchor", "middle")
+    .attr("text-anchor", "left")
     .style("font-size", "2.5rem")
     .style("font-weight", "bold")
     .text("mgd");
+
+  // written out mgd label
+  svg.append("text")
+    .attr("class", "y-axis-label-explained")
+    .attr("x", (margin.left / 2) + labelWidth*1.2) 
+    .attr("y", margin.top / 2)
+    .attr("text-anchor", "left")
+    .style("font-size", "2.5rem")
+    .style("font-style", "italic")
+    .style('font-weight', "300")
+    .text("million gallons per day");
 }
 
 // Toggle between stacked and faceted views
@@ -281,6 +301,14 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+#barplot-container {
+  max-width: 900px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
 .highlight {
   color: white;
   padding: 0.25px 5px;
