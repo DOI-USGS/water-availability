@@ -3,13 +3,18 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water supply there is and how much water are we using. For most of the country, <span class="highlight" id="supply">water supply</span> is much higher than <span class="highlight" id="demand">water demand</span>, meaning there is more than enough water available to meet our needs. In some regions, however, the difference between water supply and demand is much smaller. Those regions are more likely to experience water stress, meaning there is not enough water available to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.</p>
+                <p>Water balance is the difference between how much clean water supply there is and how much water are we using. For most of the country, <span class="highlight" id="supply">water supply</span> is much higher than <span class="highlight" id="demand">water demand</span>, meaning there is more than enough water available to meet our needs. 
+                  </p>
             </div>
-            <div class="viz-container">
-                <div id="dotplot-container">    
-                </div>
-            </div>
+        <div class="viz-container">
+          <div id="dotplot-container"> </div>   
         </div>
+        <div class="text-container">
+        <p>
+          Water stress occurs when there is not enough water available to meet human and ecosystem needs. This is more likely to happen in  regions where the difference between water supply and demand is fairly small. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.
+        </p>
+      </div>
+      </div>
         <PageCarousel></PageCarousel>
     </section>
 </template>
@@ -29,9 +34,9 @@ const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.5;
+const containerWidth = window.innerWidth * 0.6;
 const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.50;
-let margin = { top: 60, right: 20, bottom: 50, left: 200 };
+let margin = { top: 60, right: 200, bottom: 50, left: 300 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
 let chartBounds, dotGroup;
@@ -146,13 +151,20 @@ function createDotChart() {
 </script>
 
 <style scoped>
+.content-container {
+  display: block;
+}
 #viz-container {
-  width: 100vw;
+  width: 90%;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 20px auto;
+  display: block;
 }
 #dotplot-container{
   width: 100%;
+}
+.text-container {
+  margin: 20px auto;
 }
 .highlight {
   color: white;
