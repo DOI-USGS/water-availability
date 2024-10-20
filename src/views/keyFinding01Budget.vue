@@ -15,15 +15,14 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
-    import * as d3 from 'd3';
-    import PageCarousel from '../components/PageCarousel.vue';
-    import KeyMessages from '../components/KeyMessages.vue';
-    import { isMobile } from 'mobile-device-detect';
+import { onMounted, ref } from 'vue';
+import * as d3 from 'd3';
+import PageCarousel from '../components/PageCarousel.vue';
+import KeyMessages from '../components/KeyMessages.vue';
+import { isMobile } from 'mobile-device-detect';
 
-    // use for mobile logic
+// use for mobile logic
 const mobileView = isMobile;
-//console.log(mobileView)
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -32,30 +31,18 @@ const data = ref([]);
 let svg;
 const containerWidth = window.innerWidth * 0.8;
 const containerHeight = mobileView ? window.innerHeight * 0.7 : window.innerHeight * 1.5;
-const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 10, right: 10, bottom: 10, left: 100 };
-const width = containerWidth - margin.left - margin.right;
-const height = containerHeight - margin.top - margin.bottom;
-let chartBounds;
-let dotGroup;
+let margin = { top: 60, right: 20, bottom: 50, left: 100 };
+let width = containerWidth - margin.left - margin.right;
+let height = containerHeight - margin.top - margin.bottom;
+let chartBounds, dotGroup;
 
 onMounted(async () => {
     try {
         await loadDatasets();
         data.value = dataSet1.value;
         if (data.value.length > 0) {
-
-            //console.log(regionGroups);
-
-            initDotChart({
-              containerWidth: containerWidth,
-              containerHeight: containerHeight,
-              margin: margin,
-              width: width,
-              height: height
-            });
-            createDotChart({
-              dataset: data.value
-            });
+            initDotChart();
+            createDotChart();
         } else {
             console.error('Error loading data');
         }
@@ -65,138 +52,95 @@ onMounted(async () => {
 });
 
 async function loadDatasets() {
-  try {
     dataSet1.value = await loadData('wa_supply_demand.csv');
-    console.log('data in');
-  } catch (error) {
-    console.error('Error loading datasets', error);
-  }
 };
 
 async function loadData(fileName) {
-  try {
-    const data = await d3.csv(publicPath + fileName, d => { 
-      return d;
-    });
-    return data;
-  } catch (error) {
-    console.error(`Error loading data from ${fileName}`, error);
-    return [];
-  }
+    try {
+        const data = await d3.csv(publicPath + fileName, d => d);
+        return data;
+    } catch (error) {
+        console.error(`Error loading data from ${fileName}`, error);
+        return [];
+    }
 };
 
-function initDotChart({
-        containerWidth,
-        containerHeight,
-        margin
-    }) {
-
-    // draw svg canvas for sankey
+function initDotChart() {
     svg = d3.select('#dotplot-container')
       .append('svg')
-      .attr('class', 'sankeySVG')
       .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
       .style('width', '100%')
       .style('height', 'auto');
 
-    // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
-      .attr('id', 'wrapper')
-      .style("transform", `translate(${
-        margin.left
-      }px, ${
-        margin.top
-      }px)`)
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-    // Add group to chart bounds to hold all sankey path groups
-    dotGroup = chartBounds.append('g')
-      .attr('id', 'dot-group')
-    
-};
+    dotGroup = chartBounds.append('g');
+}
 
-function createDotChart({
-    dataset
-  }) {
+function createDotChart() {
+    const dataset = data.value;
+
+    if (!dataset || dataset.length === 0) {
+        console.error("No dataset available for creating the dot chart");
+        return;
+    }
 
     const yAccessor = d => d["Region_nam"];
     const xAccessorSupply = d => d["supply_mean"];
     const xAccessorDemand = d => d["demand_mean"];
 
-
     // scales
     const xScale = d3.scaleLinear()
-        .domain(d3.extent(dataset, d => d.supply_mean))
-        .range([width, 0])
-        .nice()
+        .domain(d3.extent(dataset, d => +d.supply_mean))
+        .range([0, width])
+        .nice();
 
     const yScale = d3.scaleBand()
         .domain(dataset.map(yAccessor))
         .range([0, height])
+        .padding(0.1);
 
-    // axes 
-    const xAxisGenerator = d3.axisBottom()
-        .scale(xScale)
+    // Remove old elements (if any) to avoid overlaps
+    dotGroup.selectAll("*").remove();
 
-    const xAxis = dotGroup.append("g")
-        .call(xAxisGenerator)
-            .style("transform", `translateY(${height}px)`)
+    // Append axes
+    dotGroup.append('g')
+        .attr('class', 'x-axis')
+        .attr('transform', `translate(0, ${height})`)
+        .call(d3.axisBottom(xScale).ticks(5));
 
-    const xAxisLabel = xAxis.append("text")
-        .attr("x", width / 2)
-        .attr("y", margin.bottom  - 10)
-        .attr("fill", "black")
-        .text("Mean in mm per year")
-        .attr('class', 'axis-text')
+    dotGroup.append('g')
+        .attr('class', 'y-axis')
+        .call(d3.axisLeft(yScale));
 
-    const yAxisGenerator = d3.axisLeft()
-        .scale(yScale)
-        .ticks(18)
-
-    const yAxis = dotGroup.append("g")
-        .call(yAxisGenerator)
-
-    const yAxisLabel = yAxis.append("text")
-        .attr("x", -height / 2)
-        .attr("y", -margin.left + 10)
-        .attr("fill", "black")
-        .text("Region")
-        .style("transform", "rotate(-90deg)")
-        .style("text-anchor", "middle")
-        .attr('class', 'axis-text')
-
-    // attach data 
-    const lineGenerator = d3.line()
-    const axisLinePath = d => lineGenerator( [ [xScale(d) + 0.5, 0], [xScale(d) + 0.5, height]])
-    const dotsLinePath = d => lineGenerator([ [xScale(xAccessorDemand(d)), xScale(xAccessorSupply(d))], [xScale(xAccessorSupply(d)), 0] ])
-  
-    const dotsGroup = dotGroup.append("g")
-        .attr("class", "dots")
-    
-    const dots = dotsGroup.selectAll("g")
+    // Add dots and lines
+    dotGroup.selectAll(".line")
         .data(dataset)
-        .enter().append("g")
-            .attr("class", "dot")
-            .attr("transform", d => `translate(0, ${(yScale(yAccessor(d)) + (yScale.bandwidth() / 2))})`)
- 
-    dots.append("path")
-        .attr("class", "dots-line")
-        .attr("d", dotsLinePath)
+        .enter().append('line')
+        .attr('x1', d => xScale(d.supply_mean))
+        .attr('x2', d => xScale(d.demand_mean))
+        .attr('y1', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
+        .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
+        .attr('stroke', '#ccc');
 
-    const supplyCircles = dots.append("circle")
-        .attr("class", "supply")
-        .attr("r", 10)
-        .attr("cx", d => xScale(xAccessorSupply(d)))
-        .attr("cy", d => yScale(yAccessor(d)))
-        .attr("fill", "#669999")
+    dotGroup.selectAll(".circle-supply")
+        .data(dataset)
+        .enter().append('circle')
+        .attr('cx', d => xScale(d.supply_mean))
+        .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
+        .attr('r', 5)
+        .attr('fill', '#669999');
 
-    const demandCircles = dots.append("circle")
-        .attr("class", "supply")
-        .attr("r", 10)
-        .attr("cx", d => xScale(xAccessorDemand(d)))
-        .attr("cy", d => yScale(yAccessor(d)))
-        .attr("fill", "#F87A53")
-  
+    dotGroup.selectAll(".circle-demand")
+        .data(dataset)
+        .enter().append('circle')
+        .attr('cx', d => xScale(d.demand_mean))
+        .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
+        .attr('r', 5)
+        .attr('fill', '#F87A53');
 }
+
 
 
 </script>
