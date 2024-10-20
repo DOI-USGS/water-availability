@@ -16,7 +16,7 @@
     <div id="findings-container">
       <div class="raindrop-container">
         <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
-            <div class="raindrop-button-container">
+            <div>
               <router-link :to="message.route">
                 <button class="raindrop"><span class="raindrop-text"> {{ message.page }}</span></button>
               </router-link><br>
