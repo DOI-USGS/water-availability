@@ -9,24 +9,27 @@
 :root {
   --white: #ffffff;
   --white-soft: #F0F0F0;
-
+  --medium-grey: #B5B5B5;
   --banner-col: #9DC6D7; /* #9FCACB; */
   --blue-highlight-col:  #728393; /* #5E7789; */ 
   --blue-text-col: #00264C;/* #363E4A; */ /* #00264C; */
   --grey-blue: #5e7789;
   --page-bkg-col: #FEFAF6;/* #edeadf; */
   --blue-bright: #0f52ba;
-
+  --usgs-blue: #00264c;
+  --usgs-green: #006F41;
   --black-soft: #151515;
 
-
   font-size: 62.5%;
+  --default-font: Source Sans Pro;
 }
 
 /* semantic color variables for this project */
 :root {
   --color-background: var(--white);
   --color-text: var(--black-soft);
+  --color-USGS-header-footer: var(--usgs-blue);
+  --color-link: var(--blue-bright);
 }
 
 /* @media (prefers-color-scheme: dark) {
