@@ -56,6 +56,7 @@
   }
 }
 
+
 /* this is where each page's viz will go */
 .viz-container { 
   display: flex;
@@ -73,6 +74,7 @@
 }
 .text-container {
   width: 60%;
+  min-width: 600px;
   margin: 0 auto;
   padding-top: 20px;
 }
@@ -167,7 +169,7 @@ section .waves .wave{
   bottom: 0;
   width: 100%;
   height: 50px;
-  background: url('wave.png');
+  background: url('/wave.png');
   background-size: 1000px 50px;
 }
 
@@ -235,19 +237,50 @@ body {
 }
 
 h1 {
-  font-size: 3rem;
-  font-weight: 500;
+  font-size: 5rem;
+  font-weight: 800;
 }
 h2 {
   font-size: 3.5rem;
   font-weight: 800;
 }
 h3 {
-  font-size: 3.5rem;
+  font-size: 3.0rem;
+  font-weight: 700;
+}
+h4 {
+  font-size: 2.5rem;
+  font-weight: 400;
+  font-style: italic;
 }
 @media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+  }  
+  h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  }
   h3 {
+    font-size: 2.4rem;
+    font-weight: 700;
+  }
+  h4 {
     font-size: 2rem;
+    font-weight: 400;
+  }
+}
+.subheading {
+  border-left: 10px solid var(--banner-col);
+  margin: 1.5em 10% 1.5em 0;
+  padding: 0.5em 15px;
+}
+@media only screen and (max-width: 768px) {
+  .subheading {
+    border-left: 5px solid var(--banner-col);
+    margin: 1.5em 0 1.5em 0;
+    padding: 0.5em 0px 0.5em 14px;
   }
 }
 
@@ -279,6 +312,16 @@ h3 {
 
 .viz-placeholder{
   width:80%;
+}
+.viz-portrait{
+  max-width: 100%;
+  max-height: 75vh;
+}
+.viz-landscape{
+  width: 80%;
+}
+.viz-half {
+  width: 50%;
 }
 .viz-double-portrait{
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;

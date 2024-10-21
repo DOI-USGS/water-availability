@@ -2,112 +2,103 @@ export default {
     SubPages: [
         {
             page: 1,
-            route: '/keyFinding01Budget',
-            shortTitle: 'Do we have enough water? Yes and no',
-            keyMessage: 'At the national scale, the natural water supply greatly exceeds our demand for water. However, this pattern is reversed in some regions.'
+            route: '/01Budget',
+            mainTitle: 'Do we have enough water? Yes, and no',
+            shortTitle: 'The U.S. has enough water, but not regionally',
+            keyMessage: 'At the national scale, the natural water supply greatly exceeds our demand for water. However, this pattern is not true for all regions.',
+            references: ["Stets2024", "Stets2025"]
         },
         {
             page: 2,
-            route: '/keyFinding02SUIPopn',
-            shortTitle: 'Living with water stress',
-            keyMessage: 'More than 30 million people live in areas of high/severe water stress.'
+            route: '/02SUI',
+            mainTitle: 'Living with water stress',
+            shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water stress',
+            keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.',
+            references: ["Liu2022", "Dettingher2005","Stets2024", "Stets2025"]
         },
         {
             page: 3,
-            route: '/keyFinding03SUISVI',
-            shortTitle: 'Social vulnerability',
-            keyMessage: 'A high proportion of the population living in areas with water availability limitations are considered to be socially vulnerable.'
+            route: '/03SVI',
+            mainTitle: 'Unequal access to water',
+            shortTitle: 'Socially vulnerable Americans have a higher risk of water stress',
+            keyMessage: 'A high proportion of the population living in areas with water stress are socially vulnerable',
+            references: [ "Drakes2024", "Stets2025"]
         },
         {
             page: 4,
-            route: '/keyFinding04Drought',
-            shortTitle: 'Not enough rain and snow',
-            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water stress and exacerbating water avaiability issues.' ,
+            route: '/04Drought',
+            mainTitle: 'Not enough rain and snow',
+            shortTitle: 'Disruptions to the water cycle can cause water stress',
+            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water stress and exacerbating water quality issues.' ,
             references: [
-                {
-                    reference: "Reference 1.",
-                    num: "1",
-                    authors: "Bell, J.E., Leeper, R.D., Palecki, M.A., Coopersmith, E., Wilson, T., Bilotta, R., and Embler, S.",
-                    year: "2015",
-                    title: "Evaluation of the 2012 Drought with a Newly Established National Soil Monitoring Network",
-                    journal: true,
-                    journal_name: "Vadose Zone Journal",
-                    journal_issue: "14",
-                    data_release: false,
-                    link: "https://doi.org/10.2136/vzj2015.02.0023",
-                    doi: "10.2136/vzj2015.02.0023"
-                  },
-                {
-                    reference: "Reference 2.",
-                    num: "2",
-                    authors: "Hoerling, M., Eischeid, J., Kumar, A., Leung, R., Mariotti, A., Mo, K., Schubert, S., and Seager, R.",
-                    year: "2014",
-                    title: "Causes and Predictability of the 2012 Great Plains Drought",
-                    journal: true,
-                    journal_name: "Bulletin of the American Meteorological Society",
-                    journal_issue: "95",
-                    data_release: false,
-                    link: "https://doi.org/10.1175/BAMS-D-13-00055.1",
-                    doi: "10.1175/BAMS-D-13-00055.1"
-                  },
-                {
-                    reference: "Reference 3.",
-                    num: "3",
-                    authors: "Legates, D.R., Mahmood, R., Levia, D.F., DeLiberty, T.L., Quiring, S.M., Houser, C., and Nelson, F.E.",
-                    year: "2011",
-                    title: "Soil moisture: A central and unifying theme in physical geography",
-                    journal: true,
-                    journal_name: "Progress in Physical Geography: Earth and Environment",
-                    journal_issue: "35",
-                    data_release: false,
-                    link: "https://doi.org/10.1177/0309133310386514",
-                    doi: "10.1177/0309133310386514"
-                  }
+                "Bell2015",
+                "Hoerling2014",
+                "Legates2011",
+                "Gorski2025",
+                "Stets2025"
             ]
         },
         {
             page: 5,
-            route: '/keyFinding05WQSource',
-            shortTitle: 'Sources of contamination',
-            keyMessage: 'Water quality is affected by natural and human sources.'
+            route: '/05WQSource',
+            mainTitle: 'Sources of ick',
+            shortTitle: 'Water quality is affected by natural and human sources',
+            keyMessage: 'Sources of water quality issues vary across CONUS. Common sources include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.',
+            references: ["Erickson2025"]
         },
         {
             page: 6,
-            route: '/keyFinding06WQThreats',
-            shortTitle: 'Threats to drinking water',
-            keyMessage: 'Threats to water quality depend on what the water is used for and where the water is coming from.',
+            route: '/06WQThreats',
+            mainTitle: 'Making you sick',
+            shortTitle: 'Major sources of contamination affect human health',
+            keyMessage: 'Drinking water, fish consumption, and recreational water use face different threats to water quality.',
             references: [
                 "Canedo2013",
                 "Ngoubeyou2022",
                 "Kaushal2018",
                 "EPA2023",
                 "Vareda2019",
-                "Wentz2014"
+                "Wentz2014",
+                "Erickson2025"
             ]
         },
         {
             page: 7,
-            route: '/keyFinding07WaterUse',
-            shortTitle: 'Top water use categories',
-            keyMessage: 'About 225,000 million gallons of freshwater get used per day for crop irrigation, public supply, and thermoelectric power.'
+            route: '/07WaterUse',
+            mainTitle: 'For farm, home, and energy',
+            shortTitle: 'The largest demands for water are for irrigation, public supply, and thermoelectric power',
+            keyMessage: 'About 225,000 million gallons of freshwater get used per day for irrigation (48%), public supply (16%), and thermoelectric power (36%).',
+            references: ["Medelie2025"]
         },
         {
             page: 8,
-            route: '/keyFinding08WaterUseRegional',
-            shortTitle: 'Water use by region',
-            keyMessage: 'How we use water varies across the country, including the source of water and the type of use.'
+            route: '/08WaterUseRegional',
+            mainTitle: 'From sea to shining sea',
+            shortTitle: 'How we use water varies across the country',
+            keyMessage: 'Regionally, irrigation is the largest use in the western US; thermoelectric power generation is the largest use in the central and eastern US; and public supply is the largest use in heavily populated eastern states such as New York, New Jersey, and Rhode Island.  ',
+            references: ["Medelie2025"]
         },
         {
             page: 9,
-            route: '/keyFinding09WaterUseConsumption',
-            shortTitle: 'Gone for good',
-            keyMessage: 'Not all the water withdrawn for human water use returns to the local environment.'
+            route: '/09Consumption',
+            mainTitle: 'Gone for good',
+            shortTitle: 'Not all the water withdrawn for human water use returns to the local environment',
+            keyMessage: 'Water that does not return to local water bodies or groundwater is lost to the atmosphere, plant and animal growth, or transferred to other areas. The proportion of water use consumed in this way is 74% for irrigation, 12% for public supply, and 4% for thermoelectric power.',
+            references: ["Medelie2025"]
         },
         {
             page: 10,
-            route: '/keyFinding10FutureWater',
-            shortTitle: 'Future threats to water',
-            keyMessage: 'The top future threats to water availability in the U.S. vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.'
+            route: '/10Future',
+            mainTitle: 'Future threats',
+            shortTitle: 'All elements of the water cycle are threatened by future climate conditions',
+            keyMessage: 'The top future threats to water availability in the U.S. vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
+            references: [
+                "Ranasinghe2021",
+                "IPCC2022",
+                "Hicke2022",
+                "Arias2021",
+                "Scholl2025"
+            ]
         }
     ]
 };

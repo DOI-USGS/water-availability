@@ -3,7 +3,9 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
+                <p>Water stress disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water. Most Americans experience regionally low water stress, which means that the amount of clean water available is sufficient to meet the needs of humans and the environment. It also means that within areas of low water stress, there is a wide range of <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">social vulnerability</a>, or conditions in which societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024).</p>
+                <h2>Social vulnerability is disproportionately high in areas of high water stress</h2>
+                <p>When viewing only the driest ares, the map shows almost exclusively dark red patches, meaning that most areas with high water stress occur where people are socially vulnerable. Water stress disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water. </p>
             </div>
             <div class="button-container">
                 <button id="image-toggle" class="toggle-button">View Dry Areas Only</button>
@@ -16,6 +18,7 @@
                         alt="xxx"
                     >
         </div>
+        <References></References>
         </div>
         <PageCarousel></PageCarousel>
     </section>
@@ -25,8 +28,9 @@
 import { onMounted } from 'vue';
     import PageCarousel from '../components/PageCarousel.vue';
     import KeyMessages from '../components/KeyMessages.vue';
-    import photoAll from "@/assets/images/k04_sui_svi_map.png";
-    import photoDry from "@/assets/images/k04_sui_svi_dry_map.png";
+    import References from '../components/References.vue';
+    import photoAll from "../../public/images/k04_sui_svi_map.png";
+    import photoDry from "../../public/images/k04_sui_svi_dry_map.png";
 
 onMounted(() => {
 

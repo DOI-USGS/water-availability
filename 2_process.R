@@ -116,7 +116,9 @@ p2_targets <- list(
                dplyr::left_join(p2_wu_ps_mean2000to2020_HUC8, 
                                 by = "HUC8") |>
                dplyr::left_join(p2_wu_ir_mean2000to2020_HUC8, 
-                                by = "HUC8") 
+                                by = "HUC8") |>
+               dplyr::left_join(p2_wu_ternary_df,
+                                by = "HUC8")
   ),
   # Join with water use data
   tar_target(p2_HUC8_join_wu_AggRegGrp_sf,
@@ -187,6 +189,11 @@ p2_targets <- list(
                                file = "public/wu_yearly.csv")
                return("public/wu_yearly.csv")},
              format = "file"),
+  tar_target(p2_wu_ternary_df,
+             total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC8,
+                                  ir_in = p2_wu_ir_mean2000to2020_HUC8,
+                                  te_in = p2_wu_te_mean2000to2020_HUC8,
+                                  color_scheme = p3_colors_wu)),
   
   # Public water supply
   tar_target(p2_wu_ps_gw_raw,
@@ -279,6 +286,17 @@ p2_targets <- list(
                       min_year = 2020,
                       max_year = 2020,
                       by_yearL = FALSE)),
+  # water supply and demand for each region from Ted
+  tar_target(p2_supply_v_demand_df,
+             process_supply_v_demand(data_path = p1_supply_v_demand_csv)),
+  tar_target(p2_supply_demand_csv,
+             {readr::write_csv(p2_supply_v_demand_df,
+                               file = "public/wa_supply_demand.csv")
+               return("public/wa_supply_demand.csv")},
+             format = "file"),
+  tar_target(p2_water_stress_stats_csv,
+             create_stats(in_sf = p2_HUC12_join_sui_svi_sf,
+                          out_csv = "public/wa_stress_stats.csv")),
   
   ##############################################
   # 
