@@ -17,7 +17,7 @@
             <h3>Groundwater rules the west</h3>
             <p>Across the U.S., the source of water, whether from <span class="highlight" id="groundwater">groundwater</span> or from <span class="highlight" id="surface">surface water</span> typically depends on the availability of these sources and on the category of use. On average during water years 2010-20, about 62% of water withdrawals for public supply, crop irrigation, and thermoelectric power were from surface water and 38% of withdrawals were from groundwater. </p>
             <br><br>
-            <p>This data visualization shows the relative amount of water withdrawn for public supply that comes from groundwater or surface water by region. The bars are placed from west to east based on the centroid of the hydrologic region's longitude. Hover over the map to see each individual region's data.</p>
+            <p>This data visualization shows the relative amount of water withdrawn for public supply that comes from groundwater or surface water by region. The bars are placed from west to east based on the longitude (easting) the center of each hydrologic region. Hover over the map to see each individual region's data.</p>
           </div>
           <div class="viz-container">
             <AggReg class="agg-reg-svg"></AggReg>
