@@ -130,6 +130,12 @@ function togglePoints(type) {
             .duration(300) // optional for smooth transitions
             .style("opacity", showDemand.value ? 1 : 0); // toggle visibility
     }
+
+    // update the visibility of the connecting line
+    d3.selectAll(".line")
+        .transition()
+        .duration(300)
+        .style("opacity", showSupply.value && showDemand.value ? 0.4 : 0); 
 }
 
 
@@ -223,6 +229,7 @@ function createDotChart() {
     dotGroup.selectAll(".line")
         .data(dataset)
         .enter().append('line')
+        .attr('class', 'line')
         .attr('x1', d => xScale(d.supply_mean))
         .attr('x2', d => xScale(d.demand_mean))
         .attr('y1', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
