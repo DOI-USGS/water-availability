@@ -37,8 +37,8 @@ const dataSet1 = ref([]);
 const data = ref([]);
 let svg;
 const containerWidth = window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.65;
-let margin = { top: 60, right: 150, bottom: 50, left: 200 };
+const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.7;
+let margin = { top: 50, right: 150, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
 let chartBounds, dotGroup;
@@ -135,6 +135,42 @@ function createDotChart() {
     dotGroup.append('g')
         .attr('class', 'y-axis')
         .call(d3.axisLeft(yScale));
+
+    // adding maps
+    const regionAxis = dotGroup.select('.y-axis')
+      .selectAll(".tick")
+      .select("text")
+      .attr("x", -66) // shift text to the left to make space for the mini maps
+      .attr("dy", "0.32em");
+
+      // load SVG and add it to each tick
+      d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
+      const svgNode = xml.documentElement;
+
+      dotGroup.select('.y-axis')
+      .selectAll(".tick")
+        .each(function(d) {
+          const regionClass = d.replace(/\s+/g, '_'); 
+
+          // the mini map to use for each tick
+          const svgClone = svgNode.cloneNode(true);
+
+          // add the map at each tick
+          const insertedSvg = d3.select(this)
+            .insert(() => svgClone, "text") 
+            .attr("x", -56) 
+            .attr("y", -28) 
+            .attr("width", 56) 
+            .attr("height", 56)
+            .attr("fill", "lightgrey"); 
+
+          // select the <g> element with the region name
+          insertedSvg.selectAll(`g.${regionClass} path`) // grab the path
+            .attr("stroke", "black") // apply black outline
+            .attr("stroke-width", 3)
+            .attr("fill", "black"); 
+        });
+    }); 
     
     // axis label
     dotGroup.append("text")
