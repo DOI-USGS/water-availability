@@ -85,15 +85,41 @@ onMounted(async () => {
             svgNode.setAttribute("x", "37")
             svgNode.setAttribute("y", "-2"); 
 
-            d3.select(svgNode)
-            .attr("fill","transparent")
-            .attr("stroke", "white")
-            .attr("stroke-width", "1.5")
-            .attr("z-index", 1)
-
             // Append the loaded SVG into the overlay-svg container
-            d3.select(".overlay-svg")
+            const overlaySvg = d3.select(".overlay-svg")
               .node().appendChild(svgNode); 
+
+            d3.select(svgNode).selectAll("g path")
+              .attr("stroke", "white")
+              .attr("stroke-width", "1.5")
+              .attr("fill", "transparent")
+              .on("mouseover", function(event, d) {
+                d3.selectAll(this).raise(); // Move the path to the front
+                d3.select(this)
+                  .attr("stroke", "yellow") 
+                  .attr("stroke-width", "3");
+
+                // Show region name near the cursor
+                d3.select(".overlay-svg").append("text")
+                  .attr("class", "region-label")
+                  .attr("x", event.pageX + 10) // Position near the cursor
+                  .attr("y", event.pageY - 10)
+                  .text(d3.select(this).attr("id")); 
+              })
+              .on("mousemove", function(event) {
+                // Update the position of the label as the mouse moves
+                d3.select(".region-label")
+                  .attr("x", event.pageX + 10)
+                  .attr("y", event.pageY - 10);
+              })
+              .on("mouseout", function() {
+                d3.select(this)
+                  .attr("stroke", "white") // Reset to original color
+                  .attr("stroke-width", "1.5");
+
+                // Remove the region label
+                d3.select(".region-label").remove();
+              });
       })
         await loadDatasets();
         data.value = dataSet1.value;
@@ -334,8 +360,15 @@ function createDotChart() {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
 }
+.region-label {
+  font-size: 14px;
+  font-weight: bold;
+  fill: black; 
+  pointer-events: none; /* Prevents the label from interfering with mouse events */
+}
+
+
 #toggle-supply, #toggle-demand {
   margin-left: 10px;
   background-color: #669999;
