@@ -87,7 +87,7 @@ const showNitrogen = ref(true);
 
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
-"Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"]
+"Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
 
 // Colors for bar chart (need to be updated along with CSS below!)
 const categoryColors = {
@@ -215,7 +215,7 @@ function createBarChart({
     (d3.index(dataset, d => d.region_nam, d => d.category));
 
   const regionScale = d3.scaleBand()
-    .domain(orderedRegions.reverse())
+    .domain(orderedRegions)
     .range([height, 0])
     .padding(0.1);
 
