@@ -73,6 +73,8 @@ async function loadData(fileName) {
 };
 
 function initDotChart() {
+  d3.select('#dotplot-container').select('svg').remove();
+  
     svg = d3.select('#dotplot-container')
       .append('svg')
       .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
