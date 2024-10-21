@@ -4,6 +4,7 @@ source("3_visualize/src/viz_wheatfield.R")
 source("3_visualize/src/viz_svi_sui.R")
 source("3_visualize/src/viz_sui_popn.R")
 source("3_visualize/src/viz_wq.R")
+source("3_visualize/src/viz_ternary.R")
 
 p3_targets <- list(
   ##############################################
@@ -221,38 +222,46 @@ p3_targets <- list(
   #             (e.g., crop irrigation, public supply, or 
   #             thermoelectric power generation).
   # 
-  tar_target(p3_k8_ps_CONUS_wheatfield_png,
-             plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
-                             regions_sf = p2_Reg_sf,
-                             use_type = "ps",
-                             color_scheme = p3_colors_wu,
-                             png_out = "src/assets/images/k08_ps_wheatfield_CONUS.png",
-                             width = 6,
-                             height = 5),
-             format = "file"),
-  tar_target(p3_k8_ir_CONUS_wheatfield_png,
-             plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
-                             regions_sf = p2_Reg_sf,
-                             use_type = "ir",
-                             color_scheme = p3_colors_wu,
-                             png_out = "src/assets/images/k08_ir_wheatfield_CONUS.png",
-                             width = 6,
-                             height = 5),
-             format = "file"),
-  tar_target(p3_k8_te_CONUS_wheatfield_png,
-             plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
-                             regions_sf = p2_Reg_sf,
-                             use_type = "te",
-                             color_scheme = p3_colors_website,
-                             png_out = "src/assets/images/k08_te_wheatfield_CONUS.png",
-                             width = 6,
-                             height = 6),
-             format = "file"),
-  tar_target(p3_k8_legend_png,
-             wheatfield_legend(
-               fonts = p3_fonts_website,
-               png_out = "src/assets/images/k08_legend.png"),
+  # tar_target(p3_k8_ps_CONUS_wheatfield_png,
+  #            plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
+  #                            regions_sf = p2_Reg_sf,
+  #                            use_type = "ps",
+  #                            color_scheme = p3_colors_wu,
+  #                            png_out = "src/assets/images/k08_ps_wheatfield_CONUS.png",
+  #                            width = 6,
+  #                            height = 5),
+  #            format = "file"),
+  # tar_target(p3_k8_ir_CONUS_wheatfield_png,
+  #            plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
+  #                            regions_sf = p2_Reg_sf,
+  #                            use_type = "ir",
+  #                            color_scheme = p3_colors_wu,
+  #                            png_out = "src/assets/images/k08_ir_wheatfield_CONUS.png",
+  #                            width = 6,
+  #                            height = 5),
+  #            format = "file"),
+  # tar_target(p3_k8_te_CONUS_wheatfield_png,
+  #            plot_wheatfield(data_in = p2_HUC8_join_wu_AggRegGrp_sf,
+  #                            regions_sf = p2_Reg_sf,
+  #                            use_type = "te",
+  #                            color_scheme = p3_colors_website,
+  #                            png_out = "src/assets/images/k08_te_wheatfield_CONUS.png",
+  #                            width = 6,
+  #                            height = 6),
+  #            format = "file"),
+  # tar_target(p3_k8_legend_png,
+  #            wheatfield_legend(
+  #              fonts = p3_fonts_website,
+  #              png_out = "src/assets/images/k08_legend.png"),
+  #            format = "file"),
+  
+  tar_target(p3_ternary_map_CONUS_png,
+             ternary_map(in_sf = p2_HUC8_join_wu_sf,
+                         width = 8,
+                         height = 6,
+                         png_out = "public/images/kf08_wu_ternary.png"),
              format = "file")
+  
   
   ##############################################
   # 
