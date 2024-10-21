@@ -2,76 +2,34 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
+          <div class="viz-container">
+            <img class="viz-portrait" src="../../public/images/k02_sui_popn_CONUS.png">
+          </div>
           <div class="text-container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>During drought, water stress is reduced by switching sources or using water stored in local reservoirs. In the Western United States, <a href="https://labs.waterdata.usgs.gov/visualizations/snow-to-flow/index.html#/" target="_blank">snowpack acts like a water tower,</a> holding frozen water during colder months that can help sustain ecosystems and human populations later in the year (Dettinger, 2005). In other areas, water may be transported in to supplement local water supplies. These types of inter-basin transfers may be used seasonally or year-round and are important in for meeting the water demands for people living in high water stress areas. Public water utilities in particular often rely on transferring water from other more pristine watersheds to provide high-quality water for their customers (Liu et al., 2022). However, relying on other watersheds can leave the receiving basin vulnerable in situations where the donor basin also has a water shortage.  </p>
+          </div>
+
+          <div class="text-container">
+            <p>High water stress is often due to multiple stressors. When there is high water demand driven by human activites paired with limited supply, this often co-occures with elevated water stress from other factors like water and groundwater quality issues, water imbalance, or by alterations to ecological flow.</p>
           </div>
           <div class="viz-container">
-            <AggReg class="agg-reg-svg"></AggReg>
-            <img
-                id="circles"
-                :src="imgSrc"
-                alt=""
-            >    
+            <img class="viz-landscape" src="../../public/images/kf2_stressType_maps.png">
           </div>
-          <div class="text-container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
+
+          <References></References>
         </div>
         <PageCarousel></PageCarousel>
     </section>
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue';
-  import * as d3Base from 'd3';
   import PageCarousel from '../components/PageCarousel.vue';
   import KeyMessages from '../components/KeyMessages.vue';
-  import AggReg from "@/assets/svgs/AggReg.svg";
+  import References from "../components/References.vue"
 
-  const imgSrc = ref('@/assets/images/k03_sui_popn_CONUS.png');
-
-  const setDefaultImgSrc = () => {
-    import(`@/assets/images/k03_sui_popn_CONUS.png`).then(img => {
-      imgSrc.value = img.default;
-    });
-  };
-
-  const addInteractions = () => {
-    const mapSVG = d3Base.select('.agg-reg-svg');
-    mapSVG.selectAll('.AggReg_nam_nospace')
-      .on("mouseover", mouseoverMap)
-      .on("mouseout", mouseoutMap);
-  };
-
-  const mouseoverMap = (event) => {
-    const regionID = event.target.id;
-    d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#5e7789");
-    const formattedRegionID = regionID.replace(/_/g, ' ');
-    import(`@/assets/images/k03_sui_popn_${regionID}.png`).then(img => {
-      imgSrc.value = img.default;
-    });
-  };
-
-  const mouseoutMap = (event) => {
-    const regionID = event.target.id;
-    d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
-    import(`@/assets/images/k03_sui_popn_CONUS.png`).then(img => {
-      imgSrc.value = img.default;
-    });
-  };
-
-  onMounted(() => {
-    setDefaultImgSrc();
-    addInteractions();
-  });
 
 </script>
 
 <style scoped>
-  #smallerCircles {
-      width: 30vw;
-  }
-  #circles {
-      width: 50vw;
-  }
+
 </style>
