@@ -76,8 +76,8 @@ const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
 const containerWidth = window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
+const containerHeight = mobileView ? window.innerHeight * 0.9 : 800;
+const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 200 } : { top: 30, right: 300, bottom: 40, left: 400 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 let chartBounds;
@@ -206,114 +206,80 @@ function initBarChart({
 
 }
 function createBarChart({
-    dataset,
-    scaleLoad
-  }) {
+  dataset,
+  scaleLoad
+}) {
+  const categoryGroups = [...new Set(dataset.map(d => d.category))];
+  const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
-    // get unique categories and regions
-    const categoryGroups = [... new Set(dataset.map(d => d.category))];
-    const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
+  const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
+  const stackedData = d3.stack()
+    .keys(categoryGroups)
+    .value(([, D], key) => D.get(key)[expressed])
+    (d3.index(dataset, d => d.region_nam, d => d.category));
 
-    // stack data for rectangles
-    const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
-    const stackedData = d3.stack()
-        .keys(categoryGroups)
-        .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
-        (d3.index(dataset, d => d.region_nam, d => d.category));
+  const regionScale = d3.scaleBand()
+    .domain(regionGroups)
+    .range([height, 0])
+    .padding(0.1);
+
+  nutrientScale = d3.scaleLinear()
+    .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
+    .range([0, width]);
+
+  chartBounds.selectAll(".axis-text").remove();
+
+  chartBounds.append('g')
+    .call(d3.axisLeft(regionScale))
+    .attr('class', 'axis-text');
+
+  nutrientAxis = chartBounds.append('g')
+    .attr('transform', `translate(0, ${height})`)
+    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
+    .attr('class', 'axis-text');
+
+  const colorScale = d3.scaleOrdinal()
+    .domain(categoryGroups)
+    .range(categoryGroups.map(item => categoryColors[item]));
+
+  const dur = 1000;
+  const t = d3.transition().duration(dur);
+
+  const categoryRectGroups = rectGroup.selectAll('g')
+    .data(stackedData, d => d.key)
+    .join(
+      enter => enter.append("g")
+        .attr("class", d => d.key.replace(" ", "_")),
+      update => update,
+      exit => exit.remove()
+    );
+
+  categoryRectGroups.selectAll('rect')
+    .data(D => D.map(d => (d.key = D.key, d)))
+    .join(
+      enter => enter.append("rect")
+        .attr('x', d => nutrientScale(d[0]))
+        .attr('y', d => regionScale(d.data[0]))
+        .attr('height', regionScale.bandwidth())
+        .attr('width', d => nutrientScale(d[1]) - nutrientScale(d[0]))
+        .style("fill", d => colorScale(d.key))
+        .style("opacity", 0)
+        .transition(t)
+        .style("opacity", 1),
+
+      update => update.transition(t)
+        .attr('x', d => nutrientScale(d[0]))
+        .attr('y', d => regionScale(d.data[0]))
+        .attr('height', regionScale.bandwidth())
+        .attr('width', d => nutrientScale(d[1]) - nutrientScale(d[0])),
+
+      exit => exit.transition(t)
+        .style("opacity", 0)
+        .remove()
+    );
+}
 
 
-
-    // Set up region scale (xScale in water-bottling site)
-    const regionScale = d3.scaleBand()
-        .domain(regionGroups)
-        .range(mobileView ? [height, 0] : [0, width]); 
-
-    // add region axis
-    const regionAxis = chartBounds.append('g')
-        .call(mobileView ? d3.axisLeft(regionScale) : d3.axisTop(regionScale))
-        .attr('class', 'axis-text')
-        .selectAll(".tick text")
-          .call(wrap, 80);
-
-    regionAxis
-      .select(".domain").remove();
-
-    // Set up dynamic nutrient axis (y on desktop, x on mobile)
-    // scale for nutrient scale
-    nutrientScale = d3.scaleLinear()
-        .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-        .range(mobileView ? [0, width] : [height, 0]);
-
-    // create nutrient axis generator
-    nutrientAxis = chartBounds.append('g')
-      .call(mobileView ? d3.axisTop(nutrientScale).ticks(3).tickFormat(
-            d => scaleLoad ? d + 'k Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
-              d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
-      .attr('class', 'axis-text')
-    
-
-    // Set up transition.
-    const dur = 1000;
-    const t = d3.transition().duration(dur);
-
-    // set up color scale
-    const colorScale = d3.scaleOrdinal()
-        .domain(categoryGroups)
-        .range(categoryGroups.map(item => categoryColors[item]));
-
-    // Update groups for bars, assigning data
-    const categoryRectGroups = rectGroup.selectAll('g')
-        .data(stackedData, d => d.key)
-        .attr("id", d => d.key.replace(" ", "_"))
-        .join(
-          enter => enter
-              .append("g")
-              .attr("class", d => d.key.replace(" ", "_")),
-          
-          null, // no update function
-
-          exit => {
-            exit
-              .transition()
-              .duration(dur / 2)
-              .style("fill-opacity", 0)
-              .remove();
-          }
-        )
-
-    // Update bars within groups
-    categoryRectGroups.selectAll('rect')
-      .data(D => D.map(d => (d.key = D.key, d)))
-      .join(
-          enter => enter
-            .append("rect")
-            .attr("class", d => d.key.replace(" ", "_") + ' ' + d.data[0].replace(" ", "_"))
-            .attr("role", "listitem")
-            .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
-            .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[0]))
-            .attr('height', mobileView ? regionScale.bandwidth() : 0)
-            .attr('width', mobileView ? 0 : regionScale.bandwidth() )
-            .style("fill", d => colorScale(d.key))
-          ,
-          null,
-          exit => {
-            exit
-              .transition()
-              .duration(dur / 2)
-              .style("fill-opacity", 0)
-              .remove();
-          }
-        )
-      //this is all after build
-      .transition(t)
-      .delay((d, i) => i * 20)
-      .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
-      .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[1]))
-      .attr('height', d => mobileView ? regionScale.bandwidth() : nutrientScale(d[0]) - nutrientScale(d[1]))
-      .attr('width', d => mobileView ? nutrientScale(d[1]) - nutrientScale(d[0]) : regionScale.bandwidth() )
-      .style('fill', d => colorScale(d.key))
-
-};
 
 // https://gist.github.com/mbostock/7555321
 function wrap(text, width) {
