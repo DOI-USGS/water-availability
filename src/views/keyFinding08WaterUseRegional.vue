@@ -8,10 +8,10 @@
                 <p>This plot and map show the value of each hydrological region (HUC8) on the map by its respective proportion of public supply, irrigation, and thermoelectric power. For example, regions represented by dots in the top center are dark red because they're almost entirely comprised of public supply water use. </p>
           </div>
           <div class="viz-container">
-            <img class="viz-landscape" src="../../public/images/kf08_wu_legend.png" />
+            <img class="viz-half" src="../../public/images/kf08_wu_legend.png" >
           </div>
           <div class="viz-container">
-            <img class="viz-landscape" src="../../public/images/kf08_wu_ternary.png" />
+            <img class="viz-landscape" src="../../public/images/kf08_wu_ternary.png" >
           </div>
           <div class="text-container">
             <h3>The proportion of groundwater to surface water use varies regionally</h3>
@@ -22,6 +22,7 @@
           <div class="viz-container">
             <AggReg class="agg-reg-svg"></AggReg>
             <img
+                class="viz-half"
                 id="dumbbells"
                 :src="imgSrc"
                 alt=""
@@ -83,19 +84,7 @@ onMounted(() => {
 
 
 
-img {
-    width: 35%
-}
 
-@media only screen and (max-width: 768px) {
-
-
-    img {
-    width: 50%;
-    margin-top: 20px;
-    }
-
-}
 
 .highlight {
   color: black;
