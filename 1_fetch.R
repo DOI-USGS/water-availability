@@ -204,6 +204,10 @@ p1_targets <- list(
                overwrite_fileL = FALSE
              ),
              format = "file"),
+  # WATER Supply and demand for each region from Ted
+  tar_target(p1_supply_v_demand_csv,
+             "1_fetch/in/regionSupplyandDemand.csv",
+             format = "file"),
   
   ##############################################
   # 

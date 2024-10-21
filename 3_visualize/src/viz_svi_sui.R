@@ -39,6 +39,33 @@ map_svi_sui <- function(in_sf,
   
 }
 
+map_stress <- function(in_sf,
+                      color_scheme,
+                       png_out,
+                      width,
+                      height){
+  
+  plot_sf <- in_sf |>
+    filter( ! is.na(sui_category_3)) |>
+    mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$wet_blue_dark,
+                                 sui_category_5 == "Low" ~ color_scheme$wet_blue_light,
+                                 sui_category_5 == "Moderate" ~ color_scheme$svg_col_default,
+                                 sui_category_5 == "High" ~ color_scheme$dry_red_light,
+                                 sui_category_5 == "Severe" ~ color_scheme$dry_red_dark))
+  
+  map <- ggplot(plot_sf) +
+    geom_sf(aes(fill = color_hex),
+            color = NA, size = 0)  +
+    scale_fill_identity() +
+    theme_void() +
+    theme(legend.position = "none")
+  
+  ggsave(plot = map,
+         filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
+  
+}
+
 viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
   
   plot_df <- in_df |> 
