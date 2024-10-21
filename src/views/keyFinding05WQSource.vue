@@ -75,8 +75,8 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.7;
-const containerHeight = mobileView ? window.innerHeight * 0.9 : 800;
+const containerWidth = Math.min(window.innerWidth * 0.9, 800); // Max width 800px
+const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
 const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 200 } : { top: 100, right: 100, bottom: 40, left: 300 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
@@ -172,8 +172,8 @@ function toggleNutrient() {
 
 function initBarChart({
   containerWidth,
-              containerHeight,
-              margin
+  containerHeight,
+  margin
 }) {
 
     // draw svg canvas for barplot
@@ -369,14 +369,24 @@ function wrap(text, width) {
 
 <style scoped lang="scss">
 .viz-container {
-  width: 95vw;
-}
-#barplot-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%; 
+  min-height: 600px; 
+  margin: auto;
 }
+
+#barplot-container {
+  width: 90vw; 
+  max-width: 800px; 
+  min-height: 600px; 
+  margin: 0 auto; 
+}
+
 @media only screen and (max-width: 768px) {
-  #barplot-container{
-    width: 100%;
+  #barplot-container {
+    width: 100%; 
   }
 }
 
