@@ -63,10 +63,10 @@ import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import { isMobile } from 'mobile-device-detect';
+import RegionMap from "/assets/USregions.svg";
 
 // use for mobile logic
 const mobileView = isMobile;
-//console.log(mobileView)
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -75,18 +75,19 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.7 : 600;
-const margin = mobileView ? { top: 60, right: 20, bottom: 20, left: 100 } : { top: 80, right: 20, bottom: 40, left: 100 };
+const containerWidth = Math.min(window.innerWidth * 0.9, 900); // Max width 900px
+const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
+const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { top: 100, right: 100, bottom: 40, left: 300 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
-let chartBounds;
-let rectGroup;
-let nutrientScale;
-let nutrientAxis;
+let chartBounds, rectGroup;
+let nutrientScale, nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
+const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
+"Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
+"Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
 
 // Colors for bar chart (need to be updated along with CSS below!)
 const categoryColors = {
@@ -96,8 +97,6 @@ const categoryColors = {
         'Other Human Sources': '#2E236C',
         'Wastewater': '#478CCF'
       }; 
-
-
 
 // set up filtered chart data as computed property
 const scaleType = computed(() => {
@@ -114,10 +113,6 @@ onMounted(async () => {
         await loadDatasets();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
-
-
-            //console.log(regionGroups);
-
             initBarChart({
               containerWidth: containerWidth,
               containerHeight: containerHeight,
@@ -160,27 +155,28 @@ async function loadData(fileName) {
 };
 
 function toggleScale() {
-  scaleLoad.value = !scaleLoad.value
-
-        createBarChart({
-          dataset: data.value,
-          scaleLoad: scaleLoad.value
-    })
-};
+  scaleLoad.value = !scaleLoad.value;
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: scaleLoad.value
+  });
+  updateLabels(); // update the labels when the scale changes
+}
 
 function toggleNutrient() {
-  showNitrogen.value = !showNitrogen.value
+  showNitrogen.value = !showNitrogen.value;
   data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
-    createBarChart({
-      dataset: data.value,
-      scaleLoad: scaleLoad.value
-    })
-};
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: scaleLoad.value
+  });
+  updateLabels(); // update the labels when the nutrient changes
+}
 
 function initBarChart({
   containerWidth,
-              containerHeight,
-              margin
+  containerHeight,
+  margin
 }) {
 
     // draw svg canvas for barplot
@@ -206,114 +202,180 @@ function initBarChart({
 
 }
 function createBarChart({
-    dataset,
-    scaleLoad
-  }) {
+  dataset,
+  scaleLoad
+}) {
+  const categoryGroups = [...new Set(dataset.map(d => d.category))];
+  //const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
-    // get unique categories and regions
-    const categoryGroups = [... new Set(dataset.map(d => d.category))];
-    const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
+  const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
+  const stackedData = d3.stack()
+    .keys(categoryGroups)
+    .value(([, D], key) => D.get(key)[expressed])
+    (d3.index(dataset, d => d.region_nam, d => d.category));
 
-    // stack data for rectangles
-    const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
-    const stackedData = d3.stack()
-        .keys(categoryGroups)
-        .value(([, D], key) => D.get(key)[expressed]) // get value for each series key and stack
-        (d3.index(dataset, d => d.region_nam, d => d.category));
+  const regionScale = d3.scaleBand()
+    .domain(orderedRegions)
+    .range([height, 0])
+    .padding(0.1);
 
+  nutrientScale = d3.scaleLinear()
+    .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
+    .range([0, width]);
 
+  chartBounds.selectAll(".axis-text").remove();
 
-    // Set up region scale (xScale in water-bottling site)
-    const regionScale = d3.scaleBand()
-        .domain(regionGroups)
-        .range(mobileView ? [height, 0] : [0, width]); 
+  // region axis
+  const regionAxis = chartBounds.append('g')
+    .call(d3.axisLeft(regionScale))
+    .attr('class', 'axis-text');
 
-    // add region axis
-    const regionAxis = chartBounds.append('g')
-        .call(mobileView ? d3.axisLeft(regionScale) : d3.axisTop(regionScale))
-        .attr('class', 'axis-text')
-        .selectAll(".tick text")
-          .call(wrap, 80);
+  // adding maps
+  regionAxis.selectAll(".tick")
+    .select("text")
+    .attr("x", -80) // shift text to the left to make space for the mini maps
+    .attr("dy", "0.32em")
+    //.attr("font-weight", "bold");
 
-    regionAxis
-      .select(".domain").remove();
+    // load SVG and add it to each tick
+    d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
+    const svgNode = xml.documentElement;
 
-    // Set up dynamic nutrient axis (y on desktop, x on mobile)
-    // scale for nutrient scale
-    nutrientScale = d3.scaleLinear()
-        .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-        .range(mobileView ? [0, width] : [height, 0]);
+    regionAxis.selectAll(".tick")
+      .each(function(d) {
+        const regionClass = d.replace(/\s+/g, '_'); 
 
-    // create nutrient axis generator
-    nutrientAxis = chartBounds.append('g')
-      .call(mobileView ? d3.axisTop(nutrientScale).ticks(3).tickFormat(
-            d => scaleLoad ? d + 'k Mg/yr' : d + "%") : d3.axisLeft(nutrientScale).ticks(4).tickFormat(
-              d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
-      .attr('class', 'axis-text')
-    
+        // the mini map to use for each tick
+        const svgClone = svgNode.cloneNode(true);
 
-    // Set up transition.
-    const dur = 1000;
-    const t = d3.transition().duration(dur);
+        // add the map at each tick
+        const insertedSvg = d3.select(this)
+          .insert(() => svgClone, "text") 
+          .attr("x", -66) 
+          .attr("y", -30) 
+          .attr("width", 60) 
+          .attr("height", 60)
+          .attr("fill", "lightgrey"); 
 
-    // set up color scale
-    const colorScale = d3.scaleOrdinal()
-        .domain(categoryGroups)
-        .range(categoryGroups.map(item => categoryColors[item]));
+        // select the <g> element with the region name
+        insertedSvg.selectAll(`g.${regionClass} path`) // grab the path
+          .attr("stroke", "black") // apply black outline
+          .attr("stroke-width", 3)
+          .attr("fill", "black"); 
+      });
+  });
 
-    // Update groups for bars, assigning data
-    const categoryRectGroups = rectGroup.selectAll('g')
-        .data(stackedData, d => d.key)
-        .attr("id", d => d.key.replace(" ", "_"))
-        .join(
-          enter => enter
-              .append("g")
-              .attr("class", d => d.key.replace(" ", "_")),
-          
-          null, // no update function
+  // x-axis at the bottom
+  nutrientAxis = chartBounds.append('g')
+    .attr('transform', `translate(0, ${height})`)
+    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
+    .attr('class', 'axis-text');
 
-          exit => {
-            exit
-              .transition()
-              .duration(dur / 2)
-              .style("fill-opacity", 0)
-              .remove();
-          }
-        )
+  // x-axis at the top
+  chartBounds.append('g')
+    .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
+    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
+    .attr('class', 'axis-text');
 
-    // Update bars within groups
-    categoryRectGroups.selectAll('rect')
-      .data(D => D.map(d => (d.key = D.key, d)))
-      .join(
-          enter => enter
-            .append("rect")
-            .attr("class", d => d.key.replace(" ", "_") + ' ' + d.data[0].replace(" ", "_"))
-            .attr("role", "listitem")
-            .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
-            .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[0]))
-            .attr('height', mobileView ? regionScale.bandwidth() : 0)
-            .attr('width', mobileView ? 0 : regionScale.bandwidth() )
-            .style("fill", d => colorScale(d.key))
-          ,
-          null,
-          exit => {
-            exit
-              .transition()
-              .duration(dur / 2)
-              .style("fill-opacity", 0)
-              .remove();
-          }
-        )
-      //this is all after build
-      .transition(t)
-      .delay((d, i) => i * 20)
-      .attr('x', d => mobileView ? nutrientScale(d[0]) : regionScale(d.data[0]))
-      .attr('y', d => mobileView ? regionScale(d.data[0]) : nutrientScale(d[1]))
-      .attr('height', d => mobileView ? regionScale.bandwidth() : nutrientScale(d[0]) - nutrientScale(d[1]))
-      .attr('width', d => mobileView ? nutrientScale(d[1]) - nutrientScale(d[0]) : regionScale.bandwidth() )
-      .style('fill', d => colorScale(d.key))
+  // updating x-axis label
+  svg.append("text")
+    .attr("class", "upper-right-label")
+    .attr("x", containerWidth - margin.right-100) 
+    .attr("y", margin.top / 2)
+    .attr("text-anchor", "end") // anchor to the end of the text
+    .style("font-size", "2.5rem")
+    .style("font-weight", "bold")
+    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus"); 
 
-};
+  // italic units label
+  svg.append("text")
+    .attr("class", "upper-right-label-explained")
+    .attr("x", containerWidth - margin.right) 
+    .attr("y", margin.top / 2) 
+    .attr("text-anchor", "end")
+    .style("font-size", "2.5rem")
+    .style("font-style", "italic")
+    .style("font-weight", "300")
+    .text(scaleLoad.value ? "Percent" : "Mg/year");
+
+  const colorScale = d3.scaleOrdinal()
+    .domain(categoryGroups)
+    .range(categoryGroups.map(item => categoryColors[item]));
+
+  const dur = 1000;
+  const t = d3.transition().duration(dur);
+
+  const categoryRectGroups = rectGroup.selectAll('g')
+    .data(stackedData, d => d.key)
+    .join(
+      enter => enter.append("g")
+        .attr("class", d => d.key.replace(" ", "_")),
+      update => update,
+      exit => exit.remove()
+    );
+
+  categoryRectGroups.selectAll('rect')
+    .data(D => D.map(d => (d.key = D.key, d)))
+    .join(
+      enter => enter.append("rect")
+        .attr('x', d => nutrientScale(d[0]))
+        .attr('y', d => regionScale(d.data[0]))
+        .attr('height', regionScale.bandwidth())
+        .attr('width', d => nutrientScale(d[1]) - nutrientScale(d[0]))
+        .style("fill", d => colorScale(d.key))
+        .style("opacity", 0)
+        .transition(t)
+        .style("opacity", 1),
+
+      update => update.transition(t)
+        .attr('x', d => nutrientScale(d[0]))
+        .attr('y', d => regionScale(d.data[0]))
+        .attr('height', regionScale.bandwidth())
+        .attr('width', d => nutrientScale(d[1]) - nutrientScale(d[0])),
+
+      exit => exit.transition(t)
+        .style("opacity", 0)
+        .remove()
+    );
+}
+
+// update x-axis labels
+function updateLabels() {
+
+  const label = svg.selectAll(".upper-right-label")
+    .data([null]); // Use a dummy data binding to handle enter/update/exit
+
+  label.enter()
+    .append("text")
+    .attr("class", "upper-right-label")
+    .attr("x", containerWidth - margin.right -100)
+    .attr("y", margin.top / 2)
+    .attr("text-anchor", "end")
+    .style("font-size", "2rem")
+    .style("font-weight", "bold")
+    .merge(label) 
+    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus");
+
+  label.exit().remove(); // Ensure old labels are removed
+
+  const explainedLabel = svg.selectAll(".upper-right-label-explained")
+    .data([null]); 
+
+  explainedLabel.enter()
+    .append("text")
+    .attr("class", "upper-right-label-explained")
+    .attr("x", containerWidth - margin.right)
+    .attr("y", margin.top / 2 )
+    .attr("text-anchor", "end")
+    .style("font-size", "2rem")
+    .style("font-style", "italic")
+    .style("font-weight", "300")
+    .merge(explainedLabel) 
+    .text(scaleLoad.value ? "Mg/year" : "Percent");
+
+  explainedLabel.exit().remove(); 
+}
+
 
 // https://gist.github.com/mbostock/7555321
 function wrap(text, width) {
@@ -345,13 +407,29 @@ function wrap(text, width) {
 </script>
 
 <style scoped lang="scss">
-#barplot-container{
-  width: 80vw; /* sync with container width in js */
+.viz-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; 
+  min-height: 600px; 
+  margin: auto;
 }
+
+#barplot-container {
+  width: 90vw; 
+  max-width: 900px; 
+  min-height: 600px; 
+  margin: 0 auto; 
+}
+
 @media only screen and (max-width: 768px) {
-  #barplot-container{
-    width: 90vw;
+  #barplot-container {
+    width: 100%; 
   }
+}
+.svg-icon path {
+  fill: #478CCF;
 }
 
 .highlight {

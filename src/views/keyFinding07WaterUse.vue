@@ -164,8 +164,6 @@ function createBarChart({ dataset }) {
       .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(yearScale).tickSize(0))
       .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
-      //.selectAll('.tick text')
-      //.attr('transform', `translate(${yearScale.bandwidth() / 4}, 0)`)
       .selectAll('.tick line').remove();
   });
 
