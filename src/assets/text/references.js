@@ -278,6 +278,18 @@ export default {
         data_release: false,
         link: "https://doi.org/xxx",
         doi: "xx"
+      },
+      {
+        refID: "Drakes2024", 
+        authors: "Drakes, O., Restrepo-Osorio., D.L., Powlen, K.A. and Hines, M.K.",
+        year: "2024",
+        title: "Social vulnerability and water insecurity in the western United States: A systematic review of framings, indicators, and uncertainty",
+        journal: true,
+        journal_name: "Water Resources Research",
+        journal_issue: "8",
+        data_release: false,
+        link: "https://doi.org/10.1029/2023WR036284",
+        doi: "10.1029/2023WR036284"
       }
 
     ]

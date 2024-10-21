@@ -36,12 +36,16 @@ const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.6;
-const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.50;
-let margin = { top: 60, right: 200, bottom: 50, left: 300 };
+const containerWidth = window.innerWidth * 0.8;
+const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.7;
+let margin = { top: 50, right: 150, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
 let chartBounds, dotGroup;
+
+const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
+"Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
+"Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"]
 
 onMounted(async () => {
     try {
@@ -73,9 +77,15 @@ async function loadData(fileName) {
 };
 
 function initDotChart() {
+  const constrainedWidth = Math.min(containerWidth, 700); 
+  const constrainedHeight = Math.max(containerHeight, 600);
+
+  d3.select('#dotplot-container').select('svg').remove();
+
     svg = d3.select('#dotplot-container')
       .append('svg')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+      .attr('viewBox', `0 0 ${constrainedWidth} ${constrainedHeight}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
       .style('width', '100%')
       .style('height', 'auto');
 
@@ -100,11 +110,11 @@ function createDotChart() {
     // scales
     const xScale = d3.scaleLinear()
         .domain(d3.extent(dataset, d => +d.supply_mean))
-        .range([0, width])
+        .range([0, width-margin.right])
         .nice();
 
     const yScale = d3.scaleBand()
-        .domain(dataset.map(yAccessor))
+        .domain(dataset.map(yAccessor)) // orderedRegions for geographical order
         .range([0, height])
         .padding(0.1);
 
@@ -118,8 +128,59 @@ function createDotChart() {
         .call(d3.axisBottom(xScale).ticks(5));
 
     dotGroup.append('g')
+        .attr('class', 'x-axis')
+        .attr('transform', `translate(0, 0)`)
+        .call(d3.axisTop(xScale).ticks(5));
+
+    dotGroup.append('g')
         .attr('class', 'y-axis')
         .call(d3.axisLeft(yScale));
+
+    // adding maps
+    const regionAxis = dotGroup.select('.y-axis')
+      .selectAll(".tick")
+      .select("text")
+      .attr("x", -66) // shift text to the left to make space for the mini maps
+      .attr("dy", "0.32em");
+
+      // load SVG and add it to each tick
+      d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
+      const svgNode = xml.documentElement;
+
+      dotGroup.select('.y-axis')
+      .selectAll(".tick")
+        .each(function(d) {
+          const regionClass = d.replace(/\s+/g, '_'); 
+
+          // the mini map to use for each tick
+          const svgClone = svgNode.cloneNode(true);
+
+          // add the map at each tick
+          const insertedSvg = d3.select(this)
+            .insert(() => svgClone, "text") 
+            .attr("x", -56) 
+            .attr("y", -28) 
+            .attr("width", 56) 
+            .attr("height", 56)
+            .attr("fill", "lightgrey"); 
+
+          // select the <g> element with the region name
+          insertedSvg.selectAll(`g.${regionClass} path`) // grab the path
+            .attr("stroke", "black") // apply black outline
+            .attr("stroke-width", 3)
+            .attr("fill", "black"); 
+        });
+    }); 
+    
+    // axis label
+    dotGroup.append("text")
+      .attr("class", "upper-right-label")
+      .attr("x", width - margin.right) 
+      .attr("y", -30)
+      .attr("text-anchor", "end") // anchor to the end of the text
+      .style("font-size", "2rem")
+      .style("font-weight", "bold")
+      .text("Units");
 
     // Add dots and lines
     dotGroup.selectAll(".line")
@@ -129,7 +190,9 @@ function createDotChart() {
         .attr('x2', d => xScale(d.demand_mean))
         .attr('y1', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
         .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('stroke', '#ccc');
+        .attr('stroke', '#ccc')
+        .attr('stroke-width', 3)
+        .attr("stroke-opacity", 0.4);
 
     dotGroup.selectAll(".circle-supply")
         .data(dataset)
@@ -157,13 +220,14 @@ function createDotChart() {
   display: block;
 }
 #viz-container {
-  width: 90%;
-  max-width: 1000px;
+  width: 100%;
+  max-width: 700px;
   margin: 20px auto;
   display: block;
 }
 #dotplot-container{
   width: 100%;
+  min-height: 600px;
 }
 .text-container {
   margin: 20px auto;
