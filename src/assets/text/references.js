@@ -218,6 +218,67 @@ export default {
         data_release: false,
         link: "https://doi.org/xxx",
         doi: "xx"
+      },
+      {
+        refID: "Gorski2025", 
+        authors: "Gorski, G., Stets, E., Scholl, M., Degnan, J., Mullaney, J., Galanter, A., Martinez, A., Padilla, J., Lafontaine, J., Corson-Dosch, H., and Shapiro, A.",
+        year: "2025",
+        title: "Chapter B: National Water Supply",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/xxx",
+        doi: "xx"
+      },
+      {
+        refID: "Erickson2025", 
+        authors: "Erickson, M., Miller, O., Cashman, M., Degnan, J., and Azadpour, E.",
+        year: "2025",
+        title: "Chapter C: Status of Water Quality Conditions in the United States, 2010-2020",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/xxx",
+        doi: "xx"
+      },
+      {
+        refID: "Medelie2025", 
+        authors: "Medalie, L., Galanter, A.E., Martinez, A.J., Archer, A.A., Luukkonen, C.L., Harris, M.A., and Haynes, J.V.",
+        year: "2025",
+        title: "Chapter D: Water Use Across the Conterminous United States, Water Years 2010-20",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/xxx",
+        doi: "xx"
+      },
+      {
+        refID: "Scholl2025", 
+        authors: "Scholl, M.A., McCabe, G.J., Olson, C.G., and Powlen, K.A.",
+        year: "2025",
+        title: "Chapter E: Climate change and future water availability in the United States ",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/xxx",
+        doi: "xx"
+      },
+      {
+        refID: "Stets2025", 
+        authors: "Stets, E.G., Cashman, M.J., Miller, O.A., and Powlen, K.A.",
+        year: "2025",
+        title: "Chapter F: Integrated Water Availability in the Conterminous United States, 2010–20",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/xxx",
+        doi: "xx"
       }
+
     ]
 }

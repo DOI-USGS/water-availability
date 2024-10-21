@@ -36,6 +36,7 @@
           Water use reflects human dependence on freshwater resources for public health and economic development. Water use has dual effects on water availability. On the one hand, ensuring safe, reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals decrease availability for downstream users and local stream ecosystems. Therefore, areas with more intense water use have higher needs and a higher tendency to degrade the resource than areas with less intense water use. 
         </p>
       </div>
+      <References></References>
     </div>
     <PageCarousel></PageCarousel>
   </section>
@@ -46,6 +47,7 @@ import { onMounted, ref } from 'vue';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
+import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
@@ -164,8 +166,6 @@ function createBarChart({ dataset }) {
       .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(yearScale).tickSize(0))
       .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
-      //.selectAll('.tick text')
-      //.attr('transform', `translate(${yearScale.bandwidth() / 4}, 0)`)
       .selectAll('.tick line').remove();
   });
 

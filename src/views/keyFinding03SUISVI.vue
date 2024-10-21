@@ -29,8 +29,8 @@ import { onMounted } from 'vue';
     import PageCarousel from '../components/PageCarousel.vue';
     import KeyMessages from '../components/KeyMessages.vue';
     import References from '../components/References.vue';
-    import photoAll from "@/assets/images/k04_sui_svi_map.png";
-    import photoDry from "@/assets/images/k04_sui_svi_dry_map.png";
+    import photoAll from "../../public/images/k04_sui_svi_map.png";
+    import photoDry from "../../public/images/k04_sui_svi_dry_map.png";
 
 onMounted(() => {
 
