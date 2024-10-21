@@ -278,6 +278,8 @@ function createDotChart() {
 <style scoped>
 .content-container {
   display: block;
+  margin: 0 auto;
+  padding: 0px;
 }
 #viz-container {
   width: 100%;
@@ -294,16 +296,26 @@ function createDotChart() {
 }
 .image-container {
   position: relative;
-  width: 60%; 
-  margin: -50 auto;
-  margin-top:-300px;
-  margin-bottom:-500px;
+  width: 95%; 
+  max-width: 800px;
+  margin: 40px auto; 
+  overflow: hidden;
 }
 
 .background-image {
   width: 100%;
-  height: auto;
+  height: 500px;
+  object-fit: cover; 
+  object-position: center;
   display: block;
+}
+.overlay-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 #toggle-supply, #toggle-demand {
   margin-left: 10px;
