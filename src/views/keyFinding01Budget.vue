@@ -29,7 +29,13 @@
         <div class="text-container">
         <p>
           Water stress occurs when there is not enough water available to meet human and ecosystem needs. This is more likely to happen in  regions where the difference between water supply and demand is fairly small. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.
-        </p>
+        </p><br><br>
+        <p>Levels of water stress include: 
+          <span class="highlight" id="none">very low or none</span>, 
+          <span class="highlight" id="low">low</span>, 
+          <span class="highlight" id="mod">moderate</span>, 
+          <span class="highlight" id="high">high</span>,
+          <span class="highlight" id="severe">severe</span></p>
         </div>
         <div class="image-container">
             <img src="../../public/images/01stress_map.png" alt="Water Stress" class="background-image">
@@ -411,6 +417,28 @@ function createDotChart() {
     background-color: #F87A53;
   }
 
+  &#none {
+    background-color: #39424f;
+  }
+
+  &#low {
+    background-color: #80909D;
+    color: black;
+  }
+
+  &#mod {
+    background-color: #edeadf;
+    color: black;
+  }
+
+  &#high {
+    background-color: #Cfacab;
+    color: black;
+  }
+
+  &#severe {
+    background-color: #965a6b;
+  }
 }
 .supply {
   background-color: #669999;
