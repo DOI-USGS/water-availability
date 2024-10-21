@@ -46,3 +46,45 @@ mean_sui <- function(data_in,
   return(out_categorized)
 }
 
+process_supply_v_demand <- function(data_path){
+  
+  raw_data <- readr::read_csv(data_path,
+                              show_col_types = FALSE)
+  
+  out_data <- raw_data |>
+    group_by(Region_nam) |>
+    summarise(supply_mean = mean(regionSupply_mm),
+              supply_sd = sd(regionSupply_mm),
+              supply_lower = supply_mean - supply_sd,
+              supply_upper = supply_mean + supply_sd,
+              demand_mean = mean(regionDemand_mm),
+              demand_sd = sd(regionDemand_mm),
+              demand_lower = demand_mean - demand_sd,
+              demand_upper = demand_mean + demand_sd) |>
+    arrange(-supply_mean)
+  
+  return(out_data)
+  
+}
+
+create_stats <- function(in_sf, out_csv){
+  
+  in_df <- in_sf |> 
+    sf::st_drop_geometry() 
+  
+  stress_by_reg <- in_df |> 
+    filter( ! is.na(sui_category_5)) |>
+    group_by(Region_nam, sui_category_5) |>
+    summarize(stress_by_reg = n()) 
+  
+  total_huc_by_reg <- in_df |>
+    filter( ! is.na(sui_category_5)) |>
+    group_by(Region_nam) |>
+    summarize(total_hucs = n())
+  
+  join_data <- stress_by_reg |>
+    left_join(total_huc_by_reg, by = "Region_nam") |>
+    mutate(percentage_stress = (stress_by_reg / total_hucs)*100) 
+  
+  readr::write_csv(join_data, file = out_csv)
+}

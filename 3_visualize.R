@@ -84,11 +84,14 @@ p3_targets <- list(
   ##############################################
   # 
   #           KEY TAKEAWAY 1: 
-  #             A quarter of our daily water budget leaves the U.S. 
-  #             through streamflow to Canada, the Atlantic and Pacific 
-  #             Oceans, or the Gulf of Mexico.
+  #             
   #
   #
+  tar_target(p3_map_stress_png,
+             map_stress(in_sf = p2_HUC12_join_sui_svi_sf,
+                         color_scheme = p3_colors_balance,
+                        png_out = "public/images/01stress_map.png",
+                        width = 6, height = 9)),
   
   ##############################################
   # 
