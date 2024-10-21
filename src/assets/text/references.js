@@ -206,6 +206,18 @@ export default {
         data_release: false,
         link: "https://doi.org/10.1029/2021WR031537",
         doi: "10.1029/2021WR031537"
+      },
+      {
+        refID: "Stets2024", 
+        authors: "Stets, E.G., Cashman, M., Miller, O.L., Powlen, K.A., Martinez, A., Padilla, J., Archer, A.A.",
+        year: "2024",
+        title: "Local water use and climate effects on water stress over the conterminous US with substantial impacts to fish species of greatest conservation need.",
+        journal: true,
+        journal_name: "Science of the Total Environment [in revision]",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/xxx",
+        doi: "xx"
       }
     ]
 }

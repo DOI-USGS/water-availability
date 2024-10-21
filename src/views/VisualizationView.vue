@@ -71,6 +71,7 @@
   color: var(--blue-text-col);
   border-radius: 5px;
   text-align: center;
+  z-index: -1;
 }
 #main-title {
   max-width: 700px;
