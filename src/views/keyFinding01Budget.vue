@@ -9,8 +9,8 @@
         <div class="viz-container">
           <div id="dotplot-container">             
             <div class="toggle-container">
-              <span class="highlight" id="toggle-supply">Show Supply</span>
               <span class="highlight" id="toggle-demand">Show Demand</span>
+              <span class="highlight" id="toggle-supply">Show Supply</span>
           </div>
         </div>   
         </div>
@@ -259,8 +259,11 @@ function createDotChart() {
 }
 
 .toggle-container {
-  display: inline-block;
-  margin-top: -30px;
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: -40px;
+  align-items: center;
+  justify-content: center;
 }
 
 .highlight {
