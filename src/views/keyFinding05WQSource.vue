@@ -75,9 +75,9 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.8;
+const containerWidth = window.innerWidth * 0.7;
 const containerHeight = mobileView ? window.innerHeight * 0.9 : 800;
-const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 200 } : { top: 30, right: 300, bottom: 40, left: 400 };
+const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 200 } : { top: 100, right: 100, bottom: 40, left: 300 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 let chartBounds, rectGroup;
@@ -152,22 +152,23 @@ async function loadData(fileName) {
 };
 
 function toggleScale() {
-  scaleLoad.value = !scaleLoad.value
-
-        createBarChart({
-          dataset: data.value,
-          scaleLoad: scaleLoad.value
-    })
-};
+  scaleLoad.value = !scaleLoad.value;
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: scaleLoad.value
+  });
+  updateLabels(); // update the labels when the scale changes
+}
 
 function toggleNutrient() {
-  showNitrogen.value = !showNitrogen.value
+  showNitrogen.value = !showNitrogen.value;
   data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
-    createBarChart({
-      dataset: data.value,
-      scaleLoad: scaleLoad.value
-    })
-};
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: scaleLoad.value
+  });
+  updateLabels(); // update the labels when the nutrient changes
+}
 
 function initBarChart({
   containerWidth,
@@ -228,14 +229,35 @@ function createBarChart({
   // x-axis at the bottom
   nutrientAxis = chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
+    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
     .attr('class', 'axis-text');
 
   // x-axis at the top
   chartBounds.append('g')
     .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
-    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
+    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
     .attr('class', 'axis-text');
+
+  // updating x-axis label
+  svg.append("text")
+    .attr("class", "upper-right-label")
+    .attr("x", containerWidth - margin.right-100) 
+    .attr("y", margin.top / 2)
+    .attr("text-anchor", "end") // anchor to the end of the text
+    .style("font-size", "2.5rem")
+    .style("font-weight", "bold")
+    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus"); 
+
+  // italic units label
+  svg.append("text")
+    .attr("class", "upper-right-label-explained")
+    .attr("x", containerWidth - margin.right) 
+    .attr("y", margin.top / 2) 
+    .attr("text-anchor", "end")
+    .style("font-size", "2.5rem")
+    .style("font-style", "italic")
+    .style("font-weight", "300")
+    .text(scaleLoad.value ? "Percent" : "Mg/year");
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -278,6 +300,42 @@ function createBarChart({
     );
 }
 
+// update x-axis labels
+function updateLabels() {
+
+  const label = svg.selectAll(".upper-right-label")
+    .data([null]); // Use a dummy data binding to handle enter/update/exit
+
+  label.enter()
+    .append("text")
+    .attr("class", "upper-right-label")
+    .attr("x", containerWidth - margin.right -100)
+    .attr("y", margin.top / 2)
+    .attr("text-anchor", "end")
+    .style("font-size", "2rem")
+    .style("font-weight", "bold")
+    .merge(label) 
+    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus");
+
+  label.exit().remove(); // Ensure old labels are removed
+
+  const explainedLabel = svg.selectAll(".upper-right-label-explained")
+    .data([null]); 
+
+  explainedLabel.enter()
+    .append("text")
+    .attr("class", "upper-right-label-explained")
+    .attr("x", containerWidth - margin.right)
+    .attr("y", margin.top / 2 )
+    .attr("text-anchor", "end")
+    .style("font-size", "2rem")
+    .style("font-style", "italic")
+    .style("font-weight", "300")
+    .merge(explainedLabel) 
+    .text(scaleLoad.value ? "Mg/year" : "Percent");
+
+  explainedLabel.exit().remove(); 
+}
 
 
 // https://gist.github.com/mbostock/7555321
@@ -310,12 +368,15 @@ function wrap(text, width) {
 </script>
 
 <style scoped lang="scss">
+.viz-container {
+  width: 95vw;
+}
 #barplot-container{
-  width: 80vw; /* sync with container width in js */
+  width: 100%; 
 }
 @media only screen and (max-width: 768px) {
   #barplot-container{
-    width: 90vw;
+    width: 100%;
   }
 }
 
