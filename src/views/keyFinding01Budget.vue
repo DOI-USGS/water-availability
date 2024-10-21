@@ -116,26 +116,21 @@ function initDotChart() {
 function togglePoints(type) {
     if (type === "supply") {
         showSupply.value = !showSupply.value;
-        d3.selectAll(".circle-supply")
-            .transition()
-            .duration(300)
-            .style("opacity", showSupply.value ? 1 : 0); 
     } else if (type === "demand") {
         showDemand.value = !showDemand.value;
-        d3.selectAll(".circle-demand")
-            .transition()
-            .duration(300)
-            .style("opacity", showDemand.value ? 1 : 0); 
     }
 
+    // Get the visible supply and demand points based on the toggles
     const visibleSupply = showSupply.value ? data.value.map(d => +d.supply_mean) : [];
     const visibleDemand = showDemand.value ? data.value.map(d => +d.demand_mean) : [];
 
     const visiblePoints = [...visibleSupply, ...visibleDemand];
     const newDomain = visiblePoints.length > 0 ? d3.extent(visiblePoints) : originalXScaleDomain;
 
-    xScale.domain(newDomain).nice(); 
+    // Update the x-axis domain based on visible points
+    xScale.domain(newDomain).nice();
 
+    // Transition the x-axis
     d3.selectAll(".x-axis-bottom")
         .transition()
         .duration(500)
@@ -146,27 +141,30 @@ function togglePoints(type) {
         .duration(500)
         .call(d3.axisTop(xScale).ticks(5));
 
+    // Update the position of the circles and hide/show based on the toggles
     d3.selectAll(".circle-supply")
         .transition()
         .duration(500)
-        .attr('cx', d => xScale(d.supply_mean));
+        .attr('cx', d => xScale(d.supply_mean))
+        .style("opacity", showSupply.value ? 1 : 0); // toggle opacity based on showSupply
 
     d3.selectAll(".circle-demand")
         .transition()
         .duration(500)
-        .attr('cx', d => xScale(d.demand_mean));
+        .attr('cx', d => xScale(d.demand_mean))
+        .style("opacity", showDemand.value ? 1 : 0); // toggle opacity based on showDemand
 
+    // Transition the lines connecting supply and demand
     d3.selectAll(".line")
         .transition()
         .duration(500)
         .attr('x1', d => xScale(d.supply_mean))
-        .attr('x2', d => xScale(d.demand_mean));
-
-    d3.selectAll(".line")
-        .transition()
-        .duration(300)
-        .style("opacity", showSupply.value && showDemand.value ? 0.4 : 0);
+        .attr('x2', d => xScale(d.demand_mean))
+        .style("opacity", showSupply.value && showDemand.value ? 0.4 : 0); // only show if both supply and demand are visible
 }
+
+
+
 
 function createDotChart() {
     const dataset = data.value;
