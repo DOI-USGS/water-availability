@@ -42,13 +42,11 @@ import { onMounted, ref } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import References from '../components/References.vue'
+import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 
-// use for mobile logic
 const mobileView = isMobile;
 
-// Global variables 
 const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
@@ -59,13 +57,17 @@ let margin = { top: 50, right: 50, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
 let chartBounds, dotGroup;
+let xScale;
+let originalXScaleDomain;
 
 let showSupply = ref(true);
 let showDemand = ref(true);
 
-const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
-"Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
-"Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"]
+const orderedRegions = [
+    "Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
+    "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", 
+    "Florida", "Souris-Red-Rainy", "Midwest", "Great Lakes", "Northeast"
+];
 
 onMounted(async () => {
     try {
@@ -74,10 +76,6 @@ onMounted(async () => {
         if (data.value.length > 0) {
             initDotChart();
             createDotChart();
-
-            // Add event listeners for toggles
-            d3.select("#toggle-supply").on("click", () => togglePoints("supply"));
-            d3.select("#toggle-demand").on("click", () => togglePoints("demand"));
         } else {
             console.error('Error loading data');
         }
@@ -88,7 +86,7 @@ onMounted(async () => {
 
 async function loadDatasets() {
     dataSet1.value = await loadData('wa_supply_demand.csv');
-};
+}
 
 async function loadData(fileName) {
     try {
@@ -98,11 +96,10 @@ async function loadData(fileName) {
         console.error(`Error loading data from ${fileName}`, error);
         return [];
     }
-};
+}
 
 function initDotChart() {
-
-  d3.select('#dotplot-container').select('svg').remove();
+    d3.select('#dotplot-container').select('svg').remove();
 
     svg = d3.select('#dotplot-container')
       .append('svg')
@@ -121,23 +118,55 @@ function togglePoints(type) {
         showSupply.value = !showSupply.value;
         d3.selectAll(".circle-supply")
             .transition()
-            .duration(300) // optional for smooth transitions
-            .style("opacity", showSupply.value ? 1 : 0); // toggle visibility
+            .duration(300)
+            .style("opacity", showSupply.value ? 1 : 0); 
     } else if (type === "demand") {
         showDemand.value = !showDemand.value;
         d3.selectAll(".circle-demand")
             .transition()
-            .duration(300) // optional for smooth transitions
-            .style("opacity", showDemand.value ? 1 : 0); // toggle visibility
+            .duration(300)
+            .style("opacity", showDemand.value ? 1 : 0); 
     }
 
-    // update the visibility of the connecting line
+    const visibleSupply = showSupply.value ? data.value.map(d => +d.supply_mean) : [];
+    const visibleDemand = showDemand.value ? data.value.map(d => +d.demand_mean) : [];
+
+    const visiblePoints = [...visibleSupply, ...visibleDemand];
+    const newDomain = visiblePoints.length > 0 ? d3.extent(visiblePoints) : originalXScaleDomain;
+
+    xScale.domain(newDomain).nice(); 
+
+    d3.selectAll(".x-axis-bottom")
+        .transition()
+        .duration(500)
+        .call(d3.axisBottom(xScale).ticks(5));
+
+    d3.selectAll(".x-axis-top")
+        .transition()
+        .duration(500)
+        .call(d3.axisTop(xScale).ticks(5));
+
+    d3.selectAll(".circle-supply")
+        .transition()
+        .duration(500)
+        .attr('cx', d => xScale(d.supply_mean));
+
+    d3.selectAll(".circle-demand")
+        .transition()
+        .duration(500)
+        .attr('cx', d => xScale(d.demand_mean));
+
+    d3.selectAll(".line")
+        .transition()
+        .duration(500)
+        .attr('x1', d => xScale(d.supply_mean))
+        .attr('x2', d => xScale(d.demand_mean));
+
     d3.selectAll(".line")
         .transition()
         .duration(300)
-        .style("opacity", showSupply.value && showDemand.value ? 0.4 : 0); 
+        .style("opacity", showSupply.value && showDemand.value ? 0.4 : 0);
 }
-
 
 function createDotChart() {
     const dataset = data.value;
@@ -148,84 +177,68 @@ function createDotChart() {
     }
 
     const yAccessor = d => d["Region_nam"];
-    const xAccessorSupply = d => d["supply_mean"];
-    const xAccessorDemand = d => d["demand_mean"];
 
-    // scales
-    const xScale = d3.scaleLinear()
-        .domain(d3.extent(dataset, d => +d.supply_mean))
-        .range([0, width-2*margin.right])
+    const xScaleDomain = d3.extent([
+        ...dataset.map(d => +d.supply_mean),
+        ...dataset.map(d => +d.demand_mean)
+    ]);
+    xScale = d3.scaleLinear()
+        .domain(xScaleDomain)
+        .range([0, width - 2 * margin.right])
         .nice();
 
+    originalXScaleDomain = xScale.domain(); 
+
     const yScale = d3.scaleBand()
-        .domain(dataset.map(yAccessor)) // orderedRegions for geographical order
+        .domain(dataset.map(yAccessor))
         .range([0, height])
         .padding(0.1);
 
-    // Remove old elements (if any) to avoid overlaps
     dotGroup.selectAll("*").remove();
 
-    // Append axes
     dotGroup.append('g')
-        .attr('class', 'x-axis')
+        .attr('class', 'x-axis-bottom x-axis')
         .attr('transform', `translate(0, ${height})`)
         .call(d3.axisBottom(xScale).ticks(5));
 
     dotGroup.append('g')
-        .attr('class', 'x-axis')
+        .attr('class', 'x-axis-top x-axis')
         .call(d3.axisTop(xScale).ticks(5));
 
     dotGroup.append('g')
         .attr('class', 'y-axis')
         .call(d3.axisLeft(yScale));
 
-    // adding maps
     const regionAxis = dotGroup.select('.y-axis')
       .selectAll(".tick")
       .select("text")
-      .attr("x", -44) // shift text to the left to make space for the mini maps
+      .attr("x", -44)
       .attr("dy", "0.32em");
 
-      // load SVG and add it to each tick
-      d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
+    d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
       const svgNode = xml.documentElement;
 
       dotGroup.select('.y-axis')
-      .selectAll(".tick")
+        .selectAll(".tick")
         .each(function(d) {
-          const regionClass = d.replace(/\s+/g, '_'); 
-
-          // the mini map to use for each tick
+          const regionClass = d.replace(/\s+/g, '_');
           const svgClone = svgNode.cloneNode(true);
 
-          // add the map at each tick
           const insertedSvg = d3.select(this)
-            .insert(() => svgClone, "text") 
-            .attr("x", -40) 
-            .attr("y", -20) 
-            .attr("width", 40) 
+            .insert(() => svgClone, "text")
+            .attr("x", -40)
+            .attr("y", -20)
+            .attr("width", 40)
             .attr("height", 40)
-            .attr("fill", "lightgrey"); 
+            .attr("fill", "lightgrey");
 
-          // select the <g> element with the region name
-          insertedSvg.selectAll(`g.${regionClass} path`) // grab the path
-            .attr("stroke", "black") // apply black outline
+          insertedSvg.selectAll(`g.${regionClass} path`)
+            .attr("stroke", "black")
             .attr("stroke-width", 3)
-            .attr("fill", "black"); 
+            .attr("fill", "black");
         });
-    }); 
-    
-    // axis label
-/*     dotGroup.append("text")
-      .attr("class", "upper-right-label")
-      .attr("x", width - 2*margin.right) 
-      .attr("y", -30)
-      .attr("text-anchor", "end") // anchor to the end of the text
-      .style("font-size", "2rem")
-      .style("font-weight", "bold")
-      .text("Units"); */
+    });
 
-    // Add dots and lines
     dotGroup.selectAll(".line")
         .data(dataset)
         .enter().append('line')
@@ -256,10 +269,8 @@ function createDotChart() {
         .attr('r', 5)
         .attr('fill', '#F87A53');
 }
-
-
-
 </script>
+
 
 <style scoped>
 .content-container {
@@ -296,6 +307,11 @@ function createDotChart() {
   align-items: center;
   justify-content: center;
   z-index: 999;
+  button {
+    padding: 2px;
+    margin: 5px;
+    text-align: center;
+  }
 }
 
 .highlight {
