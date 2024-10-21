@@ -232,7 +232,7 @@ export default {
         doi: "xx"
       },
       {
-        refID: "Erickons2025", 
+        refID: "Erickson2025", 
         authors: "Erickson, M., Miller, O., Cashman, M., Degnan, J., and Azadpour, E.",
         year: "2025",
         title: "Chapter C: Status of Water Quality Conditions in the United States, 2010-2020",
