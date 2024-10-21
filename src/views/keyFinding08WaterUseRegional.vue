@@ -37,7 +37,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import * as d3Base from 'd3';
-import AggReg from "@/assets/svgs/AggReg.svg";
+import AggReg from "../../public/assets/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
