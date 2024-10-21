@@ -80,10 +80,8 @@ const containerHeight = mobileView ? window.innerHeight * 0.9 : 800;
 const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 200 } : { top: 30, right: 300, bottom: 40, left: 400 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
-let chartBounds;
-let rectGroup;
-let nutrientScale;
-let nutrientAxis;
+let chartBounds, rectGroup;
+let nutrientScale, nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
@@ -96,8 +94,6 @@ const categoryColors = {
         'Other Human Sources': '#2E236C',
         'Wastewater': '#478CCF'
       }; 
-
-
 
 // set up filtered chart data as computed property
 const scaleType = computed(() => {
@@ -114,10 +110,6 @@ onMounted(async () => {
         await loadDatasets();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
-
-
-            //console.log(regionGroups);
-
             initBarChart({
               containerWidth: containerWidth,
               containerHeight: containerHeight,
@@ -233,9 +225,16 @@ function createBarChart({
     .call(d3.axisLeft(regionScale))
     .attr('class', 'axis-text');
 
+  // x-axis at the bottom
   nutrientAxis = chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
     .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
+    .attr('class', 'axis-text');
+
+  // x-axis at the top
+  chartBounds.append('g')
+    .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
+    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k Mg/yr' : d + "%"))
     .attr('class', 'axis-text');
 
   const colorScale = d3.scaleOrdinal()
