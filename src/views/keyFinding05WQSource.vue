@@ -75,9 +75,9 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-const containerWidth = Math.min(window.innerWidth * 0.9, 800); // Max width 800px
+const containerWidth = Math.min(window.innerWidth * 0.9, 900); // Max width 900px
 const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
-const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 200 } : { top: 100, right: 100, bottom: 40, left: 300 };
+const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { top: 100, right: 100, bottom: 40, left: 300 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 let chartBounds, rectGroup;
@@ -418,7 +418,7 @@ function wrap(text, width) {
 
 #barplot-container {
   width: 90vw; 
-  max-width: 800px; 
+  max-width: 900px; 
   min-height: 600px; 
   margin: 0 auto; 
 }
