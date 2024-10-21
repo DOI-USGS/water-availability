@@ -234,29 +234,31 @@ function createBarChart({
     .attr("dy", "0.32em")
     //.attr("font-weight", "bold");
 
-    // Load the inline SVG and add it to each tick
-  d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
+    // load SVG and add it to each tick
+    d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
     const svgNode = xml.documentElement;
 
     regionAxis.selectAll(".tick")
-      .each(function(d, i) {
-        // Clone the SVG node for each tick
+      .each(function(d) {
+        const regionClass = d.replace(/\s+/g, '_'); 
+
+        // the mini map to use for each tick
         const svgClone = svgNode.cloneNode(true);
 
-        // Insert the cloned SVG inline
-        d3.select(this)
-          .insert(() => svgClone, "text") // Insert SVG before the text element
-          .attr("x", -66) // Position the SVG to the left of the text
-          .attr("y", -30) // Adjust vertical alignment to match the text
-          .attr("width", 60) // Set width of the SVG icon
-          .attr("height", 60); // Set height of the SVG icon
+        // add the map at each tick
+        const insertedSvg = d3.select(this)
+          .insert(() => svgClone, "text") 
+          .attr("x", -66) 
+          .attr("y", -30) 
+          .attr("width", 60) 
+          .attr("height", 60)
+          .attr("fill", "lightgrey"); 
 
-        // Style the internal elements of the SVG (like paths)
-        d3.select(svgClone)
-          .selectAll("path")
-          .attr("fill", "#478CCF") // Apply color to paths inside the SVG
-          .attr("stroke", "#000")
-          .attr("stroke-width", 1);
+        // select the <g> element with the region name
+        insertedSvg.selectAll(`g.${regionClass} path`) // grab the path
+          .attr("stroke", "black") // apply black outline
+          .attr("stroke-width", 3)
+          .attr("fill", "black"); 
       });
   });
 
