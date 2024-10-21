@@ -7,7 +7,12 @@
                   </p>
             </div>
         <div class="viz-container">
-          <div id="dotplot-container"> </div>   
+          <div id="dotplot-container">             
+            <div class="toggle-container">
+              <span class="highlight" id="toggle-supply">Show Supply</span>
+              <span class="highlight" id="toggle-demand">Show Demand</span>
+          </div>
+        </div>   
         </div>
         <div class="text-container">
         <p>
@@ -36,12 +41,15 @@ const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.8;
-const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.7;
-let margin = { top: 50, right: 150, bottom: 40, left: 200 };
+const containerWidth = window.innerWidth * 0.45;
+const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5;
+let margin = { top: 50, right: 50, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
 let chartBounds, dotGroup;
+
+let showSupply = ref(true);
+let showDemand = ref(true);
 
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
@@ -54,6 +62,10 @@ onMounted(async () => {
         if (data.value.length > 0) {
             initDotChart();
             createDotChart();
+
+            // Add event listeners for toggles
+            d3.select("#toggle-supply").on("click", () => togglePoints("supply"));
+            d3.select("#toggle-demand").on("click", () => togglePoints("demand"));
         } else {
             console.error('Error loading data');
         }
@@ -77,15 +89,12 @@ async function loadData(fileName) {
 };
 
 function initDotChart() {
-  const constrainedWidth = Math.min(containerWidth, 700); 
-  const constrainedHeight = Math.max(containerHeight, 600);
 
   d3.select('#dotplot-container').select('svg').remove();
 
     svg = d3.select('#dotplot-container')
       .append('svg')
-      .attr('viewBox', `0 0 ${constrainedWidth} ${constrainedHeight}`)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
       .style('width', '100%')
       .style('height', 'auto');
 
@@ -93,6 +102,15 @@ function initDotChart() {
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
     dotGroup = chartBounds.append('g');
+}
+function togglePoints(type) {
+    if (type === "supply") {
+        showSupply.value = !showSupply.value;
+        d3.selectAll(".circle-supply").style("opacity", showSupply.value ? 1 : 0);
+    } else if (type === "demand") {
+        showDemand.value = !showDemand.value;
+        d3.selectAll(".circle-demand").style("opacity", showDemand.value ? 1 : 0);
+    }
 }
 
 function createDotChart() {
@@ -110,7 +128,7 @@ function createDotChart() {
     // scales
     const xScale = d3.scaleLinear()
         .domain(d3.extent(dataset, d => +d.supply_mean))
-        .range([0, width-margin.right])
+        .range([0, width-2*margin.right])
         .nice();
 
     const yScale = d3.scaleBand()
@@ -129,7 +147,6 @@ function createDotChart() {
 
     dotGroup.append('g')
         .attr('class', 'x-axis')
-        .attr('transform', `translate(0, 0)`)
         .call(d3.axisTop(xScale).ticks(5));
 
     dotGroup.append('g')
@@ -140,7 +157,7 @@ function createDotChart() {
     const regionAxis = dotGroup.select('.y-axis')
       .selectAll(".tick")
       .select("text")
-      .attr("x", -66) // shift text to the left to make space for the mini maps
+      .attr("x", -44) // shift text to the left to make space for the mini maps
       .attr("dy", "0.32em");
 
       // load SVG and add it to each tick
@@ -158,10 +175,10 @@ function createDotChart() {
           // add the map at each tick
           const insertedSvg = d3.select(this)
             .insert(() => svgClone, "text") 
-            .attr("x", -56) 
-            .attr("y", -28) 
-            .attr("width", 56) 
-            .attr("height", 56)
+            .attr("x", -40) 
+            .attr("y", -20) 
+            .attr("width", 40) 
+            .attr("height", 40)
             .attr("fill", "lightgrey"); 
 
           // select the <g> element with the region name
@@ -175,7 +192,7 @@ function createDotChart() {
     // axis label
     dotGroup.append("text")
       .attr("class", "upper-right-label")
-      .attr("x", width - margin.right) 
+      .attr("x", width - 2*margin.right) 
       .attr("y", -30)
       .attr("text-anchor", "end") // anchor to the end of the text
       .style("font-size", "2rem")
@@ -221,7 +238,7 @@ function createDotChart() {
 }
 #viz-container {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   margin: 20px auto;
   display: block;
 }
@@ -232,6 +249,20 @@ function createDotChart() {
 .text-container {
   margin: 20px auto;
 }
+#toggle-supply, #toggle-demand {
+  margin-left: 10px;
+  background-color: #669999;
+}
+
+#toggle-demand {
+  background-color: #F87A53;
+}
+
+.toggle-container {
+  display: inline-block;
+  margin-top: -30px;
+}
+
 .highlight {
   color: white;
   padding: 0.25px 5px;
