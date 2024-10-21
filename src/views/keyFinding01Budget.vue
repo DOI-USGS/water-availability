@@ -10,14 +10,14 @@
           <div id="dotplot-container">             
             <div class="toggle-container">
               <button
-                :class="{'active-toggle': showDemand}"
+                :class="{'active-toggle': showDemand, 'inactive-toggle': !showDemand}"
                 @click="togglePoints('demand')"
                 class="highlight demand toggle-button"
               >
                 {{ showDemand ? 'Hide Demand' : 'Show Demand' }}
               </button>
               <button
-            :class="{'active-toggle': showSupply}"
+            :class="{'active-toggle': showSupply, 'inactive-toggle': !showSupply}"
             @click="togglePoints('supply')"
             class="highlight supply toggle-button"
           >
@@ -247,7 +247,7 @@ function createDotChart() {
         .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
         .attr('stroke', '#ccc')
         .attr('stroke-width', 3)
-        .attr("stroke-opacity", 0.4);
+        .attr("stroke-opacity", 0.5);
 
     dotGroup.selectAll(".circle-supply")
         .data(dataset)
@@ -331,13 +331,14 @@ function createDotChart() {
 
 }
 .supply {
-    background-color: #669999;
-  }
+  background-color: #669999;
+}
 
-  .demand {
-    background-color: #F87A53;
-  }
-  .active-toggle {
-  background-color: "lightgrey"; 
+.demand {
+  background-color: #F87A53;
+}
+.inactive-toggle {
+  background-color: lightgrey; 
+  color: black;
 }
 </style>
