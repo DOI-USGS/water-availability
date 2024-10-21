@@ -23,19 +23,19 @@ p3_targets <- list(
              p3_colors_website |> bind_cols(
                tibble(
                  # Water Use
-                 te_gw_main = "#01A0C7", #tern_5
+                 te_gw_main = "#3E4F5C", #tern_5
                  te_sw_secondary = "#1687A5",
                  te_saline = "#01F9C6",
-                 ir_gw_main = "#FDFF01", #tern_9
+                 ir_gw_main = "#BBA167", #tern_9
                  ir_sw_secondary = "#D0CB02",
-                 ps_gw_main = "#F41A90", #tern_1
+                 ps_gw_main = "#952D3D", #tern_1
                  ps_secondary = "#C72873",
-                 tern_2 = "#73A8D2",
-                 tern_3 = "#FD7FBA",
-                 tern_4 = "#FEB4A6",
-                 tern_6 = "#3FBAD2",
-                 tern_7 = "#85CAC3",
-                 tern_8 = "#FEFFA7"))),
+                 tern_2 = "#705E70",
+                 tern_3 = "#C63C51",
+                 tern_4 = "#E0896D",
+                 tern_6 = "#53697A",
+                 tern_7 = "#637B73",
+                 tern_8 = "#F9D689"))),
   tar_target(p3_colors_balance,
              p3_colors_website |> bind_cols(
                tibble(
@@ -260,6 +260,12 @@ p3_targets <- list(
                          width = 8,
                          height = 6,
                          png_out = "public/images/kf08_wu_ternary.png"),
+             format = "file"),
+  tar_target(p3_ternary_plot_png,
+             ternary_plot(in_df = p2_wu_ternary_df,
+                          width = 8,
+                          height = 8,
+                          png_out = "public/images/kf08_wu_legend.png"),
              format = "file")
   
   
