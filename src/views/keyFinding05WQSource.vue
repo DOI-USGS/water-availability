@@ -63,10 +63,10 @@ import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import { isMobile } from 'mobile-device-detect';
+import RegionMap from "/assets/USregions.svg";
 
 // use for mobile logic
 const mobileView = isMobile;
-//console.log(mobileView)
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -227,18 +227,22 @@ function createBarChart({
     .call(d3.axisLeft(regionScale))
     .attr('class', 'axis-text');
 
+  // adding maps
   regionAxis.selectAll(".tick")
     .select("text")
-    .attr("x", -100) // shift text to the left to make space for the mini maps
+    .attr("x", -80) // shift text to the left to make space for the mini maps
     .attr("dy", "0.32em")
     //.attr("font-weight", "bold");
 
+
   regionAxis.selectAll(".tick")
-    .insert("circle", "text") 
-    .attr("cx", -25) 
-    .attr("cy", 0) 
-    .attr("r", 15) 
-    .style("fill", "#478CCF");
+    .insert("image", "text") 
+    .attr("xlink:href", RegionMap) 
+    .attr("x", -66) 
+    .attr("y", -30) 
+    .attr("width", 60) 
+    .attr("height", 60)
+    .attr("color", "grey"); 
 
   // x-axis at the bottom
   nutrientAxis = chartBounds.append('g')
@@ -402,6 +406,9 @@ function wrap(text, width) {
   #barplot-container {
     width: 100%; 
   }
+}
+.svg-icon path {
+  fill: #478CCF;
 }
 
 .highlight {
