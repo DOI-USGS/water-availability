@@ -9,8 +9,20 @@
         <div class="viz-container">
           <div id="dotplot-container">             
             <div class="toggle-container">
-              <span class="highlight" id="toggle-demand">Show Demand</span>
-              <span class="highlight" id="toggle-supply">Show Supply</span>
+              <button
+                :class="{'active-toggle': showDemand}"
+                @click="togglePoints('demand')"
+                class="highlight demand toggle-button"
+              >
+                {{ showDemand ? 'Hide Demand' : 'Show Demand' }}
+              </button>
+              <button
+            :class="{'active-toggle': showSupply}"
+            @click="togglePoints('supply')"
+            class="highlight supply toggle-button"
+          >
+            {{ showSupply ? 'Hide Supply' : 'Show Supply' }}
+          </button>
           </div>
         </div>   
         </div>
@@ -99,19 +111,27 @@ function initDotChart() {
       .style('height', 'auto');
 
     chartBounds = svg.append('g')
-      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+      .attr('transform', `translate(${margin.left}, 20)`);
 
     dotGroup = chartBounds.append('g');
 }
+
 function togglePoints(type) {
     if (type === "supply") {
         showSupply.value = !showSupply.value;
-        d3.selectAll(".circle-supply").style("opacity", showSupply.value ? 1 : 0);
+        d3.selectAll(".circle-supply")
+            .transition()
+            .duration(300) // optional for smooth transitions
+            .style("opacity", showSupply.value ? 1 : 0); // toggle visibility
     } else if (type === "demand") {
         showDemand.value = !showDemand.value;
-        d3.selectAll(".circle-demand").style("opacity", showDemand.value ? 1 : 0);
+        d3.selectAll(".circle-demand")
+            .transition()
+            .duration(300) // optional for smooth transitions
+            .style("opacity", showDemand.value ? 1 : 0); // toggle visibility
     }
 }
+
 
 function createDotChart() {
     const dataset = data.value;
@@ -190,14 +210,14 @@ function createDotChart() {
     }); 
     
     // axis label
-    dotGroup.append("text")
+/*     dotGroup.append("text")
       .attr("class", "upper-right-label")
       .attr("x", width - 2*margin.right) 
       .attr("y", -30)
       .attr("text-anchor", "end") // anchor to the end of the text
       .style("font-size", "2rem")
       .style("font-weight", "bold")
-      .text("Units");
+      .text("Units"); */
 
     // Add dots and lines
     dotGroup.selectAll(".line")
@@ -214,6 +234,7 @@ function createDotChart() {
     dotGroup.selectAll(".circle-supply")
         .data(dataset)
         .enter().append('circle')
+        .attr('class', 'circle-supply')
         .attr('cx', d => xScale(d.supply_mean))
         .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
         .attr('r', 5)
@@ -222,6 +243,7 @@ function createDotChart() {
     dotGroup.selectAll(".circle-demand")
         .data(dataset)
         .enter().append('circle')
+        .attr('class', 'circle-demand')
         .attr('cx', d => xScale(d.demand_mean))
         .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
         .attr('r', 5)
@@ -260,10 +282,13 @@ function createDotChart() {
 
 .toggle-container {
   display: flex;
+  width: 300px;
   margin-top: 20px;
-  margin-bottom: -40px;
+  margin: auto;
+  margin-bottom: 40px;
   align-items: center;
   justify-content: center;
+  z-index: 999;
 }
 
 .highlight {
@@ -283,5 +308,15 @@ function createDotChart() {
     background-color: #F87A53;
   }
 
+}
+.supply {
+    background-color: #669999;
+  }
+
+  .demand {
+    background-color: #F87A53;
+  }
+  .active-toggle {
+  background-color: "lightgrey"; 
 }
 </style>
