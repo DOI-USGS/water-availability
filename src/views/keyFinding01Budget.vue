@@ -30,7 +30,12 @@
         <p>
           Water stress occurs when there is not enough water available to meet human and ecosystem needs. This is more likely to happen in  regions where the difference between water supply and demand is fairly small. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.
         </p>
-      </div>
+        </div>
+        <div class="image-container">
+            <img src="../../public/images/01stress_map.png" alt="Water Stress" class="background-image">
+            <!-- Overlay SVG with the same dimensions -->
+            <svg class="overlay-svg"></svg>
+        </div>
       <References></References>
       </div>
         <PageCarousel></PageCarousel>
@@ -71,6 +76,51 @@ const orderedRegions = [
 
 onMounted(async () => {
     try {
+      // Load and append the external SVG to the overlay
+      d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
+            const svgNode = xml.documentElement;
+
+            svgNode.setAttribute("width", "113%"); // Adjust as needed
+            svgNode.setAttribute("height", "auto")
+            svgNode.setAttribute("x", "37")
+            svgNode.setAttribute("y", "-2"); 
+
+            // Append the loaded SVG into the overlay-svg container
+            const overlaySvg = d3.select(".overlay-svg")
+              .node().appendChild(svgNode); 
+
+            d3.select(svgNode).selectAll("g path")
+              .attr("stroke", "white")
+              .attr("stroke-width", "1.5")
+              .attr("fill", "transparent")
+              .on("mouseover", function(event, d) {
+                d3.selectAll(this).raise(); // Move the path to the front
+                d3.select(this)
+                  .attr("stroke", "yellow") 
+                  .attr("stroke-width", "3");
+
+                // Show region name near the cursor
+                d3.select(".overlay-svg").append("text")
+                  .attr("class", "region-label")
+                  .attr("x", event.pageX + 10) // Position near the cursor
+                  .attr("y", event.pageY - 10)
+                  .text(d3.select(this).attr("id")); 
+              })
+              .on("mousemove", function(event) {
+                // Update the position of the label as the mouse moves
+                d3.select(".region-label")
+                  .attr("x", event.pageX + 10)
+                  .attr("y", event.pageY - 10);
+              })
+              .on("mouseout", function() {
+                d3.select(this)
+                  .attr("stroke", "white") // Reset to original color
+                  .attr("stroke-width", "1.5");
+
+                // Remove the region label
+                d3.select(".region-label").remove();
+              });
+      })
         await loadDatasets();
         data.value = dataSet1.value;
         if (data.value.length > 0) {
@@ -273,6 +323,8 @@ function createDotChart() {
 <style scoped>
 .content-container {
   display: block;
+  margin: 0 auto;
+  padding: 0px;
 }
 #viz-container {
   width: 100%;
@@ -287,6 +339,36 @@ function createDotChart() {
 .text-container {
   margin: 20px auto;
 }
+.image-container {
+  position: relative;
+  width: 95%; 
+  max-width: 800px;
+  margin: 40px auto; 
+  overflow: hidden;
+}
+
+.background-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover; 
+  object-position: center;
+  display: block;
+}
+.overlay-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.region-label {
+  font-size: 14px;
+  font-weight: bold;
+  fill: black; 
+  pointer-events: none; /* Prevents the label from interfering with mouse events */
+}
+
+
 #toggle-supply, #toggle-demand {
   margin-left: 10px;
   background-color: #669999;
