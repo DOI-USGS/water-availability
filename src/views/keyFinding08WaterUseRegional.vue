@@ -28,6 +28,7 @@
                 alt=""
             >    
           </div>
+          <References></References>
         </div>
         <PageCarousel></PageCarousel>
     </section>
@@ -39,8 +40,9 @@ import * as d3Base from 'd3';
 import AggReg from "@/assets/svgs/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import References from '../components/References.vue';
 
-const imgSrc = ref('@/assets/images/ws_ps_dumbbell_centered_CONUS.png');
+const imgSrc = ref('../../public/images/ws_ps_dumbbell_centered_CONUS.png');
 
 const setDefaultImgSrc = () => {
   import(`../../public/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(img => {
@@ -75,7 +77,6 @@ const mouseoutMap = (event) => {
 onMounted(() => {
   setDefaultImgSrc();
   addInteractions();
-
 });
 </script>
 

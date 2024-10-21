@@ -29,6 +29,7 @@
             <div class="viz-container">
                 <img class="viz-portrait" src="../../public/images/kf9_cu_thermoelectric.png">
             </div>
+            <References></References>
         </div>
         <PageCarousel></PageCarousel>
     </section>
@@ -37,6 +38,7 @@
 <script setup>
     import PageCarousel from '../components/PageCarousel.vue';
     import KeyMessages from '../components/KeyMessages.vue';
+    import References from '../components/References.vue'
 
 </script>
 

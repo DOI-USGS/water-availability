@@ -47,7 +47,7 @@
                 <div id="barplot-container">    
                 </div>
             </div>
-
+            <References></References>
         </div>
 
 
@@ -62,6 +62,7 @@ import { onMounted, ref, computed } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import References from '../components/References.vue'
 import { isMobile } from 'mobile-device-detect';
 import RegionMap from "/assets/USregions.svg";
 
