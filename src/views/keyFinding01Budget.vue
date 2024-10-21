@@ -36,12 +36,16 @@ const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
 let svg;
-const containerWidth = window.innerWidth * 0.6;
-const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.50;
-let margin = { top: 60, right: 200, bottom: 50, left: 300 };
+const containerWidth = window.innerWidth * 0.8;
+const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.65;
+let margin = { top: 60, right: 150, bottom: 50, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
 let chartBounds, dotGroup;
+
+const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
+"Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
+"Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"]
 
 onMounted(async () => {
     try {
@@ -73,11 +77,15 @@ async function loadData(fileName) {
 };
 
 function initDotChart() {
+  const constrainedWidth = Math.min(containerWidth, 700); 
+  const constrainedHeight = Math.max(containerHeight, 600);
+
   d3.select('#dotplot-container').select('svg').remove();
-  
+
     svg = d3.select('#dotplot-container')
       .append('svg')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+      .attr('viewBox', `0 0 ${constrainedWidth} ${constrainedHeight}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
       .style('width', '100%')
       .style('height', 'auto');
 
@@ -102,11 +110,11 @@ function createDotChart() {
     // scales
     const xScale = d3.scaleLinear()
         .domain(d3.extent(dataset, d => +d.supply_mean))
-        .range([0, width])
+        .range([0, width-margin.right])
         .nice();
 
     const yScale = d3.scaleBand()
-        .domain(dataset.map(yAccessor))
+        .domain(dataset.map(yAccessor)) // orderedRegions for geographical order
         .range([0, height])
         .padding(0.1);
 
@@ -120,8 +128,23 @@ function createDotChart() {
         .call(d3.axisBottom(xScale).ticks(5));
 
     dotGroup.append('g')
+        .attr('class', 'x-axis')
+        .attr('transform', `translate(0, 0)`)
+        .call(d3.axisTop(xScale).ticks(5));
+
+    dotGroup.append('g')
         .attr('class', 'y-axis')
         .call(d3.axisLeft(yScale));
+    
+    // axis label
+    dotGroup.append("text")
+      .attr("class", "upper-right-label")
+      .attr("x", width - margin.right) 
+      .attr("y", -30)
+      .attr("text-anchor", "end") // anchor to the end of the text
+      .style("font-size", "2rem")
+      .style("font-weight", "bold")
+      .text("Units");
 
     // Add dots and lines
     dotGroup.selectAll(".line")
@@ -131,7 +154,9 @@ function createDotChart() {
         .attr('x2', d => xScale(d.demand_mean))
         .attr('y1', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
         .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('stroke', '#ccc');
+        .attr('stroke', '#ccc')
+        .attr('stroke-width', 3)
+        .attr("stroke-opacity", 0.4);
 
     dotGroup.selectAll(".circle-supply")
         .data(dataset)
@@ -159,13 +184,14 @@ function createDotChart() {
   display: block;
 }
 #viz-container {
-  width: 90%;
-  max-width: 1000px;
+  width: 100%;
+  max-width: 700px;
   margin: 20px auto;
   display: block;
 }
 #dotplot-container{
   width: 100%;
+  min-height: 600px;
 }
 .text-container {
   margin: 20px auto;
