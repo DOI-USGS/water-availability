@@ -82,7 +82,6 @@ export default {
   text-shadow: none;
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
 }
-
 .raindrop-static-text {
   position: absolute;
   top: 50%;

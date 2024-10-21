@@ -74,6 +74,7 @@
 }
 .text-container {
   width: 60%;
+  min-width: 600px;
   margin: 0 auto;
   padding-top: 20px;
 }
@@ -272,7 +273,7 @@ h4 {
 }
 .subheading {
   border-left: 10px solid var(--banner-col);
-  margin: 1.5em 20% 1.5em 0;
+  margin: 1.5em 10% 1.5em 0;
   padding: 0.5em 15px;
 }
 @media only screen and (max-width: 768px) {

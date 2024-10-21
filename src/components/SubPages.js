@@ -22,7 +22,7 @@ export default {
             mainTitle: 'Unequal access to water',
             shortTitle: 'Socially vulnerable Americans have a higher risk of water stress',
             keyMessage: 'A high proportion of the population living in areas with water stress are socially vulnerable',
-            references: [ "Azadpour2024", "Stets2025"]
+            references: [ "Drakes2024", "Stets2025"]
         },
         {
             page: 4,
