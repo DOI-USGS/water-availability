@@ -76,6 +76,25 @@ const orderedRegions = [
 
 onMounted(async () => {
     try {
+      // Load and append the external SVG to the overlay
+      d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
+            const svgNode = xml.documentElement;
+
+            svgNode.setAttribute("width", "113%"); // Adjust as needed
+            svgNode.setAttribute("height", "auto")
+            svgNode.setAttribute("x", "37")
+            svgNode.setAttribute("y", "-2"); 
+
+            d3.select(svgNode)
+            .attr("fill","transparent")
+            .attr("stroke", "white")
+            .attr("stroke-width", "1.5")
+            .attr("z-index", 1)
+
+            // Append the loaded SVG into the overlay-svg container
+            d3.select(".overlay-svg")
+              .node().appendChild(svgNode); 
+      })
         await loadDatasets();
         data.value = dataSet1.value;
         if (data.value.length > 0) {
