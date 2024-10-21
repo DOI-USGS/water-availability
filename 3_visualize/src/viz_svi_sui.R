@@ -46,7 +46,7 @@ map_stress <- function(in_sf,
                       height){
   
   plot_sf <- in_sf |>
-    filter( ! is.na(sui_category_3)) |>
+    filter( ! is.na(sui_category_5)) |>
     mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$wet_blue_dark,
                                  sui_category_5 == "Low" ~ color_scheme$wet_blue_light,
                                  sui_category_5 == "Moderate" ~ color_scheme$svg_col_default,
