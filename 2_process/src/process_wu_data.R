@@ -128,3 +128,55 @@ total_wu_yearly <- function(...,
   return(yearly_mgd)
   
 }
+
+#################################
+## plotting ternary plot
+##
+# Set up non-spatial data for merging with spatial (total water use, ternary plot, etc)
+total_wu_proportions <- function(ps_in, ir_in, te_in, 
+                                 color_scheme){
+  
+  raw <- ps_in |> left_join(ir_in, by = "HUC8") |> left_join(te_in, by = "HUC8")
+
+  summary <- raw |>
+    rowwise() |>
+    mutate(total_wu = sum(ps_total, ir_total, te_total, na.rm = TRUE)) |>
+    # make NAs into zeros
+    mutate(ps_total = case_when(is.na(ps_total) ~ 0,
+                                TRUE ~ ps_total),
+           ir_total = case_when(is.na(ir_total) ~ 0,
+                                TRUE ~ ir_total),
+           te_total = case_when(is.na(te_total) ~ 0,
+                                TRUE ~ te_total)) |>
+    # determine proportion
+    mutate(ps_prop = case_when(ps_total == 0 ~ 0,
+                               TRUE ~ ps_total / total_wu),
+           ir_prop = case_when(ir_total == 0 ~ 0,
+                               TRUE ~ ir_total / total_wu),
+           te_prop = case_when(te_total == 0 ~ 0,
+                               TRUE ~ te_total / total_wu)) |>
+    # categorize
+    mutate(category = case_when(ps_prop >= 0.67 ~ 1,
+                                te_prop >= 0.67 ~ 5,
+                                ir_prop >= 0.67 ~ 9,
+                                ps_prop >= 0.34 & te_prop >= 0.34 ~ 2,
+                                ps_prop >= 0.34 & te_prop < 0.34 & ir_prop < 0.34 ~ 3,
+                                ps_prop >= 0.34 & ir_prop >= 0.34 ~ 4,
+                                te_prop >= 0.34 & ir_prop >= 0.34 ~ 7,
+                                te_prop >= 0.34 & ir_prop < 0.34 & ps_prop < 0.34 ~ 6,
+                                ir_prop >= 0.34 & te_prop < 0.34 & ps_prop < 0.34 ~ 8,
+                                TRUE ~ NA),
+          # add colors
+           color = case_when(category == 1 ~ color_scheme$ps_gw_main,
+                             category == 5 ~ color_scheme$te_gw_main,
+                             category == 9 ~ color_scheme$ir_gw_main,
+                             category == 2 ~ color_scheme$tern_2,
+                             category == 3 ~ color_scheme$tern_3,
+                             category == 4 ~ color_scheme$tern_4,
+                             category == 6 ~ color_scheme$tern_6,
+                             category == 7 ~ color_scheme$tern_7,
+                             category == 8 ~ color_scheme$tern_8,
+                             TRUE ~ "#cccccc"))
+  
+  return(summary)
+}
