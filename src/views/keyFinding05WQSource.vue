@@ -85,6 +85,9 @@ let nutrientScale, nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
+const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
+"Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
+"Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"]
 
 // Colors for bar chart (need to be updated along with CSS below!)
 const categoryColors = {
@@ -203,7 +206,7 @@ function createBarChart({
   scaleLoad
 }) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
-  const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
+  //const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
   const stackedData = d3.stack()
@@ -212,7 +215,7 @@ function createBarChart({
     (d3.index(dataset, d => d.region_nam, d => d.category));
 
   const regionScale = d3.scaleBand()
-    .domain(regionGroups)
+    .domain(orderedRegions.reverse())
     .range([height, 0])
     .padding(0.1);
 
