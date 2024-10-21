@@ -222,9 +222,23 @@ function createBarChart({
 
   chartBounds.selectAll(".axis-text").remove();
 
-  chartBounds.append('g')
+  // region axis
+  const regionAxis = chartBounds.append('g')
     .call(d3.axisLeft(regionScale))
     .attr('class', 'axis-text');
+
+  regionAxis.selectAll(".tick")
+    .select("text")
+    .attr("x", -100) // shift text to the left to make space for the mini maps
+    .attr("dy", "0.32em")
+    //.attr("font-weight", "bold");
+
+  regionAxis.selectAll(".tick")
+    .insert("circle", "text") 
+    .attr("cx", -25) 
+    .attr("cy", 0) 
+    .attr("r", 15) 
+    .style("fill", "#478CCF");
 
   // x-axis at the bottom
   nutrientAxis = chartBounds.append('g')
