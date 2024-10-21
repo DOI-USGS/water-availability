@@ -24,6 +24,7 @@
                     alt="xxx"
                 >
           </div>
+          <References></References>
         </div>
         <PageCarousel></PageCarousel>
     </section>
@@ -35,13 +36,12 @@ import * as d3Base from 'd3';
 import AggReg from "@/assets/svgs/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import photoPublic from "@/assets/images/k08_ps_wheatfield_CONUS.png";
-import photoIrrigation from "@/assets/images/k08_ir_wheatfield_CONUS.png";
+import References from '../components/References.vue';
 
-const imgSrc = ref('@/assets/images/ws_ps_dumbbell_centered_CONUS.png');
+const imgSrc = ref('../../public/images/ws_ps_dumbbell_centered_CONUS.png');
 
 const setDefaultImgSrc = () => {
-  import(`@/assets/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(img => {
+  import(`../../public/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(img => {
     imgSrc.value = img.default;
   });
 };
@@ -73,21 +73,6 @@ const mouseoutMap = (event) => {
 onMounted(() => {
   setDefaultImgSrc();
   addInteractions();
-
-  const firstImg = document.getElementById("first-image");
-  const imageToggle = document.getElementById("image-toggle");
-
-  const toggleImg = () => {
-    if (firstImg.getAttribute('src') === photoPublic) {
-      firstImg.setAttribute('src', photoIrrigation);
-      imageToggle.textContent = "Switch to Public Supply";
-    } else {
-      firstImg.setAttribute('src', photoPublic);
-      imageToggle.textContent = "Switch to Irrigation";
-    }
-  };
-
-  imageToggle.addEventListener("click", toggleImg);
 });
 </script>
 
@@ -96,18 +81,6 @@ onMounted(() => {
 
 
 
-img {
-    width: 35%
-}
 
-@media only screen and (max-width: 768px) {
-
-
-    img {
-    width: 50%;
-    margin-top: 20px;
-    }
-
-}
 
 </style>
