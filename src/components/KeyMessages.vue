@@ -153,33 +153,47 @@ export default {
   transform: none;
   opacity: 1;
 }
-.side-menu {
-  position: fixed;
-  height: 100%;
-  width: 250px;
-  background-color: rgba(0, 0, 0, 0.9);
-  top: 0;
-  right: 0;
-  z-index: 9;
-  padding: 20px;
-  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.5);
-  transition: transform 0.4s ease-in-out;
+.dropdown-menu {
+  position: absolute;
+  top: 60px; /* Position it just below the hamburger */
+  right: 20px; /* Align it to the right-hand side */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  padding: 10px;
+  border-radius: 4px;
 }
 
-.side-menu ul {
+.dropdown-menu ul {
   list-style-type: none;
+  margin: 0;
   padding: 0;
 }
 
-.side-menu li {
-  margin: 15px 0;
+.dropdown-menu li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
-.side-menu a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 18px;
+.dropdown-menu li:last-child {
+  border-bottom: none;
 }
+
+.dropdown-menu a,
+.dropdown-menu router-link {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu router-link:hover {
+  background-color: #f1f1f1;
+  color: #000;
+}
+
 @media only screen and (max-width: 768px) {
     .raindrop-static{
         width: 40px;
