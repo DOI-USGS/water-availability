@@ -81,6 +81,7 @@
 @media only screen and (max-width: 768px) {
   .text-container {
     width: 90%;
+    min-width: 200px;
   }
 }
 .references-container {
@@ -233,7 +234,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-bottom: 100px; /* to make room for footer */
+  /* padding-bottom: 100px; to make room for footer */
 }
 
 h1 {
@@ -285,18 +286,28 @@ h4 {
 }
 
 /* Text for d3 chart axes, etc */
+.axis-title {
+  font-size: 1.8rem;
+  font-family: var(--default-font);
+  font-weight: 900;
+  fill: var(--color-text);
+  user-select: none;
+  @media screen and (max-width: 600px) {
+      font-size: 1.6rem;
+  }
+}
 .axis-text{
   font-family:
     Source Sans Pro,
     sans-serif;
-  font-size: 18px;
+  font-size: 1.8rem;
 }
 @media only screen and (max-width:490px) {
   .axis-text{
     font-family:
       Source Sans Pro,
       sans-serif;
-    font-size: 16px;
+    font-size: 1.6rem;
   }
 }
 
