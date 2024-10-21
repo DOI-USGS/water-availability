@@ -5,14 +5,16 @@ export default {
             route: '/01Budget',
             mainTitle: 'Do we have enough water? Yes, and no',
             shortTitle: 'The U.S. has enough water, but not regionally',
-            keyMessage: 'At the national scale, the natural water supply greatly exceeds our demand for water. However, this pattern is not true for all regions.'
+            keyMessage: 'At the national scale, the natural water supply greatly exceeds our demand for water. However, this pattern is not true for all regions.',
+            references: ["Stets2024"]
         },
         {
             page: 2,
             route: '/02SUI',
             mainTitle: 'Living with water stress',
-            shortTitle: 'More than 30 million people in the U.S. live in areas of high or severe water stress',
-            keyMessage: 'On average, 6% of the lower 48 states by area experienced high or severe water stress during 2010-2020 and another 47% experienced low or moderate water stress.'
+            shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water stress',
+            keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.',
+            references: ["Liu2022", "Dettingher2005","Stets2024"]
         },
         {
             page: 3,

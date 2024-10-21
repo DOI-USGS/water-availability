@@ -182,6 +182,42 @@ export default {
         data_release: false,
         link: "https://doi.org/10.1017/9781009157896.014",
         doi: "10.1017/9781009157896.014"
+      },
+      {
+        refID: "Dettingher2005", 
+        authors: "Dettinger, M.",
+        year: "2005",
+        title: "Changes in streamflow timing in the western United States in recent decades: U.S. Geological Survey Fact Sheet 2005–3018",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.3133/fs20053018",
+        doi: "10.3133/fs20053018"
+      },
+      {
+        refID: "Liu2022", 
+        authors: "Liu, N., Dobbs, G.R., Caldwell, P.V., Miniat, C.F., Sun, G., Duan, K., Nelson, S.A.C., Bolstad, P.V., and Carlson, C.P.",
+        year: "2022",
+        title: "Inter-basin transfers extend the benefits of water from forests to population centers across the conterminous U.S",
+        journal: true,
+        journal_name: "Water Resources Research",
+        journal_issue: "58",
+        data_release: false,
+        link: "https://doi.org/10.1029/2021WR031537",
+        doi: "10.1029/2021WR031537"
+      },
+      {
+        refID: "Stets2024", 
+        authors: "Stets, E.G., Cashman, M., Miller, O.L., Powlen, K.A., Martinez, A., Padilla, J., Archer, A.A.",
+        year: "2024",
+        title: "Local water use and climate effects on water stress over the conterminous US with substantial impacts to fish species of greatest conservation need.",
+        journal: true,
+        journal_name: "Science of the Total Environment [in revision]",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/xxx",
+        doi: "xx"
       }
     ]
 }
