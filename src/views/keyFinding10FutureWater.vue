@@ -8,27 +8,27 @@
             <div class="viz-container">
                 <div class="gallery">
                     <input type="radio" checked="checked" name="select" id="kf10_temp">
-                    <label for="kf10_temp" style="background-image: url('./images/future_temp.png');"></label>
+                    <label for="kf10_temp" style="background-image: url('/images/future_temp.png');"></label>
                     <img src="../../public/images/kf10_temp.png" border="0">
 
                     <input type="radio" checked="checked" name="select" id="kf10_water">
-                    <label for="kf10_water" style="background-image: url('./images/future_water.png');"></label>
+                    <label for="kf10_water" style="background-image: url('/images/future_water.png');"></label>
                     <img src="../../public/images/kf10_water.png" border="0">
 
                     <input type="radio" checked="checked" name="select" id="kf10_dry">
-                    <label for="kf10_dry" style="background-image: url('./images/future_dry.png');"></label>
+                    <label for="kf10_dry" style="background-image: url('/images/future_dry.png');"></label>
                     <img src="../../public/images/kf10_dry.png" border="0">
 
                     <input type="radio" checked="checked" name="select" id="kf10_snow">
-                    <label for="kf10_snow" style="background-image: url('./images/future_ice.png');"></label>
+                    <label for="kf10_snow" style="background-image: url('/images/future_ice.png');"></label>
                     <img src="../../public/images/kf10_snow.png" border="0">
 
                     <input type="radio" checked="checked" name="select" id="kf10_coastal">
-                    <label for="kf10_coastal" style="background-image: url('./images/future_coastal.png');"></label>
+                    <label for="kf10_coastal" style="background-image: url('/images/future_coastal.png');"></label>
                     <img src="../../public/images/kf10_coastal.png" border="0">
 
                     <input type="radio" checked="checked" name="select" id="kf10_wind">
-                    <label for="kf10_wind" style="background-image: url('./images/future_wind.png');"></label>
+                    <label for="kf10_wind" style="background-image: url('/images/future_wind.png');"></label>
                     <img src="../../public/images/kf10_wind.png" border="0">
                 </div>
             </div>
