@@ -4,9 +4,9 @@
       v-if="buttonText === 'I understand'"
       class="warning-open"
     >
-      ATTENTION! - You are viewing a prototype application that is in active development.
-      Contents seen here are for place holding and development only. <strong>DO NOT USE</strong> information
-      contained in this application for ANY purpose.
+      <strong>ATTENTION!</strong> You are viewing a prototype application that is in active development.
+      Contents seen here are for placeholding and development only. <strong>DO NOT USE</strong> information
+      contained in this application for <strong>ANY</strong> purpose.
     </p>
     <button @click="toggleWarning">
       {{ buttonText }}
@@ -27,25 +27,25 @@
 
 <style scoped lang="scss">
   .usa-prose {
-    background-color: #b9c7d2;
+    background-color: #386785;
     padding-bottom: 0.3em;
     padding-top: 0.3em;
     p {
-      max-width: 60em;
-      text-align: center;
-      margin: 0 auto 5px 0;
+    max-width: 50em;
+    text-align: center;
+    margin: 0 auto 5px auto;
+    color: white;
     }
     button {
       display: block;
       margin: 0 auto;
-      background: #003366;
+      background: var(--color-USGS-header-footer);
       color: #ffffff;
       border: none;
       outline: none;
       padding: 6px 10px;
       border-radius: 5px;
       font-weight: bold;
-      font-size: small;
     }
   }
 </style>
