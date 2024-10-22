@@ -6,7 +6,7 @@
     >
       <strong>ATTENTION!</strong> You are viewing a prototype application that is in active development.
       Contents seen here are for placeholding and development only. <strong>DO NOT USE</strong> information
-      contained in this application for ANY purpose.
+      contained in this application for <strong>ANY</strong> purpose.
     </p>
     <button @click="toggleWarning">
       {{ buttonText }}
