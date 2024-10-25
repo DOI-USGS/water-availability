@@ -27,7 +27,7 @@
 
 <style scoped lang="scss">
   .usa-prose {
-    background-color: #386785;
+    background-color: var(--teal-dark);
     padding-bottom: 0.3em;
     padding-top: 0.3em;
     p {

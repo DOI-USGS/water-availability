@@ -10,14 +10,20 @@
   --white: #ffffff;
   --white-soft: #F0F0F0;
   --medium-grey: #B5B5B5;
-  --banner-col: #9DC6D7; /* #9FCACB; */
+  --banner-col: var(--blue-light); /* #9FCACB; */
   --blue-highlight-col:  #728393; /* #5E7789; */ 
-  --blue-text-col: #00264C;/* #363E4A; */ /* #00264C; */
+  --blue-text-col: var(--blue-dark);/* #363E4A; */ /* #00264C; */
   --grey-blue: #5e7789;
-  --page-bkg-col: #FEFAF6;/* #edeadf; */
+  --page-bkg-col: var(--cream-background);/* #edeadf; */
   --blue-bright: #0f52ba;
   --usgs-blue: #00264c;
   --usgs-green: #006F41;
+
+  /* updated color scheme */
+  --blue-dark: #00264C; /* same as usgs header*/
+  --blue-light: #9DC6D7;
+  --cream-background: #FEFAF6;
+  --teal-dark: #386785;
   --black-soft: #151515;
 
   font-size: 62.5%;
@@ -223,8 +229,8 @@ section .waves .wave#wave4{
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
-  background: var(--page-bkg-col);
+  color: var(--black-soft);
+  background: var(--cream-background);
   transition:
     color 0.5s,
     background-color 0.5s;
@@ -243,46 +249,54 @@ body {
 h1 {
   font-size: 5rem;
   font-weight: 800;
+  color: var(--blue-dark);
 }
 h2 {
   font-size: 3.5rem;
   font-weight: 800;
+  color: var(--blue-dark);
 }
 h3 {
   font-size: 3.0rem;
   font-weight: 700;
+  color: var(--soft-black);
 }
 h4 {
   font-size: 2.5rem;
   font-weight: 400;
   font-style: italic;
+  color: var(--soft-black);
 }
 @media only screen and (max-width: 768px) {
   h1 {
     font-size: 3.5rem;
     font-weight: 800;
+    color: var(--blue-dark);
   }  
   h2 {
-  font-size: 2.8rem;
-  font-weight: 800;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--blue-dark);
   }
   h3 {
     font-size: 2.4rem;
     font-weight: 700;
+    color: var(--soft-black);
   }
   h4 {
     font-size: 2rem;
     font-weight: 400;
+    color: var(--soft-black);
   }
 }
 .subheading {
-  border-left: 10px solid var(--banner-col);
-  margin: 1.5em 10% 1.5em 0;
+  border-left: 10px solid var(--teal-dark);
+  margin: 1.5em 5% 1.5em 0;
   padding: 0.5em 15px;
 }
 @media only screen and (max-width: 768px) {
   .subheading {
-    border-left: 5px solid var(--banner-col);
+    border-left: 5px solid var(--teal-dark);
     margin: 1.5em 0 1.5em 0;
     padding: 0.5em 0px 0.5em 14px;
   }

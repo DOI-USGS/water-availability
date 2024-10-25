@@ -147,38 +147,39 @@ const returnToHome = () => {
 }
 
 .nav-card-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 0 50% 50% 50%;
-    transform: rotate(45deg);
-    margin: 10px auto 0px auto;
-    background-color: transparent;
-    border: 2px solid #427388;
-    outline: 1px solid;
-    outline-color: rgba(255, 255, 255, .5);
-    outline-offset: 0px;
-    text-shadow: none;
-    transition: all 0ms cubic-bezier(0.19, 1, 0.22, 1);
-    color: #427388;
+  width: 40px;
+  height: 40px;
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(45deg);
+  margin: 10px auto 0px auto;
+  background-color: transparent;
+  border: 2px solid var(--blue-dark);
+  outline: 1px solid;
+  outline-color: rgba(255, 255, 255, .5);
+  outline-offset: 0px;
+  text-shadow: none;
+  transition: all 0ms cubic-bezier(0.19, 1, 0.22, 1);
+  color: #427388;
 }
 
 .nav-card-button:hover {
-  background-color: #427388;
+  background-color: var(--blue-light);
   cursor: pointer;
 }
 
 .nav-card-button-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-size: 20px;
   font-weight: bold;
-  color: #427388;
+  color: var(--blue-dark);
 }
 
+
 .active-page .nav-card-button {
-  background-color: #427388; /* highlight current page */
+  background-color: var(--blue-light); /* highlight current page */
 }
 
 
@@ -186,7 +187,7 @@ const returnToHome = () => {
 .nav-page-button {
   height: 50px;
   width: 50px;
-  color: #427388;
+  color: var(--blue-dark);
   background-color: transparent;
   font-size: 40px;
   display: flex;
@@ -199,31 +200,11 @@ const returnToHome = () => {
 
 
 .nav-page-button:hover {
-  color: var(--blue-text-col);
+  color: var(--blue-dark);
   cursor: pointer;
   opacity: 1;
 }
 
-.return-home-button-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
 
-.return-home-button {
-  padding: 10px 20px;
-  background-color: #427388;
-  color: white;
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-  white-space: nowrap;
-}
-
-.return-home-button:hover {
-  background-color: var(--blue-text-col);
-}
 
 </style>
