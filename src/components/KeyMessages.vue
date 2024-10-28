@@ -71,7 +71,7 @@ export default {
     display: grid;
     width: 80vw;
     margin: 0 auto;
-    color: var(--blue-text-col);
+    color: var(--blue-dark);
     padding: 20px 0px 20px 0px;
     grid-template-columns: 140px auto;
     grid-gap: 1rem;

@@ -39,7 +39,7 @@
     button {
       display: block;
       margin: 0 auto;
-      background: var(--color-USGS-header-footer);
+      background: var(--blue-dark);
       color: #ffffff;
       border: none;
       outline: none;

@@ -9,13 +9,7 @@
 :root {
   --white: #ffffff;
   --white-soft: #F0F0F0;
-  --medium-grey: #B5B5B5;
-  --banner-col: var(--blue-light); /* #9FCACB; */
-  --blue-highlight-col:  #728393; /* #5E7789; */ 
-  --blue-text-col: var(--blue-dark);/* #363E4A; */ /* #00264C; */
-  --grey-blue: #5e7789;
-  --page-bkg-col: var(--cream-background);/* #edeadf; */
-  --blue-bright: #0f52ba;
+  --page-bkg-col: var(--cream-background);
   --usgs-blue: #00264c;
   --usgs-green: #006F41;
 
@@ -25,6 +19,7 @@
   --cream-background: #FEFAF6;
   --teal-dark: #386785;
   --black-soft: #151515;
+  --blue-bright: #0f52ba; /* link color */
 
   font-size: 62.5%;
   --default-font: Source Sans Pro;
@@ -124,21 +119,21 @@
   padding: 20px 40px;
   margin: 5px;
   font-size: 2rem;
-  color: var(--blue-text-col);
-  border: 2px solid var(--blue-text-col);
+  color: var(--blue-dark);
+  border: 2px solid var(--blue-dark);
   text-decoration: none;
   border-radius: 10px;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .report-link:hover {
-  background-color: var(--blue-text-col);
+  background-color: var(--blue-dark);
   color: white;
 }
 
 /* button for switching between images */
 .toggle-button{
-  background-color: var(--blue-highlight-col);
+  background-color: var(--teal-dark);
   color: var(--white-soft);
   cursor:pointer;
   padding: 18px;
@@ -148,7 +143,7 @@
   outline: none; 
 }
 .toggle-button:hover{
-  background-color: var(--blue-text-col);
+  background-color: var(--blue-dark);
   color: var(--white-soft);
 }
 
@@ -160,7 +155,7 @@
   flex-direction: column;
   max-height: max-content;
   min-height: 60px;
-  background-color: var(--banner-col);
+  background-color: var(--blue-light);
   position: sticky;
   z-index: 1001;
 }

@@ -55,9 +55,7 @@
 </script>
 
 <style scoped>
-/*.section-header {
-  color: var(--dodger-blue);
-}*/
+
 
 /* text box within the wavy container that houses key messages */
 .title-message-container {
@@ -68,7 +66,7 @@
   padding: 100px 20px;
   padding-bottom: 100px;
   width: 90vw;
-  color: var(--blue-text-col);
+  color: var(--blue-dark);
   border-radius: 5px;
   text-align: center;
   z-index: -1;
