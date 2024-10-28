@@ -60,6 +60,7 @@
                   </div>
                 </div>
               </section>
+              <Methods></Methods>
               <References></References>
         </div>
         <PageCarousel></PageCarousel>
@@ -74,6 +75,7 @@ import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 import { text } from '@fortawesome/fontawesome-svg-core';

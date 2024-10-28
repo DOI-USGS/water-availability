@@ -16,7 +16,7 @@ export default {
       },      {
         page: 4,
         route: '/04Drought',
-        description: "Annual average hydrologic fluxes across the conterminous United States. Precipitation data are from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States (Foks and others, In Prep a) and evapotranspiration and streamflow data are ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System (Foks and other, In Prep b) and the Weather Research and Forecasting model hydrologic modeling system (Sampson and others, In Prep). Consumptive use represents the sum of crop irrigation, public supply, and thermoelectric power generation consumptive use; further details are available in Medalie and others, 202X (chap.D)."
+        description: "Annual average hydrologic fluxes across the conterminous United States for water years 2010 through 2020. Precipitation data are from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States (Foks and others, In Prep a) and evapotranspiration and streamflow data are ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System (Foks and other, In Prep b) and the Weather Research and Forecasting model hydrologic modeling system (Sampson and others, In Prep). Consumptive use represents the sum of crop irrigation, public supply, and thermoelectric power generation consumptive use; further details are available in Medalie and others, 202X (chap.D)."
       },      {
         page: 5,
         route: '/05WQSource',
@@ -24,15 +24,15 @@ export default {
       },      {
         page: 6,
         route: '/06WQThreats',
-        description: "How we made this"
+        description: "We determined the total number of river miles by use (drinking water, fish consumption, recreation), threat category, and threat. All data were obtained from the United States Environmental Protection Agency (USEPA) Assessment, Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS) database (U.S. Environmental Protection Agency, 2023c)."
       },      {
         page: 7,
         route: '/07WaterUse',
-        description: "How we made this"
+        description: "We calculated total water withdrawn for crop irrigation, public supply, and thermoelectric water use for the conterminous United States for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024). "
       },      {
         page: 8,
         route: '/08WaterUseRegional',
-        description: "How we made this"
+        description: "We determined the proportion of water withdrawal by use for each HUC8 region in the conterminous United States. The proportions were based on the average annual water withdrawal by category (public supply, irrigation, and thermoelectric water use) for water years 2010 through 2020. <br><br> We also compared the amount of total water withdrawn from groundwater versus surface water by use category and across all uses. The values for each HUC8 region were calculated as average annual withdrawals for the conterminous United States for water years 2010 through 2020. <br><br> All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024). "
       },      {
         page: 9,
         route: '/09Consumption',
