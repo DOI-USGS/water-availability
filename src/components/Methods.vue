@@ -4,7 +4,7 @@
           <span>Learn about the methods</span><span class="symbol">+</span>
         </button>
         <div class="panel">
-            <p> {{ thisMethod }}</p>
+            <p v-html="thisMethod"></p>
         </div>
     </div>
 
@@ -94,7 +94,7 @@ onMounted(() => {
 .panel {
   display: none; 
   overflow: hidden;
-  border: 3px solid #F0F0F0; 
+  border: 3px solid var(--blue-light); 
   margin-bottom: 15px;
   margin-top: -15px;
   border-top-width: 0;
