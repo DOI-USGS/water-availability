@@ -41,7 +41,7 @@ export default {
         {
             page: 5,
             route: '/05WQSource',
-            mainTitle: 'Sources of ick',
+            mainTitle: 'Nutrients in the water',
             shortTitle: 'Water quality is affected by natural and human sources',
             keyMessage: 'Sources of water quality issues vary across CONUS. Common sources include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.',
             references: ["Erickson2025"]
