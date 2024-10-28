@@ -48,6 +48,7 @@
                 <h2>Other Impacts</h2>
                 <p>Researchers are highly confident that every region of the U.S. will experience some effects of climate change on the water cycle that don’t fall into any of the previous categories. For example, higher levels of atmospheric CO2 at the Earth’s surface increases plant transpiration (the process by which plants lose water through the pores in their leaves). Decreased surface albedo (reflectance) in the Arctic leads to additional warming and additional melting of snow and ice.</p>
             </div>
+            <Methods></Methods>
             <References></References>
         </div>
         <PageCarousel></PageCarousel>
@@ -57,6 +58,7 @@
 <script setup>
     import PageCarousel from '../components/PageCarousel.vue';
     import KeyMessages from '../components/KeyMessages.vue';
+    import Methods from '../components/Methods.vue';
     import References from '../components/References.vue';
 
 </script>

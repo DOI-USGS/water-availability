@@ -40,7 +40,7 @@ export default {
       },      {
         page: 10,
         route: '/10Future',
-        description: "How we made this"
+        description: "The impacts to future water availability were determined by a literature review. Specifically, the framework of climatic impact drivers outlined in the Intergovernmental Panel on Climate Change Sixth Assessment Report (IPCC AR6) was used to show primary drivers of physical change to the water cycle and to understand and predict changes in future water availability. "
       }
 
     ]
