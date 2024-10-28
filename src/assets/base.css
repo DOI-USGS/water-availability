@@ -244,7 +244,7 @@ body {
 h1 {
   font-size: 5rem;
   font-weight: 800;
-  color: var(--blue-dark);
+  color: var(--teal-dark);
 }
 h2 {
   font-size: 3.5rem;
@@ -271,7 +271,7 @@ h4 {
   h2 {
     font-size: 2.8rem;
     font-weight: 800;
-    color: var(--blue-dark);
+    color: var(--teal-dark);
   }
   h3 {
     font-size: 2.4rem;
