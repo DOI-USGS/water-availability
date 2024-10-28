@@ -36,7 +36,7 @@ export default {
       },      {
         page: 9,
         route: '/09Consumption',
-        description: "How we made this"
+        description: "The percent consumed was calculated as the amount of water consumed for a use versus the water withdrawn. The amount of water withdrawn or consumed for crop irrigation, thermoelectric power, and public supply use were calculated based on average annual values for the conterminous United States for water yeards 2010 through 2020. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024). "
       },      {
         page: 10,
         route: '/10Future',
