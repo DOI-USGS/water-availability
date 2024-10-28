@@ -1,7 +1,7 @@
 <template>
     <div class="methods-container">
         <button class="accordion">
-          <span>Learn more about the methods</span><span class="symbol">+</span>
+          <span>Show the methods</span><span class="symbol">+</span>
         </button>
         <div class="panel">
             <p v-html="thisMethod"></p>
