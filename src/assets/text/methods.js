@@ -16,11 +16,11 @@ export default {
       },      {
         page: 4,
         route: '/04Drought',
-        description: "How we made this"
+        description: "Annual average hydrologic fluxes across the conterminous United States. Precipitation data are from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States (Foks and others, In Prep a) and evapotranspiration and streamflow data are ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System (Foks and other, In Prep b) and the Weather Research and Forecasting model hydrologic modeling system (Sampson and others, In Prep). Consumptive use represents the sum of crop irrigation, public supply, and thermoelectric power generation consumptive use; further details are available in Medalie and others, 202X (chap.D)."
       },      {
         page: 5,
         route: '/05WQSource',
-        description: "How we made this"
+        description: "We integrated total and source-specific nutrient loads from five spatially explicit modeling studies (SPARROW) models to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise and others, 2019). The five regional models had variability in their sources, so we generalized some common sources to enable a simple comparison."
       },      {
         page: 6,
         route: '/06WQThreats',
