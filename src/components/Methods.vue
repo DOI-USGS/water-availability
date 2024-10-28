@@ -1,7 +1,7 @@
 <template>
     <div class="methods-container">
         <button class="accordion">
-          <span>Learn about the methods</span><span class="symbol">+</span>
+          <span>Learn more about the methods</span><span class="symbol">+</span>
         </button>
         <div class="panel">
             <p v-html="thisMethod"></p>
@@ -50,7 +50,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .accordion {
   background-color: var(--blue-light);
-  color: var(--blue-dark);
+  color: var(--soft-black);
   cursor: pointer;
   padding: 16px;
   width: 100%;
