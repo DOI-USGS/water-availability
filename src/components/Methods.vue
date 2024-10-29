@@ -1,10 +1,14 @@
 <template>
-    <div class="methods-container">
+    <div class="methods-container" id="heading">
+        <h2>Methods</h2>
+    </div>
+    <div class="methods-container"
+      v-for="method in thisMethod">
         <button class="accordion">
-          <span>Show the methods</span><span class="symbol">+</span>
+          <span v-html="method.header"></span><span class="symbol">+</span>
         </button>
         <div class="panel">
-            <p v-html="thisMethod"></p>
+            <p v-html="method.description"></p>
         </div>
     </div>
 
@@ -23,7 +27,8 @@ const path = computed(() => route.path)
 
 // filter to this page's key message
 const methodArray = Methods.key.filter(message => message.route === route.path);
-const thisMethod = methodArray[0].description;
+const thisMethod = methodArray[0].method;
+console.log(thisMethod[0].header)
 
 // Accordion click handler
 onMounted(() => {
