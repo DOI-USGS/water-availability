@@ -42,6 +42,7 @@
             <!-- Overlay SVG with the same dimensions -->
             <svg class="overlay-svg"></svg>
         </div>
+        <Methods></Methods>
       <References></References>
       </div>
         <PageCarousel></PageCarousel>
@@ -53,6 +54,7 @@ import { onMounted, ref } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 

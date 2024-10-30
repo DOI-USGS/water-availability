@@ -15,7 +15,7 @@
           <div class="viz-container">
             <img class="viz-landscape" src="../../public/images/kf2_stressType_maps.png">
           </div>
-
+          <Methods></Methods>
           <References></References>
         </div>
         <PageCarousel></PageCarousel>
@@ -25,7 +25,8 @@
 <script setup>
   import PageCarousel from '../components/PageCarousel.vue';
   import KeyMessages from '../components/KeyMessages.vue';
-  import References from "../components/References.vue"
+  import Methods from '../components/Methods.vue';
+  import References from "../components/References.vue";
 
 
 </script>

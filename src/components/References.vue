@@ -56,7 +56,6 @@ const refArray = References.key.sort((a, b) => a.authors.localeCompare(b.authors
 
 // extract references that match the refID from global list
 const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-console.log(theseReferences)
 
 </script>
   

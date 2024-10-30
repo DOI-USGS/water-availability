@@ -88,8 +88,15 @@
     min-width: 200px;
   }
 }
-.references-container {
+.references-container{
   width: 60%;
+  min-width: 600px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+.methods-container{
+  width: 60%;
+  min-width: 600px;
   margin: 0 auto;
   padding-top: 20px;
 }
@@ -100,6 +107,16 @@
 }
 .references-container p:first-letter {
   margin-left: -20px;
+}
+@media only screen and (max-width: 768px) {
+  .references-container {
+    width: 90%;
+    min-width: 200px;
+  }
+  .methods-container {
+    width: 90%;
+    min-width: 200px;
+  }
 }
 .button-container {
   padding: 10px 0;

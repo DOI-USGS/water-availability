@@ -28,6 +28,7 @@
                 alt=""
             >    
           </div>
+          <Methods></Methods>
           <References></References>
         </div>
         <PageCarousel></PageCarousel>
@@ -39,6 +40,7 @@ import { ref, onMounted } from 'vue';
 import * as d3Base from 'd3';
 import AggReg from "../../public/assets/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
+import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
 

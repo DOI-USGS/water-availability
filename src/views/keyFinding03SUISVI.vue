@@ -8,7 +8,7 @@
                 <p>When viewing only the driest ares, the map shows almost exclusively dark red patches, meaning that most areas with high water stress occur where people are socially vulnerable. Water stress disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water. </p>
             </div>
             <div class="button-container">
-                <button id="image-toggle" class="toggle-button">View Dry Areas Only</button>
+                <button id="image-toggle" class="toggle-button">View areas of high water stress</button>
             </div>
             <div class="viz-container">
                 <img 
@@ -18,6 +18,7 @@
                         alt="xxx"
                     >
         </div>
+        <Methods></Methods>
         <References></References>
         </div>
         <PageCarousel></PageCarousel>
@@ -28,6 +29,7 @@
 import { onMounted } from 'vue';
     import PageCarousel from '../components/PageCarousel.vue';
     import KeyMessages from '../components/KeyMessages.vue';
+    import Methods from '../components/Methods.vue';
     import References from '../components/References.vue';
     import photoAll from "../../public/images/k04_sui_svi_map.png";
     import photoDry from "../../public/images/k04_sui_svi_dry_map.png";
