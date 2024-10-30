@@ -16,7 +16,7 @@ p1_targets <- list(
   #            format = "file"
   # ),
   # unzip file and point to region shapefile
-  tar_target(p1_Reg_shp, # 64947132d34ef77fcb015320 - Boundaries.zip - HydrologicRegions.shp
+  tar_target(p1_Reg_shp, 
              sb_initialize_and_download_zipped(
                sb_id = "64947132d34ef77fcb015320",  #"643706ffd34ee8d4addcc593",
                #for some reason it's downloading within the boundaries directory (so nested boundaries folders)
@@ -34,7 +34,7 @@ p1_targets <- list(
     "EPSG:5070"
   ),
   tar_target(
-    p1_CONUS_mainstem_gdb, # 63cb38b2d34e06fef14f40ad - same file
+    p1_CONUS_mainstem_gdb, 
     sb_initialize_and_download_zipped(
       sb_id = "63cb38b2d34e06fef14f40ad",  #"60cb5edfd34e86b938a373f4",
       unzip_file_to_check = "1_fetch/in/WBD_National_GDB/WBD_National_GDB.gdb",
@@ -59,7 +59,7 @@ p1_targets <- list(
   
   # Crosswalk between HUC12, AggReg, and Reg
   tar_target(
-    p1_CONUS_crosswalk,# 66833671d34e57e93663d8a5 - HUC12_HydroRegion_crosswalk.csv
+    p1_CONUS_crosswalk,
     sb_initialize_and_download(
       sb_id = "66833671d34e57e93663d8a5", #"643706ffd34ee8d4addcc593",
       names = "HUC12_HydroRegion_crosswalk.csv", #"HUC12_VanMetre_crosswalk_230509.csv",
@@ -379,7 +379,7 @@ p1_targets <- list(
   #           WATER BALANCE DATA
   # 
   # WATER STRESS INDEX "SURFACE WATER SUPPLY AND USE INDEX" SUI
-  tar_target(p1_sui_csv, # 6685ad6bd34e10615ec29864 - same file (in review data release)
+  tar_target(p1_sui_csv, 
              sb_initialize_and_download(
                sb_id ="6685ad6bd34e10615ec29864",  #"6622aa30d34e7eb9eb7f99b5",
                names = "water_budget_sui_ensemble.csv",
