@@ -28,7 +28,7 @@ export default {
           },
           {
             header: "Integrated water availability",
-            description: "The extent to which water quantity, surface water quality, groundwater quality, and reduction of natural flows limit water availability were analyzed against quantitative values for a particular use. For the surface-water quantity indicator, water-supply and use index was used. For the surface water-quality indicator, surface water total nitrogen and total phosphorus were compared to the NRSA Good benchmark. For the groundwater-quality indicator, predicted nitrate and arsenic concentrations were compared to the regulatory enforceable drinking water MCLs. For the flows indicator, predicted alteration of different aspects of the flow regime were compared to those aspects of the flow regime that have been shown to affect regional ecological health."
+            description: "The extent to which water quantity, surface water quality, groundwater quality, and reduction of natural flows limit water availability were analyzed against quantitative values for a particular use. For the surface-water quantity indicator, water-supply and use index was used. For the surface water-quality indicator, surface water total nitrogen and total phosphorus were compared to the NRSA Good benchmark (U.S. Environmental Protection Agency, 2020; chap. C, Erickson and others, 202X). For the groundwater-quality indicator, predicted nitrate and arsenic concentrations were compared to the regulatory enforceable drinking water MCLs. For the flows indicator, predicted alteration of different aspects of the flow regime were compared to those aspects of the flow regime that have been shown to affect regional ecological health."
           }
         ]
       },      {
@@ -38,7 +38,7 @@ export default {
         method: [
           {
             header: "Calculating social vulnerability",
-            description: "To examine the relation between socioeconomic factors and water stress, we used the Centers for Disease Control (CDC) 2020 Social Vulnerability Index (SVI; Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6.",
+            description: "The Centers for Disease Control (CDC) 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water stress (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6.",
           },
           {
             header: "Calculating water stress",
@@ -51,7 +51,7 @@ export default {
         method: [
           {
             header: "Calculating the national water cycle",
-            description: "We calculated annual average hydrologic fluxes across the conterminous United States for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States (Foks and others, In Prep a) and evapotranspiration and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System (Foks and other, In Prep b) and the Weather Research and Forecasting model hydrologic modeling system (Sampson and others, In Prep). Consumptive use represented the sum of crop irrigation, public supply, and thermoelectric power generation consumptive use (Medalie and others, 202X (chap.D)).",
+            description: "The annual average hydrologic fluxes across the conterminous United States was calculated for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States (Foks and others, In Prep a) and evapotranspiration and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System (Foks and other, In Prep b) and the Weather Research and Forecasting model hydrologic modeling system (Sampson and others, In Prep). Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation (Medalie and others, 202X (chap.D)).",
           }
         ]
       },      {
@@ -60,7 +60,7 @@ export default {
         method: [
           {
             header: "Calculating nutrient sources",
-            description: "We integrated total and source-specific nutrient loads from five spatially explicit modeling studies (SPARROW) models to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise and others, 2019). We generalized common sources across regions to enable a simple comparison.",
+            description: "Total and source-specific nutrient loads from five spatially explicit modeling studies (SPARROW) models were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise and others, 2019). Common sources across regions were generalized to enable a simple comparison.",
           }
         ]
       },      {
@@ -69,7 +69,7 @@ export default {
         method: [
           {
             header: "Calculating threats to water",
-            description: "We determined the total number of river miles by use (drinking water, fish consumption, recreation), threat category, and threat. All data were obtained from the United States Environmental Protection Agency (USEPA) Assessment, Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS) database (U.S. Environmental Protection Agency, 2023c).",
+            description: "Water use type (drinking water, fish consumption, recreation), threat category, and threat is quantified by total river miles. These data were obtained from the United States Environmental Protection Agency (USEPA) Assessment, Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS) database (U.S. Environmental Protection Agency, 2023c).",
           }
         ]
       },      {
