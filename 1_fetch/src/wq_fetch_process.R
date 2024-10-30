@@ -1,11 +1,11 @@
 process_wq_data <- function(in_csv, nutrient){
   
   # read csv
-  out_raw <- readr::read_csv(in_csv,
-                  show_col_types = FALSE) 
+ # out_raw <- readr::read_csv(in_csv,
+#                  show_col_types = FALSE) 
   
   # generalize and standardize categories for website
-  out_cleaned <- out_raw |>
+  out_cleaned <- in_csv |>  #out_raw |>
     dplyr::rename(original_category = category) |>
     dplyr::mutate(category = dplyr::case_when(
       original_category %in% c("Forests", "Geologic sources", "Nitrogen fixation",
@@ -15,7 +15,9 @@ process_wq_data <- function(in_csv, nutrient){
       original_category %in% c("Atmospheric deposition") ~ original_category,
       original_category %in% c("Wastewater") ~ original_category,
       TRUE ~ "ttt"
-    )) 
+    )) |> 
+    # rename column in updated p2_load data
+    dplyr::rename(total_load = value)
   
   # Total load by region
   total_by_reg <- out_cleaned |>
@@ -26,13 +28,13 @@ process_wq_data <- function(in_csv, nutrient){
   
   # Total load by region, category
   out_mean <- out_cleaned |>
-    dplyr::select(-percent, -sum_total, -original_category) |>
+    dplyr::select(-original_category) |> #-percent, -sum_total, 
     dplyr::group_by(category, region_nam) |> 
     dplyr::summarize(total_load = sum(total_load, na.rm = TRUE),
                      # also in 1000 Mg units
                      load_1kMg = case_when(total_load == 0 ~ 0,
                                            total_load > 0 ~ total_load/1000000)) |>
-    ungroup() 
+    dplyr::ungroup() 
   
   # Add Atmospheric deposition = 0 for phosphorus, only have to add one region
   # because complete step will fill in for the rest of the regions
@@ -59,7 +61,7 @@ process_wq_data <- function(in_csv, nutrient){
     mutate(nutrient = nutrient) 
   
   # Aggregated region names from raw data
-  aggReg <- out_raw |>
+  aggReg <- in_csv |> #out_raw |>
     group_by(aggregion_nam, region_nam) |>
     summarize()
   

@@ -74,23 +74,205 @@ p1_targets <- list(
   #           WATER QUALITY DATA
   # 
   # EXTRACTED FROM ELMERA'S SOFTWARE RELEASE, loads by source
-  tar_map(
-    values = tibble(nutrient = c("tn", "tp", "ss")),
-    tar_target(p1_wq_Reg_csv,
-               sprintf("1_fetch/in/p2_load_%s.csv", nutrient),
-               format = "file"),
-    tar_target(p1_wq_Reg_df,
-               process_wq_data(in_csv = p1_wq_Reg_csv,
-                               nutrient = nutrient)),
-    tar_target(p1_wq_Reg_d3_csv,
-               readr::write_csv(p1_wq_Reg_df,
-                                file = sprintf("public/wq_sources_%s.csv", nutrient))),
-    names = nutrient),
+#  tar_map(
+#    values = tibble(nutrient = c("tn", "tp", "ss")),
+#    tar_target(p1_wq_Reg_csv,
+#               sprintf("1_fetch/in/p2_load_%s.csv", nutrient),
+#               format = "file"),
+#    tar_target(p1_wq_Reg_df,
+#               process_wq_data(in_csv = p1_wq_Reg_csv,
+#                               nutrient = nutrient)),
+#    tar_target(p1_wq_Reg_d3_csv,
+#               readr::write_csv(p1_wq_Reg_df,
+#                                file = sprintf("public/wq_sources_%s.csv", nutrient))),
+#    names = nutrient),
   
   # EXTRACTED FROM ELMERA'S SOFTWARE RELEASE, threats by source
   tar_target(p1_wq_threats_csv,
              "1_fetch/in/WaterQuality_UsePercent_PlottingData.csv",
              format = "file"),
+  
+  # using original data release and processing steps
+  # track relevant crosswalk files
+  tar_target( # need to ask anthony about this one since it's a local download from the water quality figures repo
+    p1_sparrow_variable_group_xwalk,
+    "1_fetch/in/SPARROW_variableNames_grouped_inc.csv",
+    format = "file"
+  ),
+  # Download COMID to HUC12 crosswalk
+  tar_target(
+    p1_comid_huc12_xwalk,
+    sbtools::item_file_download(
+      "66340d6ad34e9af276220a0a",
+      names = "nhd_huc12_weights_r.csv",
+      destinations = "1_fetch/out/nhd_huc12_weights_r.csv"
+    ),
+    format = "file"
+  ),
+  
+  tar_target(
+    p1_mw_names,
+    c(
+      "mw_cats.zip", "mw_sparrow_model_output_TN.txt",
+      "mw_sparrow_model_output_TP.txt", "mw_sparrow_model_output_SS.txt",
+      "mw_sparrow_model_output_FLOW.txt"
+    )
+  ),
+  tar_target(
+    p1_mw_files,
+    item_file_download(
+      sb_id = "5cbf5150e4b09b8c0b700df3",
+      names = p1_mw_names,
+      destinations = file.path("1_fetch", "out", p1_mw_names)
+    ),
+    format = "file"
+  ),
+  
+  # Download Northeast files from ScienceBase
+  tar_target(
+    p1_ne_names,
+    c(
+      "ne_cats.zip", "ne_sparrow_model_output_tn.txt",
+      "ne_sparrow_model_output_tp.txt", "ne_sparrow_model_output_ss.txt",
+      "ne_sparrow_model_output_flow.txt"
+    )
+  ),
+  tar_target(
+    p1_ne_files,
+    item_file_download(
+      sb_id = "5d4192aee4b01d82ce8da477",
+      names = p1_ne_names,
+      destinations = file.path("1_fetch", "out", p1_ne_names)
+    ),
+    format = "file"
+  ),
+  
+  # Download Pacific files from ScienceBase
+  tar_target(
+    p1_pac_names,
+    c(
+      "PAC_CATS.zip", "pac_sparrow_model_output_tn.txt",
+      "pac_sparrow_model_output_tp.txt", "pac_sparrow_model_output_ss.txt",
+      "pac_sparrow_model_output_wb.txt"
+    )
+  ),
+  tar_target(
+    p1_pac_files,
+    item_file_download(
+      sb_id = "5d407318e4b01d82ce8d9b3c",
+      names = p1_pac_names,
+      destinations = file.path("1_fetch", "out", p1_pac_names)
+    ),
+    format = "file"
+  ),
+  
+  # Download Southeast files from ScienceBase
+  tar_target(
+    p1_se_names,
+    c(
+      "se_catchments.zip", "se_sparrow_model_output_TN.txt",
+      "se_sparrow_model_output_TP.txt", "se_sparrow_model_output_Sed.txt",
+      "se_sparrow_model_output_FLOW.txt"
+    )
+  ),
+  tar_target(
+    p1_se_files,
+    item_file_download(
+      sb_id = "5d6e70e5e4b0c4f70cf635a1",
+      names = p1_se_names,
+      destinations = file.path("1_fetch", "out", p1_se_names)
+    ),
+    format = "file"
+  ),
+  
+  # Download Southwest files from ScienceBase
+  tar_target(
+    p1_sw_names,
+    c(
+      "sw_cats.zip", "sw_sparrow_model_output_TN.txt",
+      "sw_sparrow_model_output_TP.txt", "sw_sparrow_model_output_SS.txt",
+      "sw_sparrow_model_output_flow.txt"
+    )
+  ),
+  tar_target(
+    p1_sw_files,
+    item_file_download(
+      sb_id = "5f8f1f1282ce06b040efc90e",
+      names = p1_sw_names,
+      destinations = file.path("1_fetch", "out", p1_sw_names)
+    ),
+    format = "file"
+  ),
+  
+  # reorganize ScienceBase files into spatial, tn, tp, tss
+  tarchetypes::tar_map(
+    values = tibble::tibble(
+      suffix = c(
+        "spatial_zip", "tn_data_txt", "tp_data_txt", "ss_data_txt",
+        "flow_data_txt"
+      ),
+      extension_map = c(".zip", ".txt", ".txt", ".txt", ".txt"),
+      pattern_map = c(NA, "_tn", "_tp", "_ss|_sed", "_flow|_wb")
+    ),
+    tar_target(
+      p1_reg,
+      subset_files(
+        files = c(p1_mw_files, p1_ne_files, p1_pac_files, p1_se_files,
+                  p1_sw_files),
+        extension = extension_map,
+        pattern = pattern_map
+      ),
+      format = "file"
+    ),
+    names = suffix
+  ),
+  
+  tar_target(
+    p1_reg_tibble,
+    regional_tibble(
+      regions = c("mw", "ne", "pac", "se", "sw"),
+      spatial_files = p1_reg_spatial_zip,
+      tn_files = p1_reg_tn_data_txt,
+      tn_cols = c("al_tn", "tn", "al_tn", "al_tn", "al_tn"),
+      tn_abbrev_cols = c("il_", "in", "il_", "il_", "il_"),
+      tn_units = "kg/yr",
+      tp_files = p1_reg_tp_data_txt,
+      tp_cols = c("al_tp", "tp", "al_tp", "al_tp", "al_tp"),
+      tp_abbrev_cols = c("il_", "ip", "il_", "il_", "il_"),
+      tp_units = "kg/yr",
+      ss_files = p1_reg_ss_data_txt,
+      ss_cols = c("al_ss", "ts", "al_ss", "al_ss", "al_ss"),
+      ss_abbrev_cols = c("il_", "is", "il_", "il_", "il_"),
+      ss_units = c("MT/yr", "megagrams/yr", "kg/yr", "MT/year", "MT/year"),
+      flow_files = p1_reg_flow_data_txt,
+      flow_cols = c("al_q", "tq", "al_q", "al_q", "al_q"),
+      flow_units = "cfs"
+    )
+  ),
+  # TP processing to calculate loads from sources
+  tarchetypes::tar_map( 
+    values = tibble::tibble(nutrient = c("tn", "tp", "ss")),
+    tar_target(
+      p2_load,
+      process_loads(
+        in_tibble = p1_reg_tibble,
+        nutrient = nutrient,
+        var_dic_csv = p1_sparrow_variable_group_xwalk,
+        crosswalk = p1_comid_huc12_xwalk,
+        # this is using the updated version Anthony gave us but the original water 
+        # quality figures used the version from sb id 643706ffd34ee8d4addcc593
+        vm_crosswalk = p1_CONUS_crosswalk
+      )
+    ),
+    tar_target(p1_wq_Reg_df,
+               process_wq_data(in_csv = p2_load,
+                               nutrient = nutrient)),
+    tar_target(p1_wq_Reg_d3_csv,
+               readr::write_csv(p1_wq_Reg_df,
+                                file = sprintf("public/wq_sources_%s.csv", nutrient))),
+    names = nutrient
+  ),
+  
   
   ##############################################
   # 
