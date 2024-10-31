@@ -283,7 +283,7 @@ p2_targets <- list(
   tar_target(p2_sui_2020_HUC12,
              mean_sui(data_in = p2_sui_raw,
                       HUC_level = 12,
-                      min_year = 2020,
+                      min_year = 2020, # should be 2010
                       max_year = 2020,
                       by_yearL = FALSE)),
   # water supply and demand for each region from Ted
