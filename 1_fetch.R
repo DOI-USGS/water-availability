@@ -83,6 +83,7 @@ p1_targets <- list(
     tar_target( # need to find a way to download p2_load target output from iwaas-sparrow-figures pipeline
       # current idea: read in _targets p2_load objects?
       p2_load,
+      readRDS(sprintf("iwaas-sparrow-figures/_targets/objects/p2_load_%s", nutrient))
     ),
     tar_target(p1_wq_Reg_df,
                process_wq_data(in_csv = p2_load,
@@ -104,7 +105,7 @@ p1_targets <- list(
   # 
   # PS = Public Supply water use data
   tar_target(p1_wu_ps_gw_csv, # Public supply withdrawal from groundwater
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/PS_HUC12_GW_2000_2020.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_GW_2000_2020.csv",
              format = "file"
   ),
   #tar_target(p1_wu_ps_gw_csv, # Public supply withdrawal from groundwater
@@ -117,7 +118,7 @@ p1_targets <- list(
   #           format = "file"
   #),
   tar_target(p1_wu_ps_sw_csv, # Public supply withdrawal from surface water
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/PS_HUC12_SW_2000_2020.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_SW_2000_2020.csv",
              format = "file"
   ),
   #tar_target(p1_wu_ps_sw_csv, # Public supply withdrawal from surface water
@@ -130,7 +131,7 @@ p1_targets <- list(
   #           format = "file"
   #),
   tar_target(p1_wu_ps_tot_csv, # Public supply withdrawal (total)
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/PS_HUC12_Tot_2000_2020.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_Tot_2000_2020.csv",
              format = "file"
   ),
   #tar_target(p1_wu_ps_tot_csv, # Public supply withdrawal (total)
@@ -145,7 +146,7 @@ p1_targets <- list(
   
   # IR = Irrigation water use data
   tar_target(p1_wu_ir_gw_csv, # Irrigation withdrawal from groundwater
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/IR_HUC12_GW_WD_monthly_2000_2020.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_GW_WD_monthly_2000_2020.csv",
              format = "file"
   ),
   #tar_target(p1_wu_ir_gw_csv, # Irrigation withdrawal from groundwater
@@ -158,7 +159,7 @@ p1_targets <- list(
   #           format = "file"
   #),
   tar_target(p1_wu_ir_sw_csv, # Irrigation withdrawal from surface water
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/IR_HUC12_SW_WD_monthly_2000_2020.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_SW_WD_monthly_2000_2020.csv",
              format = "file"
   ),
   #tar_target(p1_wu_ir_sw_csv, # Irrigation withdrawal from surface water
@@ -171,7 +172,7 @@ p1_targets <- list(
   #           format = "file"
   #),
   tar_target(p1_wu_ir_tot_csv, # Irrigation withdrawal (total)
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/IR_HUC12_Tot_WD_monthly_2000_2020.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_Tot_WD_monthly_2000_2020.csv",
              format = "file"
   ),
   #tar_target(p1_wu_ir_tot_csv, # Irrigation withdrawal (total)
@@ -186,7 +187,7 @@ p1_targets <- list(
   
   # TE = thermoelectric water use data
   tar_target(p1_wu_te_gw_csv, # thermoelectric ground water fresh withdrawal 
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/gw_fresh_wd_mgd.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/gw_fresh_wd_mgd.csv",
              format = "file"
   ),
   #tar_target(p1_wu_te_gw_csv, # thermoelectric ground water withdrawal 
@@ -199,7 +200,7 @@ p1_targets <- list(
   #           format = "file"
   #),
   tar_target(p1_wu_te_sw_csv, # thermoelectric surface water fresh withdrawal 
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/sw_fresh_wd_mgd.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/sw_fresh_wd_mgd.csv",
              format = "file"
   ),
   #tar_target(p1_wu_te_sw_csv, # thermoelectric surface water withdrawal 
@@ -212,7 +213,7 @@ p1_targets <- list(
   #           format = "file"
   #),
   tar_target(p1_wu_te_tot_csv, # thermoelectric fresh withdrawal (total)
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/total_fresh_wd_mgd.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/total_fresh_wd_mgd.csv",
              format = "file"
   ),
   #tar_target(p1_wu_te_tot_csv, # thermoelectric fresh withdrawal (total)
@@ -225,7 +226,7 @@ p1_targets <- list(
   #           format = "file"
   #),
   tar_target(p1_wu_te_tot_saline_csv, # thermoelectric saline withdrawal (total)
-             "water-use-huc12-crosswalk/02_process/out/final/updated_water_use/sw_saline_wd_mgd.csv",
+             "water-use-huc12-crosswalk/02_process/out/final/sw_saline_wd_mgd.csv",
              format = "file"
   ),
   #tar_target(p1_wu_te_tot_saline_csv, # thermoelectric saline withdrawal (total)
