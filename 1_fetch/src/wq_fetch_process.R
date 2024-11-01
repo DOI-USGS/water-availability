@@ -6,6 +6,7 @@ process_wq_data <- function(in_csv, nutrient){
   
   # generalize and standardize categories for website
   out_cleaned <- in_csv |>  #out_raw |>
+    filter(category != "All sources") |>
     dplyr::rename(original_category = category) |>
     dplyr::mutate(category = dplyr::case_when(
       original_category %in% c("Forests", "Geologic sources", "Nitrogen fixation",
