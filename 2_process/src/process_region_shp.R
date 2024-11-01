@@ -17,7 +17,8 @@ regions_to_sf <- function(in_shp){
     nngeo::st_remove_holes() |> 
     # Transform spatial projection
     st_transform(crs = "EPSG: 5070") |>
-    select(-Region_nam, -AggRegion, -AggRegion_)
+    dplyr::rename("Region" = "HR_Number")
+    #select(-Region_nam, -AggRegion, -AggRegion_)
     
   return(hr_simplified)
   
