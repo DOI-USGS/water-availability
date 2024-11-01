@@ -1,6 +1,6 @@
 # water-availability
 
-
+This repository builds the Water Availability in the U.S. website at [https://labs.waterdata.usgs.gov/visualizations/water-availability/](https://labs.waterdata.usgs.gov/visualizations/water-availability). This website is powered by the USGS Vizlab ([portfolio link](https://labs.waterdata.usgs.gov/visualizations/vizlab-home/)).
 
 ### Required Software
 - [node.js](http://nodejs.org)
@@ -8,6 +8,7 @@
 - [git](https://git-scm.com/)
 - [R](https://cran.r-project.org/bin/windows/base/)
 - [R package targets](https://books.ropensci.org/targets/)
+- [R package sbtools](https://cran.r-project.org/web/packages/sbtools/index.html)
 
 ### Installation
 
@@ -27,19 +28,50 @@ OR
 git clone https://code.usgs.gov/wma/vizlab/water-availability.git
 ```
 
-## To build the figures in R Pipeline
+## To reproduce the figures in the website
 
-To run this pipeline:
+> Note: You do **not** need to build the R-based figures or datasets to rebuild the website. The repository will build the website using the Vue instructions below. These instructions are for those wanting to reproduce the figures using R directly.
 
-1. Verify that you have read access to the ScienceBase repository at: https://www.sciencebase.gov/catalog/item/643706ffd34ee8d4addcc593
-2. If you don't have access to that site, contact Anthony Martinez for read-access
-3. Once you have access, open `0_config.R` and run the code after changing out your username. Please do not commit this change. This will ask you to provide your username, and then an API token. Make sure you don't have pop-ups blocking this process and that you're connected to VPN.
-4. Then, `targets::tar_make()` should produce two svg files, which are located in the `src/assets/svgs/` folder. Please open those in a web browser or Illustrator and verify that they look like this:
+To reproduce the figures in the website that are created in R, you will need to run the targets pipeline. In addition, you do need to run some fetch and processing code from two additional pipelines. 
+
+### Step 1: Clone repositories
 
 
-## To build website
+Clone the water quality and water use repositories (may need a development branch, contact Althea Archer for assistance) into a folder that contains this repository's directory as well. Should look something like this:
 
-Inside of your project folder (after clone and building the pipeline):
+- parent_directory/water-availability/ (this repository)
+- parent_directory/iwaas-sparrow-figures/ (water quality repository)
+- parent_directory/water-use-huc12-crosswalk/ (water use repository)
+
+The water quality repository is at:  `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/` and the water use repository is at `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/water-use-huc12-crosswalk/-/tree/1.0.0/`.
+
+### Step 2: Run the water quality pipeline. 
+
+- Open `parent_directory/iwaas-sparrow-figures/iwaas-sparrow-figures.Rproj`. 
+- Run `renv::init()` and choose the first option
+- Sign into Sciencebase using the `0_config.R` script.
+- Build the pipeline. You do not need to run the entire pipeline, you can run only the requisite components using `targets::tar_make(starts_with("p2_load"))`. 
+- This does take a long time to download all of the SPARROW models. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make()` command above. Targets will pick up where the process left off.
+
+### Step 3: Run the water use pipeline. 
+
+- Open `parent_directory/water-use-huc12-crosswalk/water-use-huc12-crosswalk.Rproj`. 
+- Run `renv::init()` and choose the first option
+- Sign into Sciencebase using the `0_config.R` script.
+- Build the pipeline. 
+- This might take a while to download files and run. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make()` command above. Targets will pick up where the process left off.
+
+### Step 4: Run the IWAAs website pipeline.
+
+- Open `parent_directory/water-availability/water-availability.Rproj`. 
+- Sign into Sciencebase using the `0_config.R` script.
+- Build the pipeline. 
+- This might take a while to download files and run. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make()` command above. Targets will pick up where the process left off.
+
+
+## To build the website
+
+Inside of your repository directory:
 
 ```bash
 npm install
@@ -70,7 +102,7 @@ Local site: http://localhost:5173/visualizations/water-availability/
 
 ### Development Workflow
 
-Document development issues via GitLab, and use to steer your workflow:
+Document development issues via git, and use to steer your workflow:
 
 1. Create a branch based on the `main` branch using a descriptive branch name.
 2. Work on the issue on your branch.

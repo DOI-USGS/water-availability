@@ -8,13 +8,6 @@ p1_targets <- list(
   # 
   #          SPATIAL DATA
   # 
-  # Download shapefiles of Van Metre regions from ScienceBase
-  #   requires running 0_config.R first
-  # tar_target(p1_Reg_zip,
-  #            {
-  #              return("1_fetch/in/HydrologicRegions.zip")},
-  #            format = "file"
-  # ),
   # unzip file and point to region shapefile
   tar_target(p1_Reg_shp, 
              sb_initialize_and_download_zipped(
@@ -36,7 +29,7 @@ p1_targets <- list(
   tar_target(
     p1_CONUS_mainstem_gdb, 
     sb_initialize_and_download_zipped(
-      sb_id = "63cb38b2d34e06fef14f40ad",  #"60cb5edfd34e86b938a373f4",
+      sb_id = "63cb38b2d34e06fef14f40ad",  
       unzip_file_to_check = "1_fetch/in/WBD_National_GDB/WBD_National_GDB.gdb",
       names = "WBD_National_GDB.zip",
       destination_zip = "1_fetch/in/WBD_National_GDB.zip",
@@ -61,9 +54,9 @@ p1_targets <- list(
   tar_target(
     p1_CONUS_crosswalk,
     sb_initialize_and_download(
-      sb_id = "66833671d34e57e93663d8a5", #"643706ffd34ee8d4addcc593",
-      names = "HUC12_HydroRegion_crosswalk.csv", #"HUC12_VanMetre_crosswalk_230509.csv",
-      destinations = "1_fetch/out/HUC12_VanMetre_crosswalk_230509.csv",
+      sb_id = "66833671d34e57e93663d8a5", 
+      names = "HUC12_HydroRegion_crosswalk.csv", 
+      destinations = "1_fetch/out/HUC12_HydroRegion_crosswalk.csv",
       overwrite_fileL = FALSE
     ),
     format = "file"
@@ -75,6 +68,7 @@ p1_targets <- list(
   # 
   # EXTRACTED FROM ELMERA'S SOFTWARE RELEASE, loads by source
   # need to run the initial-upload branch of the repo locally in the main file directory
+  #     run with `targets::tar_make(starts_with("p2_load"))`
   # https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/-/blob/initial-upload/01_fetch.R?ref_type=heads
   
   # TP processing to calculate loads from sources
@@ -83,7 +77,7 @@ p1_targets <- list(
     tar_target( # need to find a way to download p2_load target output from iwaas-sparrow-figures pipeline
       # current idea: read in _targets p2_load objects?
       p2_load,
-      readRDS(sprintf("iwaas-sparrow-figures/_targets/objects/p2_load_%s", nutrient))
+      readRDS(sprintf("../iwaas-sparrow-figures/_targets/objects/p2_load_%s", nutrient))
     ),
     tar_target(p1_wq_Reg_df,
                process_wq_data(in_csv = p2_load,
@@ -105,139 +99,49 @@ p1_targets <- list(
   # 
   # PS = Public Supply water use data
   tar_target(p1_wu_ps_gw_csv, # Public supply withdrawal from groundwater
-             "water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_GW_2000_2020.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_GW_2000_2020.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_ps_gw_csv, # Public supply withdrawal from groundwater
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "PS_HUC12_GW_2000_2020.csv",
-  #             destinations = "1_fetch/in/PS_HUC12_GW_2000_2020.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   tar_target(p1_wu_ps_sw_csv, # Public supply withdrawal from surface water
-             "water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_SW_2000_2020.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_SW_2000_2020.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_ps_sw_csv, # Public supply withdrawal from surface water
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "PS_HUC12_SW_2000_2020.csv",
-  #             destinations = "1_fetch/in/PS_HUC12_SW_2000_2020.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   tar_target(p1_wu_ps_tot_csv, # Public supply withdrawal (total)
-             "water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_Tot_2000_2020.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/PS_HUC12_Tot_2000_2020.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_ps_tot_csv, # Public supply withdrawal (total)
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "PS_HUC12_Tot_2000_2020.csv",
-  #             destinations = "1_fetch/in/PS_HUC12_Tot_2000_2020.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   
   # IR = Irrigation water use data
   tar_target(p1_wu_ir_gw_csv, # Irrigation withdrawal from groundwater
-             "water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_GW_WD_monthly_2000_2020.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_GW_WD_monthly_2000_2020.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_ir_gw_csv, # Irrigation withdrawal from groundwater
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "IR_HUC12_GW_2000_2020.csv",
-  #             destinations = "1_fetch/in/IR_HUC12_GW_2000_2020.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   tar_target(p1_wu_ir_sw_csv, # Irrigation withdrawal from surface water
-             "water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_SW_WD_monthly_2000_2020.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_SW_WD_monthly_2000_2020.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_ir_sw_csv, # Irrigation withdrawal from surface water
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "IR_HUC12_SW_2000_2020.csv",
-  #             destinations = "1_fetch/in/IR_HUC12_SW_2000_2020.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   tar_target(p1_wu_ir_tot_csv, # Irrigation withdrawal (total)
-             "water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_Tot_WD_monthly_2000_2020.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/IR_HUC12_Tot_WD_monthly_2000_2020.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_ir_tot_csv, # Irrigation withdrawal (total)
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "IR_HUC12_Tot_2000_2020.csv",
-  #             destinations = "1_fetch/in/IR_HUC12_Tot_2000_2020.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   
   # TE = thermoelectric water use data
   tar_target(p1_wu_te_gw_csv, # thermoelectric ground water fresh withdrawal 
-             "water-use-huc12-crosswalk/02_process/out/final/gw_fresh_wd_mgd.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/gw_fresh_wd_mgd.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_te_gw_csv, # thermoelectric ground water withdrawal 
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "gw_fresh_wd_mgd.csv",
-  #             destinations = "1_fetch/in/gw_fresh_wd_mgd.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   tar_target(p1_wu_te_sw_csv, # thermoelectric surface water fresh withdrawal 
-             "water-use-huc12-crosswalk/02_process/out/final/sw_fresh_wd_mgd.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/sw_fresh_wd_mgd.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_te_sw_csv, # thermoelectric surface water withdrawal 
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "sw_fresh_wd_mgd.csv",
-  #             destinations = "1_fetch/in/sw_fresh_wd_mgd.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   tar_target(p1_wu_te_tot_csv, # thermoelectric fresh withdrawal (total)
-             "water-use-huc12-crosswalk/02_process/out/final/total_fresh_wd_mgd.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/total_fresh_wd_mgd.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_te_tot_csv, # thermoelectric fresh withdrawal (total)
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "total_fresh_wd_mgd.csv",
-  #             destinations = "1_fetch/in/total_fresh_wd_mgd.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   tar_target(p1_wu_te_tot_saline_csv, # thermoelectric saline withdrawal (total)
-             "water-use-huc12-crosswalk/02_process/out/final/sw_saline_wd_mgd.csv",
+             "../water-use-huc12-crosswalk/02_process/out/final/sw_saline_wd_mgd.csv",
              format = "file"
   ),
-  #tar_target(p1_wu_te_tot_saline_csv, # thermoelectric saline withdrawal (total)
-  #           sb_initialize_and_download(
-  #             sb_id = "655e1bc9d34e3aa43a437141",
-  #             names = "sw_saline_wd_mgd.csv",
-  #             destinations = "1_fetch/in/sw_saline_wd_mgd.csv",
-  #             overwrite_fileL = FALSE
-  #           ),
-  #           format = "file"
-  #),
   
   ##############################################
   # 

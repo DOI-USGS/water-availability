@@ -39,7 +39,7 @@ p2_targets <- list(
   ),
   # Master crosswalk at the HUC12 level
   tar_target(p2_CONUS_crosswalk_HUC12_df,
-             readr::read_csv(p1_CONUS_crosswalk, skip = 1)|>
+             readr::read_csv(p1_CONUS_crosswalk) |>
                filter(AggRegion_nam != "NULL") |>
                left_join(p2_region_name_xwalk, by = "Region_nam")),
   # Master crosswalk at the HUC8 level
