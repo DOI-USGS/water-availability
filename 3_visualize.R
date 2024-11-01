@@ -185,16 +185,16 @@ p3_targets <- list(
   tar_map(
     values = tibble(
       AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
-    ),
-    tar_target(p3_wq_tn_barchart_png,
-               viz_wq_bars(in_df = p1_wq_Reg_df_tn,
-                           region = AggReg,
-                           color_scheme = p3_colors_balance,
-                           fonts = p3_fonts_website,
-                           png_out = sprintf("src/assets/images/k05_wq_tn_bar_%s.png", AggReg),
-                           width = 6,
-                           height = 6),
-               format = "file")
+    )
+   # tar_target(p3_wq_tn_barchart_png,
+  #             viz_wq_bars(in_df = p1_wq_Reg_df_tn,
+  #                         region = AggReg,
+  #                         color_scheme = p3_colors_balance,
+  #                         fonts = p3_fonts_website,
+  #                         png_out = sprintf("src/assets/images/k05_wq_tn_bar_%s.png", AggReg),
+  #                         width = 6,
+  #                         height = 6),
+  #             format = "file")
   ),
   
   ##############################################

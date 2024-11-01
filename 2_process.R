@@ -39,7 +39,7 @@ p2_targets <- list(
   ),
   # Master crosswalk at the HUC12 level
   tar_target(p2_CONUS_crosswalk_HUC12_df,
-             readr::read_csv(p1_CONUS_crosswalk, skip = 1)|>
+             readr::read_csv(p1_CONUS_crosswalk) |>
                filter(AggRegion_nam != "NULL") |>
                left_join(p2_region_name_xwalk, by = "Region_nam")),
   # Master crosswalk at the HUC8 level
@@ -283,7 +283,7 @@ p2_targets <- list(
   tar_target(p2_sui_2020_HUC12,
              mean_sui(data_in = p2_sui_raw,
                       HUC_level = 12,
-                      min_year = 2020,
+                      min_year = 2020, # should be 2010
                       max_year = 2020,
                       by_yearL = FALSE)),
   # water supply and demand for each region from Ted
