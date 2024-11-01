@@ -28,7 +28,7 @@
                 
                 <p>Extremely dry conditions were observed in greater than 25 percent of the Southeast aggregated region in 2011. In 2012, greater than 75 percent of the High Plains and greater than 60 percent of the Northeast-Midwest aggregated regions suffered extremely dry conditions due to anomalously low rainfall totals in spring and summer. These extremely dry conditions were associated with the most severe and widespread drought in the period of analysis and one of the most extreme droughts since the 1930s Dust Bowl (Hoerling and others, 2014; Bell and others, 2015). Learn more about this recent drought at <a href="https://labs.waterdata.usgs.gov/visualizations/drought-timeline/index.html#/" target="_blank">Five droughts that changed history</a></p>
             </div>
-
+            <Methods></Methods>
             <References></References>
         </div>
         <PageCarousel></PageCarousel>
@@ -39,6 +39,7 @@
 import { onMounted } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 
 

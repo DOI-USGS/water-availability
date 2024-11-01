@@ -55,9 +55,7 @@
 </script>
 
 <style scoped>
-/*.section-header {
-  color: var(--dodger-blue);
-}*/
+
 
 /* text box within the wavy container that houses key messages */
 .title-message-container {
@@ -68,7 +66,7 @@
   padding: 100px 20px;
   padding-bottom: 100px;
   width: 90vw;
-  color: var(--blue-text-col);
+  color: var(--blue-dark);
   border-radius: 5px;
   text-align: center;
   z-index: -1;
@@ -109,13 +107,13 @@
   width: 90%;
   margin: 0px;
   padding: 10px;
-  background-color: var(--light-background);
+  background-color: var(--cream-background);
   overflow: visible;
 }
 
 
 .key-message-item-text {
-  color: var(--blue-text-col);
+  color: var(--blue-dark);
   width: 100%;
   font-size: 3rem;
   text-align: left;
@@ -131,9 +129,9 @@
   margin-right: 20px;
   margin-bottom: 10px;
   margin-top: 35px;
-  background-color: rgb(159, 202, 203);
+  background-color: var(--blue-light);
   border: 0 solid;
-  box-shadow: inset 0 0 20px  #427388;
+  box-shadow: inset 0 0 35px var(--teal-dark);
   outline: 1px solid;
   outline-color: rgba(255, 255, 255, .5);
   outline-offset: 0px;
@@ -146,12 +144,12 @@
 
 .raindrop:hover {
   cursor: pointer;
-  background-color:  #427388;
+  background-color:  var(--teal-dark);
   border: 1px solid;
-  box-shadow: inset 0 0 10px  #427388, 0 0 10px  #427388;
-  outline-color:  #427388;
+  box-shadow: inset 0 0 10px var(--teal-dark), 0 0 10px  var(--teal-dark);
+  outline-color:  var(--blue-dark);
   outline-offset: 5px;
-  text-shadow: 1px 1px 2px #427388; 
+  text-shadow: 1px 1px 2px var(--blue-dark); 
 }
 
 
@@ -160,7 +158,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
-  color: white;
+  color: var(--cream-background);
   font-size: 40px;
   font-weight: bold;
 }

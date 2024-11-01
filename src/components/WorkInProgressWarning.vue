@@ -27,7 +27,7 @@
 
 <style scoped lang="scss">
   .usa-prose {
-    background-color: #386785;
+    background-color: var(--teal-dark);
     padding-bottom: 0.3em;
     padding-top: 0.3em;
     p {
@@ -39,7 +39,7 @@
     button {
       display: block;
       margin: 0 auto;
-      background: var(--color-USGS-header-footer);
+      background: var(--blue-dark);
       color: #ffffff;
       border: none;
       outline: none;
