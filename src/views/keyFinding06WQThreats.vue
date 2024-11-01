@@ -292,6 +292,7 @@ function createSankey({
     const sankey = d3sankey.sankey()
       .nodeWidth(nodeWidth)
       .nodePadding(nodePadding) // Increase padding on mobile
+      .nodeSort((a,b) => d3.descending(a.value, b.value))
       .extent([[0, 0], [chartDimensions.boundedWidth, chartDimensions.boundedHeight]])
 
     // Set up color scale 

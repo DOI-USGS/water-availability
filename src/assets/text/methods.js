@@ -78,7 +78,7 @@ export default {
         method: [
           {
             header: "Calculating water use by year",
-            description: "We calculated total water withdrawn for crop irrigation, public supply, and thermoelectric water use for the conterminous United States for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "Total water withdrawn was calculated for crop irrigation, public supply, and thermoelectric water use for the conterminous United States for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
           }
         ]
       },      {
@@ -91,7 +91,7 @@ export default {
           },
           {
             header: "Comparing water sources by use",
-            description: "We also compared the amount of total water withdrawn from groundwater versus surface water by use category and across all uses. The values for each HUC8 region were calculated as average annual withdrawals for the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "The total water withdrawn from groundwater versus surface water was compared by use category and across all uses. The values for each HUC8 region were calculated as average annual withdrawals for the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
           }
         ]
       },      {
