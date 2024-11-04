@@ -269,8 +269,38 @@ p3_targets <- list(
                           width = 8,
                           height = 8,
                           png_out = "public/images/kf08_wu_legend.png"),
-             format = "file")
-  
+             format = "file"),
+  tar_map(
+    values = tibble::tibble(reg = c("Western", "High Plains", "Southeast", "Northeast through Midwest", "CONUS")),
+    tar_target(p3_te_dumbbell_png,
+               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+                                agg_reg = reg,
+                                wu_type = "te", #"te", "ir", "ps"
+                                color_scheme = p3_colors_website,
+                                width = 6,
+                                height = 4,
+                                png_out = sprintf("public/images/kf08_TE_gw_sw_dumbbell_%s.png", reg)),
+               format = "file"),
+    tar_target(p3_ps_dumbbell_png,
+               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+                                agg_reg = reg,
+                                wu_type = "ps", #"te", "ir", "ps"
+                                color_scheme = p3_colors_website,
+                                width = 6,
+                                height = 4,
+                                png_out = sprintf("public/images/kf08_PS_gw_sw_dumbbell_%s.png", reg)),
+               format = "file"),
+    tar_target(p3_ir_dumbbell_png,
+               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+                                agg_reg = reg,
+                                wu_type = "ir", #"te", "ir", "ps"
+                                color_scheme = p3_colors_website,
+                                width = 6,
+                                height = 4,
+                                png_out = sprintf("public/images/kf08_IR_gw_sw_dumbbell_%s.png", reg)),
+               format = "file"),
+    names = reg
+  )
   
   ##############################################
   # 
