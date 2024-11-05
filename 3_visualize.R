@@ -184,10 +184,10 @@ p3_targets <- list(
   #             air pollution.
   #
   #
-  tar_map(
-    values = tibble(
-      AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
-    )
+  #tar_map(
+  #  values = tibble(
+  #    AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
+  #  )
    # tar_target(p3_wq_tn_barchart_png,
   #             viz_wq_bars(in_df = p1_wq_Reg_df_tn,
   #                         region = AggReg,
@@ -197,7 +197,7 @@ p3_targets <- list(
   #                         width = 6,
   #                         height = 6),
   #             format = "file")
-  ),
+  #),
   
   ##############################################
   # 
