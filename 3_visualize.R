@@ -55,8 +55,8 @@ p3_targets <- list(
   
   tar_target(p3_fonts_website,
              tibble(
-               legend_font = "Source Sans Pro",
-               supporting_font = "Source Sans Pro",
+               legend_font = "Source Sans 3",
+               supporting_font = "Source Sans 3",
                handwriting_font = "Caveat"
              )),
   tar_target(p3_load_legend_font,
