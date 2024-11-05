@@ -394,6 +394,28 @@ onMounted(async () => {
   display: inline-block;
 }
 
+.highlight {
+  color: white;
+  padding: 0.25px 5px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.1s;
+  &#Public_Supply {
+    background-color: #A04747;
+  }
+  &#Irrigation {
+    background-color: #E8B86D;
+  }
+  &#Thermoelectric_fresh {
+    background-color: #0B2F9F;
+  }
+  &#Thermoelectric_saline {
+    background-color: #6CBEC7;
+  }
+}
+
 /* Mobile-specific adjustments */
 @media (max-width: 600px) {
   .dropdown-container {
