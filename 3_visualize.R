@@ -35,7 +35,9 @@ p3_targets <- list(
                  tern_4 = "#E0896D",
                  tern_6 = "#53697A",
                  tern_7 = "#637B73",
-                 tern_8 = "#F9D689"))),
+                 tern_8 = "#F9D689",
+                 dumbbell_sw = "#065867",
+                 dumbbell_gw = "#F09300"))),
   tar_target(p3_colors_balance,
              p3_colors_website |> bind_cols(
                tibble(
@@ -53,8 +55,8 @@ p3_targets <- list(
   
   tar_target(p3_fonts_website,
              tibble(
-               legend_font = "Source Sans Pro",
-               supporting_font = "Source Sans Pro",
+               legend_font = "Source Sans 3",
+               supporting_font = "Source Sans 3",
                handwriting_font = "Caveat"
              )),
   tar_target(p3_load_legend_font,
@@ -182,10 +184,10 @@ p3_targets <- list(
   #             air pollution.
   #
   #
-  tar_map(
-    values = tibble(
-      AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
-    )
+  #tar_map(
+  #  values = tibble(
+  #    AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
+  #  )
    # tar_target(p3_wq_tn_barchart_png,
   #             viz_wq_bars(in_df = p1_wq_Reg_df_tn,
   #                         region = AggReg,
@@ -195,7 +197,7 @@ p3_targets <- list(
   #                         width = 6,
   #                         height = 6),
   #             format = "file")
-  ),
+  #),
   
   ##############################################
   # 
@@ -269,8 +271,47 @@ p3_targets <- list(
                           width = 8,
                           height = 8,
                           png_out = "public/images/kf08_wu_legend.png"),
-             format = "file")
-  
+             format = "file"),
+  tar_map(
+    values = tibble::tibble(reg = c("Western", "High Plains", "Southeast", "Northeast through Midwest", "CONUS")),
+    tar_target(p3_dumbbell_png,
+               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+                                agg_reg = reg,
+                                wu_type = "all", 
+                                color_scheme = p3_colors_wu,
+                                width = 6,
+                                height = 4,
+                                png_out = sprintf("public/images/kf08_allWU_gw_sw_dumbbell_%s.png", reg)),
+               format = "file"),
+    tar_target(p3_te_dumbbell_png,
+               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+                                agg_reg = reg,
+                                wu_type = "te", #"te", "ir", "ps"
+                                color_scheme = p3_colors_wu,
+                                width = 6,
+                                height = 4,
+                                png_out = sprintf("public/images/kf08_TE_gw_sw_dumbbell_%s.png", reg)),
+               format = "file"),
+    tar_target(p3_ps_dumbbell_png,
+               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+                                agg_reg = reg,
+                                wu_type = "ps", #"te", "ir", "ps"
+                                color_scheme = p3_colors_wu,
+                                width = 6,
+                                height = 4,
+                                png_out = sprintf("public/images/kf08_PS_gw_sw_dumbbell_%s.png", reg)),
+               format = "file"),
+    tar_target(p3_ir_dumbbell_png,
+               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+                                agg_reg = reg,
+                                wu_type = "ir", #"te", "ir", "ps"
+                                color_scheme = p3_colors_wu,
+                                width = 6,
+                                height = 4,
+                                png_out = sprintf("public/images/kf08_IR_gw_sw_dumbbell_%s.png", reg)),
+               format = "file"),
+    names = reg
+  )
   
   ##############################################
   # 
