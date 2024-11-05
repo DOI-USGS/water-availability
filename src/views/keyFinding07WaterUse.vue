@@ -14,28 +14,25 @@
           uses another approximately 21,000 mgd.
         </p>
       </div>
-      <div class="toggle-buttons">
-        <button
-          :class="{ active: !isFaceted }"
-          @click="toggleToStacked"
-        >
-          Show total annual use
-        </button>
-        <button
-          :class="{ active: isFaceted }"
-          @click="toggleToFaceted"
-        >
-          Show by use type
-        </button>
+      
+      <!-- Dropdown for selecting view mode -->
+      <div class="dropdown-container">
+        <select v-model="selectedView" @change="handleViewChange">
+          <option value="stacked">Show total annual use</option>
+          <option value="faceted">Show by use type</option>
+        </select>
       </div>
+      
       <div class="viz-container">
         <div id="barplot-container"></div>
       </div>
+      
       <div class="text-container">
         <p>
-          Water use reflects human dependence on freshwater resources for public health and economic development. Water use has dual effects on water availability. On the one hand, ensuring safe, reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals decrease availability for downstream users and local stream ecosystems. Therefore, areas with more intense water use have higher needs and a higher tendency to degrade the resource than areas with less intense water use. 
+          Water use reflects human dependence on freshwater resources for public health and economic development. Water use has dual effects on water availability. On the one hand, ensuring safe, reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals decrease availability for downstream users and local stream ecosystems. Therefore, areas with more intense water use have higher needs and a higher tendency to degrade the resource than areas with less intense water use.
         </p>
       </div>
+      
       <Methods></Methods>
       <References></References>
     </div>
@@ -53,6 +50,7 @@ import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
+const selectedView = ref("stacked"); // Tracks the dropdown selection
 const mobileView = isMobile; // Detect mobile view for responsive design
 
 // Global variables to hold chart elements and data
@@ -66,13 +64,13 @@ const containerWidth = Math.min(window.innerWidth * 0.8, 800); // Constrain to 7
 const containerHeight = mobileView ? window.innerHeight * 0.85 : 700;
 
 const margin = mobileView
-  ? { top: 60, right: 0, bottom: 20, left: 40 } // Increased right margin
-  : { top: 80, right: labelWidth + 20, bottom: 40, left: 100 }; // Match the left space for balance
+  ? { top: 60, right: 10, bottom: 50, left: 40 } // Increased bottom margin for mobile
+  : { top: 80, right: labelWidth + 20, bottom: 60, left: 100 }; // Increased bottom margin for desktop
 
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 
-// Define toggle functions for switching between views
+// Define toggle functions for switching between
 function toggleToFaceted() {
   if (!isFaceted.value) {
     isFaceted.value = true;
@@ -84,6 +82,15 @@ function toggleToStacked() {
   if (isFaceted.value) {
     isFaceted.value = false;
     transitionToStacked();
+  }
+}
+
+// Handle dropdown selection change
+function handleViewChange() {
+  if (selectedView.value === "faceted") {
+    toggleToFaceted();
+  } else {
+    toggleToStacked();
   }
 }
 
@@ -153,22 +160,33 @@ function createBarChart({ dataset }) {
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
     .range([height, 0]);
 
-   // Create 4 identical y-axes (initially on top of each other)
-   categoryGroups.forEach((group, i) => {
+  // Custom x-axis tick format to show every other year
+  const xAxisTickFormat = (year) => {
+    return year % 2 === 0 ? year : '';
+  };
+
+  // Create x-axis and apply the custom tick format
+chartBounds.append('g')
+  .attr('class', 'x-axis')
+  .attr('transform', `translate(0, ${height})`)
+  .call(d3.axisBottom(yearScale)
+    .tickFormat(xAxisTickFormat) // Apply custom format for every other year
+    .tickSize(0)
+  )
+  .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
+  .selectAll('.tick text')
+  .style('text-anchor', 'middle') // Center align the labels
+  .attr('dx', '-0.2em'); // Move labels slightly to the left
+
+// Remove tick lines
+chartBounds.selectAll('.x-axis .tick line').remove();
+
+  // y-axis (water use scale)
+  categoryGroups.forEach((group, i) => {
     chartBounds.append('g')
       .attr('class', `y-axis y-axis-${i}`)
       .call(d3.axisLeft(useScale).ticks(4).tickFormat(d3.format("~s")))
       .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
-  });
-
-  // Create 4 identical x-axes (initially on top of each other)
-  categoryGroups.forEach((group, i) => {
-    chartBounds.append('g')
-      .attr('class', `x-axis x-axis-${i}`)
-      .attr('transform', `translate(0, ${height})`)
-      .call(d3.axisBottom(yearScale).tickSize(0))
-      .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
-      .selectAll('.tick line').remove();
   });
 
   // Create color scale for the bars
@@ -355,59 +373,62 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
 }
-.toggle-buttons {
+
+.dropdown-container {
   display: flex;
   justify-content: center;
   margin: 20px 0;
+  width: 100%;
+  text-align: center;
 }
 
-.toggle-buttons button {
+.dropdown-container select {
   padding: 10px 20px;
-  margin: 0 10px;
-  background-color: transparent; 
-  border: 1px solid;  
-  border-radius: 8px;  
-  cursor: pointer;
   font-size: 2rem;
   font-weight: 300;
-  color: rgb(54, 53, 53);  
-  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease; 
-}
-
-.toggle-buttons button.active {
-  background-color: rgba(54, 53, 53, 0.1); 
-  border: 2px solid;  
-  color: rgb(54, 53, 53);  
-  border-color: rgb(54, 53, 53); 
-  font-weight: 700;  
-}
-
-/* Button hover effect */
-.toggle-buttons button:hover {
-  background-color: rgba(54, 53, 53, 0.05);  
-  border: 2px solid;  
-  border-color: rgb(54, 53, 53);  
-}
-
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
+  color: rgb(54, 53, 53);
+  border: 1px solid rgb(54, 53, 53);
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.1s;
-  &#Public_Supply {
-    background-color: #A04747;
+  background-color: transparent;
+  display: inline-block;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 600px) {
+  .dropdown-container {
+    margin-top: 20px;
+    text-align: center;
+    align-items: center;
   }
-  &#Irrigation {
-    background-color: #E8B86D;
+
+  .dropdown-container select {
+    font-size: 1.5rem;
+    padding: 8px 16px;
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
   }
-  &#Thermoelectric_fresh {
-    background-color: #0B2F9F;
+
+  .text-container {
+    padding: 0 10px;
   }
-  &#Thermoelectric_saline {
-    background-color: #6CBEC7;
+
+  /* Make the visualization container wider on mobile and shift it slightly left */
+  .viz-container {
+    padding: 0 5px;
+    width: 100vw;
+    max-width: none;
+    display: flex;
+    justify-content: flex-start; /* Aligns the container to the left */
+  }
+
+  #barplot-container {
+    max-width: 100%;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: flex-start; /* Aligns the container to the left */
   }
 }
 </style>
