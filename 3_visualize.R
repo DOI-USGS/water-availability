@@ -35,7 +35,9 @@ p3_targets <- list(
                  tern_4 = "#E0896D",
                  tern_6 = "#53697A",
                  tern_7 = "#637B73",
-                 tern_8 = "#F9D689"))),
+                 tern_8 = "#F9D689",
+                 dumbbell_sw = "#065867",
+                 dumbbell_gw = "#F09300"))),
   tar_target(p3_colors_balance,
              p3_colors_website |> bind_cols(
                tibble(
@@ -276,7 +278,7 @@ p3_targets <- list(
                dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
                                 agg_reg = reg,
                                 wu_type = "all", 
-                                color_scheme = p3_colors_website,
+                                color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
                                 png_out = sprintf("public/images/kf08_allWU_gw_sw_dumbbell_%s.png", reg)),
@@ -285,7 +287,7 @@ p3_targets <- list(
                dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
                                 agg_reg = reg,
                                 wu_type = "te", #"te", "ir", "ps"
-                                color_scheme = p3_colors_website,
+                                color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
                                 png_out = sprintf("public/images/kf08_TE_gw_sw_dumbbell_%s.png", reg)),
@@ -294,7 +296,7 @@ p3_targets <- list(
                dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
                                 agg_reg = reg,
                                 wu_type = "ps", #"te", "ir", "ps"
-                                color_scheme = p3_colors_website,
+                                color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
                                 png_out = sprintf("public/images/kf08_PS_gw_sw_dumbbell_%s.png", reg)),
@@ -303,7 +305,7 @@ p3_targets <- list(
                dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
                                 agg_reg = reg,
                                 wu_type = "ir", #"te", "ir", "ps"
-                                color_scheme = p3_colors_website,
+                                color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
                                 png_out = sprintf("public/images/kf08_IR_gw_sw_dumbbell_%s.png", reg)),
