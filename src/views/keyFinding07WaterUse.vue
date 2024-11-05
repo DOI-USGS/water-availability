@@ -160,17 +160,17 @@ function createBarChart({ dataset }) {
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
     .range([height, 0]);
 
-  // Custom x-axis tick format to show every other year
+  // Custom x-axis tick format: show every other year on mobile, all years on desktop
   const xAxisTickFormat = (year) => {
-    return year % 2 === 0 ? year : '';
+    return mobileView ? (year % 2 === 0 ? year : '') : year;
   };
 
-  // Create x-axis and apply the custom tick format
-chartBounds.append('g')
+// Create x-axis and apply the custom tick format
+  chartBounds.append('g')
   .attr('class', 'x-axis')
   .attr('transform', `translate(0, ${height})`)
   .call(d3.axisBottom(yearScale)
-    .tickFormat(xAxisTickFormat) // Apply custom format for every other year
+    .tickFormat(xAxisTickFormat) // Apply custom format based on mobile view
     .tickSize(0)
   )
   .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
@@ -179,7 +179,7 @@ chartBounds.append('g')
   .attr('dx', '-0.2em'); // Move labels slightly to the left
 
 // Remove tick lines
-chartBounds.selectAll('.x-axis .tick line').remove();
+  chartBounds.selectAll('.x-axis .tick line').remove();
 
   // y-axis (water use scale)
   categoryGroups.forEach((group, i) => {
