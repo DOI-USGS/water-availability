@@ -19,14 +19,34 @@ dumbbell_gw_v_sw <- function(in_sf,
       dplyr::rename(sw_total_wu = sprintf("%s_sw.x", wu_type),
                     gw_total_wu = sprintf("%s_gw.x", wu_type))  
   }
+  max(proc_in_sf$gw_total_wu)
   
-  
-  
+  if(agg_reg == "CONUS"){
   max_sw <- proc_in_sf |>
-    filter(sw_total_wu == max(sw_total_wu)) 
+    select(x_long, sw_total_wu) |>
+    drop_na() |> 
+    filter(sw_total_wu == max(sw_total_wu)) |> 
+    unique()
   max_gw <- proc_in_sf |>
-    filter(gw_total_wu == max(gw_total_wu))
-  
+    select(x_long, gw_total_wu) |>
+    drop_na() |> 
+    filter(gw_total_wu == max(gw_total_wu)) |> 
+    unique()
+  } 
+  else if(agg_reg != "CONUS"){
+    max_sw <- proc_in_sf |>
+      filter(AggRegion_nam == agg_reg) |> 
+      select(x_long, sw_total_wu) |>
+      drop_na() |> 
+      filter(sw_total_wu == max(sw_total_wu)) |> 
+      unique()
+    max_gw <- proc_in_sf |>
+      filter(AggRegion_nam == agg_reg) |> 
+      select(x_long, gw_total_wu) |>
+      drop_na() |> 
+      filter(gw_total_wu == max(gw_total_wu)) |> 
+      unique()
+  }
   
   plot <- ggplot(proc_in_sf)  +
     geom_linerange(aes(x = x_long,
@@ -40,11 +60,13 @@ dumbbell_gw_v_sw <- function(in_sf,
     annotate("text", x = max_sw$x_long,
              y = max_sw$sw_total_wu, 
              label = sprintf("%s mgd", round(max_sw$sw_total_wu)),
-             vjust = 0, color = dumbbell_sw) + 
+             vjust = 0, color = color_scheme$dumbbell_sw) + 
     annotate("text", x = max_gw$x_long,
              y = -1*max_gw$gw_total_wu, 
              label = sprintf("%s mgd", round(max_gw$gw_total_wu)),
-             vjust = 1, color = dumbbell_gw) + 
+             vjust = 1, color = color_scheme$dumbbell_gw) + 
+    annotate("text", x = -Inf, y = 0, label = "W", vjust = -0.5, hjust = 0, color = "black")+
+    annotate("text", x = Inf, y = 0, label = "E", vjust = -0.5, hjust = 1, color = "black")+
     geom_hline(yintercept = 0, linewidth = 0.4) +
     theme_void() 
   
@@ -54,13 +76,13 @@ dumbbell_gw_v_sw <- function(in_sf,
                      aes(x = x_long,
                          ymax = sw_total_wu,
                          ymin = 0),
-                     color = dumbbell_sw, alpha = 0.6,
+                     color = color_scheme$dumbbell_sw, alpha = 0.6,
                      linewidth = 1.5) +
       geom_linerange(data = proc_in_sf,
                      aes(x = x_long,
                          ymin = gw_total_wu*-1,
                          ymax = 0),
-                     color = dumbbell_gw, alpha = 0.6,
+                     color = color_scheme$dumbbell_gw, alpha = 0.6,
                      linewidth = 1.5) 
   } else if(agg_reg != "CONUS"){
     plot <- plot+
@@ -68,13 +90,13 @@ dumbbell_gw_v_sw <- function(in_sf,
                      aes(x = x_long,
                          ymax = sw_total_wu,
                          ymin = 0),
-                     color = dumbbell_sw, alpha = 0.6,
+                     color = color_scheme$dumbbell_sw, alpha = 0.6,
                      linewidth = 1.5) +
       geom_linerange(data = subset(proc_in_sf, AggRegion_nam == agg_reg),
                      aes(x = x_long,
                          ymin = gw_total_wu*-1,
                          ymax = 0),
-                     color = dumbbell_gw, alpha = 0.6,
+                     color = color_scheme$dumbbell_gw, alpha = 0.6,
                      linewidth = 1.5) 
   }
   
