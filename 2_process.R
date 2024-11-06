@@ -137,6 +137,11 @@ p2_targets <- list(
                                 by = "HUC12")
              
   ),
+
+  # Summarize SUI by state
+  tar_target(p2_states_sui_df,
+             summary_sui_by_state(in_sf = p2_HUC12_join_sui_svi_sf)),
+  
   
   ##############################################
   # 
