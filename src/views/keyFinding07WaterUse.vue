@@ -415,42 +415,4 @@ onMounted(async () => {
     background-color: #6CBEC7;
   }
 }
-
-/* Mobile-specific adjustments */
-@media (max-width: 600px) {
-  .dropdown-container {
-    margin-top: 20px;
-    text-align: center;
-    align-items: center;
-  }
-
-  .dropdown-container select {
-    font-size: 1.5rem;
-    padding: 8px 16px;
-    width: 90%;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  .text-container {
-    padding: 0 10px;
-  }
-
-  /* Make the visualization container wider on mobile and shift it slightly left */
-  .viz-container {
-    padding: 0 5px;
-    width: 100vw;
-    max-width: none;
-    display: flex;
-    justify-content: flex-start; /* Aligns the container to the left */
-  }
-
-  #barplot-container {
-    max-width: 100%;
-    width: 100%;
-    margin: auto;
-    display: flex;
-    justify-content: flex-start; /* Aligns the container to the left */
-  }
-}
 </style>
