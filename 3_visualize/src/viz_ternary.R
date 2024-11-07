@@ -1,19 +1,33 @@
-ternary_map <- function(in_sf, 
+ternary_map <- function(in_sf, tern_side,
+                        color_scheme,
                         width, height,
                         png_out){
   states <- map_data("state")
   
-  ggplot(in_sf) +
+  proc_in_sf <- in_sf |> mutate(ps_ir = case_when(category %in% c(1, 3, 4, 8, 9) ~ TRUE, .default = FALSE),
+                                ps_te = case_when(category %in% c(1, 3, 2, 6, 5) ~ TRUE, .default = FALSE),
+                                te_ir = case_when(category %in% c(5, 6, 7, 8, 9) ~ TRUE, .default = FALSE))
+  if(tern_side != "all"){
+  plot <- ggplot(proc_in_sf)+
+    geom_sf(fill = color_scheme$svg_fill_default, color = color_scheme$svg_col_default)+
+    geom_sf(data = subset(proc_in_sf, proc_in_sf[[tern_side]] == TRUE), aes(fill = color), color = NA)+
+    geom_polygon(data = states, aes(x = long, y = lat), fill = NA, color = "white") +
+    scale_fill_identity()+
+    theme_void()
+  }
+  else if(tern_side == "all"){
+  plot <- ggplot(proc_in_sf) +
     geom_sf(aes(fill = color), color = NA) +
     geom_polygon(data = states, aes(x = long, y = lat), fill = NA, color = "white") +
     scale_fill_identity() +
     theme_void()
+  }
   
-  ggsave(png_out, device = "png", bg = "transparent",
+  ggsave(png_out, plot = plot, device = "png", bg = "transparent",
          dpi = 300, units = "in", width = width, height = height)
   
   return(png_out)
-  
+
 }
 
 # Create ternary plot and map
