@@ -12,8 +12,12 @@ ternary_map <- function(in_sf, tern_side,
     geom_sf(fill = color_scheme$svg_fill_default, color = color_scheme$svg_col_default)+
     geom_sf(data = subset(proc_in_sf, proc_in_sf[[tern_side]] == TRUE), aes(fill = color), color = NA)+
     geom_polygon(data = states, aes(x = long, y = lat), fill = NA, color = "white") +
-    scale_fill_identity()+
+    scale_fill_identity()+ #guide = "legend"
     theme_void()
+    #guides(fill = guide_legend(legend.text.position = "none"))+
+    #theme(legend.position = "bottom", 
+    #      legend.text = element_blank()) 
+    
   }
   else if(tern_side == "all"){
   plot <- ggplot(proc_in_sf) +
@@ -26,8 +30,124 @@ ternary_map <- function(in_sf, tern_side,
   ggsave(png_out, plot = plot, device = "png", bg = "transparent",
          dpi = 300, units = "in", width = width, height = height)
   
-  return(png_out)
+  return(png_out) 
 
+}
+
+# Create colorbar legend for highlighted side of ternary plot
+ternary_legend <- function(tern_side){
+  
+  color_pal <- tibble::tibble(ps_ir = c("#952D3D", "#C63C51", "#E0896D", "#F9D689", "#BBA167"),
+                              ps_te = c("#952D3D", "#C63C51", "#705E70", "#53697A", "#3E4F5C"),
+                              te_ir = c("#3E4F5C", "#53697A", "#637B73", "#F9D689", "#BBA167"))
+  
+  (left_arrow <- ggplot() + 
+      theme_void()+
+      # add arrow using `geom_curve()`
+      geom_curve(aes(x = 13, y = 1,
+                     xend = 11, yend = 1),
+                 arrow = grid::arrow(length = unit(0.5, 'lines')), 
+                 curvature = 0, angle = 100, ncp = 10,
+                 color ='black'))
+  
+  (right_arrow <- ggplot() + 
+      theme_void()+
+      # add arrow using `geom_curve()`
+      geom_curve(aes(x = 11, y = 1,
+                     xend = 13, yend = 1),
+                 arrow = grid::arrow(length = unit(0.5, 'lines')), 
+                 curvature = 0, angle = 100, ncp = 10,
+                 color ='black'))
+  
+  if(tern_side == "ps_ir"){
+    color_pal <- tibble::tibble(ps_ir = c("#952D3D", "#C63C51", "#E0896D", "#F9D689", "#BBA167"))
+    
+    (rectangle_1 <- ggplot()+ 
+        theme_void()+
+        # add arrow using `geom_curve()`
+        geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
+                  color = "black", fill = color_pal[1,])+
+        ylim(c(0, 10)))
+    (rectangle_2 <- ggplot()+ 
+        theme_void()+
+        # add arrow using `geom_curve()`
+        geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
+                  color = "black", fill = color_pal[2,])+
+        ylim(c(0, 10)))
+    (rectangle_3 <- ggplot()+ 
+        theme_void()+
+        # add arrow using `geom_curve()`
+        geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
+                  color = "black", fill = color_pal[3,])+
+        ylim(c(0, 10)))
+    (rectangle_4 <- ggplot()+ 
+        theme_void()+
+        # add arrow using `geom_curve()`
+        geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
+                  color = "black", fill = color_pal[4,])+
+        ylim(c(0, 10)))
+    (rectangle_5 <- ggplot()+ 
+        theme_void()+
+        # add arrow using `geom_curve()`
+        geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
+                  color = "black", fill = color_pal[5,])+
+        ylim(c(0, 10)))
+    
+    canvas <- grid::rectGrob(
+      x = 0, y = 0,
+      width = 10, height = 2,
+      gp = grid::gpar(fill = "white", alpha = 0, col = "white"
+      )
+    )
+    
+    final_plot <- cowplot::ggdraw(ylim = c(0,1),
+                                  xlim = c(0,1)) +
+      # White background
+      cowplot::draw_grob(canvas,
+                         x = 0, y = 1,
+                         height = 2, width = 10,
+                         hjust = 0, vjust = 1) +
+      # Add main map
+      cowplot::draw_plot(rectangle_1,
+                         x = 0.037,
+                         y = 0.4,
+                         height = 0.833,
+                         width = 0.2)+
+    cowplot::draw_plot(rectangle_2,
+                       x = 0.219,
+                       y = 0.4,
+                       height = 0.833,
+                       width = 0.2)+
+    cowplot::draw_plot(rectangle_3,
+                       x = 0.4,
+                       y = 0.4,
+                       height = 0.833,
+                       width = 0.2)+
+    cowplot::draw_plot(rectangle_4,
+                       x = 0.581,
+                       y = 0.4,
+                       height = 0.833,
+                       width = 0.2)+
+    cowplot::draw_plot(rectangle_5,
+                       x = 0.763,
+                       y = 0.4,
+                       height = 0.833,
+                       width = 0.2)+
+      cowplot::draw_plot(left_arrow,
+                         x = 0.5,
+                         y = 0.55,
+                         width = 0.4,
+                         hjust = 1,
+                         vjust = 0.5)+
+      cowplot::draw_plot(right_arrow,
+                         x = 0.5,
+                         y = 0.55,
+                         width = 0.4,
+                         hjust = 0,
+                         vjust = 0.5)
+    
+    ggsave(plot = final_plot, filename = "ternary_test_legend.png", width = 10, height = 2, dpi = 300, units = "in")
+  }
 }
 
 # Create ternary plot and map
