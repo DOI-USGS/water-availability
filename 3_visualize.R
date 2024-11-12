@@ -271,6 +271,24 @@ p3_targets <- list(
                format = "file"),
     names = tern_side
   ),
+  tar_target(p3_ternary_legend_ps_ir_png,
+             ternary_legend(tern_side_pal = tibble::tibble(ps_ir = c("#952D3D", "#C63C51", "#E0896D", "#F9D689", "#BBA167")), 
+                            left_label = "Increasing PS Use", 
+                            right_label = "Increasing IR Use",
+                            png_out = "public/images/kf08_wu_ternary_legend_ps_ir.png")
+  ),
+  tar_target(p3_ternary_legend_ps_te_png,
+             ternary_legend(tern_side_pal = tibble::tibble(ps_te = c("#952D3D", "#C63C51", "#705E70", "#53697A", "#3E4F5C")), 
+                            left_label = "Increasing PS Use", 
+                            right_label = "Increasing TE Use",
+                            png_out = "public/images/kf08_wu_ternary_legend_ps_te.png")
+  ),
+  tar_target(p3_ternary_legend_te_ir_png,
+             ternary_legend(tern_side_pal = tibble::tibble(te_ir = c("#3E4F5C", "#53697A", "#637B73", "#F9D689", "#BBA167")), 
+                            left_label = "Increasing TE Use", 
+                            right_label = "Increasing IR Use",
+                            png_out = "public/images/kf08_wu_ternary_legend_te_ir.png")
+  ),
     tar_target(p3_ternary_plot_png,
                ternary_plot(in_df = p2_wu_ternary_df,
                             width = 8,
