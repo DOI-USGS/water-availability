@@ -18,6 +18,7 @@ tar_option_set(packages = c(
   "prettyunits",
   # visualize
   "gridSVG",
+  "grid",
   "scico",
   "sysfonts",
   "magick",
