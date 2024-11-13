@@ -267,7 +267,7 @@ p3_targets <- list(
                            color_scheme = p3_colors_website,
                            width = 8,
                            height = 6,
-                           png_out = sprintf("public/images/kf08_wu_ternary_%s.png", tern_side)), 
+                           png_out = sprintf("src/images/R/kf08_wu_ternary_%s.png", tern_side)), 
                format = "file"),
     names = tern_side
   ),
@@ -275,25 +275,25 @@ p3_targets <- list(
              ternary_legend(tern_side_pal = tibble::tibble(ps_ir = c("#952D3D", "#C63C51", "#E0896D", "#F9D689", "#BBA167")), 
                             left_label = "Increasing PS Use", 
                             right_label = "Increasing IR Use",
-                            png_out = "public/images/kf08_wu_ternary_legend_ps_ir.png")
+                            png_out = "src/images/R/kf08_wu_ternary_legend_ps_ir.png")
   ),
   tar_target(p3_ternary_legend_ps_te_png,
              ternary_legend(tern_side_pal = tibble::tibble(ps_te = c("#952D3D", "#C63C51", "#705E70", "#53697A", "#3E4F5C")), 
                             left_label = "Increasing PS Use", 
                             right_label = "Increasing TE Use",
-                            png_out = "public/images/kf08_wu_ternary_legend_ps_te.png")
+                            png_out = "src/images/R/kf08_wu_ternary_legend_ps_te.png")
   ),
   tar_target(p3_ternary_legend_te_ir_png,
              ternary_legend(tern_side_pal = tibble::tibble(te_ir = c("#3E4F5C", "#53697A", "#637B73", "#F9D689", "#BBA167")), 
                             left_label = "Increasing TE Use", 
                             right_label = "Increasing IR Use",
-                            png_out = "public/images/kf08_wu_ternary_legend_te_ir.png")
+                            png_out = "src/images/R/kf08_wu_ternary_legend_te_ir.png")
   ),
     tar_target(p3_ternary_plot_png,
                ternary_plot(in_df = p2_wu_ternary_df,
                             width = 8,
                             height = 8,
-                            png_out = "public/images/kf08_wu_legend.png"), 
+                            png_out = "src/images/R/kf08_wu_legend.png"), 
                format = "file"),
   tar_map(
     values = tibble::tibble(reg = c("Western", "High Plains", "Southeast", "Northeast through Midwest", "CONUS")),
@@ -304,7 +304,7 @@ p3_targets <- list(
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("public/images/kf08_allWU_gw_sw_dumbbell_%s.png", reg)),
+                                png_out = sprintf("src/images/R/kf08_allWU_gw_sw_dumbbell_%s.png", reg)),
                format = "file"),
     tar_target(p3_te_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
@@ -313,7 +313,7 @@ p3_targets <- list(
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("public/images/kf08_TE_gw_sw_dumbbell_%s.png", reg)),
+                                png_out = sprintf("src/images/R/kf08_TE_gw_sw_dumbbell_%s.png", reg)),
                format = "file"),
     tar_target(p3_ps_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
@@ -322,7 +322,7 @@ p3_targets <- list(
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("public/images/kf08_PS_gw_sw_dumbbell_%s.png", reg)),
+                                png_out = sprintf("src/images/R/kf08_PS_gw_sw_dumbbell_%s.png", reg)),
                format = "file"),
     tar_target(p3_ir_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
@@ -331,7 +331,7 @@ p3_targets <- list(
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("public/images/kf08_IR_gw_sw_dumbbell_%s.png", reg)),
+                                png_out = sprintf("src/images/R/kf08_IR_gw_sw_dumbbell_%s.png", reg)),
                format = "file"),
     names = reg
   )
