@@ -31,8 +31,8 @@ import { onMounted } from 'vue';
     import KeyMessages from '../components/KeyMessages.vue';
     import Methods from '../components/Methods.vue';
     import References from '../components/References.vue';
-    import photoAll from "../../public/images/k04_sui_svi_map.png";
-    import photoDry from "../../public/images/k04_sui_svi_dry_map.png";
+    import photoAll from "../assets/images/R/03_sui_svi_map.png";
+    import photoDry from "../assets/images/R/03_sui_svi_dry_map.png";
 
 onMounted(() => {
 
