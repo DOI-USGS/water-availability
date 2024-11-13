@@ -8,10 +8,10 @@
                 <p>This plot and map show the value of each hydrological region (HUC8) on the map by its respective proportion of public supply, irrigation, and thermoelectric power. For example, regions represented by dots in the top center are dark red because they're almost entirely comprised of public supply water use. </p>
           </div>
           <div class="viz-container">
-            <img class="viz-half" src="../../public/images/kf08_wu_legend.png" >
+            <img class="viz-half" src="../assets/images/R/08_wu_legend.png" >
           </div>
           <div class="viz-container">
-            <img class="viz-landscape" src="../../public/images/kf08_wu_ternary.png" >
+            <img class="viz-landscape" src="../assets/images/R/08_wu_ternary_all.png" >
           </div>
           <div class="text-container">
             <h3>Groundwater rules the west</h3>
@@ -44,10 +44,10 @@ import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
 
-const imgSrc = ref('../../public/images/ws_ps_dumbbell_centered_CONUS.png');
+const imgSrc = ref('../assets/images/R/08_allWU_gw_sw_dumbbell_CONUS.png');
 
 const setDefaultImgSrc = () => {
-  import(`../../public/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(img => {
+  import(`../assets/images/R/08_allWU_gw_sw_dumbbell_CONUS.png`).then(img => {
     imgSrc.value = img.default;
   });
 };
@@ -63,7 +63,7 @@ const mouseoverMap = (event) => {
   const regionID = event.target.id;
   d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#5e7789");
   const formattedRegionID = regionID.replace(/_/g, ' ');
-  import(`../../public/images/k08_ws_ps_dumbbell_centered_${formattedRegionID}.png`).then(img => {
+  import(`../assets/images/R/08_allWU_gw_sw_dumbbell_${formattedRegionID}.png`).then(img => {
     imgSrc.value = img.default;
   });
 };
@@ -71,7 +71,7 @@ const mouseoverMap = (event) => {
 const mouseoutMap = (event) => {
   const regionID = event.target.id;
   d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
-  import(`../../public/images/k08_ws_ps_dumbbell_centered_CONUS.png`).then(img => {
+  import(`../assets/images/R/08_allWU_gw_sw_dumbbell_CONUS.png`).then(img => {
     imgSrc.value = img.default;
   });
 };
