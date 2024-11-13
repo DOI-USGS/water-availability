@@ -14,9 +14,6 @@ ternary_map <- function(in_sf, tern_side,
     geom_polygon(data = states, aes(x = long, y = lat), fill = NA, color = "white") +
     scale_fill_identity()+ #guide = "legend"
     theme_void()
-    #guides(fill = guide_legend(legend.text.position = "none"))+
-    #theme(legend.position = "bottom", 
-    #      legend.text = element_blank()) 
     
   }
   else if(tern_side == "all"){
