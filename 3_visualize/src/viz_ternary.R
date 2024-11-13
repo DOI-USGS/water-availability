@@ -37,9 +37,10 @@ ternary_map <- function(in_sf, tern_side,
 # Create colorbar legend for highlighted side of ternary plot
 ternary_legend <- function(tern_side_pal, left_label, right_label, png_out){
   
-  # will become function argument tern_side_pal
+  # color palette
   color_pal <- tern_side_pal
   
+  # arrows for annotation
   (left_arrow <- ggplot() + 
       theme_void()+
       # add arrow using `geom_curve()`
@@ -58,37 +59,23 @@ ternary_legend <- function(tern_side_pal, left_label, right_label, png_out){
                  curvature = 0, angle = 100, ncp = 10,
                  color ='black'))
   
-  (rectangle_1 <- ggplot()+ 
+  # draw rectangles
+  rect_plot <- function(fill){
+    ggplot()+ 
       theme_void()+
       # add arrow using `geom_curve()`
       geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
-                color = "black", fill = color_pal[1,])+
-      ylim(c(0, 10)))
-  (rectangle_2 <- ggplot()+ 
-      theme_void()+
-      # add arrow using `geom_curve()`
-      geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
-                color = "black", fill = color_pal[2,])+
-      ylim(c(0, 10)))
-  (rectangle_3 <- ggplot()+ 
-      theme_void()+
-      # add arrow using `geom_curve()`
-      geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
-                color = "black", fill = color_pal[3,])+
-      ylim(c(0, 10)))
-  (rectangle_4 <- ggplot()+ 
-      theme_void()+
-      # add arrow using `geom_curve()`
-      geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
-                color = "black", fill = color_pal[4,])+
-      ylim(c(0, 10)))
-  (rectangle_5 <- ggplot()+ 
-      theme_void()+
-      # add arrow using `geom_curve()`
-      geom_rect(aes(xmin = 1, xmax = 10, ymin = 3, ymax = 7),
-                color = "black", fill = color_pal[5,])+
-      ylim(c(0, 10)))
+                color = "black", fill = fill)+
+      ylim(c(0, 10))
+  }
   
+  rectangle_1 <- rect_plot(fill = color_pal[1,])
+  rectangle_2 <- rect_plot(fill = color_pal[2,])
+  rectangle_3 <- rect_plot(fill = color_pal[3,])
+  rectangle_4 <- rect_plot(fill = color_pal[4,])
+  rectangle_5 <- rect_plot(fill = color_pal[5,])
+  
+  # create cowplot
   canvas <- grid::rectGrob(
     x = 0, y = 0,
     width = 10, height = 2,
@@ -105,56 +92,36 @@ ternary_legend <- function(tern_side_pal, left_label, right_label, png_out){
                        hjust = 0, vjust = 1) +
     # Add main map
     cowplot::draw_plot(rectangle_1,
-                       x = 0.037,
-                       y = 0.3,
-                       height = 0.833,
-                       width = 0.2)+
+                       x = 0.037, y = 0.3,
+                       height = 0.833, width = 0.2)+
     cowplot::draw_plot(rectangle_2,
-                       x = 0.219,
-                       y = 0.3,
-                       height = 0.833,
-                       width = 0.2)+
+                       x = 0.219, y = 0.3,
+                       height = 0.833, width = 0.2)+
     cowplot::draw_plot(rectangle_3,
-                       x = 0.4,
-                       y = 0.3,
-                       height = 0.833,
-                       width = 0.2)+
+                       x = 0.4, y = 0.3,
+                       height = 0.833, width = 0.2)+
     cowplot::draw_plot(rectangle_4,
-                       x = 0.581,
-                       y = 0.3,
-                       height = 0.833,
-                       width = 0.2)+
+                       x = 0.581, y = 0.3,
+                       height = 0.833, width = 0.2)+
     cowplot::draw_plot(rectangle_5,
-                       x = 0.763,
-                       y = 0.3,
-                       height = 0.833,
-                       width = 0.2)+
+                       x = 0.763, y = 0.3,
+                       height = 0.833, width = 0.2)+
     cowplot::draw_plot(left_arrow,
-                       x = 0.5,
-                       y = 0.45,
+                       x = 0.5, y = 0.45,
                        width = 0.475,
-                       hjust = 1,
-                       vjust = 0.5)+
+                       hjust = 1, vjust = 0.5)+
     cowplot::draw_plot(right_arrow,
-                       x = 0.5,
-                       y = 0.45,
+                       x = 0.5, y = 0.45,
                        width = 0.475,
-                       hjust = 0,
-                       vjust = 0.5)+
+                       hjust = 0, vjust = 0.5)+
     cowplot::draw_label(left_label, 
-                        x = 0.05,   
-                        y = 0.3,
-                        size = 25,
-                        hjust = 0,
-                        vjust = 0.5,
-                        color = "black")+
-  cowplot::draw_label(right_label, 
-                      x = 0.95,   
-                      y = 0.3,
-                      size = 25,
-                      hjust = 1,
-                      vjust = 0.5,
-                      color = "black")
+                        x = 0.05, y = 0.3,
+                        size = 25, color = "black",
+                        hjust = 0, vjust = 0.5)+
+    cowplot::draw_label(right_label, 
+                        x = 0.95, y = 0.3,
+                        size = 25, color = "black",
+                        hjust = 1, vjust = 0.5)
   
   ggplot2::ggsave(plot = final_plot, filename = png_out, width = 10, height = 2, dpi = 300, units = "in")
   
