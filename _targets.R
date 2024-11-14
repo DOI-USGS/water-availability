@@ -10,6 +10,7 @@ tar_option_set(packages = c(
   "sf",
   # fetch
   "sbtools",
+  "maps",
   # process
   "stringr",
   "lubridate",
