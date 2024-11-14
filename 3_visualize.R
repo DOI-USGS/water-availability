@@ -105,7 +105,7 @@ p3_targets <- list(
   # Use static branching
   tar_map(
     values = tibble(
-      AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
+      AggReg = c("CONUS") #, "Northeast_through_Midwest", "Southeast", "High_Plains", "Western"
     ),
     tar_target(p3_popn_circles_png,
                viz_popn_circles(in_df = p2_sui_popn_df,
@@ -116,6 +116,26 @@ p3_targets <- list(
                                 width = 6,
                                 height = 6),
                format = "file")
+  ),
+  tar_target(p3_popn_bar_vert_png,
+             viz_popn_bar(in_df = p2_sui_popn_df, 
+                          color_scheme = p3_colors_balance, 
+                          fonts = p3_fonts_website,
+                          direction = "vertical",
+                          #png_out = "src/assets/images/k02_sui_popn_vert_bar.png",
+                          width = 2,
+                          height = 6),
+             format = "file"
+  ),
+  tar_target(p3_popn_bar_hori_png,
+             viz_popn_bar(in_df = p2_sui_popn_df, 
+                          color_scheme = p3_colors_balance, 
+                          fonts = p3_fonts_website,
+                          direction = "horizontal",
+                          #png_out = "src/assets/images/k02_sui_popn_hori_bar.png",
+                          width = 2,
+                          height = 6),
+             format = "file"
   ),
   
   
