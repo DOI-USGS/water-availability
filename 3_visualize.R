@@ -52,6 +52,12 @@ p3_targets <- list(
                  dry_red_dark = "#965a5b",
                  dry_red_light = "#CFACAB"
                ))),
+  tar_target(p3_popn_colors,
+             col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
+                          "High" = p3_colors_balance$dry_red_light, 
+                          "Moderate" = p3_colors_balance$svg_col_default, 
+                          "Low" = p3_colors_balance$wet_blue_light, 
+                          "Very low/\nnone" = p3_colors_balance$wet_blue_dark)),
   
   tar_target(p3_fonts_website,
              tibble(
@@ -102,20 +108,31 @@ p3_targets <- list(
   #             high/severe water imbalance
   #
   #
-  # Use static branching
-  tar_map(
-    values = tibble(
-      AggReg = c("CONUS", "Northeast_through_Midwest", "Southeast", "High_Plains", "Western")
-    ),
     tar_target(p3_popn_circles_png,
                viz_popn_circles(in_df = p2_sui_popn_df,
-                                region = AggReg,
-                                color_scheme = p3_colors_balance,
-                                fonts = p3_fonts_website,
-                                png_out = sprintf("src/assets/images/R/02_sui_popn_%s.png", AggReg),
+                                color_scheme = p3_popn_colors,
+                                png_out = "src/assets/images/R/02_sui_popn_CONUS.png",
                                 width = 6,
                                 height = 6),
-               format = "file")
+               format = "file"
+  ),
+  tar_target(p3_popn_bar_vert_png,
+             viz_popn_bar_vert(in_df = p2_popn_bar_df, 
+                               color_scheme = p3_popn_colors, 
+                               fonts = p3_fonts_website,
+                               png_out = "src/assets/images/R/02_sui_popn_vert_bar.png",
+                               width = 2,
+                               height = 6),
+             format = "file"
+  ),
+  tar_target(p3_popn_bar_hori_png,
+             viz_popn_bar_hori(in_df = p2_popn_bar_df, 
+                               color_scheme = p3_popn_colors, 
+                               fonts = p3_fonts_website,
+                               png_out = "src/assets/images/R/02_sui_popn_hori_bar.png",
+                               width = 6,
+                               height = 2),
+             format = "file"
   ),
   
   
