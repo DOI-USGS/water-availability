@@ -1,5 +1,4 @@
 viz_popn_circles <- function(in_df,
-                             region,
                              color_scheme,
                              fonts,
                              png_out,
@@ -13,12 +12,13 @@ viz_popn_circles <- function(in_df,
   circle_pack_data <- cbind(in_df, packing)
   dat.gg <- packcircles::circleLayoutVertices(packing, npoints = 50)
   dat.gg$value <- rep(in_df$sui_category_5, each = 51)
-  dat.gg$AggReg <- rep(in_df$AggReg_nam_nospace, each = 51)
   
   handwriting_font <- fonts$handwriting_font
   sysfonts::font_add_google("Coming Soon")
   showtext::showtext_opts(dpi = 300, regular.wt = 200, bold.wt = 700)
   showtext::showtext_auto(enable = TRUE)
+  
+  plot_data <- dat.gg
   
   # circle packing plot
   (circle_plot <- ggplot() + 
