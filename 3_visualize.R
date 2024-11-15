@@ -108,26 +108,20 @@ p3_targets <- list(
   #             high/severe water imbalance
   #
   #
-  # Use static branching
-  tar_map(
-    values = tibble(
-      AggReg = c("CONUS") #, "Northeast_through_Midwest", "Southeast", "High_Plains", "Western"
-    ),
     tar_target(p3_popn_circles_png,
                viz_popn_circles(in_df = p2_sui_popn_df,
                                 region = AggReg,
                                 color_scheme = p3_popn_colors,
                                 fonts = p3_fonts_website,
-                                png_out = sprintf("src/assets/images/k02_sui_popn_%s.png", AggReg),
+                                png_out = sprintf("src/assets/images/k02_sui_popn_CONUS.png", AggReg),
                                 width = 6,
                                 height = 6),
-               format = "file")
+               format = "file"
   ),
   tar_target(p3_popn_bar_vert_png,
              viz_popn_bar_vert(in_df = p2_popn_bar_df, 
                                color_scheme = p3_popn_colors, 
                                fonts = p3_fonts_website,
-                               #direction = "vertical",
                                png_out = "src/assets/images/k02_sui_popn_vert_bar.png",
                                width = 2,
                                height = 6),
@@ -137,7 +131,6 @@ p3_targets <- list(
              viz_popn_bar_hori(in_df = p2_popn_bar_df, 
                                color_scheme = p3_popn_colors, 
                                fonts = p3_fonts_website,
-                               #direction = "horizontal",
                                png_out = "src/assets/images/k02_sui_popn_hori_bar.png",
                                width = 6,
                                height = 2),

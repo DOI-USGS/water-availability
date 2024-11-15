@@ -15,13 +15,6 @@ viz_popn_circles <- function(in_df,
   dat.gg$value <- rep(in_df$sui_category_5, each = 51)
   dat.gg$AggReg <- rep(in_df$AggReg_nam_nospace, each = 51)
   
-  ## select data for plot type
-  if(region == "CONUS"){
-    plot_data <- dat.gg
-  } else {
-    plot_data <- dat.gg |> filter(AggReg == region)
-  }
-  
   handwriting_font <- fonts$handwriting_font
   sysfonts::font_add_google("Coming Soon")
   showtext::showtext_opts(dpi = 300, regular.wt = 200, bold.wt = 700)
