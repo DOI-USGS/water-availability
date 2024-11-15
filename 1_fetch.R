@@ -49,6 +49,14 @@ p1_targets <- list(
                      crs_out = p1_usgs_crs,
                      exclude_non_plot_hucs = TRUE)
   ),
+  # State boundaries
+  tar_target(
+    p1_states_sf,
+    st_as_sf(maps::map("state", fill = TRUE, plot = FALSE)) |> 
+      filter(! ID %in% c("alaska", "hawaii")) |> 
+      st_transform(p1_usgs_crs) |> 
+      st_sf()
+  ),
   
   # Crosswalk between HUC12, AggReg, and Reg
   tar_target(

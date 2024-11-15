@@ -38,7 +38,7 @@
           <span class="highlight" id="severe">severe</span></p>
         </div>
         <div class="image-container">
-            <img src="../../public/images/01stress_map.png" alt="Water Stress" class="background-image">
+            <img src="../assets/images/R/01_stress_map.png" alt="Water Stress" class="background-image">
             <!-- Overlay SVG with the same dimensions -->
             <svg class="overlay-svg"></svg>
         </div>
