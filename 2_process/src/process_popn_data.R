@@ -31,3 +31,26 @@ join_popn_to_sui <- function(sui_in, popn_in){
   return(sui_popn_join)
   
 }
+
+popn_for_bar <- function(in_df){
+  
+  # prep data for proportion bar (summed to each SUI class)
+  total_bar_height = sum(in_df$popn, na.rm = TRUE)
+  
+  reg_part_to_whole_summed <- in_df |>
+    #filter(if(region == "CONUS") TRUE else AggReg_nam_nospace == region) |>
+    group_by(sui_factor) |>
+    summarize(sum_pop = sum(popn, na.rm = TRUE)) |>
+    ungroup() |>
+    mutate(year = "2020") 
+  
+  reg_part_to_whole_prop <- reg_part_to_whole_summed |>
+    arrange(rev(sui_factor), .by_group = TRUE) |>
+    mutate(pos = cumsum(sum_pop) - sum_pop/2,
+           ymax = cumsum(sum_pop)) |>
+    arrange(sui_factor) |>
+    mutate(label_pop = prettyunits::pretty_num(sum_pop)) |> 
+    mutate(label_pop = as.numeric(str_sub(label_pop, end = -2))) |> 
+    mutate(label_pop = paste0(round(label_pop, digits = 0), " M")) |> 
+    mutate(total_bar_height = total_bar_height)
+}
