@@ -111,7 +111,6 @@ p3_targets <- list(
     tar_target(p3_popn_circles_png,
                viz_popn_circles(in_df = p2_sui_popn_df,
                                 color_scheme = p3_popn_colors,
-                                fonts = p3_fonts_website,
                                 png_out = "src/assets/images/R/02_sui_popn_CONUS.png",
                                 width = 6,
                                 height = 6),
