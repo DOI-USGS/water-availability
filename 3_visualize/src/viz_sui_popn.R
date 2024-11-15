@@ -54,10 +54,12 @@ viz_popn_bar_vert <- function(in_df, color_scheme, fonts, direction, png_out, wi
                stat = "identity",
                aes(x = year, y = sum_pop, fill = sui_factor),
                width = 0.35) +
-      geom_text(data = in_df,
+      geom_text(data = subset(in_df, label_pop %in% c("194 M", "18 M")),
                 aes(x = year, y = pos, label = label_pop),
-                color = "black", size = 3,
-                hjust = 1, nudge_x = -0.23) +
+                color = "white", size = 3, hjust = 0.5) +
+      geom_text(data = subset(in_df, label_pop %in% c("73 M", "26 M", "17 M")),
+                aes(x = year, y = pos, label = label_pop),
+                color = "black", size = 3, hjust = 0.5) +
       geom_text(data = in_df,
                 aes(x = year, y = pos, label = sui_factor),
                 color = "black", size = 3,
