@@ -122,7 +122,7 @@ p3_targets <- list(
              viz_popn_bar_vert(in_df = p2_popn_bar_df, 
                                color_scheme = p3_popn_colors, 
                                fonts = p3_fonts_website,
-                               png_out = "src/assets/images/k02_sui_popn_vert_bar.png",
+                               png_out = "src/assets/images/R/02_sui_popn_vert_bar.png",
                                width = 2,
                                height = 6),
              format = "file"
@@ -131,7 +131,7 @@ p3_targets <- list(
              viz_popn_bar_hori(in_df = p2_popn_bar_df, 
                                color_scheme = p3_popn_colors, 
                                fonts = p3_fonts_website,
-                               png_out = "src/assets/images/k02_sui_popn_hori_bar.png",
+                               png_out = "src/assets/images/R/02_sui_popn_hori_bar.png",
                                width = 6,
                                height = 2),
              format = "file"
