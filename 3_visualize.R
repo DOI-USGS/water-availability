@@ -90,8 +90,11 @@ p3_targets <- list(
              format = "file"),
   tar_target(p3_Reg_json,
              p2_Reg_sf |>
+               select(-Shape_Area, -Shape_Leng, -Name, -Region, -AggRegion) |>
                ms_simplify(keep = 0.05) |>
-               topojson_write(file = "src/assets/Regions.topojson")
+               topojson_write(group = Region_nam, 
+                              precision = 6,
+                              file = "public/assets/Regions.topojson")
              ),
   
   ##############################################
