@@ -88,6 +88,11 @@ p3_targets <- list(
                                 file_out = "src/assets/svgs/Regions.svg",
                                 color_scheme = p3_colors_website),
              format = "file"),
+  tar_target(p3_Reg_json,
+             p2_Reg_sf |>
+               ms_simplify(keep = 0.05) |>
+               topojson_write(file = "src/assets/Regions.topojson")
+             ),
   
   ##############################################
   # 
@@ -100,6 +105,7 @@ p3_targets <- list(
                          color_scheme = p3_colors_balance,
                         png_out = "src/assets/images/R/01_stress_map.png",
                         width = 6, height = 9)),
+  
   
   ##############################################
   # 
