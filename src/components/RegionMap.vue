@@ -194,7 +194,8 @@
         .on('mouseover',function(event, d) {
             d3.selectAll('.region')
                 .attr('fill','lightgrey')
-                .attr('opacity', 0.6)
+                .attr('opacity', 0.8)
+                .attr('stroke',"black")
 
             // highlight the selected region with transparent fill
             d3.select(this)
