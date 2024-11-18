@@ -21,8 +21,6 @@
   
     const width = 800;
     const height = 550;
-    const cropTop = 0;
-    const cropBottom = 0;
     const maxHeight = 800;
   
     // create svg that holds the map
@@ -93,7 +91,7 @@
             .attr('width', 0) 
             .remove())
         );
- // updating chart title with region name
+ // updating bar chart title with region name
   g.selectAll('text.chart-title')
     .data([regionName])
     .join(
@@ -201,7 +199,9 @@
           d3.select(`.region ${d.properties.Region_nam_nospace}`)
             .attr('stroke', 'grey')
             .attr('stroke-width', '0.65px'); // Restore secondary path
+
           }
+            
           activeRegion = null;
           updateBarChart(aggregatedData, 'United States');
         })
@@ -212,12 +212,15 @@
   
     // selection effects and filtering with interaction
       function highlightRegionAndUpdateChart(event, d) {
+        // emphasize selected region on map
         if (activeRegion !== d.properties.Region_nam_nospace) {
-          d3.select(event.target).attr('stroke', 'black')
+          d3.select(event.target)
+          .attr('stroke', 'black')
           .attr('stroke-width', '2px')
           .raise();
         }
-  
+
+        // update bar chart with regional data
         const regionClassFilter = d.properties.Region_nam;
         const filteredData = csvData
           .filter(row => row.Region_nam === regionClassFilter)
@@ -229,6 +232,24 @@
         updateBarChart(filteredData, `${regionClassFilter} region`);
       }
 
+      // add double outline for CONUS
+    svg.append('g')
+        .append('path')
+        .datum(geoUS)
+        .attr("class", "outline-conus")
+        .attr('d', path)
+        .attr('fill', 'none')
+        .attr('stroke', 'white')
+        .attr('stroke-width', '3px');
+
+    svg.append('g')
+        .append('path')
+        .datum(geoUS)
+        .attr('d', path)
+        .attr('fill', 'none')
+        .attr('stroke', 'black')
+        .attr('stroke-width', '1px');
+
       // add another outline to regions to make it more visible? idk if this looks great
       svg.append('g')
         .selectAll('path')
@@ -238,24 +259,6 @@
         .attr('fill', 'none')
         .attr('stroke', 'grey')
         .attr('stroke-width', '0.65px');
-
-
-    // add outline for CONUS
-    svg.append('g')
-        .append('path')
-        .datum(geoUS)
-        .attr('d', path)
-        .attr('fill', 'none')
-        .attr('stroke', 'white')
-        .attr('stroke-width', '3px');
-
-        svg.append('g')
-        .append('path')
-        .datum(geoUS)
-        .attr('d', path)
-        .attr('fill', 'none')
-        .attr('stroke', 'black')
-        .attr('stroke-width', '1.5px');
   
     } catch (error) {
       console.error('Error loading TopoJSON:', error);
@@ -283,6 +286,9 @@
     width: 100%;
     height: auto;
     max-height: 100%;
+  }
+  .outline-conus {
+    filter: drop-shadow(0px 0px 10px rgba(2, 2, 2, 0.5));
   }
   </style>
   
