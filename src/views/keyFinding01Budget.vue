@@ -38,9 +38,7 @@
           <span class="highlight" id="severe">severe</span></p>
         </div>
         <div class="image-container">
-            <img src="../assets/images/R/01_stress_map.png" alt="Water Stress" class="background-image">
-            <!-- Overlay SVG with the same dimensions -->
-            <svg class="overlay-svg"></svg>
+          <RegionMap />
         </div>
         <Methods></Methods>
       <References></References>
@@ -53,6 +51,7 @@
 import { onMounted, ref } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
+import RegionMap from '../components/RegionMap.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
@@ -64,6 +63,7 @@ const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
 let svg;
+const mapContainer = ref(null)
 const containerWidth = window.innerWidth * 0.45;
 const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5;
 let margin = { top: 50, right: 50, bottom: 40, left: 200 };
@@ -84,51 +84,6 @@ const orderedRegions = [
 
 onMounted(async () => {
     try {
-      // Load and append the external SVG to the overlay
-      d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
-            const svgNode = xml.documentElement;
-
-            svgNode.setAttribute("width", "113%"); // Adjust as needed
-            svgNode.setAttribute("height", "auto")
-            svgNode.setAttribute("x", "37")
-            svgNode.setAttribute("y", "-2"); 
-
-            // Append the loaded SVG into the overlay-svg container
-            const overlaySvg = d3.select(".overlay-svg")
-              .node().appendChild(svgNode); 
-
-            d3.select(svgNode).selectAll("g path")
-              .attr("stroke", "white")
-              .attr("stroke-width", "1.5")
-              .attr("fill", "transparent")
-              .on("mouseover", function(event, d) {
-                d3.selectAll(this).raise(); // Move the path to the front
-                d3.select(this)
-                  .attr("stroke", "yellow") 
-                  .attr("stroke-width", "3");
-
-                // Show region name near the cursor
-                d3.select(".overlay-svg").append("text")
-                  .attr("class", "region-label")
-                  .attr("x", event.pageX + 10) // Position near the cursor
-                  .attr("y", event.pageY - 10)
-                  .text(d3.select(this).attr("id")); 
-              })
-              .on("mousemove", function(event) {
-                // Update the position of the label as the mouse moves
-                d3.select(".region-label")
-                  .attr("x", event.pageX + 10)
-                  .attr("y", event.pageY - 10);
-              })
-              .on("mouseout", function() {
-                d3.select(this)
-                  .attr("stroke", "white") // Reset to original color
-                  .attr("stroke-width", "1.5");
-
-                // Remove the region label
-                d3.select(".region-label").remove();
-              });
-      })
         await loadDatasets();
         data.value = dataSet1.value;
         if (data.value.length > 0) {

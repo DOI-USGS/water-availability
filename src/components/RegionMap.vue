@@ -25,10 +25,14 @@
   
     try {
         // load sui suv png
+        let scale_size = 1.239
+
         svg.append('image')
             .attr('xlink:href', import.meta.env.BASE_URL + '/assets/01_stress_map.png')
-            .attr('width', width)
-            .attr('height', height)
+            .attr('x', -71)
+            .attr('y', -96.1)
+            .attr('width', width*scale_size)
+            .attr('height', height*scale_size)
 
         // load boundary layers
         const topoData = await d3.json(import.meta.env.BASE_URL + '/assets/Regions.topojson')
@@ -45,6 +49,8 @@
             .attr('fill', 'none')
             .attr('stroke', 'black')
 
+            console.log('Raster Extent:', { width, height });
+console.log('Vector Extent:', d3.extent(geoData.features, d => d.geometry.coordinates));
 
     } catch (error) {
       console.error('Error loading TopoJSON:', error)
