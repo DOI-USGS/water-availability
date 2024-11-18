@@ -110,23 +110,31 @@
   
       const formatPercentage = d3.format('.0f');
   
-     /*  g.append('text')
-        .attr('class', 'chart-title')
-        .attr('x', 0)
-        .attr('y', -10)
-        .attr('fill', 'black')
-        .attr('font-size', '2.5rem')
-        .text(d => `Water stress in the ${regionName}`); */
-  
       g.selectAll('.chart-labels')
-        .data(data)
-        .join('text')
-        .attr('class', 'chart-labels')
-        .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-        .attr('y', 50)
-        .attr('fill', 'black')
-        .attr('text-anchor', 'start')
-        .text(d => `${formatPercentage(d.percentage_stress)}%`);
+      .data(data, d => d.sui_category_5) // key by sui_category_5
+      .join(
+        enter => enter.append('text')
+          .attr('class', 'chart-labels')
+          .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+          .attr('y', 50)
+          .attr('fill', 'black')
+          .attr('text-anchor', 'middle')
+          .text(d => `${formatPercentage(d.percentage_stress)}%`)
+          .style('opacity', 0)
+          .call(enter => enter.transition()
+            .duration(750)
+            .style('opacity', 1)),
+        update => update
+          .call(update => update.transition()
+            .duration(750)
+            .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+            .text(d => `${formatPercentage(d.percentage_stress)}%`)),
+        exit => exit
+          .call(exit => exit.transition()
+            .duration(750)
+            .style('opacity', 0)
+            .remove())
+      );
     };
   
     try {
@@ -181,6 +189,8 @@
             .attr('stroke', 'grey')
             .attr('stroke-width', '0.65px'); // Restore secondary path
           }
+          activeRegion = null;
+          updateBarChart(aggregatedData, 'United States');
         })
         .on('click', (event, d) => {
           activeRegion = d.properties.Region_nam_nospace;
@@ -202,6 +212,8 @@
   
         updateBarChart(filteredData, `${regionClassFilter} region`);
       }
+
+
   
       svg.append('g')
         .selectAll('path')
