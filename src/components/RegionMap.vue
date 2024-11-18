@@ -158,7 +158,7 @@
         .append('image')
         .attr('xlink:href', import.meta.env.BASE_URL + '/assets/01_stress_map.png')
         .attr('x', -80) // nudging png to fit within svg bounds
-        .attr('y', -56) // nudging png to fit within svg bounds
+        .attr('y', -55) // nudging png to fit within svg bounds
         .attr('width', width * scale_size)
         .attr('height', height * scale_size);
   
@@ -185,25 +185,39 @@
         .data(geoRegions.features)
         .join('path')
         .attr('d', path)
-        .attr('class', d => `region-${d.properties.Region_nam_nospace}`)
+        .attr('class', d => `region ${d.properties.Region_nam_nospace}`)
         .attr('fill', 'transparent')
+        .attr("opacity", 0)
         .attr('stroke', 'white')
-        .attr('stroke-width', '2px')
+        .attr('stroke-width', '1px')
         // add interaction to highlight selected region and update bar chart
-        .on('mouseover', highlightRegionAndUpdateChart)
-        .on('mouseout', function (event, d) {
-          if (activeRegion !== d.properties.Region_nam_nospace) {
-            d3.select(this)
-            .attr('stroke', 'white')
-            .attr('stroke-width', '2px'); // Restore primary path
-          d3.select(`.region ${d.properties.Region_nam_nospace}`)
-            .attr('stroke', 'grey')
-            .attr('stroke-width', '0.65px'); // Restore secondary path
+        .on('mouseover',function(event, d) {
+            d3.selectAll('.region')
+                .attr('fill','lightgrey')
+                .attr('opacity', 0.6)
 
-          }
-            
-          activeRegion = null;
-          updateBarChart(aggregatedData, 'United States');
+            // highlight the selected region with transparent fill
+            d3.select(this)
+                .attr('fill', 'transparent')
+                .attr('opacity', 1)
+                .attr('stroke', 'white')
+                .attr('stroke-width', '1.5px')
+                .raise(); // bring the selected region to the front
+
+            // update the bar chart with the selected region's data
+             highlightRegionAndUpdateChart(event, d);
+
+        })
+        .on('mouseout', function () {
+            // reset all regions to transparent fill and opacity 0
+            d3.selectAll('.region')
+            .attr('fill', 'transparent')
+            .attr('opacity', 0)
+            .attr('stroke', 'white')
+            .attr('stroke-width', '1.2px');
+
+            // reset bar chart to default aggregated data
+            updateBarChart(aggregatedData, 'United States');
         })
         .on('click', (event, d) => {
           activeRegion = d.properties.Region_nam_nospace;
@@ -212,14 +226,7 @@
   
     // selection effects and filtering with interaction
       function highlightRegionAndUpdateChart(event, d) {
-        // emphasize selected region on map
-        if (activeRegion !== d.properties.Region_nam_nospace) {
-          d3.select(event.target)
-          .attr('stroke', 'black')
-          .attr('stroke-width', '2px')
-          .raise();
-        }
-
+        
         // update bar chart with regional data
         const regionClassFilter = d.properties.Region_nam;
         const filteredData = csvData
@@ -232,23 +239,15 @@
         updateBarChart(filteredData, `${regionClassFilter} region`);
       }
 
-      // add double outline for CONUS
+    // add double outline for CONUS
     svg.append('g')
         .append('path')
         .datum(geoUS)
         .attr("class", "outline-conus")
         .attr('d', path)
         .attr('fill', 'none')
-        .attr('stroke', 'white')
-        .attr('stroke-width', '3px');
-
-    svg.append('g')
-        .append('path')
-        .datum(geoUS)
-        .attr('d', path)
-        .attr('fill', 'none')
-        .attr('stroke', 'black')
-        .attr('stroke-width', '1px');
+        .attr('stroke', 'grey')
+        .attr('stroke-width', '2px');
 
       // add another outline to regions to make it more visible? idk if this looks great
       svg.append('g')
@@ -257,8 +256,8 @@
         .join('path')
         .attr('d', path)
         .attr('fill', 'none')
-        .attr('stroke', 'grey')
-        .attr('stroke-width', '0.65px');
+        .attr('stroke', 'white')
+        .attr('stroke-width', '0.75px');
   
     } catch (error) {
       console.error('Error loading TopoJSON:', error);
