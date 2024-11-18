@@ -199,7 +199,9 @@
   
       function highlightRegionAndUpdateChart(event, d) {
         if (activeRegion !== d.properties.Region_nam_nospace) {
-          d3.select(event.target).attr('stroke', 'black').attr('stroke-width', '2px');
+          d3.select(event.target).attr('stroke', 'black')
+          .attr('stroke-width', '2px')
+          .raise();
         }
   
         const regionClassFilter = d.properties.Region_nam;
@@ -213,8 +215,6 @@
         updateBarChart(filteredData, `${regionClassFilter} region`);
       }
 
-
-  
       svg.append('g')
         .selectAll('path')
         .data(geoData.features)
