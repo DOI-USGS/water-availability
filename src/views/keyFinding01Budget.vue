@@ -63,7 +63,6 @@ const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
 let svg;
-const mapContainer = ref(null)
 const containerWidth = window.innerWidth * 0.45;
 const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5;
 let margin = { top: 50, right: 50, bottom: 40, left: 200 };

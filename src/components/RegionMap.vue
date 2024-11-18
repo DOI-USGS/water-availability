@@ -57,6 +57,11 @@
         // load boundary layers
         const topoData = await d3.json(import.meta.env.BASE_URL + '/assets/Regions.topojson')
         const geoData = topojson.feature(topoData, topoData.objects[Object.keys(topoData.objects)[0]])
+
+        // Load wa_stress_stats.csv
+      const csvData = await d3.csv(import.meta.env.BASE_URL + '/wa_stress_stats.csv');
+      const csvLookup = Object.fromEntries(csvData.map(d => [d.Region_nam_nospace, d]));
+
     
         const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoData)
         const path = d3.geoPath().projection(projection)
@@ -66,9 +71,19 @@
             .data(geoData.features)
             .join('path')
             .attr('d', path)
+            .attr('class', d => `region-${d.properties.Region_nam_nospace}`)
             .attr('fill', 'none')
             .attr('stroke', 'white')
             .attr('stroke-width', "2px")
+            .on('mouseover', function (event, d) {
+                const regionClass = `region ${d.properties.Region_nam_nospace}`;
+                const regionClassFilter = d.properties.Region_nam;
+                const filteredData = csvData.filter(row => row.Region_nam === regionClassFilter);
+                console.log(filteredData);
+            })
+            .on('mouseout', function () {
+                //console.log('Mouse left region');
+            });
 
         // black and white outline...looks questionable. what color works??
         svg.append('g')
