@@ -1,4 +1,7 @@
 <template>
+    <div class="text-container">
+        <div ref="barContainer" class="bar-container"></div>
+    </div>
     <div ref="mapContainer" class="map-container"></div>
   </template>
   
@@ -8,6 +11,7 @@
   import * as topojson from 'topojson-client'
   
   const mapContainer = ref(null)
+  const barContainer = ref(null)
   
   onMounted(async () => {
     if (!mapContainer.value) {
@@ -36,6 +40,12 @@
         svg.attr('width', containerWidth)
         .attr('height', containerHeight);
     };
+
+    const svgBar = d3.select(barContainer.value)
+      .append('svg')
+      .attr('viewBox', `0 0 700 100`)
+      .attr('preserveAspectRatio', 'xMidYMid meet') // center and scale dynamically
+      .attr('class', 'bar-chart-svg')
 
     resizeSvg();
     window.addEventListener('resize', resizeSvg);
@@ -79,10 +89,8 @@
                 const regionClass = `region ${d.properties.Region_nam_nospace}`;
                 const regionClassFilter = d.properties.Region_nam;
                 const filteredData = csvData.filter(row => row.Region_nam === regionClassFilter);
-                console.log(filteredData);
-            })
-            .on('mouseout', function () {
-                //console.log('Mouse left region');
+
+                updateBarChart(filteredData);
             });
 
         // black and white outline...looks questionable. what color works??
@@ -94,10 +102,46 @@
             .attr('fill', 'none')
             .attr('stroke', 'grey')
             .attr('stroke-width', "0.65px")
+        
+        // Create stacked bar chart
+        svgBar.selectAll('g').remove(); // Clear old chart
+        const g = svgBar.append('g')
 
-    } catch (error) {
-      console.error('Error loading TopoJSON:', error)
-    }
+        const updateBarChart = (data) => {
+            if (!data.length) return;
+
+            const categories = data.map(d => d.sui_category_5);
+            const values = data.map(d => +d.percentage_stress);
+            const colors = d3.scaleOrdinal()
+                .domain(categories)
+                .range(['#965a6b', '#Cfacab', '#edeadf', '#80909D', '#39424f']); 
+
+            const xScale = d3.scaleLinear()
+                .domain([0, d3.sum(values)])
+                .range([0, 700]);
+
+            g.selectAll('rect')
+                .data(data)
+                .join('rect')
+                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
+                .attr('y', 0)
+                .attr('width', d => xScale(d.percentage_stress))
+                .attr('height', 30)
+                .attr('fill', d => colors(d.sui_category_5));
+
+            g.selectAll('text')
+                .data(data)
+                .join('text')
+                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+                .attr('y', 20)
+                .attr('fill', '#fff')
+                .attr('text-anchor', 'middle')
+                .text(d => `${d.sui_category_5}: ${(d.percentage_stress).toFixed(1)}%`);
+        };
+
+        } catch (error) {
+        console.error('Error loading TopoJSON:', error)
+        }
   })
   </script>
   
@@ -112,6 +156,11 @@
 }
 
 .responsive-svg {
+  width: 100%; 
+  height: auto; /* maintains aspect ratio */
+  max-height: 100%;
+}
+.bar-chart-svg {
   width: 100%; 
   height: auto; /* maintains aspect ratio */
   max-height: 100%;
