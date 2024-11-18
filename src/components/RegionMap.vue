@@ -20,12 +20,25 @@
     const cropTop = 200  // crop 390px from top
     const cropBottom = 200 // crop 200px from bottom
     const visibleHeight = height - cropTop - cropBottom
+
+    const maxHeight = 700;
   
     const svg = d3.select(mapContainer.value)
       .append('svg')
       .attr('viewBox', `0 ${cropTop} ${width} ${visibleHeight}`)
       .attr('preserveAspectRatio', 'xMidYMid meet') // center and scale dynamically
       .classed('responsive-svg', true)
+
+      const resizeSvg = () => {
+        const containerWidth = mapContainer.value.clientWidth;
+        const containerHeight = Math.min(mapContainer.value.clientHeight, maxHeight);
+
+        svg.attr('width', containerWidth)
+        .attr('height', containerHeight);
+    };
+
+    resizeSvg();
+    window.addEventListener('resize', resizeSvg);
   
     try {
         // load sui suv png
@@ -49,7 +62,6 @@
         const path = d3.geoPath().projection(projection)
     
         svg.append('g')
-            //.attr('transform', `translate(0, -${cropTop})`) 
             .selectAll('path')
             .data(geoData.features)
             .join('path')
@@ -60,7 +72,6 @@
 
         // black and white outline...looks questionable. what color works??
         svg.append('g')
-            //.attr('transform', `translate(0, -${cropTop})`) 
             .selectAll('path')
             .data(geoData.features)
             .join('path')
@@ -82,11 +93,13 @@
   align-items: center;
   width: 100%; 
   height: auto;
+  max-height: 700px;
 }
 
 .responsive-svg {
   width: 100%; 
   height: auto; /* maintains aspect ratio */
+  max-height: 100%;
 }
   </style>
   
