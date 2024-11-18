@@ -19,11 +19,11 @@
       return
     }
   
-    const width = 750;
-    const height = 600;
+    const width = 800;
+    const height = 550;
     const cropTop = 0;
     const cropBottom = 0;
-    const maxHeight = 700;
+    const maxHeight = 800;
   
     // create svg that holds the map
     const svg = d3.select(mapContainer.value)
@@ -45,7 +45,7 @@
     // svg for stacked bar chart
     const svgBar = d3.select(barContainer.value)
       .append('svg')
-      .attr('viewBox', `0 0 700 100`)
+      .attr('viewBox', `0 -30 700 100`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .classed('bar-chart-svg', true);
   
@@ -149,12 +149,12 @@
       const path = d3.geoPath().projection(projection);
   
       // Overlay the raster image
-      const scale_size = 1.1; // scaling pngs because they have an added margin when exported from ggplot
+      const scale_size = 1.2; // scaling pngs because they have an added margin when exported from ggplot
       svg.append('g')
         .append('image')
         .attr('xlink:href', import.meta.env.BASE_URL + '/assets/01_stress_map.png')
-        .attr('x', -38) // nudging png to fit within svg bounds
-        .attr('y', -30) // nudging png to fit within svg bounds
+        .attr('x', -80) // nudging png to fit within svg bounds
+        .attr('y', -56) // nudging png to fit within svg bounds
         .attr('width', width * scale_size)
         .attr('height', height * scale_size);
   
