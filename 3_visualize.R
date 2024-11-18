@@ -102,11 +102,11 @@ p3_targets <- list(
   #           KEY TAKEAWAY 1: 
   #             
   #
-  #
+  ## National water stress map
   tar_target(p3_map_stress_png,
              map_stress(in_sf = p2_HUC12_join_sui_svi_sf,
                          color_scheme = p3_colors_balance,
-                        png_out = "src/assets/images/R/01_stress_map.png",
+                        png_out = "public/assets/01_stress_map.png",
                         width = 8, height = 6)),
   ## Replicate maps for each water stress category
   tar_target(p3_map_stress_bins_png,

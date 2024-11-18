@@ -19,19 +19,20 @@
       return
     }
   
-    const width = 600;
-    const height = 800;
-    const cropTop = 200;
-    const cropBottom = 200;
-    const visibleHeight = height - cropTop - cropBottom;
+    const width = 750;
+    const height = 600;
+    const cropTop = 0;
+    const cropBottom = 0;
     const maxHeight = 700;
   
+    // create svg that holds the map
     const svg = d3.select(mapContainer.value)
       .append('svg')
-      .attr('viewBox', `0 ${cropTop} ${width} ${visibleHeight}`)
+      .attr('viewBox', `0 0 ${width} ${height}`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .classed('responsive-svg', true);
   
+    // resizing so flexes to page width but stays within reasonable height
     const resizeSvg = () => {
       const containerWidth = mapContainer.value.clientWidth;
       const containerHeight = Math.min(mapContainer.value.clientHeight, maxHeight);
@@ -41,15 +42,17 @@
     resizeSvg();
     window.addEventListener('resize', resizeSvg);
   
+    // svg for stacked bar chart
     const svgBar = d3.select(barContainer.value)
       .append('svg')
-      .attr('viewBox', `0 -30 700 100`)
+      .attr('viewBox', `0 0 700 100`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .classed('bar-chart-svg', true);
   
-    let activeRegion = null;
+    let activeRegion = null; // start at national scale
     const g = svgBar.append('g'); // Bar chart container
   
+    // updating stacked bar chart to selected region or state
     const updateBarChart = (data, regionName = 'United States') => {
       if (!data.length) return;
   
@@ -62,8 +65,6 @@
       const xScale = d3.scaleLinear()
         .domain([0, d3.sum(values)])
         .range([0, 700]);
-  
-      //g.selectAll('text').remove();
   
       g.selectAll('rect')
         .data(data)
@@ -92,7 +93,7 @@
             .attr('width', 0) 
             .remove())
         );
-
+ // updating chart title with region name
   g.selectAll('text.chart-title')
     .data([regionName])
     .join(
@@ -110,6 +111,7 @@
   
       const formatPercentage = d3.format('.0f');
   
+      // percent labels on bar chart - currently overlap where very small
       g.selectAll('.chart-labels')
       .data(data, d => d.sui_category_5) // key by sui_category_5
       .join(
@@ -138,6 +140,7 @@
     };
   
     try {
+        // read in data
       const topoData = await d3.json(import.meta.env.BASE_URL + '/assets/Regions.topojson');
       const geoData = topojson.feature(topoData, topoData.objects[Object.keys(topoData.objects)[0]]);
       const csvData = await d3.csv(import.meta.env.BASE_URL + '/wa_stress_stats.csv');
@@ -146,12 +149,12 @@
       const path = d3.geoPath().projection(projection);
   
       // Overlay the raster image
-      const scale_size = 1.239;
+      const scale_size = 1.1; // scaling pngs because they have an added margin when exported from ggplot
       svg.append('g')
         .append('image')
         .attr('xlink:href', import.meta.env.BASE_URL + '/assets/01_stress_map.png')
-        .attr('x', -71)
-        .attr('y', -96.1)
+        .attr('x', -38) // nudging png to fit within svg bounds
+        .attr('y', -30) // nudging png to fit within svg bounds
         .attr('width', width * scale_size)
         .attr('height', height * scale_size);
   
