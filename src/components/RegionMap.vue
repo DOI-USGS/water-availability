@@ -63,34 +63,67 @@
         .domain([0, d3.sum(values)])
         .range([0, 700]);
   
-      g.selectAll('rect').remove();
-      g.selectAll('text').remove();
+      //g.selectAll('text').remove();
   
       g.selectAll('rect')
         .data(data)
-        .join('rect')
-        .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
-        .attr('y', 0)
-        .attr('width', d => xScale(d.percentage_stress))
-        .attr('height', 30)
-        .attr('fill', d => colors(d.sui_category_5));
-  
-      const formatPercentage = d3.format('.0f');
-  
-      g.append('text')
+        .join(
+        enter => enter.append('rect')
+            .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
+            .attr('y', 0)
+            .attr('width', 0) 
+            .attr('height', 30)
+            .attr('fill', d => colors(d.sui_category_5))
+            .call(enter => enter.transition()
+            .duration(750) 
+            .attr('width', d => xScale(d.percentage_stress))),
+        update => update
+            .call(update => update.transition()
+            .duration(750)
+            .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
+            .attrTween('width', function(d, i) {
+                const previousWidth = d3.select(this).attr('width') || 0; // fallback to 0 if no prior value
+                const interpolator = d3.interpolate(previousWidth, xScale(d.percentage_stress));
+                return t => interpolator(t);
+            })),
+        exit => exit
+            .call(exit => exit.transition()
+            .duration(750)
+            .attr('width', 0) 
+            .remove())
+        );
+
+  g.selectAll('text.chart-title')
+    .data([regionName])
+    .join(
+      enter => enter.append('text')
         .attr('class', 'chart-title')
         .attr('x', 0)
         .attr('y', -10)
         .attr('fill', 'black')
         .attr('font-size', '2.5rem')
-        .text(d => `Water stress in the ${regionName}`);
+        .text(regionName),
+      update => update.call(update => update.transition()
+        .duration(750)
+        .text(regionName))
+    );
+  
+      const formatPercentage = d3.format('.0f');
+  
+     /*  g.append('text')
+        .attr('class', 'chart-title')
+        .attr('x', 0)
+        .attr('y', -10)
+        .attr('fill', 'black')
+        .attr('font-size', '2.5rem')
+        .text(d => `Water stress in the ${regionName}`); */
   
       g.selectAll('.chart-labels')
         .data(data)
         .join('text')
         .attr('class', 'chart-labels')
         .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-        .attr('y', 20)
+        .attr('y', 50)
         .attr('fill', 'black')
         .attr('text-anchor', 'start')
         .text(d => `${formatPercentage(d.percentage_stress)}%`);
