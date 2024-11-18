@@ -304,9 +304,9 @@ function createDotChart() {
 }
 .image-container {
   position: relative;
-  width: 95%; 
-  max-width: 800px;
-  margin: 40px auto; 
+  width: 100%; 
+  max-width: 1200px;
+  margin: auto; 
   overflow: hidden;
 }
 
