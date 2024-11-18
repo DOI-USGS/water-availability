@@ -141,11 +141,14 @@
   
     try {
         // read in data
-      const topoData = await d3.json(import.meta.env.BASE_URL + '/assets/Regions.topojson');
-      const geoData = topojson.feature(topoData, topoData.objects[Object.keys(topoData.objects)[0]]);
+      const topoRegions = await d3.json(import.meta.env.BASE_URL + '/assets/Regions.topojson');
+      const geoRegions = topojson.feature(topoRegions, topoRegions.objects[Object.keys(topoRegions.objects)[0]]);
+
+      const topoUS = await d3.json(import.meta.env.BASE_URL + '/assets/USoutline.topojson');
+      const geoUS = topojson.feature(topoUS, topoUS.objects[Object.keys(topoUS.objects)[0]]);
       const csvData = await d3.csv(import.meta.env.BASE_URL + '/wa_stress_stats.csv');
   
-      const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoData);
+      const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoRegions);
       const path = d3.geoPath().projection(projection);
   
       // Overlay the raster image
@@ -158,6 +161,7 @@
         .attr('width', width * scale_size)
         .attr('height', height * scale_size);
   
+    // find national water stress by category
       const totalByCategory = d3.rollups(
         csvData,
         v => d3.sum(v, d => +d.stress_by_reg),
@@ -171,17 +175,20 @@
         percentage_stress: (value / totalStress) * 100,
       }));
   
+      // init bar chart with aggregated data
       updateBarChart(aggregatedData, 'United States');
   
+      // draw region boundaries
       const paths = svg.append('g')
         .selectAll('path')
-        .data(geoData.features)
+        .data(geoRegions.features)
         .join('path')
         .attr('d', path)
         .attr('class', d => `region-${d.properties.Region_nam_nospace}`)
         .attr('fill', 'transparent')
         .attr('stroke', 'white')
         .attr('stroke-width', '2px')
+        // add interaction to highlight selected region and update bar chart
         .on('mouseover', highlightRegionAndUpdateChart)
         .on('mouseout', function (event, d) {
           if (activeRegion !== d.properties.Region_nam_nospace) {
@@ -200,6 +207,7 @@
           highlightRegionAndUpdateChart(event, d);
         });
   
+    // selection effects and filtering with interaction
       function highlightRegionAndUpdateChart(event, d) {
         if (activeRegion !== d.properties.Region_nam_nospace) {
           d3.select(event.target).attr('stroke', 'black')
@@ -218,13 +226,24 @@
         updateBarChart(filteredData, `${regionClassFilter} region`);
       }
 
+      // add another outline to regions to make it more visible? idk if this looks great
       svg.append('g')
         .selectAll('path')
-        .data(geoData.features)
+        .data(geoRegions.features)
         .join('path')
         .attr('d', path)
         .attr('fill', 'none')
         .attr('stroke', 'grey')
+        .attr('stroke-width', '0.65px');
+
+    // add outline for CONUS
+    svg.append('g')
+        .selectAll('path')
+        .data(geoUS.features)
+        .join('path')
+        .attr('d', path)
+        .attr('fill', 'none')
+        .attr('stroke', 'orange')
         .attr('stroke-width', '0.65px');
   
     } catch (error) {
