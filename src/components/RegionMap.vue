@@ -122,7 +122,7 @@
           .attr('fill', 'black')
           .attr('text-anchor', 'middle')
           .text(d => `${formatPercentage(d.percentage_stress)}%`)
-          .style('opacity', 0)
+          //.style('opacity', 0)
           .call(enter => enter.transition()
             .duration(750)
             .style('opacity', 1)),
@@ -134,18 +134,21 @@
         exit => exit
           .call(exit => exit.transition()
             .duration(750)
-            .style('opacity', 0)
-            .remove())
+            .style('opacity', 0))
       );
     };
   
     try {
-        // read in data
+    // read in data
+      // region shapes - feature collection
       const topoRegions = await d3.json(import.meta.env.BASE_URL + '/assets/Regions.topojson');
       const geoRegions = topojson.feature(topoRegions, topoRegions.objects[Object.keys(topoRegions.objects)[0]]);
 
+      // CONUS outline - single feature
       const topoUS = await d3.json(import.meta.env.BASE_URL + '/assets/USoutline.topojson');
-      const geoUS = topojson.feature(topoUS, topoUS.objects[Object.keys(topoUS.objects)[0]]);
+      const geoUS = topojson.feature(topoUS, topoUS.objects['foo']);
+
+      // water stress stats by region
       const csvData = await d3.csv(import.meta.env.BASE_URL + '/wa_stress_stats.csv');
   
       const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoRegions);
@@ -236,15 +239,23 @@
         .attr('stroke', 'grey')
         .attr('stroke-width', '0.65px');
 
+
     // add outline for CONUS
     svg.append('g')
-        .selectAll('path')
-        .data(geoUS.features)
-        .join('path')
+        .append('path')
+        .datum(geoUS)
         .attr('d', path)
         .attr('fill', 'none')
-        .attr('stroke', 'orange')
-        .attr('stroke-width', '0.65px');
+        .attr('stroke', 'white')
+        .attr('stroke-width', '3px');
+
+        svg.append('g')
+        .append('path')
+        .datum(geoUS)
+        .attr('d', path)
+        .attr('fill', 'none')
+        .attr('stroke', 'black')
+        .attr('stroke-width', '1.5px');
   
     } catch (error) {
       console.error('Error loading TopoJSON:', error);
