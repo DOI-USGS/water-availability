@@ -50,7 +50,7 @@
     let activeRegion = null;
     const g = svgBar.append('g'); // Bar chart container
   
-    const updateBarChart = (data, regionName = 'U.S.') => {
+    const updateBarChart = (data, regionName = 'United States') => {
       if (!data.length) return;
   
       const categories = data.map(d => d.sui_category_5);
@@ -75,7 +75,7 @@
         .attr('height', 30)
         .attr('fill', d => colors(d.sui_category_5));
   
-      const formatPercentage = d3.format('.1f');
+      const formatPercentage = d3.format('.0f');
   
       g.append('text')
         .attr('class', 'chart-title')
@@ -92,7 +92,7 @@
         .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
         .attr('y', 20)
         .attr('fill', 'black')
-        .attr('text-anchor', 'middle')
+        .attr('text-anchor', 'start')
         .text(d => `${formatPercentage(d.percentage_stress)}%`);
     };
   
@@ -127,7 +127,7 @@
         percentage_stress: (value / totalStress) * 100,
       }));
   
-      updateBarChart(aggregatedData, 'U.S.');
+      updateBarChart(aggregatedData, 'United States');
   
       const paths = svg.append('g')
         .selectAll('path')
