@@ -21,3 +21,16 @@ viz_wq_bars <- function(in_df,
   
   return(png_out)
 }
+
+map_wq <- function(in_sf, width, height, png_out){
+  
+  map <- ggplot(in_sf) +
+    geom_sf()  +
+    scale_fill_identity() +
+    theme_void() +
+    theme(legend.position = "none")
+  
+  ggsave(plot = map,
+         filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
+}

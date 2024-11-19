@@ -137,6 +137,15 @@ p2_targets <- list(
                                 by = "HUC12")
              
   ),
+  # Join with water quality data (loads)
+  tar_target(p2_HUC12_join_wq_sf,
+             p2_mainstem_HUC12_simple_sf |>
+               # add in tn loads
+               dplyr::left_join(p1_wq_HUC12_df_tn |> rename(tn_load = value), 
+                                by = "HUC12") |>
+               # add in tp loads
+               dplyr::left_join(p1_wq_HUC12_df_tp |> rename(tp_load = value), 
+                                by = "HUC12")),
 
   # Summarize SUI by state
   tar_target(p2_states_sui_df,

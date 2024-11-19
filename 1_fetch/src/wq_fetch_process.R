@@ -1,11 +1,31 @@
+# total loads by HUC12
+process_wq_HUC12 <- function(in_csv, in_COMID_xwalk, nutrient){
+  
+  # read in COMID crosswalk
+  # Only retain highest weighted huc12s
+  xwalk <- data.table::fread(in_COMID_xwalk, keepLeadingZeros = TRUE) |>
+    tidytable::select(huc12, comid = featureid, weights) |> 
+    group_by(huc12) |> 
+    slice_max(weights)
+  
+  # filter sources to all sources
+  out_all_sources <- in_csv |>
+    filter(category == "All sources") |>
+    select(comid, value, category, constituent) 
+  
+  # extract values of load by comid for each HUC12
+  joined_loads <- xwalk |> left_join(out_all_sources, by = "comid") |>
+    rename(HUC12 = huc12) |>
+    select(HUC12, value)
+  
+  return(joined_loads)
+}
+
+# loads by category
 process_wq_data <- function(in_csv, nutrient){
   
-  # read csv
- # out_raw <- readr::read_csv(in_csv,
-#                  show_col_types = FALSE) 
-  
   # generalize and standardize categories for website
-  out_cleaned <- in_csv |>  #out_raw |>
+  out_cleaned <- in_csv |> 
     filter(category != "All sources") |>
     dplyr::rename(original_category = category) |>
     dplyr::mutate(category = dplyr::case_when(

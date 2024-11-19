@@ -97,7 +97,7 @@ p3_targets <- list(
   #
   tar_target(p3_map_stress_png,
              map_stress(in_sf = p2_HUC12_join_sui_svi_sf,
-                         color_scheme = p3_colors_balance,
+                        color_scheme = p3_colors_balance,
                         png_out = "src/assets/images/R/01_stress_map.png",
                         width = 6, height = 9)),
   
@@ -201,6 +201,10 @@ p3_targets <- list(
   #             air pollution.
   #
   #
+  tar_target(p3_map_tn_png,
+             map_wq(in_sf = p2_HUC12_join_sui_svi_sf,
+                    png_out = "src/assets/images/R/05_tn_map.png",
+                    width = 6, height = 9)),
   
   ##############################################
   # 
@@ -210,6 +214,8 @@ p3_targets <- list(
   #             water is coming from (e.g., surface water, groundwater).
   #
   #
+  
+  
   
   ##############################################
   # 
