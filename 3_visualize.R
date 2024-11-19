@@ -52,6 +52,16 @@ p3_targets <- list(
                  dry_red_dark = "#965a5b",
                  dry_red_light = "#CFACAB"
                ))),
+  tar_target(p3_colors_wq,
+             p3_colors_website |> bind_cols(
+               tibble(
+                 # Wq loads 
+                 very_low_col = "#E7CAE1",
+                 low_col = "#D585A9", 
+                 moderate_col = "#93658E", 
+                 high_col = "#554C7A",
+                 very_high_col = "#270C3F"
+               ))),
   tar_target(p3_popn_colors,
              col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
                           "High" = p3_colors_balance$dry_red_light, 
@@ -204,7 +214,16 @@ p3_targets <- list(
   tar_target(p3_map_tn_png,
              map_wq(in_sf = p2_HUC12_join_wq_sf,
                     nutrient = "tn",
+                    color_scheme = p3_colors_wq, 
+                    regions_sf = p2_Reg_sf,
                     png_out = "src/assets/images/R/05_tn_map.png",
+                    width = 9, height = 6)),
+  tar_target(p3_map_tp_png,
+             map_wq(in_sf = p2_HUC12_join_wq_sf,
+                    nutrient = "tp",
+                    color_scheme = p3_colors_wq, 
+                    regions_sf = p2_Reg_sf,
+                    png_out = "src/assets/images/R/05_tp_map.png",
                     width = 9, height = 6)),
   
   ##############################################
