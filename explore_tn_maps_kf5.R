@@ -1,47 +1,55 @@
+# Load in packages
 library(tidyverse)
 library(targets)
 library(sf)
 library(purrr)
 library(scico)
 
-tar_load(p1_wq_Reg_df_tn)
-tar_load(p1_wq_Reg_df_tp)
-tar_load(p1_Reg_shp)
-tar_load(p1_usgs_crs)
+# Load in spatial data 
+tar_load(p2_mainstem_HUC12_simple_sf)
+p2_mainstem_HUC12_simple_sf <- janitor::clean_names(p2_mainstem_HUC12_simple_sf) |> select(huc12, geometry)
+# nrow(p2_mainstem_HUC12_simple_sf) 83051
 
-p2_AggReg_sf <- st_read(p1_Reg_shp) |> 
-  st_transform(crs = p1_usgs_crs) |> 
-  rename(region_nam = Name) |> 
-  mutate(
-    region_nam = dplyr::case_match(
-      region_nam,
-      "Souris-Red_Rainy" ~ "Souris-Red-Rainy",
-      "Gulf Cost" ~ "Gulf Coast",
-      "Tennesse-Missouri" ~ "Tennessee-Missouri",
-      "Pacific NW" ~ "Pacific Northwest",
-      .default = region_nam
-    )
-  )
+# Load in nutrient loads 
+# These RDS were taken from water-quality-figures IWAAs pipeline
+tn_loads <- readRDS("public/tn_loads.RDS") |>
+  select(comid, value, category, constituent) |> 
+  filter(category == "All sources")
+# nrow(tn_loads) 1675944
 
-p1_wq_Reg_tn_sf <- p1_wq_Reg_df_tn |> 
-  left_join(p2_AggReg_sf, "region_nam") |> 
-  st_as_sf()
+# tp_loads <- readRDS("public/tp_loads.RDS") |> 
+#   select(comid, value, category, constituent) |> 
+#   filter(category == "All sources")
+# 
+# ss_loads <- readRDS("public/ss_loads.RDS") |>
+#   select(comid, value, category, constituent) |> 
+#   filter(category == "All sources")
 
-list_of_sfs <- split(p1_wq_Reg_tn_sf, p1_wq_Reg_tn_sf$region_nam) |> 
-  map(~ .x)
+# Load in comid -> huc12 xwalk 
+# Only retain highest weighted huc12s
+comid_huc12_xwalk <- data.table::fread("public/nhd_huc12_weights_r.csv", keepLeadingZeros = TRUE) |>
+  tidytable::select(huc12, comid = featureid, weights) |> 
+  group_by(huc12) |> 
+  slice_max(weights)
+# nrow(comid_huc12_xwalk) 85685
 
-create_and_save_facet_map <- function(data, region_name) {
-  plot <- ggplot(data) +
-    geom_sf(data = p2_AggReg_sf, fill = NA, color = "black", size = 0.2) +
-    geom_sf(aes(fill = total_load)) +  
-    scale_fill_scico(palette = "batlow") + 
-    facet_wrap(~ category) +          
-    labs(fill = "Total Load") +
-    theme_void() +
-    theme(legend.position = "none")
-  
-  ggsave(filename = paste0("3_visualize/out/map_tn_tot_", gsub(" ", "_", region_name), ".png"),
-         plot = plot, width = 10, height = 8, dpi = 300, bg = "white")
-}
+# Join spatial data to xwalk and nutrient load by comid
+tn_loads_huc12<- p2_mainstem_HUC12_simple_sf |> 
+  left_join(comid_huc12_xwalk, by = "huc12") |> 
+  left_join(tn_loads, by = "comid") 
+# nrow(tn_loads_huc12) 83052
+# sum(is.na(tn_loads_huc12$value)) 35195
 
-imap(list_of_sfs, ~ create_and_save_facet_map(.x, .y))
+# Map just nitrogen loads
+map <- ggplot(tn_loads_huc12) +
+  geom_sf(aes(fill = value),
+          color = NA, size = 0)  +
+  scale_fill_scico(palette = "batlow") +
+  theme_void() 
+# +
+#   theme(legend.position = "none")
+
+# Save 
+ggsave(plot = map,
+       filename = "3_visualize/out/tn_loads_huc12.png", device = "png", bg = "transparent",
+       dpi = 300, units = "in", width = 6, height = 9)
