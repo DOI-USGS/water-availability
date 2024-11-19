@@ -111,37 +111,37 @@
   
       // percent labels on bar chart - currently overlap where very small
       g.selectAll('.chart-labels')
-  .data(data, d => d.sui_category_5) // use sui_category_5 as the unique key
-  .join(
-    enter => {
-      const enteringText = enter.append('text')
-        .attr('class', 'chart-labels')
-        .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-        .attr('y', 50)
-        .attr('fill', 'black')
-        .attr('text-anchor', 'middle')
-        .text(d => `${formatPercentage(d.percentage_stress)}%`)
-        .style('opacity', 0); // start invisible
+        .data(data, d => d.sui_category_5) // use sui_category_5 as the unique key
+        .join(
+            enter => {
+            const enteringText = enter.append('text')
+                .attr('class', 'chart-labels')
+                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+                .attr('y', 50)
+                .attr('fill', 'black')
+                .attr('text-anchor', 'middle')
+                .text(d => `${formatPercentage(d.percentage_stress)}%`)
+                .style('opacity', 0); // start invisible
 
-      enteringText.transition()
-        .duration(750)
-        .style('opacity', 1); // fade in
+            enteringText.transition()
+                .duration(750)
+                .style('opacity', 1); // fade in
 
-      return enteringText;
-    },
-    update => {
-      return update.transition()
-        .duration(750)
-        .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-        .text(d => `${formatPercentage(d.percentage_stress)}%`);
-    },
-    exit => {
-      return exit.transition()
-        .duration(750)
-        .style('opacity', 0)
-        .remove(); // fade out and remove
-    }
-  );
+            return enteringText;
+            },
+            update => {
+            return update.transition()
+                .duration(750)
+                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+                .text(d => `${formatPercentage(d.percentage_stress)}%`);
+            },
+            exit => {
+            return exit.transition()
+                .duration(750)
+                .style('opacity', 0)
+                .remove(); // fade out and remove
+            }
+        );
 
     };
   
@@ -161,8 +161,9 @@
       const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoRegions);
       const path = d3.geoPath().projection(projection);
   
-      // Overlay the raster image
+      // Overlay the raster images
       const scale_size = 1.2; // scaling pngs because they have an added margin when exported from ggplot
+     
       svg.append('g')
         .append('image')
         .attr('xlink:href', import.meta.env.BASE_URL + '/assets/01_stress_map.png')
@@ -170,6 +171,8 @@
         .attr('y', -55) // nudging png to fit within svg bounds
         .attr('width', width * scale_size)
         .attr('height', height * scale_size);
+
+    
   
     // find national water stress by category
       const totalByCategory = d3.rollups(
