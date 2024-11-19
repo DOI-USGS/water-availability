@@ -88,3 +88,27 @@ create_stats <- function(in_sf, out_csv){
   
   readr::write_csv(join_data, file = out_csv)
 }
+
+
+summary_sui_by_state <- function(in_sf){
+  
+  # Expand each HUC to its state (some hucs overlap states)
+  expand_states <- in_sf |>
+    select(STATES, HUC12, Region_nam, AggReg_nam, mean_sui, sui_category_5) |>
+    filter(! is.na(mean_sui)) |>
+    separate_rows(STATES, sep = ",")
+  
+  # Calculate total number of HUCS per state
+  HUC_per_state <- expand_states |> 
+    sf::st_drop_geometry() |>
+    group_by(STATES) |>
+    mutate(total_hucs = n()) |>
+    ungroup()
+  
+  # Calculate total hucs in each sui category by state and proportion
+  summary_sui <- HUC_per_state |>
+    group_by(sui_category_5, STATES, total_hucs) |>
+    summarize(n_cat_sui = n()) |>
+    mutate(prop_cat_sui = n_cat_sui / total_hucs)
+    
+}

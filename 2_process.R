@@ -137,6 +137,15 @@ p2_targets <- list(
                                 by = "HUC12")
              
   ),
+
+  # Summarize SUI by state
+  tar_target(p2_states_sui_df,
+             summary_sui_by_state(in_sf = p2_HUC12_join_sui_svi_sf)),
+  # write summary to csv
+  tar_target(p2_states_sui_csv,
+             readr::write_csv(p2_states_sui_df,
+                              file = "public/sui_state.csv")),
+  
   
   ##############################################
   # 
@@ -329,6 +338,8 @@ p2_targets <- list(
   # join sui with population data
   tar_target(p2_sui_popn_df,
              join_popn_to_sui(sui_in = p2_sui_2020_HUC12,
-                              popn_in = p2_popn_HUC12_df))
+                              popn_in = p2_popn_HUC12_df)),
+  tar_target(p2_popn_bar_df,
+             popn_for_bar(in_df = p2_sui_popn_df))
   
 )
