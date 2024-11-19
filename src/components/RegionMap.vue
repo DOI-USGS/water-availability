@@ -111,29 +111,38 @@
   
       // percent labels on bar chart - currently overlap where very small
       g.selectAll('.chart-labels')
-      .data(data, d => d.sui_category_5) // key by sui_category_5
-      .join(
-        enter => enter.append('text')
-          .attr('class', 'chart-labels')
-          .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-          .attr('y', 50)
-          .attr('fill', 'black')
-          .attr('text-anchor', 'middle')
-          .text(d => `${formatPercentage(d.percentage_stress)}%`)
-          //.style('opacity', 0)
-          .call(enter => enter.transition()
-            .duration(750)
-            .style('opacity', 1)),
-        update => update
-          .call(update => update.transition()
-            .duration(750)
-            .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-            .text(d => `${formatPercentage(d.percentage_stress)}%`)),
-        exit => exit
-          .call(exit => exit.transition()
-            .duration(750)
-            .style('opacity', 0))
-      );
+  .data(data, d => d.sui_category_5) // use sui_category_5 as the unique key
+  .join(
+    enter => {
+      const enteringText = enter.append('text')
+        .attr('class', 'chart-labels')
+        .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+        .attr('y', 50)
+        .attr('fill', 'black')
+        .attr('text-anchor', 'middle')
+        .text(d => `${formatPercentage(d.percentage_stress)}%`)
+        .style('opacity', 0); // start invisible
+
+      enteringText.transition()
+        .duration(750)
+        .style('opacity', 1); // fade in
+
+      return enteringText;
+    },
+    update => {
+      return update.transition()
+        .duration(750)
+        .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+        .text(d => `${formatPercentage(d.percentage_stress)}%`);
+    },
+    exit => {
+      return exit.transition()
+        .duration(750)
+        .style('opacity', 0)
+        .remove(); // fade out and remove
+    }
+  );
+
     };
   
     try {
