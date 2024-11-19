@@ -202,9 +202,10 @@ p3_targets <- list(
   #
   #
   tar_target(p3_map_tn_png,
-             map_wq(in_sf = p2_HUC12_join_sui_svi_sf,
+             map_wq(in_sf = p2_HUC12_join_wq_sf,
+                    nutrient = "tn",
                     png_out = "src/assets/images/R/05_tn_map.png",
-                    width = 6, height = 9)),
+                    width = 9, height = 6)),
   
   ##############################################
   # 
