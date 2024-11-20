@@ -141,7 +141,7 @@ p3_targets <- list(
                water_avail_map(in_df = p2_water_avail_sf, 
                                wa_type = wa_types, 
                                color_scheme = p3_colors_website, 
-                               png_out = sprintf("src/images/R/water_avail_%s.png", wa_types), 
+                               png_out = sprintf("src/assets/images/R/02_water_avail_%s.png", wa_types), 
                                width = 6, height = 4),
                format = "file"
     ),
