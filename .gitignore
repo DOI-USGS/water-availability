@@ -31,3 +31,4 @@ workspace.R
 node_modules
 .Rproj.user
 soil_moisture_extremes_figure.R
+drought_figure_for_website_241119.R
