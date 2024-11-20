@@ -70,6 +70,32 @@ p1_targets <- list(
     format = "file"
   ),
   
+  
+  
+  
+  
+  ##############################################
+  # 
+  #           WATER SUPPLY DATA
+  # 
+  # EXTRACTED FROM TO-BE-RELEASED PIPELINES, WATER SUPPLY AND UNCERTAINTY ANALYSIS
+  #   To run this pipeline, must download temporary files from IWAAs sharepoint and 
+  #     put them in the 1_fetch/in folder
+  tar_target(p1_ws_precip_csv,
+             "1_fetch/in/c404bc_rain_mm.csv",
+             format = "file"),
+  tar_target(p1_ws_et_csv,
+             "1_fetch/in/model_ensemble_Evapotranspiration.csv",
+             format = "file"),
+  tar_target(p1_ws_sm_csv,
+             "1_fetch/in/model_ensemble_huc12_Soil moisture percentage.csv",
+             format = "file"),
+  tar_target(p1_ws_sf_csv,
+             "1_fetch/in/model_ensemble_huc12_Surface runoff.csv",
+             format = "file"),
+  
+  
+  
   ##############################################
   # 
   #           WATER QUALITY DATA
