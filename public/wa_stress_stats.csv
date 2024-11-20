@@ -1,109 +1,109 @@
 sui_category_5,Region_nam,stress_by_reg,total_hucs,percentage_stress
 High,Atlantic Coast,6,5120,0.1171875
-Low,Atlantic Coast,441,5120,8.61328125
+Low,Atlantic Coast,448,5120,8.75
 Moderate,Atlantic Coast,42,5120,0.8203125
 Severe,Atlantic Coast,20,5120,0.390625
 "Very low/
-none",Atlantic Coast,4611,5120,90.05859375
-High,California-Nevada,564,7284,7.742998352553541
-Low,California-Nevada,1267,7284,17.394288852278965
-Moderate,California-Nevada,1105,7284,15.170236133992313
-Severe,California-Nevada,580,7284,7.962657880285557
+none",Atlantic Coast,4604,5120,89.921875
+High,California-Nevada,561,7284,7.701812191103789
+Low,California-Nevada,1258,7284,17.27073036792971
+Moderate,California-Nevada,1084,7284,14.881933003844042
+Severe,California-Nevada,577,7284,7.921471718835804
 "Very low/
-none",California-Nevada,3768,7284,51.72981878088962
-High,Central High Plains,712,3552,20.045045045045047
-Low,Central High Plains,809,3552,22.7759009009009
-Moderate,Central High Plains,1227,3552,34.54391891891892
-Severe,Central High Plains,70,3552,1.9707207207207207
+none",California-Nevada,3804,7284,52.22405271828665
+High,Central High Plains,713,3552,20.0731981981982
+Low,Central High Plains,786,3552,22.12837837837838
+Moderate,Central High Plains,1237,3552,34.825450450450454
+Severe,Central High Plains,69,3552,1.9425675675675675
 "Very low/
-none",Central High Plains,734,3552,20.664414414414413
-High,Central Rockies,417,4855,8.58908341915551
-Low,Central Rockies,1526,4855,31.431513903192588
-Moderate,Central Rockies,745,4855,15.345005149330587
-Severe,Central Rockies,66,4855,1.3594232749742534
+none",Central High Plains,747,3552,21.030405405405407
+High,Central Rockies,401,4855,8.259526261585993
+Low,Central Rockies,1541,4855,31.740473738414003
+Moderate,Central Rockies,755,4855,15.550978372811535
+Severe,Central Rockies,62,4855,1.2770339855818744
 "Very low/
-none",Central Rockies,2101,4855,43.27497425334707
-High,Columbia-Snake,423,6883,6.14557605695191
-Low,Columbia-Snake,1530,6883,22.228679354932442
-Moderate,Columbia-Snake,645,6883,9.370913845706815
-Severe,Columbia-Snake,76,6883,1.1041696934476246
+none",Central Rockies,2096,4855,43.17198764160659
+High,Columbia-Snake,426,6883,6.189161702745896
+Low,Columbia-Snake,1535,6883,22.30132209792242
+Moderate,Columbia-Snake,648,6883,9.4144994915008
+Severe,Columbia-Snake,72,6883,1.0460554990556443
 "Very low/
-none",Columbia-Snake,4209,6883,61.15066104896121
-High,Florida,70,1185,5.9071729957805905
+none",Columbia-Snake,4202,6883,61.048961208775246
+High,Florida,72,1185,6.075949367088607
 Low,Florida,433,1185,36.540084388185655
-Moderate,Florida,196,1185,16.540084388185655
-Severe,Florida,60,1185,5.063291139240507
+Moderate,Florida,197,1185,16.624472573839665
+Severe,Florida,59,1185,4.9789029535864975
 "Very low/
-none",Florida,426,1185,35.949367088607595
+none",Florida,424,1185,35.780590717299575
 High,Great Lakes,1,4485,0.022296544035674472
-Low,Great Lakes,1063,4485,23.701226309921964
-Moderate,Great Lakes,97,4485,2.1627647714604237
+Low,Great Lakes,1068,4485,23.812709030100336
+Moderate,Great Lakes,98,4485,2.185061315496098
 Severe,Great Lakes,0,0,0
 "Very low/
-none",Great Lakes,3324,4485,74.11371237458194
-High,Gulf Coast,14,4183,0.33468802295003586
-Low,Gulf Coast,909,4183,21.730815204398755
-Moderate,Gulf Coast,172,4183,4.111881424814726
+none",Great Lakes,3318,4485,73.9799331103679
+High,Gulf Coast,15,4183,0.3585943103036099
+Low,Gulf Coast,910,4183,21.75472149175233
+Moderate,Gulf Coast,165,4183,3.944537413339708
 Severe,Gulf Coast,4,4183,0.09562514941429597
 "Very low/
-none",Gulf Coast,3084,4183,73.72699019842219
-High,Midwest,9,7423,0.12124477973865014
-Low,Midwest,1970,7423,26.5391351205712
-Moderate,Midwest,404,7423,5.442543446046073
+none",Gulf Coast,3089,4183,73.84652163519006
+High,Midwest,10,7423,0.13471642193183347
+Low,Midwest,1958,7423,26.377475414253
+Moderate,Midwest,420,7423,5.6580897211370065
 Severe,Midwest,0,0,0
 "Very low/
-none",Midwest,5040,7423,67.89707665364408
+none",Midwest,5035,7423,67.82971844267817
 High,Mississippi Embayment,0,0,0
-Low,Mississippi Embayment,533,1145,46.55021834061135
-Moderate,Mississippi Embayment,77,1145,6.724890829694323
+Low,Mississippi Embayment,532,1145,46.46288209606987
+Moderate,Mississippi Embayment,80,1145,6.986899563318777
 Severe,Mississippi Embayment,0,0,0
 "Very low/
-none",Mississippi Embayment,535,1145,46.724890829694324
+none",Mississippi Embayment,533,1145,46.55021834061135
 High,Northeast,11,5904,0.18631436314363142
-Low,Northeast,1559,5904,26.405826558265584
-Moderate,Northeast,73,5904,1.236449864498645
+Low,Northeast,1558,5904,26.38888888888889
+Moderate,Northeast,74,5904,1.2533875338753389
 Severe,Northeast,25,5904,0.4234417344173441
 "Very low/
 none",Northeast,4236,5904,71.7479674796748
-High,Northern High Plains,79,5853,1.3497351785409193
-Low,Northern High Plains,1645,5853,28.105245173415344
-Moderate,Northern High Plains,729,5853,12.455151204510507
+High,Northern High Plains,73,5853,1.2472236459935075
+Low,Northern High Plains,1631,5853,27.86605159747138
+Moderate,Northern High Plains,725,5853,12.386810182812233
 Severe,Northern High Plains,11,5853,0.18793780967025456
 "Very low/
-none",Northern High Plains,3389,5853,57.901930633862975
-High,Pacific Northwest,142,2491,5.700521878763549
-Low,Pacific Northwest,614,2491,24.6487354476114
-Moderate,Pacific Northwest,291,2491,11.682055399437976
-Severe,Pacific Northwest,52,2491,2.0875150541951024
+none",Northern High Plains,3413,5853,58.311976764052616
+High,Pacific Northwest,140,2491,5.620232838217584
+Low,Pacific Northwest,612,2491,24.568446407065437
+Moderate,Pacific Northwest,294,2491,11.802488960256925
+Severe,Pacific Northwest,51,2491,2.0473705339221198
 "Very low/
-none",Pacific Northwest,1392,2491,55.88117221999197
+none",Pacific Northwest,1394,2491,55.96146126053794
 High,Souris-Red-Rainy,4,2739,0.14603870025556773
-Low,Souris-Red-Rainy,969,2739,35.37787513691128
-Moderate,Souris-Red-Rainy,139,2739,5.074844833880979
+Low,Souris-Red-Rainy,960,2739,35.049288061336256
+Moderate,Souris-Red-Rainy,147,2739,5.3669222343921135
 Severe,Souris-Red-Rainy,0,0,0
 "Very low/
-none",Souris-Red-Rainy,1627,2739,59.40124132895217
-High,Southern High Plains,1869,4730,39.51374207188161
-Low,Southern High Plains,616,4730,13.023255813953488
-Moderate,Southern High Plains,594,4730,12.558139534883722
-Severe,Southern High Plains,186,4730,3.9323467230443976
+none",Souris-Red-Rainy,1628,2739,59.43775100401606
+High,Southern High Plains,1792,4730,37.88583509513742
+Low,Southern High Plains,621,4730,13.128964059196619
+Moderate,Southern High Plains,665,4730,14.059196617336154
+Severe,Southern High Plains,184,4730,3.890063424947146
 "Very low/
-none",Southern High Plains,1465,4730,30.972515856236786
-High,Southwest Desert,226,4623,4.8886004758814625
-Low,Southwest Desert,756,4623,16.3530175210902
-Moderate,Southwest Desert,290,4623,6.27298291152931
-Severe,Southwest Desert,184,4623,3.9800995024875623
+none",Southern High Plains,1468,4730,31.035940803382662
+High,Southwest Desert,220,4623,4.758814622539476
+Low,Southwest Desert,743,4623,16.07181483884923
+Moderate,Southwest Desert,298,4623,6.44603071598529
+Severe,Southwest Desert,185,4623,4.00173047804456
 "Very low/
-none",Southwest Desert,3167,4623,68.50529958901146
+none",Southwest Desert,3177,4623,68.72160934458144
 High,Tennessee-Missouri,1,6717,0.014887598630340925
-Low,Tennessee-Missouri,348,6717,5.180884323358642
-Moderate,Tennessee-Missouri,35,6717,0.5210659520619324
+Low,Tennessee-Missouri,350,6717,5.210659520619324
+Moderate,Tennessee-Missouri,37,6717,0.5508411493226143
 Severe,Tennessee-Missouri,0,0,0
 "Very low/
-none",Tennessee-Missouri,6333,6717,94.28316212594908
-High,Texas,767,3850,19.92207792207792
-Low,Texas,1064,3850,27.636363636363637
-Moderate,Texas,697,3850,18.1038961038961
-Severe,Texas,311,3850,8.077922077922079
+none",Tennessee-Missouri,6329,6717,94.22361173142772
+High,Texas,766,3850,19.896103896103895
+Low,Texas,1081,3850,28.07792207792208
+Moderate,Texas,680,3850,17.662337662337663
+Severe,Texas,308,3850,8
 "Very low/
-none",Texas,1011,3850,26.259740259740262
+none",Texas,1015,3850,26.36363636363636

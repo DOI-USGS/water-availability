@@ -134,7 +134,13 @@ p2_targets <- list(
                dplyr::left_join(p2_sui_2020_HUC12,
                                 by = "HUC12") |>
                dplyr::left_join(p2_svi_mean_HUC12,
-                                by = "HUC12")
+                                by = "HUC12") |>
+               filter(! is.na(sui_category_5)) |> 
+               dplyr::mutate(sui_cat_clean = case_when(sui_category_5 == "High" ~ "high",
+                                                       sui_category_5 == "Low" ~ "low",
+                                                       sui_category_5 == "Moderate" ~ "moderate",
+                                                       sui_category_5 == "Severe" ~ "severe",
+                                                       sui_category_5 == "Very low/\nnone" ~ "very_low_none"))
              
   ),
 

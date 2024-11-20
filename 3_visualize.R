@@ -106,24 +106,37 @@ p3_targets <- list(
   tar_target(p3_map_stress_png,
              map_stress(in_sf = p2_HUC12_join_sui_svi_sf,
                          color_scheme = p3_colors_balance,
-                        png_out = "public/assets/01_stress_map.png",
+                        in_regions = p2_Reg_sf,
+                        png_out = "src/assets/images/R/01_stress_map.png",
                         width = 8, height = 6)),
   ## Replicate maps for each water stress category
-  tar_target(p3_map_stress_bins_png,
-             {
-               sui_cat <- janitor::make_clean_names(unique(p2_HUC12_join_sui_svi_sf$sui_category_5))
-               sui_cat |>
-                 purrr::map(function(x){
-                   map_stress(in_sf = p2_HUC12_join_sui_svi_sf |> 
-                                mutate(sui_category_5_clean = janitor::make_clean_names(sui_category_5)) |>
-                                filter(sui_category_5_clean == x),
-                              color_scheme = p3_colors_balance,
-                              png_out = sprintf("public/assets/01_stress_map_%s.png", x),
-                              width = 8, height = 6)
-                 })
-             
-             }
-  ),
+  tarchetypes::tar_map( 
+    values = tibble::tibble(level = c("low", "very_low_none", "moderate", "severe", "high")),
+    tar_target(p3_map_stress_levels_png,
+               map_stress(in_sf = p2_HUC12_join_sui_svi_sf |>
+                            dplyr::filter(sui_cat_clean == level),
+                          in_regions = p2_Reg_sf,
+                          color_scheme = p3_colors_balance,
+                          png_out = sprintf("src/assets/images/R/01_stress_map_%s.png", level),
+                          width = 8, height = 6)),
+    names = level
+          ),
+  # tar_target(p3_map_stress_bins_png,
+  #            {
+  #              sui_cat <- janitor::make_clean_names(unique(p2_HUC12_join_sui_svi_sf$sui_category_5))
+  #              sui_cat |>
+  #                purrr::map(function(x){
+  #                  map_stress(in_sf = p2_HUC12_join_sui_svi_sf |> 
+  #                               dplyr::mutate(sui_category_5_clean = janitor::make_clean_names(sui_category_5)) |>
+  #                               dplyr::filter(sui_category_5_clean == x),
+  #                             in_regions = p2_Reg_sf,
+  #                             color_scheme = p3_colors_balance,
+  #                             png_out = sprintf("public/assets/01_stress_map_%s.png", x),
+  #                             width = 8, height = 6)
+  #                })
+  #            
+  #            }
+  # ),
   
   
   ##############################################
