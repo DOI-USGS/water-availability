@@ -163,10 +163,20 @@
   
       // Overlay the raster images
       const scale_size = 1.2; // scaling pngs because they have an added margin when exported from ggplot
-     
+      const mapPaths = [
+        '/assets/01_stress_map_severe.png',
+        '/assets/01_stress_map_high.png',
+        '/assets/01_stress_map_moderate.png',
+        '/assets/01_stress_map_low.png',
+        '/assets/01_stress_map_very_low_none.png'
+        ];
+
       svg.append('g')
+        .selectAll('image')
+        .data(mapPaths)
+        .enter()
         .append('image')
-        .attr('xlink:href', import.meta.env.BASE_URL + '/assets/01_stress_map.png')
+        .attr('xlink:href', d => import.meta.env.BASE_URL + d)
         .attr('x', -80) // nudging png to fit within svg bounds
         .attr('y', -55) // nudging png to fit within svg bounds
         .attr('width', width * scale_size)
