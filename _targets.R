@@ -22,6 +22,7 @@ tar_option_set(packages = c(
   "grid",
   "scico",
   "sysfonts",
+  "showtext",
   "magick",
   "cowplot",
   "packcircles",
