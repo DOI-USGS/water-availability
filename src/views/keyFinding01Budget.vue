@@ -31,14 +31,45 @@
           Water stress occurs when there is not enough water available to meet human and ecosystem needs. This is more likely to happen in  regions where the difference between water supply and demand is fairly small. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.
         </p><br><br>
         <p>Levels of water stress include: 
-          <span class="highlight" id="none">very low or none</span>, 
-          <span class="highlight" id="low">low</span>, 
-          <span class="highlight" id="mod">moderate</span>, 
-          <span class="highlight" id="high">high</span>,
-          <span class="highlight" id="severe">severe</span></p>
+          <span 
+            class="highlight" 
+            id="none" 
+            :class="{ active: toggles.none }"
+            @click="toggleLayer('none')">
+            very low or none
+          </span>, 
+          <span 
+            class="highlight" 
+            id="low" 
+            :class="{ active: toggles.low }"
+            @click="toggleLayer('low')">
+            low
+          </span>, 
+          <span 
+            class="highlight" 
+            id="mod" 
+            :class="{ active: toggles.mod }"
+            @click="toggleLayer('mod')">
+            moderate
+          </span>, 
+          <span 
+            class="highlight" 
+            id="high" 
+            :class="{ active: toggles.high }"
+            @click="toggleLayer('high')">
+            high
+          </span>,
+          <span 
+            class="highlight" 
+            id="severe" 
+            :class="{ active: toggles.severe }"
+            @click="toggleLayer('severe')">
+            severe
+          </span>
+        </p>
         </div>
         <div class="image-container">
-          <RegionMap />
+          <RegionMap :layerVisibility="toggles" />
         </div>
         <Methods></Methods>
       <References></References>
@@ -48,7 +79,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, reactive, watchEffect } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
@@ -80,6 +111,24 @@ const orderedRegions = [
     "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", 
     "Florida", "Souris-Red-Rainy", "Midwest", "Great Lakes", "Northeast"
 ];
+
+const toggles = reactive({
+  none: { visible: false },
+  low: { visible: false },
+  mod: { visible: true },
+  high: { visible: true },
+  severe: { visible: true }
+})
+
+const toggleLayer = (layerId) => {
+  toggles[layerId].visible = !toggles[layerId].visible
+  console.log(`Toggled ${layerId}:`, JSON.stringify(toggles[layerId], null, 2)) // Log full object
+}
+
+
+watchEffect(() => {
+  console.log('Current toggles state:', JSON.stringify(toggles, null, 2))
+})
 
 onMounted(async () => {
     try {

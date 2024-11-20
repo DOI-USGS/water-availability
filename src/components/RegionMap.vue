@@ -6,12 +6,68 @@
   </template>
   
   <script setup>
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, watch } from 'vue'
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
   
   const mapContainer = ref(null)
   const barContainer = ref(null)
+  let mapLayers;
+
+  const props = defineProps({
+  layerVisibility: {
+    type: Object,
+    required: true
+  }
+})
+
+const updateLayers = () => {
+  if (!mapLayers) return // ensure mapLayers is initialized
+
+  const visibleLayers = Object.entries(props.layerVisibility).map(([key, value]) => ({
+    key,
+    path: layerPaths[key],
+    visible: value.visible
+  }))
+
+  console.log('Visible layers:', visibleLayers) // debug log
+
+  mapLayers.selectAll('image')
+    .data(visibleLayers, d => d.key) // use key as the identifier
+    .join(
+      enter => enter.append('image')
+        .attr('xlink:href', d => import.meta.env.BASE_URL + d.path)
+        .attr('x', -80)
+        .attr('y', -55)
+        .attr('width', 800 * 1.2)
+        .attr('height', 550 * 1.2)
+        .style('opacity', d => (d.visible ? 1 : 0))
+        .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
+      update => update
+        .style('opacity', d => (d.visible ? 1 : 0))
+        .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
+      exit => exit.remove()
+    )
+}
+
+
+watch(
+  () => props.layerVisibility,
+  (newVal) => {
+    console.log('Layer visibility updated:', newVal)
+  },
+  { deep: true }
+)
+
+
+const layerPaths = {
+  none: '/assets/01_stress_map_very_low_none.png',
+  low: '/assets/01_stress_map_low.png',
+  mod: '/assets/01_stress_map_moderate.png',
+  high: '/assets/01_stress_map_high.png',
+  severe: '/assets/01_stress_map_severe.png'
+}
+
   
   onMounted(async () => {
     if (!mapContainer.value) {
@@ -29,6 +85,14 @@
       .attr('viewBox', `0 0 ${width} ${height}`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .classed('responsive-svg', true);
+
+    mapLayers = svg.append('g').attr('class', 'map-layers')
+    updateLayers()  
+
+    
+   // update layers whenever visibility changes
+   watch(() => props.layerVisibility, updateLayers, { deep: true })
+    
   
     // resizing so flexes to page width but stays within reasonable height
     const resizeSvg = () => {
