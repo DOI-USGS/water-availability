@@ -1,6 +1,7 @@
 source("2_process/src/process_region_shp.R")
 source("2_process/src/process_WBD_GDB.R")
 source("2_process/src/process_ps_dumbbell.R")
+source("2_process/src/process_ws_data.R")
 source("2_process/src/process_wq_data.R")
 source("2_process/src/process_wu_data.R")
 source("2_process/src/process_sui_data.R")
@@ -146,6 +147,35 @@ p2_targets <- list(
              readr::write_csv(p2_states_sui_df,
                               file = "public/sui_state.csv")),
   
+  ##############################################
+  # 
+  #           WATER SUPPLY DATA
+  # 
+  # Change water supply data into long format
+  tar_target(p2_ws_precip_df,
+         compare_ws_mean(data_in = p1_ws_precip_csv,
+                         supply_name = "precip",
+                         min_year = 2010,
+                         max_year = 2020,
+                         xwalk = p2_CONUS_crosswalk_HUC12_df)),
+  tar_target(p2_ws_et_df,
+             compare_ws_mean(data_in = p1_ws_et_csv,
+                             supply_name = "et",
+                             min_year = 2010,
+                             max_year = 2020,
+                             xwalk = p2_CONUS_crosswalk_HUC12_df)),
+  tar_target(p2_ws_sm_df,
+             compare_ws_mean(data_in = p1_ws_sm_csv,
+                             supply_name = "sm",
+                             min_year = 2010,
+                             max_year = 2020,
+                             xwalk = p2_CONUS_crosswalk_HUC12_df)),
+  tar_target(p2_ws_sf_df,
+             compare_ws_mean(data_in = p1_ws_sf_csv,
+                             supply_name = "sf",
+                             min_year = 2010,
+                             max_year = 2020,
+                             xwalk = p2_CONUS_crosswalk_HUC12_df)),
   
   ##############################################
   # 
