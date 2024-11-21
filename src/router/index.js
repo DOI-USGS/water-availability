@@ -10,6 +10,7 @@ import page7 from '../views/keyFinding07WaterUse.vue'
 import page8 from '../views/keyFinding08WaterUseRegional.vue'
 import page9 from '../views/keyFinding09WaterUseConsumption.vue'
 import page10 from '../views/keyFinding10FutureWater.vue'
+import glossary from '../views/glossaryPage.vue'
 
 
 const router = createRouter({
@@ -74,6 +75,11 @@ const router = createRouter({
       path: '/10Future',
       name: 'Page 10',
       component: page10
+    },
+    {
+      path: '/glossary',
+      name: 'Glossary',
+      component: glossary
     }
   ]
 })
