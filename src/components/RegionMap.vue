@@ -209,7 +209,7 @@ const layerPaths = {
   
       // percent labels on bar chart - currently overlap where very small
       g.selectAll('.chart-labels')
-        .data(data, d => d.sui_category_5) // use sui_category_5 as the unique key
+        .data(sortedData, d => d.sui_category_5) // use sui_category_5 as the unique key
         .join(
             enter => {
             const enteringText = enter.append('text')
