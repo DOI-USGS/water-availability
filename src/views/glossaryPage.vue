@@ -4,7 +4,7 @@
     <div class="glossary-container">
         <div id="text-container">
             <h1>Key Definitions</h1>
-            <div class="key-term" v-for="terms in glossaryTerms.key">
+            <div class="key-term" v-for="terms in termArray">
                 <div class="key-message-item-text">
                     <h3 class="glossary-term"> {{ terms.term }} </h3>
                     <p class="glossary-def"> {{ terms.definition }}</p>
@@ -39,6 +39,9 @@
   import glossaryTerms from '@/assets/text/glossaryTerms.js';
   import KeyMessages from '../components/KeyMessages.vue';
   console.log(glossaryTerms)
+
+  // Sort references
+const termArray = glossaryTerms.key.sort((a, b) => a.term.localeCompare(b.term));
 </script>
 
 <style scoped>
@@ -57,35 +60,7 @@
   }
 }
 
-.title-message-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 100px 20px;
-  padding-bottom: 100px;
-  width: 90vw;
-  color: var(--blue-dark);
-  border-radius: 5px;
-  text-align: center;
-  z-index: -1;
-}
-#main-title {
-  max-width: 700px;
-  font-size: 8rem;
-  line-height: 1.2;
-  word-wrap: break-word;
-}
-@media only screen and (max-width: 768px) {
-  .title-message-container {
-    padding: 80px 10px;
-    width: 95vw;
-  }
-  
-  #main-title {
-    font-size: 4rem;
-  }
-}
+
 
 .key-message-item {
   display: grid;
@@ -108,9 +83,11 @@
 
 .glossary-term {
     padding-left: 1em;
+    padding-top: 1em;
 }
 .glossary-def {
     padding-left: 3em;
+    padding-top: 0.5em;
 }
 
 </style>
