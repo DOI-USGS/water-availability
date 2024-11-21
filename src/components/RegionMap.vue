@@ -53,11 +53,12 @@ const updateLayers = () => {
 
 watch(
   () => props.layerVisibility,
-  (newVal) => {
-    console.log('Layer visibility updated:', newVal)
+  () => {
+    updateLayers(); // Trigger layer updates
   },
   { deep: true }
-)
+);
+
 
 
 const layerPaths = {
@@ -184,7 +185,7 @@ const layerPaths = {
                 .attr('y', 50)
                 .attr('fill', 'black')
                 .attr('text-anchor', 'middle')
-                .text(d => `${formatPercentage(d.percentage_stress)}%`)
+                .text(d => `${(d.sui_category_5)}`)
                 .style('opacity', 0); // start invisible
 
             enteringText.transition()
@@ -227,17 +228,9 @@ const layerPaths = {
   
       // Overlay the raster images
       const scale_size = 1.2; // scaling pngs because they have an added margin when exported from ggplot
-      const mapPaths = [
-        '/assets/01_stress_map_severe.png',
-        '/assets/01_stress_map_high.png',
-        '/assets/01_stress_map_moderate.png',
-        '/assets/01_stress_map_low.png',
-        '/assets/01_stress_map_very_low_none.png'
-        ];
-
       svg.append('g')
         .selectAll('image')
-        .data(mapPaths)
+        .data(layerPaths)
         .enter()
         .append('image')
         .attr('xlink:href', d => import.meta.env.BASE_URL + d)
