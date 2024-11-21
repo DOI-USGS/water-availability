@@ -224,7 +224,7 @@ p3_targets <- list(
   #
   #
   tar_target(p3_map_tn_png,
-             map_wq(in_sf = p2_HUC12_join_wq_sf,
+             map_wq(in_sf = p2_HUC8_join_wq_sf,
                     nutrient = "tn",
                     color_scheme = p3_colors_wq, 
                     regions_sf = p2_Reg_sf,
@@ -235,7 +235,7 @@ p3_targets <- list(
                     png_out = "src/assets/images/R/05_tn_map.png",
                     width = 9, height = 6)),
   tar_target(p3_map_tp_png,
-             map_wq(in_sf = p2_HUC12_join_wq_sf,
+             map_wq(in_sf = p2_HUC8_join_wq_sf,
                     nutrient = "tp",
                     color_scheme = p3_colors_wq, 
                     regions_sf = p2_Reg_sf,

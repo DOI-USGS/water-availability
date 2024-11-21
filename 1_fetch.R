@@ -96,6 +96,8 @@ p1_targets <- list(
                process_wq_HUC12(in_csv = p2_load,
                                 in_COMID_xwalk = p1_COMID_to_HUC12_crosswalk_csv,
                                 nutrient = nutrient)),
+    tar_target(p1_wq_HUC8_df,
+               process_wq_HUC8(data_in = p1_wq_HUC12_df)),
     tar_target(p1_wq_Reg_d3_csv,
                readr::write_csv(p1_wq_Reg_df,
                                 file = sprintf("public/wq_sources_%s.csv", nutrient))),

@@ -139,14 +139,14 @@ p2_targets <- list(
   ),
 
   # Join with water quality data (loads)
-  tar_target(p2_HUC12_join_wq_sf,
-             p2_mainstem_HUC12_simple_sf |>
+  tar_target(p2_HUC8_join_wq_sf,
+             p2_mainstem_HUC8_simple_sf |>
                # add in tn loads
-               dplyr::left_join(p1_wq_HUC12_df_tn |> rename(tn_load = value), 
-                                by = "HUC12") |>
+               dplyr::left_join(p1_wq_HUC8_df_tn |> rename(tn_load = total_load), 
+                                by = "HUC8") |>
                # add in tp loads
-               dplyr::left_join(p1_wq_HUC12_df_tp |> rename(tp_load = value), 
-                                by = "HUC12")),
+               dplyr::left_join(p1_wq_HUC8_df_tp |> rename(tp_load = total_load), 
+                                by = "HUC8")),
 
   # Join with water availability for key finding 2
   tar_target(p2_water_avail,

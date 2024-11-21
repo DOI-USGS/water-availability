@@ -21,6 +21,16 @@ process_wq_HUC12 <- function(in_csv, in_COMID_xwalk, nutrient){
   return(joined_loads)
 }
 
+process_wq_HUC8 <- function(data_in, nutrient){
+  
+  huc8 <- data_in |>
+    mutate(HUC8 = substr(HUC12, 1, 8)) |>
+    group_by(HUC8) |>
+    summarize(total_load = sum(value, na.rm = TRUE))
+  
+}
+
+
 # loads by category
 process_wq_data <- function(in_csv, nutrient){
   
