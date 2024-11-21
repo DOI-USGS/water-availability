@@ -137,6 +137,7 @@ p2_targets <- list(
                                 by = "HUC12")
              
   ),
+
   # Join with water quality data (loads)
   tar_target(p2_HUC12_join_wq_sf,
              p2_mainstem_HUC12_simple_sf |>
@@ -146,6 +147,37 @@ p2_targets <- list(
                # add in tp loads
                dplyr::left_join(p1_wq_HUC12_df_tp |> rename(tp_load = value), 
                                 by = "HUC12")),
+
+  # Join with water availability for key finding 2
+  tar_target(p2_water_avail,
+    tibble(
+      Region_nam = c("Northeast", "Atlantic Coast", "Florida", 
+                  "Great Lakes", "Midwest", "Tennessee-Missouri",  
+                  "Mississippi Embayment", "Gulf Coast",   
+                  "Souris-Red-Rainy", "Northern High Plains",
+                  "Central High Plains", "Southern High Plains",
+                  "Texas", "Columbia-Snake",
+                  "Central Rockies", "Southwest Desert",
+                  "Pacific Northwest", "California-Nevada"),
+      wa_sui = c("very low", "low", "high", "very low", "moderate", "low", 
+                 "severe", "moderate", "moderate", "moderate", "severe", "severe", 
+                 "severe", "very low", "moderate", "high", "very low", "high"),
+      wa_sw_wq = c("moderate", "moderate", "very low", "low", "severe", "high", 
+                   "high", "low", "severe", "severe", "severe", "severe", 
+                   "low", "moderate", "high", "high", "moderate", "high"),
+      wa_gw_wq = c("moderate", "low", "very low", "moderate", "moderate", "low", 
+                   "very low", "very low", "moderate", "low", "high", "severe", 
+                   "high", "moderate", "low", "severe", "very low", "high"),
+      wa_ecoflow = c("severe", "moderate", "severe", "low", "low", "moderate", 
+                     "high", "high", "very low", "low", "severe", "high", 
+                     "severe", "low", "very low", "very low", "moderate", "high")
+    )
+  ),
+  tar_target(p2_water_avail_sf,
+             p2_water_avail |> 
+               dplyr::left_join(p2_Reg_sf,
+                                by = "Region_nam")
+  ),
 
   # Summarize SUI by state
   tar_target(p2_states_sui_df,

@@ -5,6 +5,7 @@ source("3_visualize/src/viz_svi_sui.R")
 source("3_visualize/src/viz_sui_popn.R")
 source("3_visualize/src/viz_wq.R")
 source("3_visualize/src/viz_ternary.R")
+source("3_visualize/src/viz_availability.R")
 
 p3_targets <- list(
   ##############################################
@@ -144,7 +145,18 @@ p3_targets <- list(
                                height = 2),
              format = "file"
   ),
-  
+  tar_map(
+    values = tibble::tibble(wa_types = c("wa_sw_wq", "wa_sui", "wa_gw_wq", "wa_ecoflow")),
+    tar_target(p3_water_avail_png,
+               water_avail_map(in_df = p2_water_avail_sf, 
+                               wa_type = wa_types, 
+                               color_scheme = p3_colors_website, 
+                               png_out = sprintf("src/assets/images/R/02_water_avail_%s.png", wa_types), 
+                               width = 6, height = 4),
+               format = "file"
+    ),
+    names = wa_types
+  ),
   
   ##############################################
   # 
