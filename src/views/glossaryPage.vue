@@ -6,10 +6,6 @@
             <h1>Key Definitions</h1>
             <div class="key-term" v-for="terms in termArray">
                 <div class="key-message-item-text">
-                  <v-img
-                    :width="300"
-                    src="terms.visual"
-                  ></v-img>
                     <h3 class="glossary-term"> {{ terms.term }} </h3>
                     <p class="glossary-def"> {{ terms.definition }}</p>
                 </div>
@@ -92,6 +88,29 @@ const termArray = glossaryTerms.key.sort((a, b) => a.term.localeCompare(b.term))
 .glossary-def {
     padding-left: 3em;
     padding-top: 0.5em;
+}
+
+/* text box within the wavy container that houses key messages */
+.title-message-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px;
+  padding-bottom: 100px;
+  width: 90vw;
+  color: var(--blue-dark);
+  border-radius: 5px;
+  text-align: center;
+  z-index: -1;
+}
+
+@media only screen and (max-width: 768px) {
+  .title-message-container {
+    padding: 80px 10px;
+    width: 95vw;
+  }
+  
 }
 
 </style>
