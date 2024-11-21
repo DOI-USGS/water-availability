@@ -176,6 +176,12 @@ p2_targets <- list(
                              min_year = 2010,
                              max_year = 2020,
                              xwalk = p2_CONUS_crosswalk_HUC12_df)),
+  # join together
+  tar_target(p2_ws_all_df,
+             bind_rows(p2_ws_precip_df,
+                       p2_ws_et_df,
+                       p2_ws_sm_df,
+                       p2_ws_sf_df)),
   
   ##############################################
   # 

@@ -5,6 +5,7 @@ source("3_visualize/src/viz_svi_sui.R")
 source("3_visualize/src/viz_sui_popn.R")
 source("3_visualize/src/viz_wq.R")
 source("3_visualize/src/viz_ternary.R")
+source("3_visualize/src/viz_ws.R")
 
 p3_targets <- list(
   ##############################################
@@ -192,6 +193,13 @@ p3_targets <- list(
   #             water stress and exacerbating water quality issues 
   #
   #
+  tar_target(p3_ws_cascading_png,
+             plot_deviations(data_in = p2_ws_all_df,
+                             png_out = "src/assets/images/R/04_ws_cascading_NHP.png",
+                             width = 3,
+                             height = 5,
+                             color_scheme = p3_colors_balance),
+             format = "file"),
   
   ##############################################
   # 
