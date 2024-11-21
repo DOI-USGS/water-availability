@@ -1,12 +1,38 @@
-# total loads by HUC12
-process_wq_HUC12 <- function(in_csv, in_COMID_xwalk, nutrient){
+# total loads by HUC8
+process_wq_HUC8 <- function(in_csv, in_COMID_xwalk, nutrient){
+  
+  # approach: add up the total load of every comid in each huc8
+  # where for each comid that's in more than one HUC8, the one
+  # with the highest weight is assigned that huc
+  # xwalk2 <- xwalk |> 
+  #   mutate(HUC8 = substr(huc12, 1, 8)) |>
+  #   select(HUC8, comid, weights) 
+  # 
+  # nhucs <- length(unique(xwalk2$HUC8))
+  # ncomids <- length(unique(xwalk$comid))
+  # comids <- unique(xwalk$comid)
+  # new_df <- NULL
+  # for(nn in 1:1000){
+  #   
+  #   temp <- test |> filter(comid == comids[nn])
+  #   
+  #   if(nrow(temp) > 1){
+  #     add_on <- temp |> slice_max(weights)
+  #   } else {
+  #     add_on <- temp
+  #   }
+  #   
+  #   new_df <- new_df |> bind_rows(add_on)
+  # }
   
   # read in COMID crosswalk
-  # Only retain highest weighted huc12s
+  # 
   xwalk <- data.table::fread(in_COMID_xwalk, keepLeadingZeros = TRUE) |>
     tidytable::select(huc12, comid = featureid, weights) |> 
-    group_by(huc12) |> 
-    slice_max(weights)
+    mutate(HUC8 = substr(huc12, 1, 8)) |>
+    select(comid, HUC8, weights) #|>
+    #group_by(comid) |> 
+    #slice_max(weights)
   
   # filter sources to all sources
   out_all_sources <- in_csv |>
@@ -15,20 +41,24 @@ process_wq_HUC12 <- function(in_csv, in_COMID_xwalk, nutrient){
   
   # extract values of load by comid for each HUC12
   joined_loads <- xwalk |> left_join(out_all_sources, by = "comid") |>
-    rename(HUC12 = huc12) |>
-    select(HUC12, value)
+    select(HUC8, value)
   
-  return(joined_loads)
-}
-
-process_wq_HUC8 <- function(data_in, nutrient){
-  
-  huc8 <- data_in |>
-    mutate(HUC8 = substr(HUC12, 1, 8)) |>
+  # sum loads up by HUC8
+  total_load_HUC8 <- joined_loads |>
     group_by(HUC8) |>
     summarize(total_load = sum(value, na.rm = TRUE))
   
+  return(total_load_HUC8)
 }
+
+# process_wq_HUC8 <- function(data_in, nutrient){
+#   
+#   huc8 <- data_in |>
+#     mutate(HUC8 = substr(HUC12, 1, 8)) |>
+#     group_by(HUC8) |>
+#     summarize(total_load = sum(value, na.rm = TRUE))
+#   
+# }
 
 
 # loads by category

@@ -81,7 +81,7 @@ p1_targets <- list(
   
   # TP processing to calculate loads from sources
   tarchetypes::tar_map( 
-    values = tibble::tibble(nutrient = c("tn", "tp", "ss")),
+    values = tibble::tibble(nutrient = c("tn", "tp")),
     tar_target( # need to find a way to download p2_load target output from iwaas-sparrow-figures pipeline
       # current idea: read in _targets p2_load objects?
       p2_load,
@@ -91,13 +91,13 @@ p1_targets <- list(
     tar_target(p1_wq_Reg_df,
                process_wq_data(in_csv = p2_load,
                                nutrient = nutrient)),
-    # total loads by HUC12
-    tar_target(p1_wq_HUC12_df,
-               process_wq_HUC12(in_csv = p2_load,
+    # total loads by HUC8
+    tar_target(p1_wq_HUC8_df,
+               process_wq_HUC8(in_csv = p2_load,
                                 in_COMID_xwalk = p1_COMID_to_HUC12_crosswalk_csv,
                                 nutrient = nutrient)),
-    tar_target(p1_wq_HUC8_df,
-               process_wq_HUC8(data_in = p1_wq_HUC12_df)),
+    #tar_target(p1_wq_HUC8_df,
+    #           process_wq_HUC8(data_in = p1_wq_HUC12_df)),
     tar_target(p1_wq_Reg_d3_csv,
                readr::write_csv(p1_wq_Reg_df,
                                 file = sprintf("public/wq_sources_%s.csv", nutrient))),
