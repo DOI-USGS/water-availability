@@ -34,35 +34,35 @@
           <span 
             class="highlight" 
             id="very_low_none" 
-            :class="{ active: toggles.very_low_none }"
+            :class="{'active': toggles.very_low_none.visible, 'inactive-toggle': !toggles.very_low_none.visible}"
             @click="toggleLayer('very_low_none')">
             very low or none
           </span>, 
           <span 
             class="highlight" 
             id="low" 
-            :class="{ active: toggles.low }"
+            :class="{'active': toggles.low.visible, 'inactive-toggle': !toggles.low.visible}"
             @click="toggleLayer('low')">
             low
           </span>, 
           <span 
             class="highlight" 
             id="moderate" 
-            :class="{ active: toggles.moderate }"
+            :class="{'active': toggles.moderate.visible, 'inactive-toggle': !toggles.moderate.visible}"
             @click="toggleLayer('moderate')">
             moderate
           </span>, 
           <span 
             class="highlight" 
             id="high" 
-            :class="{ active: toggles.high }"
+            :class="{'active': toggles.high.visible, 'inactive-toggle': !toggles.high.visible}"
             @click="toggleLayer('high')">
             high
           </span>,
           <span 
             class="highlight" 
             id="severe" 
-            :class="{ active: toggles.severe }"
+            :class="{'active': toggles.severe.visible, 'inactive-toggle': !toggles.severe.visible}"
             @click="toggleLayer('severe')">
             severe
           </span>
@@ -121,14 +121,8 @@ const toggles = reactive({
 })
 
 const toggleLayer = (layerId) => {
-  toggles[layerId].visible = !toggles[layerId].visible
-  console.log(`Toggled ${layerId}:`, JSON.stringify(toggles[layerId], null, 2)) // Log full object
+  toggles[layerId].visible = !toggles[layerId].visible;
 }
-
-
-watchEffect(() => {
-  console.log('Current toggles state:', JSON.stringify(toggles, null, 2))
-})
 
 onMounted(async () => {
     try {
@@ -380,12 +374,13 @@ function createDotChart() {
 }
 
 
-#toggle-supply, #toggle-demand {
+#toggle-supply {
   margin-left: 10px;
   background-color: #669999;
 }
 
 #toggle-demand {
+  margin-left: 10px;
   background-color: #F87A53;
 }
 
@@ -452,8 +447,24 @@ function createDotChart() {
 .demand {
   background-color: #F87A53;
 }
-.inactive-toggle {
+.highlight.inactive-toggle {
   background-color: lightgrey; 
   color: black;
+  &#very_low_none {
+    background-color: lightgrey; 
+  }
+  &#low {
+    background-color: lightgrey; 
+  }
+  &#moderate {
+    background-color: lightgrey; 
+  }
+  &#high {
+    background-color: lightgrey; 
+  }
+  &#severe {
+    background-color: lightgrey; 
+  }
 }
+
 </style>
