@@ -19,7 +19,7 @@ export default {
         {
             term: "Hydrologic Unit Classification (HUC)",
             definition: "The U.S. Geological Survey uses a depiction and classification scheme for hydrologic units known as hydrologic unit codes (HUCs). HUCs generally represent catchments, and river basins are represented by a unique series of numbers with successively smaller hydrologic units nested inside of larger ones. Digits are added as hydrologic units become smaller, such that a 2-digit HUC encompasses multiple 4-digit HUCs, and a 4-digit HUC encompasses multiple 6-digit HUCs, etc. This assessment uses 12-digit HUCs (HUC12s), which generally range from 50 to 100 square kilometers (km2) in size. The CONUS contains 18 2-digit HUCs and over 93,000 12-digit HUCs. The median HUC12 in the conterminous United States is 90 km2. Although in practice, HUCs represent river basins, they are formally administrative units, and not always natural watersheds. As such, HUCs can depict human-created drainages and diversions or arbitrary breaks in connected flow systems.",
-            visual: "assets/images/manual/glossary_huc.png",
+            visual: "../assets/images/manual/glossary_huc.png",
             visualLogic: true
         },
         {
