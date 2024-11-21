@@ -30,8 +30,6 @@ const updateLayers = () => {
     visible: value.visible
   }))
 
-  console.log('Visible layers:', visibleLayers) // debug log
-
   mapLayers.selectAll('image')
     .data(visibleLayers, d => d.key) // use key as the identifier
     .join(
@@ -62,7 +60,7 @@ watch(
 
 
 const layerPaths = {
-  very_low_or_none: {
+  very_low_none: {
     path: '/assets/01_stress_map_very_low_none.png',
     color: '#39424f',
     order: 1
@@ -142,14 +140,13 @@ const layerPaths = {
 
       // Sort data based on the order defined in layerPaths
       const sortedData = [...data].sort((a, b) => {
-        const normalize = (str) => str.trim().toLowerCase().replace(/\s+/g, '_');
+        const normalize = (str) => str.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
         const orderA = layerPaths[normalize(a.sui_category_5)]?.order || Infinity;
         const orderB = layerPaths[normalize(b.sui_category_5)]?.order || Infinity;
         return orderA - orderB;
       });
-      console.log('Sorted data:', sortedData);
 
-      const categories = data.map(d => d.sui_category_5);
+      const categories = sortedData.map(d => d.sui_category_5);
       const values = sortedData.map(d => +d.percentage_stress);
   
       const xScale = d3.scaleLinear()
@@ -157,13 +154,13 @@ const layerPaths = {
         .range([0, 700]);
 
         const getColor = (category) => {
-          const normalizedCategory = category.trim().toLowerCase().replace(/\s+/g, '_');
+          const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
           return layerPaths[normalizedCategory]?.color || "#ccc"; // Default to gray if no match
         };
 
   
       g.selectAll('rect')
-        .data(data)
+        .data(sortedData)
         .join(
         enter => enter.append('rect')
             .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
@@ -190,21 +187,22 @@ const layerPaths = {
             .attr('width', 0) 
             .remove())
         );
- // updating bar chart title with region name
-  g.selectAll('text.chart-title')
-    .data([regionName])
-    .join(
-      enter => enter.append('text')
-        .attr('class', 'chart-title')
-        .attr('x', 0)
-        .attr('y', -10)
-        .attr('fill', 'black')
-        .attr('font-size', '2.5rem')
-        .text(regionName),
-      update => update.call(update => update.transition()
-        .duration(750)
-        .text(regionName))
-    );
+
+    // updating bar chart title with region name
+      g.selectAll('text.chart-title')
+        .data([regionName])
+        .join(
+          enter => enter.append('text')
+            .attr('class', 'chart-title')
+            .attr('x', 0)
+            .attr('y', -10)
+            .attr('fill', 'black')
+            .attr('font-size', '2.5rem')
+            .text(regionName),
+          update => update.call(update => update.transition()
+            .duration(750)
+            .text(regionName))
+        );
 
   
       const formatPercentage = d3.format('.0f');

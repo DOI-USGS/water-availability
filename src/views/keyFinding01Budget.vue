@@ -33,9 +33,9 @@
         <p>Levels of water stress include: 
           <span 
             class="highlight" 
-            id="very_low_or_none" 
-            :class="{ active: toggles.very_low_or_none }"
-            @click="toggleLayer('very_low_or_none')">
+            id="very_low_none" 
+            :class="{ active: toggles.very_low_none }"
+            @click="toggleLayer('very_low_none')">
             very low or none
           </span>, 
           <span 
@@ -113,7 +113,7 @@ const orderedRegions = [
 ];
 
 const toggles = reactive({
-  very_low_or_none: { visible: true },
+  very_low_none: { visible: true },
   low: { visible: true },
   moderate: { visible: true },
   high: { visible: true },
@@ -422,7 +422,7 @@ function createDotChart() {
     background-color: #F87A53;
   }
 
-  &#very_low_or_none {
+  &#very_low_none {
     background-color: #39424f;
   }
 
