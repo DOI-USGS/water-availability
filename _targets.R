@@ -25,7 +25,8 @@ tar_option_set(packages = c(
   "magick",
   "cowplot",
   "packcircles",
-  "ggtern"))
+  "ggtern",
+  "geojsonio"))
 
 ### Naming conventions:
 # Water Supply = ws
