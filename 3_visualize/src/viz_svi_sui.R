@@ -40,13 +40,13 @@ map_svi_sui <- function(in_sf,
 }
 
 map_stress <- function(in_sf,
-                      color_scheme,
+                       in_regions,
+                       color_scheme,
                        png_out,
-                      width,
-                      height){
+                       width,
+                       height){
   
   plot_sf <- in_sf |>
-    filter( ! is.na(sui_category_5)) |>
     mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$wet_blue_dark,
                                  sui_category_5 == "Low" ~ color_scheme$wet_blue_light,
                                  sui_category_5 == "Moderate" ~ color_scheme$svg_col_default,
@@ -54,6 +54,9 @@ map_stress <- function(in_sf,
                                  sui_category_5 == "Severe" ~ color_scheme$dry_red_dark))
   
   map <- ggplot(plot_sf) +
+    geom_sf(data = in_regions, 
+            fill = NA,
+            color = NA, linewidth = 0.1) +
     geom_sf(aes(fill = color_hex),
             color = NA, size = 0)  +
     scale_fill_identity() +
@@ -96,7 +99,7 @@ viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
     color_scheme$wet_blue_dark,
     color_scheme$wet_blue_light,
     color_scheme$wet_blue_vlight)
-
+  
   y_pos <- ifelse(legend_type == "Number", "stack", "fill")
   legend_label <- ifelse(legend_type == "Explainer", 
                          "Social Vulnerability", 
@@ -104,8 +107,8 @@ viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
   
   
   legend <- ggplot(plot_df,
-                          ggplot2::aes(y = if(legend_type != "Explainer"){n_hucs} else {rep(100, 9)}, 
-                              x = sui_factor, fill = join_factor)) +
+                   ggplot2::aes(y = if(legend_type != "Explainer"){n_hucs} else {rep(100, 9)}, 
+                                x = sui_factor, fill = join_factor)) +
     geom_bar(position = y_pos, stat = "identity") +
     ylab(legend_label) +
     xlab("Water stress ") 
@@ -120,7 +123,7 @@ viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
             axis.title.y = element_text(size = 9, angle = 90),
             axis.title.x = element_text(size = 9),
             axis.text = element_text(size = 8))
-    } else {
+  } else {
     legend_out <- legend +
       # same styles as below
       scale_fill_manual(values = palette) +
@@ -129,11 +132,11 @@ viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
             axis.title.y = element_text(size = 9, angle = 90),
             axis.title.x = element_text(size = 9),
             axis.text = element_text(size = 8))
-    }
+  }
   
   return(legend_out)
 }
-  
+
 
 compose_svi_plot <- function(in_map,
                              legend_n,
@@ -142,7 +145,7 @@ compose_svi_plot <- function(in_map,
                              png_out,
                              width, 
                              height){
-   
+  
   final_plot <- ggdraw() +
     draw_plot(in_map, x = 0, y = 0.1, width = 1, height = 1) +
     draw_plot(legend_n, x = 0.4, y = 0.0, width = 0.25, height = 0.25) +
