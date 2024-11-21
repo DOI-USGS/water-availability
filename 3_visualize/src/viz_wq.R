@@ -22,8 +22,8 @@ viz_wq_bars <- function(in_df,
   return(png_out)
 }
 
-map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, plot_margin, 
-                   leg_title, bkgd_color, width, height, png_out){
+map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, regions_fill,
+                   plot_margin, leg_title, bkgd_color, width, height, png_out){
   
   # import font
   font_legend <- 'Source Sans Pro'
@@ -46,13 +46,13 @@ map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, plot_margin,
                                                 "Moderate", "Low", "Very low")))
   
   map <- ggplot(plot_sf) +
-    geom_sf(aes(fill = load_levelf), color = "NA", size = 0) +
     geom_sf(
       data = regions_sf,
-      fill = NA,
+      fill = regions_fill$svg_fill_default,
       color = "white",
       linewidth = 0.4
     ) + 
+    geom_sf(aes(fill = load_levelf), color = "NA", size = 0) +
     scale_fill_manual(
       values = c(
         "Very high" = color_scheme$very_high_col,
@@ -85,7 +85,7 @@ map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, plot_margin,
   canvas <- grid::rectGrob(
     x = 0, y = 0,
     width = width, height = height,
-    gp = grid::gpar(fill = bkgd_color, alpha = 1, col = bkgd_color)
+    gp = grid::gpar(fill = bkgd_color, alpha = 1, col = "transparent")
   )
   
   # Extract from plot
@@ -129,6 +129,6 @@ map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, plot_margin,
                lineheight = 1)
   
   ggsave(plot = map_w_leg,
-         filename = png_out, device = "png", bg = "transparent",
+         filename = png_out, device = "png", bg = bkgd_color,
          dpi = 300, units = "in", width = width, height = height)
 }
