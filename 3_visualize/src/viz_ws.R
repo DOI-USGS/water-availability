@@ -15,24 +15,28 @@ plot_deviations <- function(data_in, width, height, png_out, color_scheme){
     filter(water_year >= 2010, water_year <= 2015)
   
   main_plot <- ggplot(data = plot_df,
-         aes(x = date, y = norm_val, color = hi_lo)) +
-    geom_linerange(aes(ymin = 0, ymax = norm_val)) +
+                      aes(x = date, y = norm_val, color = hi_lo)) +
+    geom_linerange(aes(ymin = 0, ymax = norm_val), linewidth = 1.3) +
     facet_wrap(~ name, nrow = 4) +
-    scale_color_manual(values = c(color_scheme$dry_red_dark,
-                                  color_scheme$wet_blue_dark)) +
+    scale_color_manual(values = c(color_scheme$drier_than_normal,
+                                  color_scheme$wetter_than_normal)) +
     scale_x_date(breaks = "1 year", date_labels = "%Y") +
     theme_void() +
     theme(legend.position = "none",
           panel.grid.major.x = element_line(color = color_scheme$shadow, linewidth = 0.1),
-          axis.text.x = element_text(color = color_scheme$shadow, size = 8))
+          axis.text.x = element_text(color = color_scheme$shadow, size = 8),
+          plot.margin = margin(t = 0,  # Top margin
+                               r = 5,  # Right margin
+                               b = 0,  # Bottom margin
+                               l = 5)) # Left margin)
   
   
   # background
   canvas <- grid::rectGrob(
     x = 0, y = 0,
     width = width, height = height,
-    gp = grid::gpar(fill = color_scheme$svg_col_default, alpha = 1, 
-                    col = color_scheme$svg_col_default)
+    gp = grid::gpar(fill = "transparent", alpha = 1, 
+                    col = "transparent")
   )
   
   plot_composition <- 

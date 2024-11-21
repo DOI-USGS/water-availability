@@ -51,7 +51,9 @@ p3_targets <- list(
                  mid_cream = "#C3C3AC",
                  dry_red_vdark = "#492525",
                  dry_red_dark = "#965a5b",
-                 dry_red_light = "#CFACAB"
+                 dry_red_light = "#CFACAB",
+                 drier_than_normal = "#965a5b",
+                 wetter_than_normal = "#1687A5"
                ))),
   tar_target(p3_popn_colors,
              col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
