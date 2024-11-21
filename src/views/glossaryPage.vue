@@ -6,6 +6,10 @@
             <h1>Key Definitions</h1>
             <div class="key-term" v-for="terms in termArray">
                 <div class="key-message-item-text">
+                  <v-img
+                    :width="300"
+                    src="terms.visual"
+                  ></v-img>
                     <h3 class="glossary-term"> {{ terms.term }} </h3>
                     <p class="glossary-def"> {{ terms.definition }}</p>
                 </div>
