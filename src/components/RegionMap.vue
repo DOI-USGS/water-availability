@@ -26,7 +26,7 @@ const updateLayers = () => {
 
   const visibleLayers = Object.entries(props.layerVisibility).map(([key, value]) => ({
     key,
-    path: layerPaths[key],
+    path: layerPaths[key]?.path,
     visible: value.visible
   }))
 
@@ -62,12 +62,33 @@ watch(
 
 
 const layerPaths = {
-  none: '/assets/01_stress_map_very_low_none.png',
-  low: '/assets/01_stress_map_low.png',
-  mod: '/assets/01_stress_map_moderate.png',
-  high: '/assets/01_stress_map_high.png',
-  severe: '/assets/01_stress_map_severe.png'
-}
+  very_low_or_none: {
+    path: '/assets/01_stress_map_very_low_none.png',
+    color: '#39424f',
+    order: 1
+  },
+  low: {
+    path: '/assets/01_stress_map_low.png',
+    color: '#80909D',
+    order: 2
+  },
+  moderate: {
+    path: '/assets/01_stress_map_moderate.png',
+    color: '#edeadf',
+    order: 3
+  },
+  high: {
+    path: '/assets/01_stress_map_high.png',
+    color: '#Cfacab',
+    order: 4
+  },
+  severe: {
+    path: '/assets/01_stress_map_severe.png',
+    color: '#965a6b',
+    order: 5
+  }
+};
+
 
   
   onMounted(async () => {
@@ -118,16 +139,28 @@ const layerPaths = {
     // updating stacked bar chart to selected region or state
     const updateBarChart = (data, regionName = 'United States') => {
       if (!data.length) return;
-  
+
+      // Sort data based on the order defined in layerPaths
+      const sortedData = [...data].sort((a, b) => {
+        const normalize = (str) => str.trim().toLowerCase().replace(/\s+/g, '_');
+        const orderA = layerPaths[normalize(a.sui_category_5)]?.order || Infinity;
+        const orderB = layerPaths[normalize(b.sui_category_5)]?.order || Infinity;
+        return orderA - orderB;
+      });
+      console.log('Sorted data:', sortedData);
+
       const categories = data.map(d => d.sui_category_5);
-      const values = data.map(d => +d.percentage_stress);
-      const colors = d3.scaleOrdinal()
-        .domain(categories)
-        .range(['#965a6b', '#Cfacab', '#edeadf', '#80909D', '#39424f']);
+      const values = sortedData.map(d => +d.percentage_stress);
   
       const xScale = d3.scaleLinear()
         .domain([0, d3.sum(values)])
         .range([0, 700]);
+
+        const getColor = (category) => {
+          const normalizedCategory = category.trim().toLowerCase().replace(/\s+/g, '_');
+          return layerPaths[normalizedCategory]?.color || "#ccc"; // Default to gray if no match
+        };
+
   
       g.selectAll('rect')
         .data(data)
@@ -137,7 +170,7 @@ const layerPaths = {
             .attr('y', 0)
             .attr('width', 0) 
             .attr('height', 30)
-            .attr('fill', d => colors(d.sui_category_5))
+            .attr('fill', d => getColor(d.sui_category_5))
             .call(enter => enter.transition()
             .duration(750) 
             .attr('width', d => xScale(d.percentage_stress))),
@@ -145,6 +178,7 @@ const layerPaths = {
             .call(update => update.transition()
             .duration(750)
             .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
+            .attr('fill', d => getColor(d.sui_category_5))
             .attrTween('width', function(d, i) {
                 const previousWidth = d3.select(this).attr('width') || 0; // fallback to 0 if no prior value
                 const interpolator = d3.interpolate(previousWidth, xScale(d.percentage_stress));
@@ -171,6 +205,7 @@ const layerPaths = {
         .duration(750)
         .text(regionName))
     );
+
   
       const formatPercentage = d3.format('.0f');
   
@@ -185,7 +220,7 @@ const layerPaths = {
                 .attr('y', 50)
                 .attr('fill', 'black')
                 .attr('text-anchor', 'middle')
-                .text(d => `${(d.sui_category_5)}`)
+                .text(d => `${formatPercentage(d.percentage_stress)}%`)
                 .style('opacity', 0); // start invisible
 
             enteringText.transition()
@@ -238,8 +273,6 @@ const layerPaths = {
         .attr('y', -55) // nudging png to fit within svg bounds
         .attr('width', width * scale_size)
         .attr('height', height * scale_size);
-
-    
   
     // find national water stress by category
       const totalByCategory = d3.rollups(
