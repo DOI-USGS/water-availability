@@ -20,7 +20,7 @@ export default {
         method: [
           {
             header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation were very low or none indicating values <= 0.2, low indicating values > 0.2 and <= 0.4, medium indicating values > 0.4 and <= 0.6, high indicating values > 0.6 and <= 0.8, and severe indicating values > 0.8."
+            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
           },
           {
             header: "Mapping Census Data",
@@ -34,7 +34,6 @@ export default {
       },      {
         page: 3,
         route: '/03SVI',
-        description: "Water limitation was calculated as annual average water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. ",
         method: [
           {
             header: "Calculating social vulnerability",
@@ -42,7 +41,7 @@ export default {
           },
           {
             header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6."
+            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation included low, which was between 0 and 0.4, medium between 0.4 and 0.6, and high, which was above 0.6."
           }
         ]
       },      {
