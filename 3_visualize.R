@@ -257,7 +257,7 @@ p3_targets <- list(
                       plot_margin = 0.0009, 
                       bkgd_color = "transparent",
                       leg_title = title,
-                      png_out = sprintf("src/assets/images/R/05_%s_HUC12_map.png", nutrient),
+                      png_out = sprintf("src/assets/images/R/05_%s_map.png", nutrient),
                       width = 9, height = 6)),
     names = nutrient
   ),
