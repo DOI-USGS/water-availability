@@ -6,6 +6,7 @@ source("3_visualize/src/viz_sui_popn.R")
 source("3_visualize/src/viz_wq.R")
 source("3_visualize/src/viz_ternary.R")
 source("3_visualize/src/viz_ws.R")
+source("3_visualize/src/viz_availability.R")
 
 p3_targets <- list(
   ##############################################
@@ -91,18 +92,56 @@ p3_targets <- list(
                                 file_out = "src/assets/svgs/Regions.svg",
                                 color_scheme = p3_colors_website),
              format = "file"),
+  tar_target(p3_Reg_json,
+             p2_Reg_sf |>
+               select(-Shape_Area, -Shape_Leng, -Name, -Region, -AggRegion) |>
+               ms_simplify(keep = 0.05) |>
+               topojson_write(group = Region_nam, 
+                              precision = 6,
+                              file = "public/assets/Regions.topojson")
+             ),
   
   ##############################################
   # 
   #           KEY TAKEAWAY 1: 
   #             
   #
-  #
+  ## National water stress map
   tar_target(p3_map_stress_png,
              map_stress(in_sf = p2_HUC12_join_sui_svi_sf,
                          color_scheme = p3_colors_balance,
+                        in_regions = p2_Reg_sf,
                         png_out = "src/assets/images/R/01_stress_map.png",
-                        width = 6, height = 9)),
+                        width = 8, height = 6)),
+  ## Replicate maps for each water stress category
+  tarchetypes::tar_map( 
+    values = tibble::tibble(level = c("low", "very_low_none", "moderate", "severe", "high")),
+    tar_target(p3_map_stress_levels_png,
+               map_stress(in_sf = p2_HUC12_join_sui_svi_sf |>
+                            dplyr::filter(sui_cat_clean == level),
+                          in_regions = p2_Reg_sf,
+                          color_scheme = p3_colors_balance,
+                          png_out = sprintf("public/assets/01_stress_map_%s.png", level),
+                          width = 8, height = 6)),
+    names = level
+          ),
+  # tar_target(p3_map_stress_bins_png,
+  #            {
+  #              sui_cat <- janitor::make_clean_names(unique(p2_HUC12_join_sui_svi_sf$sui_category_5))
+  #              sui_cat |>
+  #                purrr::map(function(x){
+  #                  map_stress(in_sf = p2_HUC12_join_sui_svi_sf |> 
+  #                               dplyr::mutate(sui_category_5_clean = janitor::make_clean_names(sui_category_5)) |>
+  #                               dplyr::filter(sui_category_5_clean == x),
+  #                             in_regions = p2_Reg_sf,
+  #                             color_scheme = p3_colors_balance,
+  #                             png_out = sprintf("public/assets/01_stress_map_%s.png", x),
+  #                             width = 8, height = 6)
+  #                })
+  #            
+  #            }
+  # ),
+  
   
   ##############################################
   # 
@@ -137,7 +176,18 @@ p3_targets <- list(
                                height = 2),
              format = "file"
   ),
-  
+  tar_map(
+    values = tibble::tibble(wa_types = c("wa_sw_wq", "wa_sui", "wa_gw_wq", "wa_ecoflow")),
+    tar_target(p3_water_avail_png,
+               water_avail_map(in_df = p2_water_avail_sf, 
+                               wa_type = wa_types, 
+                               color_scheme = p3_colors_website, 
+                               png_out = sprintf("src/assets/images/R/02_water_avail_%s.png", wa_types), 
+                               width = 6, height = 4),
+               format = "file"
+    ),
+    names = wa_types
+  ),
   
   ##############################################
   # 

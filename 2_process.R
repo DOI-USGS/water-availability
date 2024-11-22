@@ -135,8 +135,44 @@ p2_targets <- list(
                dplyr::left_join(p2_sui_2020_HUC12,
                                 by = "HUC12") |>
                dplyr::left_join(p2_svi_mean_HUC12,
-                                by = "HUC12")
+                                by = "HUC12") |>
+               filter(! is.na(sui_category_5)) |> 
+               dplyr::mutate(sui_cat_clean = case_when(sui_category_5 == "High" ~ "high",
+                                                       sui_category_5 == "Low" ~ "low",
+                                                       sui_category_5 == "Moderate" ~ "moderate",
+                                                       sui_category_5 == "Severe" ~ "severe",
+                                                       sui_category_5 == "Very low/\nnone" ~ "very_low_none"))
              
+  ),
+  # Join with water availability for key finding 2
+  tar_target(p2_water_avail,
+    tibble(
+      Region_nam = c("Northeast", "Atlantic Coast", "Florida", 
+                  "Great Lakes", "Midwest", "Tennessee-Missouri",  
+                  "Mississippi Embayment", "Gulf Coast",   
+                  "Souris-Red-Rainy", "Northern High Plains",
+                  "Central High Plains", "Southern High Plains",
+                  "Texas", "Columbia-Snake",
+                  "Central Rockies", "Southwest Desert",
+                  "Pacific Northwest", "California-Nevada"),
+      wa_sui = c("very low", "low", "high", "very low", "moderate", "low", 
+                 "severe", "moderate", "moderate", "moderate", "severe", "severe", 
+                 "severe", "very low", "moderate", "high", "very low", "high"),
+      wa_sw_wq = c("moderate", "moderate", "very low", "low", "severe", "high", 
+                   "high", "low", "severe", "severe", "severe", "severe", 
+                   "low", "moderate", "high", "high", "moderate", "high"),
+      wa_gw_wq = c("moderate", "low", "very low", "moderate", "moderate", "low", 
+                   "very low", "very low", "moderate", "low", "high", "severe", 
+                   "high", "moderate", "low", "severe", "very low", "high"),
+      wa_ecoflow = c("severe", "moderate", "severe", "low", "low", "moderate", 
+                     "high", "high", "very low", "low", "severe", "high", 
+                     "severe", "low", "very low", "very low", "moderate", "high")
+    )
+  ),
+  tar_target(p2_water_avail_sf,
+             p2_water_avail |> 
+               dplyr::left_join(p2_Reg_sf,
+                                by = "Region_nam")
   ),
 
   # Summarize SUI by state

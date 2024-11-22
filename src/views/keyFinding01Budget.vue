@@ -31,16 +31,45 @@
           Water stress occurs when there is not enough water available to meet human and ecosystem needs. This is more likely to happen in  regions where the difference between water supply and demand is fairly small. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.
         </p><br><br>
         <p>Levels of water stress include: 
-          <span class="highlight" id="none">very low or none</span>, 
-          <span class="highlight" id="low">low</span>, 
-          <span class="highlight" id="mod">moderate</span>, 
-          <span class="highlight" id="high">high</span>,
-          <span class="highlight" id="severe">severe</span></p>
+          <span 
+            class="highlight" 
+            id="very_low_none" 
+            :class="{'active': toggles.very_low_none.visible, 'inactive-toggle': !toggles.very_low_none.visible}"
+            @click="toggleLayer('very_low_none')">
+            very low or none
+          </span>, 
+          <span 
+            class="highlight" 
+            id="low" 
+            :class="{'active': toggles.low.visible, 'inactive-toggle': !toggles.low.visible}"
+            @click="toggleLayer('low')">
+            low
+          </span>, 
+          <span 
+            class="highlight" 
+            id="moderate" 
+            :class="{'active': toggles.moderate.visible, 'inactive-toggle': !toggles.moderate.visible}"
+            @click="toggleLayer('moderate')">
+            moderate
+          </span>, 
+          <span 
+            class="highlight" 
+            id="high" 
+            :class="{'active': toggles.high.visible, 'inactive-toggle': !toggles.high.visible}"
+            @click="toggleLayer('high')">
+            high
+          </span>,
+          <span 
+            class="highlight" 
+            id="severe" 
+            :class="{'active': toggles.severe.visible, 'inactive-toggle': !toggles.severe.visible}"
+            @click="toggleLayer('severe')">
+            severe
+          </span>
+        </p>
         </div>
         <div class="image-container">
-            <img src="../assets/images/R/01_stress_map.png" alt="Water Stress" class="background-image">
-            <!-- Overlay SVG with the same dimensions -->
-            <svg class="overlay-svg"></svg>
+          <RegionMap :layerVisibility="toggles" />
         </div>
         <Methods></Methods>
       <References></References>
@@ -50,9 +79,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, reactive, watchEffect } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
+import RegionMap from '../components/RegionMap.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
@@ -82,53 +112,20 @@ const orderedRegions = [
     "Florida", "Souris-Red-Rainy", "Midwest", "Great Lakes", "Northeast"
 ];
 
+const toggles = reactive({
+  very_low_none: { visible: true },
+  low: { visible: true },
+  moderate: { visible: true },
+  high: { visible: true },
+  severe: { visible: true }
+})
+
+const toggleLayer = (layerId) => {
+  toggles[layerId].visible = !toggles[layerId].visible;
+}
+
 onMounted(async () => {
     try {
-      // Load and append the external SVG to the overlay
-      d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
-            const svgNode = xml.documentElement;
-
-            svgNode.setAttribute("width", "113%"); // Adjust as needed
-            svgNode.setAttribute("height", "auto")
-            svgNode.setAttribute("x", "37")
-            svgNode.setAttribute("y", "-2"); 
-
-            // Append the loaded SVG into the overlay-svg container
-            const overlaySvg = d3.select(".overlay-svg")
-              .node().appendChild(svgNode); 
-
-            d3.select(svgNode).selectAll("g path")
-              .attr("stroke", "white")
-              .attr("stroke-width", "1.5")
-              .attr("fill", "transparent")
-              .on("mouseover", function(event, d) {
-                d3.selectAll(this).raise(); // Move the path to the front
-                d3.select(this)
-                  .attr("stroke", "yellow") 
-                  .attr("stroke-width", "3");
-
-                // Show region name near the cursor
-                d3.select(".overlay-svg").append("text")
-                  .attr("class", "region-label")
-                  .attr("x", event.pageX + 10) // Position near the cursor
-                  .attr("y", event.pageY - 10)
-                  .text(d3.select(this).attr("id")); 
-              })
-              .on("mousemove", function(event) {
-                // Update the position of the label as the mouse moves
-                d3.select(".region-label")
-                  .attr("x", event.pageX + 10)
-                  .attr("y", event.pageY - 10);
-              })
-              .on("mouseout", function() {
-                d3.select(this)
-                  .attr("stroke", "white") // Reset to original color
-                  .attr("stroke-width", "1.5");
-
-                // Remove the region label
-                d3.select(".region-label").remove();
-              });
-      })
         await loadDatasets();
         data.value = dataSet1.value;
         if (data.value.length > 0) {
@@ -349,9 +346,9 @@ function createDotChart() {
 }
 .image-container {
   position: relative;
-  width: 95%; 
-  max-width: 800px;
-  margin: 40px auto; 
+  width: 100%; 
+  max-width: 1800px;
+  margin: auto; 
   overflow: hidden;
 }
 
@@ -377,12 +374,13 @@ function createDotChart() {
 }
 
 
-#toggle-supply, #toggle-demand {
+#toggle-supply {
   margin-left: 10px;
   background-color: #669999;
 }
 
 #toggle-demand {
+  margin-left: 10px;
   background-color: #F87A53;
 }
 
@@ -419,7 +417,7 @@ function createDotChart() {
     background-color: #F87A53;
   }
 
-  &#none {
+  &#very_low_none {
     background-color: #39424f;
   }
 
@@ -428,7 +426,7 @@ function createDotChart() {
     color: black;
   }
 
-  &#mod {
+  &#moderate {
     background-color: #edeadf;
     color: black;
   }
@@ -449,8 +447,24 @@ function createDotChart() {
 .demand {
   background-color: #F87A53;
 }
-.inactive-toggle {
+.highlight.inactive-toggle {
   background-color: lightgrey; 
   color: black;
+  &#very_low_none {
+    background-color: lightgrey; 
+  }
+  &#low {
+    background-color: lightgrey; 
+  }
+  &#moderate {
+    background-color: lightgrey; 
+  }
+  &#high {
+    background-color: lightgrey; 
+  }
+  &#severe {
+    background-color: lightgrey; 
+  }
 }
+
 </style>
