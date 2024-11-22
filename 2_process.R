@@ -145,6 +145,14 @@ p2_targets <- list(
   ),
 
   # Join with water quality data (loads)
+  tar_target(p2_HUC12_join_wq_sf,
+             p2_mainstem_HUC12_simple_sf |>
+               # add in tn loads
+               dplyr::left_join(p2_wq_HUC12_df_tn |> rename(tn_load = total_load), 
+                                by = "HUC12") |>
+               # add in tp loads
+               dplyr::left_join(p2_wq_HUC12_df_tp |> rename(tp_load = total_load), 
+                                by = "HUC12")),
   tar_target(p2_HUC8_join_wq_sf,
              p2_mainstem_HUC8_simple_sf |>
                # add in tn loads
@@ -235,11 +243,12 @@ p2_targets <- list(
     tar_target(p2_wq_Reg_df,
                process_wq_data(in_csv = raw_targets,
                                nutrient = nutrient)),
-    # total loads by HUC8
+    # total loads by HUC12 and HUC8
+    tar_target(p2_wq_HUC12_df,
+               process_wq_HUC12(in_csv = raw_targets,
+                              in_COMID_xwalk = p1_COMID_to_HUC12_crosswalk_csv)),
     tar_target(p2_wq_HUC8_df,
-               process_wq_HUC8(in_csv = raw_targets,
-                               in_COMID_xwalk = p1_COMID_to_HUC12_crosswalk_csv,
-                               nutrient = nutrient)),
+               process_wq_HUC8(data_in = p2_wq_HUC12_df)),
     tar_target(p2_wq_Reg_d3_csv,
                readr::write_csv(p2_wq_Reg_df,
                                 file = sprintf("public/wq_sources_%s.csv", nutrient))),
