@@ -290,6 +290,30 @@ export default {
         data_release: false,
         link: "https://doi.org/10.1029/2023WR036284",
         doi: "10.1029/2023WR036284"
+      },
+      {
+        refID: "CDC2022", 
+        authors: "Centers for Disease Control",
+        year: "2022",
+        title: "CDC SVI documentation 2020",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://www.atsdr.cdc.gov/placeandhealth/svi/documentation/SVI_documentation_2020.html",
+        doi: "https://www.atsdr.cdc.gov/"
+      },
+      {
+        refID: "Flanagan2011", 
+        authors: "Flanagan, B.E., Gregory, E.W., Hallisey, E.J., Heitgerd, J.L., and Lewis, B.",
+        year: "2011",
+        title: "A social vulnerability index for disaster management",
+        journal: true,
+        journal_name: "Journal of Homeland Security and Emergency Management",
+        journal_issue: "8",
+        data_release: false,
+        link: "https://doi.org/10.2202/1547-7355.1792",
+        doi: "10.2202/1547-7355.1792"
       }
 
     ]

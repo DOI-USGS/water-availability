@@ -32,7 +32,11 @@ export default {
         },
         {
             term: "Social vulnerability",
-            definition: "'Social vulnerability refers to the demographic and socioeconomic factors (such as poverty, lack of access to transportation, and crowded housing) that adversely affect communities that encounter hazards and other community-level stressors. These stressors can include natural or human-caused disasters (such as tornadoes or chemical spills) or disease outbreaks (such as COVID-19).' The Centers for Disease Control (CDC) Social Vulnerability Index (SVI; Centers for Disease Control, 2022) includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011)."
+            definition: "'Social vulnerability refers to the demographic and socioeconomic factors (such as poverty, lack of access to transportation, and crowded housing) that adversely affect communities that encounter hazards and other community-level stressors. These stressors can include natural or human-caused disasters (such as tornadoes or chemical spills) or disease outbreaks (such as COVID-19).' The Centers for Disease Control (CDC) Social Vulnerability Index (SVI; Centers for Disease Control, 2022) includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011).",
         }
+    ],
+    references: [
+        "CDC2022",
+        "Flanagan2011"
     ]
 }

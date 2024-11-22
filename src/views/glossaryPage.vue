@@ -1,6 +1,5 @@
 <template>
-  <section>
-    <KeyMessages></KeyMessages>
+  <section>    
     <div class="glossary-container">
         <div id="text-container">
             <h1>Key Definitions</h1>
@@ -15,36 +14,52 @@
             </div>
         </div>
     </div>
-    
-    <section class="wavy-container bottom-wavy">
-      <section>
-        <div class="waves upside-down">
-          <div class="wave" id="wave1"></div>
-          <div class="wave" id="wave2"></div>
-          <div class="wave" id="wave3"></div>
-          <div class="wave" id="wave4"></div>
-        </div>
-      </section>
-      <div class="title-message-container">
-        <div class="report-link-container">
-        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
-         <h3> Read the report</h3>
-        </a>        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
-         <h3> Access the data</h3>
-        </a>
-        </div>
+    <div class="references-container">
+        <h2>References</h2>
+      <div  v-for="reference in theseReferences">
+          <p>
+              <span v-html="reference.authors" /> (<span v-html="reference.year" />). <a
+              :href="reference.link"
+              target="_blank"
+              ><span v-html="reference.title" :class="{ report: reference.report }"/></a>
+              <span v-if="reference.data_release">: U.S. Geological Survey data release</span>.
+              <span v-if="reference.publication_info"> {{ reference.publication_info }}. </span>
+              <span v-if="reference.journal">
+              <span v-html="reference.journal_name" class="journal-name"></span>
+              <span v-if="reference.journal_issue">, {{ reference.journal_issue }}</span>.
+              </span>
+              <span v-if="reference.doi">DOI: {{ reference.doi }}</span>
+          </p>
       </div>
-    </section>
+    </div>
+    <div class="report-link-container">
+          <a href="index.html" rel="noopener noreferrer" class="report-link">
+            <h3> Return Home</h3>
+          </a>       
+    </div>
   </section>
 </template>
 
 <script setup>
   import glossaryTerms from '@/assets/text/glossaryTerms.js';
   import KeyMessages from '../components/KeyMessages.vue';
-  console.log(glossaryTerms)
+  import References from './../assets/text/references.js';
 
-  // Sort references
+  // Sort terms
 const termArray = glossaryTerms.key.sort((a, b) => a.term.localeCompare(b.term));
+
+// extract list of references for this page
+const filteredReferences = glossaryTerms.references;
+console.log(filteredReferences)
+
+
+const refArray = References.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID));
+
+console.log(theseReferences)
+
 </script>
 
 <style scoped>
