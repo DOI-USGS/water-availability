@@ -10,9 +10,12 @@
                     <img class="viz-placeholder" src="../assets/images/manual/04_watercycle.png">
                 </div>
                 <div class="text-container">
-                    <p>As water moves through the water cycle it can spend different amounts of time in the various stages. For example, water that falls as snow could remain on the landscape for months until it melts in the spring, while water that makes its way into groundwater may remain for decades or longer. This means that periods of abnormally low precipitation affect different parts of the water cycle at different times. During periods of low precipitation, less water in streams and rivers can lead to more groundwater use resulting in groundwater declines that may take years to recover. By assessing all parts of the water budget together, we can visualize how these changes are reflected in different parts of water cycle, and how they relate to water availability across the nation.</p>
+                    <p>As water moves through the water cycle it can spend different amounts of time in the various stages. For example, water that falls as snow could remain on the landscape for months until it melts in the spring, while water that makes its way into groundwater may remain for decades or longer. This means that periods of abnormally low precipitation affect different parts of the water cycle at different times.</p>
                     <br><br>
-                    <p>Water supply cascades through the water cycle. In 2012 the Northern High Plains had 
+                    <p> 
+                      During periods of low precipitation, less water in streams and rivers can lead to more groundwater use resulting in groundwater declines that may take years to recover. By assessing all parts of the water budget together, we can visualize how these changes are reflected in different parts of water cycle, and how they relate to water availability across the nation.</p>
+                    <br><br>
+                    <p>Water supply cascades through the water cycle. For example, in 2012 the Northern High Plains had 
                         <span class="highlight" id="dry">abnormally low</span> precipitation, which cascaded through the water cycle with delayed responses in evapotranspiration, soil moisture, and eventually streamflow. Similarly, periods of  
                         <span class="highlight" id="wet">abnormally high</span>
                     rainfall in early 2011 did not show up in the streamflow signature until later in that year.</p>
