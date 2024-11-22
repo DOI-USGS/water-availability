@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water supply there is and how much water are we using. For most of the country, <span class="highlight" id="supply">water supply</span> is much higher than <span class="highlight" id="demand">water demand</span>, meaning there is more than enough water available to meet our needs. 
+                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand. For most of the country, <span class="highlight" id="supply">water supply</span> is much higher than <span class="highlight" id="demand">water demand</span>, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the southwest and the high plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
                   </p>
             </div>
         <div class="viz-container">
@@ -28,7 +28,7 @@
         </div>
         <div class="text-container">
         <p>
-          Water stress occurs when there is not enough water available to meet human and ecosystem needs. This is more likely to happen in  regions where the difference between water supply and demand is fairly small. Between 2010 and 2020, the Southern High Plains, Texas, Central High Plains, and Mississippi Embayment had the most widespread exposure to water stress in the country.
+          Water limitation occurs when water use is a high percentage of surface-water supply and therefore there is not enough water available to meet human and ecosystem needs. Water stress is calculated based on a water supply and use index, which is a way of showing the imbalance between surface water-supply and consumptive uses. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water stress in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements.
         </p><br><br>
         <p>Levels of water stress include: 
           <span 
@@ -70,6 +70,10 @@
         </div>
         <div class="image-container">
           <RegionMap :layerVisibility="toggles" />
+        </div>
+        <div class="text-container">
+          <h2>Local and seasonal effects of water limitation</h2>
+          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest (chap. D, Medalie and others, 202x). Thus, lower supply is often matched with increased use, which increases water stress for local watersheds.</p>
         </div>
         <Methods></Methods>
       <References></References>

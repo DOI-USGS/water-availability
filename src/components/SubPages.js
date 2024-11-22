@@ -5,14 +5,14 @@ export default {
             route: '/01Budget',
             mainTitle: 'Do we have enough water? Yes, and no',
             shortTitle: 'The U.S. has enough water, but not regionally',
-            keyMessage: 'At the national scale, the natural water supply greatly exceeds our demand for water. However, this pattern is not true for all regions.',
+            keyMessage: 'At the national scale, water supply is much higher than our demand for water. However, this pattern is not true for all regions.',
             references: ["Stets2024", "Stets2025"]
         },
         {
             page: 2,
             route: '/02SUI',
-            mainTitle: 'Living with water stress',
-            shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water stress',
+            mainTitle: 'Living with water limitation',
+            shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water limitation',
             keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.',
             references: ["Liu2022", "Dettingher2005","Stets2024", "Stets2025"]
         },
@@ -20,16 +20,16 @@ export default {
             page: 3,
             route: '/03SVI',
             mainTitle: 'Unequal access to water',
-            shortTitle: 'Socially vulnerable Americans have a higher risk of water stress',
-            keyMessage: 'A high proportion of the population living in areas with water stress are socially vulnerable',
+            shortTitle: 'Socially vulnerable Americans have a higher risk of water limitation',
+            keyMessage: 'A high proportion of the population living in areas with water limitation are socially vulnerable',
             references: [ "Drakes2024", "Stets2025"]
         },
         {
             page: 4,
             route: '/04Drought',
             mainTitle: 'Not enough rain and snow',
-            shortTitle: 'Disruptions to the water cycle can cause water stress',
-            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water stress and exacerbating water quality issues.' ,
+            shortTitle: 'Disruptions to the water cycle can cause water limitation',
+            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation and exacerbating water quality issues.' ,
             references: [
                 "Bell2015",
                 "Hoerling2014",

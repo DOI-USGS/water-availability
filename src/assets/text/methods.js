@@ -7,11 +7,11 @@ export default {
         method: [
           {
             header: "Calculating supply and demand",
-            description: "Supply and demand were calculated as mean annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. Error bars on the supply and demand were calculated as standard deviations.",
+            description: "Supply and demand were calculated as mean annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. Error bars on the supply and demand were calculated as standard deviations between the years of analysis.",
           },
           {
-            header: "Calculating water stress",
-            description: "Water stress was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water stress were very low or none indicating values <= 0.2, low indicating values > 0.2 and <= 0.4, medium indicating values > 0.4 and <= 0.6, high indicating values > 0.6 and <= 0.8, and severe indicating values > 0.8."
+            header: "Calculating water limitation",
+            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
           }
         ]
         },      {
@@ -19,12 +19,12 @@ export default {
         route: '/02SUI',
         method: [
           {
-            header: "Calculating water stress",
-            description: "Water stress was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water stress were very low or none indicating values <= 0.2, low indicating values > 0.2 and <= 0.4, medium indicating values > 0.4 and <= 0.6, high indicating values > 0.6 and <= 0.8, and severe indicating values > 0.8."
+            header: "Calculating water limitation",
+            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation were very low or none indicating values <= 0.2, low indicating values > 0.2 and <= 0.4, medium indicating values > 0.4 and <= 0.6, high indicating values > 0.6 and <= 0.8, and severe indicating values > 0.8."
           },
           {
             header: "Mapping Census Data",
-            description: "To calculate the number of people living in different water stress categories, we merged census data with water stress data by watershed (HUC12)."
+            description: "To calculate the number of people living in different water limitation categories, we merged census data with water limitation data by watershed (HUC12)."
           },
           {
             header: "Integrated water availability",
@@ -34,15 +34,15 @@ export default {
       },      {
         page: 3,
         route: '/03SVI',
-        description: "Water stress was calculated as annual average water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. ",
+        description: "Water limitation was calculated as annual average water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. ",
         method: [
           {
             header: "Calculating social vulnerability",
-            description: "The Centers for Disease Control (CDC) 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water stress (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6.",
+            description: "The Centers for Disease Control (CDC) 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water limitation (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6.",
           },
           {
-            header: "Calculating water stress",
-            description: "Water stress was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water stress were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6."
+            header: "Calculating water limitation",
+            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6."
           }
         ]
       },      {
