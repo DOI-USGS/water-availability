@@ -1,4 +1,4 @@
-plot_deviations <- function(data_in, width, height, png_out, color_scheme){
+plot_deviations <- function(data_in, region, width, height, png_out, color_scheme){
   
   # set up factors for plotting
   plot_df <- data_in |>
@@ -10,7 +10,7 @@ plot_deviations <- function(data_in, width, height, png_out, color_scheme){
                                     "Streamflow"))) |>
     mutate(date = as_date(paste(water_year, month, '01', sep = '-'))) |>
     # filter to Northern High Plains
-    filter(Region_nam == "Northern High Plains") |>
+    filter(Region_nam == region) |>
     # fewer years in view
     filter(water_year >= 2010, water_year <= 2015)
   

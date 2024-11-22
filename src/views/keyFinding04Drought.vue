@@ -18,7 +18,13 @@
                     rainfall in early 2011 did not show up in the streamflow signature until later in that year.</p>
                 </div>
                 <div class="viz-container">
-                    <img class="viz-portrait" src="../assets/images/R/04_ws_cascading_NHP.png">
+                    <Reg class="reg-svg"></Reg>
+                    <img
+                        class="viz-portrait"
+                        id="cascades"
+                        :src="imgSrc"
+                        alt=""
+                    >    
                 </div>
                 <div class="text-container">
                 <h2>Disruptions to the water cycle can cause water stress</h2>
@@ -47,12 +53,52 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
+import * as d3Base from 'd3';
+import Reg from "../../public/assets/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 
+const imgSrc = ref('../assets/images/R/04_ws_2010_Northern High Plains.png');
+
+
+const setDefaultImgSrc = () => {
+  import(`../assets/images/R/04_ws_2010_Northern High Plains.png`).then(img => {
+    imgSrc.value = img.default;
+  });
+};
+
+const addInteractions = () => {
+  const mapSVG = d3Base.select('.reg-svg');
+  mapSVG.selectAll('.Region_nam_nospace')
+    .on("mouseover", mouseoverMap)
+    .on("mouseout", mouseoutMap);
+};
+
+
+const mouseoverMap = (event) => {
+  const regionID = event.target.id;
+  d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", "#5e7789");
+  const formattedRegionID = regionID.replace(/_/g, ' ');
+  import(`../assets/images/R/04_ws_2010_${formattedRegionID}.png`).then(img => {
+    imgSrc.value = img.default;
+  });
+};
+
+const mouseoutMap = (event) => {
+  const regionID = event.target.id;
+  d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
+  import(`../assets/images/R/04_ws_2010_Northern High Plains.png`).then(img => {
+    imgSrc.value = img.default;
+  });
+};
+
+onMounted(() => {
+  setDefaultImgSrc();
+  addInteractions();
+});
 
 </script>
 

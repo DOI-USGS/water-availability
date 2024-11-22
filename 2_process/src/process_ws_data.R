@@ -4,7 +4,7 @@ compare_ws_mean <- function(data_in, supply_name, min_year, max_year, xwalk){
   raw_data <- readr::read_csv(data_in,
                               show_col_types = FALSE) |>
     mutate(HUC8 = str_sub(HUC, 1, 8)) |>
-    pivot_longer(cols = starts_with("20"), 
+    pivot_longer(cols = starts_with("20"), # select all columns that start with "20"
                  names_to = c("year", "month"), 
                  names_sep = "_", 
                  names_transform = list(year = as.integer, month = as.integer), 

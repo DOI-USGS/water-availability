@@ -195,13 +195,23 @@ p3_targets <- list(
   #             water stress and exacerbating water quality issues 
   #
   #
-  tar_target(p3_ws_cascading_png,
-             plot_deviations(data_in = p2_ws_all_df,
-                             png_out = "src/assets/images/R/04_ws_cascading_NHP.png",
-                             width = 3,
-                             height = 5,
-                             color_scheme = p3_colors_balance),
-             format = "file"),
+  tar_map(
+    values = tibble::tibble(reg = c("Northeast", "Atlantic Coast", "Florida", 
+                                    "Great Lakes", "Midwest", "Tennessee-Missouri",  
+                                    "Mississippi Embayment", "Gulf Coast",   
+                                    "Souris-Red-Rainy", "Northern High Plains",
+                                    "Central High Plains", "Southern High Plains",
+                                    "Texas", "Columbia-Snake",
+                                    "Central Rockies", "Southwest Desert",
+                                    "Pacific Northwest", "California-Nevada")),
+    tar_target(p3_ws_cascading_2010_png,
+               plot_deviations(data_in = p2_ws_all_df,
+                               region = reg,
+                               png_out = sprintf("src/assets/images/R/04_ws_2010_%s.png", reg),
+                               width = 3, height = 5,
+                               color_scheme = p3_colors_balance),
+               format = "file")
+    ),
   
   ##############################################
   # 
