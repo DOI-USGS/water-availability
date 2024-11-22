@@ -5,6 +5,7 @@ source("3_visualize/src/viz_svi_sui.R")
 source("3_visualize/src/viz_sui_popn.R")
 source("3_visualize/src/viz_wq.R")
 source("3_visualize/src/viz_ternary.R")
+source("3_visualize/src/viz_ws.R")
 source("3_visualize/src/viz_availability.R")
 
 p3_targets <- list(
@@ -51,7 +52,9 @@ p3_targets <- list(
                  mid_cream = "#C3C3AC",
                  dry_red_vdark = "#492525",
                  dry_red_dark = "#965a5b",
-                 dry_red_light = "#CFACAB"
+                 dry_red_light = "#CFACAB",
+                 drier_than_normal = "#965a5b",
+                 wetter_than_normal = "#1687A5"
                ))),
   tar_target(p3_popn_colors,
              col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
@@ -242,6 +245,23 @@ p3_targets <- list(
   #             water stress and exacerbating water quality issues 
   #
   #
+  tar_map(
+    values = tibble::tibble(reg = c("Northeast", "Atlantic Coast", "Florida", 
+                                    "Great Lakes", "Midwest", "Tennessee-Missouri",  
+                                    "Mississippi Embayment", "Gulf Coast",   
+                                    "Souris-Red-Rainy", "Northern High Plains",
+                                    "Central High Plains", "Southern High Plains",
+                                    "Texas", "Columbia-Snake",
+                                    "Central Rockies", "Southwest Desert",
+                                    "Pacific Northwest", "California-Nevada")),
+    tar_target(p3_ws_cascading_2010_png,
+               plot_deviations(data_in = p2_ws_all_df,
+                               region = reg,
+                               png_out = sprintf("src/assets/images/R/04_ws_2010_%s.png", reg),
+                               width = 3, height = 5,
+                               color_scheme = p3_colors_balance),
+               format = "file")
+    ),
   
   ##############################################
   # 
