@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-  import { reactive } from 'vue';
+  import { reactive, provide } from 'vue';
   import SubPages from '@/components/SubPages.js';
 
   // reactive feature toggles
@@ -83,9 +83,13 @@
       keyFinding09: true,
       keyFinding10: true,
     },
-    showReportLinks: true,
+    showReportLinks: false,
     showPageCarousel: false,
+    showAlternativeWarning: true,
   });
+
+// provide feature toggles to all descendants
+provide('featureToggles', featureToggles);
 </script>
 
 <style scoped>

@@ -3,14 +3,17 @@
     <WindowSize v-if="typeOfEnv === '-test build-'" />
     <HeaderUSWDSBanner v-if="typeOfEnv !== '-test build-'" />
     <HeaderUSGS />
-    <WorkInProgressWarning v-if="typeOfEnv !== ''" />
+    <!-- Render the WorkInProgressWarning component only if typeOfEnv is not empty -->
+    <WorkInProgressWarning
+      v-if="typeOfEnv !== ''"
+    />
     <RouterView />
     <FooterUSGS />
   </div>
 </template>
 
 <script setup>
-  import { onMounted } from "vue";
+  import { reactive, provide, onMounted } from "vue";
   import { RouterView } from 'vue-router'
   import WindowSize from "./components/WindowSize.vue";
   import HeaderUSWDSBanner from "./components/HeaderUSWDSBanner.vue";
@@ -21,6 +24,15 @@
 
   const windowSizeStore = useWindowSizeStore();
   const typeOfEnv = import.meta.env.VITE_APP_TIER;
+
+  // define feature toggles
+  const featureToggles = reactive({
+    showAlternativeWarning: true, // toggle to control alternative warning text
+  });
+
+  // provide feature toggles to the entire app
+  provide('featureToggles', featureToggles);
+
 
   // Declare behavior on mounted
   // functions called here
