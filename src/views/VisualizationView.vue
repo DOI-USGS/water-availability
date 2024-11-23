@@ -16,17 +16,28 @@
     <div id="findings-container">
       <div class="raindrop-container">
         <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
-          <div v-if="featureToggles.keyFindingToggles[`keyFinding${index + 1 < 10 ? `0${index + 1}` : index + 1}`]">
-              <router-link :to="message.route">
-                <button class="raindrop"><span class="raindrop-text"> {{ message.page }}</span></button>
-              </router-link><br>
-            </div>
+          <div>
+            <router-link 
+              :to="message.route"
+              :class="{
+                disabled: !featureToggles.keyFindingToggles[`keyFinding${index + 1 < 10 ? `0${index + 1}` : index + 1}`]
+              }"
+              @click.prevent="!featureToggles.keyFindingToggles[`keyFinding${index + 1 < 10 ? `0${index + 1}` : index + 1}`] ? null : undefined"
+            >
+              <button 
+                class="raindrop"
+                :disabled="!featureToggles.keyFindingToggles[`keyFinding${index + 1 < 10 ? `0${index + 1}` : index + 1}`]"
+              >
+                <span class="raindrop-text">{{ message.page }}</span>
+              </button>
+            </router-link>
+          </div>
           <div class="key-message-item-text">
-            <h3> {{ message.mainTitle }} </h3>
-            <h4> {{ message.shortTitle }}</h4>
+            <h3>{{ message.mainTitle }}</h3>
+            <h4>{{ message.shortTitle }}</h4>
           </div>
         </div>
-    </div>
+      </div>
     </div>
     <section class="wavy-container bottom-wavy">
       <section>
@@ -60,8 +71,8 @@
   const featureToggles = reactive({
     keyFindingToggles: {
       keyFinding01: false,
-      keyFinding02: false,
-      keyFinding03: false,
+      keyFinding02: true,
+      keyFinding03: true,
       keyFinding04: false,
       keyFinding05: false,
       keyFinding06: true,
@@ -181,6 +192,17 @@
   color: var(--cream-background);
   font-size: 40px;
   font-weight: bold;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.raindrop.disabled {
+  background-color: grey;
+  box-shadow: none;
+  outline: none;
 }
 
 </style>
