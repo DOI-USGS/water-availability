@@ -16,7 +16,7 @@
     <div id="findings-container">
       <div class="raindrop-container">
         <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
-            <div>
+          <div v-if="featureToggles.keyFindingToggles[`keyFinding${index + 1 < 10 ? `0${index + 1}` : index + 1}`]">
               <router-link :to="message.route">
                 <button class="raindrop"><span class="raindrop-text"> {{ message.page }}</span></button>
               </router-link><br>
@@ -38,7 +38,9 @@
         </div>
       </section>
       <div class="title-message-container">
-        <div class="report-link-container">
+        <div 
+          v-if="featureToggles.showReportLinks" 
+          class="report-link-container">
         <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
          <h3> Read the report</h3>
         </a>        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
@@ -51,7 +53,25 @@
 </template>
 
 <script setup>
+  import { reactive } from 'vue';
   import SubPages from '@/components/SubPages.js';
+
+  // reactive feature toggles
+  const featureToggles = reactive({
+    keyFindingToggles: {
+      keyFinding01: false,
+      keyFinding02: false,
+      keyFinding03: false,
+      keyFinding04: false,
+      keyFinding05: false,
+      keyFinding06: true,
+      keyFinding07: true,
+      keyFinding08: true,
+      keyFinding09: true,
+      keyFinding10: true,
+    },
+    showReportLinks: true,
+  });
 </script>
 
 <style scoped>
