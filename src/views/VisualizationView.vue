@@ -72,19 +72,19 @@
   // reactive feature toggles
   const featureToggles = reactive({
     keyFindingToggles: {
-      keyFinding01: false,
+      keyFinding01: true,
       keyFinding02: true,
       keyFinding03: true,
-      keyFinding04: false,
-      keyFinding05: false,
+      keyFinding04: true,
+      keyFinding05: true,
       keyFinding06: true,
       keyFinding07: true,
       keyFinding08: true,
       keyFinding09: true,
       keyFinding10: true,
     },
-    showReportLinks: false,
-    showPageCarousel: false,
+    showReportLinks: true,
+    showPageCarousel: true,
     showAlternativeWarning: true,
   });
 
