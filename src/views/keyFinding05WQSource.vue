@@ -54,7 +54,8 @@
 
 
          
-         <PageCarousel></PageCarousel>
+      <!-- conditionally render PageCarousel for preview site -->
+      <PageCarousel v-if="showCarousel"></PageCarousel>
     </section>
 </template>
 

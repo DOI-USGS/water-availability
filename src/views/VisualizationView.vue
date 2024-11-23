@@ -60,6 +60,8 @@
         </div>
       </div>
     </section>
+    <!-- router-view to render subpages and pass the toggle as a prop -->
+    <router-view :show-carousel="featureToggles.showCarousel"></router-view>
   </section>
 </template>
 
@@ -82,6 +84,7 @@
       keyFinding10: true,
     },
     showReportLinks: true,
+    showPageCarousel: false,
   });
 </script>
 
