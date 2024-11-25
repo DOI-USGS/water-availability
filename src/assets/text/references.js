@@ -244,7 +244,7 @@ export default {
         doi: "xx"
       },
       {
-        refID: "Medelie2025", 
+        refID: "Medalie2025", 
         authors: "Medalie, L., Galanter, A.E., Martinez, A.J., Archer, A.A., Luukkonen, C.L., Harris, M.A., and Haynes, J.V.",
         year: "2025",
         title: "Chapter D: Water Use Across the Conterminous United States, Water Years 2010-20",
