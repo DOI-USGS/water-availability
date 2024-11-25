@@ -3,7 +3,7 @@ export default {
       // Journal article with single author
       {
         refID: "Canedo2013",
-        authors: "Cañedo-Argüelles, M., Kefford, B.J., Piscart, C., Prat, N., Schäfer, R.B., and Schulz, C.-J.",
+        authors: "Cañedo-Argüelles, M., Kefford, B.J., Piscart, C., ..., and Schulz, C.-J.",
         year: "2013",
         title: "Salinisation of rivers: An urgent ecological issue",
         journal: true,
@@ -15,7 +15,7 @@ export default {
       },
       {
         refID: "Kaushal2018",
-        authors: "Kaushal, S.S., Likens, G.E., Pace, M.L., Utz, R.M., Haq, S., Gorman, J., and Grese, M.",
+        authors: "Kaushal, S.S., Likens, G.E., Pace, M.L., ..., and Grese, M.",
         year: "2018",
         title: "Freshwater salinization syndrome on a continental scale",
         link: "https://doi.org/10.1007/s10533-021-00784-w",
@@ -89,7 +89,7 @@ export default {
       },
       {
         refID: "Bell2015",
-        authors: "Bell, J.E., Leeper, R.D., Palecki, M.A., Coopersmith, E., Wilson, T., Bilotta, R., and Embler, S.",
+        authors: "Bell, J.E., Leeper, R.D., Palecki, M.A., ..., and Embler, S.",
         year: "2015",
         title: "Evaluation of the 2012 Drought with a Newly Established National Soil Monitoring Network",
         journal: true,
@@ -101,7 +101,7 @@ export default {
       },
     {
         refID: "Hoerling2014",
-        authors: "Hoerling, M., Eischeid, J., Kumar, A., Leung, R., Mariotti, A., Mo, K., Schubert, S., and Seager, R.",
+        authors: "Hoerling, M., Eischeid, J., Kumar, A., ..., and Seager, R.",
         year: "2014",
         title: "Causes and Predictability of the 2012 Great Plains Drought",
         journal: true,
@@ -113,7 +113,7 @@ export default {
       },
       {
         refID: "Legates2011", 
-        authors: "Legates, D.R., Mahmood, R., Levia, D.F., DeLiberty, T.L., Quiring, S.M., Houser, C., and Nelson, F.E.",
+        authors: "Legates, D.R., Mahmood, R., Levia, D.F., ..., and Nelson, F.E.",
         year: "2011",
         title: "Soil moisture: A central and unifying theme in physical geography",
         journal: true,
@@ -125,7 +125,7 @@ export default {
       },
       {
         refID: "Azadpour2024", 
-        authors: "Azadpour, E., Clarke A., Carr, A., Drakes, O., Restrepo-Osario, D., Alanis, Y.A., Gonzales, P.R., and Nell, C.",
+        authors: "Azadpour, E., Clarke A., Carr, A., ..., and Nell, C.",
         year: "2024",
         title: "Unequal access to water: how societal factors shape vulnerability to water insecurity, U.S. [USGS Website]",
         journal: false,
@@ -197,7 +197,7 @@ export default {
       },
       {
         refID: "Liu2022", 
-        authors: "Liu, N., Dobbs, G.R., Caldwell, P.V., Miniat, C.F., Sun, G., Duan, K., Nelson, S.A.C., Bolstad, P.V., and Carlson, C.P.",
+        authors: "Liu, N., Dobbs, G.R., Caldwell, P.V., ..., and Carlson, C.P.",
         year: "2022",
         title: "Inter-basin transfers extend the benefits of water from forests to population centers across the conterminous U.S",
         journal: true,
@@ -209,7 +209,7 @@ export default {
       },
       {
         refID: "Stets2024", 
-        authors: "Stets, E.G., Cashman, M., Miller, O.L., Powlen, K.A., Martinez, A., Padilla, J., Archer, A.A.",
+        authors: "Stets, E.G., Cashman, M., Miller, O.L., ..., Archer, A.A.",
         year: "2024",
         title: "Local water use and climate effects on water stress over the conterminous US with substantial impacts to fish species of greatest conservation need.",
         journal: true,
@@ -221,7 +221,7 @@ export default {
       },
       {
         refID: "Gorski2025", 
-        authors: "Gorski, G., Stets, E., Scholl, M., Degnan, J., Mullaney, J., Galanter, A., Martinez, A., Padilla, J., Lafontaine, J., Corson-Dosch, H., and Shapiro, A.",
+        authors: "Gorski, G., Stets, E., Scholl, M., ..., and Shapiro, A.",
         year: "2025",
         title: "Chapter B: National Water Supply",
         journal: false,
@@ -245,7 +245,7 @@ export default {
       },
       {
         refID: "Medalie2025", 
-        authors: "Medalie, L., Galanter, A.E., Martinez, A.J., Archer, A.A., Luukkonen, C.L., Harris, M.A., and Haynes, J.V.",
+        authors: "Medalie, L., Galanter, A.E., Martinez, A.J., ..., and Haynes, J.V.",
         year: "2025",
         title: "Chapter D: Water Use Across the Conterminous United States, Water Years 2010-20",
         journal: false,
