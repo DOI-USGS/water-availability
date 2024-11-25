@@ -21,7 +21,7 @@
             </p>
 
     </div>
-        <div class="report-link-container">
+        <div class="report-link-container" v-if="featureToggles.showReportLinks">
           <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
           <h3> Read the report</h3>
           </a>        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
@@ -32,10 +32,12 @@
 </template>
   
 <script setup>
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import SubPages from './SubPages';
 import References from './../assets/text/references.js'
+
+const featureToggles = inject('featureToggles');
 
 const route = useRoute();
 
