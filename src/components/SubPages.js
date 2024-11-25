@@ -14,7 +14,7 @@ export default {
             mainTitle: 'Living with water limitation',
             shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water limitation',
             keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.',
-            references: ["Liu2022", "Dettingher2005","Stets2024", "Stets2025"]
+            references: ["Liu2022", "Dettingher2005","Stets2024", "Stets2025", "Census2020"]
         },
         {
             page: 3,
