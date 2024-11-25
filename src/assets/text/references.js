@@ -268,6 +268,18 @@ export default {
         doi: "xx"
       },
       {
+        refID: "Census2020",
+        authors: "U.S. Census Bureau",
+        year: "2020",
+        title: "2020 Census Demographic Profile",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://data.census.gov",
+        ref: "data.census.gov"
+      },
+      {
         refID: "Stets2025", 
         authors: "Stets, E.G., Cashman, M.J., Miller, O.A., and Powlen, K.A.",
         year: "2025",

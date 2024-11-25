@@ -7,11 +7,11 @@ export default {
         method: [
           {
             header: "Calculating supply and demand",
-            description: "Supply and demand were calculated as mean annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. Error bars on the supply and demand were calculated as standard deviations.",
+            description: "Supply and demand were calculated as mean annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. Error bars on the supply and demand were calculated as standard deviations between the years of analysis.",
           },
           {
-            header: "Calculating water stress",
-            description: "Water stress was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water stress were very low or none indicating values <= 0.2, low indicating values > 0.2 and <= 0.4, medium indicating values > 0.4 and <= 0.6, high indicating values > 0.6 and <= 0.8, and severe indicating values > 0.8."
+            header: "Calculating water limitation",
+            description: "Water limitation was calculated as an average supply and use index (SUI). SUI expresses the imbalance between surface water-supply and consumptive uses for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
           }
         ]
         },      {
@@ -19,12 +19,12 @@ export default {
         route: '/02SUI',
         method: [
           {
-            header: "Calculating water stress",
-            description: "Water stress was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water stress were very low or none indicating values <= 0.2, low indicating values > 0.2 and <= 0.4, medium indicating values > 0.4 and <= 0.6, high indicating values > 0.6 and <= 0.8, and severe indicating values > 0.8."
+            header: "Calculating water limitation",
+            description: "Water limitation was calculated as an average surface water-supply and use index (SUI). SUI expresses the imbalance between surface water-supply and consumptive uses for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
           },
           {
             header: "Mapping Census Data",
-            description: "To calculate the number of people living in different water stress categories, we merged census data with water stress data by watershed (HUC12)."
+            description: "The population estimate within each HUC12 catchment was calculated using the 2020 U.S. Census Bureau tract-level population counts (U.S. Census Bureau, 2020). Census data were merged with water limitation data by watershed (HUC12)."
           },
           {
             header: "Integrated water availability",
@@ -34,15 +34,14 @@ export default {
       },      {
         page: 3,
         route: '/03SVI',
-        description: "Water stress was calculated as annual average water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. ",
         method: [
           {
             header: "Calculating social vulnerability",
-            description: "The Centers for Disease Control (CDC) 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water stress (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6.",
+            description: "The Centers for Disease Control (CDC) 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water limitation (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6.",
           },
           {
-            header: "Calculating water stress",
-            description: "Water stress was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water stress were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6."
+            header: "Calculating water limitation",
+            description: "Water limitation was calculated as an average surface water-supply and use index (SUI). SUI expresses the imbalance between surface water-supply and consumptive uses for water years 2010 through 2020. Categories of water limitation included low, which was between 0 and 0.4, medium between 0.4 and 0.6, and high, which was above 0.6."
           }
         ]
       },      {
@@ -51,7 +50,7 @@ export default {
         method: [
           {
             header: "Calculating the national water cycle",
-            description: "The annual average hydrologic fluxes across the conterminous United States was calculated for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States (Foks and others, In Prep a) and evapotranspiration and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System (Foks and other, In Prep b) and the Weather Research and Forecasting model hydrologic modeling system (Sampson and others, In Prep). Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation (Medalie and others, 202X (chap.D)).",
+            description: "The annual average hydrologic fluxes across the United States were calculated for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the United States (Foks and others, In Prep a) and evapotranspiration and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System (Foks and other, In Prep b) and the Weather Research and Forecasting model hydrologic modeling system (Sampson and others, In Prep). Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation (Medalie and others, 202X (chap.D)).",
           },
           {
             header: "Comparing water supply to normal",
@@ -82,7 +81,7 @@ export default {
         method: [
           {
             header: "Calculating water use by year",
-            description: "Total water withdrawn was calculated for crop irrigation, public supply, and thermoelectric water use for the conterminous United States for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "Total water withdrawn was calculated for crop irrigation, public supply, and thermoelectric water use for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
           }
         ]
       },      {
@@ -91,11 +90,11 @@ export default {
         method: [
           {
             header: "Spatial patterns in water use",
-            description: "The proportion of use by category (public supply, irrigation, and thermoelectric water use) were calculated based on annual average withdrawals for each HUC8 region in the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "The proportion of use by category (public supply, irrigation, and thermoelectric water use) were calculated based on annual average withdrawals for each HUC8 region for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
           },
           {
             header: "Comparing water sources by use",
-            description: "The total water withdrawn from groundwater versus surface water was compared by use category and across all uses. The values for each HUC8 region were calculated as average annual withdrawals for the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "The total water withdrawn from groundwater versus surface water was compared by use category and across all uses. The values for each HUC8 region were calculated as average annual withdrawals for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
           }
         ]
       },      {
@@ -104,7 +103,7 @@ export default {
         method: [
           {
             header: "Calculating consumptive use",
-            description: "The percent of consumptive use for each use category (public supply, irrigation, and thermoelectric water use) was calculated as the amount of water consumed versus the total water withdrawn. The amount of water withdrawn or consumed were calculated based on average annual values for the conterminous United States for water yeards 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "The percent of consumptive use for each use category (public supply, irrigation, and thermoelectric water use) was calculated as the amount of water consumed versus the total water withdrawn. The amount of water withdrawn or consumed were calculated based on average annual values for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
           }
         ]
       },      {
