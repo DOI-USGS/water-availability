@@ -36,18 +36,22 @@
       <Methods></Methods>
       <References></References>
     </div>
-    <PageCarousel></PageCarousel>
+    <!-- conditionally render PageCarousel for preview site -->
+      <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
   </section>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
+
+
+const featureToggles = inject('featureToggles');
 
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
 const selectedView = ref("stacked"); // Tracks the dropdown selection

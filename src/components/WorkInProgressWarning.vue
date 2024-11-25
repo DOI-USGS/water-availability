@@ -1,12 +1,19 @@
 <template>
   <div class="usa-prose">
+    <!-- Conditional rendering based on the toggle -->
     <p
-      v-if="buttonText === 'I understand'"
+      v-if="!featureToggles.showAlternativeWarning && buttonText === 'I understand'"
       class="warning-open"
     >
       <strong>ATTENTION!</strong> You are viewing a prototype application that is in active development.
       Contents seen here are for placeholding and development only. <strong>DO NOT USE</strong> information
       contained in this application for <strong>ANY</strong> purpose.
+    </p>
+    <p
+      v-if="featureToggles.showAlternativeWarning && buttonText === 'I understand'"
+      class="warning-open"
+    >
+      <strong>Welcome!</strong> This is a preview of a website about the upcoming Integrated Water Availability Assessments. It is under active development and may not represent the final version, any content is subject to change.
     </p>
     <button @click="toggleWarning">
       {{ buttonText }}
@@ -14,15 +21,21 @@
   </div>
 </template>
 
+
 <script setup>
-  import { ref } from "vue";
+import { ref, inject } from "vue";
 
-  const buttonText = ref();
-  buttonText.value = 'I understand';
+// inject feature toggles
+const featureToggles = inject('featureToggles');
 
-  function toggleWarning() {
-    buttonText.value === 'I understand' ? buttonText.value = 'read in progress warning' : buttonText.value = 'I understand';
-  }
+const buttonText = ref('I understand');
+
+function toggleWarning() {
+  buttonText.value =
+    buttonText.value === 'I understand'
+      ? 'read in progress warning'
+      : 'I understand';
+}
 </script>
 
 <style scoped lang="scss">

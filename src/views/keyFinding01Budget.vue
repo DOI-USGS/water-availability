@@ -78,12 +78,13 @@
         <Methods></Methods>
       <References></References>
       </div>
-        <PageCarousel></PageCarousel>
+      <!-- conditionally render PageCarousel for preview site -->
+      <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, watchEffect } from 'vue';
+import { onMounted, ref, reactive, inject } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
@@ -91,6 +92,8 @@ import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
+
+const featureToggles = inject('featureToggles');
 
 const mobileView = isMobile;
 

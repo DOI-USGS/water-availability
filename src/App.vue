@@ -3,14 +3,17 @@
     <WindowSize v-if="typeOfEnv === '-test build-'" />
     <HeaderUSWDSBanner v-if="typeOfEnv !== '-test build-'" />
     <HeaderUSGS />
-    <WorkInProgressWarning v-if="typeOfEnv !== ''" />
+    <!-- Render the WorkInProgressWarning component only if typeOfEnv is not empty -->
+    <WorkInProgressWarning
+      v-if="typeOfEnv !== ''"
+    />
     <RouterView />
     <FooterUSGS />
   </div>
 </template>
 
 <script setup>
-  import { onMounted } from "vue";
+  import { reactive, provide, onMounted } from "vue";
   import { RouterView } from 'vue-router'
   import WindowSize from "./components/WindowSize.vue";
   import HeaderUSWDSBanner from "./components/HeaderUSWDSBanner.vue";
@@ -21,6 +24,31 @@
 
   const windowSizeStore = useWindowSizeStore();
   const typeOfEnv = import.meta.env.VITE_APP_TIER;
+
+  // define feature toggles
+  // reactive feature toggles
+  const featureToggles = reactive({
+    keyFindingToggles: {
+      keyFinding01: true,
+      keyFinding02: true,
+      keyFinding03: true,
+      keyFinding04: true,
+      keyFinding05: true,
+      keyFinding06: true,
+      keyFinding07: true,
+      keyFinding08: true,
+      keyFinding09: true,
+      keyFinding10: true,
+    },
+    showReportLinks: true, // buttons that say "read the report" and "download the data"
+    showPageCarousel: true, // page carousel at bottom of key finding pages
+    showAlternativeWarning: true, // alternative warning message
+  });
+
+
+  // provide feature toggles to the entire app
+  provide('featureToggles', featureToggles);
+
 
   // Declare behavior on mounted
   // functions called here

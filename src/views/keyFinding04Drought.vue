@@ -51,12 +51,13 @@
             <Methods></Methods>
             <References></References>
         </div>
-        <PageCarousel></PageCarousel>
+      <!-- conditionally render PageCarousel for preview site -->
+      <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import * as d3Base from 'd3';
 import Reg from "../../public/assets/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
@@ -66,6 +67,7 @@ import References from '../components/References.vue';
 
 const imgSrc = ref('../assets/images/R/04_ws_2010_Northern High Plains.png');
 
+const featureToggles = inject('featureToggles');
 
 const setDefaultImgSrc = () => {
   import(`../assets/images/R/04_ws_2010_Northern High Plains.png`).then(img => {

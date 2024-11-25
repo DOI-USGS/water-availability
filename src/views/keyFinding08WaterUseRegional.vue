@@ -31,18 +31,22 @@
           <Methods></Methods>
           <References></References>
         </div>
-        <PageCarousel></PageCarousel>
+      <!-- conditionally render PageCarousel for preview site -->
+      <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import * as d3Base from 'd3';
 import AggReg from "../../public/assets/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
+
+
+const featureToggles = inject('featureToggles');
 
 const imgSrc = ref('../assets/images/R/08_allWU_gw_sw_dumbbell_CONUS.png');
 
