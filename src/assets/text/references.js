@@ -326,7 +326,42 @@ export default {
         data_release: false,
         link: "https://doi.org/10.2202/1547-7355.1792",
         doi: "10.2202/1547-7355.1792"
+      },
+      {
+        refID: "AMAP2009",
+        authors: "Arctic Monitoring and Assessment Programme",
+        year: "2009",
+        title: "AMAP assessment 2009: Human Health in the Arctic",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://www.amap.no/documents/doc/amap-assessment-2009-human-health-in-the-arctic/98",
+        doi: "https://www.amap.no/"
+      },
+      {
+        refID: "Lauber2017",
+        authors: "Bruce Lauber, T., Connelly, N.A., Niederdeppe, J., and Knuth, B.A.",
+        year: "2017",
+        title: "Urban anglers in the Great Lakes region—Fish consumption patterns, influences, and responses to advisory messages",
+        journal: true,
+        journal_name: "Science of the Total Environment",
+        journal_issue: "590-591",
+        data_release: false,
+        link: "https://doi.org/10.1016/j.scitotenv.2017.02.189",
+        doi: "10.1016/j.scitotenv.2017.02.189"
+      },
+      {
+        refID: "Cabral2010",
+        authors: "Cabral, J.P.S.",
+        year: "2010",
+        title: "Water microbiology. Bacterial pathogens and water",
+        journal: true,
+        journal_name: "International Journal of Environmental Research and Public Health",
+        journal_issue: "7",
+        data_release: false,
+        link: "https://doi.org/10.3390/ijerph7103657",
+        doi: "10.3390/ijerph7103657"
       }
-
     ]
 }
