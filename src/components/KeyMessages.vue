@@ -20,6 +20,7 @@
         <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Read the Report</a></li>
         <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Access the Data</a></li>
         <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">USGS Vizlab</a></li>
+        <li><a href="glossary.html" target="_blank">Glossary of Terms</a></li>
         </ul>
     </div>
 

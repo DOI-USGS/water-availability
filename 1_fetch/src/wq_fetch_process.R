@@ -1,11 +1,47 @@
+# total loads by HUC8
+process_wq_HUC12 <- function(in_csv, in_COMID_xwalk){
+  
+  # read in COMID crosswalk
+  # 
+  xwalk <- data.table::fread(in_COMID_xwalk, keepLeadingZeros = TRUE) |>
+    tidytable::select(HUC12 = huc12, comid = featureid, weights) |> 
+    select(comid, HUC12, weights) #|>
+    #group_by(comid) |> 
+    #slice_max(weights)
+  
+  # filter sources to all sources
+  out_all_sources <- in_csv |>
+    filter(category == "All sources") |>
+    select(comid, value, category, constituent) 
+  
+  # extract values of load by comid for each HUC12
+  joined_loads <- xwalk |> left_join(out_all_sources, by = "comid") |>
+    select(HUC12, value)
+  
+  # sum loads up by HUC12
+  total_load_HUC12 <- joined_loads |>
+    group_by(HUC12) |>
+    summarize(total_load = sum(value, na.rm = TRUE))
+  
+  return(total_load_HUC12)
+}
+
+process_wq_HUC8 <- function(data_in){
+  # sum loads up by HUC8
+  data_out <- data_in |>
+    mutate(HUC8 = substr(HUC12, 1, 8)) |>
+    group_by(HUC8) |>
+    summarize(total_load = sum(total_load, na.rm = TRUE))
+  
+  return(data_out)
+}
+
+
+# loads by category
 process_wq_data <- function(in_csv, nutrient){
   
-  # read csv
- # out_raw <- readr::read_csv(in_csv,
-#                  show_col_types = FALSE) 
-  
   # generalize and standardize categories for website
-  out_cleaned <- in_csv |>  #out_raw |>
+  out_cleaned <- in_csv |> 
     filter(category != "All sources") |>
     dplyr::rename(original_category = category) |>
     dplyr::mutate(category = dplyr::case_when(
