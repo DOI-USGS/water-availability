@@ -1,6 +1,7 @@
 source("2_process/src/process_region_shp.R")
 source("2_process/src/process_WBD_GDB.R")
 source("2_process/src/process_ps_dumbbell.R")
+source("2_process/src/process_ws_data.R")
 source("2_process/src/process_wq_data.R")
 source("2_process/src/process_wu_data.R")
 source("2_process/src/process_sui_data.R")
@@ -134,9 +135,26 @@ p2_targets <- list(
                dplyr::left_join(p2_sui_2020_HUC12,
                                 by = "HUC12") |>
                dplyr::left_join(p2_svi_mean_HUC12,
-                                by = "HUC12")
+                                by = "HUC12") |>
+               filter(! is.na(sui_category_5)) |> 
+               dplyr::mutate(sui_cat_clean = case_when(sui_category_5 == "High" ~ "high",
+                                                       sui_category_5 == "Low" ~ "low",
+                                                       sui_category_5 == "Moderate" ~ "moderate",
+                                                       sui_category_5 == "Severe" ~ "severe",
+                                                       sui_category_5 == "Very low/\nnone" ~ "very_low_none"))
              
   ),
+
+  # Join with water quality data (loads)
+  tar_target(p2_HUC12_join_wq_sf,
+             p2_mainstem_HUC12_simple_sf |>
+               # add in tn loads
+               dplyr::left_join(p2_wq_HUC12_df_tn |> rename(tn_load = total_load), 
+                                by = "HUC12") |>
+               # add in tp loads
+               dplyr::left_join(p2_wq_HUC12_df_tp |> rename(tp_load = total_load), 
+                                by = "HUC12")),
+
   # Join with water availability for key finding 2
   tar_target(p2_water_avail,
     tibble(
@@ -176,6 +194,41 @@ p2_targets <- list(
              readr::write_csv(p2_states_sui_df,
                               file = "public/sui_state.csv")),
   
+  ##############################################
+  # 
+  #           WATER SUPPLY DATA
+  # 
+  # Change water supply data into long format
+  tar_target(p2_ws_precip_df,
+         compare_ws_mean(data_in = p1_ws_precip_csv,
+                         supply_name = "precip",
+                         min_year = 2010,
+                         max_year = 2020,
+                         xwalk = p2_CONUS_crosswalk_HUC12_df)),
+  tar_target(p2_ws_et_df,
+             compare_ws_mean(data_in = p1_ws_et_csv,
+                             supply_name = "et",
+                             min_year = 2010,
+                             max_year = 2020,
+                             xwalk = p2_CONUS_crosswalk_HUC12_df)),
+  tar_target(p2_ws_sm_df,
+             compare_ws_mean(data_in = p1_ws_sm_csv,
+                             supply_name = "sm",
+                             min_year = 2010,
+                             max_year = 2020,
+                             xwalk = p2_CONUS_crosswalk_HUC12_df)),
+  tar_target(p2_ws_sf_df,
+             compare_ws_mean(data_in = p1_ws_sf_csv,
+                             supply_name = "sf",
+                             min_year = 2010,
+                             max_year = 2020,
+                             xwalk = p2_CONUS_crosswalk_HUC12_df)),
+  # join together
+  tar_target(p2_ws_all_df,
+             bind_rows(p2_ws_precip_df,
+                       p2_ws_et_df,
+                       p2_ws_sm_df,
+                       p2_ws_sf_df)),
   
   ##############################################
   # 
@@ -209,6 +262,26 @@ p2_targets <- list(
                "Fish Consumption Use", "Unimpaired", "Unimpaired", 98021,
                "Recreational Use", "Unimpaired", "Unimpaired", 323983,
                "Other Use", "Unimpaired", "Unimpaired", 487640)),
+  
+  # Total nitrogen and phosphorus loads
+  tar_map(
+    values = tibble::tibble(raw_targets = rlang::syms(c("p1_load_tn", "p1_load_tp")),
+                            nutrient = c("tn", "tp")),
+    # loads by category
+    tar_target(p2_wq_Reg_df,
+               process_wq_data(in_csv = raw_targets,
+                               nutrient = nutrient)),
+    # total loads by HUC12 and HUC8
+    tar_target(p2_wq_HUC12_df,
+               process_wq_HUC12(in_csv = raw_targets,
+                              in_COMID_xwalk = p1_COMID_to_HUC12_crosswalk_csv)),
+    tar_target(p2_wq_HUC8_df,
+               process_wq_HUC8(data_in = p2_wq_HUC12_df)),
+    tar_target(p2_wq_Reg_d3_csv,
+               readr::write_csv(p2_wq_Reg_df,
+                                file = sprintf("public/wq_sources_%s.csv", nutrient))),
+    names = nutrient
+  ),
   
   ##############################################
   # 

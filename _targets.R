@@ -22,10 +22,12 @@ tar_option_set(packages = c(
   "grid",
   "scico",
   "sysfonts",
+  "showtext",
   "magick",
   "cowplot",
   "packcircles",
-  "ggtern"))
+  "ggtern",
+  "geojsonio"))
 
 ### Naming conventions:
 # Water Supply = ws

@@ -1,103 +1,109 @@
-Region_nam,sui_category_5,stress_by_reg,total_hucs,percentage_stress
-Atlantic Coast,High,6,5120,0.1171875
-Atlantic Coast,Low,448,5120,8.75
-Atlantic Coast,Moderate,42,5120,0.8203125
-Atlantic Coast,Severe,20,5120,0.390625
-Atlantic Coast,"Very low/
-none",4604,5120,89.921875
-California-Nevada,High,561,7284,7.701812191103789
-California-Nevada,Low,1258,7284,17.27073036792971
-California-Nevada,Moderate,1084,7284,14.881933003844042
-California-Nevada,Severe,577,7284,7.921471718835804
-California-Nevada,"Very low/
-none",3804,7284,52.22405271828665
-Central High Plains,High,713,3552,20.0731981981982
-Central High Plains,Low,786,3552,22.12837837837838
-Central High Plains,Moderate,1237,3552,34.825450450450454
-Central High Plains,Severe,69,3552,1.9425675675675675
-Central High Plains,"Very low/
-none",747,3552,21.030405405405407
-Central Rockies,High,401,4855,8.259526261585993
-Central Rockies,Low,1541,4855,31.740473738414003
-Central Rockies,Moderate,755,4855,15.550978372811535
-Central Rockies,Severe,62,4855,1.2770339855818744
-Central Rockies,"Very low/
-none",2096,4855,43.17198764160659
-Columbia-Snake,High,426,6883,6.189161702745896
-Columbia-Snake,Low,1535,6883,22.30132209792242
-Columbia-Snake,Moderate,648,6883,9.4144994915008
-Columbia-Snake,Severe,72,6883,1.0460554990556443
-Columbia-Snake,"Very low/
-none",4202,6883,61.048961208775246
-Florida,High,72,1185,6.075949367088607
-Florida,Low,433,1185,36.540084388185655
-Florida,Moderate,197,1185,16.624472573839665
-Florida,Severe,59,1185,4.9789029535864975
-Florida,"Very low/
-none",424,1185,35.780590717299575
-Great Lakes,High,1,4485,0.022296544035674472
-Great Lakes,Low,1068,4485,23.812709030100336
-Great Lakes,Moderate,98,4485,2.185061315496098
-Great Lakes,"Very low/
-none",3318,4485,73.9799331103679
-Gulf Coast,High,15,4183,0.3585943103036099
-Gulf Coast,Low,910,4183,21.75472149175233
-Gulf Coast,Moderate,165,4183,3.944537413339708
-Gulf Coast,Severe,4,4183,0.09562514941429597
-Gulf Coast,"Very low/
-none",3089,4183,73.84652163519006
-Midwest,High,10,7423,0.13471642193183347
-Midwest,Low,1958,7423,26.377475414253
-Midwest,Moderate,420,7423,5.6580897211370065
-Midwest,"Very low/
-none",5035,7423,67.82971844267817
-Mississippi Embayment,Low,532,1145,46.46288209606987
-Mississippi Embayment,Moderate,80,1145,6.986899563318777
-Mississippi Embayment,"Very low/
-none",533,1145,46.55021834061135
-Northeast,High,11,5904,0.18631436314363142
-Northeast,Low,1558,5904,26.38888888888889
-Northeast,Moderate,74,5904,1.2533875338753389
-Northeast,Severe,25,5904,0.4234417344173441
-Northeast,"Very low/
-none",4236,5904,71.7479674796748
-Northern High Plains,High,73,5853,1.2472236459935075
-Northern High Plains,Low,1631,5853,27.86605159747138
-Northern High Plains,Moderate,725,5853,12.386810182812233
-Northern High Plains,Severe,11,5853,0.18793780967025456
-Northern High Plains,"Very low/
-none",3413,5853,58.311976764052616
-Pacific Northwest,High,140,2491,5.620232838217584
-Pacific Northwest,Low,612,2491,24.568446407065437
-Pacific Northwest,Moderate,294,2491,11.802488960256925
-Pacific Northwest,Severe,51,2491,2.0473705339221198
-Pacific Northwest,"Very low/
-none",1394,2491,55.96146126053794
-Souris-Red-Rainy,High,4,2739,0.14603870025556773
-Souris-Red-Rainy,Low,960,2739,35.049288061336256
-Souris-Red-Rainy,Moderate,147,2739,5.3669222343921135
-Souris-Red-Rainy,"Very low/
-none",1628,2739,59.43775100401606
-Southern High Plains,High,1792,4730,37.88583509513742
-Southern High Plains,Low,621,4730,13.128964059196619
-Southern High Plains,Moderate,665,4730,14.059196617336154
-Southern High Plains,Severe,184,4730,3.890063424947146
-Southern High Plains,"Very low/
-none",1468,4730,31.035940803382662
-Southwest Desert,High,220,4623,4.758814622539476
-Southwest Desert,Low,743,4623,16.07181483884923
-Southwest Desert,Moderate,298,4623,6.44603071598529
-Southwest Desert,Severe,185,4623,4.00173047804456
-Southwest Desert,"Very low/
-none",3177,4623,68.72160934458144
-Tennessee-Missouri,High,1,6717,0.014887598630340925
-Tennessee-Missouri,Low,350,6717,5.210659520619324
-Tennessee-Missouri,Moderate,37,6717,0.5508411493226143
-Tennessee-Missouri,"Very low/
-none",6329,6717,94.22361173142772
-Texas,High,766,3850,19.896103896103895
-Texas,Low,1081,3850,28.07792207792208
-Texas,Moderate,680,3850,17.662337662337663
-Texas,Severe,308,3850,8
-Texas,"Very low/
-none",1015,3850,26.36363636363636
+sui_category_5,Region_nam,stress_by_reg,total_hucs,percentage_stress
+High,Atlantic Coast,6,5120,0.1171875
+Low,Atlantic Coast,448,5120,8.75
+Moderate,Atlantic Coast,42,5120,0.8203125
+Severe,Atlantic Coast,20,5120,0.390625
+"Very low/
+none",Atlantic Coast,4604,5120,89.921875
+High,California-Nevada,561,7284,7.701812191103789
+Low,California-Nevada,1258,7284,17.27073036792971
+Moderate,California-Nevada,1084,7284,14.881933003844042
+Severe,California-Nevada,577,7284,7.921471718835804
+"Very low/
+none",California-Nevada,3804,7284,52.22405271828665
+High,Central High Plains,713,3552,20.0731981981982
+Low,Central High Plains,786,3552,22.12837837837838
+Moderate,Central High Plains,1237,3552,34.825450450450454
+Severe,Central High Plains,69,3552,1.9425675675675675
+"Very low/
+none",Central High Plains,747,3552,21.030405405405407
+High,Central Rockies,401,4855,8.259526261585993
+Low,Central Rockies,1541,4855,31.740473738414003
+Moderate,Central Rockies,755,4855,15.550978372811535
+Severe,Central Rockies,62,4855,1.2770339855818744
+"Very low/
+none",Central Rockies,2096,4855,43.17198764160659
+High,Columbia-Snake,426,6883,6.189161702745896
+Low,Columbia-Snake,1535,6883,22.30132209792242
+Moderate,Columbia-Snake,648,6883,9.4144994915008
+Severe,Columbia-Snake,72,6883,1.0460554990556443
+"Very low/
+none",Columbia-Snake,4202,6883,61.048961208775246
+High,Florida,72,1185,6.075949367088607
+Low,Florida,433,1185,36.540084388185655
+Moderate,Florida,197,1185,16.624472573839665
+Severe,Florida,59,1185,4.9789029535864975
+"Very low/
+none",Florida,424,1185,35.780590717299575
+High,Great Lakes,1,4485,0.022296544035674472
+Low,Great Lakes,1068,4485,23.812709030100336
+Moderate,Great Lakes,98,4485,2.185061315496098
+Severe,Great Lakes,0,0,0
+"Very low/
+none",Great Lakes,3318,4485,73.9799331103679
+High,Gulf Coast,15,4183,0.3585943103036099
+Low,Gulf Coast,910,4183,21.75472149175233
+Moderate,Gulf Coast,165,4183,3.944537413339708
+Severe,Gulf Coast,4,4183,0.09562514941429597
+"Very low/
+none",Gulf Coast,3089,4183,73.84652163519006
+High,Midwest,10,7423,0.13471642193183347
+Low,Midwest,1958,7423,26.377475414253
+Moderate,Midwest,420,7423,5.6580897211370065
+Severe,Midwest,0,0,0
+"Very low/
+none",Midwest,5035,7423,67.82971844267817
+High,Mississippi Embayment,0,0,0
+Low,Mississippi Embayment,532,1145,46.46288209606987
+Moderate,Mississippi Embayment,80,1145,6.986899563318777
+Severe,Mississippi Embayment,0,0,0
+"Very low/
+none",Mississippi Embayment,533,1145,46.55021834061135
+High,Northeast,11,5904,0.18631436314363142
+Low,Northeast,1558,5904,26.38888888888889
+Moderate,Northeast,74,5904,1.2533875338753389
+Severe,Northeast,25,5904,0.4234417344173441
+"Very low/
+none",Northeast,4236,5904,71.7479674796748
+High,Northern High Plains,73,5853,1.2472236459935075
+Low,Northern High Plains,1631,5853,27.86605159747138
+Moderate,Northern High Plains,725,5853,12.386810182812233
+Severe,Northern High Plains,11,5853,0.18793780967025456
+"Very low/
+none",Northern High Plains,3413,5853,58.311976764052616
+High,Pacific Northwest,140,2491,5.620232838217584
+Low,Pacific Northwest,612,2491,24.568446407065437
+Moderate,Pacific Northwest,294,2491,11.802488960256925
+Severe,Pacific Northwest,51,2491,2.0473705339221198
+"Very low/
+none",Pacific Northwest,1394,2491,55.96146126053794
+High,Souris-Red-Rainy,4,2739,0.14603870025556773
+Low,Souris-Red-Rainy,960,2739,35.049288061336256
+Moderate,Souris-Red-Rainy,147,2739,5.3669222343921135
+Severe,Souris-Red-Rainy,0,0,0
+"Very low/
+none",Souris-Red-Rainy,1628,2739,59.43775100401606
+High,Southern High Plains,1792,4730,37.88583509513742
+Low,Southern High Plains,621,4730,13.128964059196619
+Moderate,Southern High Plains,665,4730,14.059196617336154
+Severe,Southern High Plains,184,4730,3.890063424947146
+"Very low/
+none",Southern High Plains,1468,4730,31.035940803382662
+High,Southwest Desert,220,4623,4.758814622539476
+Low,Southwest Desert,743,4623,16.07181483884923
+Moderate,Southwest Desert,298,4623,6.44603071598529
+Severe,Southwest Desert,185,4623,4.00173047804456
+"Very low/
+none",Southwest Desert,3177,4623,68.72160934458144
+High,Tennessee-Missouri,1,6717,0.014887598630340925
+Low,Tennessee-Missouri,350,6717,5.210659520619324
+Moderate,Tennessee-Missouri,37,6717,0.5508411493226143
+Severe,Tennessee-Missouri,0,0,0
+"Very low/
+none",Tennessee-Missouri,6329,6717,94.22361173142772
+High,Texas,766,3850,19.896103896103895
+Low,Texas,1081,3850,28.07792207792208
+Moderate,Texas,680,3850,17.662337662337663
+Severe,Texas,308,3850,8
+"Very low/
+none",Texas,1015,3850,26.36363636363636

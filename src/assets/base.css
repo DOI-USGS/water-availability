@@ -400,6 +400,11 @@ h4 {
   height: auto;
   margin-right: 20px;
 }
+.reg-svg {
+  width: 20%;
+  height: auto;
+  margin-right: 20px;
+}
 
 @media only screen and (max-width:490px) {
   .agg-reg-svg {
@@ -409,6 +414,13 @@ h4 {
   margin-bottom: -80px;
   margin-top: -50px;
   }
+  .reg-svg {
+    width: 40%;
+    height: auto;
+    margin-right: 0px;
+    margin-bottom: -80px;
+    margin-top: -50px;
+    }
 }
 
 

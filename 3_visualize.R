@@ -1,10 +1,10 @@
 source("3_visualize/src/svg_helpers.R")
 source("3_visualize/src/viz_dumbbell.R")
-source("3_visualize/src/viz_wheatfield.R")
 source("3_visualize/src/viz_svi_sui.R")
 source("3_visualize/src/viz_sui_popn.R")
 source("3_visualize/src/viz_wq.R")
 source("3_visualize/src/viz_ternary.R")
+source("3_visualize/src/viz_ws.R")
 source("3_visualize/src/viz_availability.R")
 
 p3_targets <- list(
@@ -51,7 +51,19 @@ p3_targets <- list(
                  mid_cream = "#C3C3AC",
                  dry_red_vdark = "#492525",
                  dry_red_dark = "#965a5b",
-                 dry_red_light = "#CFACAB"
+                 dry_red_light = "#CFACAB",
+                 drier_than_normal = "#965a5b",
+                 wetter_than_normal = "#1687A5"
+               ))),
+  tar_target(p3_colors_wq,
+             p3_colors_website |> bind_cols(
+               tibble(
+                 # Wq loads 
+                 very_low_col = "#E7CAE1",
+                 low_col = "#D585A9", 
+                 moderate_col = "#93658E", 
+                 high_col = "#554C7A",
+                 very_high_col = "#270C3F"
                ))),
   tar_target(p3_popn_colors,
              col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
@@ -89,18 +101,40 @@ p3_targets <- list(
                                 file_out = "src/assets/svgs/Regions.svg",
                                 color_scheme = p3_colors_website),
              format = "file"),
+  tar_target(p3_Reg_json,
+             p2_Reg_sf |>
+               select(-Shape_Area, -Shape_Leng, -Name, -Region, -AggRegion) |>
+               ms_simplify(keep = 0.05) |>
+               topojson_write(group = Region_nam, 
+                              precision = 6,
+                              file = "public/assets/Regions.topojson")
+             ),
   
   ##############################################
   # 
   #           KEY TAKEAWAY 1: 
   #             
   #
-  #
+  ## National water stress map
   tar_target(p3_map_stress_png,
              map_stress(in_sf = p2_HUC12_join_sui_svi_sf,
-                         color_scheme = p3_colors_balance,
+                        color_scheme = p3_colors_balance,
+                        in_regions = p2_Reg_sf,
                         png_out = "src/assets/images/R/01_stress_map.png",
-                        width = 6, height = 9)),
+                        width = 8, height = 6)),
+  ## Replicate maps for each water stress category
+  tarchetypes::tar_map( 
+    values = tibble::tibble(level = c("low", "very_low_none", "moderate", "severe", "high")),
+    tar_target(p3_map_stress_levels_png,
+               map_stress(in_sf = p2_HUC12_join_sui_svi_sf |>
+                            dplyr::filter(sui_cat_clean == level),
+                          in_regions = p2_Reg_sf,
+                          color_scheme = p3_colors_balance,
+                          png_out = sprintf("public/assets/01_stress_map_%s.png", level),
+                          width = 8, height = 6)),
+    names = level
+          ),
+  
   
   ##############################################
   # 
@@ -204,6 +238,23 @@ p3_targets <- list(
   #             water stress and exacerbating water quality issues 
   #
   #
+  tar_map(
+    values = tibble::tibble(reg = c("Northeast", "Atlantic Coast", "Florida", 
+                                    "Great Lakes", "Midwest", "Tennessee-Missouri",  
+                                    "Mississippi Embayment", "Gulf Coast",   
+                                    "Souris-Red-Rainy", "Northern High Plains",
+                                    "Central High Plains", "Southern High Plains",
+                                    "Texas", "Columbia-Snake",
+                                    "Central Rockies", "Southwest Desert",
+                                    "Pacific Northwest", "California-Nevada")),
+    tar_target(p3_ws_cascading_2010_png,
+               plot_deviations(data_in = p2_ws_all_df,
+                               region = reg,
+                               png_out = sprintf("src/assets/images/R/04_ws_2010_%s.png", reg),
+                               width = 3, height = 5,
+                               color_scheme = p3_colors_balance),
+               format = "file")
+    ),
   
   ##############################################
   # 
@@ -213,6 +264,24 @@ p3_targets <- list(
   #             air pollution.
   #
   #
+  tar_map(
+    values = tibble::tibble(nutrient = c("tn", "tp"),
+                            title = c("Increasing nitrogen load",
+                                      "Increasting phosphorus load")),
+    tar_target(p3_wq_map_HUC12_png,
+               map_wq(in_sf = p2_HUC12_join_wq_sf,
+                      nutrient = nutrient,
+                      color_scheme = p3_colors_wq, 
+                      regions_sf = p2_Reg_sf,
+                      regions_fill = p3_colors_website,
+                      plot_margin = 0.0009, 
+                      bkgd_color = "transparent",
+                      leg_title = title,
+                      png_out = sprintf("src/assets/images/R/05_%s_map.png", nutrient),
+                      width = 9, height = 6)),
+    names = nutrient
+  ),
+  
   
   ##############################################
   # 
@@ -222,6 +291,8 @@ p3_targets <- list(
   #             water is coming from (e.g., surface water, groundwater).
   #
   #
+  
+  
   
   ##############################################
   # 
