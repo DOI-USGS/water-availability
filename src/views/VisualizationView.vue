@@ -13,6 +13,7 @@
         </div>
       </section>
     </div>
+
     <div id="findings-container">
       <div class="raindrop-container">
         <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
@@ -48,15 +49,18 @@
           <div class="wave" id="wave4"></div>
         </div>
       </section>
+
       <div class="title-message-container">
+        <h2>About the Integrated Water Availability Assessment</h2>
+        <p><strong>Water quantity, quality, and use must be considered together to fully understand water availability.</strong> Because of limitations in technology and modeling capabilities, these factors are usually assessed independent of one another—but this assessment is different. The National Water Availability Assessment Report is the <strong>first nationwide assessment of water availability</strong> that includes the amount of water, quality of water, and use of water for human and ecosystem needs. This assessment uses <strong>state-of-the-art models</strong> to enable a new evaluation of the balance between natural water supply and water demands at fine scales, providing <strong>new insight on areas of the United States with a supply-use imbalance</strong>. In addition, the underlying <strong>modeled water supply and demand data </strong>spanning multiple decades into the past are available in the National Water Availability Assessment Data Companion. </p> 
         <div 
           v-if="featureToggles.showReportLinks" 
           class="report-link-container">
-        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
-         <h3> Read the report</h3>
-        </a>        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
-         <h3> Access the data</h3>
-        </a>
+          <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
+            <h3> Read the report</h3></a>        
+          <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
+            <h3> Access the data</h3>
+          </a>
         </div>
       </div>
     </section>
@@ -85,7 +89,7 @@
   align-items: center;
   padding: 100px 20px;
   padding-bottom: 100px;
-  width: 90vw;
+  max-width: 60vw;
   color: var(--blue-dark);
   border-radius: 5px;
   text-align: center;
