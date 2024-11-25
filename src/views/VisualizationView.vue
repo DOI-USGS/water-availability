@@ -61,35 +61,17 @@
       </div>
     </section>
     <!-- router-view to render subpages and pass the toggle as a prop -->
-    <router-view :show-carousel="featureToggles.showCarousel"></router-view>
+    <router-view :show-carousel="featureToggles.showPageCarousel"></router-view>
   </section>
 </template>
 
 <script setup>
-  import { reactive, provide } from 'vue';
+  import { reactive, inject } from 'vue';
   import SubPages from '@/components/SubPages.js';
 
-  // reactive feature toggles
-  const featureToggles = reactive({
-    keyFindingToggles: {
-      keyFinding01: true,
-      keyFinding02: true,
-      keyFinding03: true,
-      keyFinding04: true,
-      keyFinding05: true,
-      keyFinding06: true,
-      keyFinding07: true,
-      keyFinding08: true,
-      keyFinding09: true,
-      keyFinding10: true,
-    },
-    showReportLinks: true,
-    showPageCarousel: true,
-    showAlternativeWarning: true,
-  });
 
-// provide feature toggles to all descendants
-provide('featureToggles', featureToggles);
+  const featureToggles = inject('featureToggles');
+
 </script>
 
 <style scoped>

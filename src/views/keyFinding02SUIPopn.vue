@@ -19,16 +19,18 @@
           <References></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
-      <PageCarousel v-if="showCarousel"></PageCarousel>
+      <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
 </template>
 
 <script setup>
-  import PageCarousel from '../components/PageCarousel.vue';
-  import KeyMessages from '../components/KeyMessages.vue';
-  import Methods from '../components/Methods.vue';
-  import References from "../components/References.vue";
+import {inject} from 'vue';
+import PageCarousel from '../components/PageCarousel.vue';
+import KeyMessages from '../components/KeyMessages.vue';
+import Methods from '../components/Methods.vue';
+import References from "../components/References.vue";
 
+const featureToggles = inject('featureToggles');
 
 </script>
 

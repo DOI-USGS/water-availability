@@ -55,12 +55,12 @@
 
          
       <!-- conditionally render PageCarousel for preview site -->
-      <PageCarousel v-if="showCarousel"></PageCarousel>
+      <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, inject } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -68,6 +68,9 @@ import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 import RegionMap from "/assets/USregions.svg";
+
+
+const featureToggles = inject('featureToggles');
 
 // use for mobile logic
 const mobileView = isMobile;

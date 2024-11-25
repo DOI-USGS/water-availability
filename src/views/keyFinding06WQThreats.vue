@@ -64,14 +64,14 @@
               <References></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
-      <PageCarousel v-if="showCarousel"></PageCarousel>
+      <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
 
 
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
@@ -80,6 +80,9 @@ import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 import { text } from '@fortawesome/fontawesome-svg-core';
+
+
+const featureToggles = inject('featureToggles');
 
 // use for mobile logic
 const mobileView = isMobile;

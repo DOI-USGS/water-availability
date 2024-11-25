@@ -22,18 +22,21 @@
         <References></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
-      <PageCarousel v-if="showCarousel"></PageCarousel>
+      <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-    import PageCarousel from '../components/PageCarousel.vue';
-    import KeyMessages from '../components/KeyMessages.vue';
-    import Methods from '../components/Methods.vue';
-    import References from '../components/References.vue';
-    import photoAll from "../assets/images/R/03_sui_svi_map.png";
-    import photoDry from "../assets/images/R/03_sui_svi_dry_map.png";
+import { onMounted, inject } from 'vue';
+import PageCarousel from '../components/PageCarousel.vue';
+import KeyMessages from '../components/KeyMessages.vue';
+import Methods from '../components/Methods.vue';
+import References from '../components/References.vue';
+import photoAll from "../assets/images/R/03_sui_svi_map.png";
+import photoDry from "../assets/images/R/03_sui_svi_dry_map.png";
+
+
+const featureToggles = inject('featureToggles');
 
 onMounted(() => {
 

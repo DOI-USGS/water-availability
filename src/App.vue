@@ -26,9 +26,25 @@
   const typeOfEnv = import.meta.env.VITE_APP_TIER;
 
   // define feature toggles
+  // reactive feature toggles
   const featureToggles = reactive({
-    showAlternativeWarning: true, // toggle to control alternative warning text
+    keyFindingToggles: {
+      keyFinding01: true,
+      keyFinding02: true,
+      keyFinding03: true,
+      keyFinding04: true,
+      keyFinding05: true,
+      keyFinding06: true,
+      keyFinding07: true,
+      keyFinding08: true,
+      keyFinding09: true,
+      keyFinding10: true,
+    },
+    showReportLinks: true, // buttons that say "read the report" and "download the data"
+    showPageCarousel: true, // page carousel at bottom of key finding pages
+    showAlternativeWarning: true, // alternative warning message
   });
+
 
   // provide feature toggles to the entire app
   provide('featureToggles', featureToggles);
