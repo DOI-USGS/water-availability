@@ -746,6 +746,42 @@ export default {
         data_release: false,
         link: "https://doi.org/10.1002/wat2.1373",
         doi: "10.1002/wat2.1373"
+      },
+      {
+        refID: "Harris2024",
+        authors: "Harris, M.A., Diehl, T.H., Gorman-Sanisaca, L.E., ..., and Valseth, K.J.",
+        year: "2024",
+        title: "Automating physics-based models to estimate thermoelectric-power water use",
+        journal: true,
+        journal_name: "Environmental Modelling & Software",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.1016/j.envsoft.2024.106265",
+        doi: "10.1016/j.envsoft.2024.106265"
+      },
+      {
+        refID: "Masson-Delmotte2021",
+        authors: "Masson-Delmotte, V., Zhai, P., Pirani, A., ..., and Zhou, B.",
+        year: "2021",
+        title: "Climate change 2021—The physical science basis-Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change"",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://www.ipcc.ch/report/ar6/wg1/",
+        doi: "10.1017/9781009157896"
+      },
+      {
+        refID: "Morris1995",
+        authors: "Morris, R.D., and Levine, R.",
+        year: "1995",
+        title: "Estimating the incidence of waterborne infectious disease related to drinking water in the United States",
+        journal: true,
+        journal_name: "International Association of Hydrological Sciences Press",
+        journal_issue: "",
+        data_release: false,
+        link: "https://api.semanticscholar.org/CorpusID:31585961",
+        doi: "https://api.semanticscholar.org/CorpusID:31585961"
       }
     ]
 }
