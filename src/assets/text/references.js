@@ -362,6 +362,102 @@ export default {
         data_release: false,
         link: "https://doi.org/10.3390/ijerph7103657",
         doi: "10.3390/ijerph7103657"
+      },
+      {
+        refID: "Chini2020",
+        authors: "Chini, C.M., Logan, L.H., and Stillwell, A.S.",
+        year: "2020",
+        title: "Grey water footprints of U.S. thermoelectric power plants from 2010–2016",
+        journal: true,
+        journal_name: "Advances in Water Resources",
+        journal_issue: "145",
+        data_release: false,
+        link: "https://doi.org/10.1016/j.advwatres.2020.103733",
+        doi: "10.1016/j.advwatres.2020.103733"
+      },
+      {
+        refID: "Deitz2019",
+        authors: "Deitz, S., and Meehan, K.",
+        year: "2019",
+        title: "Plumbing poverty—Mapping hot spots of racial and geographic inequality in US household water insecurity",
+        journal: true,
+        journal_name: "Annals of the American Association of Geographers",
+        journal_issue: "109",
+        data_release: false,
+        link: "https://doi.org/10.1080/24694452.2018.1530587",
+        doi: "10.1080/24694452.2018.1530587"
+      },
+      {
+        refID: "Diehl2014",
+        authors: "Diehl, T.H., and Harris, M.A.",
+        year: "2014",
+        title: "Withdrawal and consumption of water by thermoelectric power plants in the United States, 2010 [USGS Scientific Investigation Report]",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.3133/sir20145184",
+        doi: "10.3133/sir20145184"
+      },
+      {
+        refID: "Eng2019",
+        authors: "Eng, K., Carlisle, D., Grantham, T.E., Wolock, D.M., and Eng, R.L.",
+        year: "2019",
+        title: "Severity and extent of alterations to natural streamflow regimes based on hydrologic metrics in the conterminous United States, 1980–2014 [USGS Scientific Investigation Report]",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.3133/sir20195001",
+        doi: "10.3133/sir20195001"
+      },
+      {
+        refID: "Eppehimer2021",
+        authors: "Eppehimer, D.E., Enger, B.J., Ebenal, A.E., Rocha, E.P., and Bogan, M.T.",
+        year: "2021",
+        title: "Daily flow intermittence in an effluent-dependent river—Impacts of flow duration and recession rate on fish stranding",
+        journal: true,
+        journal_name: "River Research and Applications",
+        journal_issue: "37",
+        data_release: false,
+        link: "https://doi.org/10.1002/rra.3850",
+        doi: "10.1002/rra.3850"
+      },
+      {
+        refID: "Gillespie2018",
+        authors: "Gillespie, N., Epstein, J., Alexander, S., ..., and Thoms, A.",
+        year: "2018",
+        title: "Socioeconomic benefits of recreational, commercial, and subsistence fishing associated with national forests",
+        journal: true,
+        journal_name: "Fisheries",
+        journal_issue: "43",
+        data_release: false,
+        link: "https://doi.org/10.1002/fsh.10127",
+        doi: "10.1002/fsh.10127"
+      },
+      {
+        refID: "Haynes2024",
+        authors: "Haynes, J.V., Read, A.L., Chan, A.Y., ..., and Stewart, J.S.",
+        year: "2024",
+        title: "Monthly crop irrigation withdrawals and efficiencies by HUC12 watershed for years 2000–2020 within the conterminous United States (ver. 2.0, June 2024)",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: true,
+        link: "https://doi.org/10.5066/P9LGISUM",
+        doi: "10.5066/P9LGISUM"
+      },
+      {
+        refID: "Kennedy2016",
+        authors: "Kennedy, T.A., Muehlbauer, J.D., Yackulic, C.B., ..., and Baxter, C.V.",
+        year: "2016",
+        title: "Flow management for hydropower extirpates aquatic insects, undermining river food webs",
+        journal: true,
+        journal_name: "Bioscience",
+        journal_issue: "66",
+        data_release: true,
+        link: "https://doi.org/10.1093/biosci/biw059",
+        doi: "10.1093/biosci/biw059"
       }
     ]
 }
