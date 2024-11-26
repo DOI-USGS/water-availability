@@ -39,7 +39,7 @@ export default {
       },
       {
         refID: "Harris2019",
-        authors: "Harris, M.A., and Diehl, T.H.",
+        authors: "Harris, M.A. and Diehl, T.H.",
         year: "2019",
         title: "Withdrawal and consumption of water by thermoelectric power plants in the United States, 2015 [USGS Scientific Investigation Report]",
         link: "https://doi.org/10.3133/sir20195103",
@@ -377,7 +377,7 @@ export default {
       },
       {
         refID: "Deitz2019",
-        authors: "Deitz, S., and Meehan, K.",
+        authors: "Deitz, S. and Meehan, K.",
         year: "2019",
         title: "Plumbing poverty—Mapping hot spots of racial and geographic inequality in US household water insecurity",
         journal: true,
@@ -389,7 +389,7 @@ export default {
       },
       {
         refID: "Diehl2014",
-        authors: "Diehl, T.H., and Harris, M.A.",
+        authors: "Diehl, T.H. and Harris, M.A.",
         year: "2014",
         title: "Withdrawal and consumption of water by thermoelectric power plants in the United States, 2010 [USGS Scientific Investigation Report]",
         journal: false,
@@ -461,7 +461,7 @@ export default {
       },
       {
         refID: "Konar2020",
-        authors: "Konar, M., and Marston, L.",
+        authors: "Konar, M. and Marston, L.",
         year: "2020",
         title: "The water footprint of the United States",
         journal: true,
@@ -473,7 +473,7 @@ export default {
       },
       {
         refID: "Lin2012",
-        authors: "Lin, Y., and Garcia, L.A.",
+        authors: "Lin, Y. and Garcia, L.A.",
         year: "2012",
         title: "Assessing the impact of irrigation return flow on river salinity for Colorado’s Arkansas River Valley",
         journal: true,
@@ -521,7 +521,7 @@ export default {
       },
       {
         refID: "Mueller2021",
-        authors: "Mueller, J.T., and Gasteyer, S.",
+        authors: "Mueller, J.T. and Gasteyer, S.",
         year: "2021",
         title: "The widespread and unjust drinking water and clean water crisis in the United States",
         journal: true,
@@ -581,7 +581,7 @@ export default {
       },
       {
         refID: "Rice2017",
-        authors: "Rice, J., and Westerhoff, P.",
+        authors: "Rice, J. and Westerhoff, P.",
         year: "2017", 
         title: "High levels of endocrine pollutants in US streams during low flow due to insufficient wastewater dilution",
         journal: true,
@@ -773,7 +773,7 @@ export default {
       },
       {
         refID: "Morris1995",
-        authors: "Morris, R.D., and Levine, R.",
+        authors: "Morris, R.D. and Levine, R.",
         year: "1995",
         title: "Estimating the incidence of waterborne infectious disease related to drinking water in the United States",
         journal: true,
