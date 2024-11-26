@@ -5,6 +5,7 @@ import { createPinia } from 'pinia'
 import VueUswds from "vue-uswds"
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {Tabs, Tab} from 'vue3-tabs-component';
 
 // social icons
 import { faSquareXTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -24,5 +25,7 @@ app.use(createPinia())
 app.use(VueUswds)
 app.use(router)
 app.component("FontAwesomeIcon", FontAwesomeIcon)
+app.component("tabsGroup", Tabs)
+app.component("tabItem", Tab)
 
 app.mount('#app')

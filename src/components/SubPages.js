@@ -98,6 +98,17 @@ export default {
                 "Hicke2022",
                 "Arias2021",
                 "Scholl2025"
+            ],
+            tabData: [
+                {
+                    tabTitle: "Temperature Impacts",
+                    tabTitleID: "temp",
+                    tabText: "Researchers are highly confident that changes in temperature will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. High stream temperatures harm fish health, especially in native, cold-water fisheries. Higher temperatures also lead to warmer and shorter winters, meaning less snowfall and less time for the snow to permeate into the ground.",
+                },                {
+                    tabTitle: "Wind Impacts",
+                    tabTitleID: "wind",
+                    tabText: "The anticipated effects of wind on the water cycle vary from region to region. Researchers are highly confident that changes in wind will affect the Northwest and Southwest and moderately confident that they will affect the rest of the U.S., except Alaska. We expect to see an increase in severe windstorms, including sand and dust storms, as well as stronger hurricanes.",
+                }
             ]
         }
     ]
