@@ -27,7 +27,7 @@ export default {
       },
       {
         refID: "Wentz2014",
-        authors: "Wentz, D.A., Brigham, M.E., Chasar, L.C., Lutz, M.A., and Krabbenhoft, D.P.",
+        authors: "Wentz, D.A., Brigham, M.E., Chasar, L.C., ..., and Krabbenhoft, D.P.",
         year: "2014",
         title: "Mercury in the nation's streams - Levels, trends and implications [Report]",
         link: "https://doi.org/10.3133/cir1395",
@@ -233,7 +233,7 @@ export default {
       },
       {
         refID: "Erickson2025", 
-        authors: "Erickson, M., Miller, O., Cashman, M., Degnan, J., and Azadpour, E.",
+        authors: "Erickson, M., Miller, O., Cashman, M., ..., and Azadpour, E.",
         year: "2025",
         title: "Chapter C: Status of Water Quality Conditions in the United States, 2010-2020",
         journal: false,
@@ -293,7 +293,7 @@ export default {
       },
       {
         refID: "Drakes2024", 
-        authors: "Drakes, O., Restrepo-Osorio., D.L., Powlen, K.A. and Hines, M.K.",
+        authors: "Drakes, O., Restrepo-Osorio, D.L., Powlen, K.A. and Hines, M.K.",
         year: "2024",
         title: "Social vulnerability and water insecurity in the western United States: A systematic review of framings, indicators, and uncertainty",
         journal: true,
@@ -317,7 +317,7 @@ export default {
       },
       {
         refID: "Flanagan2011", 
-        authors: "Flanagan, B.E., Gregory, E.W., Hallisey, E.J., Heitgerd, J.L., and Lewis, B.",
+        authors: "Flanagan, B.E., Gregory, E.W., Hallisey, E.J., ..., and Lewis, B.",
         year: "2011",
         title: "A social vulnerability index for disaster management",
         journal: true,
@@ -401,7 +401,7 @@ export default {
       },
       {
         refID: "Eng2019",
-        authors: "Eng, K., Carlisle, D., Grantham, T.E., Wolock, D.M., and Eng, R.L.",
+        authors: "Eng, K., Carlisle, D., Grantham, T.E., ..., and Eng, R.L.",
         year: "2019",
         title: "Severity and extent of alterations to natural streamflow regimes based on hydrologic metrics in the conterminous United States, 1980–2014 [USGS Scientific Investigation Report]",
         journal: false,
@@ -413,7 +413,7 @@ export default {
       },
       {
         refID: "Eppehimer2021",
-        authors: "Eppehimer, D.E., Enger, B.J., Ebenal, A.E., Rocha, E.P., and Bogan, M.T.",
+        authors: "Eppehimer, D.E., Enger, B.J., Ebenal, A.E., ..., and Bogan, M.T.",
         year: "2021",
         title: "Daily flow intermittence in an effluent-dependent river—Impacts of flow duration and recession rate on fish stranding",
         journal: true,
@@ -533,7 +533,7 @@ export default {
       },
       {
         refID: "Murphy2024",
-        authors: "Murphy, S.F., Runkel, R.L., Stets, E.G., Nolan, A.J., and Repert, D.A.",
+        authors: "Murphy, S.F., Runkel, R.L., Stets, E.G., ..., and Repert, D.A.",
         year: "2024", 
         title: "Urbanization and water management control stream water quality along a mountain to plains transition",
         journal: true,
@@ -545,7 +545,7 @@ export default {
       },
       {
         refID: "Park2018",
-        authors: "Park, Y., Kim, Y., Park, S.-K., Shin, W.-J., and Lee, K.-S.",
+        authors: "Park, Y., Kim, Y., Park, S.-K., ..., and Lee, K.-S.",
         year: "2018",
         title: "Water quality impacts of irrigation return flow on stream and groundwater in an intensive agricultural watershed",
         journal: true,
@@ -593,7 +593,7 @@ export default {
       },
       {
         refID: "Scanlon2023",
-        authors: "Scanlon, B.R., Reedy, R.C., Fakhreddine, S., Yang, Q., and Pierce, G.",
+        authors: "Scanlon, B.R., Reedy, R.C., Fakhreddine, S., ..., and Pierce, G.",
         year: "2023",
         title: "Drinking water quality and social vulnerability linkages at the system level in the United States",
         journal: true,
@@ -641,7 +641,7 @@ export default {
       },
       {
        refID: "Tesoriero2013",
-       authors: "Tesoriero, A.J., Duff, J.H., Saad, D.A., Spahr, N.E., and Wolock, D.M.",
+       authors: "Tesoriero, A.J., Duff, J.H., Saad, D.A., ..., and Wolock, D.M.",
        year: "2013",
        title: "Vulnerability of streams to legacy nitrate sources",
        journal: true,
@@ -689,7 +689,7 @@ export default {
       },
       {
         refID: "Verhougstraete2015",
-        authors: "Verhougstraete, M.P., Martin, S.L., Kendall, A.D., Hyndman, D.W., and Rose, J.B.",
+        authors: "Verhougstraete, M.P., Martin, S.L., Kendall, A.D., ..., and Rose, J.B.",
         year: "2015",
         title: "Linking fecal bacteria in rivers to landscape, geochemical, and hydrologic factors and sources at the basin scale",
         journal: true,
