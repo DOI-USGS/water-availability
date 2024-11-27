@@ -246,11 +246,11 @@ const layerPaths = {
     try {
     // read in data
       // region shapes - feature collection
-      const topoRegions = await d3.json(import.meta.env.BASE_URL + '/assets/Regions.topojson');
+      const topoRegions = await d3.json(import.meta.env.BASE_URL + 'assets/Regions.topojson');
       const geoRegions = topojson.feature(topoRegions, topoRegions.objects[Object.keys(topoRegions.objects)[0]]);
 
       // CONUS outline - single feature
-      const topoUS = await d3.json(import.meta.env.BASE_URL + '/assets/USoutline.topojson');
+      const topoUS = await d3.json(import.meta.env.BASE_URL + 'assets/USoutline.topojson');
       const geoUS = topojson.feature(topoUS, topoUS.objects['foo']);
 
       // water stress stats by region
