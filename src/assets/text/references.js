@@ -763,7 +763,7 @@ export default {
         refID: "Masson-Delmotte2021",
         authors: "Masson-Delmotte, V., Zhai, P., Pirani, A., ..., and Zhou, B.",
         year: "2021",
-        title: "Climate change 2021—The physical science basis-Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change"",
+        title: "Climate change 2021—The physical science basis-Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change",
         journal: false,
         journal_name: "",
         journal_issue: "",
