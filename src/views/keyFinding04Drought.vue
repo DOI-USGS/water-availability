@@ -65,12 +65,12 @@ import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 
-const imgSrc = ref('https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern High Plains.png');
+const imgSrc = ref('https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern_High_Plains.png');
 
 const featureToggles = inject('featureToggles');
 
 const setDefaultImgSrc = () => {
-  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern High Plains.png`).then(img => {
+  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern_High_Plains.png`).then(img => {
     imgSrc.value = img.default;
   });
 };
@@ -95,7 +95,7 @@ const mouseoverMap = (event) => {
 const mouseoutMap = (event) => {
   const regionID = event.target.id;
   d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
-  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern High Plains.png`).then(img => {
+  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern_High_Plains.png`).then(img => {
     imgSrc.value = img.default;
   });
 };
