@@ -56,7 +56,7 @@
                 :name="`<span class='tabHeader'>${tab.tabTitle}</span>`" 
                 :key="tab.tabTitle" 
                 :prefix="getIconImgHTML(tab.tabTitleID)">
-                  <h3>
+                  <h3 class="tab-content-title">
                     <span id="`impact-${tab.tabTitleID}`">
                       <span id="tab.tabTitleID">
                         {{  tab.tabTitle }}

@@ -34,7 +34,7 @@ const updateLayers = () => {
     .data(visibleLayers, d => d.key) // use key as the identifier
     .join(
       enter => enter.append('image')
-        .attr('xlink:href', d => import.meta.env.BASE_URL + d.path)
+        .attr('xlink:href', d => 'https://labs.waterdata.usgs.gov/visualizations/images/water-availability/' + d.path)
         .attr('x', -80)
         .attr('y', -55)
         .attr('width', 800 * 1.2)
@@ -61,27 +61,27 @@ watch(
 
 const layerPaths = {
   very_low_none: {
-    path: '/assets/01_stress_map_very_low_none.png',
+    path: '01_stress_map_very_low_none.png',
     color: '#39424f',
     order: 1
   },
   low: {
-    path: '/assets/01_stress_map_low.png',
+    path: '01_stress_map_low.png',
     color: '#80909D',
     order: 2
   },
   moderate: {
-    path: '/assets/01_stress_map_moderate.png',
+    path: '01_stress_map_moderate.png',
     color: '#edeadf',
     order: 3
   },
   high: {
-    path: '/assets/01_stress_map_high.png',
+    path: '01_stress_map_high.png',
     color: '#Cfacab',
     order: 4
   },
   severe: {
-    path: '/assets/01_stress_map_severe.png',
+    path: '01_stress_map_severe.png',
     color: '#965a6b',
     order: 5
   }
