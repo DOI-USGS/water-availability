@@ -569,7 +569,7 @@ export default {
       },
       {
         refID: "Raptis2016",
-        auhtors: "Raptis, C.E., van Vliet, M.T.H., and Pfister, S.",
+        authors: "Raptis, C.E., van Vliet, M.T.H., and Pfister, S.",
         year: "2016",
         title: "Global thermal pollution of rivers from thermoelectric power plants",
         journal: true,
@@ -662,7 +662,7 @@ export default {
         data_release: false,
         link: "https://www.epa.gov/system/files/documents/2021-10/nrsa_13-14_report_508_ci_2021-10-15.pdf",
         doi: ""
-      },
+      }, 
       {
         refID: "VanMetre2020",
         authors: "Van Metre, P.C., Qi, S., Deacon, J., ..., and Wolock, D.",
@@ -674,7 +674,7 @@ export default {
         data_release: false,
         link: "https://doi.org/10.1007/s10661-020-08403-1",
         doi: "10.1007/s10661-020-08403-1"
-      },
+      }, 
       {
         refID: "Crimmins2023",
         authors: "Crimmins, A.R., Avery, C.W., Easterling, D.R., ..., and Maycock, T.K.",
@@ -686,7 +686,7 @@ export default {
         data_release: false,
         link: "https://doi.org/10.7930/NCA5.2023.CH1",
         doi: "10.7930/NCA5.2023.CH1"
-      },
+      }, 
       {
         refID: "Verhougstraete2015",
         authors: "Verhougstraete, M.P., Martin, S.L., Kendall, A.D., ..., and Rose, J.B.",
@@ -763,7 +763,7 @@ export default {
         refID: "Masson-Delmotte2021",
         authors: "Masson-Delmotte, V., Zhai, P., Pirani, A., ..., and Zhou, B.",
         year: "2021",
-        title: "Climate change 2021—The physical science basis-Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change"",
+        title: "Climate change 2021—The physical science basis-Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change",
         journal: false,
         journal_name: "",
         journal_issue: "",
@@ -782,6 +782,6 @@ export default {
         data_release: false,
         link: "https://api.semanticscholar.org/CorpusID:31585961",
         doi: "https://api.semanticscholar.org/CorpusID:31585961"
-      }
+      } 
     ]
 }
