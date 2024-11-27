@@ -65,45 +65,47 @@ import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 
-const imgSrc = ref('https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern_High_Plains.png');
-
+// global variables
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_";
+const defaultRegionID = "Northern_High_Plains";
+const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
+const focalFill = "#5e7789";
+const defaultFill = "#d1cdc0";
 
-const setDefaultImgSrc = () => {
-  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern_High_Plains.png`).then(img => {
-    imgSrc.value = img.default;
-  });
-};
+// functions called here
+onMounted(() => {
+  addInteractions();
 
-const addInteractions = () => {
+  // select default region to start
+  d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+});
+
+function getImgURL(id) {
+  return new URL(`${baseURL}${id}.png`);
+}
+
+function addInteractions() {
   const mapSVG = d3Base.select('.reg-svg');
   mapSVG.selectAll('.Region_nam_nospace')
     .on("mouseover", mouseoverMap)
     .on("mouseout", mouseoutMap);
 };
 
-
-const mouseoverMap = (event) => {
+function mouseoverMap(event) {
   const regionID = event.target.id;
-  d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", "#5e7789");
-  const formattedRegionID = regionID.replace(/_/g, ' ');
-  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_${formattedRegionID}.png`).then(img => {
-    imgSrc.value = img.default;
-  });
+  console.log(`region id: ${regionID}`)
+  d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
+  d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
+  imgSrc.value = getImgURL(regionID)
 };
 
-const mouseoutMap = (event) => {
+function mouseoutMap(event) {
   const regionID = event.target.id;
-  d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
-  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_Northern_High_Plains.png`).then(img => {
-    imgSrc.value = img.default;
-  });
+  d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
+  d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+  imgSrc.value = getImgURL(defaultRegionID)
 };
-
-onMounted(() => {
-  setDefaultImgSrc();
-  addInteractions();
-});
 
 </script>
 
