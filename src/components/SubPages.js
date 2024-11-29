@@ -89,9 +89,9 @@ export default {
         {
             page: 10,
             route: '/10Future',
-            mainTitle: 'Future threats',
-            shortTitle: 'All elements of the water cycle are threatened by future climate conditions',
-            keyMessage: 'The top future threats to water availability in the U.S. vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
+            mainTitle: 'Future water availability',
+            shortTitle: 'All elements of the water cycle will change under future climate conditions',
+            keyMessage: 'The top impacts to water availability in the U.S. in the future vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
             references: [
                 "Ranasinghe2021",
                 "IPCC2022",

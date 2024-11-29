@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>The climate is changing. Land and ocean temperatures are increasing, atmospheric CO2 is increasing, sea levels are rising, and glaciers are melting. Climate policies aim to limit these changes, but what happens if the global temperature rises 2-2.4°C by mid-21st century? What does a changing climate mean for the national water cycle? The answer may vary from region to region, but some effects are more consistent than others.</p>
+                <p>The climate is changing. Land and ocean temperatures are increasing, atmospheric carbon dioxide is increasing, Arctic permafrost is melting, and sea levels are rising. Climate policies aim to limit these changes, but what happens if the global temperature rises 2.2°C by mid-21st century? How will a changing climate affect the water cycle in the U.S.? The answer will vary from region to region, but some future impacts of climate change are consistent across the U.S.</p>
             </div>
             <div class="viz-container">
               <tabsGroup id="impact-tabs" :options="{ useUrlFragment: false }">
