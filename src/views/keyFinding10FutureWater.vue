@@ -5,23 +5,6 @@
             <div class="text-container">
                 <p>The climate is changing. Land and ocean temperatures are increasing, atmospheric CO2 is increasing, sea levels are rising, and glaciers are melting. Climate policies aim to limit these changes, but what happens if the global temperature rises 2-2.4°C by mid-21st century? What does a changing climate mean for the national water cycle? The answer may vary from region to region, but some effects are more consistent than others.</p>
             </div>
-            <div class="text-container">
-                <h2>Temperature Impacts</h2>
-                <p>Researchers are highly confident that changes in temperature will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. High stream temperatures harm fish health, especially in native, cold-water fisheries. Higher temperatures also lead to warmer and shorter winters, meaning less snowfall and less time for the snow to permeate into the ground.</p>
-                <h2>Water Availability Impacts</h2>
-                <p>Changes in wet and dry conditions are a little more variable. Researchers are highly confident that extreme precipitation and flooding will affect Alaska, the Northeast, and the Southeast, and moderately confident that those wet events will affect the remaining regions of the U.S. We are already seeing more extreme precipitation and flooding events, like the recent catastrophe with Hurricane Helene in Asheville, North Carolina. Such extreme flooding events impair water quality; dry conditions increase fire weather; and variability in precipitation hurts agricultural production.</p>
-                <h2>Aridity and Drought Impacts</h2>
-                <p>researchers are highly confident that dry conditions, like increases in drought and changes in aridity, will affect every region of the country. Overall, we expect the amount and timing of streamflow to change, the demand for groundwater to increase, and stream baseflow (streamflow derived from groundwater not precipitation) to decrease. Dry conditions increase fire weather and affect socially vulnerable people in particular (Azadpour et al., 2024)</p>
-                <h2>Snow and Ice Impacts</h2>
-                <p>Researchers are highly confident that every region in the U.S. except Hawaii and the Caribbean islands will see changes in snow and ice. The extent of snow cover is already smaller, and snow melts sooner. Ice in lakes and rivers is declining, as are glaciers, leading to decreased meltwater for downstream areas. Permafrost is thawing, and the transition line between rain and snow is moving north (meaning we see more rain where we used to see snow).</p>
-                <h2>Coastal Impacts</h2>
-                <p>Researchers are highly confident that coastal effects of climate change will impact every region in the U.S. that borders an ocean, meaning every region except the Northern Plains and Midwest. Along with sea level rise we expect to see larger storm surges, an increased frequency and severity of coastal flooding, and greater intrusion of saltwater into freshwater aquifers. </p>
-                <h2>Wind Impacts</h2>
-                <p>The anticipated effects of wind on the water cycle vary from region to region. Researchers are highly confident that changes in wind will affect the Northwest and Southwest and moderately confident that they will affect the rest of the U.S., except Alaska. We expect to see an increase in severe windstorms, including sand and dust storms, as well as stronger hurricanes. </p>
-                <h2>Other Impacts</h2>
-                <p>Researchers are highly confident that every region of the U.S. will experience some effects of climate change on the water cycle that don’t fall into any of the previous categories. For example, higher levels of atmospheric CO2 at the Earth’s surface increases plant transpiration (the process by which plants lose water through the pores in their leaves). Decreased surface albedo (reflectance) in the Arctic leads to additional warming and additional melting of snow and ice.</p>
-            </div>
-
             <div class="viz-container">
               <tabsGroup id="impact-tabs" :options="{ useUrlFragment: false }">
                 <tabItem 
@@ -32,7 +15,7 @@
                   <h3 class="tab-content-title">
                     <span class="impact-class" id="tab.tabTitleIDname">
                       <span id="tab.tabTitleID">
-                        {{  tab.tabTitle }}
+                        {{ tab.tabSubtitle }} 
                       </span>
                     </span>
                   </h3>
@@ -45,6 +28,12 @@
                   <p v-html="tab.tabText" />
                 </tabItem>
               </tabsGroup>
+            </div>
+            <div class="text-container">
+                <h3>Impacts from other aspects of the water cycle</h3>
+                <p>Every region of the U.S. will experience some effects of climate change on water cycle processes that do not fall into any of the previous categories. For example, higher levels of atmospheric CO2 at the Earth's surface can increase plant transpiration (water evaporated through the pores in leaves), causing greater consumptive losses (transfer of soil water to the atmosphere leading to soil moisture depletion). Decreased surface albedo (reflectance) in the Arctic will lead to additional warming and additional melting of snow and ice. </p> 
+                <br>
+                <p>Interacting processes in the water cycle are likely to produce complex changes in regional-scale hydroclimate that will influence water availability for populations in the United States, including changes in mountain and coastal precipitation, aridification, and the influence of land-cover change on terrestrial water-vapor recycling.</p>
             </div>
             <Methods></Methods>
             <References></References>
@@ -104,13 +93,22 @@ function getIconImgHTML(image_name) {
     padding-left: 15px;
 }
 
+
+@media only screen and (max-width: 768px) {
+    #map-list {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    #impact-list {
+        padding-bottom: 10px;
+    }
+}
+
 .impact-title {
     padding: 0px;
 }
 .impact-class {
     padding: 0px;
-    font-weight: 300;
-    font-style: italic;
 }
 #impact-tabs {
     margin-top: 3rem;
@@ -126,11 +124,11 @@ li {
 .tabs-component {
     margin: auto;
     width: 100%;
-    max-width: 1000px;
 }
+
 @media (min-width: 850px) {
     .tabs-component {
-        width: 100%;
+        width: 90%;
     }
 }
 .tab-image {
@@ -150,20 +148,7 @@ li {
         width: auto;
     }
 }
-.subheading-container {
-    margin: 1rem 0 1rem 0;
-    height: 5rem;
-}
-.subheading-image {
-    /* max-width: 5rem; */
-    height: 5rem;
-    margin: 0 1rem 0 1rem;
-}
-.subheading {
-    padding: 0;
-    display: inline-block;
-    transform: translate(0%, -50%);
-}
+
 .tabs-component-tab.is-inactive img {
     opacity: 0.5;
 }
@@ -180,6 +165,7 @@ li {
     border-radius: 6px;
     margin-bottom: 5px;
 }
+
 
 @media (min-width: 850px) {
     .tabs-component-tabs {
@@ -215,6 +201,7 @@ li {
     cursor: not-allowed !important;
 }
 
+
 @media (min-width: 850px) {
     .tabs-component-tab {
         background-color: #fff;
@@ -233,6 +220,7 @@ li {
         transform: translateY(0);
     }
 }
+
 
 @media (min-width: 850px) {
     .tabs-component-tab-a {
@@ -256,6 +244,7 @@ li {
 .tabs-component-panels {
     padding: 2em 0;
 }
+
 
 @media (min-width: 850px) {
     .tabs-component-panels {

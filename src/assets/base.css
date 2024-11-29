@@ -16,7 +16,7 @@
   /* updated color scheme */
   --blue-dark: #00264C; /* same as usgs header*/
   --blue-light: #9DC6D7;
-  --cream-background: var(--soft-white);/* old cream: #FEFAF6;*/
+  --cream-background: #FFF;/* old cream: #FEFAF6;*/
   --teal-dark: #386785;
   --black-soft: #151515;
   --blue-bright: #0f52ba; /* link color */
