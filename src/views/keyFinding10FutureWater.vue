@@ -5,33 +5,6 @@
             <div class="text-container">
                 <p>The climate is changing. Land and ocean temperatures are increasing, atmospheric CO2 is increasing, sea levels are rising, and glaciers are melting. Climate policies aim to limit these changes, but what happens if the global temperature rises 2-2.4°C by mid-21st century? What does a changing climate mean for the national water cycle? The answer may vary from region to region, but some effects are more consistent than others.</p>
             </div>
-            <div class="viz-container">
-                <div class="gallery">
-                    <input type="radio" checked="checked" name="select" id="kf10_temp">
-                    <label for="kf10_temp" style="background-image: url('./icons/future_temp.png');"></label>
-                    <img src="../assets/images/manual/10_temp.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_water">
-                    <label for="kf10_water" style="background-image: url('./icons/future_water.png');"></label>
-                    <img src="../assets/images/manual/10_water.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_dry">
-                    <label for="kf10_dry" style="background-image: url('./icons/future_dry.png');"></label>
-                    <img src="../assets/images/manual/10_dry.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_snow">
-                    <label for="kf10_snow" style="background-image: url('./icons/future_ice.png');"></label>
-                    <img src="../assets/images/manual/10_snow.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_coastal">
-                    <label for="kf10_coastal" style="background-image: url('./icons/future_coastal.png');"></label>
-                    <img src="../assets/images/manual/10_coastal.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_wind">
-                    <label for="kf10_wind" style="background-image: url('./icons/future_wind.png');"></label>
-                    <img src="../assets/images/manual/10_wind.png" border="0">
-                </div>
-            </div>
             <div class="text-container">
                 <h2>Temperature Impacts</h2>
                 <p>Researchers are highly confident that changes in temperature will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. High stream temperatures harm fish health, especially in native, cold-water fisheries. Higher temperatures also lead to warmer and shorter winters, meaning less snowfall and less time for the snow to permeate into the ground.</p>
@@ -53,11 +26,11 @@
               <tabsGroup id="impact-tabs" :option="{ useUrlFragment: false }">
                 <tabItem 
                 v-for="tab in impactTabs" 
-                :name="`<span class='tabHeader'>${tab.tabTitle}</span>`" 
-                :key="tab.tabTitle" 
-                :prefix="getIconImgHTML(tab.tabTitleID)">
+                :name="tab.tabTitle" 
+                :key="tab.tabTitleID" 
+                :prefix="getIconImgHTML(tab.tabTitleID)"> 
                   <h3 class="tab-content-title">
-                    <span id="`impact-${tab.tabTitleID}`">
+                    <span class="impact-class" id="tab.tabTitleIDname">
                       <span id="tab.tabTitleID">
                         {{  tab.tabTitle }}
                       </span>
@@ -108,75 +81,18 @@ function getIconURL(suffix) {
     return baseURL + `future_${suffix}.png`
 }
 function getIconImgHTML(image_name) {
-    const imgURL = getIconURL(image_name)
+    const imgURL = getIconURL(image_name);
     return `<img class='tab-image' src=${imgURL}>`
 }
 
 
 </script>
 
-<style scoped>
-.gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 20px;
-  grid-column-start: 1;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  align-content: start;
-  max-width: 700px;
-  margin: 0 auto;
-  transition: all 150ms linear;
-}
-
-.gallery input[type="radio"] {
-  display: none;
-}
-
-.gallery label {
-  position: relative;
-  display: block;
-  padding-bottom: 60%;
-  margin: 5px;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
-  background-size: 50px;
-}
-
-.gallery label:before {
-  border: 1px solid #e3e3e3;
-  content: '';
-  position: absolute;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  top: -5px;
-}
-
-.gallery img {
-  display: none;
-  grid-column-start: 1;
-  grid-column-end: 7;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  width: 100%;
-  transition: all 150ms linear;
-}
-
-.gallery input[name="select"]:checked + label + img {
-  display: block;
-}
-
-.gallery input[name="select"]:checked + label:before {
-  border: 1px solid #000;
-}
-
-.species-title {
+<style>
+.impact-title {
     padding: 1px 10px 2px 6px;
 }
-.species-class {
+.impact-class {
     border-radius: 10px;
     padding: 1px 10px 2px 0px;
     font-weight: 300;
@@ -201,17 +117,17 @@ li {
 
 .tabs-component {
     margin: auto;
-    width: 90vw;
+    width: 100%;
     max-width: 1000px;
 }
 @media (min-width: 850px) {
     .tabs-component {
-        width: 70vw;
+        width: 100%;
     }
 }
 .tab-image {
-    max-width: 2.5rem;
-    max-height: 2.5rem;
+    max-width: 2rem;
+    max-height: 2rem;
     margin-right: 1rem;
     height: auto;
     width: auto;
@@ -343,40 +259,5 @@ li {
     }
 }
 
-.tabs-component-btn {
-  cursor: pointer;
-  background: #e1ecf4;
-  border-radius: 3px;
-  border: 1px solid #7aa7c7;
-  padding: 4px 8px;
-  color: #39739d;
-}
-
-.tabs-component-btn:hover {
-  background-color: #b3d3ea;
-  color: #2c5777;
-}
-
-.tabs-component-btn:active {
-  background-color: #a0c7e4;
-  box-shadow: none;
-  color: #2c5777;
-}
-
-.tabs-component-tab--custom {
-    border-color: #e1ecf4;
-    color: #68838d;
-}
-
-.tabs-component-tab--custom:hover {
-    border-color: #e1ecf4;
-    color: #39739d;
-}
-
-.tabs-component-tab--custom.is-active {
-    color: #39739d;
-    border-color: #7aa7c7;
-    border-bottom: solid 1px #fff;
-}
 
 </style>
