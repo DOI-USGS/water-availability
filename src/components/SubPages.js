@@ -105,11 +105,27 @@ export default {
                     tabTitleID: "temp",
                     tabTitleIDname: "impact-temp",
                     tabText: "Researchers are highly confident that changes in temperature will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. High stream temperatures harm fish health, especially in native, cold-water fisheries. Higher temperatures also lead to warmer and shorter winters, meaning less snowfall and less time for the snow to permeate into the ground.",
+                    listText: [
+                        "Average air temperature increases",
+                        "Extreme heat more common",
+                        "Drought amplification",
+                        "Evaporative loss from reservoirs",
+                        "Stream temperatures affect fish health",
+                        "Warmer and shorter winter season",
+                        "Frost and cold spells decrease"
+                    ]
                 },                {
                     tabTitle: "Wind Impacts",
                     tabTitleID: "wind",
                     tabTitleIDname: "impact-wind",
                     tabText: "The anticipated effects of wind on the water cycle vary from region to region. Researchers are highly confident that changes in wind will affect the Northwest and Southwest and moderately confident that they will affect the rest of the U.S., except Alaska. We expect to see an increase in severe windstorms, including sand and dust storms, as well as stronger hurricanes.",
+                    listText: [
+                        "Decrease in average wind speed",
+                        "Increase in sand and dust storms",
+                        "Stronger hurricanes",
+                        "Severe wind storms increase",
+                        "Increase erosion"
+                    ]
                 }
             ]
         }

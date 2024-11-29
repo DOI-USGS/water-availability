@@ -23,7 +23,7 @@
             </div>
 
             <div class="viz-container">
-              <tabsGroup id="impact-tabs" :option="{ useUrlFragment: false }">
+              <tabsGroup id="impact-tabs" :options="{ useUrlFragment: false }">
                 <tabItem 
                 v-for="tab in impactTabs" 
                 :name="tab.tabTitle" 
@@ -36,7 +36,12 @@
                       </span>
                     </span>
                   </h3>
-                  <img class="tab-content-image" :src="getMapUrl(tab.tabTitleID)">
+                  <div id="map-list">
+                    <ul id="impact-list">
+                        <li v-for="items in tab.listText"> {{ items }} </li>
+                    </ul>
+                    <img class="tab-content-image" :src="getMapUrl(tab.tabTitleID)">
+                  </div>
                   <p v-html="tab.tabText" />
                 </tabItem>
               </tabsGroup>
@@ -89,20 +94,23 @@ function getIconImgHTML(image_name) {
 </script>
 
 <style>
+#map-list {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    padding-bottom: 15px;
+}
+#impact-list{
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
 .impact-title {
-    padding: 1px 10px 2px 6px;
+    padding: 0px;
 }
 .impact-class {
-    border-radius: 10px;
-    padding: 1px 10px 2px 0px;
+    padding: 0px;
     font-weight: 300;
     font-style: italic;
-}
-#impact-wind {
-    border: 1px solid #3c475a;
-}
-#impact-temp {
-    border: 1px solid #66768F;
 }
 #impact-tabs {
     margin-top: 3rem;
@@ -183,7 +191,7 @@ li {
     }
 }
 
-.tabs-component-tab, .tabs-component-tab--custom {
+.tabs-component-tab {
     color: #999;
     font-size: 1.6rem;
     font-weight: 600;
@@ -202,13 +210,13 @@ li {
 .tabs-component-tab.is-active {
     color: #000;
 }
-.tabs-component-tab.is-disabled *, .tabs-component-tab--custom.is-disabled * {
+.tabs-component-tab.is-disabled * {
     color: #cdcdcd;
     cursor: not-allowed !important;
 }
 
 @media (min-width: 850px) {
-    .tabs-component-tab, .tabs-component-tab--custom {
+    .tabs-component-tab {
         background-color: #fff;
         border: solid 1px #ddd;
         border-radius: 3px 3px 0 0;
@@ -219,7 +227,7 @@ li {
         text-align: center;
     }
 
-    .tabs-component-tab.is-active, .tabs-component-tab--custom.is-active {
+    .tabs-component-tab.is-active {
         border-bottom: solid 1px #fff;
         z-index: 2;
         transform: translateY(0);
@@ -227,7 +235,7 @@ li {
 }
 
 @media (min-width: 850px) {
-    .tabs-component-tab-a, .tabs-component-tab-a--custom {
+    .tabs-component-tab-a {
         align-items: center;
         color: inherit;
         display: flex;
@@ -237,7 +245,7 @@ li {
     }
 }
 
-.tabs-component-tab-a, .tabs-component-tab-a--custom {
+.tabs-component-tab-a {
     align-items: center;
     color: inherit;
     display: flex;
