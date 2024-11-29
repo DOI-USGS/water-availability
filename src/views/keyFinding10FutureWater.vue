@@ -51,7 +51,7 @@ import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import SubPages from '@/components/SubPages.js';
-
+import { isMobile } from 'mobile-device-detect';
 const featureToggles = inject('featureToggles');
 
 const route = useRoute();
@@ -69,7 +69,7 @@ const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-ava
 
 
 function getMapUrl(suffix) {
-    return baseURL + `10_${suffix}.png`
+    return isMobile ? baseURL + `10_${suffix}-mobile.png` : baseURL + `10_${suffix}.png`
 }
 function getIconURL(suffix) {
     return baseURL + `future_${suffix}.png`
