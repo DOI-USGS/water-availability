@@ -31,8 +31,9 @@ load_wu_data <- function(data_path, use_type, source_type) {
 #
 #    AVERAGE WU OVER YEARS
 #
-mean_wu_HUC8 <- function(..., min_year, max_year) {
-  data_in <- bind_rows(...)
+mean_wu_HUC12 <- function(..., min_year, max_year) {
+  data_in <- bind_rows(...) |>
+    rename(HUC12 = HUC)
   
   temp_use <- unique(data_in$use_type)
   
@@ -44,19 +45,19 @@ mean_wu_HUC8 <- function(..., min_year, max_year) {
     filter(year >= min_year,
            year <= max_year) |>
     # Aggregate spatially to HUC8
-    group_by(HUC8, source_type, use_type, year, month) |>
+    group_by(HUC12, source_type, use_type, year, month) |>
     summarise(wu_mgd = sum(wu_mgd, na.rm = TRUE)) |>
     # Aggregate temporally to get average water use in each year
     tidytable::mutate(
       days_per_month = lubridate::days_in_month(
         as_date(sprintf('%s/%s/01', year, month))),
       wu_mgm = wu_mgd * days_per_month) %>%
-    tidytable::group_by(HUC8, source_type, use_type, year) |>
+    tidytable::group_by(HUC12, source_type, use_type, year) |>
     tidytable::summarise(wu_mgy = sum(wu_mgm, na.rm = TRUE),
                          wu_mgd = sum(wu_mgm, na.rm = TRUE)/
                            sum(days_per_month, na.rm = TRUE))  |>
     # Get average water use across 20 years
-    tidytable::group_by(HUC8, source_type, use_type) |>
+    tidytable::group_by(HUC12, source_type, use_type) |>
     tidytable::summarise(mean_wu_mgd = mean(wu_mgd, na.rm = TRUE)) |>
     # Pivot to wide format
     pivot_wider(names_from = source_type, values_from = mean_wu_mgd) |>
@@ -69,7 +70,7 @@ mean_wu_HUC8 <- function(..., min_year, max_year) {
     mutate(gw_pct = gw/total,
            sw_pct = sw/total,
             use_name = use_type) |>
-    rename_with(~ sprintf("%s_%s", temp_use, .), .cols = !HUC8)
+    rename_with(~ sprintf("%s_%s", temp_use, .), .cols = !HUC12)
 }
 
 
@@ -136,7 +137,7 @@ total_wu_yearly <- function(...,
 total_wu_proportions <- function(ps_in, ir_in, te_in, 
                                  color_scheme){
   
-  raw <- ps_in |> left_join(ir_in, by = "HUC8") |> left_join(te_in, by = "HUC8")
+  raw <- ps_in |> left_join(ir_in, by = "HUC12") |> left_join(te_in, by = "HUC12")
 
   summary <- raw |>
     rowwise() |>

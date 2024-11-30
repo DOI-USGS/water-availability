@@ -5,13 +5,6 @@
           <div class="text-container">
                 <p>The spatial patterns of the relative proportion of water use for public supply (PS), irrigation (IR), and thermoelectric power (TE) show that these categories vary in their importance regionally. Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the central and eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some eastern States such as Ohio, New York, and New Jersey. Withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida.</p>
                 <br><br>
-                <p>This plot and map show the value of each hydrological region (HUC8) on the map by its respective proportion of public supply, irrigation, and thermoelectric power. For example, regions represented by dots in the top center are dark red because they're almost entirely comprised of public supply water use. </p>
-          </div>
-          <div class="viz-container">
-            <img class="viz-half" src="../assets/images/R/08_wu_legend.png" >
-          </div>
-          <div class="viz-container">
-            <img class="viz-landscape" src="../assets/images/R/08_wu_ternary_all.png" >
           </div>
           <div class="text-container">
             <h3>Groundwater rules the west</h3>
@@ -48,10 +41,10 @@ import References from '../components/References.vue';
 
 const featureToggles = inject('featureToggles');
 
-const imgSrc = ref('../assets/images/R/08_allWU_gw_sw_dumbbell_CONUS.png');
+const imgSrc = ref('https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_allWU_gw_sw_dumbbell_CONUS.png');
 
 const setDefaultImgSrc = () => {
-  import(`../assets/images/R/08_allWU_gw_sw_dumbbell_CONUS.png`).then(img => {
+  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_allWU_gw_sw_dumbbell_CONUS.png`).then(img => {
     imgSrc.value = img.default;
   });
 };
@@ -67,7 +60,7 @@ const mouseoverMap = (event) => {
   const regionID = event.target.id;
   d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#5e7789");
   const formattedRegionID = regionID.replace(/_/g, ' ');
-  import(`../assets/images/R/08_allWU_gw_sw_dumbbell_${formattedRegionID}.png`).then(img => {
+  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_allWU_gw_sw_dumbbell_${formattedRegionID}.png`).then(img => {
     imgSrc.value = img.default;
   });
 };
@@ -75,7 +68,7 @@ const mouseoverMap = (event) => {
 const mouseoutMap = (event) => {
   const regionID = event.target.id;
   d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
-  import(`../assets/images/R/08_allWU_gw_sw_dumbbell_CONUS.png`).then(img => {
+  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_allWU_gw_sw_dumbbell_CONUS.png`).then(img => {
     imgSrc.value = img.default;
   });
 };

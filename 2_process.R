@@ -109,21 +109,21 @@ p2_targets <- list(
   
   ##################################################
   # Join spatial data with water data 
-  tar_target(p2_HUC8_join_wu_sf,
-             p2_mainstem_HUC8_simple_sf |>
+  tar_target(p2_HUC12_join_wu_sf,
+             p2_mainstem_HUC12_simple_sf |>
                # add in mean water use data 
-               dplyr::left_join(p2_wu_te_mean2000to2020_HUC8, 
-                                by = "HUC8") |>
-               dplyr::left_join(p2_wu_ps_mean2000to2020_HUC8, 
-                                by = "HUC8") |>
-               dplyr::left_join(p2_wu_ir_mean2000to2020_HUC8, 
-                                by = "HUC8") |>
+               dplyr::left_join(p2_wu_te_mean2000to2020_HUC12, 
+                                by = "HUC12") |>
+               dplyr::left_join(p2_wu_ps_mean2000to2020_HUC12, 
+                                by = "HUC12") |>
+               dplyr::left_join(p2_wu_ir_mean2000to2020_HUC12, 
+                                by = "HUC12") |>
                dplyr::left_join(p2_wu_ternary_df,
-                                by = "HUC8")
+                                by = "HUC12")
   ),
   # Join with water use data
-  tar_target(p2_HUC8_join_wu_AggRegGrp_sf,
-             p2_HUC8_join_wu_sf |> 
+  tar_target(p2_HUC12_join_wu_AggRegGrp_sf,
+             p2_HUC12_join_wu_sf |> 
                group_by(AggRegion_nam) |>
                tar_group(),
              iteration = "group"),
@@ -302,9 +302,9 @@ p2_targets <- list(
                return("public/wu_yearly.csv")},
              format = "file"),
   tar_target(p2_wu_ternary_df,
-             total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC8,
-                                  ir_in = p2_wu_ir_mean2000to2020_HUC8,
-                                  te_in = p2_wu_te_mean2000to2020_HUC8,
+             total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC12,
+                                  ir_in = p2_wu_ir_mean2000to2020_HUC12,
+                                  te_in = p2_wu_te_mean2000to2020_HUC12,
                                   color_scheme = p3_colors_wu)),
   
   # Public water supply
@@ -323,12 +323,12 @@ p2_targets <- list(
                           use_type = "ps",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_ps_mean2000to2020_HUC8,
-             mean_wu_HUC8(p2_wu_ps_gw_raw,
-                          p2_wu_ps_sw_raw,
-                          p2_wu_ps_tot_raw,
-                          min_year = 2010,
-                          max_year = 2020) 
+  tar_target(p2_wu_ps_mean2000to2020_HUC12,
+             mean_wu_HUC12(p2_wu_ps_gw_raw,
+                           p2_wu_ps_sw_raw,
+                           p2_wu_ps_tot_raw,
+                           min_year = 2010,
+                           max_year = 2020) 
   ),
   # Irrigation
   tar_target(p2_wu_ir_gw_raw,
@@ -346,8 +346,8 @@ p2_targets <- list(
                           use_type = "ir",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_ir_mean2000to2020_HUC8,
-             mean_wu_HUC8(p2_wu_ir_gw_raw,
+  tar_target(p2_wu_ir_mean2000to2020_HUC12,
+             mean_wu_HUC12(p2_wu_ir_gw_raw,
                           p2_wu_ir_sw_raw,
                           p2_wu_ir_tot_raw,
                           min_year = 2010,
@@ -374,8 +374,8 @@ p2_targets <- list(
                           use_type = "te",
                           source_type = "saline") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_te_mean2000to2020_HUC8,
-             mean_wu_HUC8(p2_wu_te_gw_raw,
+  tar_target(p2_wu_te_mean2000to2020_HUC12,
+             mean_wu_HUC12(p2_wu_te_gw_raw,
                           p2_wu_te_sw_raw,
                           p2_wu_te_tot_raw,
                           min_year = 2010,

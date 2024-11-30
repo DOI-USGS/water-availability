@@ -131,4 +131,6 @@ map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, regions_fill,
   ggsave(plot = map_w_leg,
          filename = png_out, device = "png", bg = bkgd_color,
          dpi = 300, units = "in", width = width, height = height)
+  
+  return(png_out)
 }

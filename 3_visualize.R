@@ -130,7 +130,7 @@ p3_targets <- list(
                             dplyr::filter(sui_cat_clean == level),
                           in_regions = p2_Reg_sf,
                           color_scheme = p3_colors_balance,
-                          png_out = sprintf("assets/images/R/01_stress_map_%s.png", level),
+                          png_out = sprintf("src/assets/images/R/01_stress_map_%s.png", level),
                           width = 8, height = 6)),
     names = level
           ),
@@ -279,7 +279,8 @@ p3_targets <- list(
                       bkgd_color = "transparent",
                       leg_title = title,
                       png_out = sprintf("src/assets/images/R/05_%s_map.png", nutrient),
-                      width = 9, height = 6)),
+                      width = 9, height = 6),
+               format = "file"),
     names = nutrient
   ),
   
@@ -317,7 +318,7 @@ p3_targets <- list(
   tar_map(
     values = tibble::tibble(tern_side = c("ps_ir", "ps_te", "te_ir", "all")),
     tar_target(p3_ternary_map_CONUS_png,
-               ternary_map(in_sf = p2_HUC8_join_wu_sf,
+               ternary_map(in_sf = p2_HUC12_join_wu_sf,
                            tern_side = tern_side,
                            color_scheme = p3_colors_website,
                            width = 8,
@@ -353,7 +354,7 @@ p3_targets <- list(
   tar_map(
     values = tibble::tibble(reg = c("Western", "High Plains", "Southeast", "Northeast through Midwest", "CONUS")),
     tar_target(p3_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
                                 agg_reg = reg,
                                 wu_type = "all", 
                                 color_scheme = p3_colors_wu,
@@ -362,7 +363,7 @@ p3_targets <- list(
                                 png_out = sprintf("src/assets/images/R/08_allWU_gw_sw_dumbbell_%s.png", reg)),
                format = "file"),
     tar_target(p3_te_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
                                 agg_reg = reg,
                                 wu_type = "te", #"te", "ir", "ps"
                                 color_scheme = p3_colors_wu,
@@ -371,7 +372,7 @@ p3_targets <- list(
                                 png_out = sprintf("src/assets/images/R/08_TE_gw_sw_dumbbell_%s.png", reg)),
                format = "file"),
     tar_target(p3_ps_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
                                 agg_reg = reg,
                                 wu_type = "ps", #"te", "ir", "ps"
                                 color_scheme = p3_colors_wu,
@@ -380,7 +381,7 @@ p3_targets <- list(
                                 png_out = sprintf("src/assets/images/R/08_PS_gw_sw_dumbbell_%s.png", reg)),
                format = "file"),
     tar_target(p3_ir_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC8_join_wu_sf, 
+               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
                                 agg_reg = reg,
                                 wu_type = "ir", #"te", "ir", "ps"
                                 color_scheme = p3_colors_wu,
