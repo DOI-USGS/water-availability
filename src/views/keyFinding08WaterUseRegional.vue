@@ -4,7 +4,6 @@
         <div class="content-container">
           <div class="text-container">
                 <p>The spatial patterns of the relative proportion of water use for public supply (PS), irrigation (IR), and thermoelectric power (TE) show that these categories vary in their importance regionally. Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the central and eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some eastern States such as Ohio, New York, and New Jersey. Withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida.</p>
-                <br><br>
           </div>
           <div class="text-container">
             <h3>Groundwater rules the west</h3>
@@ -38,45 +37,47 @@ import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
 
-
+// global variables
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_PS_gw_sw_dumbbell_";
+const defaultRegionID = "High_Plains";
+const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
+const focalFill = "#5e7789";
+const defaultFill = "#d1cdc0";
 
-const imgSrc = ref('https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_allWU_gw_sw_dumbbell_CONUS.png');
+// functions called here
+onMounted(() => {
+  addInteractions();
 
-const setDefaultImgSrc = () => {
-  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_allWU_gw_sw_dumbbell_CONUS.png`).then(img => {
-    imgSrc.value = img.default;
-  });
-};
+  // select default region to start
+  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+});
 
-const addInteractions = () => {
+function getImgURL(id) {
+  return new URL(`${baseURL}${id}.png`);
+}
+
+function addInteractions() {
   const mapSVG = d3Base.select('.agg-reg-svg');
   mapSVG.selectAll('.AggReg_nam_nospace')
     .on("mouseover", mouseoverMap)
     .on("mouseout", mouseoutMap);
 };
 
-const mouseoverMap = (event) => {
+function mouseoverMap(event) {
   const regionID = event.target.id;
-  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#5e7789");
-  const formattedRegionID = regionID.replace(/_/g, ' ');
-  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_allWU_gw_sw_dumbbell_${formattedRegionID}.png`).then(img => {
-    imgSrc.value = img.default;
-  });
+  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
+  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
+  imgSrc.value = getImgURL(regionID)
 };
 
-const mouseoutMap = (event) => {
+function mouseoutMap(event) {
   const regionID = event.target.id;
-  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", "#d1cdc0");
-  import(`https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_allWU_gw_sw_dumbbell_CONUS.png`).then(img => {
-    imgSrc.value = img.default;
-  });
+  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
+  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+  imgSrc.value = getImgURL(defaultRegionID)
 };
 
-onMounted(() => {
-  setDefaultImgSrc();
-  addInteractions();
-});
 </script>
 
 

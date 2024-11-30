@@ -10,14 +10,14 @@ dumbbell_gw_v_sw <- function(in_sf,
   if(wu_type == "all"){
     proc_in_sf <- in_sf |>
       dplyr::mutate(x_long = sf::st_coordinates(sf::st_centroid(in_sf))[,1]) |> 
-      dplyr::mutate(sw_total_wu = rowSums(dplyr::across(c(ps_sw.x, ir_sw.x, te_sw.x))),
-                    gw_total_wu = rowSums(dplyr::across(c(ps_gw.x, ir_gw.x, te_gw.x))))
+      dplyr::mutate(sw_total_wu = rowSums(dplyr::across(c(ps_sw, ir_sw, te_sw))),
+                    gw_total_wu = rowSums(dplyr::across(c(ps_gw, ir_gw, te_gw))))
   }
   else if(wu_type != "all"){
     proc_in_sf <- in_sf |>
       dplyr::mutate(x_long = sf::st_coordinates(sf::st_centroid(in_sf))[,1]) |> 
-      dplyr::rename(sw_total_wu = sprintf("%s_sw.x", wu_type),
-                    gw_total_wu = sprintf("%s_gw.x", wu_type))  
+      dplyr::rename(sw_total_wu = sprintf("%s_sw", wu_type),
+                    gw_total_wu = sprintf("%s_gw", wu_type))  
   }
   max(proc_in_sf$gw_total_wu)
   

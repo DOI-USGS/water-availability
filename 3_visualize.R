@@ -3,7 +3,7 @@ source("3_visualize/src/viz_dumbbell.R")
 source("3_visualize/src/viz_svi_sui.R")
 source("3_visualize/src/viz_sui_popn.R")
 source("3_visualize/src/viz_wq.R")
-source("3_visualize/src/viz_ternary.R")
+source("3_visualize/src/viz_wu.R")
 source("3_visualize/src/viz_ws.R")
 source("3_visualize/src/viz_availability.R")
 
@@ -24,19 +24,19 @@ p3_targets <- list(
              p3_colors_website |> bind_cols(
                tibble(
                  # Water Use
-                 te_gw_main = "#3E4F5C", #tern_5
-                 te_sw_secondary = "#1687A5",
-                 te_saline = "#01F9C6",
-                 ir_gw_main = "#BBA167", #tern_9
-                 ir_sw_secondary = "#D0CB02",
-                 ps_gw_main = "#952D3D", #tern_1
-                 ps_secondary = "#C72873",
-                 tern_2 = "#705E70",
-                 tern_3 = "#C63C51",
-                 tern_4 = "#E0896D",
-                 tern_6 = "#53697A",
-                 tern_7 = "#637B73",
-                 tern_8 = "#F9D689",
+                 te_gw_main = "#3E4C5B", #tern_5 #3.06:1 vs te_saline
+                 #te_sw_secondary = "#1687A5",
+                 te_saline = "#09A7C3",
+                 ir_gw_main = "#B0904F", #tern_9 #3.02:1 on white
+                 #ir_sw_secondary = "#D0CB02",
+                 ps_gw_main = "#822734", #tern_1 #3.03:1 vs ir_gw_main
+                 #ps_secondary = "#C72873",
+                 #tern_2 = "#705E70",
+                 #tern_3 = "#C63C51",
+                 #tern_4 = "#E0896D",
+                 #tern_6 = "#53697A",
+                 #tern_7 = "#637B73",
+                 #tern_8 = "#F9D689",
                  dumbbell_sw = "#065867",
                  dumbbell_gw = "#F09300"))),
   tar_target(p3_colors_balance,
@@ -315,44 +315,25 @@ p3_targets <- list(
   #             (e.g., crop irrigation, public supply, or 
   #             thermoelectric power generation).
   # 
+  # maps of water use
+  tar_target(p3_wu_ir_HUC12_map_png,
+             map_ir(in_sf = p2_HUC12_join_wu_sf,
+                    in_regions = p2_Reg_sf,
+                    color_scheme = p3_colors_balance,
+                    png_out = "src/assets/images/R/08_wu_ir_map.png",
+                    width = 8, height = 6)),
+  tar_target(p3_wu_ps_HUC12_map_png,
+             map_ps(in_sf = p2_HUC12_join_wu_sf,
+                    in_regions = p2_Reg_sf,
+                    color_scheme = p3_colors_balance,
+                    png_out = "src/assets/images/R/08_wu_ps_map.png",
+                    width = 8, height = 6)),
+  
+  
+  # Dumbbells
   tar_map(
-    values = tibble::tibble(tern_side = c("ps_ir", "ps_te", "te_ir", "all")),
-    tar_target(p3_ternary_map_CONUS_png,
-               ternary_map(in_sf = p2_HUC12_join_wu_sf,
-                           tern_side = tern_side,
-                           color_scheme = p3_colors_website,
-                           width = 8,
-                           height = 6,
-                           png_out = sprintf("src/assets/images/R/08_wu_ternary_%s.png", tern_side)), 
-               format = "file"),
-    names = tern_side
-  ),
-  tar_target(p3_ternary_legend_ps_ir_png,
-             ternary_legend(tern_side_pal = tibble::tibble(ps_ir = c("#952D3D", "#C63C51", "#E0896D", "#F9D689", "#BBA167")), 
-                            left_label = "Increasing PS Use", 
-                            right_label = "Increasing IR Use",
-                            png_out = "src/assets/images/R/08_wu_ternary_legend_ps_ir.png")
-  ),
-  tar_target(p3_ternary_legend_ps_te_png,
-             ternary_legend(tern_side_pal = tibble::tibble(ps_te = c("#952D3D", "#C63C51", "#705E70", "#53697A", "#3E4F5C")), 
-                            left_label = "Increasing PS Use", 
-                            right_label = "Increasing TE Use",
-                            png_out = "src/assets/images/R/08_wu_ternary_legend_ps_te.png")
-  ),
-  tar_target(p3_ternary_legend_te_ir_png,
-             ternary_legend(tern_side_pal = tibble::tibble(te_ir = c("#3E4F5C", "#53697A", "#637B73", "#F9D689", "#BBA167")), 
-                            left_label = "Increasing TE Use", 
-                            right_label = "Increasing IR Use",
-                            png_out = "src/assets/images/R/08_wu_ternary_legend_te_ir.png")
-  ),
-    tar_target(p3_ternary_plot_png,
-               ternary_plot(in_df = p2_wu_ternary_df,
-                            width = 8,
-                            height = 8,
-                            png_out = "src/assets/images/R/08_wu_legend.png"), 
-               format = "file"),
-  tar_map(
-    values = tibble::tibble(reg = c("Western", "High Plains", "Southeast", "Northeast through Midwest", "CONUS")),
+    values = tibble::tibble(reg = c("Western", "High Plains", "Southeast", "Northeast through Midwest", "CONUS"),
+                            reg_noname = c("Western", "High_Plains", "Southeast", "Northeast_through_Midwest", "CONUS")),
     tar_target(p3_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
                                 agg_reg = reg,
@@ -360,7 +341,7 @@ p3_targets <- list(
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("src/assets/images/R/08_allWU_gw_sw_dumbbell_%s.png", reg)),
+                                png_out = sprintf("src/assets/images/R/08_allWU_gw_sw_dumbbell_%s.png", reg_noname)),
                format = "file"),
     tar_target(p3_te_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
@@ -369,7 +350,7 @@ p3_targets <- list(
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("src/assets/images/R/08_TE_gw_sw_dumbbell_%s.png", reg)),
+                                png_out = sprintf("src/assets/images/R/08_TE_gw_sw_dumbbell_%s.png", reg_noname)),
                format = "file"),
     tar_target(p3_ps_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
@@ -378,7 +359,7 @@ p3_targets <- list(
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("src/assets/images/R/08_PS_gw_sw_dumbbell_%s.png", reg)),
+                                png_out = sprintf("src/assets/images/R/08_PS_gw_sw_dumbbell_%s.png", reg_noname)),
                format = "file"),
     tar_target(p3_ir_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
@@ -387,7 +368,7 @@ p3_targets <- list(
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("src/assets/images/R/08_IR_gw_sw_dumbbell_%s.png", reg)),
+                                png_out = sprintf("src/assets/images/R/08_IR_gw_sw_dumbbell_%s.png", reg_noname)),
                format = "file"),
     names = reg
   )

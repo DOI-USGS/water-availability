@@ -112,12 +112,12 @@ p2_targets <- list(
   tar_target(p2_HUC12_join_wu_sf,
              p2_mainstem_HUC12_simple_sf |>
                # add in mean water use data 
-               dplyr::left_join(p2_wu_te_mean2000to2020_HUC12, 
-                                by = "HUC12") |>
-               dplyr::left_join(p2_wu_ps_mean2000to2020_HUC12, 
-                                by = "HUC12") |>
-               dplyr::left_join(p2_wu_ir_mean2000to2020_HUC12, 
-                                by = "HUC12") |>
+               #dplyr::left_join(p2_wu_te_mean2000to2020_HUC12, 
+               #                 by = "HUC12") |>
+               #dplyr::left_join(p2_wu_ps_mean2000to2020_HUC12, 
+               #                 by = "HUC12") |>
+               #dplyr::left_join(p2_wu_ir_mean2000to2020_HUC12, 
+               #                 by = "HUC12") 
                dplyr::left_join(p2_wu_ternary_df,
                                 by = "HUC12")
   ),
