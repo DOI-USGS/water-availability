@@ -102,14 +102,14 @@ export default {
             tabData: [
                 {
                     tabTitle: "Temperature",
-                    tabSubtitle: "Likelihood of regional impacts from rising temperature",
+                    tabSubtitle: "Potential impacts from rising temperature",
                     tabTitleID: "temp",
                     tabTitleIDname: "impact-temp",
                     tabText: "Climate assessments indicate a high degree of confidence that changes in extreme heat, mean air temperature, and cold spells and frost will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. Increased stream temperatures harm fish health, especially in native, cold-water fisheries. Harmful algal blooms also increase with increasing water temperatures.  Higher air temperatures  lead to warmer and shorter winters, meaning less precipitation occurs as snowfall and less snowmelt for streamflow in the spring and early summer.",
                     listText: [
-                        "Increase average air temperature",
+                        "Increased average air temperature",
                         "More common extreme heat events",
-                        "Amplification of drought",
+                        "Amplified drought events",
                         "Increased evaporative water loss",
                         "Effects on aquatic habitats and fish health",
                         "Warmer and shorter winter season",
@@ -117,7 +117,7 @@ export default {
                     ]
                 },                {
                     tabTitle: "Precipitation",
-                    tabSubtitle: "Likelihood of regional impacts from wetter conditions",
+                    tabSubtitle: "Potential impacts from wetter conditions",
                     tabTitleID: "water",
                     tabTitleIDname: "impact-water",
                     tabText: "Changes in mean precipitation, river floods, and heavy precipitation leading to pluvial floods  are projected to vary across the country. There is a high degree of confidence that changes in precipitation-related climate drivers will affect Alaska, the Northeast, and the Southeast, and moderately confident that changes in those drivers will affect the remaining regions of the United States. Most regions of the U.S. are seeing more extreme precipitation and flooding events than in past decades,. Extreme flooding events, like 2024’s Hurricane Helene in North Carolina, have a multitude of negative effects on water availability, including impairing water quality and disrupting water infrastructure.",
@@ -126,11 +126,11 @@ export default {
                         "More extreme precipitation and flooding",
                         "Changes in streamflow amount and timing",
                         "Effects on agriculture",
-                        "Water quality impairment"
+                        "Impaired water quality"
                     ]
                 },                {
                     tabTitle: "Aridity",
-                    tabSubtitle: "Likelihood of regional impacts from drier conditions",
+                    tabSubtitle: "Potential impacts from drier conditions",
                     tabTitleID: "dry",
                     tabTitleIDname: "impact-dry",
                     tabText: "Climate assessments indicate that increases in drought and fire weather and aridity will have the highest likelihood of impacting the Western region of the contiguous U.S. Overall, the amount and timing of streamflow is expected to change, the demand for groundwater to increase, and stream baseflow  to decrease.",
@@ -139,48 +139,48 @@ export default {
                         "Changes in streamflow amount and timing",
                         "Reduced baseflow",
                         "Effects on agriculture",
-                        "Water quality impairment",
+                        "Impaired water quality",
                         "More frequent and long-lasting fire weather",
-                        "Amplification of drought"
+                        "Amplified drought events"
                     ]
                 },                {
                     tabTitle: "Snow",
-                    tabSubtitle: "Likelihood of regional impacts from changing snow and ice",
+                    tabSubtitle: "Potential impacts from changing snow and ice",
                     tabTitleID: "ice",
                     tabTitleIDname: "impact-ice",
                     tabText: "Climate assessments indicate a high degree of confidence that every region in the U.S. except Hawaii and the Caribbean islands will see changes in snow and ice. Changes in many areas will bring a smaller extent of snow cover and sooner snow melt. Ice in lakes and rivers is declining, as are glaciers. Permafrost is thawing, and the transition line between rain and snow is moving north (meaning we see more rain where we used to see snow).",
                     listText: [
-                        "Decrease in snowfall",
+                        "Decreased snowfall",
                         "Earlier snowmelt runoff",
-                        "Decreasing lake and river ice extent",
+                        "Decreased lake and river ice extent",
                         "Reduced snow cover extent and duration",
-                        "Decreasing glaciers and increasing meltwater",
+                        "Decreased glaciers and increasing meltwater",
                         "Thawing permafrost",
-                        "Alteration of rain and snow patterns"
+                        "Altered rain and snow patterns"
                     ]
                 },                {
                     tabTitle: "Wind",
-                    tabSubtitle: "Likelihood of regional impacts from changing winds",
+                    tabSubtitle: "Potential impacts from changing winds",
                     tabTitleID: "wind",
                     tabTitleIDname: "impact-wind",
                     tabText: "The projected effects of wind on water availability vary from region to region. Climate assessments indicate a moderate degree of confidence that changes in wind will affect the Northwest and Southwest and moderate confidence that they will affect the rest of the U.S.. We expect to see decreased wind speeds, an increase in severe windstorms and sand and dust storms;, and stronger hurricanes. ",
                     listText: [
-                        "Decrease in average wind speed",
-                        "Increase in sand and dust storms",
+                        "Decreased average wind speed",
+                        "Increased sand and dust storms",
                         "Stronger hurricanes",
-                        "Increase in severe wind storms",
-                        "Increase erosion"
+                        "Increased severe wind storms",
+                        "Increased erosion"
                     ]
                 },                {
                     tabTitle: "Coastal",
-                    tabSubtitle: "Likelihood of regional impacts from coastal change",
+                    tabSubtitle: "Potential impacts from coastal change",
                     tabTitleID: "coastal",
                     tabTitleIDname: "impact-coast",
                     tabText: "Climate assessments indicate a high degree of confidence that climate impacts on water resources in coastal areas will impact all areas of the U.S. that border an ocean. Along with sea level rise, we expect to see larger storm surges, an increased frequency and severity of coastal flooding, and greater incursion of saltwater into freshwater aquifers, estuaries, wetlands, and soils via storm floodwaters.",
                     listText: [
                         "Rising sea levels",
-                        "Increase in storm surge",
-                        "Increase in saltwater intrusion",
+                        "Increased storm surge",
+                        "Increased saltwater intrusion",
                         "Increased frequency and severity of coastal flooding"
                     ]
                 }

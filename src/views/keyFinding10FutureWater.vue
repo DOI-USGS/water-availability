@@ -23,7 +23,8 @@
                     <ul id="impact-list">
                         <li v-for="items in tab.listText"> {{ items }} </li>
                     </ul>
-                    <img class="tab-content-image" :src="getMapUrl(tab.tabTitleID)">
+                    <img id="tab-content-image" :src="getMapURL(tab.tabTitleID)">
+                    <img id="tab-legend" :src="getLegendURL(tab.tabTitleID)">
                   </div>
                   <p v-html="tab.tabText" />
                 </tabItem>
@@ -68,8 +69,11 @@ const impactTabs = filteredMessages[0].tabData;
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
 
 
-function getMapUrl(suffix) {
+function getMapURL(suffix) {
     return isMobile ? baseURL + `10_${suffix}-mobile.png` : baseURL + `10_${suffix}.png`
+}
+function getLegendURL(suffix) {
+    return isMobile ? null : baseURL + `10_${suffix}_legend.png`
 }
 function getIconURL(suffix) {
     return baseURL + `future_${suffix}.png`
@@ -85,22 +89,41 @@ function getIconImgHTML(image_name) {
 <style>
 #map-list {
     display: grid;
-    grid-template-columns: 1fr 3fr;
     padding-bottom: 15px;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas: 
+    "list map"
+    "legend map";
 }
 #impact-list{
+    grid-area: list;
     padding-top: 15px;
     padding-left: 15px;
+    font-size: 2.5rem;
 }
-
+#tab-content-image {
+    width: 100%;
+    grid-area: map;
+}
+#tab-legend {
+    min-height: 100px;
+    max-height: 150px;
+    grid-area: legend;
+}
 
 @media only screen and (max-width: 768px) {
     #map-list {
         display: grid;
         grid-template-columns: 1fr;
+        grid-template-rows: 1fr minmax(200px, 100%);
+        grid-template-areas: 
+            "list"
+            "map";
     }
     #impact-list {
-        padding-bottom: 10px;
+        padding-bottom: 0px;
+        font-size: 1.8rem;
     }
 }
 
@@ -152,9 +175,7 @@ li {
 .tabs-component-tab.is-inactive img {
     opacity: 0.5;
 }
-.tab-content-image {
-    width: 100%;
-}
+
 .tab-content-title {
     padding: 0rem 0 1rem 0;
     line-height: 2.6rem;
