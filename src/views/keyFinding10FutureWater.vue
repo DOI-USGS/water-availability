@@ -5,33 +5,7 @@
             <div class="text-container">
                 <p>The climate is changing. Land and ocean temperatures are increasing, atmospheric CO2 is increasing, sea levels are rising, and glaciers are melting. Climate policies aim to limit these changes, but what happens if the global temperature rises 2-2.4°C by mid-21st century? What does a changing climate mean for the national water cycle? The answer may vary from region to region, but some effects are more consistent than others.</p>
             </div>
-            <div class="viz-container">
-                <div class="gallery">
-                    <input type="radio" checked="checked" name="select" id="kf10_temp">
-                    <label for="kf10_temp" style="background-image: url('./icons/future_temp.png');"></label>
-                    <img src="../assets/images/manual/10_temp.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_water">
-                    <label for="kf10_water" style="background-image: url('./icons/future_water.png');"></label>
-                    <img src="../assets/images/manual/10_water.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_dry">
-                    <label for="kf10_dry" style="background-image: url('./icons/future_dry.png');"></label>
-                    <img src="../assets/images/manual/10_dry.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_snow">
-                    <label for="kf10_snow" style="background-image: url('./icons/future_ice.png');"></label>
-                    <img src="../assets/images/manual/10_snow.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_coastal">
-                    <label for="kf10_coastal" style="background-image: url('./icons/future_coastal.png');"></label>
-                    <img src="../assets/images/manual/10_coastal.png" border="0">
-
-                    <input type="radio" checked="checked" name="select" id="kf10_wind">
-                    <label for="kf10_wind" style="background-image: url('./icons/future_wind.png');"></label>
-                    <img src="../assets/images/manual/10_wind.png" border="0">
-                </div>
-            </div>
+    
             <div class="text-container">
                 <h2>Temperature Impacts</h2>
                 <p>Researchers are highly confident that changes in temperature will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. High stream temperatures harm fish health, especially in native, cold-water fisheries. Higher temperatures also lead to warmer and shorter winters, meaning less snowfall and less time for the snow to permeate into the ground.</p>

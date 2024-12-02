@@ -8,7 +8,7 @@
                     <h3 class="glossary-term"> {{ terms.term }} </h3>
                     <p class="glossary-def"> {{ terms.definition }}</p>
                     <div v-if="terms.visualLogic" class="viz-container">
-                      <img class="viz-portrait" src="../assets/images/manual/glossary_huc.png">
+                      <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/glossary_huc.png">
                     </div>
                 </div>
             </div>

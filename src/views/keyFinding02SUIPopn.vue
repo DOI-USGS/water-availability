@@ -13,7 +13,7 @@
             <p>High water stress is often due to multiple stressors. When there is high water demand driven by human activites paired with limited supply, this often co-occures with elevated water stress from other factors like water and groundwater quality issues, water imbalance, or by alterations to ecological flow.</p>
           </div>
           <div class="viz-container">
-            <img class="viz-landscape" src="../assets/images/manual/02_stressType_maps.png">
+            <img class="viz-landscape" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_sw_wq.png">
           </div>
           <Methods></Methods>
           <References></References>
