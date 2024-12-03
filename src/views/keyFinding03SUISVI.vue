@@ -45,12 +45,11 @@ const featureToggles = inject('featureToggles');
 
 
 function getImgURL(id) {
-  return new URL(`${baseURL}${id}.png`);
+  return `${baseURL}${id}.png`;
 }
 
 function showStress() {
-    // since we're using getImgURL to build a url href, we have to check equivalence of one of the URL properties, e.g., href
-    if(imgSrc.value.href === getImgURL(defaultImageID).href) {
+    if(imgSrc.value === getImgURL(defaultImageID)) {
         imgSrc.value = getImgURL(stressImageID);
     } else {
         imgSrc.value = getImgURL(defaultImageID);
