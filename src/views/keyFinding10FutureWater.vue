@@ -53,6 +53,7 @@ import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import SubPages from '@/components/SubPages.js';
 import { isMobile } from 'mobile-device-detect';
+
 const featureToggles = inject('featureToggles');
 
 const route = useRoute();
@@ -90,7 +91,7 @@ function getIconImgHTML(image_name) {
 #map-list {
     display: grid;
     padding-bottom: 15px;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 200px minmax(300px, 80%);
     grid-template-rows: 2fr 1fr;
     grid-template-areas: 
     "list map"
@@ -100,7 +101,6 @@ function getIconImgHTML(image_name) {
     grid-area: list;
     padding-top: 15px;
     padding-left: 15px;
-    font-size: 2.5rem;
 }
 #tab-content-image {
     width: 100%;
@@ -112,20 +112,20 @@ function getIconImgHTML(image_name) {
     grid-area: legend;
 }
 
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
     #map-list {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr minmax(200px, 100%);
+        grid-template-rows: auto minmax(300px, 60vh);
         grid-template-areas: 
-            "list"
+            "list" 
             "map";
     }
     #impact-list {
         padding-bottom: 0px;
-        font-size: 1.8rem;
     }
 }
+
 
 .impact-title {
     padding: 0px;
@@ -149,7 +149,7 @@ li {
     width: 100%;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 1000px) {
     .tabs-component {
         width: 90%;
     }
@@ -162,7 +162,7 @@ li {
     width: auto;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 1000px) {
     .tab-image {
         max-width: fit-content;
         max-height: 5rem;
@@ -188,8 +188,8 @@ li {
 }
 
 
-@media (min-width: 850px) {
-    .tabs-component-tabs {
+@media (min-width: 1000px) {
+    .tabs-component-tabs { 
         border: 0;
         align-items: stretch;
         display: flex;
@@ -223,7 +223,7 @@ li {
 }
 
 
-@media (min-width: 850px) {
+@media (min-width: 1000px) {
     .tabs-component-tab {
         background-color: #fff;
         border: solid 1px #ddd;
@@ -231,7 +231,7 @@ li {
         margin-right: .5em;
         /* transform: translateY(4px); */
         transition: transform .3s ease;
-        font-size: 1.6rem;
+        font-size: 2rem;
         text-align: center;
     }
 
@@ -243,7 +243,7 @@ li {
 }
 
 
-@media (min-width: 850px) {
+@media (min-width: 1000px) {
     .tabs-component-tab-a {
         align-items: center;
         color: inherit;
@@ -267,7 +267,7 @@ li {
 }
 
 
-@media (min-width: 850px) {
+@media (min-width: 1000px) {
     .tabs-component-panels {
         background-color: #fff;
         border: solid 1px #ddd;
