@@ -77,7 +77,7 @@ const router = createRouter({
       component: page10
     },
     {
-      path: '/glossary.html',
+      path: '/glossary',
       name: 'Glossary',
       component: glossary
     }
