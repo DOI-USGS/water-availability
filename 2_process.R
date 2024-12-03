@@ -99,6 +99,21 @@ p2_targets <- list(
                tar_group(),
              iteration = "group"),
   
+  # Summarize WU by state
+  tar_target(p2_states_wu_df,
+             summary_wu_by_state(in_sf = p2_HUC12_join_wu_AggRegGrp_sf)),  
+  # write summary to csv
+  tar_target(p2_states_wu_csv,
+             readr::write_csv(p2_states_wu_df,
+                              file = "public/wu_state.csv")),
+  # Summarize WU by Region
+  tar_target(p2_Reg_wu_df,
+             summary_wu_by_Reg(in_sf = p2_HUC12_join_wu_AggRegGrp_sf)),  
+  # write summary to csv
+  tar_target(p2_Reg_wu_csv,
+             readr::write_csv(p2_Reg_wu_df,
+                              file = "public/wu_regions.csv")),
+  
   # Join with SUI/water stress and SVI/vulnerability indices
   tar_target(p2_HUC12_join_sui_svi_sf,
              p2_mainstem_HUC12_simple_sf |>

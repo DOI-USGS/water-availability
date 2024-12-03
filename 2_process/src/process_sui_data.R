@@ -86,7 +86,7 @@ create_stats <- function(in_sf, out_csv){
     left_join(total_huc_by_reg, by = "Region_nam") |>
     mutate(percentage_stress = (stress_by_reg / total_hucs)*100) 
   
-  expand_data <-expand.grid(sui_category_5 = unique(join_data$sui_category_5), 
+  expand_data <- expand.grid(sui_category_5 = unique(join_data$sui_category_5), 
               Region_nam = unique(join_data$Region_nam)) |>
     left_join(join_data) |>
     mutate(percentage_stress = ifelse(is.na(percentage_stress), 0, percentage_stress),
