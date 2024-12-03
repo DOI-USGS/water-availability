@@ -43,12 +43,6 @@ p2_targets <- list(
              readr::read_csv(p1_CONUS_crosswalk) |>
                filter(AggRegion_nam != "NULL") |>
                left_join(p2_region_name_xwalk, by = "Region_nam")),
-  # Master crosswalk at the HUC8 level
-  tar_target(p2_CONUS_crosswalk_HUC8_df,
-             p2_CONUS_crosswalk_HUC12_df |>
-               group_by(HUC8) |>
-               reframe(AggRegion_nam = unique(AggRegion_nam),
-                       Region_nam = unique(Region_nam)) ),
   
   
   ##############################################
@@ -66,26 +60,6 @@ p2_targets <- list(
                left_join(p2_region_name_xwalk, by = "AggReg_nam")),
   
   # Shapefiles for plotting
-  tar_target(p2_mainstem_HUC8_simple_sf,
-             p1_mainstem_HUC8_raw_sf |> 
-               dplyr::mutate(
-                 HUC2 = str_sub(HUC, 1, 2),
-                 region_group = case_when(
-                   HUC2 == "19" ~ "AK",
-                   HUC2 == "20" ~ "HI",
-                   HUC2 == "21" ~ "PR",
-                   HUC2 == "22" ~ "other",
-                   .default = "CONUS"
-                 )
-               ) |> 
-               rename(HUC8 = HUC) |>
-               # remove everything outside of CONUS for now
-               filter(region_group == "CONUS") |>
-               st_intersection(st_union(p2_Reg_sf)) |>
-               # add in region names
-               inner_join(p2_CONUS_crosswalk_HUC8_df, by = "HUC8") |>
-               filter(! is.na(Region_nam)) 
-  ),
   tar_target(p2_mainstem_HUC12_simple_sf,
              p1_mainstem_HUC12_raw_sf |> 
                dplyr::mutate(
@@ -272,8 +246,6 @@ p2_targets <- list(
     tar_target(p2_wq_HUC12_df,
                process_wq_HUC12(in_csv = raw_targets,
                               in_COMID_xwalk = p1_COMID_to_HUC12_crosswalk_csv)),
-    tar_target(p2_wq_HUC8_df,
-               process_wq_HUC8(data_in = p2_wq_HUC12_df)),
     tar_target(p2_wq_Reg_d3_csv,
                readr::write_csv(p2_wq_Reg_df,
                                 file = sprintf("public/wq_sources_%s.csv", nutrient))),
