@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { onMounted, inject, ref } from 'vue';
+import { inject, ref } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
@@ -38,46 +38,24 @@ import References from '../components/References.vue';
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
 const defaultImageID = "03_sui_svi_map";
+const stressImageID = "03_sui_svi_dry_map";
 let imgSrc = ref(getImgURL(defaultImageID));
 
 const featureToggles = inject('featureToggles');
 
-
-// functions called here
-onMounted(() => {
-    let imageToggle = document.getElementById("image-toggle");
-
-    imageToggle.addEventListener("click", toggleImg)
-});
 
 function getImgURL(id) {
   return new URL(`${baseURL}${id}.png`);
 }
 
 function showStress() {
-    if(imgSrc.value === 'https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_svi_map.png') {
-        imgSrc = getImgURL('03_sui_svi_dry_map');
-        console.log(imgSrc.value)
+    // since we're using getImgURL to build a url href, we have to check equivalence of one of the URL properties, e.g., href
+    if(imgSrc.value.href === getImgURL(defaultImageID).href) {
+        imgSrc.value = getImgURL(stressImageID);
     } else {
-        imgSrc = getImgURL('03_sui_svi_map');
-        console.log(imgSrc)
+        imgSrc.value = getImgURL(defaultImageID);
     }
 }
-
-
-function toggleImg() {
-
-    if(imgSrc.value === getImgURL('03_sui_svi_map')) {
-        imgSrc = ref(getImgURL('03_sui_svi_dry_map'));
-        console.log(imgSrc.value)
-        //imageToggle.textContent = "View All Areas";
-    }
-    else {
-        imgSrc.value = getImgURL('03_sui_svi_map');
-        //imageToggle.textContent = "View Dry Areas Only";
-    }
-}
-
 
 </script>
 
