@@ -68,7 +68,7 @@ import References from '../components/References.vue';
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_";
 const defaultRegionID = "Northern_High_Plains";
-const imgSrc = ref(getImgURL(defaultRegionID));
+const imgSrc = ref(getImgURL(defaultRegionID)); 
 const featureToggles = inject('featureToggles');
 const focalFill = "#5e7789";
 const defaultFill = "#d1cdc0";
@@ -94,7 +94,6 @@ function addInteractions() {
 
 function mouseoverMap(event) {
   const regionID = event.target.id;
-  console.log(`region id: ${regionID}`)
   d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
   d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
   imgSrc.value = getImgURL(regionID)

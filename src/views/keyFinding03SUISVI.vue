@@ -8,13 +8,13 @@
                 <p>When viewing only the driest ares, the map shows almost exclusively dark red patches, meaning that most areas with high water stress occur where people are socially vulnerable. Water stress disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water. </p>
             </div>
             <div class="button-container">
-                <button id="image-toggle" class="toggle-button">View areas of high water stress</button>
+                <button id="image-toggle" class="toggle-button" @click="showStress">View areas of high water stress</button>
             </div>
             <div class="viz-container">
                 <img 
                         id="first-image" 
                         class="viz-placeholder" 
-                        :src="photoAll" 
+                        :src="imgSrc" 
                         alt="xxx"
                     >
         </div>
@@ -27,36 +27,58 @@
 </template>
 
 <script setup>
-import { onMounted, inject } from 'vue';
+import { onMounted, inject, ref } from 'vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
-import photoAll from "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_svi_map.png";
-import photoDry from "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_svi_dry_map.png";
+//import photoAll from "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_svi_map.png";
+//import photoDry from "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_svi_dry_map.png";
 
+// global variables
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
+const defaultImageID = "03_sui_svi_map";
+let imgSrc = ref(getImgURL(defaultImageID));
 
 const featureToggles = inject('featureToggles');
 
-onMounted(() => {
 
-    let firstImg = document.getElementById("first-image");
+// functions called here
+onMounted(() => {
     let imageToggle = document.getElementById("image-toggle");
 
-
-    function toggleImg() {
-        if(firstImg.getAttribute('src') === photoAll) {
-            firstImg.setAttribute('src', photoDry);
-            imageToggle.textContent = "View All Areas";
-        }
-        else {
-            firstImg.setAttribute('src', photoAll);
-            imageToggle.textContent = "View Dry Areas Only";
-        }
-    }
-
     imageToggle.addEventListener("click", toggleImg)
-}); 
+});
+
+function getImgURL(id) {
+  return new URL(`${baseURL}${id}.png`);
+}
+
+function showStress() {
+    if(imgSrc.value === 'https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_svi_map.png') {
+        imgSrc = getImgURL('03_sui_svi_dry_map');
+        console.log(imgSrc.value)
+    } else {
+        imgSrc = getImgURL('03_sui_svi_map');
+        console.log(imgSrc)
+    }
+}
+
+
+function toggleImg() {
+
+    if(imgSrc.value === getImgURL('03_sui_svi_map')) {
+        imgSrc = ref(getImgURL('03_sui_svi_dry_map'));
+        console.log(imgSrc.value)
+        //imageToggle.textContent = "View All Areas";
+    }
+    else {
+        imgSrc.value = getImgURL('03_sui_svi_map');
+        //imageToggle.textContent = "View Dry Areas Only";
+    }
+}
+
+
 </script>
 
 <style scoped>
