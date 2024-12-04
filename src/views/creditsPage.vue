@@ -3,15 +3,6 @@
     <div class="authors-container">
         <div id="text-container">
             <h1>Website Credits</h1>
-            <div class="key-term" v-for="terms in termArray">
-                <div class="key-message-item-text">
-                    <h3 class="glossary-term"> {{ terms.term }} </h3>
-                    <p class="glossary-def"> {{ terms.definition }}</p>
-                    <div v-if="terms.visualLogic" class="viz-container">
-                      <img class="viz-portrait" src="../assets/images/manual/glossary_huc.png">
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="authors-container">
@@ -38,7 +29,7 @@
     </div>
     <div class="authors-container">
       <h2>Meet the Vizlab Team</h2>
-        <div class="viz-container">
+        <div class="chart-container">
             <div ref="chart" class="chart"></div>
         </div>
         <p>
@@ -64,11 +55,11 @@
     </div>
     <div class="authors-container">
         <h2>Meet the National IWAAs Authors</h2>
-        <div class="viz-container">
+        <div class="chart-container">
             <div ref="chartSME" class="chartSME"></div>
         </div>
         <p>
-            The chapter leads for the National Integrated Water Availability Assessment Report includes
+            The chapter leads for the National Integrated Water Availability Assessment Report include
           <span id="primary-author-statment">
             <span
               v-for="(author, index) in authorSMEs" 
@@ -98,6 +89,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import * as d3 from 'd3';
+import { isMobile } from 'mobile-device-detect';
 import authorList from '@/assets/text/authors.js';
 
 const authorLeads = authorList.leads;
@@ -127,8 +119,8 @@ const chart = ref(null);
 const chartSME = ref(null);
 
 onMounted(() => {
-  createChart({container: chart.value, data: [...props.data], team: 'Vizlab'});
-  createChart({container: chartSME.value, data: [...propsSME.data], team: 'scientists'});
+  //createChart({container: chart.value, data: [...props.data], team: 'Vizlab'});
+  //createChart({container: chartSME.value, data: [...propsSME.data], team: 'scientists'});
 
   window.addEventListener('resize', createChart);
 });
@@ -141,12 +133,12 @@ function createChart({ container, data, team }) {
 
     const margin = { top: 20, right: 0, bottom: 20, left: 0 };
     const width = container.clientWidth - margin.left - margin.right;
-    const radius = 100; // Fixed circle size
-    const padding = 10; // Padding between circles
+    const radius = isMobile ? 20 : 100; // Fixed circle size
+    const padding = isMobile ? 2 : 10; // Padding between circles
 
     // Calculate the number of columns and rows based on screen width
     const columns = Math.floor(width / (2 * radius));
-    const rows = 2;
+    const rows = Math.ceil(data.length / columns);
     console.log(columns)
 
     // Calculate the required height dynamically
@@ -308,6 +300,18 @@ function createChart({ container, data, team }) {
   color: var(--blue-dark);
   width: 100%;
   text-align: left;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.chart {
+  width: 100%;
+  height: 100%;
 }
 
 </style>
