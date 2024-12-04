@@ -43,12 +43,6 @@ p2_targets <- list(
              readr::read_csv(p1_CONUS_crosswalk) |>
                filter(AggRegion_nam != "NULL") |>
                left_join(p2_region_name_xwalk, by = "Region_nam")),
-  # Master crosswalk at the HUC8 level
-  tar_target(p2_CONUS_crosswalk_HUC8_df,
-             p2_CONUS_crosswalk_HUC12_df |>
-               group_by(HUC8) |>
-               reframe(AggRegion_nam = unique(AggRegion_nam),
-                       Region_nam = unique(Region_nam)) ),
   
   
   ##############################################
@@ -66,26 +60,6 @@ p2_targets <- list(
                left_join(p2_region_name_xwalk, by = "AggReg_nam")),
   
   # Shapefiles for plotting
-  tar_target(p2_mainstem_HUC8_simple_sf,
-             p1_mainstem_HUC8_raw_sf |> 
-               dplyr::mutate(
-                 HUC2 = str_sub(HUC, 1, 2),
-                 region_group = case_when(
-                   HUC2 == "19" ~ "AK",
-                   HUC2 == "20" ~ "HI",
-                   HUC2 == "21" ~ "PR",
-                   HUC2 == "22" ~ "other",
-                   .default = "CONUS"
-                 )
-               ) |> 
-               rename(HUC8 = HUC) |>
-               # remove everything outside of CONUS for now
-               filter(region_group == "CONUS") |>
-               st_intersection(st_union(p2_Reg_sf)) |>
-               # add in region names
-               inner_join(p2_CONUS_crosswalk_HUC8_df, by = "HUC8") |>
-               filter(! is.na(Region_nam)) 
-  ),
   tar_target(p2_mainstem_HUC12_simple_sf,
              p1_mainstem_HUC12_raw_sf |> 
                dplyr::mutate(
@@ -109,24 +83,36 @@ p2_targets <- list(
   
   ##################################################
   # Join spatial data with water data 
-  tar_target(p2_HUC8_join_wu_sf,
-             p2_mainstem_HUC8_simple_sf |>
+  tar_target(p2_HUC12_join_wu_sf,
+             p2_mainstem_HUC12_simple_sf |>
                # add in mean water use data 
-               dplyr::left_join(p2_wu_te_mean2000to2020_HUC8, 
-                                by = "HUC8") |>
-               dplyr::left_join(p2_wu_ps_mean2000to2020_HUC8, 
-                                by = "HUC8") |>
-               dplyr::left_join(p2_wu_ir_mean2000to2020_HUC8, 
-                                by = "HUC8") |>
                dplyr::left_join(p2_wu_ternary_df,
-                                by = "HUC8")
+                                by = "HUC12") |>
+               dplyr::left_join(p2_wu_te_saline_mean2000to2020_HUC12 |>
+                                  select(HUC12, te_saline),
+                                by = "HUC12")
   ),
   # Join with water use data
-  tar_target(p2_HUC8_join_wu_AggRegGrp_sf,
-             p2_HUC8_join_wu_sf |> 
+  tar_target(p2_HUC12_join_wu_AggRegGrp_sf,
+             p2_HUC12_join_wu_sf |> 
                group_by(AggRegion_nam) |>
                tar_group(),
              iteration = "group"),
+  
+  # Summarize WU by state
+  tar_target(p2_states_wu_df,
+             summary_wu_by_state(in_sf = p2_HUC12_join_wu_AggRegGrp_sf)),  
+  # write summary to csv
+  tar_target(p2_states_wu_csv,
+             readr::write_csv(p2_states_wu_df,
+                              file = "public/wu_state.csv")),
+  # Summarize WU by Region
+  tar_target(p2_Reg_wu_df,
+             summary_wu_by_Reg(in_sf = p2_HUC12_join_wu_AggRegGrp_sf)),  
+  # write summary to csv
+  tar_target(p2_Reg_wu_csv,
+             readr::write_csv(p2_Reg_wu_df,
+                              file = "public/wu_regions.csv")),
   
   # Join with SUI/water stress and SVI/vulnerability indices
   tar_target(p2_HUC12_join_sui_svi_sf,
@@ -275,8 +261,6 @@ p2_targets <- list(
     tar_target(p2_wq_HUC12_df,
                process_wq_HUC12(in_csv = raw_targets,
                               in_COMID_xwalk = p1_COMID_to_HUC12_crosswalk_csv)),
-    tar_target(p2_wq_HUC8_df,
-               process_wq_HUC8(data_in = p2_wq_HUC12_df)),
     tar_target(p2_wq_Reg_d3_csv,
                readr::write_csv(p2_wq_Reg_df,
                                 file = sprintf("public/wq_sources_%s.csv", nutrient))),
@@ -302,9 +286,9 @@ p2_targets <- list(
                return("public/wu_yearly.csv")},
              format = "file"),
   tar_target(p2_wu_ternary_df,
-             total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC8,
-                                  ir_in = p2_wu_ir_mean2000to2020_HUC8,
-                                  te_in = p2_wu_te_mean2000to2020_HUC8,
+             total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC12,
+                                  ir_in = p2_wu_ir_mean2000to2020_HUC12,
+                                  te_in = p2_wu_te_mean2000to2020_HUC12,
                                   color_scheme = p3_colors_wu)),
   
   # Public water supply
@@ -323,12 +307,12 @@ p2_targets <- list(
                           use_type = "ps",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_ps_mean2000to2020_HUC8,
-             mean_wu_HUC8(p2_wu_ps_gw_raw,
-                          p2_wu_ps_sw_raw,
-                          p2_wu_ps_tot_raw,
-                          min_year = 2010,
-                          max_year = 2020) 
+  tar_target(p2_wu_ps_mean2000to2020_HUC12,
+             mean_wu_HUC12(p2_wu_ps_gw_raw,
+                           p2_wu_ps_sw_raw,
+                           p2_wu_ps_tot_raw,
+                           min_year = 2010,
+                           max_year = 2020) 
   ),
   # Irrigation
   tar_target(p2_wu_ir_gw_raw,
@@ -346,8 +330,8 @@ p2_targets <- list(
                           use_type = "ir",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_ir_mean2000to2020_HUC8,
-             mean_wu_HUC8(p2_wu_ir_gw_raw,
+  tar_target(p2_wu_ir_mean2000to2020_HUC12,
+             mean_wu_HUC12(p2_wu_ir_gw_raw,
                           p2_wu_ir_sw_raw,
                           p2_wu_ir_tot_raw,
                           min_year = 2010,
@@ -374,12 +358,17 @@ p2_targets <- list(
                           use_type = "te",
                           source_type = "saline") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_te_mean2000to2020_HUC8,
-             mean_wu_HUC8(p2_wu_te_gw_raw,
+  tar_target(p2_wu_te_mean2000to2020_HUC12,
+             mean_wu_HUC12(p2_wu_te_gw_raw,
                           p2_wu_te_sw_raw,
                           p2_wu_te_tot_raw,
                           min_year = 2010,
                           max_year = 2020) 
+  ),
+  tar_target(p2_wu_te_saline_mean2000to2020_HUC12,
+             mean_wu_HUC12(p2_wu_te_tot_saline_raw,
+                           min_year = 2010,
+                           max_year = 2020) 
   ),
   
   ##############################################
@@ -395,7 +384,7 @@ p2_targets <- list(
   tar_target(p2_sui_2020_HUC12,
              mean_sui(data_in = p2_sui_raw,
                       HUC_level = 12,
-                      min_year = 2020, # should be 2010
+                      min_year = 2010, 
                       max_year = 2020,
                       by_yearL = FALSE)),
   # water supply and demand for each region from Ted
