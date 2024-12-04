@@ -1,46 +1,30 @@
-map_ir <- function(in_sf,
-                   in_regions,
-                   color_scheme,
-                   png_out,
-                   width,
-                   height){
-
-  plot_sf <- in_sf |> 
-    dplyr::filter(ir_prop > 0) 
+map_ir_or_ps <- function(in_sf,
+                         layer,
+                         in_regions,
+                         color_scheme,
+                         png_out,
+                         width,
+                         height){
   
+  if(layer == "ir") {
+    plot_sf <- in_sf |> 
+      dplyr::filter(ir_prop > 0) |>
+      rename(prop_use = ir_prop)
+    
+    color_fill = color_scheme$ir_gw_main
+  } else {
+    plot_sf <- in_sf |> 
+      dplyr::filter(ps_prop > 0) |>
+      rename(prop_use = ps_prop)
+    
+    color_fill = color_scheme$ps_gw_main
+  }
+ 
   
-  map <- ggplot(plot_sf) +
-    geom_sf(data = in_regions, 
-            fill = NA,
+  map <- ggplot(in_regions) +
+    geom_sf(fill = NA,
             color = NA, linewidth = 0.1) +
-    geom_sf(fill = color_scheme$ir_gw_main, aes(alpha = ir_prop),
-            color = NA, size = 0)  +
-    scale_alpha_identity() +
-    theme_void() +
-    theme(legend.position = "none")
-  
-  ggsave(plot = map,
-         filename = png_out, device = "png", bg = "transparent",
-         dpi = 300, units = "in", width = width, height = height)
-  
-}
-
-map_ps <- function(in_sf,
-                   in_regions,
-                   color_scheme,
-                   png_out,
-                   width,
-                   height){
-
-  plot_sf <- in_sf |> 
-    dplyr::filter(ps_prop > 0) 
-  
-  
-  map <- ggplot(plot_sf) +
-    geom_sf(data = in_regions, 
-            fill = NA,
-            color = NA, linewidth = 0.1) +
-    geom_sf(fill = color_scheme$ps_gw_main, aes(alpha = ps_prop),
+    geom_sf(data = plot_sf, fill = color_fill, aes(alpha = prop_use),
             color = NA, size = 0)  +
     scale_alpha_identity() +
     theme_void() +
