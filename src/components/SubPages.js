@@ -11,9 +11,9 @@ export default {
         {
             page: 2,
             route: '/02SUI',
-            mainTitle: 'Living with water limitation',
+            mainTitle: 'Limits on water availability',
             shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water limitation',
-            keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.',
+            keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where most of the renewable water supply is consumed for human water use.',
             references: ["Liu2022", "Dettingher2005","Stets2024", "Stets2025", "Census2020"]
         },
         {
@@ -21,15 +21,15 @@ export default {
             route: '/03SVI',
             mainTitle: 'Unequal access to water',
             shortTitle: 'Socially vulnerable Americans have a higher risk of water limitation',
-            keyMessage: 'A high proportion of the population living in areas with water limitation are socially vulnerable',
+            keyMessage: 'Water limitation disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water.',
             references: [ "Drakes2024", "Stets2025"]
         },
         {
             page: 4,
             route: '/04Drought',
             mainTitle: 'Not enough rain and snow',
-            shortTitle: 'Disruptions to the water cycle can cause water limitation',
-            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation and exacerbating water quality issues.' ,
+            shortTitle: 'Limited water supply can cause water imbalance',
+            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation and exacerbating water quality issues' ,
             references: [
                 "Bell2015",
                 "Hoerling2014",
@@ -42,16 +42,16 @@ export default {
             page: 5,
             route: '/05WQSource',
             mainTitle: 'Nutrients in the water',
-            shortTitle: 'Water quality is affected by natural and human sources',
-            keyMessage: 'Sources of water quality issues vary across CONUS. Common sources include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.',
+            shortTitle: 'Natural and human sources of nutrients degrade water quality',
+            keyMessage: 'Sources of nutrients in our water vary across the United States. Common sources of nutrients such as nitrogen and phosphorus include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.',
             references: ["Erickson2025"]
         },
         {
             page: 6,
             route: '/06WQThreats',
-            mainTitle: 'Making you sick',
-            shortTitle: 'Major sources of contamination affect human health',
-            keyMessage: 'Drinking water, fish consumption, and recreational water use face different threats to water quality.',
+            mainTitle: 'Threats to water quality',
+            shortTitle: 'Water quality issues can potentially affect human and aquatic health',
+            keyMessage: 'Drinking water, fish consumption, and recreational water use face different water quality threats.',
             references: [
                 "Canedo2013",
                 "Ngoubeyou2022",
@@ -66,8 +66,8 @@ export default {
             page: 7,
             route: '/07WaterUse',
             mainTitle: 'For farm, home, and energy',
-            shortTitle: 'The largest demands for water are for irrigation, public supply, and thermoelectric power',
-            keyMessage: 'About 225,000 million gallons of freshwater get used per day for irrigation (48%), public supply (16%), and thermoelectric power (36%).',
+            shortTitle: 'The largest demands for water are for crop irrigation, public supply, and thermoelectric power',
+            keyMessage: 'About 224,000 million gallons of freshwater are used every day for irrigation (48%), public supply (16%), and thermoelectric power (36%).',
             references: ["Medelie2025"]
         },
         {
@@ -75,23 +75,23 @@ export default {
             route: '/08WaterUseRegional',
             mainTitle: 'From sea to shining sea',
             shortTitle: 'How we use water varies across the country',
-            keyMessage: 'Regionally, irrigation is the largest use in the western US; thermoelectric power generation is the largest use in the central and eastern US; and public supply is the largest use in heavily populated eastern states such as New York, New Jersey, and Rhode Island.  ',
+            keyMessage: 'Regionally, crop irrigation is the primary water use in the western and High Plains areas of the U.S., while the eastern half of the country uses water primarily for public supply or thermoelectric power.',
             references: ["Medelie2025"]
         },
         {
             page: 9,
             route: '/09Consumption',
-            mainTitle: 'Gone for good',
+            mainTitle: 'Gone but not forgotten',
             shortTitle: 'Not all the water withdrawn for human water use returns to the local environment',
-            keyMessage: 'Water that does not return to local water bodies or groundwater is lost to the atmosphere, plant and animal growth, or transferred to other areas. The proportion of water use consumed in this way is 74% for irrigation, 12% for public supply, and 4% for thermoelectric power.',
+            keyMessage: 'Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across CONUS, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power.',
             references: ["Medelie2025"]
         },
         {
             page: 10,
             route: '/10Future',
-            mainTitle: 'Future threats',
-            shortTitle: 'All elements of the water cycle are threatened by future climate conditions',
-            keyMessage: 'The top future threats to water availability in the U.S. vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
+            mainTitle: 'Future water availability',
+            shortTitle: 'The water cycle is shifting due to climate change',
+            keyMessage: 'The top impacts to water availability in the U.S. in the future vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
             references: [
                 "Ranasinghe2021",
                 "IPCC2022",
