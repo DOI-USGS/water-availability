@@ -1,4 +1,29 @@
 <template>
+      <section class="main-container">
+      <div class="wavy-container">
+        <section>
+        <div class="waves">
+          <div class="wave" id="wave1"></div>
+          <div class="wave" id="wave2"></div>
+          <div class="wave" id="wave3"></div>
+          <div class="wave" id="wave4"></div>
+        </div>
+      </section>
+    </div>
+    <div class="hamburger-menu" @click="menuOpen = !menuOpen">
+        <div :class="{ 'bar1': menuOpen, 'bar': !menuOpen }"></div>
+        <div :class="{ 'bar2': menuOpen, 'bar': !menuOpen }"></div>
+        <div :class="{ 'bar3': menuOpen, 'bar': !menuOpen }"></div>
+    </div>
+    <div class="dropdown-menu" v-if="menuOpen">
+        <ul>
+        <li><router-link to="/">Home</router-link></li>
+        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Read the Report</a></li>
+        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Access the Data</a></li>
+        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">USGS Vizlab</a></li>
+        <li><a href="water-availability/#/glossary" target="_blank">Glossary of Terms</a></li>
+        </ul>
+    </div>
   <section>    
     <div class="authors-container">
         <div id="text-container">
@@ -7,9 +32,17 @@
     </div>
     <div class="authors-container">
       <p>
-          This website was developed by the <a href='https://labs.waterdata.usgs.gov/visualizations/' target='_blank'>USGS Vizlab</a>
+          This website was developed by the <a href='https://labs.waterdata.usgs.gov/visualizations/' target='_blank'>USGS Vizlab</a> in collaboration with the <a href="https://www.usgs.gov/iwaas" target="_blank">National Integrated Water Availability Assessment</a> Report team.  
+        </p>
+    </div>
+    <div class="authors-container">
+      <h2>Meet the Vizlab Team</h2>
+        <div class="chart-container">
+            <div ref="chart" class="chart"></div>
+        </div>
+        <p>
+            The USGS Vizlab is a data visualization team within the USGS <a href='https://www.usgs.gov/mission-areas/water-resources' target='_blank'>Water Resources Mission Area</a>. 
           <span id="primary-author-statment">
-            and led by 
             <span
               v-for="(author, index) in authorLeads" 
               :id="`initial-${author.initials}`"
@@ -23,21 +56,11 @@
               />
               <span v-if="index != Object.keys(authorLeads).length - 1 && Object.keys(authorLeads).length > 2">, </span>
               <span v-if="index == Object.keys(authorLeads).length - 2"> and </span>
-            </span>.
-          </span>
-        </p>
-    </div>
-    <div class="authors-container">
-      <h2>Meet the Vizlab Team</h2>
-        <div class="chart-container">
-            <div ref="chart" class="chart"></div>
-        </div>
-        <p>
-            The USGS Vizlab is a data visualization team within the USGS <a href='https://www.usgs.gov/mission-areas/water-resources' target='_blank'>Water Resources Mission Area</a>. View the Vizlab <a href='https://labs.waterdata.usgs.gov/visualizations/' target='_blank'>portfolio</a>.
+            </span>
+          </span> lead the development of this website with support from 
           <span id="primary-author-statment">
-            Vizlab team members that contributed to this website include
             <span
-              v-for="(author, index) in authorsVizlab" 
+              v-for="(author, index) in authorDevs" 
               :id="`initial-${author.initials}`"
               :key="`${author.initials}-attribution`"
               :class="'author first'"
@@ -47,9 +70,9 @@
                 target="_blank"
                 v-text="author.fullName"
               />
-              <span v-if="index != Object.keys(authorsVizlab).length - 1 && Object.keys(authorsVizlab).length > 2">, </span>
-              <span v-if="index == Object.keys(authorsVizlab).length - 2"> and </span>
-            </span>.
+              <span v-if="index != Object.keys(authorDevs).length - 1 && Object.keys(authorDevs).length > 2">, </span>
+              <span v-if="index == Object.keys(authorDevs).length - 2"> and </span>
+            </span>. View the Vizlab <a href='https://labs.waterdata.usgs.gov/visualizations/' target='_blank'>portfolio</a>.
           </span>
         </p>
     </div>
@@ -59,7 +82,7 @@
             <div ref="chartSME" class="chart"></div>
         </div>
         <p>
-            The chapter leads for the National Integrated Water Availability Assessment Report include
+            Collaborators from the <a href="https://www.usgs.gov/iwaas" target="_blank">National Integrated Water Availability Assessment</a> Report include
           <span id="primary-author-statment">
             <span
               v-for="(author, index) in authorSMEs" 
@@ -84,6 +107,7 @@
           </a>       
     </div>
   </section>
+  </section>
 </template>
 
 <script setup>
@@ -94,6 +118,8 @@ import authorList from '@/assets/text/authors.js';
 
 const authorLeads = authorList.leads;
 
+const authorDevs = authorList.devs;
+
 const authorsVizlabUnsort = authorLeads.concat(authorList.devs);
 
 const authorsVizlab = authorsVizlabUnsort.sort((a, b) => a.fullOrder - b.fullOrder);
@@ -102,6 +128,7 @@ const authorSMEs = authorList.scientists;
 
 let container = ref();
 let data = ref();
+let menuOpen = ref(false);
 
 //const props = {
 //    data: authorsVizlab}
@@ -111,7 +138,6 @@ const props = {
 const propsSME = {
     data: authorSMEs
 }
-console.log(props.data[0].headshot)
 
 // images
 
@@ -139,7 +165,6 @@ function createChart({ container, data, team }) {
     // Calculate the number of columns and rows based on screen width
     const columns = Math.floor(width / (2 * radius));
     const rows = Math.ceil(data.length / columns);
-    console.log(columns)
 
     // Calculate the required height dynamically
     const height = rows * (2 * radius + padding) + margin.top + margin.bottom;
@@ -161,9 +186,9 @@ function createChart({ container, data, team }) {
     d3.forceSimulation(data)
         .force("x", d3.forceX((d, i) => {
             return xCenter[i];
-        }).strength(1))
+        }).strength(0.1))
         .force("center", d3.forceCenter(width / 2, (height - margin.top - margin.bottom) / 2).strength(1))
-        .force("charge", d3.forceManyBody().strength(30))
+        .force("charge", d3.forceManyBody().strength(10))
 
         .force("collision", d3.forceCollide().radius(radius + padding))
         .on("tick", ticked);
@@ -219,7 +244,7 @@ function createChart({ container, data, team }) {
         .attr('fill', 'white')
         .attr('pointer-events', 'none')
         .style('opacity', 0)
-        .text(d => d.fullName);
+        .text(d => d.shortName);
 
     // append link
     node    
