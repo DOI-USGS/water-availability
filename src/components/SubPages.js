@@ -90,11 +90,7 @@ export default {
             page: 10,
             route: '/10Future',
             mainTitle: 'Future water availability',
-<<<<<<< HEAD
             shortTitle: 'The water cycle is shifting due to climate change',
-=======
-            shortTitle: 'All elements of the water cycle will change under future climate conditions',
->>>>>>> 0331771e506d6135af346e341124f8a6c6672b8a
             keyMessage: 'The top impacts to water availability in the U.S. in the future vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
             references: [
                 "Ranasinghe2021",
