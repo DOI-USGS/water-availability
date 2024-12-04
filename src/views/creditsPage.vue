@@ -56,7 +56,7 @@
     <div class="authors-container">
         <h2>Meet the National IWAAs Authors</h2>
         <div class="chart-container">
-            <div ref="chartSME" class="chartSME"></div>
+            <div ref="chartSME" class="chart"></div>
         </div>
         <p>
             The chapter leads for the National Integrated Water Availability Assessment Report include
@@ -119,8 +119,8 @@ const chart = ref(null);
 const chartSME = ref(null);
 
 onMounted(() => {
-  //createChart({container: chart.value, data: [...props.data], team: 'Vizlab'});
-  //createChart({container: chartSME.value, data: [...propsSME.data], team: 'scientists'});
+  createChart({container: chart.value, data: [...props.data], team: 'Vizlab'});
+  createChart({container: chartSME.value, data: [...propsSME.data], team: 'scientists'});
 
   window.addEventListener('resize', createChart);
 });
@@ -131,9 +131,9 @@ function createChart({ container, data, team }) {
     // Clear any existing SVG elements
     d3.select(container).selectAll('*').remove();
 
-    const margin = { top: 20, right: 0, bottom: 20, left: 0 };
+    const margin = { top: 20, right: 10, bottom: 20, left: 10 };
     const width = container.clientWidth - margin.left - margin.right;
-    const radius = isMobile ? 20 : 100; // Fixed circle size
+    const radius = isMobile ? 50 : 80; // Fixed circle size
     const padding = isMobile ? 2 : 10; // Padding between circles
 
     // Calculate the number of columns and rows based on screen width
