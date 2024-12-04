@@ -19,7 +19,7 @@ export default {
           initials: 'CN',
           fullOrder: 7,
           profile_link: 'https://www.usgs.gov/staff-profiles/cee-nell',
-          headshot: 'https://labs.waterdata.usgs.gov/visualizations/headshots/cee_nell_resized.png'
+          headshot: 'https://labs.waterdata.usgs.gov/visualizations/headshots/cee nell resized.png'
         }
     ],
     devs: [
@@ -42,7 +42,7 @@ export default {
         initials: 'EA',
         fullOrder: 6,
         profile_link: 'https://www.usgs.gov/staff-profiles/elmera-azadpour',
-          headshot: 'https://labs.waterdata.usgs.gov/visualizations/headshots/elmera_azadpour.jpg'
+          headshot: 'https://labs.waterdata.usgs.gov/visualizations/headshots/elmera_azadpourSquare.jpg'
         },
         {
         fullName: 'Kaysa Vaarre-Lamoureux',
