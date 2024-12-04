@@ -161,9 +161,9 @@ function createChart({ container, data, team }) {
     d3.forceSimulation(data)
         .force("x", d3.forceX((d, i) => {
             return xCenter[i];
-        }).strength(1))
-        .force("center", d3.forceCenter(width / 2, (height - margin.top - margin.bottom) / 2).strength(1))
-        .force("charge", d3.forceManyBody().strength(30))
+        }).strength(0.1))
+        .force("center", d3.forceCenter(width / 2, (height - margin.top - margin.bottom) / 2).strength(0.6))
+        .force("charge", d3.forceManyBody().strength(10))
 
         .force("collision", d3.forceCollide().radius(radius + padding))
         .on("tick", ticked);

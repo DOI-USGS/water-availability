@@ -34,42 +34,60 @@
           <span 
             class="highlight" 
             id="very_low_none" 
-            :class="{'active': toggles.very_low_none.visible, 'inactive-toggle': !toggles.very_low_none.visible}"
+            :class="{'active': layers.very_low_none.visible, 'inactive-toggle': !layers.very_low_none.visible}"
             @click="toggleLayer('very_low_none')">
             very low or none
           </span>, 
           <span 
             class="highlight" 
             id="low" 
-            :class="{'active': toggles.low.visible, 'inactive-toggle': !toggles.low.visible}"
+            :class="{'active': layers.low.visible, 'inactive-toggle': !layers.low.visible}"
             @click="toggleLayer('low')">
             low
           </span>, 
           <span 
             class="highlight" 
             id="moderate" 
-            :class="{'active': toggles.moderate.visible, 'inactive-toggle': !toggles.moderate.visible}"
+            :class="{'active': layers.moderate.visible, 'inactive-toggle': !layers.moderate.visible}"
             @click="toggleLayer('moderate')">
             moderate
           </span>, 
           <span 
             class="highlight" 
             id="high" 
-            :class="{'active': toggles.high.visible, 'inactive-toggle': !toggles.high.visible}"
+            :class="{'active': layers.high.visible, 'inactive-toggle': !layers.high.visible}"
             @click="toggleLayer('high')">
             high
           </span>,
           <span 
             class="highlight" 
             id="severe" 
-            :class="{'active': toggles.severe.visible, 'inactive-toggle': !toggles.severe.visible}"
+            :class="{'active': layers.severe.visible, 'inactive-toggle': !layers.severe.visible}"
             @click="toggleLayer('severe')">
             severe
           </span>
         </p>
         </div>
         <div class="image-container">
-          <RegionMap :layerVisibility="toggles" />
+          <RegionMap 
+          :layerVisibility="{
+            very_low_none: layers.very_low_none.visible,
+            low: layers.low.visible,
+            moderate: layers.moderate.visible,
+            high: layers.high.visible,
+            severe: layers.severe.visible,
+          }"
+          :layerPaths="{
+            very_low_none: { path: layers.very_low_none.path, color: layers.very_low_none.color, order: layers.very_low_none.order },
+            low: { path: layers.low.path, color: layers.low.color, order: layers.low.order },
+            moderate: { path: layers.moderate.path, color: layers.moderate.color, order: layers.moderate.order },
+            high: { path: layers.high.path, color: layers.high.color, order: layers.high.order },
+            severe: { path: layers.severe.path, color: layers.severe.color, order: layers.severe.order },
+          }"
+          regionsDataUrl="assets/Regions.topojson"
+          usOutlineUrl="assets/USoutline.topojson"
+          csvDataUrl="/wa_stress_stats.csv"
+        />
         </div>
         <div class="text-container">
           <h2>Local and seasonal effects of water limitation</h2>
@@ -120,17 +138,44 @@ const orderedRegions = [
     "Florida", "Souris-Red-Rainy", "Midwest", "Great Lakes", "Northeast"
 ];
 
-const toggles = reactive({
-  very_low_none: { visible: true },
-  low: { visible: true },
-  moderate: { visible: true },
-  high: { visible: true },
-  severe: { visible: true }
-})
+const layers = reactive({
+  very_low_none: {
+    visible: true,
+    path: '01_stress_map_very_low_none.png',
+    color: '#39424f',
+    order: 1
+  },
+  low: {
+    visible: true,
+    path: '01_stress_map_low.png',
+    color: '#80909D',
+    order: 2
+  },
+  moderate: {
+    visible: true,
+    path: '01_stress_map_moderate.png',
+    color: '#edeadf',
+    order: 3
+  },
+  high: {
+    visible: true,
+    path: '01_stress_map_high.png',
+    color: '#Cfacab',
+    order: 4
+  },
+  severe: {
+    visible: true,
+    path: '01_stress_map_severe.png',
+    color: '#965a6b',
+    order: 5
+  }
+});
 
+// function to toggle layer visibility
 const toggleLayer = (layerId) => {
-  toggles[layerId].visible = !toggles[layerId].visible;
+  layers[layerId].visible = !layers[layerId].visible;
 }
+
 
 onMounted(async () => {
     try {
