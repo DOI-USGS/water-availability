@@ -31,45 +31,58 @@ load_wu_data <- function(data_path, use_type, source_type) {
 #
 #    AVERAGE WU OVER YEARS
 #
-mean_wu_HUC8 <- function(..., min_year, max_year) {
-  data_in <- bind_rows(...)
+mean_wu_HUC12 <- function(..., min_year, max_year) {
+  data_in <- bind_rows(...) |>
+    rename(HUC12 = HUC)
   
   temp_use <- unique(data_in$use_type)
   
+  temp_source <- unique(data_in$source_type)
   
-    
+
+  data_out <- data_in |>
+      # Select only focal years
+      filter(year >= min_year,
+             year <= max_year) |>
+      # Aggregate spatially to HUC8
+      group_by(HUC12, source_type, use_type, year, month) |>
+      summarise(wu_mgd = sum(wu_mgd, na.rm = TRUE)) |>
+      # Aggregate temporally to get average water use in each year
+      tidytable::mutate(
+        days_per_month = lubridate::days_in_month(
+          as_date(sprintf('%s/%s/01', year, month))),
+        wu_mgm = wu_mgd * days_per_month) %>%
+      tidytable::group_by(HUC12, source_type, use_type, year) |>
+      tidytable::summarise(wu_mgy = sum(wu_mgm, na.rm = TRUE),
+                           wu_mgd = sum(wu_mgm, na.rm = TRUE)/
+                             sum(days_per_month, na.rm = TRUE))  |>
+      # Get average water use across 20 years
+      tidytable::group_by(HUC12, source_type, use_type) |>
+      tidytable::summarise(mean_wu_mgd = mean(wu_mgd, na.rm = TRUE)) |>
+      # Pivot to wide format
+      pivot_wider(names_from = source_type, values_from = mean_wu_mgd) 
   
-  data_in |>
-    # Select only focal years
-    filter(year >= min_year,
-           year <= max_year) |>
-    # Aggregate spatially to HUC8
-    group_by(HUC8, source_type, use_type, year, month) |>
-    summarise(wu_mgd = sum(wu_mgd, na.rm = TRUE)) |>
-    # Aggregate temporally to get average water use in each year
-    tidytable::mutate(
-      days_per_month = lubridate::days_in_month(
-        as_date(sprintf('%s/%s/01', year, month))),
-      wu_mgm = wu_mgd * days_per_month) %>%
-    tidytable::group_by(HUC8, source_type, use_type, year) |>
-    tidytable::summarise(wu_mgy = sum(wu_mgm, na.rm = TRUE),
-                         wu_mgd = sum(wu_mgm, na.rm = TRUE)/
-                           sum(days_per_month, na.rm = TRUE))  |>
-    # Get average water use across 20 years
-    tidytable::group_by(HUC8, source_type, use_type) |>
-    tidytable::summarise(mean_wu_mgd = mean(wu_mgd, na.rm = TRUE)) |>
-    # Pivot to wide format
-    pivot_wider(names_from = source_type, values_from = mean_wu_mgd) |>
-    # Make sure that sw and gw are NOT NA if total != NA
-    mutate(sw = case_when(!is.na(total) & is.na(sw) ~ 0,
-                               TRUE ~ sw),
-           gw = case_when(!is.na(total) & is.na(gw) ~ 0,
-                          TRUE ~ gw)) |>
-    # calculate percent gw and sw
-    mutate(gw_pct = gw/total,
-           sw_pct = sw/total,
-            use_name = use_type) |>
-    rename_with(~ sprintf("%s_%s", temp_use, .), .cols = !HUC8)
+  if(temp_source[1] == "saline") {
+    data_final <- data_out |>
+      # different than non-saline
+      rename_with(~ sprintf("%s_%s", temp_use, .), .cols = !HUC12)
+  } else {
+    data_final <- data_out |>
+      # Make sure that sw and gw are NOT NA if total != NA
+      mutate(sw = case_when(!is.na(total) & is.na(sw) ~ 0,
+                            TRUE ~ sw),
+             gw = case_when(!is.na(total) & is.na(gw) ~ 0,
+                            TRUE ~ gw)) |>
+      # calculate percent gw and sw
+      mutate(gw_pct = gw/total,
+             sw_pct = sw/total,
+             use_name = use_type) |>
+      rename_with(~ sprintf("%s_%s", temp_use, .), .cols = !HUC12)
+      
+  }
+  
+  return(data_final)
+
 }
 
 
@@ -136,7 +149,7 @@ total_wu_yearly <- function(...,
 total_wu_proportions <- function(ps_in, ir_in, te_in, 
                                  color_scheme){
   
-  raw <- ps_in |> left_join(ir_in, by = "HUC8") |> left_join(te_in, by = "HUC8")
+  raw <- ps_in |> left_join(ir_in, by = "HUC12") |> left_join(te_in, by = "HUC12")
 
   summary <- raw |>
     rowwise() |>
@@ -154,29 +167,46 @@ total_wu_proportions <- function(ps_in, ir_in, te_in,
            ir_prop = case_when(ir_total == 0 ~ 0,
                                TRUE ~ ir_total / total_wu),
            te_prop = case_when(te_total == 0 ~ 0,
-                               TRUE ~ te_total / total_wu)) |>
-    # categorize
-    mutate(category = case_when(ps_prop >= 0.67 ~ 1,
-                                te_prop >= 0.67 ~ 5,
-                                ir_prop >= 0.67 ~ 9,
-                                ps_prop >= 0.34 & te_prop >= 0.34 ~ 2,
-                                ps_prop >= 0.34 & te_prop < 0.34 & ir_prop < 0.34 ~ 3,
-                                ps_prop >= 0.34 & ir_prop >= 0.34 ~ 4,
-                                te_prop >= 0.34 & ir_prop >= 0.34 ~ 7,
-                                te_prop >= 0.34 & ir_prop < 0.34 & ps_prop < 0.34 ~ 6,
-                                ir_prop >= 0.34 & te_prop < 0.34 & ps_prop < 0.34 ~ 8,
-                                TRUE ~ NA),
-          # add colors
-           color = case_when(category == 1 ~ color_scheme$ps_gw_main,
-                             category == 5 ~ color_scheme$te_gw_main,
-                             category == 9 ~ color_scheme$ir_gw_main,
-                             category == 2 ~ color_scheme$tern_2,
-                             category == 3 ~ color_scheme$tern_3,
-                             category == 4 ~ color_scheme$tern_4,
-                             category == 6 ~ color_scheme$tern_6,
-                             category == 7 ~ color_scheme$tern_7,
-                             category == 8 ~ color_scheme$tern_8,
-                             TRUE ~ "#cccccc"))
+                               TRUE ~ te_total / total_wu)) 
   
   return(summary)
+}
+
+# create state summaries
+summary_wu_by_state <- function(in_sf){
+  
+  # Expand each HUC to its state (some hucs overlap states)
+  expand_states <- in_sf |>
+    select(STATES, HUC12, Region_nam, AggReg_nam, ps_total, ir_total, te_total, te_saline) |>
+    separate_rows(STATES, sep = ",")
+  
+  # Long form
+  longer_data <- expand_states |>
+    sf::st_drop_geometry() |>
+    pivot_longer(cols = c("ps_total", "ir_total", "te_total", "te_saline"),
+                 names_to = "use_category")
+  
+  # Calculate total water use by state and category
+  summary_sui <- longer_data |>
+    group_by(STATES, use_category) |>
+    summarize(total_use = sum(value, na.rm = TRUE)) 
+  
+}
+
+# create regional summaries
+summary_wu_by_Reg <- function(in_sf){
+  
+  # Long form
+  longer_data <- in_sf |>
+    select(Region_nam, Region_nam_nospace, AggReg_nam, AggReg_nam_nospace, 
+           ps_total, ir_total, te_total, te_saline) |>
+    sf::st_drop_geometry() |>
+    pivot_longer(cols = c("ps_total", "ir_total", "te_total", "te_saline"),
+                 names_to = "use_category")
+  
+  # Calculate total water use by region and category
+  summary_sui <- longer_data |>
+    group_by(Region_nam_nospace, Region_nam, AggReg_nam, use_category) |>
+    summarize(total_use = sum(value, na.rm = TRUE)) 
+  
 }

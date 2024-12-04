@@ -33,11 +33,11 @@ mean_sui <- function(data_in,
   
   # add categories
   out_categorized <- out_mean |>
-    mutate(sui_category_5  = case_when(mean_sui >= 0 & mean_sui < 0.2 ~ "Very low/\nnone",
-                                       mean_sui >= 0.2 & mean_sui < 0.4 ~ "Low",
-                                       mean_sui >= 0.4 & mean_sui < 0.6 ~ "Moderate",
-                                       mean_sui >= 0.6 & mean_sui < 0.8 ~ "High",
-                                       mean_sui >= 0.8 & mean_sui <= 1 ~ "Severe"),
+    mutate(sui_category_5  = case_when(mean_sui >= 0 & mean_sui <= 0.2 ~ "Very low/\nnone",
+                                       mean_sui > 0.2 & mean_sui <= 0.4 ~ "Low",
+                                       mean_sui > 0.4 & mean_sui <= 0.6 ~ "Moderate",
+                                       mean_sui > 0.6 & mean_sui <= 0.8 ~ "High",
+                                       mean_sui > 0.8 & mean_sui <= 1 ~ "Severe"),
            sui_category_3 = case_when(mean_sui <= 0.4 ~ "Low SUI",
                                       mean_sui <= 0.6 ~ "Medium SUI",
                                       mean_sui <= 1.0 ~ "High SUI",
@@ -86,7 +86,7 @@ create_stats <- function(in_sf, out_csv){
     left_join(total_huc_by_reg, by = "Region_nam") |>
     mutate(percentage_stress = (stress_by_reg / total_hucs)*100) 
   
-  expand_data <-expand.grid(sui_category_5 = unique(join_data$sui_category_5), 
+  expand_data <- expand.grid(sui_category_5 = unique(join_data$sui_category_5), 
               Region_nam = unique(join_data$Region_nam)) |>
     left_join(join_data) |>
     mutate(percentage_stress = ifelse(is.na(percentage_stress), 0, percentage_stress),

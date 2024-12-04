@@ -1,0 +1,73 @@
+Region_nam_nospace,Region_nam,AggReg_nam,use_category,total_use
+Atlantic_Coast,Atlantic Coast,Southeast,ir_total,1231.9090280510725
+Atlantic_Coast,Atlantic Coast,Southeast,ps_total,2772.8800699809553
+Atlantic_Coast,Atlantic Coast,Southeast,te_saline,3192.2216632275363
+Atlantic_Coast,Atlantic Coast,Southeast,te_total,11518.854347631896
+California-Nevada,California-Nevada,Western,ir_total,24769.090061207284
+California-Nevada,California-Nevada,Western,ps_total,4990.234644256128
+California-Nevada,California-Nevada,Western,te_saline,2352.640668137423
+California-Nevada,California-Nevada,Western,te_total,56.16521029509126
+Central_High_Plains,Central High Plains,High Plains,ir_total,11734.515260069087
+Central_High_Plains,Central High Plains,High Plains,ps_total,682.8929168277044
+Central_High_Plains,Central High Plains,High Plains,te_saline,0
+Central_High_Plains,Central High Plains,High Plains,te_total,300.0096511392357
+Central_Rockies,Central Rockies,Western,ir_total,3307.651961120632
+Central_Rockies,Central Rockies,Western,ps_total,277.97879950415563
+Central_Rockies,Central Rockies,Western,te_saline,0
+Central_Rockies,Central Rockies,Western,te_total,201.40777523150322
+Columbia-Snake,Columbia-Snake,Western,ir_total,14725.150063558205
+Columbia-Snake,Columbia-Snake,Western,ps_total,602.0898830917218
+Columbia-Snake,Columbia-Snake,Western,te_saline,0
+Columbia-Snake,Columbia-Snake,Western,te_total,30.47657947423964
+Florida,Florida,Southeast,ir_total,2855.8778786139906
+Florida,Florida,Southeast,ps_total,1853.9236376860315
+Florida,Florida,Southeast,te_saline,5925.502385726799
+Florida,Florida,Southeast,te_total,187.61225054452257
+Great_Lakes,Great Lakes,Northeast through Midwest,ir_total,1342.1809621414066
+Great_Lakes,Great Lakes,Northeast through Midwest,ps_total,1191.6854130382062
+Great_Lakes,Great Lakes,Northeast through Midwest,te_saline,0
+Great_Lakes,Great Lakes,Northeast through Midwest,te_total,7514.441159333613
+Gulf_Coast,Gulf Coast,Southeast,ir_total,1161.904826120005
+Gulf_Coast,Gulf Coast,Southeast,ps_total,3384.3167578892076
+Gulf_Coast,Gulf Coast,Southeast,te_saline,715.8122966847496
+Gulf_Coast,Gulf Coast,Southeast,te_total,7914.784074073702
+Midwest,Midwest,Northeast through Midwest,ir_total,6349.0347277818355
+Midwest,Midwest,Northeast through Midwest,ps_total,4101.4538659607715
+Midwest,Midwest,Northeast through Midwest,te_saline,0
+Midwest,Midwest,Northeast through Midwest,te_total,19218.537416106843
+Mississippi_Embayment,Mississippi Embayment,Southeast,ir_total,8286.415815691566
+Mississippi_Embayment,Mississippi Embayment,Southeast,ps_total,176.9596125647735
+Mississippi_Embayment,Mississippi Embayment,Southeast,te_saline,0
+Mississippi_Embayment,Mississippi Embayment,Southeast,te_total,802.5300942331444
+Northeast,Northeast,Northeast through Midwest,ir_total,207.81335973838665
+Northeast,Northeast,Northeast through Midwest,ps_total,7049.459340390643
+Northeast,Northeast,Northeast through Midwest,te_saline,8114.528936851971
+Northeast,Northeast,Northeast through Midwest,te_total,8116.188424078819
+Northern_High_Plains,Northern High Plains,High Plains,ir_total,3458.0006354678253
+Northern_High_Plains,Northern High Plains,High Plains,ps_total,135.74478390271892
+Northern_High_Plains,Northern High Plains,High Plains,te_saline,0
+Northern_High_Plains,Northern High Plains,High Plains,te_total,966.3477927196137
+Pacific_Northwest,Pacific Northwest,Western,ir_total,1334.0487170816425
+Pacific_Northwest,Pacific Northwest,Western,ps_total,973.7897687535911
+Pacific_Northwest,Pacific Northwest,Western,te_saline,4.137380234151926
+Pacific_Northwest,Pacific Northwest,Western,te_total,16.650094529181843
+Souris-Red-Rainy,Souris-Red-Rainy,Northeast through Midwest,ir_total,1355.1901441588313
+Souris-Red-Rainy,Souris-Red-Rainy,Northeast through Midwest,ps_total,220.40909963773782
+Souris-Red-Rainy,Souris-Red-Rainy,Northeast through Midwest,te_saline,0
+Souris-Red-Rainy,Souris-Red-Rainy,Northeast through Midwest,te_total,143.09795476079782
+Southern_High_Plains,Southern High Plains,High Plains,ir_total,11732.225692394055
+Southern_High_Plains,Southern High Plains,High Plains,ps_total,748.3180331914403
+Southern_High_Plains,Southern High Plains,High Plains,te_saline,0
+Southern_High_Plains,Southern High Plains,High Plains,te_total,345.31246836323726
+Southwest_Desert,Southwest Desert,Western,ir_total,6765.303065441847
+Southwest_Desert,Southwest Desert,Western,ps_total,1265.5315798388342
+Southwest_Desert,Southwest Desert,Western,te_saline,0
+Southwest_Desert,Southwest Desert,Western,te_total,43.73701045659355
+Tennessee-Missouri,Tennessee-Missouri,Southeast,ir_total,1733.1147879087239
+Tennessee-Missouri,Tennessee-Missouri,Southeast,ps_total,3340.6271110131274
+Tennessee-Missouri,Tennessee-Missouri,Southeast,te_saline,0
+Tennessee-Missouri,Tennessee-Missouri,Southeast,te_total,16909.945769679118
+Texas,Texas,Western,ir_total,3442.6057509069224
+Texas,Texas,Western,ps_total,1316.4223853464368
+Texas,Texas,Western,te_saline,85.35315868383834
+Texas,Texas,Western,te_total,5944.84369757922
