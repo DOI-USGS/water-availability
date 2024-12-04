@@ -130,7 +130,7 @@ p3_targets <- list(
                             dplyr::filter(sui_cat_clean == level),
                           in_regions = p2_Reg_sf,
                           color_scheme = p3_colors_balance,
-                          png_out = sprintf("public/assets/01_stress_map_%s.png", level),
+                          png_out = sprintf("src/assets/images/R/01_stress_map_%s.png", level),
                           width = 8, height = 6)),
     names = level
           ),
