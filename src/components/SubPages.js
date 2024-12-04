@@ -89,9 +89,9 @@ export default {
         {
             page: 10,
             route: '/10Future',
-            mainTitle: 'Future threats',
-            shortTitle: 'All elements of the water cycle are threatened by future climate conditions',
-            keyMessage: 'The top future threats to water availability in the U.S. vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
+            mainTitle: 'Future water availability',
+            shortTitle: 'All elements of the water cycle will change under future climate conditions',
+            keyMessage: 'The top impacts to water availability in the U.S. in the future vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
             references: [
                 "Ranasinghe2021",
                 "IPCC2022",
@@ -101,13 +101,88 @@ export default {
             ],
             tabData: [
                 {
-                    tabTitle: "Temperature Impacts",
+                    tabTitle: "Temperature",
+                    tabSubtitle: "Potential impacts from rising temperature",
                     tabTitleID: "temp",
-                    tabText: "Researchers are highly confident that changes in temperature will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. High stream temperatures harm fish health, especially in native, cold-water fisheries. Higher temperatures also lead to warmer and shorter winters, meaning less snowfall and less time for the snow to permeate into the ground.",
+                    tabTitleIDname: "impact-temp",
+                    tabText: "Climate assessments indicate a high degree of confidence that changes in extreme heat, mean air temperature, and cold spells and frost will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. Increased stream temperatures harm fish health, especially in native, cold-water fisheries. Harmful algal blooms also increase with increasing water temperatures.  Higher air temperatures  lead to warmer and shorter winters, meaning less precipitation occurs as snowfall and less snowmelt for streamflow in the spring and early summer.",
+                    listText: [
+                        "Increased average air temperature",
+                        "More common extreme heat events",
+                        "Amplified drought events",
+                        "Increased evaporative water loss",
+                        "Effects on aquatic habitats and fish health",
+                        "Warmer and shorter winter season",
+                        "Decreased frost and cold"
+                    ]
                 },                {
-                    tabTitle: "Wind Impacts",
+                    tabTitle: "Precipitation",
+                    tabSubtitle: "Potential impacts from wetter conditions",
+                    tabTitleID: "water",
+                    tabTitleIDname: "impact-water",
+                    tabText: "Changes in mean precipitation, river floods, and heavy precipitation leading to pluvial floods  are projected to vary across the country. There is a high degree of confidence that changes in precipitation-related climate drivers will affect Alaska, the Northeast, and the Southeast, and moderately confident that changes in those drivers will affect the remaining regions of the United States. Most regions of the U.S. are seeing more extreme precipitation and flooding events than in past decades,. Extreme flooding events, like 2024’s Hurricane Helene in North Carolina, have a multitude of negative effects on water availability, including impairing water quality and disrupting water infrastructure.",
+                    listText: [
+                        "Increased mean precipitation",
+                        "More extreme precipitation and flooding",
+                        "Changes in streamflow amount and timing",
+                        "Effects on agriculture",
+                        "Impaired water quality"
+                    ]
+                },                {
+                    tabTitle: "Aridity",
+                    tabSubtitle: "Potential impacts from drier conditions",
+                    tabTitleID: "dry",
+                    tabTitleIDname: "impact-dry",
+                    tabText: "Climate assessments indicate that increases in drought and fire weather and aridity will have the highest likelihood of impacting the Western region of the contiguous U.S. Overall, the amount and timing of streamflow is expected to change, the demand for groundwater to increase, and stream baseflow  to decrease.",
+                    listText: [
+                        "Increased groundwater demand",
+                        "Changes in streamflow amount and timing",
+                        "Reduced baseflow",
+                        "Effects on agriculture",
+                        "Impaired water quality",
+                        "More frequent and long-lasting fire weather",
+                        "Amplified drought events"
+                    ]
+                },                {
+                    tabTitle: "Snow",
+                    tabSubtitle: "Potential impacts from changing snow and ice",
+                    tabTitleID: "ice",
+                    tabTitleIDname: "impact-ice",
+                    tabText: "Climate assessments indicate a high degree of confidence that every region in the U.S. except Hawaii and the Caribbean islands will see changes in snow and ice. Changes in many areas will bring a smaller extent of snow cover and sooner snow melt. Ice in lakes and rivers is declining, as are glaciers. Permafrost is thawing, and the transition line between rain and snow is moving north (meaning we see more rain where we used to see snow).",
+                    listText: [
+                        "Decreased snowfall",
+                        "Earlier snowmelt runoff",
+                        "Decreased lake and river ice extent",
+                        "Reduced snow cover extent and duration",
+                        "Decreased glaciers and increasing meltwater",
+                        "Thawing permafrost",
+                        "Altered rain and snow patterns"
+                    ]
+                },                {
+                    tabTitle: "Wind",
+                    tabSubtitle: "Potential impacts from changing winds",
                     tabTitleID: "wind",
-                    tabText: "The anticipated effects of wind on the water cycle vary from region to region. Researchers are highly confident that changes in wind will affect the Northwest and Southwest and moderately confident that they will affect the rest of the U.S., except Alaska. We expect to see an increase in severe windstorms, including sand and dust storms, as well as stronger hurricanes.",
+                    tabTitleIDname: "impact-wind",
+                    tabText: "The projected effects of wind on water availability vary from region to region. Climate assessments indicate a moderate degree of confidence that changes in wind will affect the Northwest and Southwest and moderate confidence that they will affect the rest of the U.S.. We expect to see decreased wind speeds, an increase in severe windstorms and sand and dust storms;, and stronger hurricanes. ",
+                    listText: [
+                        "Decreased average wind speed",
+                        "Increased sand and dust storms",
+                        "Stronger hurricanes",
+                        "Increased severe wind storms",
+                        "Increased erosion"
+                    ]
+                },                {
+                    tabTitle: "Coastal",
+                    tabSubtitle: "Potential impacts from coastal change",
+                    tabTitleID: "coastal",
+                    tabTitleIDname: "impact-coast",
+                    tabText: "Climate assessments indicate a high degree of confidence that climate impacts on water resources in coastal areas will impact all areas of the U.S. that border an ocean. Along with sea level rise, we expect to see larger storm surges, an increased frequency and severity of coastal flooding, and greater incursion of saltwater into freshwater aquifers, estuaries, wetlands, and soils via storm floodwaters.",
+                    listText: [
+                        "Rising sea levels",
+                        "Increased storm surge",
+                        "Increased saltwater intrusion",
+                        "Increased frequency and severity of coastal flooding"
+                    ]
                 }
             ]
         }

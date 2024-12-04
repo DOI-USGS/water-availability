@@ -115,7 +115,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
-  color: var(--cream-background);
+  color: white;
   font-size: 80px;
   font-weight: bold;
 }
