@@ -6,17 +6,36 @@
   </template>
   
   <script setup>
-  import { onMounted, ref, watch } from 'vue'
+  import { onMounted, ref, watch, defineProps } from 'vue'
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
+
+  const publicPath = import.meta.env.BASE_URL; // this gets the base url for your application
   
   const mapContainer = ref(null)
   const barContainer = ref(null)
   let mapLayers;
 
-  const props = defineProps({
+// props definition, allowing customized paths and datasets
+const props = defineProps({
   layerVisibility: {
     type: Object,
+    required: true
+  },
+  layerPaths: {
+    type: Object,
+    required: true
+  },
+  regionsDataUrl: {
+    type: String,
+    required: true
+  },
+  usOutlineUrl: {
+    type: String,
+    required: true
+  },
+  csvDataUrl: {
+    type: String,
     required: true
   }
 })
@@ -26,7 +45,7 @@ const updateLayers = () => {
 
   const visibleLayers = Object.entries(props.layerVisibility).map(([key, value]) => ({
     key,
-    path: layerPaths[key]?.path,
+    path: props.layerPaths[key]?.path,
     visible: value.visible
   }))
 
@@ -48,7 +67,7 @@ const updateLayers = () => {
     )
 }
 
-
+// watch layerVisibility for changes
 watch(
   () => props.layerVisibility,
   () => {
@@ -56,37 +75,6 @@ watch(
   },
   { deep: true }
 );
-
-
-
-const layerPaths = {
-  very_low_none: {
-    path: '01_stress_map_very_low_none.png',
-    color: '#39424f',
-    order: 1
-  },
-  low: {
-    path: '01_stress_map_low.png',
-    color: '#80909D',
-    order: 2
-  },
-  moderate: {
-    path: '01_stress_map_moderate.png',
-    color: '#edeadf',
-    order: 3
-  },
-  high: {
-    path: '01_stress_map_high.png',
-    color: '#Cfacab',
-    order: 4
-  },
-  severe: {
-    path: '01_stress_map_severe.png',
-    color: '#965a6b',
-    order: 5
-  }
-};
-
 
   
   onMounted(async () => {
@@ -108,11 +96,6 @@ const layerPaths = {
 
     mapLayers = svg.append('g').attr('class', 'map-layers')
     updateLayers()  
-
-    
-   // update layers whenever visibility changes
-   watch(() => props.layerVisibility, updateLayers, { deep: true })
-    
   
     // resizing so flexes to page width but stays within reasonable height
     const resizeSvg = () => {
@@ -141,8 +124,8 @@ const layerPaths = {
       // Sort data based on the order defined in layerPaths
       const sortedData = [...data].sort((a, b) => {
         const normalize = (str) => str.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
-        const orderA = layerPaths[normalize(a.sui_category_5)]?.order || Infinity;
-        const orderB = layerPaths[normalize(b.sui_category_5)]?.order || Infinity;
+        const orderA = props.layerPaths[normalize(a.sui_category_5)]?.order || Infinity;
+        const orderB = props.layerPaths[normalize(b.sui_category_5)]?.order || Infinity;
         return orderA - orderB;
       });
 
@@ -155,7 +138,7 @@ const layerPaths = {
 
         const getColor = (category) => {
           const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
-          return layerPaths[normalizedCategory]?.color || "#ccc"; // Default to gray if no match
+          return props.layerPaths[normalizedCategory]?.color || "#ccc"; // Default to gray if no match
         };
 
   
@@ -246,15 +229,15 @@ const layerPaths = {
     try {
     // read in data
       // region shapes - feature collection
-      const topoRegions = await d3.json(import.meta.env.BASE_URL + 'assets/Regions.topojson');
+      const topoRegions = await d3.json(`${publicPath}${props.regionsDataUrl}`);
       const geoRegions = topojson.feature(topoRegions, topoRegions.objects[Object.keys(topoRegions.objects)[0]]);
 
       // CONUS outline - single feature
-      const topoUS = await d3.json(import.meta.env.BASE_URL + 'assets/USoutline.topojson');
+      const topoUS = await d3.json(props.usOutlineUrl);
       const geoUS = topojson.feature(topoUS, topoUS.objects['foo']);
 
       // water stress stats by region
-      const csvData = await d3.csv(import.meta.env.BASE_URL + '/wa_stress_stats.csv');
+      const csvData = await d3.csv(`${publicPath}${props.csvDataUrl}`);
   
       const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoRegions);
       const path = d3.geoPath().projection(projection);
@@ -263,7 +246,7 @@ const layerPaths = {
       const scale_size = 1.2; // scaling pngs because they have an added margin when exported from ggplot
       svg.append('g')
         .selectAll('image')
-        .data(layerPaths)
+        .data(props.layerPaths)
         .enter()
         .append('image')
         .attr('xlink:href', d => import.meta.env.BASE_URL + d)
