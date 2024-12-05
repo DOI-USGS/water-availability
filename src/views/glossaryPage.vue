@@ -8,7 +8,7 @@
                     <h3 class="glossary-term"> {{ terms.term }} </h3>
                     <p class="glossary-def"> {{ terms.definition }}</p>
                     <div v-if="terms.visualLogic" class="viz-container">
-                      <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/glossary_huc.png">
+                      <img class="viz-portrait" :src="getIconURL(terms.visual)">
                     </div>
                 </div>
             </div>
@@ -59,6 +59,14 @@ const refArray = References.key.sort((a, b) => a.authors.localeCompare(b.authors
 const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID));
 
 console.log(theseReferences)
+
+// global objects
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+
+
+function getIconURL(suffix) {
+    return baseURL + `${suffix}.png`
+}
 
 </script>
 
