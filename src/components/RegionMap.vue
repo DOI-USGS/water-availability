@@ -30,6 +30,14 @@ const props = defineProps({
     type: String,
     required: true
   },
+  regionsVar: {
+    type: String,
+    required: true
+  },
+  regionsVarLabel: {
+    type: String,
+    required: true
+  },
   usOutlineUrl: {
     type: String,
     required: true
@@ -205,7 +213,7 @@ watch(
   
       // percent labels on bar chart - currently overlap where very small
       g.selectAll('.chart-labels')
-        .data(sortedData, d => d[props.categoricalVariable]) // use sui_category_5 as the unique key
+        .data(sortedData, d => d[props.categoricalVariable]) // unique key
         .join(
             enter => {
             const enteringText = enter.append('text')
@@ -291,7 +299,7 @@ watch(
         .data(geoRegions.features)
         .join('path')
         .attr('d', path)
-        .attr('class', d => `region ${d.properties.Region_nam_nospace}`)
+        .attr('class', d => `region ${d[props.RegionsVar]}`)
         .attr('fill', 'transparent')
         .attr("opacity", 0)
         .attr('stroke', 'white')
@@ -327,7 +335,7 @@ watch(
             updateBarChart(aggregatedData, 'United States');
         })
         .on('click', (event, d) => {
-          activeRegion = d.properties.Region_nam_nospace;
+          activeRegion = d[props.RegionsVar];
           highlightRegionAndUpdateChart(event, d);
         });
   
