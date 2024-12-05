@@ -48,6 +48,7 @@
             <div class="text-container">
               <h3>Effects of nutrients in the water</h3>
               <p>Increased water demands can facilitate mobilization (the release of previously trapped contaminants into the water supply) and transport of chemicals and elements in groundwater. This release and movement of contaminants happens because of altered groundwater chemistry and disturbances to the water cycle resulting from drought, managed aquifer recharge, and changes to groundwater level.</p>
+              <br>
               <p>Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and palatability, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication disrupts many other ecosystem functions (Wurtsbaugh and others, 2019), including food webs and species composition. Eutrophication is also an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
             <Methods></Methods>
