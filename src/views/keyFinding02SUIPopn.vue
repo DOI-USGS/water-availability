@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-            <p>The availability of clean water for our communities is affected by water supply conditions like water quantity, quality, and flow. The conditions that limit water availability, often occur together. For example, areas with limited water supply can be more vulnerable to water quality issues and alterations to ecological flow. The relative impact of these factors varies from region to region, and regions that have water limitation arising from more than one indicator may pose the greatest challenges to resource managers.</p>
+            <p>The availability of clean water for our communities is affected by interrelated issues from hydrological (water quantity, quality, and flow) to social (water infrastructure, access, and rights). Physical infrastructure, such as public-supply (or self-supply) facilities, household-level plumbing, wells, dams, reservoirs, and diversions, are critical for meeting local water demands. Treaties, water compacts, and other legal agreements also determine access at multiple scales from household and municipal to internationally shared water resources. Additionally, characteristics of a community, such as socioeconomic status or access to resources and public services, can determine a community’s adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
             <br>
             <p>This bubble chart shows the level of water limitation for each watershed (HUC8) in the U.S. The size of the bubble represents the population living in that watershed (CITE). Levels of water limitation are <span class="highlight" id="very_low_none"> very low or none </span>, <span class="highlight" id="low"> low </span>, <span class="highlight" id="moderate"> moderate </span>, <span class="highlight" id="high"> high </span>, and <span class="highlight" id="severe"> severe </span>.     </p>
           </div>
@@ -11,7 +11,9 @@
           <div class="viz-container">
             <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_sui_popn_CONUS.png">
           </div>
-
+          <div class="text-container">
+            <p>The conditions that limit water availability, often occur together. For example, areas with limited water supply can be more vulnerable to water quality issues and alterations to ecological flow. The relative impact of these factors varies from region to region, and regions that have water limitation arising from more than one indicator may pose the greatest challenges to resource managers.</p>
+          </div>
           <div class="viz-container">
               <tabsGroup id="impact-tabs" :options="{ useUrlFragment: false }">
                 <tabItem 
