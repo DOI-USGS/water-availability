@@ -87,6 +87,10 @@
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
           csvDataUrl="/wa_stress_stats.csv"
+          continuous-raw="stress_by_reg"
+          continuous-percent="percentage_stress"
+          categorical-variable="sui_category_5"
+
         />
         </div>
         <div class="text-container">

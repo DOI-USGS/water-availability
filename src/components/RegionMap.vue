@@ -37,6 +37,18 @@ const props = defineProps({
   csvDataUrl: {
     type: String,
     required: true
+  },
+  continuousRaw: { 
+    type: String,
+    required: true
+  },
+  continuousPercent: { 
+    type: String,
+    required: true
+  },
+  categoricalVariable: { 
+    type: String,
+    required: true
   }
 })
 
@@ -125,13 +137,13 @@ watch(
       // Sort data based on the order defined in layerPaths
       const sortedData = [...data].sort((a, b) => {
         const normalize = (str) => str.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
-        const orderA = props.layerPaths[normalize(a.sui_category_5)]?.order || Infinity;
-        const orderB = props.layerPaths[normalize(b.sui_category_5)]?.order || Infinity;
+        const orderA = props.layerPaths[normalize(a[props.categoricalVariable])]?.order || Infinity;
+        const orderB = props.layerPaths[normalize(b[props.categoricalVariable])]?.order || Infinity;
         return orderA - orderB;
       });
 
-      const categories = sortedData.map(d => d.sui_category_5);
-      const values = sortedData.map(d => +d.percentage_stress);
+      const categories = sortedData.map(d => d[props.categoricalVariable]);
+      const values = sortedData.map(d => +d[props.continuousPercent]);
   
       const xScale = d3.scaleLinear()
         .domain([0, d3.sum(values)])
@@ -212,16 +224,16 @@ watch(
             return enteringText;
             },
             update => {
-            return update.transition()
-                .duration(750)
-                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-                .text(d => `${formatPercentage(d.percentage_stress)}%`);
+              return update.transition()
+                  .duration(750)
+                  .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+                  .text(d => `${formatPercentage(d.percentage_stress)}%`);
             },
             exit => {
-            return exit.transition()
-                .duration(750)
-                .style('opacity', 0)
-                .remove(); // fade out and remove
+              return exit.transition()
+                  .duration(750)
+                  .style('opacity', 0)
+                  .remove(); // fade out and remove
             }
         );
 
@@ -259,14 +271,14 @@ watch(
     // find national water stress by category
       const totalByCategory = d3.rollups(
         csvData,
-        v => d3.sum(v, d => +d.stress_by_reg),
-        d => d.sui_category_5
+        v => d3.sum(v, d => +d[props.continuousRaw]),
+        d => d[props.categoricalVariable]
       );
   
       const totalStress = d3.sum(totalByCategory, d => d[1]);
   
       const aggregatedData = totalByCategory.map(([category, value]) => ({
-        sui_category_5: category,
+        [props.categoricalVariable]: category,
         percentage_stress: (value / totalStress) * 100,
       }));
   
@@ -327,8 +339,8 @@ watch(
         const filteredData = csvData
           .filter(row => row.Region_nam === regionClassFilter)
           .map(row => ({
-            sui_category_5: row.sui_category_5,
-            percentage_stress: (+row.stress_by_reg / d3.sum(csvData.filter(r => r.Region_nam === regionClassFilter), r => +r.stress_by_reg)) * 100,
+            sui_category_5: row[props.categoricalVariable],
+            percentage_stress: (+row[props.continuousRaw] / d3.sum(csvData.filter(r => r.Region_nam === regionClassFilter), r => +r[props.continuousRaw])) * 100,
           }));
   
         updateBarChart(filteredData, `${regionClassFilter} region`);
