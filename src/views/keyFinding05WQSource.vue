@@ -3,14 +3,12 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-              <p>Nutrients have a range of natural and human sources. <span class="highlight" id="Naturalsources"> Natural sources </span> of nutrients in surface water include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.</p>
+              <p>Nutrient effects on water availability for human and ecological use are widespread and at times substantial. Excessive nutrients commonly occur in surface water (Shoda and others, 2019) and can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses.</p>
               </div>
             <div class="text-container">
-              <p>Human sources of nutrients in surface water generally include nonpoint fertilizer and manure application for 
-                <span class="highlight" id="Agriculture"> agriculture </span> , atmospheric deposition or 
-                <span class="highlight" id="Atmosphericdeposition"> air pollution </span>, which generally has human origins, point sources such as 
-                <span class="highlight" id="Wastewater"> wastewater  </span> treatment plant discharge, and  
-                    <span class="highlight" id="Otherhumansources"> other human sources </span> such as mining, dams, and urbanization. Increased water demands and drought can aggravate water quality issues by altering groundwater chemistry.
+              <p>Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from 
+                <span class="highlight" id="Agriculture"> agriculture </span> or 
+                <span class="highlight" id="Atmosphericdeposition"> air pollution </span>, which generally has human origins; <span class="highlight" id="Wastewater"> wastewater  </span> treatment plant discharge, and <span class="highlight" id="Otherhumansources"> other human sources </span> such as dredging, mining, dams, and urbanization. <span class="highlight" id="Naturalsources"> Natural sources </span> of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
             <div
@@ -47,10 +45,14 @@
                 <div id="barplot-container">    
                 </div>
             </div>
+            <div class="text-container">
+              <h3>Effects of nutrients in the water</h3>
+              <p>Increased water demands can facilitate mobilization (the release of previously trapped contaminants into the water supply) and transport of chemicals and elements in groundwater. This release and movement of contaminants happens because of altered groundwater chemistry and disturbances to the water cycle resulting from drought, managed aquifer recharge, and changes to groundwater level.</p>
+              <p>Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and palatability, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication disrupts many other ecosystem functions (Wurtsbaugh and others, 2019), including food webs and species composition. Eutrophication is also an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
+            </div>
             <Methods></Methods>
             <References></References>
         </div>
-
 
 
          
