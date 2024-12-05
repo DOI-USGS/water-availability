@@ -1,4 +1,29 @@
 <template>
+  <section class="main-container">    
+    <div class="wavy-container">
+        <section>
+        <div class="waves">
+          <div class="wave" id="wave1"></div>
+          <div class="wave" id="wave2"></div>
+          <div class="wave" id="wave3"></div>
+          <div class="wave" id="wave4"></div>
+        </div>
+      </section>
+    </div>
+    <div class="hamburger-menu" @click="menuOpen = !menuOpen">
+        <div :class="{ 'bar1': menuOpen, 'bar': !menuOpen }"></div>
+        <div :class="{ 'bar2': menuOpen, 'bar': !menuOpen }"></div>
+        <div :class="{ 'bar3': menuOpen, 'bar': !menuOpen }"></div>
+    </div>
+    <div class="dropdown-menu" v-if="menuOpen">
+        <ul>
+        <li><router-link to="/">Home</router-link></li>
+        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Read the Report</a></li>
+        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Access the Data</a></li>
+        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">USGS Vizlab</a></li>
+        <li><a href="water-availability/#/credits" target="_blank">Website Credits</a></li>
+        </ul>
+    </div>
   <section>    
     <div class="glossary-container">
         <div id="text-container">
@@ -38,12 +63,15 @@
           </a>       
     </div>
   </section>
+  </section>
 </template>
 
 <script setup>
-  import glossaryTerms from '@/assets/text/glossaryTerms.js';
-  import KeyMessages from '../components/KeyMessages.vue';
-  import References from './../assets/text/references.js';
+import { ref } from 'vue';
+import glossaryTerms from '@/assets/text/glossaryTerms.js';
+import KeyMessages from '../components/KeyMessages.vue';
+import References from './../assets/text/references.js';
+let menuOpen = ref(false);
 
   // Sort terms
 const termArray = glossaryTerms.key.sort((a, b) => a.term.localeCompare(b.term));

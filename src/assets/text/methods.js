@@ -11,7 +11,7 @@ export default {
           },
           {
             header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average supply and use index (SUI). SUI expresses the imbalance between surface water-supply and consumptive uses for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
+            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
           }
         ]
         },      {
