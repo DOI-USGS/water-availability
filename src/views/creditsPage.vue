@@ -187,11 +187,7 @@ function createChart({ container, data, team }) {
         .force("x", d3.forceX((d, i) => {
             return xCenter[i];
         }).strength(0.1))
-<<<<<<< HEAD
         .force("center", d3.forceCenter(width / 2, (height - margin.top - margin.bottom) / 2).strength(0.6))
-=======
-        .force("center", d3.forceCenter(width / 2, (height - margin.top - margin.bottom) / 2).strength(1))
->>>>>>> 23c208b36f895da3c9de11ef08f5844b13a5cf52
         .force("charge", d3.forceManyBody().strength(10))
 
         .force("collision", d3.forceCollide().radius(radius + padding))
