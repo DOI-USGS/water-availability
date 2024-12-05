@@ -41,12 +41,12 @@ const props = defineProps({
 })
 
 const updateLayers = () => {
-  if (!mapLayers) return // ensure mapLayers is initialized
+  if (!mapLayers) return 
 
   const visibleLayers = Object.entries(props.layerVisibility).map(([key, value]) => ({
     key,
     path: props.layerPaths[key]?.path,
-    visible: value.visible
+    visible: value
   }))
 
   mapLayers.selectAll('image')
@@ -65,6 +65,7 @@ const updateLayers = () => {
         .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
       exit => exit.remove()
     )
+    
 }
 
 // watch layerVisibility for changes
