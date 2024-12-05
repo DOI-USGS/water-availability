@@ -80,6 +80,21 @@ p2_targets <- list(
                inner_join(p2_CONUS_crosswalk_HUC12_df, by = "HUC12") |>
                filter(! is.na(Region_nam)) 
   ),
+  tar_target(
+    p2_State_sf,
+    {
+      tigris::states(cb = TRUE) |>
+        rmapshaper::ms_simplify() |> 
+        sf::st_transform(st_crs(p2_Reg_sf)) |>
+        filter(!(STUSPS %in% c('AS','GU','VI', 'HI','AK', 'PR', 'MP'))) |>
+        select(STUSPS, NAME) |>
+        group_by(STATES = STUSPS, NAME) |>
+        summarize() |>
+        ms_simplify() |>
+        mutate(name_clean = gsub(' ', '_', NAME))
+    }
+    
+  ),
   
   ##################################################
   # Join spatial data with water data 
