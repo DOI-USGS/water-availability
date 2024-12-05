@@ -163,18 +163,18 @@ watch(
             .attr('y', 0)
             .attr('width', 0) 
             .attr('height', 30)
-            .attr('fill', d => getColor(d.sui_category_5))
+            .attr('fill', d => getColor(d[props.categoricalVariable]))
             .call(enter => enter.transition()
             .duration(750) 
-            .attr('width', d => xScale(d.percentage_stress))),
+            .attr('width', d => xScale(d[props.continuousPercent]))),
         update => update
             .call(update => update.transition()
             .duration(750)
             .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
-            .attr('fill', d => getColor(d.sui_category_5))
+            .attr('fill', d => getColor(d[props.categoricalVariable]))
             .attrTween('width', function(d, i) {
                 const previousWidth = d3.select(this).attr('width') || 0; // fallback to 0 if no prior value
-                const interpolator = d3.interpolate(previousWidth, xScale(d.percentage_stress));
+                const interpolator = d3.interpolate(previousWidth, xScale(d[props.continuousPercent]));
                 return t => interpolator(t);
             })),
         exit => exit
@@ -205,16 +205,16 @@ watch(
   
       // percent labels on bar chart - currently overlap where very small
       g.selectAll('.chart-labels')
-        .data(sortedData, d => d.sui_category_5) // use sui_category_5 as the unique key
+        .data(sortedData, d => d[props.categoricalVariable]) // use sui_category_5 as the unique key
         .join(
             enter => {
             const enteringText = enter.append('text')
                 .attr('class', 'chart-labels')
-                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 50)
                 .attr('fill', 'black')
                 .attr('text-anchor', 'middle')
-                .text(d => `${formatPercentage(d.percentage_stress)}%`)
+                .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
                 .style('opacity', 0); // start invisible
 
             enteringText.transition()
@@ -226,8 +226,8 @@ watch(
             update => {
               return update.transition()
                   .duration(750)
-                  .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-                  .text(d => `${formatPercentage(d.percentage_stress)}%`);
+                  .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
+                  .text(d => `${formatPercentage(d[props.continuousPercent])}%`);
             },
             exit => {
               return exit.transition()
