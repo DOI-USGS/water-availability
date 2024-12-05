@@ -37,11 +37,11 @@ export default {
         method: [
           {
             header: "Calculating social vulnerability",
-            description: "The Centers for Disease Control (CDC) 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water limitation (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were low indicating values <= 0.4, medium indicating values > 0.4 and <= 0.6, and high indicating values > 0.6.",
+            description: "The Centers for Disease Control (CDC) 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water stress (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were defined such that values less than 0.4 indicate low vulnerability, values between 0.4 and 0.6 indicate medium vulnerability, and values greater than 0.6 indicate high vulnerability.",
           },
           {
             header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average surface water-supply and use index (SUI). SUI expresses the imbalance between surface water-supply and consumptive uses for water years 2010 through 2020. Categories of water limitation included low, which was between 0 and 0.4, medium between 0.4 and 0.6, and high, which was above 0.6."
+            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation were low indicating values less than 0.4, medium indicating values between 0.4 and 0.6, and high indicating values greater than 0.6."
           }
         ]
       },      {

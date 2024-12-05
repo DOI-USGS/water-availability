@@ -3,12 +3,14 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water stress disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water. Most Americans experience regionally low water stress, which means that the amount of clean water available is sufficient to meet the needs of humans and the environment. It also means that within areas of low water stress, there is a wide range of <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">social vulnerability</a>, or conditions in which societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024).</p>
-                <h2>Social vulnerability is disproportionately high in areas of high water stress</h2>
-                <p>When viewing only the driest ares, the map shows almost exclusively dark red patches, meaning that most areas with high water stress occur where people are socially vulnerable. Water stress disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water. </p>
+                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan and others, 2020; Mueller and Gasteyer, 2021; Scanlon and others, 2023). For example, drinking-water violations in the U.S. are more prevalent in socially vulnerable communities based on socioeconomic status, race, language, and demographic and housing characteristics (Scanlon and others, 2023). In addition, cases of incomplete plumbing have been reported to be associated with communities of color, high poverty levels, low average income, low education rates, and renter-dominated communities (Deitz and Meehan, 2019; Meehan and others, 2020; Mueller and Gasteyer, 2021). Characteristics of a community, such as socioeconomic status or access to resources and public services, can determine a community’s adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
+                <h3>Social vulnerability is disproportionately high in areas of water limitation</h3>
+                <p>The overall balance between water supply and demand is quantified as water stress, which is calculated by comparing surface water-supply and consumptive uses. Although 8% of Americans living in the lower 48 states (27 million individuals) live in watersheds with high or severe water stress, more than half of this population belongs to the most socially vulnerable populations. </p>
+                <br>
+                <p>This map shows areas of high and low water limitation by color, with socially vulnerable populations indicated with darker shades of those colors. Click on the button to view the areas of high water limitation. These areas show almost exclusively dark red patches, meaning that most areas with high water limitation occur where people are socially vulnerable. </p>
             </div>
             <div class="button-container">
-                <button id="image-toggle" class="toggle-button" @click="showStress">View areas of high water stress</button>
+                <button id="image-toggle" class="toggle-button" @click="showStress"> {{ buttonText }}</button>
             </div>
             <div class="viz-container">
                 <img 
@@ -17,7 +19,11 @@
                         :src="imgSrc" 
                         alt="xxx"
                     >
-        </div>
+            </div>
+            <div class="text-container">
+                <h3>For socially vulnerable households, water quality is a limitation to water availability</h3>
+                <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable. For example, the proportion of individuals with the highest levels of social vulnerability increases as the concentrations of total nitrogen and total phosphorus in streams goes up. While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain higher proportions of socially vulnerable individuals. These areas are relatively limited in spatial extent and have high population density, which emphasizes the impacts of highly developed, human-dominated watersheds to human health and wellbeing.</p>
+            </div>
         <Methods></Methods>
         <References></References>
         </div>
@@ -43,6 +49,7 @@ let imgSrc = ref(getImgURL(defaultImageID));
 
 const featureToggles = inject('featureToggles');
 
+let buttonText = "All areas";
 
 function getImgURL(id) {
   return `${baseURL}${id}.png`;
@@ -51,8 +58,12 @@ function getImgURL(id) {
 function showStress() {
     if(imgSrc.value === getImgURL(defaultImageID)) {
         imgSrc.value = getImgURL(stressImageID);
+        buttonText = "High water limitation";
+
     } else {
         imgSrc.value = getImgURL(defaultImageID);
+        buttonText = "All areas";
+
     }
 }
 
