@@ -2,14 +2,14 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-            <div class="text-container">
-                <p>Exposure to drinking water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source.</p>
-            </div>
+
             <div
             id="toggle-container"
             class="text-container"
             aria-hidden="true"
             >
+
+              <h2>Surface water quality contamination</h2>
               <p>Surface water quality differs by source and use. Broad sources of water contamination include   
                     <span class="highlight" id="Biotic"> biotic threats </span>,
                     <span class="highlight" id="Nutrients"> nutrients </span>,
@@ -18,12 +18,11 @@
                     <span class="highlight" id="Sediment"> sediment </span>, 
                     <span class="highlight" id="Salinity"> salinity </span>, and
                     <span class="highlight" id="Temperature"> temperature </span>. Some areas of surface water are not threatened and are considered
-                    <span class="highlight" id="Unimpaired"> unimpaired </span>. This chart shows threats to the water quality of surface water in the U.S. by source and water use category. The height of each ribbon in the chart represents the total river miles, and the broad categories on the left are broken out into their respective sources on the right. 
+                    <span class="highlight" id="Unimpaired"> unimpaired </span>. The charts below show threats to the quality of surface water in the U.S. by source and water-use category. The height of each ribbon in the chart represents the total river miles impaired or unimpaired, and the broad categories on the left are broken out into their respective threats on the right. 
                 </p>
             </div>
             <section id="dw-viz">
               <div class="text-container">
-                <h2>Top Threats to Drinking Water</h2>
                 <p>Metal contamination, salinity, and sediments were identified as the main threats to streams and rivers used as a drinking-water source. </p>
               </div>
               <div class="viz-container">
