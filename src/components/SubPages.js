@@ -134,7 +134,30 @@ export default {
             mainTitle: 'Gone but not forgotten',
             shortTitle: 'Not all the water withdrawn for human water use returns to the local environment',
             keyMessage: 'Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across CONUS, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power.',
-            references: ["Medelie2025"]
+            references: ["Medelie2025"],
+            tabData: [
+                {
+                    tabTitle: "Crop Irrigation",
+                    tabSubtitle: "On average, about 72% of water withdrawn for irrigation is consumed rather than returned to the local environment.",
+                    tabTitleID: "irrigation",
+                    tabTitleIDname: "irrigation",
+                    tabText: "On average, about 72% of water withdrawn for irrigation is consumed rather than returned to the local environment.  This proportion, influenced primarily by climate and the ability of the irrigation system to meet crop needs (efficiency), varies greatly across the country. In general, higher proportions of water are consumed for crop irrigation in the eastern U.S. than the western U.S. During drought, crop needs for irrigation are greater, and more water is lost as consumptive use to evapotranspiration, even though the footprint of irrigated crops typically shrinks (Martin and others, 2023; Haynes and others, 2024). Some areas without sufficient local resources use water for crop irrigation that is transported from other areas with abundant water resources, changing the natural water availability in both the sending and receiving areas. Transfers of water for crop irrigation are particularly common in the western U.S."
+                },
+                {
+                    tabTitle: "Public Supply",
+                    tabSubtitle: "Most water used for public supply is returned to the local environment",
+                    tabTitleID: "public",
+                    tabTitleIDname: "public_supply",
+                    tabText: "Most water used for public supply is returned to the local environment through wastewater treatment plant outfalls  or through sewer systems. On a national basis, about 88% of the water withdrawn for public supply is returned to the local environment. Water that is not returned includes water consumed by humans and animals, water incorporated into products or crops, water evaporated from the landscape, and water transpired from plants.  Some areas without sufficient local resources use water for public supply that is transported from other areas with more abundant water resources, changing the natural water availability in both the sending and receiving areas. Movement of water for public supply is typically from rural to urban areas."
+                },
+                {
+                    tabTitle: "Thermoelectric Power",
+                    tabSubtitle: "Thermoelectric water use uses, then returns, a large amount of water",
+                    tabTitleID: "thermoelectric",
+                    tabTitleIDname: "thermoelectric",
+                    tabText: "Overall thermoelectric-power water use is characterized by large withdrawals and relatively low consumptive use (Diehl and Harris, 2014; Harris and Diehl, 2019). However, volumes of water withdrawn and consumed for thermoelectric power at individual facilities vary tremendously and are entirely influenced by the type of cooling system used by the facility.  One broad type of cooling system is once-through, where a large volume of water is withdrawn and a relatively small amount is consumed through evaporation. The other broad type of system recirculates water for multiple cooling cycles, resulting in much smaller withdrawals than once-through systems.  On the other hand, recirculating cooling systems consume a larger percentage, up to 70%, of the water through evaporation  (Harris and Diehl, 2019). Between 2010 to 2020, many plants shifted from once-through cooling systems towards recirculating cooling systems."
+                }
+            ]
         },
         {
             page: 10,
@@ -155,7 +178,7 @@ export default {
                     tabSubtitle: "Potential impacts from rising temperature",
                     tabTitleID: "temp",
                     tabTitleIDname: "impact-temp",
-                    tabText: "Climate assessments indicate a high degree of confidence that changes in extreme heat, mean air temperature, and cold spells and frost will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. Increased stream temperatures harm fish health, especially in native, cold-water fisheries. Harmful algal blooms also increase with increasing water temperatures.  Higher air temperatures  lead to warmer and shorter winters, meaning less precipitation occurs as snowfall and less snowmelt for streamflow in the spring and early summer.",
+                    tabText: "Climate assessments indicate a high degree of confidence that changes in extreme heat, mean air temperature, and cold spells and frost will affect water resources in every region in the U.S., including Alaska, Hawaii, and the Caribbean islands. Extreme heat amplifies the effects of drought and increases evaporative loss from reservoirs. Increased stream temperatures harm fish health, especially in native, cold-water fisheries. Harmful algal blooms also increase with increasing water temperatures.  Higher air temperatures lead to warmer and shorter winters, which can in turn affect snowfall and snowmelt in the spring and early summer. ",
                     listText: [
                         "Increased average air temperature",
                         "More common extreme heat events",
@@ -183,7 +206,7 @@ export default {
                     tabSubtitle: "Potential impacts from drier conditions",
                     tabTitleID: "dry",
                     tabTitleIDname: "impact-dry",
-                    tabText: "Climate assessments indicate that increases in drought and fire weather and aridity will have the highest likelihood of impacting the Western region of the contiguous U.S. Overall, the amount and timing of streamflow is expected to change, the demand for groundwater to increase, and stream baseflow  to decrease.",
+                    tabText: "Climate assessments indicate  that increases in drought and fire weather and aridity, will have the highest likelihood of impacting the Western region of the contiguous U.S.. Overall, the amount and timing of streamflow is expected to change, the demand for groundwater to increase, and stream baseflow  to decrease.",
                     listText: [
                         "Increased groundwater demand",
                         "Changes in streamflow amount and timing",
@@ -198,7 +221,7 @@ export default {
                     tabSubtitle: "Potential impacts from changing snow and ice",
                     tabTitleID: "ice",
                     tabTitleIDname: "impact-ice",
-                    tabText: "Climate assessments indicate a high degree of confidence that every region in the U.S. except Hawaii and the Caribbean islands will see changes in snow and ice. Changes in many areas will bring a smaller extent of snow cover and sooner snow melt. Ice in lakes and rivers is declining, as are glaciers. Permafrost is thawing, and the transition line between rain and snow is moving north (meaning we see more rain where we used to see snow).",
+                    tabText: "Climate assessments indicate a high degree of confidence that every region in the U.S. except Hawaii and the Caribbean islands will see changes in snow and ice. The extent of snow cover is shrinking and snow is melting sooner. Ice in lakes and rivers is declining, as are glaciers. Permafrost is thawing, and the transition line between rain and snow is moving north (meaning we see more rain where we used to see snow).",
                     listText: [
                         "Decreased snowfall",
                         "Earlier snowmelt runoff",
@@ -226,7 +249,7 @@ export default {
                     tabSubtitle: "Potential impacts from coastal change",
                     tabTitleID: "coastal",
                     tabTitleIDname: "impact-coast",
-                    tabText: "Climate assessments indicate a high degree of confidence that climate impacts on water resources in coastal areas will impact all areas of the U.S. that border an ocean. Along with sea level rise, we expect to see larger storm surges, an increased frequency and severity of coastal flooding, and greater incursion of saltwater into freshwater aquifers, estuaries, wetlands, and soils via storm floodwaters.",
+                    tabText: "Climate assessments indicate a high degree of confidence that climate impacts on water resources in coastal areas will impact   all areas of  the U.S. that border an ocean. Along with sea level rise we expect to see larger storm surges, an increased frequency and severity of coastal flooding, and greater incursion of saltwater into freshwater aquifers, estuaries, wetlands, and soils, (via storm overwash).",
                     listText: [
                         "Rising sea levels",
                         "Increased storm surge",
