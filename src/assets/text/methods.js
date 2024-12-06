@@ -90,11 +90,11 @@ export default {
         method: [
           {
             header: "Spatial patterns in water use",
-            description: "The proportion of use by category (public supply, irrigation, and thermoelectric water use) were calculated based on annual average withdrawals for each HUC8 region for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "Spatial patterns in water use: The proportion of use by category (public supply, irrigation, and thermoelectric water use) were calculated based on annual average withdrawals for each watershed (HUC12) in the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
           },
           {
             header: "Comparing water sources by use",
-            description: "The total water withdrawn from groundwater versus surface water was compared by use category and across all uses. The values for each HUC8 region were calculated as average annual withdrawals for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "The total water withdrawn from groundwater versus surface water was compared by use category and across all uses. The values for each watershed (HUC12) were calculated as average annual withdrawals for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
           }
         ]
       },      {
