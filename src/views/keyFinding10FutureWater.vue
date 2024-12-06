@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>The climate is changing. Land and ocean temperatures are increasing, atmospheric carbon dioxide is increasing, Arctic permafrost is melting, and sea levels are rising. Climate policies aim to limit these changes, but what happens if the global temperature rises 2.2°C by mid-21st century? How will a changing climate affect the water cycle in the U.S.? The answer will vary from region to region, but some future impacts of climate change are consistent across the U.S.</p>
+                <p>The climate is changing. Land and ocean temperatures are increasing, atmospheric CO2 is increasing, Arctic permafrost is melting, and sea levels are rising. Climate policies aim to limit these changes, but what happens if the global temperature rises  2.2°C by mid-21st century? How will a changing climate affect the water cycle in the U.S.? The answer will vary from region to region, but some future impacts of climate change are consistent across the U.S.</p>
             </div>
             <div class="viz-container">
               <tabsGroup id="impact-tabs" :options="{ useUrlFragment: false }">
@@ -32,9 +32,10 @@
             </div>
             <div class="text-container">
                 <h3>Impacts from other aspects of the water cycle</h3>
-                <p>Every region of the U.S. will experience some effects of climate change on water cycle processes that do not fall into any of the previous categories. For example, higher levels of atmospheric CO2 at the Earth's surface can increase plant transpiration (water evaporated through the pores in leaves), causing greater consumptive losses (transfer of soil water to the atmosphere leading to soil moisture depletion). Decreased surface albedo (reflectance) in the Arctic will lead to additional warming and additional melting of snow and ice. </p> 
+                <p>Eevery region of the U.S. will experience some effects of climate change on water cycle processes that don’t fall into any of the previous categories. For example, higher levels of atmospheric CO2 at the Earth’s surface can increase plant transpiration (water evaporated through the pores in leaves), causing greater consumptive losses (transfer of soil water to the atmosphere leading to soil moisture depletion). Decreased surface albedo (reflectance) in the Arctic will lead to additional warming and additional melting of snow and ice. </p>
                 <br>
                 <p>Interacting processes in the water cycle are likely to produce complex changes in regional-scale hydroclimate that will influence water availability for populations in the United States, including changes in mountain and coastal precipitation, aridification, and the influence of land-cover change on terrestrial water-vapor recycling.</p>
+</p>
             </div>
             <Methods></Methods>
             <References></References>
