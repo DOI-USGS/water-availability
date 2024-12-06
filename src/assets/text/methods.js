@@ -81,7 +81,7 @@ export default {
         method: [
           {
             header: "Calculating water use by year",
-            description: "Total water withdrawn was calculated for crop irrigation, public supply, and thermoelectric water use for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024).",
+            description: "Calculating water use by year: Total water used for crop irrigation, public supply, and thermoelectric water use for the conterminous United States was calculated for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter and others, 2023; Luukkonen and others, 2023; Martin and others, 2023; Haynes and others, 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
           }
         ]
       },      {

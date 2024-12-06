@@ -95,7 +95,30 @@ export default {
             mainTitle: 'For farm, home, and energy',
             shortTitle: 'The largest demands for water are for crop irrigation, public supply, and thermoelectric power',
             keyMessage: 'About 224,000 million gallons of freshwater are used every day for irrigation (48%), public supply (16%), and thermoelectric power (36%).',
-            references: ["Medelie2025"]
+            references: ["Medelie2025"],
+            tabData: [
+                {
+                    tabTitle: "Crop Irrigation",
+                    tabSubtitle: "Crop irrigation is the largest use of water in the U.S.",
+                    tabTitleID: "irrigation",
+                    tabTitleIDname: "irrigation",
+                    tabText: "As the largest category of water use overall in the country, crop irrigation has the biggest effects on water availability. Irrigation directly reduces the amount of water locally available because a large proportion of water withdrawn is evapotranspired, and thus no longer available locally. Irrigation also increases runoff and can carry contaminants such as fertilizers and pesticides to waterbodies across large areas with long-lasting impacts (Tesoriero and others, 2013; Van Metre and others, 2016; Konar and Marston, 2020; chap. C, Erickson and others, 202x.)."
+                },
+                {
+                    tabTitle: "Public Supply",
+                    tabSubtitle: "Public water supply is essential for our communities",
+                    tabTitleID: "public",
+                    tabTitleIDname: "public_supply",
+                    tabText: "Across CONUS, public suppliers provide drinking water to about 87% of the population, as well as to many commercial entities (hotels, restaurants, etc) and industries (Dieter et al, 2018). The total volume of withdrawals for public supply is low compared to crop irrigation or thermoelectric power. However, depending on the area, public-supply withdrawals and the return of most of that water to the natural water supply as wastewater are locally important to water availability and quality. Treatment of water at wastewater treatment facilities can mitigate some potentially harmful effects of introduced contaminants from users of public supply water. Nevertheless, local effects on water quantity and quality—including alteration of flows and flow timing, as well as introduction of disinfection byproducts and other constituents not removed from treated wastewater—can be substantial (Symonds and others, 2015; Eppehimer and others, 2021). In dry regions, discharge from wastewater treatment facilities can dominate base flow and contain contaminants like pharmaceutical products, which are hard and expensive to remove from wastewater and can reach high concentrations (Rice and Westerhoff, 2017). In areas with combined sewers, large storms can cause untreated sewage to overflow directly into downstream waters. "
+                },
+                {
+                    tabTitle: "Thermoelectric Power",
+                    tabSubtitle: "Thermoelectric water use uses, then returns, a large amount of water",
+                    tabTitleID: "thermoelectric",
+                    tabTitleIDname: "thermoelectric",
+                    tabText: "Water-availability effects from thermoelectric power are typically lower than for crop irrigation or public supply because most of the water is returned close to the point of withdrawal. However, withdrawals from surface water for thermoelectric power generation are large in some areas, particularly the eastern U.S. Thermoelectric water use can also degrade water quality through temperature pollution; this impact can be substantial, particularly for ecosystem uses (Raptis and others, 2016; Chini and others, 2020)."
+                }
+            ]
         },
         {
             page: 8,
