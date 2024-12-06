@@ -75,29 +75,20 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { onMounted, ref, inject } from 'vue';
 import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
-import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 import { text } from '@fortawesome/fontawesome-svg-core';
 
 
 const featureToggles = inject('featureToggles');
 
-const route = useRoute();
 
-const path = computed(() => route.path)
-// filter to this page's key message
-const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of tab items for this page
-const impactTabs = filteredMessages[0].tabData;
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -137,12 +128,6 @@ let textGroup;
 
 // functions for tabs
 
-function getMapURL(suffix) {
-    return isMobile ? baseURL + `10_${suffix}-mobile.png` : baseURL + `10_${suffix}.png`
-}
-function getLegendURL(suffix) {
-    return isMobile ? null : baseURL + `10_${suffix}_legend.png`
-}
 function getIconURL(suffix) {
     return baseURL + `06_icon_${suffix}.png`
 }
