@@ -60,6 +60,12 @@
   }
 }
 
+a {
+  color: var(--blue-bright);
+}
+a:visited {
+  color: var(--blue-bright);
+}
 
 /* this is where each page's viz will go */
 .viz-container { 
@@ -423,6 +429,14 @@ h4 {
     }
 }
 
+.wavy-container {
+  position: relative;
+  z-index: 1; /* set waves below hamburger */
+}
+.waves {
+  position: relative;
+  z-index: 1; /* ensure waves stay below menu */
+}
 
 .hamburger-menu {
   width: 35px;
@@ -499,8 +513,15 @@ h4 {
   color: #000;
 }
 
-@media screen and (max-width: 768px) {
-  .hamburger-menu {
+@media only screen and (max-width: 768px) {
+    .raindrop-static{
+        width: 40px;
+        height: 40px;
+    }
+    .raindrop-static-text{
+        font-size: 30px;
+    }
+    .hamburger-menu {
     top: 10px;
     right: 10px;
   }
@@ -694,3 +715,4 @@ li {
       padding: 2em 2em;
   }
 }
+

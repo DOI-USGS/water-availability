@@ -109,6 +109,13 @@ p3_targets <- list(
                               precision = 6,
                               file = "public/assets/Regions.topojson")
              ),
+  tar_target(p3_State_json,
+             p2_State_sf |>
+               ms_simplify(keep = 0.05) |>
+               topojson_write(group = STATES, 
+                              precision = 6,
+                              file = "public/assets/States.topojson")
+  ),
   
   ##############################################
   # 

@@ -6,28 +6,67 @@
   </template>
   
   <script setup>
-  import { onMounted, ref, watch } from 'vue'
+  import { onMounted, ref, watch, defineProps } from 'vue'
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
+
+  const publicPath = import.meta.env.BASE_URL; // this gets the base url for your application
   
   const mapContainer = ref(null)
   const barContainer = ref(null)
   let mapLayers;
 
-  const props = defineProps({
+// props definition, allowing customized paths and datasets
+const props = defineProps({
   layerVisibility: {
     type: Object,
+    required: true
+  },
+  layerPaths: {
+    type: Object,
+    required: true
+  },
+  regionsDataUrl: {
+    type: String,
+    required: true
+  },
+  regionsVar: {
+    type: String,
+    required: true
+  },
+  regionsVarLabel: {
+    type: String,
+    required: true
+  },
+  usOutlineUrl: {
+    type: String,
+    required: true
+  },
+  csvDataUrl: {
+    type: String,
+    required: true
+  },
+  continuousRaw: { 
+    type: String,
+    required: true
+  },
+  continuousPercent: { 
+    type: String,
+    required: true
+  },
+  categoricalVariable: { 
+    type: String,
     required: true
   }
 })
 
 const updateLayers = () => {
-  if (!mapLayers) return // ensure mapLayers is initialized
+  if (!mapLayers) return 
 
   const visibleLayers = Object.entries(props.layerVisibility).map(([key, value]) => ({
     key,
-    path: layerPaths[key]?.path,
-    visible: value.visible
+    path: props.layerPaths[key]?.path,
+    visible: value
   }))
 
   mapLayers.selectAll('image')
@@ -46,9 +85,10 @@ const updateLayers = () => {
         .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
       exit => exit.remove()
     )
+    
 }
 
-
+// watch layerVisibility for changes
 watch(
   () => props.layerVisibility,
   () => {
@@ -56,37 +96,6 @@ watch(
   },
   { deep: true }
 );
-
-
-
-const layerPaths = {
-  very_low_none: {
-    path: '01_stress_map_very_low_none.png',
-    color: '#39424f',
-    order: 1
-  },
-  low: {
-    path: '01_stress_map_low.png',
-    color: '#80909D',
-    order: 2
-  },
-  moderate: {
-    path: '01_stress_map_moderate.png',
-    color: '#edeadf',
-    order: 3
-  },
-  high: {
-    path: '01_stress_map_high.png',
-    color: '#Cfacab',
-    order: 4
-  },
-  severe: {
-    path: '01_stress_map_severe.png',
-    color: '#965a6b',
-    order: 5
-  }
-};
-
 
   
   onMounted(async () => {
@@ -108,11 +117,6 @@ const layerPaths = {
 
     mapLayers = svg.append('g').attr('class', 'map-layers')
     updateLayers()  
-
-    
-   // update layers whenever visibility changes
-   watch(() => props.layerVisibility, updateLayers, { deep: true })
-    
   
     // resizing so flexes to page width but stays within reasonable height
     const resizeSvg = () => {
@@ -141,13 +145,13 @@ const layerPaths = {
       // Sort data based on the order defined in layerPaths
       const sortedData = [...data].sort((a, b) => {
         const normalize = (str) => str.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
-        const orderA = layerPaths[normalize(a.sui_category_5)]?.order || Infinity;
-        const orderB = layerPaths[normalize(b.sui_category_5)]?.order || Infinity;
+        const orderA = props.layerPaths[normalize(a[props.categoricalVariable])]?.order || Infinity;
+        const orderB = props.layerPaths[normalize(b[props.categoricalVariable])]?.order || Infinity;
         return orderA - orderB;
       });
 
-      const categories = sortedData.map(d => d.sui_category_5);
-      const values = sortedData.map(d => +d.percentage_stress);
+      const categories = sortedData.map(d => d[props.categoricalVariable]);
+      const values = sortedData.map(d => +d[props.continuousPercent]);
   
       const xScale = d3.scaleLinear()
         .domain([0, d3.sum(values)])
@@ -155,7 +159,7 @@ const layerPaths = {
 
         const getColor = (category) => {
           const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
-          return layerPaths[normalizedCategory]?.color || "#ccc"; // Default to gray if no match
+          return props.layerPaths[normalizedCategory]?.color || "#ccc"; // Default to gray if no match
         };
 
   
@@ -167,18 +171,18 @@ const layerPaths = {
             .attr('y', 0)
             .attr('width', 0) 
             .attr('height', 30)
-            .attr('fill', d => getColor(d.sui_category_5))
+            .attr('fill', d => getColor(d[props.categoricalVariable]))
             .call(enter => enter.transition()
             .duration(750) 
-            .attr('width', d => xScale(d.percentage_stress))),
+            .attr('width', d => xScale(d[props.continuousPercent]))),
         update => update
             .call(update => update.transition()
             .duration(750)
             .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
-            .attr('fill', d => getColor(d.sui_category_5))
+            .attr('fill', d => getColor(d[props.categoricalVariable]))
             .attrTween('width', function(d, i) {
                 const previousWidth = d3.select(this).attr('width') || 0; // fallback to 0 if no prior value
-                const interpolator = d3.interpolate(previousWidth, xScale(d.percentage_stress));
+                const interpolator = d3.interpolate(previousWidth, xScale(d[props.continuousPercent]));
                 return t => interpolator(t);
             })),
         exit => exit
@@ -209,16 +213,16 @@ const layerPaths = {
   
       // percent labels on bar chart - currently overlap where very small
       g.selectAll('.chart-labels')
-        .data(sortedData, d => d.sui_category_5) // use sui_category_5 as the unique key
+        .data(sortedData, d => d[props.categoricalVariable]) // unique key
         .join(
             enter => {
             const enteringText = enter.append('text')
                 .attr('class', 'chart-labels')
-                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
+                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 50)
                 .attr('fill', 'black')
                 .attr('text-anchor', 'middle')
-                .text(d => `${formatPercentage(d.percentage_stress)}%`)
+                .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
                 .style('opacity', 0); // start invisible
 
             enteringText.transition()
@@ -228,16 +232,16 @@ const layerPaths = {
             return enteringText;
             },
             update => {
-            return update.transition()
-                .duration(750)
-                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d.percentage_stress / 2))
-                .text(d => `${formatPercentage(d.percentage_stress)}%`);
+              return update.transition()
+                  .duration(750)
+                  .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
+                  .text(d => `${formatPercentage(d[props.continuousPercent])}%`);
             },
             exit => {
-            return exit.transition()
-                .duration(750)
-                .style('opacity', 0)
-                .remove(); // fade out and remove
+              return exit.transition()
+                  .duration(750)
+                  .style('opacity', 0)
+                  .remove(); // fade out and remove
             }
         );
 
@@ -246,15 +250,15 @@ const layerPaths = {
     try {
     // read in data
       // region shapes - feature collection
-      const topoRegions = await d3.json(import.meta.env.BASE_URL + 'assets/Regions.topojson');
+      const topoRegions = await d3.json(`${publicPath}${props.regionsDataUrl}`);
       const geoRegions = topojson.feature(topoRegions, topoRegions.objects[Object.keys(topoRegions.objects)[0]]);
 
       // CONUS outline - single feature
-      const topoUS = await d3.json(import.meta.env.BASE_URL + 'assets/USoutline.topojson');
+      const topoUS = await d3.json(props.usOutlineUrl);
       const geoUS = topojson.feature(topoUS, topoUS.objects['foo']);
 
       // water stress stats by region
-      const csvData = await d3.csv(import.meta.env.BASE_URL + '/wa_stress_stats.csv');
+      const csvData = await d3.csv(`${publicPath}${props.csvDataUrl}`);
   
       const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoRegions);
       const path = d3.geoPath().projection(projection);
@@ -263,7 +267,7 @@ const layerPaths = {
       const scale_size = 1.2; // scaling pngs because they have an added margin when exported from ggplot
       svg.append('g')
         .selectAll('image')
-        .data(layerPaths)
+        .data(props.layerPaths)
         .enter()
         .append('image')
         .attr('xlink:href', d => import.meta.env.BASE_URL + d)
@@ -275,14 +279,14 @@ const layerPaths = {
     // find national water stress by category
       const totalByCategory = d3.rollups(
         csvData,
-        v => d3.sum(v, d => +d.stress_by_reg),
-        d => d.sui_category_5
+        v => d3.sum(v, d => +d[props.continuousRaw]),
+        d => d[props.categoricalVariable]
       );
   
       const totalStress = d3.sum(totalByCategory, d => d[1]);
   
       const aggregatedData = totalByCategory.map(([category, value]) => ({
-        sui_category_5: category,
+        [props.categoricalVariable]: category,
         percentage_stress: (value / totalStress) * 100,
       }));
   
@@ -295,7 +299,7 @@ const layerPaths = {
         .data(geoRegions.features)
         .join('path')
         .attr('d', path)
-        .attr('class', d => `region ${d.properties.Region_nam_nospace}`)
+        .attr('class', d => `region ${d[props.RegionsVar]}`)
         .attr('fill', 'transparent')
         .attr("opacity", 0)
         .attr('stroke', 'white')
@@ -331,7 +335,7 @@ const layerPaths = {
             updateBarChart(aggregatedData, 'United States');
         })
         .on('click', (event, d) => {
-          activeRegion = d.properties.Region_nam_nospace;
+          activeRegion = d[props.RegionsVar];
           highlightRegionAndUpdateChart(event, d);
         });
   
@@ -343,8 +347,8 @@ const layerPaths = {
         const filteredData = csvData
           .filter(row => row.Region_nam === regionClassFilter)
           .map(row => ({
-            sui_category_5: row.sui_category_5,
-            percentage_stress: (+row.stress_by_reg / d3.sum(csvData.filter(r => r.Region_nam === regionClassFilter), r => +r.stress_by_reg)) * 100,
+            sui_category_5: row[props.categoricalVariable],
+            percentage_stress: (+row[props.continuousRaw] / d3.sum(csvData.filter(r => r.Region_nam === regionClassFilter), r => +r[props.continuousRaw])) * 100,
           }));
   
         updateBarChart(filteredData, `${regionClassFilter} region`);

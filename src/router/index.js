@@ -11,6 +11,7 @@ import page8 from '../views/keyFinding08WaterUseRegional.vue'
 import page9 from '../views/keyFinding09WaterUseConsumption.vue'
 import page10 from '../views/keyFinding10FutureWater.vue'
 import glossary from '../views/glossaryPage.vue'
+import credits from '../views/creditsPage.vue'
 
 
 const router = createRouter({
@@ -80,6 +81,11 @@ const router = createRouter({
       path: '/glossary',
       name: 'Glossary',
       component: glossary
+    },
+    {
+      path: '/credits',
+      name: 'Credits',
+      component: credits
     }
   ]
 })
