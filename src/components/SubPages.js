@@ -257,7 +257,7 @@ export default {
                     tabSubtitle: "Potential impacts from coastal change",
                     tabTitleID: "coastal",
                     tabTitleIDname: "impact-coast",
-                    tabText: "Climate assessments indicate a high degree of confidence that climate impacts on water resources in coastal areas will impact   all areas of  the U.S. that border an ocean. Along with sea level rise we expect to see larger storm surges, an increased frequency and severity of coastal flooding, and greater incursion of saltwater into freshwater aquifers, estuaries, wetlands, and soils, (via storm overwash).",
+                    tabText: "Climate assessments indicate a high degree of confidence that climate impacts on water resources in coastal areas will impact   all areas of  the U.S. that border an ocean. Along with sea level rise we expect to see larger storm surges, an increased frequency and severity of coastal flooding, and greater incursion of saltwater into freshwater aquifers, estuaries, wetlands, and soils from storm floodwaters.",
                     listText: [
                         "Rising sea levels",
                         "Increased storm surge",

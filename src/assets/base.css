@@ -541,6 +541,9 @@ h4 {
   padding-top: 15px;
   padding-left: 15px;
 }
+.impact-list-items {
+  margin: 7px 0;
+}
 #tab-content-image {
   width: 100%;
   grid-area: map;
