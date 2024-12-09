@@ -15,24 +15,20 @@
             <p>The conditions that limit water availability, often occur together. For example, areas with limited water supply can be more vulnerable to water quality issues and alterations to ecological flow. The relative impact of these factors varies from region to region, and regions that have water limitation arising from more than one indicator may pose the greatest challenges to resource managers.</p>
           </div>
           <div class="viz-container">
-              <tabsGroup id="impact-tabs" :options="{ useUrlFragment: false }">
+              <tabsGroup class="impact-tabs" :options="{ useUrlFragment: false }">
                 <tabItem 
                 v-for="tab in impactTabs" 
                 :name="tab.tabTitle" 
                 :key="tab.tabTitleID" 
                 :prefix="getIconImgHTML(tab.tabTitleIDname)"> 
-                  <h3 class="tab-content-title">
-                    <span class="impact-class" id="tab.tabTitleIDname">
-                      <span id="tab.tabTitleID">
-                        {{ tab.tabSubtitle }} 
-                      </span>
-                    </span>
-                  </h3>
-                  <div id="map-list">
-                    <img id="tab-content-image" :src="getMapURL(tab.tabTitleIDname)">
-                    <img id="tab-legend" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_legend.png">
+                  <div class="tab-container-text-img-legend">
+                    <h3 class="tab-content-title">
+                      {{ tab.tabSubtitle }}
+                    </h3>
+                    <img class="tab-content-img" :src="getMapURL(tab.tabTitleIDname)">
+                    <img class="tab-content-legend" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_legend.png">
+                    <p class="tab-content-text" v-html="tab.tabText" />
                   </div>
-                  <p v-html="tab.tabText" />
                 </tabItem>
               </tabsGroup>
             </div>

@@ -26,26 +26,17 @@
         </p>
       </div>
       <div class="viz-container">
-        <tabsGroup id="impact-tabs" :options="{ useUrlFragment: false }">
+        <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
                 <tabItem 
                 v-for="tab in impactTabs" 
                 :name="tab.tabTitle" 
                 :key="tab.tabTitleID" 
                 :prefix="getIconImgHTML(tab.tabTitleID)"> 
-                  <h3 class="tab-content-title">
-                    <span class="impact-class" id="tab.tabTitleIDname">
-                      <span id="tab.tabTitleID">
-                        {{ tab.tabSubtitle }} 
-                      </span>
-                    </span>
-                  </h3>
-                  <div id="map-list">
-                    <ul id="impact-list">
-                        <li v-for="items in tab.listText"> {{ items }} </li>
-                    </ul>
-                    <img id="tab-content-image" :src="getPhotoURL(tab.tabTitleIDname)">
+                  <div class="tab-container-text-img">
+                    <h3> {{ tab.tabSubtitle }}</h3>
+                    <img class="tab-content-img" :src="getPhotoURL(tab.tabTitleIDname)">
+                    <p class="tab-content-text" v-html="tab.tabText" />
                   </div>
-                  <p v-html="tab.tabText" />
                 </tabItem>
               </tabsGroup>
       </div>

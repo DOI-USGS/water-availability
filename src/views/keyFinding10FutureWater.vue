@@ -6,27 +6,23 @@
                 <p>The climate is changing. Land and ocean temperatures are increasing, atmospheric CO2 is increasing, Arctic permafrost is melting, and sea levels are rising. Climate policies aim to limit these changes, but what happens if the global temperature rises  2.2°C by mid-21st century? How will a changing climate affect the water cycle in the U.S.? The answer will vary from region to region, but some future impacts of climate change are consistent across the U.S.</p>
             </div>
             <div class="viz-container">
-              <tabsGroup id="impact-tabs" :options="{ useUrlFragment: false }">
+              <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
                 <tabItem 
                 v-for="tab in impactTabs" 
                 :name="tab.tabTitle" 
                 :key="tab.tabTitleID" 
                 :prefix="getIconImgHTML(tab.tabTitleID)"> 
-                  <h3 class="tab-content-title">
-                    <span class="impact-class" id="tab.tabTitleIDname">
-                      <span id="tab.tabTitleID">
+                  <div class="tab-container-text-list-img">
+                    <h3 class="tab-content-title">
                         {{ tab.tabSubtitle }} 
-                      </span>
-                    </span>
-                  </h3>
-                  <div id="map-list">
-                    <ul id="impact-list">
+                    </h3>
+                    <ul class="tab-content-list">
                         <li class="impact-list-items" v-for="items in tab.listText"> {{ items }} </li>
                     </ul>
-                    <img id="tab-content-image" :src="getMapURL(tab.tabTitleID)">
-                    <img id="tab-legend" :src="getLegendURL(tab.tabTitleID)">
+                    <img class="tab-content-img" :src="getMapURL(tab.tabTitleID)">
+                    <img class="tab-content-legend" :src="getLegendURL(tab.tabTitleID)">
+                    <p class="tab-content-text" v-html="tab.tabText" />
                   </div>
-                  <p v-html="tab.tabText" />
                 </tabItem>
               </tabsGroup>
             </div>
