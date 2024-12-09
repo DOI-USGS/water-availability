@@ -26,11 +26,11 @@
                 <tabItem 
                 name="Drinking water"
                 :prefix="getIconImgHTML('dw')">
-                  <div class="tab-container-text-img">
+                  <div class="tab-container-text-d3">
                     <h3 class="tab-content-title">
                           About one-third of stream miles that are sources of drinking-water supply are impaired for drinking-water use, most commonly because of non-mercury metals and salinity. 
                     </h3>
-                    <div class="tab-content-img">
+                    <div class="tab-content-d3">
                       <section id="DW-container" ref="chart"></section>
                     </div>
                     <div class="tab-content-text">
@@ -43,11 +43,11 @@
                 <tabItem 
                 name="Fish consumption"
                 :prefix="getIconImgHTML('fish')">
-                  <div class="tab-container-text-img">
+                  <div class="tab-container-text-d3">
                     <h3 class="tab-content-title">
                     Water-quality problems that affect ecosystems may also affect people who rely on ecosystems for food. The top threats to fish consumption for human health include mercury and polychlorinated biphenyls (PCBs). 
                     </h3>
-                    <div class="tab-content-img">
+                    <div class="tab-content-d3">
                       <section id="fish-container" ref="chart"></section>
                     </div>
                     <div class="tab-content-text">
@@ -62,11 +62,11 @@
                 <tabItem 
                 name="Recreation"
                 :prefix="getIconImgHTML('rec')">
-                  <div class="tab-container-text-img">
+                  <div class="tab-container-text-d3">
                     <h3 class="tab-content-title">
                       Biotic pathogens are the main threat to recreational use of surface water in the United States. 
                     </h3>
-                    <div class="tab-content-img">
+                    <div class="tab-content-d3">
                       <section id="rec-container" ref="chart"></section>
                     </div>
                     <div class="tab-content-text">
@@ -176,7 +176,7 @@ onMounted(async () => {
                     top: mobileView ? 60 : 50,
                     right: mobileView ? 145 : 200,
                     bottom: mobileView ? 15 : 10,
-                    left: mobileView ? 92 : 170
+                    left: mobileView ? 0 : 170
                 },
             }
             chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,

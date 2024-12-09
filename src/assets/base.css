@@ -563,7 +563,7 @@ h4 {
 .tab-container-text-img {
   display: grid;
   padding-bottom: 15px;
-  grid-template-columns: 200px minmax(300px, 80%);
+  grid-template-columns: minmax(2fr, 500px) 1fr;
   grid-template-rows: minmax(50px, 100px) 2fr 1fr;
   grid-template-areas: 
   "title title"
@@ -584,21 +584,40 @@ h4 {
 .tab-container-text-img-legend {
   display: grid;
   padding-bottom: 15px;
-  grid-template-columns: 200px minmax(300px, 80%);
-  grid-template-rows: minmax(50px, 100px) 2fr 1fr;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: minmax(50px, 100px) auto auto ;
   grid-template-areas: 
   "title title"
-  "text map"
-  "legend map";
+  "text legend"
+  "text img";
+}
+.tab-container-text-d3 {
+  display: grid;
+  padding-bottom: 15px;
+  grid-template-columns:  1fr;
+  grid-template-rows: minmax(50px, 100px) minmax(2fr, 600px) 1fr;
+  grid-template-areas: 
+  "title"
+  "d3"
+  "text";
 }
 @media screen and (max-width: 600px) {
   .tab-container-text-img{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(300px, 60vh) auto;
+    grid-template-rows: auto auto auto;
     grid-template-areas: 
         "title"
         "img" 
+        "text";
+  }
+  .tab-container-text-d3{
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: auto 70vh auto;
+    grid-template-areas: 
+        "title"
+        "d3" 
         "text";
   }
   .tab-container-text-list-img{
@@ -614,7 +633,7 @@ h4 {
   .tab-container-text-img-legend{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(300px, 60vh) auto auto;
+    grid-template-rows: auto minmax(50px, 100px) auto auto;
     grid-template-areas: 
         "title"
         "legend"
@@ -641,6 +660,11 @@ h4 {
   grid-area: img;
   width: 100%;
 }
+.tab-content-d3 {
+  grid-area: d3;
+  width: 70%;
+  margin: 10px auto;
+}
 .tab-content-legend {
   grid-area: legend;
   min-height: 100px;
@@ -650,6 +674,26 @@ h4 {
   grid-area: text;
   max-width: 800px;
   margin: 0 auto;
+  padding-right: 20px;
+}
+@media screen and (max-width: 600px) {
+  .tab-content-title {
+    padding: 0px;
+    max-width: 80vw;
+    margin: 0 0 20px 0;
+  }
+  .tab-content-legend {
+    min-height: 50px;
+    max-height: 100px;
+  }
+  .tab-content-d3 {
+    grid-area: d3;
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
+  .tab-content-img {
+    padding: 10px 0;
+  }
 }
 
 /* built in classes with vue3-tabs-component */
@@ -688,7 +732,7 @@ h4 {
   font-size: 2rem;
 }
 .tabs-component-panels { /* cards */
-  padding: 2em;
+  padding: 1em 2em ;
   background-color: var(--cream-background);
   border: solid 5px var(--teal-dark);
   border-top: none;
@@ -697,7 +741,7 @@ h4 {
 
 @media screen and (max-width: 600px) {
   .tabs-component { /* full component */
-    width: 85%;
+    width: 95%;
     margin: 0 auto;
   }
   .tab-image {  /* icon image on each tab */
@@ -730,6 +774,7 @@ h4 {
   }
   .tabs-component-panels {
     border: none;
+    padding-top: 10px;
   }
   .tabs-component-tab-a {
     align-items: left;
