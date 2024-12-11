@@ -15,7 +15,7 @@
             <p>The conditions that limit water availability, often occur together. For example, areas with limited water supply can be more vulnerable to water quality issues and alterations to ecological flow. The relative impact of these factors varies from region to region, and regions that have water limitation arising from more than one indicator may pose the greatest challenges to resource managers.</p>
           </div>
           <div class="viz-container">
-              <tabsGroup class="impact-tabs" :options="{ useUrlFragment: false }">
+              <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
                 <tabItem 
                 v-for="tab in impactTabs" 
                 :name="tab.tabTitle" 
