@@ -9,8 +9,23 @@
                 <br>
                 <p>This map shows areas of high and low water limitation by color, with socially vulnerable populations indicated with darker shades of those colors. Click on the button to view the areas of high water limitation. These areas show almost exclusively dark red patches, meaning that most areas with high water limitation occur where people are socially vulnerable. </p>
             </div>
-            <div class="button-container">
-                <button id="image-toggle" class="toggle-button" @click="showStress"> {{ buttonText }}</button>
+            <div
+            id="toggle-container"
+            class="text-container"
+            aria-hidden="true"
+            >
+              <p>This map shows 
+                <span>
+                  <button
+                  class="button"
+                  :text="scaleType"
+                  @click="showStress"
+                  >
+                    {{ buttonText }}
+                  </button>
+                </span>
+              of water limitation in the U.S.A.
+              </p>
             </div>
             <div class="viz-container">
                 <img 
@@ -49,7 +64,7 @@ let imgSrc = ref(getImgURL(defaultImageID));
 
 const featureToggles = inject('featureToggles');
 
-let buttonText = "All areas";
+let buttonText = "all levels";
 
 function getImgURL(id) {
   return `${baseURL}${id}.png`;
@@ -58,11 +73,11 @@ function getImgURL(id) {
 function showStress() {
     if(imgSrc.value === getImgURL(defaultImageID)) {
         imgSrc.value = getImgURL(stressImageID);
-        buttonText = "High water limitation";
+        buttonText = "only high levels";
 
     } else {
         imgSrc.value = getImgURL(defaultImageID);
-        buttonText = "All areas";
+        buttonText = "all levels";
 
     }
 }
