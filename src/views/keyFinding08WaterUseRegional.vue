@@ -35,7 +35,7 @@
               >
                 saline water
               </span>
-            </p>
+            </p> for each watershed. Click the name to turn off and on the layers in the map.
           </div>
           <div class="viz-container">
             <div class="map-container">
