@@ -208,18 +208,6 @@ export default {
         doi: "10.1029/2021WR031537"
       },
       {
-        refID: "Stets2024", 
-        authors: "Stets, E.G., Cashman, M., Miller, O.L., ..., Archer, A.A.",
-        year: "2024",
-        title: "Local water use and climate effects on water stress over the conterminous US with substantial impacts to fish species of greatest conservation need.",
-        journal: true,
-        journal_name: "Science of the Total Environment [in revision]",
-        journal_issue: "",
-        data_release: false,
-        link: "https://doi.org/xxx",
-        doi: "xx"
-      },
-      {
         refID: "Gorski2025", 
         authors: "Gorski, G., Stets, E., Scholl, M., ..., and Shapiro, A.",
         year: "2025",
@@ -782,6 +770,162 @@ export default {
         data_release: false,
         link: "https://api.semanticscholar.org/CorpusID:31585961",
         doi: "https://api.semanticscholar.org/CorpusID:31585961"
-      } 
+      } ,
+      {
+        refID: "Foks2025a",
+        authors: "Foks, S.S., LaFontaine, J.H., McDonald, R.M., ..., and Viger, R.J.",
+        year: "In Prep",
+        title: "Monthly twelve-digit hydrologic unit code aggregations of the National Hydrologic Model Precipitation-Runoff Modeling System (version 1.1) forced with CONUS404-BA, 1980–2021",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: true,
+        link: "https://doi.org/10.5066/P14C5YAP",
+        doi: "10.5066/P14C5YAP"
+      } ,
+      {
+        refID: "Foks2025b",
+        authors: "Foks, S.S., LaMotte, A.E., LaFontaine, J.H., and Viger, R.J.",
+        year: "In Prep",
+        title: "Monthly twelve-digit hydrologic unit code aggregations of the CONUS404 bias adjusted application, 1979–2021",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: true,
+        link: "https://doi.org/10.5066/P1AM8AM7",
+        doi: "10.5066/P1AM8AM7"
+      } ,
+      {
+        refID: "Sampson2025",
+        authors: "Sampson, K., Dugger, A., RafieeiNasab, A., ..., and Viger, R.J.",
+        year: "In Prep",
+        title: "Monthly twelve-digit hydrologic unit code aggregations of the WRF-Hydro application with CONUS404BA atmospheric forcings, 2009–21",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: true,
+        link: "https://doi.org/10.5066/P13QA5KX",
+        doi: "10.5066/P13QA5KX"
+      } ,
+      {
+        refID: "Ator2019",
+        authors: "Ator, S.W.",
+        year: "2019",
+        title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment loads in streams of the northeastern United States",
+        journal: true,
+        journal_name: "U. S. Geological Survey Scientific Investigations Report",
+        journal_issue: "2019–5118",
+        data_release: false,
+        link: "https://doi.org/10.3133/sir20195118",
+        doi: "10.3133/sir20195118"
+      } ,
+      {
+        refID: "Hoos2019",
+        authors: "Hoos, A.B. and Roland, II, V.L.",
+        year: "2019",
+        title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment loads in the Southeastern United States",
+        journal: true,
+        journal_name: "U. S. Geological Survey Scientific Investigations Report",
+        journal_issue: "2019–5135",
+        data_release: false,
+        link: "https://doi.org/10.3133/sir20195135",
+        doi: "10.3133/sir20195135"
+      } ,
+      {
+        refID: "Robertson2019",
+        authors: "Robertson, D.M., and Saad, D.A.",
+        year: "2019",
+        title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment loads in streams of the midwestern United States",
+        journal: true,
+        journal_name: "U. S. Geological Survey Scientific Investigations Report",
+        journal_issue: "2019–5114",
+        data_release: false,
+        link: "https://doi.org/10.3133/sir20195114",
+        doi: "10.3133/sir20195114"
+      } ,
+      {
+        refID: "Wise2019a",
+        authors: "Wise, D.R.",
+        year: "2019",
+        title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment loads in streams of the Pacific region of the United States",
+        journal: true,
+        journal_name: "U. S. Geological Survey Scientific Investigations Report",
+        journal_issue: "2019–5112",
+        data_release: false,
+        link: "https://doi.org/10.3133/sir20195112",
+        doi: "10.3133/sir20195112"
+      } ,
+      {
+        refID: "Wise2019b",
+        authors: "Wise, D.R., Anning, D.W., and Miller, O.L.",
+        year: "2019",
+        title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment transport in streams of the southwestern United States",
+        journal: true,
+        journal_name: "U. S. Geological Survey Scientific Investigations Report",
+        journal_issue: "2019–5106",
+        data_release: false,
+        link: "https://doi.org/10.3133/sir20195106",
+        doi: "10.3133/sir20195106"
+      } ,
+      {
+        refID: "Martinez2024",
+        authors: "Martinez A.J., Azadpour E., Padilla J.A., Cashman M.J., and Miller O.L.",
+        year: "2024",
+        title: "Water quality across the conterminous United States using SPARROW 2012 simulated nutrient load estimates",
+        journal: true,
+        journal_name: "U.S. Geological Survey software release",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/10.5066/P14XRQ9R",
+        doi: "10.5066/P14XRQ9R"
+      } ,
+      {
+        refID: "VanMetre2020",
+        authors: "Van Metre, P.C., Qi, S., Deacon, J., ..., Wolock, D.",
+        year: "2024",
+        title: "Prioritizing river basins for intensive monitoring and assessment by the US Geological Survey",
+        journal: true,
+        journal_name: "Environmental Monitoring and Assessment",
+        journal_issue: "192",
+        data_release: false,
+        link: "https://doi.org/10.1007/s10661-020-08403-1",
+        doi: "10.1007/s10661-020-08403-1"
+      } ,
+      {
+        refID: "Dieter2018",
+        authors: "Dieter, C.A., Linsey, K.S., Caldwell, R.R., ..., Barber, N.L.",
+        year: "2018",
+        title: "Estimated use of water in the United States county-level data for 2015 (ver. 2.0, June 2018)",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: true,
+        link: "https://doi.org/10.5066/F7TB15V5",
+        doi: "10.5066/F7TB15V5"
+      },
+      {
+        refID: "Galanter2023",
+        authors: "Galanter, A.E., Gorman Sanisaca, L.E., Skinner, K.D., ..., Worland, S.",
+        year: "2023",
+        title: "Thermoelectric-power water use reanalysis for the 2008–2020 period by power plant, month, and year for the conterminous United States",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: true,
+        link: "https://10.5066/P9ZE2FVM",
+        doi: "10.5066/P9ZE2FVM"
+      },
+      {
+        refID: "Luukkonen2023",
+        authors: "Luukkonen, C.L., Alzraiee, A.H., Larsen, J.D., ..., Miller, O.L.",
+        year: "2023",
+        title: "Public supply water use reanalysis for the 2000–2020 period by HUC12, month, and year for the conterminous United States",
+        journal: false,
+        journal_name: "",
+        journal_issue: "",
+        data_release: true,
+        link: "https://10.5066/P9FUL880",
+        doi: "10.5066/P9FUL880"
+      }
     ]
 }

@@ -4,14 +4,7 @@
     <div class="content-container">
       <div class="text-container">
         <p>
-          Around 90% of daily water use in the United States comes from public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for
-          <span class="highlight" id="Irrigation">agriculture </span>
-          followed by fresh water used in the process of creating energy from
-          <span class="highlight" id="Thermoelectric_fresh"> Thermoelectric power</span> plants. Along with
-          <span class="highlight" id="Public_Supply"> public supply </span>,
-          these three uses of water add up to 225,000 million gallons of water used per day in the U.S.
-          <span class="highlight" id="Thermoelectric_saline"> Thermoelectric power (from saline water)</span>
-          uses another approximately 21,000 mgd.
+          An understanding of where, when, why, and how much water is extracted for human use is fundamental to the evaluation of the Nation’s water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for <span class="highlight" id="Irrigation">crop irrigation </span> followed by fresh water used in the process of creating energy from <span class="highlight" id="Thermoelectric_fresh"> Thermoelectric power</span> plants. Along with <span class="highlight" id="Public_Supply"> public supply </span>, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. <span class="highlight" id="Thermoelectric_saline"> Thermoelectric power (from saline water)</span> uses another approximately 21,000 million gallons per day.
         </p>
       </div>
       
@@ -29,8 +22,23 @@
       
       <div class="text-container">
         <p>
-          Water use reflects human dependence on freshwater resources for public health and economic development. Water use has dual effects on water availability. On the one hand, ensuring safe, reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals decrease availability for downstream users and local stream ecosystems. Therefore, areas with more intense water use have higher needs and a higher tendency to degrade the resource than areas with less intense water use.
+          Water use reflects human dependence on freshwater resources and has dual effects on water availability. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Therefore, areas with more intensive water demands have a higher potential to degrade the resource than areas with less intense water demands. 
         </p>
+      </div>
+      <div class="viz-container">
+        <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
+                <tabItem 
+                v-for="tab in impactTabs" 
+                :name="tab.tabTitle" 
+                :key="tab.tabTitleID" 
+                :prefix="getIconImgHTML(tab.tabTitleID)"> 
+                  <div class="tab-container-text-img">
+                    <h3> {{ tab.tabSubtitle }}</h3>
+                    <img class="tab-content-img" :src="getPhotoURL(tab.tabTitleIDname)">
+                    <p class="tab-content-text" v-html="tab.tabText" />
+                  </div>
+                </tabItem>
+              </tabsGroup>
       </div>
       
       <Methods></Methods>
@@ -42,16 +50,40 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject } from 'vue';
+import { onMounted, ref, inject, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
+import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 
 
 const featureToggles = inject('featureToggles');
+
+const route = useRoute();
+const path = computed(() => route.path)
+// filter to this page's key message
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+// extract list of tab items for this page
+const impactTabs = filteredMessages[0].tabData;
+// global objects
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+
+// tab functions
+function getPhotoURL(suffix) {
+    return baseURL + `07_${suffix}_photo.png`
+}
+function getIconURL(suffix) {
+    return baseURL + `07_icon_${suffix}.png`
+}
+function getIconImgHTML(image_name) {
+    const imgURL = getIconURL(image_name);
+    return `<img class='tab-image' src=${imgURL}>`
+}
+
 
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
 const selectedView = ref("stacked"); // Tracks the dropdown selection

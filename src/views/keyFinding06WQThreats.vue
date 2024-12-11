@@ -2,64 +2,80 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-            <div class="text-container">
-                <p>Exposure to drinking water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source.</p>
-            </div>
+
             <div
             id="toggle-container"
             class="text-container"
             aria-hidden="true"
             >
+
+              <h2>Surface water quality contamination</h2>
               <p>Surface water quality differs by source and use. Broad sources of water contamination include   
                     <span class="highlight" id="Biotic"> biotic threats </span>,
                     <span class="highlight" id="Nutrients"> nutrients </span>,
                     <span class="highlight" id="Organics"> organics  </span>,
-                    <span class="highlight" id="Metals"> metal and physical sources </span>, 
+                    <span class="highlight" id="Metals"> metals </span>, 
                     <span class="highlight" id="Sediment"> sediment </span>, 
                     <span class="highlight" id="Salinity"> salinity </span>, and
                     <span class="highlight" id="Temperature"> temperature </span>. Some areas of surface water are not threatened and are considered
-                    <span class="highlight" id="Unimpaired"> unimpaired </span>. This chart shows threats to the water quality of surface water in the U.S. by source and water use category. The height of each ribbon in the chart represents the total river miles, and the broad categories on the left are broken out into their respective sources on the right. 
+                    <span class="highlight" id="Unimpaired"> unimpaired </span>. The charts below show threats to the quality of surface water in the U.S. by source and water-use category. The height of each ribbon in the chart represents the total river miles impaired or unimpaired, and the broad categories on the left are broken out into their respective threats on the right. 
                 </p>
             </div>
-            <section id="dw-viz">
-              <div class="text-container">
-                <h2>Top Threats to Drinking Water</h2>
-                <p>Metal contamination, salinity, and sediments were identified as the main threats to streams and rivers used as a drinking-water source. </p>
-              </div>
-              <div class="viz-container">
-                <div id="DW-container" ref="chart">    
-                </div>
-              </div>
-              <div class="text-container">
-                <p><br>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels. Human-derived metals may also be released in more toxic and mobile forms than natural sources (Vareda et al., 2019). </p>
-                <p><br>Salinity effects on water availability are more spatially limited than nutrients, but salinity can cause considerable local issues for human beneficial uses and ecosystem needs. There has been a growing recognition of the threat that freshwater salinization (increasing salinity) of surface waters poses to water availability (Cañedo-Argüelles, 2020), with 37 percent of the drainage area of the CONUS having experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal and others, 2018; Cañedo-Argüelles, 2020). Trend assessments at individual sites across the United States show increasing salinity with time at many sites, particularly in urban areas, and at concentrations that indicate potential corrosion to drinking-water infrastructure. </p>
-              </div>
-            </section>
-            <section id="fish-viz">
-              <div class="text-container">
-                <h2>Top Threats to Fish Consumption</h2>
-                <p>Water-quality problems that affect ecosystems may also affect people who rely on ecosystems for food. The top threats to fish consumption for human health include mercury and polychlorinated biphenyls (PCBs).
-                </p>
-              </div>
-              <div class="viz-container">
-                <div id="fish-container">    
-                </div>
-              </div>
-              <div class="text-container">
-                <p>Mercury can limit water availability for aquatic species and humans through consumption of aquatic species. Mercury has geogenic sources (volcanos, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and primarily coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. The methylated form of mercury, methylmercury, is highly bioavailable and can accumulate in higher trophic levels, such as fish, relative to lower trophic levels at concentrations that make fish consumption unhealthy for humans (Wentz and others, 2014). For example, Arctic Indigenous peoples have a traditional diet rich in marine mammals and fish, which are also a substantial source of mercury exposure. Young children and developing fetuses are particularly vulnerable to mercury exposure through movement across the placenta from mother to fetus. Stream contaminants that threaten fish-consumption use by humans included primarily polychlorinated biphenyls and mercury.</p>
-                <p><br>Polychlorinated biphenyls (PCBs) are endocrine-disrupting compounds, associated with cancers and a wide range of human-health risks, are generally stable and persistent in the environment, and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou and others, 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption. Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites (point sources) and hydrologically connected locations. About 30 percent of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou and others, 2022). </p>
-              </div>
-            </section>
-              <section id="rec-viz">
-                <div class="text-container">
-                  <h2>Top Threats to Recreational Water Use</h2>
-                  <p>Contaminants that threaten recreational use were mainly biotic pathogens.</p>
-                </div>
-                <div class="viz-container">
-                  <div id="rec-container">    
+            <div class="viz-container">
+              <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
+                <tabItem 
+                name="Drinking water"
+                :prefix="getIconImgHTML('dw')">
+                  <div class="tab-container-text-d3">
+                    <h3 class="tab-content-title">
+                          About one-third of stream miles that are sources of drinking-water supply are impaired for drinking-water use, most commonly because of non-mercury metals and salinity. 
+                    </h3>
+                    <div class="tab-content-d3">
+                      <section id="DW-container" ref="chart"></section>
+                    </div>
+                    <div class="tab-content-text">
+                      <p>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels. Human-derived metals may also be released in more toxic and mobile forms than natural sources (Vareda et al., 2019).</p>
+                      <br>
+                      <p>Salinity effects on water availability are more spatially limited than metals, but salinity can cause considerable local issues for human beneficial uses and ecosystem needs. There has been a growing recognition of the threat that salinization (increasing salinity) of surface waters poses to water availability (Cañedo-Argüelles, 2020). Over one-third of the drainage area of the lower 48 states has experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal et al., 2018; Cañedo-Argüelles, 2020). Trend assessments at many sites across the United States show increasing salinity over time, particularly in urban areas, and at concentrations that indicate potential corrosion of drinking-water infrastructure (Stets et al. 2020).</p>
+                    </div>
                   </div>
-                </div>
-              </section>
+                </tabItem>
+                <tabItem 
+                name="Fish consumption"
+                :prefix="getIconImgHTML('fish')">
+                  <div class="tab-container-text-d3">
+                    <h3 class="tab-content-title">
+                    Water-quality problems that affect ecosystems may also affect people who rely on ecosystems for food. The top threats to fish consumption for human health include mercury and polychlorinated biphenyls (PCBs). 
+                    </h3>
+                    <div class="tab-content-d3">
+                      <section id="fish-container" ref="chart"></section>
+                    </div>
+                    <div class="tab-content-text">
+                      <p>Communities that rely on fishing for a larger proportion of their dietary intake can be particularly vulnerable to the effects of limited water availability on ecosystems and fish communities. Financial insecurity may increase the dependence on fishing to meet caloric needs, and transportation barriers can limit access to alternative fishing locations or food sources. Remote communities in particular are more likely to use subsistence fishing for their diet (Gillespie et al., 2018). American Indian and Arctic Native communities have a high dependence on wild-caught fish and are more likely to experience health effects from mercury pollution (Arctic Monitoring and Assessment Programme, 2009). Low-income populations and those with English as a second language can also be particularly vulnerable to contaminated fish from heavy metals, organics, and other factors because of communication barriers reducing the effectiveness of fish-consumption advisories (Bruce Lauber et al., 2017). </p>
+                      <br>
+                      <p>Mercury can harm aquatic organisms and limit the amount of fish and other aquatic species that are safe for humans to eat. Mercury has geogenic sources (volcanoes, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. The methylated form of mercury is highly bioavailable—meaning it can be absorbed in the body—and can accumulate in fish higher in the food chain, like tuna, at concentrations that make fish consumption unhealthy for humans (Wentz et al., 2014). Young children and developing fetuses are particularly vulnerable to mercury exposure. </p>
+                      <br>
+                      <p>PCBs are endocrine-disrupting compounds that were once commonly used in industry and commercial products and are associated a wide range of human-health risks. PCBs are generally stable and persistent in the environment and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou et al., 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption. Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites and hydrologically connected locations About 30 of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou et al., 2022).</p>
+                    </div>
+                  </div>
+                </tabItem>
+                <tabItem 
+                name="Recreation"
+                :prefix="getIconImgHTML('rec')">
+                  <div class="tab-container-text-d3">
+                    <h3 class="tab-content-title">
+                      Biotic pathogens are the main threat to recreational use of surface water in the United States. 
+                    </h3>
+                    <div class="tab-content-d3">
+                      <section id="rec-container" ref="chart"></section>
+                    </div>
+                    <div class="tab-content-text">
+                      <p>Microbial pathogens, especially bacteria (U.S. Environmental Protection Agency, 2023c), primarily threaten human health through ingestion and recreational activities like swimming. Bacteria can originate from natural or human activities that cause contamination including wastewater treatment plant discharge, leaky septic systems, stormwater runoff, animal waste, and runoff from animal pastures, feedlots, or manure storage (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Each year in the United States, an estimated 560,000 people suffer from moderate-to-severe waterborne infection. An additional 1.7 million people suffer from mild-to-moderate waterborne infections, and an estimated 1,200 people die from waterborne infections (Morris and Levine, 1995). Young children are particularly vulnerable to waterborne diseases.</p>
+                    </div>
+                  </div>
+                </tabItem>
+              </tabsGroup>
+            </div>
               <Methods></Methods>
               <References></References>
         </div>
@@ -84,8 +100,16 @@ import { text } from '@fortawesome/fontawesome-svg-core';
 
 const featureToggles = inject('featureToggles');
 
+
+
 // use for mobile logic
 const mobileView = isMobile;
+
+
+// global objects
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+
+
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -113,6 +137,16 @@ let textGroup;
 //  Fish = Fish Consumption Use
 //  Rec = Recreational Use
 //  Other = Other Use
+
+// functions for tabs
+
+function getIconURL(suffix) {
+    return baseURL + `06_icon_${suffix}.png`
+}
+function getIconImgHTML(image_name) {
+    const imgURL = getIconURL(image_name);
+    return `<img class='tab-image' src=${imgURL}>`
+}
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 const categoryColors = {
@@ -142,7 +176,7 @@ onMounted(async () => {
                     top: mobileView ? 60 : 50,
                     right: mobileView ? 145 : 200,
                     bottom: mobileView ? 15 : 10,
-                    left: mobileView ? 92 : 170
+                    left: mobileView ? 0 : 170
                 },
             }
             chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
@@ -574,6 +608,23 @@ function wrap(text, {
   &#Unimpaired {
     background-color: #478CCF;
   }
+}
+
+.sankey-container {
+  width: 80%;
+  min-width: 600px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+@media only screen and (max-width: 768px) {
+  .sankey-container {
+    width: 90%;
+    min-width: 200px;
+  }
+}
+.sankey-tab-container {
+  width: 90%;
+  margin: 0 auto;
 }
 
 </style>

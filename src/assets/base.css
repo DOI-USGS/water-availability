@@ -429,6 +429,14 @@ h4 {
     }
 }
 
+.wavy-container {
+  position: relative;
+  z-index: 1; /* set waves below hamburger */
+}
+.waves {
+  position: relative;
+  z-index: 1; /* ensure waves stay below menu */
+}
 
 .hamburger-menu {
   width: 35px;
@@ -505,6 +513,32 @@ h4 {
   color: #000;
 }
 
+.raindrop-static {
+  width: 100px;
+  height: 100px;
+  border-radius: 0 50% 50% 50%;
+  border: 0px;
+  transform: rotate(45deg);
+  margin: 20px auto 0px auto;
+  background-color: var(--blue-light);
+  border: 0 solid;
+  box-shadow: inset 0 0 40px  var(--blue-dark);
+  outline: 1px solid;
+  outline-color: var(--cream-background);
+  outline-offset: 0px;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.raindrop-static-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  color: white;
+  font-size: 80px;
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 768px) {
     .raindrop-static{
         width: 40px;
@@ -519,11 +553,263 @@ h4 {
   }
 }
 
-.wavy-container {
-  position: relative;
-  z-index: 1; /* Set waves below hamburger */
+/*  ----------------    tab content -------------------- */
+
+.tab-group {
+  margin-top: 3rem;
+  padding-inline-start: 0px;
 }
-.waves {
-  position: relative;
-  z-index: 1; /* Ensure waves stay below the menu */
+
+.tab-container-text-img {
+  display: grid;
+  padding-bottom: 15px;
+  grid-template-columns: minmax(2fr, 500px) 1fr;
+  grid-template-rows: minmax(50px, 100px) 2fr 1fr;
+  grid-template-areas: 
+  "title title"
+  "text img"
+  "text img";
 }
+.tab-container-text-list-img {
+  display: grid;
+  padding-bottom: 15px;
+  grid-template-columns: 200px minmax(300px, 80%);
+  grid-template-rows: minmax(50px, 100px) 2fr 1fr minmax(1fr, 2fr);
+  grid-template-areas: 
+    "title title"
+    "list img"
+    "legend img"
+    "text text";
+}
+.tab-container-text-img-legend {
+  display: grid;
+  padding-bottom: 15px;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: minmax(50px, 100px) auto auto ;
+  grid-template-areas: 
+  "title title"
+  "text legend"
+  "text img";
+}
+.tab-container-text-d3 {
+  display: grid;
+  padding-bottom: 15px;
+  grid-template-columns:  1fr;
+  grid-template-rows: minmax(50px, 100px) minmax(2fr, 600px) 1fr;
+  grid-template-areas: 
+  "title"
+  "d3"
+  "text";
+}
+@media screen and (max-width: 600px) {
+  .tab-container-text-img{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+        "title"
+        "img" 
+        "text";
+  }
+  .tab-container-text-d3{
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: auto 70vh auto;
+    grid-template-areas: 
+        "title"
+        "d3" 
+        "text";
+  }
+  .tab-container-text-list-img{
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto minmax(300px, 60vh) minmax(300px, 60vh) auto;
+      grid-template-areas: 
+          "title"
+          "list" 
+          "img"
+          "text";
+  }
+  .tab-container-text-img-legend{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(50px, 100px) auto auto;
+    grid-template-areas: 
+        "title"
+        "legend"
+        "img" 
+        "text";
+  }
+}
+
+
+.tab-content-title {
+  grid-area: title;
+  padding: 0px;
+  max-width: 900px;
+}
+.tab-content-list{
+  grid-area: list;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+.impact-list-items {
+  margin: 7px 0;
+}
+.tab-content-img {
+  grid-area: img;
+  width: 100%;
+}
+.tab-content-d3 {
+  grid-area: d3;
+  width: 70%;
+  margin: 10px auto;
+}
+.tab-content-legend {
+  grid-area: legend;
+  min-height: 100px;
+  max-height: 150px;
+}
+.tab-content-text {
+  grid-area: text;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-right: 20px;
+}
+@media screen and (max-width: 600px) {
+  .tab-content-title {
+    padding: 0px;
+    max-width: 80vw;
+    margin: 0 0 20px 0;
+  }
+  .tab-content-legend {
+    min-height: 50px;
+    max-height: 100px;
+  }
+  .tab-content-d3 {
+    grid-area: d3;
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
+  .tab-content-img {
+    padding: 10px 0;
+  }
+}
+
+/* built in classes with vue3-tabs-component */
+/* css modified from vue-tabs-component demo: https://tabs-component.jakubpotocky.sk/ */
+
+.tabs-component { /* full component */
+  margin: auto;
+  width: 90%;
+}
+.tab-image { /* icon image on each tab */
+  max-width: fit-content;
+  max-height: 5rem;
+  margin-bottom: 1rem;
+  height: 5rem;
+  width: auto;
+}
+.tabs-component-tabs { /* set of tabs */
+  border: 0;
+  align-items: stretch;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  list-style: none;
+  border: solid 5px var(--teal-dark);
+  border-bottom: none;
+  border-radius: 0px 16px 0 0; /* top left, top right, bottom right, bottom left */
+}
+.tabs-component-tab { /* each tab */
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.75em 1em;
+  transition: transform .3s ease;
+  font-size: 2rem;
+}
+.tabs-component-panels { /* cards */
+  padding: 1em 2em ;
+  background-color: var(--cream-background);
+  border: solid 5px var(--teal-dark);
+  border-top: none;
+  border-radius: 0 0px 16px 16px; /* top left, top right, bottom right, bottom left */
+}
+
+@media screen and (max-width: 600px) {
+  .tabs-component { /* full component */
+    width: 95%;
+    margin: 0 auto;
+  }
+  .tab-image {  /* icon image on each tab */
+    max-width: 4rem;
+    max-height: 4rem;
+    margin-right: 1rem;
+    margin-bottom: 0;
+    height: auto;
+    width: auto;
+  }
+  .tabs-component-tabs { /* set of tabs */
+    display: block;
+    font-size: 1.6rem;
+    margin-right: 0;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    border: solid 1px #ddd;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    margin-right: 0px;
+    padding-inline-start: 0px;
+    align-items: flex-start;
+    text-align: left;
+    justify-content: left; 
+  }
+  .tabs-component-tab { /* each tab */
+    display: list-item;
+    align-items: left;
+  }
+  .tabs-component-panels {
+    border: none;
+    padding-top: 10px;
+  }
+  .tabs-component-tab-a {
+    align-items: left;
+    display: flex;
+    text-decoration: none;
+  }
+  .tabs-component-tab:not(:last-child) { /* all tabs except last one */
+    border-bottom: dotted 1px #ddd;
+  }
+  .tabs-component-tab.is-active { /* active tab */
+    color: var(--black-soft) !important;
+    border: solid 5px var(--blue-light);
+    background-color: var(--cream-background);
+  }
+}
+
+.tabs-component-tab-a { /* link */
+  color: var(--teal-dark);
+  text-decoration: none;
+}
+.tabs-component-tab.is-inactive img { /* icon when inactive */
+  filter: grayscale(100%);
+}
+.tabs-component-tab.is-inactive img:hover { /* icon when inactive */
+  filter: none;
+}
+.tabs-component-tab:hover { /* tab when hovered */
+  background-color: var(--blue-light);
+  color: var(--black-soft);
+}
+.tabs-component-tab.is-active { /* active tab */
+  color: var(--black-soft) !important;
+  border-bottom: solid 5px var(--blue-light);
+  background-color: var(--cream-background);
+}
+
+
+/*  ----------------    end tab content -------------------- */

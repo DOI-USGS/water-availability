@@ -14,17 +14,19 @@ export default {
         },
         {
             term: "Water year",
-            definition: "A water year is defined as the 12-month period October 1, for any given year through September 30, of the following year. The water year is designated by the calendar year in which it ends and which includes 9 of the 12 months. Thus, the water year ending beginning October 1, 2023 and ending on September 30, 2024 was the 2024 water year.",
+            definition: "A water year is defined as the 12-month period October 1, for any given year through September 30, of the following year. The water year is designated by the calendar year in which it ends and which includes 9 of the 12 months. Thus, the water year ending beginning October 1, 2023 and ending on September 30, 2024 was the 2024 water year."
         },
         {
             term: "Hydrologic Unit Classification (HUC)",
             definition: "The U.S. Geological Survey uses a depiction and classification scheme for hydrologic units known as hydrologic unit codes (HUCs). HUCs generally represent catchments, and river basins are represented by a unique series of numbers with successively smaller hydrologic units nested inside of larger ones. Digits are added as hydrologic units become smaller, such that a 2-digit HUC encompasses multiple 4-digit HUCs, and a 4-digit HUC encompasses multiple 6-digit HUCs, etc. This assessment uses 12-digit HUCs (HUC12s), which generally range from 50 to 100 square kilometers (km2) in size. The CONUS contains 18 2-digit HUCs and over 93,000 12-digit HUCs. The median HUC12 in the conterminous United States is 90 km2. Although in practice, HUCs represent river basins, they are formally administrative units, and not always natural watersheds. As such, HUCs can depict human-created drainages and diversions or arbitrary breaks in connected flow systems.",
-            visual: "../assets/images/manual/glossary_huc.png",
+            visual: "glossary_huc",
             visualLogic: true
         },
         {
             term: "Streamflow",
-            definition: "The movement of water through streams and rivers as measured by the rate of flow, which includes volume and speed and is often provided in units of cubic feet per second. Streamflow is also sometimes referred to as surface runoff."
+            definition: "Streamflow is the flow of water in a natural channel on the land surface. Streamflow can be conceptualized as having two primary components: baseflow and quickflow. Quickflow is the short-term flow of water off the landscape following precipitation or snowmelt events. Quickflow is also often referred to as runoff. Baseflow is subsurface water that enters the stream channel from groundwater. Baseflow can maintain streamflow between precipitation events, if the groundwater level remains high enough to feed the stream.",            
+            visual: "glossary_streamflow",
+            visualLogic: true
         },
         {
             term: "Watershed",

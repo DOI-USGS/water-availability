@@ -57,7 +57,7 @@
               <span v-if="index != Object.keys(authorLeads).length - 1 && Object.keys(authorLeads).length > 2">, </span>
               <span v-if="index == Object.keys(authorLeads).length - 2"> and </span>
             </span>
-          </span> lead the development of this website with support from 
+          </span> led the development of this website with support from 
           <span id="primary-author-statment">
             <span
               v-for="(author, index) in authorDevs" 

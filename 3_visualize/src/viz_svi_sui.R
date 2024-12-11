@@ -111,7 +111,7 @@ viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
                                 x = sui_factor, fill = join_factor)) +
     geom_bar(position = y_pos, stat = "identity") +
     ylab(legend_label) +
-    xlab("Water stress ") 
+    xlab("Water limitation") 
   
   if(legend_type == "Explainer"){
     legend_out <- legend + 

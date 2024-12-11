@@ -97,7 +97,7 @@
         </div>
         <div class="text-container">
           <h2>Local and seasonal effects of water limitation</h2>
-          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest (IWAAs Report Ch D: Medalie et al., 2025). Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
+          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest (Medalie et al., 2025). Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
         </div>
         <Methods></Methods>
       <References></References>
