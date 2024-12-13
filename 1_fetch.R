@@ -82,16 +82,31 @@ p1_targets <- list(
   #   To run this pipeline, must download temporary files from IWAAs sharepoint and 
   #     put them in the 1_fetch/in folder
   tar_target(p1_ws_precip_csv,
-             "1_fetch/in/c404bc_rain_mm.csv",
+             "../ws-uncertainty-analysis/03_process/out/huc_summaries/c404bc_RAIN_mm.csv",
              format = "file"),
   tar_target(p1_ws_et_csv,
-             "1_fetch/in/model_ensemble_Evapotranspiration.csv",
+             sb_initialize_and_download(
+               sb_id = "66fd7083d34edc655a85f049", 
+               names = "nhm_wrf_ensemble_evapotranspiration_mm.csv", 
+               destinations = "1_fetch/out/nhm_wrf_ensemble_evapotranspiration_mm.csv",
+               overwrite_fileL = FALSE
+             ),
              format = "file"),
   tar_target(p1_ws_sm_csv,
-             "1_fetch/in/model_ensemble_huc12_Soil moisture percentage.csv",
+             sb_initialize_and_download(
+               sb_id = "66fd7083d34edc655a85f049", 
+               names = "nhm_wrf_ensemble_soil_saturation_percentage.csv", 
+               destinations = "1_fetch/out/nhm_wrf_ensemble_soil_saturation_percentage.csv",
+               overwrite_fileL = FALSE
+             ),
              format = "file"),
   tar_target(p1_ws_sf_csv,
-             "1_fetch/in/model_ensemble_huc12_Surface runoff.csv",
+             sb_initialize_and_download(
+               sb_id = "66fd7083d34edc655a85f049", 
+               names = "nhm_wrf_ensemble_streamflow_mm.csv", 
+               destinations = "1_fetch/out/nhm_wrf_ensemble_streamflow_mm.csv",
+               overwrite_fileL = FALSE
+             ),
              format = "file"),
   
   
