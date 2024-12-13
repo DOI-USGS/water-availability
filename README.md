@@ -42,18 +42,23 @@ Clone the water quality and water use repositories (may need a development branc
 - parent_directory/water-availability/ (this repository)
 - parent_directory/iwaas-sparrow-figures/ (water quality repository)
 - parent_directory/water-use-huc12-crosswalk/ (water use repository)
+- parent_directory/iwaas-water-supply/ (water supply repository)
 
-The water quality repository is at:  `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/` and the water use repository is at `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/water-use-huc12-crosswalk/-/tree/1.0.0/`.
+The water quality repository is at:  `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/`, the water use repository is at `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/water-use-huc12-crosswalk/-/tree/1.0.0/`, and the water supply repository is at `https://code.usgs.gov/wma/national-iwaas/NWAA/ws-uncertainty-analysis`.
 
 ### Step 2: Run the water quality pipeline. 
 
+> Note, Mac and Linux users may have to install some dependencies manually. See the `iwaas-sparrow-figures/Readme.md` for more information
+
 - Open `parent_directory/iwaas-sparrow-figures/iwaas-sparrow-figures.Rproj`. 
-- Run `renv::init()` and choose the first option
+- Run `renv::init()` and choose the first option. 
 - Sign into Sciencebase using the `0_config.R` script.
 - Build the pipeline. You do not need to run the entire pipeline, you can run only the requisite components using `targets::tar_make(starts_with("p2_load"))`. 
 - This does take a long time to download all of the SPARROW models. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make()` command above. Targets will pick up where the process left off.
 
 ### Step 3: Run the water use pipeline. 
+
+> Note, Mac and Linux users may have to install some dependencies manually. See the `water-use-huc12-crosswalk/Readme.md` for more information
 
 - Open `parent_directory/water-use-huc12-crosswalk/water-use-huc12-crosswalk.Rproj`. 
 - Run `renv::init()` and choose the first option
@@ -61,7 +66,17 @@ The water quality repository is at:  `https://code.usgs.gov/wma/national-iwaas/N
 - Build the pipeline. 
 - This might take a while to download files and run. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make()` command above. Targets will pick up where the process left off.
 
-### Step 4: Run the IWAAs website pipeline.
+### Step 4: Run the water supply pipeline. 
+
+> Note, Mac and Linux users may have to install some dependencies manually. See the `ws-uncertainty-analysis/Readme.md` for more information
+
+- Open `parent_directory/ws-uncertainty-analysis/ws-uncertainty-analysis.Rproj`. 
+- Run `renv::init()` and choose the first option
+- Sign into Sciencebase using the `0_config.R` script.
+- Build the pipeline `tar_make(p3_c404_precip_csv)`. 
+- This might take a while to download files and run. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make(p3_c404_precip_csv)` command above. Targets will pick up where the process left off.
+
+### Step 5: Run the IWAAs website pipeline.
 
 - Open `parent_directory/water-availability/water-availability.Rproj`. 
 - Sign into Sciencebase using the `0_config.R` script.
