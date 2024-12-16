@@ -96,6 +96,7 @@ export default {
                 "Cabral2010",
                 "Verhougstraete2015",
                 "EPA2020",
+                "Belitz2022",
                 "Morris1995"
             ]
         },

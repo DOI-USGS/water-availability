@@ -3,12 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
 
-            <div
-            id="toggle-container"
-            class="text-container"
-            aria-hidden="true"
-            >
-
+            <div  class="text-container">
               <h2>Surface water quality contamination</h2>
               <p>Surface water quality differs by source and use. Broad sources of water contamination include   
                     <span class="highlight" id="Biotic"> biotic threats </span>,
@@ -75,6 +70,13 @@
                   </div>
                 </tabItem>
               </tabsGroup>
+            </div>
+            <div  class="text-container">
+              <h2>Groundwater quality contamination</h2>
+              <p>The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic constituent concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin (cacb), Basin and Range basin-fill (bnrf), and the Glacial aquifer (glac) (Belitz and others, 2022).</p>
+            </div>
+            <div class="viz-container">
+              <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/06_wq_gw_geofacet.png">
             </div>
               <Methods></Methods>
               <References></References>

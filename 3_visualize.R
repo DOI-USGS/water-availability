@@ -303,6 +303,7 @@ p3_targets <- list(
   # Groundwater geofacet - Percent of study area over health standards
   tar_target(p3_wq_gw_geofacet_png,
              wq_geofacet(in_df = p1_wq_gw_exceedences_df,
+                         in_states = p2_State_sf,
                          in_geogrid = p2_aquifer_name_xwalk,
                          png_out = "src/assets/images/R/06_wq_gw_geofacet.png",
                          width = 9, height = 6

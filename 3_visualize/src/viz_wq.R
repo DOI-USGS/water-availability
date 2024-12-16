@@ -135,7 +135,7 @@ map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, regions_fill,
   return(png_out)
 }
 
-wq_geofacet <- function(in_df, in_geogrid, png_out, width, height){
+wq_geofacet <- function(in_df, in_states, in_geogrid, png_out, width, height){
   
   plot_df <- in_df |>
     mutate(bins = factor(bins, levels = c("low", "moderate", "high")))
@@ -149,7 +149,7 @@ wq_geofacet <- function(in_df, in_geogrid, png_out, width, height){
     geom_col(show.legend = TRUE, width = 1) +
     geom_text(
       aes(x = 1.8, fill = bins, 
-          label = sprintf("%s%%", round(ratio * 100))),
+          label = round(ratio * 100)),
       position = position_stack(vjust = 0.5),
       size = 3,
       color = "black",
@@ -164,9 +164,23 @@ wq_geofacet <- function(in_df, in_geogrid, png_out, width, height){
     theme(
       legend.position = "none"
     )
-    
   
-  ggsave(plot = plot_geofacet,
+  plot_states <- ggplot(in_states) + 
+    geom_sf(fill = "transparent") +
+    theme_void() 
+  
+  canvas <- grid::rectGrob(     
+    x = 0, y = 0,     
+    width = width, height = height,
+    gp = grid::gpar(fill = "transparent", alpha = 1, col = "transparent"))
+    
+  out_plot <- 
+    ggdraw(ylim = c(0,1), xlim = c(0,1)) +     # a background     
+    draw_grob(canvas, x = 0, y = 1, height = height, width = width, hjust = 0, vjust = 1) +     # just nutrient map     
+    draw_plot(plot_states, x = 0, y = 0, width = 1) +
+    draw_plot(plot_geofacet, x = 0, y = 0.05, height = 0.85)
+  
+  ggsave(plot = out_plot,
          filename = png_out, device = "png", bg = "transparent",
          dpi = 300, units = "in", width = width, height = height)
   
