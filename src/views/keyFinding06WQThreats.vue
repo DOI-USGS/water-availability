@@ -73,7 +73,10 @@
             </div>
             <div  class="text-container">
               <h2>Groundwater quality contamination</h2>
-              <p>The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic constituent concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin (cacb), Basin and Range basin-fill (bnrf), and the Glacial aquifer (glac) (Belitz and others, 2022).</p>
+              <p>The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic constituent concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
+              <br>
+              <p>These pie charts represent the overall groundwater quality in principal aquifers across the U.S. The charts show the percentage of the area of the aquifer that contained a contaminant in untreated groundwater samples at a <span class="highlight" id="high"> high</span>, <span class="highlight" id="moderate"> moderate</span> or <span class="highlight" id="low"> low </span> concentration relative to human-health benchmarks for drinking water. 
+                </p>
             </div>
             <div class="viz-container">
               <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/06_wq_gw_geofacet.png">
@@ -609,6 +612,20 @@ function wrap(text, {
 
   &#Unimpaired {
     background-color: #478CCF;
+  }
+
+  &#high {
+    background-color: #3B1E54;
+    color: white;
+  }
+
+  &#moderate {
+    background-color: #8F6EB4;
+    color: white;
+  }
+
+  &#low {
+    background-color: #E7D9F2;
   }
 }
 
