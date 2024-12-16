@@ -134,3 +134,41 @@ map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, regions_fill,
   
   return(png_out)
 }
+
+wq_geofacet <- function(in_df, in_geogrid, png_out, width, height){
+  
+  plot_df <- in_df |>
+    mutate(bins = factor(bins, levels = c("low", "moderate", "high")))
+  
+  geofacet_grid_prepped <- in_geogrid |>
+    rename(name = abbreviation) |>
+    select(code, name, row, col)
+  
+  plot_geofacet <- ggplot(data = plot_df,
+         aes(x = "", y = ratio, fill = bins)) +
+    geom_col(show.legend = TRUE, width = 1) +
+    geom_text(
+      aes(x = 1.8, fill = bins, 
+          label = sprintf("%s%%", round(ratio * 100))),
+      position = position_stack(vjust = 0.5),
+      size = 3,
+      color = "black",
+      show.legend = FALSE,
+      ylim = c(1, NA),
+      fontface = "bold"
+    ) +
+    coord_polar(theta = "y", start = 0) +
+    scale_fill_manual(values = c("#E7D9F2", "#8F6EB4", "#3B1E54")) +
+    facet_geo(~ study_unit_abbreviation, grid = geofacet_grid_prepped, label = "name") +
+    theme_void() +
+    theme(
+      legend.position = "none"
+    )
+    
+  
+  ggsave(plot = plot_geofacet,
+         filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
+  
+  return(png_out)
+}
