@@ -167,7 +167,7 @@ wq_geofacet <- function(in_df, in_states, in_geogrid, png_out, width, height){
     )
   
   plot_states <- ggplot(in_states) + 
-    geom_sf(fill = "transparent", color = "#926c68") +
+    geom_sf(fill = "transparent", color = "#d1cdc0") +
     theme_void() 
   
   canvas <- grid::rectGrob(     
@@ -180,7 +180,7 @@ wq_geofacet <- function(in_df, in_states, in_geogrid, png_out, width, height){
     cowplot::draw_label(in_geogrid$full_name[x],
                         x = in_geogrid$x[x],
                         y = in_geogrid$y[x],
-                        size = 10, color = "black"
+                        size = 10, color = "black", fontface = "bold"
     ) 
     
   })
