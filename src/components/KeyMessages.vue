@@ -16,12 +16,12 @@
     </div>
     <div class="dropdown-menu" v-if="menuOpen">
         <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Read the Report</a></li>
-        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Access the Data</a></li>
-        <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">USGS Vizlab</a></li>
-        <li><a href="water-availability/#/glossary" target="_blank">Glossary of Terms</a></li>
-        <li><a href="water-availability/#/credits" target="_blank">Website Credits</a></li>
+            <li><router-link to="/">Home</router-link></li>
+            <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Read the Report</a></li>
+            <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Access the Data</a></li>
+            <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">USGS Vizlab</a></li>
+            <li><router-link to="/glossary"> Glossary of Terms</router-link></li>
+            <li><router-link to="/credits"> Website Credits</router-link></li>
         </ul>
     </div>
 
