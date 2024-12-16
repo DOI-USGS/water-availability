@@ -43,6 +43,34 @@ p2_targets <- list(
              readr::read_csv(p1_CONUS_crosswalk) |>
                filter(AggRegion_nam != "NULL") |>
                left_join(p2_region_name_xwalk, by = "Region_nam")),
+  # Master aquifer crosswalk 
+  tar_target(p2_aquifer_name_xwalk,
+             tibble::tribble(
+               ~abbreviation, ~full_name, ~code, ~row, ~col,
+               "cacb",        "California Coastal Basin",       1, 4, 1,
+               "cval",        "Central Valley",                 2, 3, 1,
+               "clpt",        "Columbia Plateau basaltic-rock", 3, 1, 1,
+               "bnrf",        "Basin and Range basin-fill",     4, 4, 2,
+               "bnrc",        "Basin and Range carbonate-rock", 5, 3, 2,
+               "copl",        "Colorado Plateau",           6, 3, 3,
+               "hpaq",        "High Plains",                7, 3, 4,
+               "strv1",       "Stream Valley-West",         8, 3, 5,
+               "rgaq",        "Rio Grande",                 9, 4, 3,
+               "edtr",        "Edwards-Trinity",            10, 5, 5,
+               "ozrk",        "Ozarks",                     13, 4, 6,
+               "metx",        "Mississippi Embayment and Texas coastal uplands", 14, 6, 5,
+               "secp",        "Southeastern Coastal Plain",   15, 4, 8,
+               "strv2",       "Stream Valley-East",           16, 2, 8,
+               "cmor",        "Cambrian-Ordovician",          17, 1, 6,
+               "glac",        "Glacial",                      18, 1, 5,
+               "vpdc",         "Valley and Ridge, Piedmont and Blue Ridge", 19, 1, 9,
+               "pied",        "Piedmont and Blue Ridge crystalline", 20, 3, 8,
+               "nacp",        "Northern Atlantic Coastal Plain", 21, 2, 9,
+               "surf",          "Surficial",                22, 5, 8, 
+               "bisc",        "Biscayne",                   23, 6, 8,
+               "flor",        "Floridian",                   24, 5, 7,
+               "clow",        "Coastal Lowlands",           25, 5, 6
+             )),
   
   
   ##############################################
@@ -94,6 +122,11 @@ p2_targets <- list(
         mutate(name_clean = gsub(' ', '_', NAME))
     }
     
+  ),
+  # Principle aquifers
+  tar_target(p2_aquifers_sf,
+    sf::st_read(p1_aquifers_shp) |>
+      dplyr::filter(AQ_CODE != 999)
   ),
   
   ##################################################
