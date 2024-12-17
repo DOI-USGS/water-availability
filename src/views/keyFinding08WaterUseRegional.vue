@@ -54,9 +54,9 @@
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
           csvDataUrl="wu_regions.csv"
-          continuous-raw="total_use"
-          continuous-percent="percentage_stress"
-          categorical-variable="sui_category_5"
+          continuousRaw="total_use"
+          continuousPercent="d3_percentage"
+          categoricalVariable="d3_category"
           regionsVar="Region_nam_nospace"
           regionsVarLabel="Region_nam"
 
