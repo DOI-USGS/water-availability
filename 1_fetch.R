@@ -83,11 +83,10 @@ p1_targets <- list(
              ##       the IWAAs report; it's based off the https://doi.org/10.5066/P9Y2HOUJ
              ##       aquifer map, but generalized by IWAAs team for cartographic
              ##       purposes
-             {
-               sf::st_read("1_fetch/in/Figure14_AquiferBoundaries_Shapefile/PrincipalAquifers.shp")
-               return("1_fetch/in/Figure14_AquiferBoundaries_Shapefile/PrincipalAquifers.shp")
-               },
+             "1_fetch/in/Figure14_AquiferBoundaries_Shapefile/PrincipalAquifers.shp",
              format = "file"),
+  tar_target(p1_aquifers_sf,
+             sf::st_read(p1_aquifers_shp)),
   
   
   
