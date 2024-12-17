@@ -178,7 +178,7 @@ summary_wu_by_state <- function(in_sf){
   # Expand each HUC to its state (some hucs overlap states)
   expand_states <- in_sf |>
     select(STATES, HUC12, Region_nam, AggReg_nam, ps_total, ir_total, te_total, te_saline) |>
-    separate_rows(STATES, sep = ",")
+    separate_rows(STATES, sep = ",") 
   
   # Long form
   longer_data <- expand_states |>
@@ -186,10 +186,19 @@ summary_wu_by_state <- function(in_sf){
     pivot_longer(cols = c("ps_total", "ir_total", "te_total", "te_saline"),
                  names_to = "use_category")
   
+  # calculate total water use by state
+  total_by_state <- longer_data |> 
+    group_by(STATES) |>
+    summarize(state_use = sum(value, na.rm = TRUE)) |>
+    ungroup()
+  
   # Calculate total water use by state and category
-  summary_sui <- longer_data |>
+  summary <- longer_data |>
     group_by(STATES, use_category) |>
-    summarize(total_use = sum(value, na.rm = TRUE)) 
+    summarize(total_use = round(sum(value, na.rm = TRUE), 4)) |>
+    left_join(total_by_state, by = "STATES") |>
+    mutate(d3_percentage = round((total_use/state_use)*100), 4) |>
+    rename(d3_category = use_category)
   
 }
 
@@ -204,9 +213,17 @@ summary_wu_by_Reg <- function(in_sf){
     pivot_longer(cols = c("ps_total", "ir_total", "te_total", "te_saline"),
                  names_to = "use_category")
   
+  # total use
+  total_by_region <- longer_data |>
+    group_by(Region_nam_nospace, Region_nam, AggReg_nam) |>
+    summarize(total_region = sum(value, na.rm = TRUE))
+  
   # Calculate total water use by region and category
   summary_sui <- longer_data |>
     group_by(Region_nam_nospace, Region_nam, AggReg_nam, use_category) |>
-    summarize(total_use = sum(value, na.rm = TRUE)) 
+    summarize(total_use = round(sum(value, na.rm = TRUE), 4)) |>
+    left_join(total_by_region) |>
+    mutate(d3_percentage = round(total_use/total_region, 4)) |>
+    rename(d3_category = use_category)
   
 }

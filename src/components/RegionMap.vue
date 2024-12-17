@@ -257,7 +257,7 @@ watch(
       const topoUS = await d3.json(props.usOutlineUrl);
       const geoUS = topojson.feature(topoUS, topoUS.objects['foo']);
 
-      // water stress stats by region
+      // water stats by region
       const csvData = await d3.csv(`${publicPath}${props.csvDataUrl}`);
   
       const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoRegions);
@@ -276,18 +276,18 @@ watch(
         .attr('width', width * scale_size)
         .attr('height', height * scale_size);
   
-    // find national water stress by category
+    // find national stats by category
       const totalByCategory = d3.rollups(
         csvData,
         v => d3.sum(v, d => +d[props.continuousRaw]),
         d => d[props.categoricalVariable]
       );
   
-      const totalStress = d3.sum(totalByCategory, d => d[1]);
+      const totalValue = d3.sum(totalByCategory, d => d[1]);
   
       const aggregatedData = totalByCategory.map(([category, value]) => ({
         [props.categoricalVariable]: category,
-        percentage_stress: (value / totalStress) * 100,
+        d3_percentage: (value / totalValue) * 100,
       }));
   
       // init bar chart with aggregated data
@@ -347,8 +347,8 @@ watch(
         const filteredData = csvData
           .filter(row => row.Region_nam === regionClassFilter)
           .map(row => ({
-            sui_category_5: row[props.categoricalVariable],
-            percentage_stress: (+row[props.continuousRaw] / d3.sum(csvData.filter(r => r.Region_nam === regionClassFilter), r => +r[props.continuousRaw])) * 100,
+            d3_category: row[props.categoricalVariable],
+            d3_percentage: (+row[props.continuousRaw] / d3.sum(csvData.filter(r => r.Region_nam === regionClassFilter), r => +r[props.continuousRaw])) * 100,
           }));
   
         updateBarChart(filteredData, `${regionClassFilter} region`);

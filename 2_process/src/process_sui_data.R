@@ -89,9 +89,10 @@ create_stats <- function(in_sf, out_csv){
   expand_data <- expand.grid(sui_category_5 = unique(join_data$sui_category_5), 
               Region_nam = unique(join_data$Region_nam)) |>
     left_join(join_data) |>
-    mutate(percentage_stress = ifelse(is.na(percentage_stress), 0, percentage_stress),
+    mutate(d3_percentage = ifelse(is.na(percentage_stress), 0, percentage_stress),
            stress_by_reg = ifelse(is.na(stress_by_reg), 0, stress_by_reg),
-           total_hucs = ifelse(is.na(total_hucs), 0, total_hucs))
+           total_hucs = ifelse(is.na(total_hucs), 0, total_hucs)) |>
+    rename(d3_category = sui_category_5)
   
   readr::write_csv(expand_data, file = out_csv)
 }
@@ -116,6 +117,8 @@ summary_sui_by_state <- function(in_sf){
   summary_sui <- HUC_per_state |>
     group_by(sui_category_5, STATES, total_hucs) |>
     summarize(n_cat_sui = n()) |>
-    mutate(prop_cat_sui = n_cat_sui / total_hucs)
+    mutate(prop_cat_sui = (n_cat_sui / total_hucs)) |>
+    mutate(d3_percentage = prop_cat_sui,
+           d3_category = sui_category_5)
     
 }
