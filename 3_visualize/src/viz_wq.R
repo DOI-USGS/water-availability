@@ -135,7 +135,12 @@ map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, regions_fill,
   return(png_out)
 }
 
-wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid, png_out, width, height){
+wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid, 
+                        aquifer_abbr, color_scheme,
+                        png_out, width, height){
+  
+  aquifer_label <- in_geogrid$full_name[in_geogrid$abbr == aquifer_abbr]
+  
   
   #### process data for plotting
   plot_df <- in_df |>
@@ -143,57 +148,92 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid, png_out, width, hei
   
   #### match projections between states and aquifers
   aquifers <- in_sf |>
-    sf::st_transform(crs = sf::st_crs(in_states))
+    sf::st_transform(crs = sf::st_crs(in_states)) |>
+    rename(full_name = LABEL) |>
+    left_join(in_geogrid, by = "full_name")
+  
+  #### subset data for plotting focal areas
+  if(aquifer_abbr != "overview") {
+    # only for focal maps
+    subplot_df <- plot_df |> 
+      mutate(ratio = case_when(study_unit_abbreviation == aquifer_abbr ~ ratio,
+                               TRUE ~ NA))
+    sub_aquifers <- aquifers |> filter(abbr == aquifer_abbr)
+  } else {
+    subplot_df <- plot_df
+  }
   
   #### select just fields that geofacet requires
   geofacet_grid_prepped <- in_geogrid |>
     rename(name = abbr) |>
     select(code, name, row, col)
   
-  #### main plot with geofaceted pie charts
-  plot_geofacet <- ggplot(data = plot_df,
+  #### base plot with greyed out pie charts
+  plot_geofacet_grey <- ggplot(data = plot_df,
          aes(x = "", y = ratio, fill = bins)) +
-    geom_col(show.legend = TRUE, width = 1, color = "black", linewidth = 0.1) +
-    geom_text(
-      aes(x = 1.8,  
-          label = round(ratio * 100)),
-      position = position_stack(vjust = 0.5),
-      size = 3,
-      color = "#3B1E54",
-      show.legend = FALSE,
-      fontface = "italic"
-    ) +
+    geom_col(show.legend = TRUE, width = 1, color = "white", linewidth = 0.1,
+             alpha = 0.5) +
     coord_polar(theta = "y", start = 0) +
-    scale_fill_manual(values = c("#E7D9F2", "#8F6EB4", "#3B1E54")) +
-    facet_geo(~ study_unit_abbreviation, grid = geofacet_grid_prepped, label = "name") +
+    scale_fill_manual(values = c(color_scheme$low_grey, 
+                                 color_scheme$mod_grey, 
+                                 color_scheme$high_grey)) +
+    facet_geo(~ study_unit_abbreviation, 
+              grid = geofacet_grid_prepped, 
+              label = "name") +
     theme_void() +
     theme(
       legend.position = "none",
       strip.text.x = element_blank()
     )
   
+  plot_geofacet_color <- ggplot(data = subplot_df,
+                          aes(x = "", y = ratio, fill = bins)) +
+    geom_col(show.legend = TRUE, width = 1, color = "black", linewidth = 0.1) +
+    geom_text(
+      aes(x = 1.2,  
+          label = round(ratio * 100),
+          color = bins),
+      position = position_stack(vjust = 0.5),
+      size = 3,
+      show.legend = FALSE,
+      fontface = "italic"
+    ) +
+    coord_polar(theta = "y", start = 0) +
+    scale_fill_manual(values = c(color_scheme$very_low_col, 
+                                 color_scheme$moderate_col, 
+                                 color_scheme$very_high_col)) +
+    scale_color_manual(values = c("black", "black", "white")) +
+    facet_geo(~ study_unit_abbreviation, 
+              grid = geofacet_grid_prepped, 
+              label = "name") +
+    theme_void() +
+    theme(
+      legend.position = "none",
+      strip.text.x = element_blank()
+    )
+    
+  
   #### make map of states & aquifers to underlay geofacet
-  plot_states <- ggplot(in_states) + 
-    geom_sf(data = aquifers, fill = "grey90", color = "white") +
-    geom_sf(fill = "transparent", color = "#d1cdc0") +
-    theme_void() 
+  if(aquifer_abbr == "overview"){
+    plot_states <- ggplot(in_states) + 
+      geom_sf(data = aquifers, fill = "grey90", color = "white") +
+      geom_sf(fill = "transparent", color = "#d1cdc0") +
+      theme_void() 
+  } else {
+    plot_states <- ggplot(in_states) + 
+      geom_sf(data = aquifers, fill = "grey90", color = "white") +
+      geom_sf(data = sub_aquifers, fill = color_scheme$high_col, 
+              color = color_scheme$high_col, linewidth = 1.4) +
+      geom_sf(fill = "transparent", color = "#d1cdc0") +
+      theme_void() 
+  }
+  
   
   #### prep canvas for cowplot
   canvas <- grid::rectGrob(     
     x = 0, y = 0,     
     width = width, height = height,
     gp = grid::gpar(fill = "transparent", alpha = 1, col = "transparent"))
-    
-  #### Function to make labels
-  # one "cowplot::draw_label" is created for each row of the in_geogrid
-  draw_labels <- purrr::map(1:nrow(in_geogrid), function(x){
-    cowplot::draw_label(in_geogrid$abbr[x],
-                        x = in_geogrid$x[x],
-                        y = in_geogrid$y[x],
-                        size = 10, color = "black", fontface = "bold"
-    ) 
-    
-  })
   
   #### Final plot
   out_plot <- 
@@ -204,9 +244,10 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid, png_out, width, hei
     # add states map     
     draw_plot(plot_states, x = 0, y = 0, width = 1) +
     # add geofacetted plot
-    draw_plot(plot_geofacet, x = 0, y = 0.1, height = 0.75) + 
-    # add all the labels
-    draw_labels
+    draw_plot(plot_geofacet_grey, x = 0, y = 0.1, height = 0.75) +
+    draw_plot(plot_geofacet_color, x = 0, y = 0.1, height = 0.75) +
+    # add label
+    draw_label(aquifer_label, x = 0.05, y = 0.95, hjust = 0, size = 12)
   
   ggsave(plot = out_plot,
          filename = png_out, device = "png", bg = "transparent",
