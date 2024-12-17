@@ -37,6 +37,31 @@
               </span>
             </p> for each watershed. Click the name to turn off and on the layers in the map.
           </div>
+          <div class="image-container">
+          <RegionMap 
+          :layerVisibility="{
+            irrigation: layers.irrigation.visible,
+            public: layers.public.visible,
+            teFresh: layers.teFresh.visible,
+            teSaline: layers.teSaline.visible,
+          }"
+          :layerPaths="{
+            irrigation: { path: layers.irrigation.path, color: layers.irrigation.color, order: layers.irrigation.order },
+            public: { path: layers.public.path, color: layers.public.color, order: layers.public.order },
+            teFresh: { path: layers.teFresh.path, color: layers.teFresh.color, order: layers.teFresh.order },
+            teSaline: { path: layers.teSaline.path, color: layers.teSaline.color, order: layers.teSaline.order },
+          }"
+          regionsDataUrl="assets/Regions.topojson"
+          usOutlineUrl="assets/USoutline.topojson"
+          csvDataUrl="wa_stress_stats.csv"
+          continuous-raw="stress_by_reg"
+          continuous-percent="percentage_stress"
+          categorical-variable="sui_category_5"
+          regionsVar="Region_nam_nospace"
+          regionsVarLabel="Region_nam"
+
+        />
+        </div>
           <div class="viz-container">
             <div class="map-container">
               <img
@@ -89,13 +114,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject, watch } from 'vue';
+import { ref, onMounted, inject, reactive } from 'vue';
 import * as d3Base from 'd3';
 import AggReg from "../../public/assets/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
+import RegionMap from '../components/RegionMap.vue';
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
@@ -113,6 +139,32 @@ const isChecked = ref({
   teSaline: true
 });
 
+const layers = reactive({
+  irrigation: {
+    visible: true,
+    path: '08_wu_ir_map.png',
+    color: '#39424f',
+    order: 1
+  },
+  public: {
+    visible: true,
+    path: '08_wu_ps_map.png',
+    color: '#80909D',
+    order: 2
+  },
+  teFresh: {
+    visible: true,
+    path: '08_wu_te_fresh_map.png',
+    color: '#edeadf',
+    order: 3
+  },
+  teSaline: {
+    visible: true,
+    path: '08_wu_te_saline_map.png',
+    color: '#Cfacab',
+    order: 4
+  },
+});
 
 
 // functions called here

@@ -30,18 +30,18 @@
   const featureToggles = reactive({
     keyFindingToggles: {
       keyFinding01: true,
-      keyFinding02: false,
-      keyFinding03: false,
-      keyFinding04: false,
-      keyFinding05: false,
-      keyFinding06: false,
-      keyFinding07: false,
-      keyFinding08: false,
-      keyFinding09: false,
-      keyFinding10: false,
+      keyFinding02: true,
+      keyFinding03: true,
+      keyFinding04: true,
+      keyFinding05: true,
+      keyFinding06: true,
+      keyFinding07: true,
+      keyFinding08: true,
+      keyFinding09: true,
+      keyFinding10: true,
     },
-    showReportLinks: false, // buttons that say "read the report" and "download the data"
-    showPageCarousel: false, // page carousel at bottom of key finding pages
+    showReportLinks: true, // buttons that say "read the report" and "download the data"
+    showPageCarousel: true, // page carousel at bottom of key finding pages
     showAlternativeWarning: true, // alternative warning message
   });
 
