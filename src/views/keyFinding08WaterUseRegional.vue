@@ -62,34 +62,6 @@
 
         />
         </div>
-          <div class="viz-container">
-            <div class="map-container">
-              <img
-                  class="map-overlay visible"
-                  id="irrigation"
-                  src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_wu_ir_map.png"
-                  alt=""
-              >    
-              <img
-                  class="map-overlay visible"
-                  id="public"
-                  src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_wu_ps_map.png"
-                  alt=""
-              >    
-              <img
-                  class="map-overlay visible"
-                  id="teFresh"
-                  src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_wu_te_fresh_map.png"
-                  alt=""
-              >    
-              <img
-                  class="map-overlay visible"
-                  id="teSaline"
-                  src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_wu_te_saline_map.png"
-                  alt=""
-              >    
-            </div>
-          </div>
           <div class="text-container">
             <h3>Water from above and below</h3>
             <p>Across the U.S., the source of water, whether from  <span class="highlight" id="groundwater">groundwater</span> or from <span class="highlight" id="surface">surface water</span> typically depends on the availability of these sources and on the category of use. On average during water years 2010-2020, about 62% of water withdrawals for the combination of public supply, crop irrigation, and thermoelectric power across the country were from surface water and 38% of withdrawals were from groundwater.  However, these proportions vary widely across the country, for example, for the High Plains area, 31% of withdrawals were from surface water compared to 69% from groundwater. This regional reversal of the national pattern reflects the heavy use of groundwater used for crop irrigation in the High Plains. Groundwater use also is prevalent for crop irrigation in the eastern U.S.; the western U.S. uses a nearly even mixture of groundwater and surface water for crop irrigation. In contrast, the eastern U.S., where thermoelectric power is generally the largest category of water use, is overall much more reliant on surface water. Sources of water for public-supply vary across the country, depending on the available the local water supply.</p>
