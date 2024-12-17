@@ -79,7 +79,7 @@
                 </p>
             </div>
             <div class="viz-container">
-              <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/06_wq_gw_geofacet.png">
+              <img class="viz-placeholder" src="../assets/images/R/06_wq_gw_geofacet.png">
             </div>
               <Methods></Methods>
               <References></References>

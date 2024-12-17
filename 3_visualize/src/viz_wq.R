@@ -187,7 +187,7 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid, png_out, width, hei
   #### Function to make labels
   # one "cowplot::draw_label" is created for each row of the in_geogrid
   draw_labels <- purrr::map(1:nrow(in_geogrid), function(x){
-    cowplot::draw_label(in_geogrid$full_name[x],
+    cowplot::draw_label(in_geogrid$abbr[x],
                         x = in_geogrid$x[x],
                         y = in_geogrid$y[x],
                         size = 10, color = "black", fontface = "bold"
@@ -204,9 +204,9 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid, png_out, width, hei
     # add states map     
     draw_plot(plot_states, x = 0, y = 0, width = 1) +
     # add geofacetted plot
-    draw_plot(plot_geofacet, x = 0, y = 0.1, height = 0.75) #+ 
+    draw_plot(plot_geofacet, x = 0, y = 0.1, height = 0.75) + 
     # add all the labels
-    #draw_labels
+    draw_labels
   
   ggsave(plot = out_plot,
          filename = png_out, device = "png", bg = "transparent",

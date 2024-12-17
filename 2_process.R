@@ -111,8 +111,15 @@ p2_targets <- list(
                inner_join(p2_CONUS_crosswalk_HUC12_df, by = "HUC12") |>
                filter(! is.na(Region_nam)) 
   ),
+  # simplified for small inset maps
   tar_target(
     p2_State_sf,
+    p2_State_detailed_sf |>
+      ms_simplify()
+  ),
+  # not simplified, for more detailed maps
+  tar_target(
+    p2_State_detailed_sf,
     {
       tigris::states(cb = TRUE) |>
         rmapshaper::ms_simplify() |> 
@@ -121,10 +128,8 @@ p2_targets <- list(
         select(STUSPS, NAME) |>
         group_by(STATES = STUSPS, NAME) |>
         summarize() |>
-        ms_simplify() |>
         mutate(name_clean = gsub(' ', '_', NAME))
     }
-    
   ),
   
   ##################################################
