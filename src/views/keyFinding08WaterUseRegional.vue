@@ -202,15 +202,6 @@ function mouseoutMap(event) {
 
 <style scoped>
 
-.map-container {
-  position: relative;
-  min-height: 600px;
-}
-.map-overlay {
-  position: absolute;
-  width: 100%;
-  max-width: 800px;
-}
 
 .highlight {
   color: black;
@@ -247,11 +238,6 @@ function mouseoutMap(event) {
   &#teSalineButton {
     background-color: #09A7C3;
   }
-}
-
-.hidden {
-  display: none;
-  opacity: 0;
 }
 
 .unchecked {
