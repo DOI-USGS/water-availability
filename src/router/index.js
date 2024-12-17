@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import VisualizationView from '../views/VisualizationView.vue'
 import page1 from '../views/keyFinding01Budget.vue'
 import page2 from '../views/keyFinding02SUIPopn.vue'
@@ -15,7 +15,7 @@ import credits from '../views/creditsPage.vue'
 
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
