@@ -56,7 +56,7 @@
           csvDataUrl="wu_regions.csv"
           continuous-raw="total_use"
           continuous-percent="percentage_stress"
-          categorical-variable="use_category"
+          categorical-variable="sui_category_5"
           regionsVar="Region_nam_nospace"
           regionsVarLabel="Region_nam"
 
