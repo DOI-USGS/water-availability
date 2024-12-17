@@ -86,6 +86,10 @@ const router = createRouter({
       path: '/credits',
       name: 'Credits',
       component: credits
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: "/index.html",
     }
   ]
 })
