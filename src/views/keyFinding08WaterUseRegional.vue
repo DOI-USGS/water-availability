@@ -8,30 +8,30 @@
           <div class="text-container">
             <p>These maps show areas where water is used for 
               <span 
-                :class="['highlight', { checked: isChecked.irrigation }]" 
+                :class="['highlight', { checked: isChecked.ir_total }]" 
                 id="irrigationButton"
-                @click="toggleCategory('irrigation')"
+                @click="toggleCategory('ir_total')"
               >
                 crop irrigation
               </span>, 
               <span 
-                :class="['highlight', { checked: isChecked.public }]" 
+                :class="['highlight', { checked: isChecked.ps_total }]" 
                 id="publicButton"
-                @click="toggleCategory('public')"
+                @click="toggleCategory('ps_total')"
               >
                 public supply
               </span>, thermoelectric power sourced from 
               <span 
-                :class="['highlight', { checked: isChecked.teFresh }]" 
+                :class="['highlight', { checked: isChecked.te_total }]" 
                 id="teFreshButton"
-                @click="toggleCategory('teFresh')"
+                @click="toggleCategory('te_total')"
               >
                 fresh water
               </span>, and thermoelectric power sourced from 
               <span 
-                :class="['highlight', { checked: isChecked.teSaline }]" 
+                :class="['highlight', { checked: isChecked.te_saline }]" 
                 id="teSalineButton"
-                @click="toggleCategory('teSaline')"
+                @click="toggleCategory('te_saline')"
               >
                 saline water
               </span>
@@ -40,23 +40,23 @@
           <div class="image-container">
           <RegionMap 
           :layerVisibility="{
-            irrigation: layers.irrigation.visible,
-            public: layers.public.visible,
-            teFresh: layers.teFresh.visible,
-            teSaline: layers.teSaline.visible,
+            ir_total: layers.ir_total.visible,
+            ps_total: layers.ps_total.visible,
+            te_total: layers.te_total.visible,
+            te_saline: layers.te_saline.visible,
           }"
           :layerPaths="{
-            irrigation: { path: layers.irrigation.path, color: layers.irrigation.color, order: layers.irrigation.order },
-            public: { path: layers.public.path, color: layers.public.color, order: layers.public.order },
-            teFresh: { path: layers.teFresh.path, color: layers.teFresh.color, order: layers.teFresh.order },
-            teSaline: { path: layers.teSaline.path, color: layers.teSaline.color, order: layers.teSaline.order },
+            ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
+            ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
+            te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
+            te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
           }"
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
-          csvDataUrl="wa_stress_stats.csv"
-          continuous-raw="stress_by_reg"
+          csvDataUrl="wu_regions.csv"
+          continuous-raw="total_use"
           continuous-percent="percentage_stress"
-          categorical-variable="sui_category_5"
+          categorical-variable="use_category"
           regionsVar="Region_nam_nospace"
           regionsVarLabel="Region_nam"
 
@@ -105,32 +105,32 @@ const defaultFill = "#d1cdc0";
 
 // toggle maps on and off
 const isChecked = ref({
-  irrigation: true,
-  public: true,
-  teFresh: true,
-  teSaline: true
+  ir_total: true,
+  ps_total: true,
+  te_total: true,
+  te_saline: true
 });
 
 const layers = reactive({
-  irrigation: {
+  ir_total: {
     visible: true,
     path: '08_wu_ir_map.png',
     color: '#B0904F',
     order: 1
   },
-  public: {
+  ps_total: {
     visible: true,
     path: '08_wu_ps_map.png',
     color: '#822734',
     order: 2
   },
-  teFresh: {
+  te_total: {
     visible: true,
     path: '08_wu_te_fresh_map.png',
     color: '#3E4C5B',
     order: 3
   },
-  teSaline: {
+  te_saline: {
     visible: true,
     path: '08_wu_te_saline_map.png',
     color: '#09A7C3',

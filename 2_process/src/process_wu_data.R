@@ -204,9 +204,17 @@ summary_wu_by_Reg <- function(in_sf){
     pivot_longer(cols = c("ps_total", "ir_total", "te_total", "te_saline"),
                  names_to = "use_category")
   
+  # total use
+  total_by_region <- longer_data |>
+    group_by(Region_nam_nospace, Region_nam, AggReg_nam) |>
+    summarize(total_region = sum(value, na.rm = TRUE))
+  
   # Calculate total water use by region and category
   summary_sui <- longer_data |>
     group_by(Region_nam_nospace, Region_nam, AggReg_nam, use_category) |>
-    summarize(total_use = sum(value, na.rm = TRUE)) 
+    summarize(total_use = round(sum(value, na.rm = TRUE), 4)) |>
+    left_join(total_by_region) |>
+    mutate(percentage_stress = round(total_use/total_region, 4)) |>
+    rename(sui_category_5 = use_category)
   
 }
