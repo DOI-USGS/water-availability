@@ -122,7 +122,6 @@ const featureToggles = inject('featureToggles');
 const mobileView = isMobile;
 
 const publicPath = import.meta.env.BASE_URL;
-console.log(publicPath)
 const dataSet1 = ref([]); 
 const data = ref([]);
 let svg;
