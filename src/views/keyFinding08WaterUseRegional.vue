@@ -58,13 +58,11 @@
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
           csvDataUrl="wu_regions.csv"
+          regionsVar="Region_nam_nospace"
           continuousRaw="total_use"
           continuousPercent="d3_percentage"
           categoricalVariable="d3_category"
-          regionsVar="Region_nam_nospace"
-          regionsVarLabel="Region_nam"
-
-        />
+          />
         </div>
           <div class="text-container">
             <h3>Water from above and below</h3>
@@ -97,7 +95,7 @@ import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
-import RegionMap from '../components/RegionMap.vue';
+import RegionMap from '../components/LayeredRegionMap.vue';
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
@@ -141,7 +139,6 @@ const layers = reactive({
     order: 4
   },
 });
-
 
 // functions called here
 onMounted(() => {
