@@ -228,13 +228,13 @@ onMounted(async () => {
 function addInteractions() {
         // set viewbox for svg with wedges
         const aquiferSVG = d3.select("#aquifer-svg")
-            .attr("viewBox", "0 0 " + 360 + " " + 360)
+            .attr("viewBox", "0 0 " + 2700 + " " + 1800)
             .attr("preserveAspectRatio", "xMidYMid meet")
             .attr("width", '100%')
             .attr("height", '100%')
         
         // Add interaction to wedges
-        aquiferSVG.selectAll('.st1')
+        aquiferSVG.selectAll('.st0')
             .on("mouseover", (event) => mouseoverMap(event))
             .on("mouseout", (event) => mouseoutMap(event))
 
@@ -629,16 +629,14 @@ function wrap(text, {
 .map-overlay {
   grid-area: overlay-maps;
   place-self: center;
-  width: 100%;
-  max-width: 800px;
-  place-self: center;
+  max-width: 100%;
+  max-height: 100%;
 }
 #aquifer-svg {
   grid-area: overlay-maps;
   place-self: center;
-  width: 200px;
-  max-width: 800px;
-  max-height: 400px;
+  width: 100%;
+  height: 100%;
 }
 
 
