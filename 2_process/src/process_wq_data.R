@@ -45,3 +45,38 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
                                Use == "Other Use" ~ "Other")) |>
     arrange(-riverMiles)
 }
+
+
+summary_wq_by_state <- function(in_sf, nutrient){
+  
+  load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
+  
+  category_sf <- in_sf |> 
+    filter(!is.na(!!load_column)) |> 
+    mutate(load_level = case_when(
+      !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
+      !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
+      !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
+      !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
+      !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
+    ))
+  
+  # Expand each HUC to its state (some hucs overlap states)
+  expand_states <- category_sf |>
+    select(STATES, HUC12, Region_nam, AggReg_nam, !!load_column, load_level) |>
+    separate_rows(STATES, sep = ",")
+  
+  # Calculate total number of HUCS per state
+  HUC_per_state <- expand_states |> 
+    sf::st_drop_geometry() |>
+    group_by(STATES) |>
+    mutate(total_hucs = n()) |>
+    ungroup()
+  
+  # Calculate total hucs in each sui category by state and proportion
+  summary_sui <- HUC_per_state |>
+    group_by(load_level, STATES, total_hucs) |>
+    summarize(n_cat_sui = n()) |>
+    mutate(prop_cat_sui = n_cat_sui / total_hucs) 
+  
+}

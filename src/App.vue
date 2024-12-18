@@ -33,7 +33,7 @@
       keyFinding02: false,
       keyFinding03: false,
       keyFinding04: false,
-      keyFinding05: false,
+      keyFinding05: true,
       keyFinding06: false,
       keyFinding07: false,
       keyFinding08: false,
