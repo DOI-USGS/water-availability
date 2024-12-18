@@ -1,7 +1,5 @@
 <template>
-    <div class="methods-container" id="heading">
-        <h2>Methods</h2>
-    </div>
+   
     <div class="methods-container"
       v-for="method in thisMethod">
         <button class="accordion">
@@ -54,10 +52,11 @@ onMounted(() => {
   
 <style scoped lang="scss">
 .accordion {
-  background-color: var(--blue-light);
+  background-color: var(--cream-background);
   color: var(--soft-black);
   cursor: pointer;
-  padding: 16px;
+  padding: 5px;
+  padding-bottom: 0;
   width: 100%;
   border: none;
   text-align: left;
@@ -71,8 +70,7 @@ onMounted(() => {
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 600;
   position: relative;
-  border: 2px solid transparent;
-  margin-bottom: 8px
+  border-bottom: 2px solid var(--teal-dark);
 }
 
 .accordion::before {
@@ -92,22 +90,19 @@ onMounted(() => {
 }
 
 .active, .accordion:hover {
-  background-color: var(--teal-dark); 
-  color: white;
+  background-color: var(--blue-light); 
+  color: black;
 }
 
 .panel {
   display: none; 
   overflow: hidden;
-  border: 3px solid var(--blue-light); 
-  margin-bottom: 15px;
+  margin-bottom: -15px;
   margin-top: -15px;
-  border-top-width: 0;
-  border-radius: 0 0 10px 10px;
 }
 
 .panel p {
-  margin: 20px;
+  margin: 20px 25px 0px 25px;
 }
   
 .symbol {
