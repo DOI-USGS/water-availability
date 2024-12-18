@@ -169,11 +169,9 @@ p2_targets <- list(
   tar_target(p2_HUC12_join_wq_sf,
              p2_mainstem_HUC12_simple_sf |>
                # add in tn loads
-               dplyr::left_join(p2_wq_HUC12_df_tn |> rename(tn_load = total_load), 
-                                by = "HUC12") |>
-               # add in tp loads
-               dplyr::left_join(p2_wq_HUC12_df_tp |> rename(tp_load = total_load), 
-                                by = "HUC12")),
+               dplyr::left_join(p2_wq_yields_df, 
+                                by = "HUC12") 
+             ),
 
   # Join with water availability for key finding 2
   tar_target(p2_water_avail,
@@ -335,6 +333,13 @@ p2_targets <- list(
                readr::write_csv(p2_wq_Reg_df,
                                 file = sprintf("public/wq_sources_%s.csv", nutrient))),
     names = nutrient
+  ),
+  # nitrogen and phosporus loads (extracted from iwaas-sparrow-maps pipeline)
+  tar_target(
+    p2_wq_yields_df,
+    process_wq_yield(in_target_paths = p1_yield_targets,
+                     in_COMID_xwalk = p1_COMID_to_HUC12_crosswalk_csv,
+                     in_pathway = "../iwaas-sparrow-figures/_targets/objects/")
   ),
   
   ##############################################

@@ -17,6 +17,7 @@ tar_option_set(packages = c(
   "rmapshaper",
   "nngeo",
   "prettyunits",
+  "purrr",
   # visualize
   "gridSVG",
   "grid",

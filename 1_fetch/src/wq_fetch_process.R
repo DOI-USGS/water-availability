@@ -1,4 +1,4 @@
-# total loads by HUC8
+# total loads by HUC12
 process_wq_HUC12 <- function(in_csv, in_COMID_xwalk){
   
   # read in COMID crosswalk
@@ -36,6 +36,42 @@ process_wq_HUC8 <- function(data_in){
   return(data_out)
 }
 
+
+# total loads by HUC12
+process_wq_yield <- function(in_target_paths, in_COMID_xwalk, in_pathway){
+  
+  # read in COMID crosswalk
+  # 
+  xwalk <- data.table::fread(in_COMID_xwalk, keepLeadingZeros = TRUE) |>
+    tidytable::select(HUC12 = huc12, featureid, weights) |> 
+    select(featureid, HUC12, weights) 
+  
+  # read in target files (sf), make unspatial, and merge
+  in_sf <- purrr::map(sprintf("%s%s", in_pathway, in_target_paths), 
+                      ~ readRDS(.))
+  
+  # make un-spatial
+  in_df <- purrr::map(in_sf, 
+                      ~as.data.frame(.))
+  
+  # process data into data frame
+  output_df <- in_df |>  
+    # Merge
+    #purrr::map(sf::st_drop_geometry) |> 
+    purrr::list_rbind() |> 
+    # get HUC12s and weights
+    tidytable::left_join(xwalk, by = c("comid" = "featureid")) |> 
+    # Crosswalk COMID -> HUC12 by multiplying values by spatial weights and adding up HUC12s
+    tidytable::mutate(
+      tn_yield = al_tn_yield * weights,
+      tp_yield = al_tp_yield * weights
+    ) |> 
+    tidytable::drop_na(HUC12, tn_yield, tp_yield) |> 
+    tidytable::group_by(HUC12) |> 
+    tidytable::summarise(tn_yield = sum(tn_yield), tp_yield = sum(tp_yield)) 
+    
+}
+  
 
 # loads by category
 process_wq_data <- function(in_csv, nutrient){

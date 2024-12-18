@@ -131,7 +131,7 @@ p1_targets <- list(
   #     run with `targets::tar_make(starts_with("p2_load"))`
   # https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/-/blob/initial-upload/01_fetch.R?ref_type=heads
   
-  # TP processing to calculate loads from sources
+  # WQ processing to calculate loads from sources
   tarchetypes::tar_map( 
     values = tibble::tibble(nutrient = c("tn", "tp")),
     tar_target( # need to find a way to download p2_load target output from iwaas-sparrow-figures pipeline
@@ -140,6 +140,13 @@ p1_targets <- list(
       readRDS(sprintf("../iwaas-sparrow-figures/_targets/objects/p2_load_%s", nutrient))
     ),
     names = nutrient),
+  tar_target(p1_sparrow_targets,
+             #readRDS("../iwaas-sparrow-figures/_targets/objects/p2_reg_sf_8beedeba024bb04c") |>
+             #  purrr::map(sf::st_drop_geometry) |>
+             #  unlist()),
+             list.files("../iwaas-sparrow-figures/_targets/objects/")),
+  tar_target(p1_yield_targets,
+             p1_sparrow_targets[startsWith(p1_sparrow_targets, "p2_reg_sf_")]),
   
   # EXTRACTED FROM ELMERA'S SOFTWARE RELEASE, threats by source
   tar_target(p1_wq_threats_csv,

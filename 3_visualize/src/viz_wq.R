@@ -25,17 +25,15 @@ viz_wq_bars <- function(in_df,
 map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
                    width, height, png_out){
   
-
-  
-  load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
+  load_column <- sym(ifelse(nutrient == "tn", "tn_yield", "tp_yield"))
   
   plot_sf <- in_sf |>
     rename(load = !!load_column)
   
   if(nutrient == "tn") {
-    breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, Inf)
+    breaks <- c(5, 15, 30, 75, 150, 250, 350, 550, 1000, Inf)
   } else {
-    breaks <- c(10, 40, 85, 160, 290, 520, 100, 2500, 10000, Inf)
+    breaks <- c(0.5, 2, 6, 10, 15, 25, 40, 70, 120, Inf)
   }
   
   n_breaks <- 10
