@@ -71,15 +71,22 @@ p1_targets <- list(
   ),
   # Principle aquifers
   tar_target(p1_aquifers_shp,
-             sb_initialize_and_download_zipped(
-               sb_id = "63140610d34e36012efa385d", 
-               unzip_file_to_check = "1_fetch/in/aquifers_us/us_aquifers.shp", 
-               names = "aquifers_us.zip",
-               destination_zip = "1_fetch/in/aquifers_us.zip",
-               download_dir = "1_fetch/in/aquifers_us/",
-               overwrite_fileL = FALSE
-             ),
+             ## Sourced from Jim Reddy (USGS) : "This shapefile was derived from a geodatabase of principal 
+             ## aquifers that was part of the NAWQA Groundwater C3GIS system 
+             ## (now retired).  The dataset was never published.  The metadata 
+             ## associated with the geodatabase cites the Groundwater Atlas of the 
+             ## United States as the primary source.  The data in the NAWQA geodatabase 
+             ## is essentially the same as that contained in Principal Aquifers of 
+             ## the 48 Conterminous United States, Hawaii, Puerto Rico, and the U.S. 
+             ## Virgin Islands available on ScienceBase."
+             ##     Note: This shapefile has generalized aquifer boundaries used in
+             ##       the IWAAs report; it's based off the https://doi.org/10.5066/P9Y2HOUJ
+             ##       aquifer map, but generalized by IWAAs team for cartographic
+             ##       purposes
+             "1_fetch/in/Figure14_AquiferBoundaries_Shapefile/PrincipalAquifers.shp",
              format = "file"),
+  tar_target(p1_aquifers_sf,
+             sf::st_read(p1_aquifers_shp)),
   
   
   

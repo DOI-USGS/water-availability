@@ -29,7 +29,8 @@ tar_option_set(packages = c(
   "ggtern",
   "geojsonio",
   "tigris",
-  "geofacet"))
+  "geofacet",
+  "ggnewscale"))
 
 ### Naming conventions:
 # Water Supply = ws

@@ -16,7 +16,7 @@
                 crop irrigation
               </span>, 
               <span 
-              class="highlight" 
+                class="highlight" 
                 id="ps_totalButton"
                 :class="{'active': layers.ps_total.visible, 'inactive-toggle': !layers.ps_total.visible}"
                 @click="toggleCategory('ps_total')"
@@ -24,7 +24,7 @@
                 public supply
               </span>, thermoelectric power sourced from 
               <span 
-              class="highlight" 
+                class="highlight" 
                 id="te_totalButton"
                 :class="{'active': layers.te_total.visible, 'inactive-toggle': !layers.te_total.visible}"
                 @click="toggleCategory('te_total')"
@@ -169,7 +169,7 @@ function addClassToImage(category) {
     else {
   		useImage.classList.add('visible');
       useImage.classList.remove('hidden');
-      useButton.classList.add('nactive-toggle');
+      useButton.classList.add('inactive-toggle');
       useButton.classList.remove('active');
     }
   }
@@ -206,15 +206,6 @@ function mouseoutMap(event) {
 
 <style scoped>
 
-.map-container {
-  position: relative;
-  min-height: 600px;
-}
-.map-overlay {
-  position: absolute;
-  width: 100%;
-  max-width: 800px;
-}
 
 .highlight {
   color: white;
@@ -224,7 +215,6 @@ function mouseoutMap(event) {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.1s;
-
 
   &#groundwater {
     background-color: #E29635;
@@ -240,12 +230,10 @@ function mouseoutMap(event) {
 
   &#ps_totalButton {
     background-color: #822734;
-
   }
 
   &#te_totalButton {
     background-color: #3E4C5B;
-
   }
 
   &#te_salineButton {
@@ -253,13 +241,8 @@ function mouseoutMap(event) {
   }
 }
 
-.hidden {
-  display: none;
-  opacity: 0;
-}
 
 .highlight.inactive-toggle {
-  background-color: lightgrey; 
   color: black;
   padding: 0.25px 5px;
   border-radius: 10px;
@@ -275,12 +258,10 @@ function mouseoutMap(event) {
 
   &#ps_totalButton {
     background-color: lightgrey;
-   
   }
 
   &#te_totalButton {
     background-color: lightgrey;
-  
   }
 
   &#te_salineButton {
