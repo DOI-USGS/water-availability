@@ -234,7 +234,7 @@ function addInteractions() {
             .attr("height", '100%')
         
         // Add interaction to wedges
-        aquiferSVG.selectAll('.st1')
+        aquiferSVG.selectAll('.st0')
             .on("mouseover", (event) => mouseoverMap(event))
             .on("mouseout", (event) => mouseoutMap(event))
 
