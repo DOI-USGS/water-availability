@@ -1,9 +1,9 @@
 <template>
     <div class="map-and-chart">
       <div ref="mapContainer" class="map-container"></div>
-      <StackedBarChart
+      <BarChart
         :categoricalVariable="categoricalVariable"
-        :continuousPercent="continuousPercent"
+        :continuousRaw="continuousRaw"
         :layerPaths="layerPaths"
         :regionData="activeRegionData"
         :regionName="activeRegionName"
@@ -15,7 +15,7 @@
   import { onMounted, ref, watch } from 'vue';
   import * as d3 from 'd3';
   import * as topojson from 'topojson-client';
-  import StackedBarChart from './StackedBarChart.vue';
+  import BarChart from './BarChart.vue';
   
   const mapContainer = ref(null);
   const activeRegionData = ref([]);
@@ -93,13 +93,14 @@
 
     // Precompute aggregated data for national scale
     aggregatedDataCache = d3.rollups(
-      csvData,
-      v => d3.sum(v, d => +d[props.continuousRaw]),
-      d => d[props.categoricalVariable]
-    ).map(([category, value]) => ({
-      [props.categoricalVariable]: category,
-      [props.continuousPercent]: (value / d3.sum(csvData, d => +d[props.continuousRaw])) * 100,
+        csvData,
+        values => d3.sum(values, d => +d[props.continuousRaw]),
+        d => d[props.categoricalVariable]
+    ).map(([category, total]) => ({
+        category,
+        total,
     }));
+
 
     activeRegionData.value = aggregatedDataCache;
 
@@ -133,6 +134,8 @@
       .attr('stroke', 'white')
       .attr('stroke-width', '0.5px')
       .on('mouseover', function (event, d) {
+        const regionName = d.properties[props.regionsVar];
+
         // Highlight hovered region and dim others
         d3.selectAll('.region')
           .attr('fill', 'lightgrey')
@@ -145,17 +148,13 @@
           .attr('stroke-width', '1.5px')
           .raise();
 
-        // Filter data for hovered region
-        const regionName = d.properties[props.regionsVar];
+        // Filter data for hovered region and compute totals
         const filteredData = csvData
-          .filter(row => row[props.regionsVar] === regionName)
-          .map(row => ({
-            [props.categoricalVariable]: row[props.categoricalVariable],
-            [props.continuousPercent]: (+row[props.continuousRaw] / d3.sum(
-              csvData.filter(r => r[props.regionsVar] === regionName),
-              r => +r[props.continuousRaw]
-            )) * 100,
-          }));
+            .filter(row => row[props.regionsVar] === regionName)
+            .map(row => ({
+            category: row[props.categoricalVariable],
+            total: +row[props.continuousRaw],
+            }));
 
         activeRegionName.value = `${regionName} Region`;
         activeRegionData.value = filteredData;
