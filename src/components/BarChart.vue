@@ -7,7 +7,7 @@
   import * as d3 from 'd3';
   
   const barContainer = ref(null);
-  
+  const xMax = 120000;
   const props = defineProps({
     categoricalVariable: String,
     continuousRaw: String,
@@ -32,7 +32,7 @@
   const g = svg.select('g');
 
   const xScale = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.total)]) 
+    .domain([0, xMax]) 
     .range([0, 600]); 
 
   const yScale = d3.scaleBand()
