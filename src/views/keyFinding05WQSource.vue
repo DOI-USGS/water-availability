@@ -46,6 +46,44 @@
                 </div>
             </div>
             <div class="text-container">
+              <p>These maps show total load of nutrients. Click the names to toggle between  
+                <span 
+                  :class="['highlight', { checked: isChecked.tn }]" 
+                  id="tnButton"
+                  @click="toggleCategory('tn')"
+                >
+                  nitrogen load
+                </span> or 
+                <span 
+                  :class="['highlight', { checked: isChecked.tp }]" 
+                  id="tpButton"
+                  @click="toggleCategory('tp')"
+                >
+                  phosphorus load
+                </span>.
+              </p>
+            </div>
+            <div class="image-container">
+              <RegionMap 
+              :layerVisibility="{
+                tn: layers.tn.visible,
+                tp: layers.tp.visible
+              }"
+              :layerPaths="{
+                tn: { path: layers.tn.path, color: layers.tn.color, order: layers.tn.order },
+                tp: { path: layers.tp.path, color: layers.tp.color, order: layers.tp.order },
+              }"
+              regionsDataUrl="assets/Regions.topojson"
+              usOutlineUrl="assets/USoutline.topojson"
+              csvDataUrl="wq_loads_tn.csv"
+              continuousRaw="total_load"
+              continuousPercent="d3_percentage"
+              categoricalVariable="d3_category"
+              regionsVar="Region_nam_nospace"
+              regionsVarLabel="Region_nam"
+              />  
+            </div>
+            <div class="text-container">
               <h3>Effects of nutrients in the water</h3>
               <p>Increased water demands can facilitate mobilization (the release of previously trapped contaminants into the water supply) and transport of chemicals and elements in groundwater. This release and movement of contaminants happens because of altered groundwater chemistry and disturbances to the water cycle resulting from drought, managed aquifer recharge, and changes to groundwater level.</p>
               <br>
@@ -63,7 +101,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, inject } from 'vue';
+import { onMounted, ref, computed, inject, reactive } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -77,6 +115,27 @@ const featureToggles = inject('featureToggles');
 
 // use for mobile logic
 const mobileView = isMobile;
+
+// toggle maps on and off
+const isChecked = ref({
+  tn: true,
+  tp: false,
+});
+
+const layers = reactive({
+  tn: {
+    visible: true,
+    path: '05_tn_map.png',
+    color: '#B0904F',
+    order: 1
+  },
+  tp: {
+    visible: false,
+    path: '05_tp_map.png',
+    color: '#822734',
+    order: 2
+  }
+});
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -469,6 +528,14 @@ function wrap(text, width) {
 
   &#Naturalsources {
     background-color: #EECEB9;
+  }
+
+  &#tnButton {
+    background-color: cyan;
+  }
+
+  &tpButton {
+    background-color: cyan;
   }
 }
 $switchWidth: 7.9rem;
