@@ -57,7 +57,7 @@ Clone the water quality and water use repositories (may need a development branc
 - Open `parent_directory/iwaas-sparrow-figures/iwaas-sparrow-figures.Rproj`. 
 - Run `renv::init()` and choose the first option. 
 - Sign into Sciencebase using the `0_config.R` script.
-- Build the pipeline. You do not need to run the entire pipeline, you can run only the requisite components using `targets::tar_make(starts_with("p2_load"))` and `targets::tar_make(p2_reg_sf))`. There may be warnings related to gdal if you're on a Mac/Linux, but you can ignore those. 
+- Build the pipeline. You do not need to run the entire pipeline, you can run only the requisite components using `targets::tar_make(starts_with("p2_load"))`. 
 - This does take a long time to download all of the SPARROW models. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make()` command above. Targets will pick up where the process left off.
 
 ### Step 3: Run the water use pipeline. 
