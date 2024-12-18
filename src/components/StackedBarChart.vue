@@ -68,15 +68,17 @@ const updateBarChart = (data, regionName) => {
         .attr('class', 'chart-labels')
         .attr('x', (d, i) => xScale(d3.sum(data.slice(0, i), d => +d[props.continuousPercent]) + d[props.continuousPercent] / 2))
         .attr('y', 45)
+        .attr('font-size','1.8rem')
         .attr('fill', 'black')
         .attr('text-anchor', 'middle')
         .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
-        //.style('opacity', 0) // start invisible
-        .transition().duration(750),
-        //.style('opacity', 1), // fade in
+        .style('opacity', d => (d[props.continuousPercent] < 1 ? 0 : 1 )) 
+        .transition().duration(750)
+        .style('opacity', d => (d[props.continuousPercent] < 1 ? 0 : 1 )),
       update => update.transition().duration(750)
         .attr('x', (d, i) => xScale(d3.sum(data.slice(0, i), d => +d[props.continuousPercent]) + d[props.continuousPercent] / 2))
-        .text(d => `${formatPercentage(d[props.continuousPercent])}%`),
+        .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
+        .style('opacity', d => (d[props.continuousPercent] < 1 ? 0 : 1 )) ,
       exit => exit.transition().duration(750).style('opacity', 0).remove() // fade out and remove
     );
 
@@ -90,7 +92,7 @@ const updateBarChart = (data, regionName) => {
     .attr('class', 'chart-title')
     .attr('x', 0)
     .attr('y', -10)
-    .attr('font-size', '2rem')
+    .attr('font-size', '2.2rem')
     .attr('font-weight', 'bold')
     .text(cleanRegionName);
 };
