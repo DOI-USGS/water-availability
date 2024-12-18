@@ -616,13 +616,12 @@ function wrap(text, {
 
 <style scoped>
 
-
 .map-container {
   position: relative;
   display: grid;
   margin: 0 auto 0 auto;
   grid-template-columns: minmax(40vw, 90vw);
-  grid-template-rows:  minmax(20vh, 90vh);
+  grid-template-rows:  minmax(20vh, 80vh);
   grid-template-areas:
       "overlay-maps";
 }
@@ -637,6 +636,7 @@ function wrap(text, {
   place-self: center;
   width: 100%;
   height: 100%;
+  fill-opacity: 0;
 }
 
 

@@ -241,6 +241,7 @@ function mouseoutMap(event) {
   }
 }
 
+
 .highlight.inactive-toggle {
   color: black;
   padding: 0.25px 5px;
