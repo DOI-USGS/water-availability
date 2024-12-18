@@ -46,12 +46,14 @@
   };
 
   // update bars
-  const barStart = 150;
+  const barStart = 70;
+  const formatValue = d3.format('.0f');
+
   g.selectAll('rect')
     .data(data)
     .join(
       enter => enter.append('rect')
-        .attr('x', barStart) 
+        .attr('x', 0) 
         .attr('y', d => yScale(d.category)) // vertical positioning
         .attr('height', yScale.bandwidth()) 
         .attr('fill', d => getColor(d.category)) 
@@ -64,28 +66,41 @@
       exit => exit.transition().duration(750).attr('width', 0).remove()
     );
 
+    g.selectAll('text.category-label')
+    .data(data)
+    .append('text')
+    .attr('class', 'category-label')
+    .attr('x', 10) 
+    .attr('y', d => yScale(d.category) + yScale.bandwidth() / 2)
+    .attr('dy', '0.35em')
+    .attr('font-size', '1rem')
+    .attr('fill', 'black')
+    .attr('text-anchor', 'start')
+    .text(d => d.category)
+
   // update labels
-  g.selectAll('text')
+  g.selectAll('text.value-label')
     .data(data)
     .join(
       enter => enter.append('text')
-        .attr('x', d => xScale(d.total) + 5 + barStart) // position to the right of the bar
+      .attr('class', 'value-label')
+        .attr('x', d => xScale(d.total) + 5) // position to the right of the bar
         .attr('y', d => yScale(d.category) + yScale.bandwidth() / 2) // center vertically
         .attr('dy', '0.35em')
         .attr('font-size', '1rem')
         .attr('fill', 'black')
         .attr('text-anchor', 'start')
-        .text(d => d3.format(',')(d.total)),
+        .text(d => d3.format(',')(formatValue(d.total))),
       update => update.transition().duration(750)
-        .attr('x', d => xScale(d.total) + 5 + barStart)
+        .attr('x', d => xScale(d.total) + 5)
         .attr('y', d => yScale(d.category) + yScale.bandwidth() / 2)
-        .text(d => d3.format(',')(d.total)),
+        .text(d => d3.format(',')(formatValue(d.total))),
       exit => exit.transition().duration(750).attr('x', 0).remove()
     );
 
   // update y-axis labels
   const yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(5)
-  svg.select('.y-axis').call(yAxis);
+  svg.select('.y-axis').attr('transform', `translate(${barStart}, 0)`).call(yAxis);
 
   // style y-axis labels
   svg.select('.y-axis').selectAll('text')
@@ -104,7 +119,7 @@ watch(
 
 onMounted(() => {
   const svg = d3.select(barContainer.value).append('svg')
-    .attr('viewBox', `0 0 800 ${props.regionData.length * 20 + 50}`) // adjust height dynamically
+    .attr('viewBox', `0 0 800 150`)
     .attr('preserveAspectRatio', 'xMidYMid meet')
     .classed('bar-chart-svg', true);
 
@@ -112,26 +127,6 @@ onMounted(() => {
   svg.append('g'); // append main g for bars
 });
 
-  
-  // watch for changes in regionData and regionName
-  watch(
-    () => [props.regionData, props.regionName],
-    ([newData, newRegionName]) => {
-      updateBarChart(newData, newRegionName);
-    },
-    { immediate: true }
-  );
-  
-  onMounted(() => {
-    // create svg container
-    const svg = d3.select(barContainer.value).append('svg')
-      .attr('viewBox', `0 0 800 ${props.regionData.length * 40 + 50}`)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
-      .classed('bar-chart-svg', true);
-  
-    svg.append('g').attr('class', 'y-axis').attr('transform', 'translate(0, 0)');
-    svg.append('g').attr('transform', 'translate(0, 10)'); // append g element
-  });
   </script>
   
   <style>

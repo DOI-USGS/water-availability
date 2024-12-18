@@ -118,25 +118,29 @@ const layers = reactive({
     visible: true,
     path: '08_wu_ir_map.png',
     color: '#B0904F',
-    order: 1
+    order: 1,
+    label: 'Irrigation'
   },
   ps_total: {
     visible: true,
     path: '08_wu_ps_map.png',
     color: '#822734',
-    order: 2
+    order: 2,
+    label: 'Public Supply'
   },
   te_total: {
     visible: true,
     path: '08_wu_te_fresh_map.png',
     color: '#3E4C5B',
-    order: 3
+    order: 3,
+    label: 'Thermo fresh'
   },
   te_saline: {
     visible: true,
     path: '08_wu_te_saline_map.png',
     color: '#09A7C3',
-    order: 4
+    order: 4,
+    label: 'Thermo saline'
   },
 });
 
