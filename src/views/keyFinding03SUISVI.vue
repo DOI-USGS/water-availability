@@ -53,8 +53,6 @@ import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
-//import photoAll from "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_svi_map.png";
-//import photoDry from "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_svi_dry_map.png";
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";

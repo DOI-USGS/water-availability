@@ -27,21 +27,22 @@
 
   // define feature toggles
   // reactive feature toggles
+  const previewSiteLogic = true; // change this one setting to toggle preview site on and off
   const featureToggles = reactive({
     keyFindingToggles: {
-      keyFinding01: true,
-      keyFinding02: false,
-      keyFinding03: false,
-      keyFinding04: false,
-      keyFinding05: true,
-      keyFinding06: false,
-      keyFinding07: false,
-      keyFinding08: false,
-      keyFinding09: false,
-      keyFinding10: false,
+      keyFinding01: true, // always true
+      keyFinding02: previewSiteLogic ? false : true,
+      keyFinding03: previewSiteLogic ? false : true,
+      keyFinding04: previewSiteLogic ? false : true,
+      keyFinding05: previewSiteLogic ? false : true,
+      keyFinding06: previewSiteLogic ? false : true,
+      keyFinding07: previewSiteLogic ? false : true,
+      keyFinding08: previewSiteLogic ? false : true,
+      keyFinding09: previewSiteLogic ? false : true,
+      keyFinding10: previewSiteLogic ? false : true,
     },
-    showReportLinks: false, // buttons that say "read the report" and "download the data"
-    showPageCarousel: false, // page carousel at bottom of key finding pages
+    showReportLinks: previewSiteLogic ? false : true, // buttons that say "read the report" and "download the data"
+    showPageCarousel: previewSiteLogic ? false : true, // page carousel at bottom of key finding pages
     showAlternativeWarning: true, // alternative warning message
   });
 
