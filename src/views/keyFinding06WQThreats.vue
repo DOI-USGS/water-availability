@@ -620,8 +620,8 @@ function wrap(text, {
   position: relative;
   display: grid;
   margin: 0 auto 0 auto;
-  grid-template-columns: minmax(40vw, 90vw);
-  grid-template-rows:  minmax(20vh, 80vh);
+  grid-template-columns: minmax(50vw, 100%);
+  grid-template-rows:  minmax(20vh, 600px);
   grid-template-areas:
       "overlay-maps";
 }
