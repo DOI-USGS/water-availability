@@ -22,41 +22,65 @@ viz_wq_bars <- function(in_df,
   return(png_out)
 }
 
-map_wq <- function(in_sf, nutrient, color_scheme, regions_sf, 
+map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
                    width, height, png_out){
+  
+
   
   load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
   
-  plot_sf <- in_sf |> 
-    filter(!is.na(!!load_column)) |> 
-    mutate(load_level = case_when(
-      !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
-      !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
-      !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
-      !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
-      !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
-    ),
-    load_levelf = factor(load_level, levels = c("Very high", "High",
-                                                "Moderate", "Low", "Very low")))
+  plot_sf <- in_sf |>
+    rename(load = !!load_column)
+  
+  if(nutrient == "tn") {
+    breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, Inf)
+  } else {
+    breaks <- c(10, 40, 85, 160, 290, 520, 100, 2500, 10000, Inf)
+  }
+  
+  n_breaks <- 10
+  
+  # plot_sf <- in_sf |> 
+  #   filter(!is.na(!!load_column)) |> 
+  #   mutate(load_level = case_when(
+  #     !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
+  #     !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
+  #     !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
+  #     !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
+  #     !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
+  #   ),
+  #   load_levelf = factor(load_level, levels = c("Very high", "High",
+  #                                               "Moderate", "Low", "Very low")))
+  
+  pretty_labels <- function(num) {
+    dplyr::case_when(
+      num >= 1000000 ~ format(num, scientific = TRUE),
+      num >= 10000 ~ format(num, scientific = FALSE, big.mark = ","),
+      num < 10000 ~ as.character(num)
+    )
+  }
   
   map <- ggplot(plot_sf) +
     geom_sf(
       data = regions_sf,
-      fill = color_scheme$svg_fill_default,
+      fill = "transparent",
       color = "white",
       linewidth = 0.4
     ) + 
-    geom_sf(aes(fill = load_levelf), color = "NA", size = 0) +
-    scale_fill_manual(
-      values = c(
-        "Very high" = color_scheme$very_high_col,
-        "High" = color_scheme$high_col,
-        "Moderate" = color_scheme$moderate_col,
-        "Low" = color_scheme$low_col,
-        "Very low" = color_scheme$very_low_col
-      ),
-      name = "Load Level"
-    ) + 
+    geom_sf(aes(fill = load), color = "NA", size = 0) +
+    ggplot2::binned_scale(
+      aesthetics = "fill",
+      palette = \(x) scico::scico(n_breaks, palette = "acton", direction = -1),
+      breaks = breaks,
+      labels = ~ pretty_labels(.x),
+      guide = ggplot2::guide_colorsteps(
+        direction = "horizontal",
+        title.position = "left",
+        barwidth = grid::unit((width * 3 / 4), units = "in"),
+        barheight = grid::unit(0.1, units = "in"),
+        label.vjust = 2
+      )
+    ) +
     theme_void() +
     theme(
       legend.position = "none") 

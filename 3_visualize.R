@@ -58,10 +58,10 @@ p3_targets <- list(
   tar_target(p3_colors_wq,
              p3_colors_website |> bind_cols(
                tibble(
-                 # Wq loads 
-                 very_low_col = "#E7CAE1",
-                 low_col = "#D585A9", 
-                 moderate_col = "#93658E", 
+                 # Wq loads (from scico palette "acton")
+                 very_low_col = "#E8CDE3",
+                 low_col = "#D485AA", 
+                 moderate_col = "#93658F", 
                  high_col = "#554C7A",
                  very_high_col = "#270C3F"
                ))),
@@ -279,8 +279,8 @@ p3_targets <- list(
     tar_target(p3_wq_map_HUC12_png,
                map_wq(in_sf = p2_HUC12_join_wq_sf,
                       nutrient = nutrient,
-                      color_scheme = p3_colors_wq, 
                       regions_sf = p2_Reg_sf,
+                      color_scheme = p3_colors_wq,
                       png_out = sprintf("src/assets/images/R/05_%s_map.png", nutrient),
                       width = 9, height = 6),
                format = "file"),
