@@ -34,35 +34,13 @@
   
 <script setup>
 import { computed, inject, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import SubPages from './SubPages';
-import References from './../assets/text/references.js'
-
 const featureToggles = inject('featureToggles');
 
-const route = useRoute();
-
-const path = computed(() => route.path)
-
-// filter to this page's key message
-const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-//console.log(filteredMessages[0].references)
-//console.log('filteredReferences ' + filteredReferences)
-
-// Sort references
-const refArray = References.key.sort((a, b) => a.authors.localeCompare(b.authors));
-//console.log(References.key)
-//console.log(refArray)
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
+defineProps({
+  theseReferences: {
+    type: Array,
+    required: true
+  }
 });
 
 </script>
