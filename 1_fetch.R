@@ -69,6 +69,17 @@ p1_targets <- list(
     ),
     format = "file"
   ),
+  # Principle aquifers
+  tar_target(p1_aquifers_shp,
+             sb_initialize_and_download_zipped(
+               sb_id = "63140610d34e36012efa385d", 
+               unzip_file_to_check = "1_fetch/in/aquifers_us/us_aquifers.shp", 
+               names = "aquifers_us.zip",
+               destination_zip = "1_fetch/in/aquifers_us.zip",
+               download_dir = "1_fetch/in/aquifers_us/",
+               overwrite_fileL = FALSE
+             ),
+             format = "file"),
   
   
   
@@ -135,11 +146,16 @@ p1_targets <- list(
              "1_fetch/in/WaterQuality_UsePercent_PlottingData.csv",
              format = "file"),
   
-  # Extracted from Elmera's software release, comid to HUC12 crosswalk
+  # Extracted from software release `iwaas-sparrow-figures`, comid to HUC12 crosswalk
   tar_target(p1_COMID_to_HUC12_crosswalk_csv,
              "../iwaas-sparrow-figures/01_fetch/out/nhd_huc12_weights_r.csv",
              format = "file"),
-  
+  ### groundwater
+  # Extracted from software release `wq-decadal-change-plots`
+  tar_target( 
+    p1_wq_gw_exceedences_df,
+    readRDS("../wq-decadal-change-plots/_targets/objects/p2_overview_inorg_threshold_belitz")
+  ),
   
   ##############################################
   # 

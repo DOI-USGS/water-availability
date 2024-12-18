@@ -40,11 +40,15 @@ To reproduce the figures in the website that are created in R, you will need to 
 Clone the water quality and water use repositories (may need a development branch, contact Althea Archer for assistance) into a folder that contains this repository's directory as well. Should look something like this:
 
 - parent_directory/water-availability/ (this repository)
-- parent_directory/iwaas-sparrow-figures/ (water quality repository)
+- parent_directory/iwaas-sparrow-figures/ (water quality repository) 
+    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/`
+- parent_directory/wq-decadal-change-plots/ (groundwater quality repository)
+    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/wq-decadal-change-plots`
 - parent_directory/water-use-huc12-crosswalk/ (water use repository)
+    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/water-use-huc12-crosswalk/-/tree/1.0.0/`
 - parent_directory/iwaas-water-supply/ (water supply repository)
+    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/ws-uncertainty-analysis`
 
-The water quality repository is at:  `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/`, the water use repository is at `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/water-use-huc12-crosswalk/-/tree/1.0.0/`, and the water supply repository is at `https://code.usgs.gov/wma/national-iwaas/NWAA/ws-uncertainty-analysis`.
 
 ### Step 2: Run the water quality pipeline. 
 
@@ -76,7 +80,17 @@ The water quality repository is at:  `https://code.usgs.gov/wma/national-iwaas/N
 - Build the pipeline `tar_make(p3_c404_precip_csv)`. 
 - This might take a while to download files and run. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make(p3_c404_precip_csv)` command above. Targets will pick up where the process left off.
 
-### Step 5: Run the IWAAs website pipeline.
+### Step 5: Run the groundwater quality pipeline. 
+
+> Note, Mac and Linux users may have to install some dependencies manually. See the `wq-decadal-change-plots/Readme.md` for more information
+
+- Open `parent_directory/wq-decadal-change-plots/wq-decadal-change-plots.Rproj`. 
+- Run `renv::init()` and choose the first option
+- Sign into Sciencebase using the `0_config.R` script.
+- Build the pipeline `tar_make(p2_overview_inorg_threshold_belitz)`. 
+- This might take a while to download files and run. If the pipeline seems to be stalled out, you can stop the pipeline with the stop button on RStudio and rerun the `tar_make(p2_overview_inorg_threshold_belitz)` command above. Targets will pick up where the process left off.
+
+### Step 6: Run the IWAAs website pipeline.
 
 - Open `parent_directory/water-availability/water-availability.Rproj`. 
 - Sign into Sciencebase using the `0_config.R` script.

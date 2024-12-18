@@ -87,9 +87,9 @@
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
           csvDataUrl="wa_stress_stats.csv"
-          continuous-raw="stress_by_reg"
-          continuous-percent="percentage_stress"
-          categorical-variable="sui_category_5"
+          continuousRaw="stress_by_reg"
+          continuousPercent="d3_percentage"
+          categoricalVariable="d3_category"
           regionsVar="Region_nam_nospace"
           regionsVarLabel="Region_nam"
 

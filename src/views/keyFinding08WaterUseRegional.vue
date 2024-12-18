@@ -8,63 +8,60 @@
           <div class="text-container">
             <p>These maps show areas where water is used for 
               <span 
-                :class="['highlight', { checked: isChecked.irrigation }]" 
+                :class="['highlight', { checked: isChecked.ir_total }]" 
                 id="irrigationButton"
-                @click="toggleCategory('irrigation')"
+                @click="toggleCategory('ir_total')"
               >
                 crop irrigation
               </span>, 
               <span 
-                :class="['highlight', { checked: isChecked.public }]" 
+                :class="['highlight', { checked: isChecked.ps_total }]" 
                 id="publicButton"
-                @click="toggleCategory('public')"
+                @click="toggleCategory('ps_total')"
               >
                 public supply
               </span>, thermoelectric power sourced from 
               <span 
-                :class="['highlight', { checked: isChecked.teFresh }]" 
+                :class="['highlight', { checked: isChecked.te_total }]" 
                 id="teFreshButton"
-                @click="toggleCategory('teFresh')"
+                @click="toggleCategory('te_total')"
               >
                 fresh water
               </span>, and thermoelectric power sourced from 
               <span 
-                :class="['highlight', { checked: isChecked.teSaline }]" 
+                :class="['highlight', { checked: isChecked.te_saline }]" 
                 id="teSalineButton"
-                @click="toggleCategory('teSaline')"
+                @click="toggleCategory('te_saline')"
               >
                 saline water
               </span>
             </p> for each watershed. Click the name to turn off and on the layers in the map.
           </div>
-          <div class="viz-container">
-            <div class="map-container">
-              <img
-                  class="map-overlay visible"
-                  id="irrigation"
-                  src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_wu_ir_map.png"
-                  alt=""
-              >    
-              <img
-                  class="map-overlay visible"
-                  id="public"
-                  src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_wu_ps_map.png"
-                  alt=""
-              >    
-              <img
-                  class="map-overlay visible"
-                  id="teFresh"
-                  src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_wu_te_fresh_map.png"
-                  alt=""
-              >    
-              <img
-                  class="map-overlay visible"
-                  id="teSaline"
-                  src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/08_wu_te_saline_map.png"
-                  alt=""
-              >    
-            </div>
-          </div>
+          <div class="image-container">
+          <RegionMap 
+          :layerVisibility="{
+            ir_total: layers.ir_total.visible,
+            ps_total: layers.ps_total.visible,
+            te_total: layers.te_total.visible,
+            te_saline: layers.te_saline.visible,
+          }"
+          :layerPaths="{
+            ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
+            ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
+            te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
+            te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
+          }"
+          regionsDataUrl="assets/Regions.topojson"
+          usOutlineUrl="assets/USoutline.topojson"
+          csvDataUrl="wu_regions.csv"
+          continuousRaw="total_use"
+          continuousPercent="d3_percentage"
+          categoricalVariable="d3_category"
+          regionsVar="Region_nam_nospace"
+          regionsVarLabel="Region_nam"
+
+        />
+        </div>
           <div class="text-container">
             <h3>Water from above and below</h3>
             <p>Across the U.S., the source of water, whether from  <span class="highlight" id="groundwater">groundwater</span> or from <span class="highlight" id="surface">surface water</span> typically depends on the availability of these sources and on the category of use. On average during water years 2010-2020, about 62% of water withdrawals for the combination of public supply, crop irrigation, and thermoelectric power across the country were from surface water and 38% of withdrawals were from groundwater.  However, these proportions vary widely across the country, for example, for the High Plains area, 31% of withdrawals were from surface water compared to 69% from groundwater. This regional reversal of the national pattern reflects the heavy use of groundwater used for crop irrigation in the High Plains. Groundwater use also is prevalent for crop irrigation in the eastern U.S.; the western U.S. uses a nearly even mixture of groundwater and surface water for crop irrigation. In contrast, the eastern U.S., where thermoelectric power is generally the largest category of water use, is overall much more reliant on surface water. Sources of water for public-supply vary across the country, depending on the available the local water supply.</p>
@@ -89,13 +86,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject, watch } from 'vue';
+import { ref, onMounted, inject, reactive } from 'vue';
 import * as d3Base from 'd3';
 import AggReg from "../../public/assets/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
+import RegionMap from '../components/RegionMap.vue';
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
@@ -107,12 +105,38 @@ const defaultFill = "#d1cdc0";
 
 // toggle maps on and off
 const isChecked = ref({
-  irrigation: true,
-  public: true,
-  teFresh: true,
-  teSaline: true
+  ir_total: true,
+  ps_total: true,
+  te_total: true,
+  te_saline: true
 });
 
+const layers = reactive({
+  ir_total: {
+    visible: true,
+    path: '08_wu_ir_map.png',
+    color: '#B0904F',
+    order: 1
+  },
+  ps_total: {
+    visible: true,
+    path: '08_wu_ps_map.png',
+    color: '#822734',
+    order: 2
+  },
+  te_total: {
+    visible: true,
+    path: '08_wu_te_fresh_map.png',
+    color: '#3E4C5B',
+    order: 3
+  },
+  te_saline: {
+    visible: true,
+    path: '08_wu_te_saline_map.png',
+    color: '#09A7C3',
+    order: 4
+  },
+});
 
 
 // functions called here

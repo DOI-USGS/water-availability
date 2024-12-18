@@ -196,6 +196,18 @@ export default {
         doi: "10.3133/fs20053018"
       },
       {
+        refID: "Belitz2022", 
+        authors: "Belitz, K., Fram, M., Lindsey, B.D., ..., and Dubrovsky, N.M.",
+        year: "2022",
+        title: "The quality of groundwater used for public supply in the continental United States—A comprehensive assessment",
+        journal: true,
+        journal_name: "Environmental Science & Technology - Water",
+        journal_issue: "",
+        data_release: false,
+        link: "https://doi.org/acsestwater.2c00390",
+        doi: "acsestwater.2c00390"
+      },
+      {
         refID: "Liu2022", 
         authors: "Liu, N., Dobbs, G.R., Caldwell, P.V., ..., and Carlson, C.P.",
         year: "2022",
