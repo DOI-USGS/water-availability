@@ -47,7 +47,7 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
 }
 
 
-summary_wq_by_state <- function(in_sf, nutrient){
+summary_wq_by_state <- function(in_sf, nutrient, out_csv){
   
   load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
   
@@ -74,9 +74,65 @@ summary_wq_by_state <- function(in_sf, nutrient){
     ungroup()
   
   # Calculate total hucs in each sui category by state and proportion
-  summary_sui <- HUC_per_state |>
+  summary_out <- HUC_per_state |>
     group_by(load_level, STATES, total_hucs) |>
-    summarize(n_cat_sui = n()) |>
-    mutate(prop_cat_sui = n_cat_sui / total_hucs) 
+    summarize(n_cat = n()) |>
+    mutate(prop_cat = n_cat / total_hucs) |>
+    rename(d3_percentage = prop_cat,
+           d3_category = load_level) |>
+    ungroup() |>
+    complete(STATES, d3_category)
+  
+  
+  # save to csv
+  readr::write_csv(summary_out, file = out_csv)
+  
+}
+
+summary_wq_by_region <- function(in_sf, nutrient, out_csv){
+  
+  load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
+  
+  category_sf <- in_sf |> 
+    filter(!is.na(!!load_column)) |> 
+    mutate(load_level = case_when(
+      !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
+      !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
+      !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
+      !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
+      !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
+    ))
+  
+  # summarize by region and category
+  region_summary <- category_sf |>
+    sf::st_drop_geometry() |>
+    rename(load = !!load_column) |>
+    select(HUC12, Region_nam, AggReg_nam, load, load_level) |>
+    group_by(Region_nam, AggReg_nam, load_level) |>
+    summarize(category_hucs = n(),
+              total_load = round(sum(load, na.rm = TRUE), 4))
+  
+  # Calculate total number of HUCS per state
+  HUC_per_region <- category_sf |> 
+    sf::st_drop_geometry() |>
+    group_by(Region_nam) |>
+    summarize(total_hucs = n()) 
+  
+  # Calculate total hucs in each sui category by state and proportion
+  summary_out <- region_summary |>
+    left_join(HUC_per_region, by = "Region_nam") |>
+    mutate(prop_cat = round((category_hucs / total_hucs), 4)) |>
+    rename(d3_percentage = prop_cat,
+           d3_category = load_level) |>
+    ungroup() |>
+    complete(d3_category, Region_nam,
+             fill = list(d3_percentage = 0,
+                         category_hucs = 0,
+                         total_load = 0))
+  
+  
+  
+  # save to csv
+  readr::write_csv(summary_out, file = out_csv)
   
 }

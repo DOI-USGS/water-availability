@@ -235,12 +235,17 @@ p2_targets <- list(
              create_stats(in_sf = p2_HUC12_join_sui_svi_sf,
                           out_csv = "public/wa_stress_stats.csv")),
   
-  # Summarize water quality by state
+  # Summarize WQ water quality
   tarchetypes::tar_map(
     values = tibble::tibble(nutrient = c("tn", "tp")),
-    tar_target(p2_states_wq_df,
+    tar_target(p2_states_wq_csv,
                summary_wq_by_state(in_sf = p2_HUC12_join_wq_sf,
-                                   nutrient = nutrient)),
+                                   nutrient = nutrient,
+                                   out_csv = sprintf("public/wq_loads_state_%s.csv", nutrient))),
+    tar_target(p2_Reg_wq_csv,
+               summary_wq_by_region(in_sf = p2_HUC12_join_wq_sf,
+                                   nutrient = nutrient,
+                                   out_csv = sprintf("public/wq_loads_Reg_%s.csv", nutrient))),
     names = nutrient
   ),
 
