@@ -45,6 +45,31 @@
                 <div id="barplot-container">    
                 </div>
             </div>
+            <div
+            id="toggle-container"
+            class="text-container"
+            aria-hidden="true"
+            >
+              <p>This map shows 
+                <span>
+                  <button
+                  class="button"
+                  :text="scaleType"
+                  @click="showPhosphorus"
+                  >
+                    {{ buttonText }}
+                  </button>
+                </span>
+              </p>
+            </div>
+            <div class="viz-container">
+                <img 
+                        id="first-image" 
+                        class="viz-placeholder" 
+                        :src="imgSrc" 
+                        alt="xxx"
+                    >
+            </div>
             <div class="text-container">
               <h3>Effects of nutrients in the water</h3>
               <p>Increased water demands can facilitate mobilization (the release of previously trapped contaminants into the water supply) and transport of chemicals and elements in groundwater. This release and movement of contaminants happens because of altered groundwater chemistry and disturbances to the water cycle resulting from drought, managed aquifer recharge, and changes to groundwater level.</p>
@@ -77,6 +102,33 @@ const featureToggles = inject('featureToggles');
 // use for mobile logic
 const mobileView = isMobile;
 
+///// placeholder sparrow maps /////
+
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
+const tnImageID = "05_tn_map";
+const tpImageID = "05_tp_map";
+let imgSrc = ref(getImgURL(tnImageID));
+
+let buttonText = "nitrogen load";
+
+function getImgURL(id) {
+  return `${baseURL}${id}.png`;
+}
+
+function showPhosphorus() {
+    if(imgSrc.value === getImgURL(tnImageID)) {
+        imgSrc.value = getImgURL(tpImageID);
+        buttonText = "phosporus load";
+
+    } else {
+        imgSrc.value = getImgURL(tnImageID);
+        buttonText = "nitrogen load";
+
+    }
+}
+
+
+////// 
 
 
 // Global variables 
