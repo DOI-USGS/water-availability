@@ -3,9 +3,9 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-            <p>The availability of clean water for our communities is affected by interrelated issues from hydrological (water quantity, quality, and flow) to social (water infrastructure, access, and rights). Physical infrastructure, such as public-supply (or self-supply) facilities, household-level plumbing, wells, dams, reservoirs, and diversions, are critical for meeting local water demands. Treaties, water compacts, and other legal agreements also determine access at multiple scales from household and municipal to internationally shared water resources. Additionally, characteristics of a community, such as socioeconomic status or access to resources and public services, can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
+            <p>The availability of clean water for our communities is affected by interrelated issues from hydrological (water quantity, quality, and flow) to social (water infrastructure, access, and rights)<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Physical infrastructure, such as public-supply (or self-supply) facilities, household-level plumbing, wells, dams, reservoirs, and diversions, are critical for meeting local water demands. Treaties, water compacts, and other legal agreements also determine access at multiple scales from household and municipal to internationally shared water resources. Additionally, characteristics of a community, such as socioeconomic status or access to resources and public services, can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
             <br>
-            <p>These circles each represent one watershed (HUC8) in the U.S., and the size corresponds to the population living within that watershed (U.S. Census Bureau, 2020). Levels of water limitation are <span class="highlight" id="very_low_none"> very low or none </span>, <span class="highlight" id="low"> low </span>, <span class="highlight" id="moderate"> moderate </span>, <span class="highlight" id="high"> high </span>, and <span class="highlight" id="severe"> severe </span>.     </p>
+            <p>These circles each represent one watershed (HUC8) in the U.S., and the size corresponds to the population living within that watershed <span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Levels of water limitation are <span class="highlight" id="very_low_none"> very low or none </span>, <span class="highlight" id="low"> low </span>, <span class="highlight" id="moderate"> moderate </span>, <span class="highlight" id="high"> high </span>, and <span class="highlight" id="severe"> severe </span>.     </p>
           </div>
 
           <div class="viz-container">
@@ -33,7 +33,7 @@
               </tabsGroup>
             </div>
           <Methods></Methods>
-          <References></References>
+          <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
@@ -41,20 +41,43 @@
 </template>
 
 <script setup>
-import {inject} from 'vue';
+import {inject, computed, ref} from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
-import References from "../components/References.vue";
+import references from './../assets/text/references.js';
+import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
 
+
+//////// references array //
+const path = computed(() => route.path)
+
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
 
 // extract list of tab items for this page
 const impactTabs = filteredMessages[0].tabData;
