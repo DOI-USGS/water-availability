@@ -76,7 +76,8 @@
     .attr('font-size', '1rem')
     .attr('fill', 'black')
     .attr('text-anchor', 'start')
-    .text(d => d.category)
+    .text(d => props.layerPaths[d.category]?.label || d.category)
+
 
   // update labels
   g.selectAll('text.value-label')
