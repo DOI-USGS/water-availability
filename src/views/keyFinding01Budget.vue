@@ -91,7 +91,6 @@
           continuousPercent="d3_percentage"
           categoricalVariable="d3_category"
           regionsVar="Region_nam_nospace"
-          regionsVarLabel="Region_nam"
 
         />
         </div>

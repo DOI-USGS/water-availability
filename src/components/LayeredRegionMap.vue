@@ -113,6 +113,15 @@
       .attr('stroke', 'grey')
       .attr('stroke-width', '2px');
 
+      svg.append('g')
+        .selectAll('path')
+        .data(geoRegions.features)
+        .join('path')
+        .attr('d', path)
+        .attr('fill', 'none')
+        .attr('stroke', 'white')
+        .attr('stroke-width', '0.75px');
+
     // Add interactive regions
     svg.append('g')
       .selectAll('path')
@@ -122,7 +131,7 @@
       .attr('class', d => `region ${d.properties[props.regionsVar]}`)
       .attr('fill', 'transparent')
       .attr('stroke', 'white')
-      .attr('stroke-width', '1px')
+      .attr('stroke-width', '0.5px')
       .on('mouseover', function (event, d) {
         // Highlight hovered region and dim others
         d3.selectAll('.region')

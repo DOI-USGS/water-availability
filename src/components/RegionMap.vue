@@ -201,7 +201,8 @@ watch(
             .attr('x', 0)
             .attr('y', -10)
             .attr('fill', 'black')
-            .attr('font-size', '2.5rem')
+            .attr('font-size', '2.2rem')
+            .attr('font-weight', 'bold')
             .text(regionName),
           update => update.call(update => update.transition()
             .duration(750)
