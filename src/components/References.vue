@@ -7,7 +7,8 @@
         <div  v-for="reference in theseReferences">
           
             <p>
-                <span v-html="reference.authors" /> (<span v-html="reference.year" />). <a
+              <span v-html="reference.referenceNumber"/>.   
+              <span v-html="reference.authors" /> (<span v-html="reference.year" />). <a
                 :href="reference.link"
                 target="_blank"
                 ><span v-html="reference.title" :class="{ report: reference.report }"/></a>
@@ -32,7 +33,7 @@
 </template>
   
 <script setup>
-import { computed, inject } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import SubPages from './SubPages';
 import References from './../assets/text/references.js'
@@ -58,6 +59,11 @@ const refArray = References.key.sort((a, b) => a.authors.localeCompare(b.authors
 
 // extract references that match the refID from global list
 const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
 
 </script>
   
