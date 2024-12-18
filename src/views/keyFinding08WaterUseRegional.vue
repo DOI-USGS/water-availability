@@ -8,29 +8,33 @@
           <div class="text-container">
             <p>These maps show areas where water is used for 
               <span 
-                :class="['highlight', { checked: isChecked.ir_total }]" 
-                id="irrigationButton"
+                class="highlight" 
+                id="ir_totalButton"
+                :class="{'active': layers.ir_total.visible, 'inactive-toggle': !layers.ir_total.visible}"
                 @click="toggleCategory('ir_total')"
               >
                 crop irrigation
               </span>, 
               <span 
-                :class="['highlight', { checked: isChecked.ps_total }]" 
-                id="publicButton"
+                class="highlight" 
+                id="ps_totalButton"
+                :class="{'active': layers.ps_total.visible, 'inactive-toggle': !layers.ps_total.visible}"
                 @click="toggleCategory('ps_total')"
               >
                 public supply
               </span>, thermoelectric power sourced from 
               <span 
-                :class="['highlight', { checked: isChecked.te_total }]" 
-                id="teFreshButton"
+                class="highlight" 
+                id="te_totalButton"
+                :class="{'active': layers.te_total.visible, 'inactive-toggle': !layers.te_total.visible}"
                 @click="toggleCategory('te_total')"
               >
                 fresh water
               </span>, and thermoelectric power sourced from 
               <span 
-                :class="['highlight', { checked: isChecked.te_saline }]" 
-                id="teSalineButton"
+                class="highlight" 
+                id="te_salineButton"
+                :class="{'active': layers.te_saline.visible, 'inactive-toggle': !layers.te_saline.visible}"
                 @click="toggleCategory('te_saline')"
               >
                 saline water
@@ -148,7 +152,7 @@ onMounted(() => {
 });
 
 function toggleCategory(category) {
-  isChecked.value[category] = !isChecked.value[category];
+  layers[category].visible = !layers[category].visible;
   addClassToImage(category);
 }
 
@@ -159,14 +163,14 @@ function addClassToImage(category) {
   	if(useImage.classList.contains('visible')) {
       useImage.classList.remove('visible');
       useImage.classList.add('hidden');
-      useButton.classList.add('unchecked');
-      useButton.classList.remove('highlight');
+      useButton.classList.add('active');
+      useButton.classList.remove('inactive-toggle');
     }
     else {
   		useImage.classList.add('visible');
       useImage.classList.remove('hidden');
-      useButton.classList.add('highlight');
-      useButton.classList.remove('unchecked');
+      useButton.classList.add('inactive-toggle');
+      useButton.classList.remove('active');
     }
   }
 }
@@ -204,7 +208,7 @@ function mouseoutMap(event) {
 
 
 .highlight {
-  color: black;
+  color: white;
   padding: 0.25px 5px;
   border-radius: 10px;
   white-space: nowrap;
@@ -218,29 +222,26 @@ function mouseoutMap(event) {
 
   &#surface {
     background-color: #355B65;
-    color: white;
   }
 
-  &#irrigationButton {
+  &#ir_totalButton {
     background-color: #B0904F;
   }
 
-  &#publicButton {
+  &#ps_totalButton {
     background-color: #822734;
-    color: white;
   }
 
-  &#teFreshButton {
+  &#te_totalButton {
     background-color: #3E4C5B;
-    color: white;
   }
 
-  &#teSalineButton {
+  &#te_salineButton {
     background-color: #09A7C3;
   }
 }
 
-.unchecked {
+.highlight.inactive-toggle {
   color: black;
   padding: 0.25px 5px;
   border-radius: 10px;
@@ -248,24 +249,22 @@ function mouseoutMap(event) {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.1s;
-  background-color: grey;
+  background-color: lightgrey;
 
-  &#irrigationButton {
-    background-color: grey;
+  &#ir_totalButton {
+    background-color: lightgrey;
   }
 
-  &#publicButton {
-    background-color: grey;
-    color: white;
+  &#ps_totalButton {
+    background-color: lightgrey;
   }
 
-  &#teFreshButton {
-    background-color: grey;
-    color: white;
+  &#te_totalButton {
+    background-color: lightgrey;
   }
 
-  &#teSalineButton {
-    background-color: grey;
+  &#te_salineButton {
+    background-color: lightgrey;
   }
 }
 
