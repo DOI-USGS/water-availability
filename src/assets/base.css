@@ -163,6 +163,15 @@ a:visited {
   justify-content: center;
 }
 
+.caption-container {
+  padding: 0px 10px;
+}
+.caption-container p{
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic
+}
+
 .report-link-container {
   padding: 40px 20px;
   text-align: center;

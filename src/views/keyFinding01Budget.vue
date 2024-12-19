@@ -6,24 +6,29 @@
                 <p>Water balance is the difference between how much clean water is in supply and how much water is in demand. For most of the country, <span class="highlight" id="supply">water supply</span> is much higher than <span class="highlight" id="demand">water demand</span>, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the southwest and the high plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
                   </p>
             </div>
-        <div class="viz-container">
-          <div id="dotplot-container">             
-            <div class="toggle-container">
-              <button
-                :class="{'active-toggle': showDemand, 'inactive-toggle': !showDemand}"
-                @click="togglePoints('demand')"
-                class="highlight demand toggle-button"
-              >
-                {{ showDemand ? 'Hide Demand' : 'Show Demand' }}
-              </button>
-              <button
-            :class="{'active-toggle': showSupply, 'inactive-toggle': !showSupply}"
-            @click="togglePoints('supply')"
-            class="highlight supply toggle-button"
-          >
-            {{ showSupply ? 'Hide Supply' : 'Show Supply' }}
-          </button>
+            <div class="caption-container">
+              <p>This chart shows the average annual water supply and demand in millimeters per year. </p>
+              <div class="toggle-container">
+                <button
+                  :class="{'active-toggle': showDemand, 'inactive-toggle': !showDemand}"
+                  @click="togglePoints('demand')"
+                  class="highlight demand toggle-button"
+                >
+                  {{ showDemand ? 'Hide Demand' : 'Show Demand' }}
+                </button>
+                <button
+                  :class="{'active-toggle': showSupply, 'inactive-toggle': !showSupply}"
+                  @click="togglePoints('supply')"
+                  class="highlight supply toggle-button"
+                >
+                  {{ showSupply ? 'Hide Supply' : 'Show Supply' }}
+                </button>
+              </div>
           </div>
+        <div class="viz-container">
+          
+          <div id="dotplot-container">             
+            
         </div>   
         </div>
         <div class="text-container">
