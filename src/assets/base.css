@@ -196,17 +196,22 @@ a:visited {
     text-align: center;
   }
 }
-.checkbox_item .checkbox_wrap{
-	position: relative;
+.legend_item .legend_wrap,
+.checkbox_item .checkbox_wrap {
+  position: relative;
 	display: block;
-	cursor: pointer;
 	margin: 0 auto 2px;
   font-size: 2.5rem;
   font-weight: 600;
 }
+  .checkbox_item .checkbox_wrap{
+    cursor: pointer;
+  }
+.legend_item:last-child .legend_wrap,
 .checkbox_item:last-child .checkbox_wrap{
 	margin-bottom: 0;
 }
+.legend_item .legend_wrap .legend-inp,
 .checkbox_item .checkbox_wrap .checkbox_inp{
 	position: absolute;
 	top: 0;
@@ -214,11 +219,12 @@ a:visited {
 	opacity: 0;
 	z-index: 1;
 }
+.legend_item .legend_wrap .legend_mark,
 .checkbox_item .checkbox_wrap .checkbox_mark{
 	display: inline-block;
 	position: relative;
-	border-radius: 25px;
 }
+
 .checkbox_item .checkbox_wrap .checkbox_mark:before,
 .checkbox_item .checkbox_wrap .checkbox_mark:after{
 	content: "";
@@ -226,12 +232,27 @@ a:visited {
 	transition: all 0.5s ease;
 }
 /* flat styles */
+.legend_item .legend_wrap .legend_mark,
 .checkbox_item .checkbox_wrap .checkbox_mark{  /* when layer is on */
   border: 4px solid cyan;
 	width: 60px;
 	height: 30px;
 	padding: 2px;
 }
+  .legend_item .legend_wrap .legend_mark {
+    border-radius: 2px;
+  }
+    #legend-ws-low.legend_item .legend_wrap .legend_mark {
+      border-color: var(--ws-demand);
+      background-color: var(--ws-demand);
+    }
+    #legend-ws-high.legend_item .legend_wrap .legend_mark {
+      border-color: var(--ws-supply);
+      background-color: var(--ws-supply);
+    }
+  .checkbox_item .checkbox_wrap .checkbox_mark{
+    border-radius: 25px;
+  }
     #checkbox-demand.checkbox_item .checkbox_wrap .checkbox_mark{
       border-color: var(--ws-demand);
     }

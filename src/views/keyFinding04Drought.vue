@@ -12,11 +12,30 @@
                 <div class="text-container">
                     <p>As water moves through the water cycle it can spend different amounts of time in the various stages. For example, water that falls as snow could remain on the landscape for months until it melts in the spring, while water that makes its way into groundwater may remain for decades or longer. This means that periods of abnormally low precipitation affect different parts of the water cycle at different times. </p>
                   <br>
-                    <p>During periods of low precipitation, less water in streams and rivers can lead to more groundwater use resulting in groundwater declines that may take years to recover. By assessing all parts of the water budget together, we can visualize how these changes are reflected in different parts of water cycle, and how they relate to water availability across the nation. For example, in 2012 the Northern High Plains had 
-                        <span class="highlight" id="dry">abnormally low</span> precipitation, which cascaded through the water cycle with delayed responses in evapotranspiration, soil moisture, and eventually streamflow. Similarly, periods of  
-                        <span class="highlight" id="wet">abnormally high</span>
+                    <p>During periods of low precipitation, less water in streams and rivers can lead to more groundwater use resulting in groundwater declines that may take years to recover. By assessing all parts of the water budget together, we can visualize how these changes are reflected in different parts of water cycle, and how they relate to water availability across the nation. For example, in 2012 the Northern High Plains had abnormally low precipitation, which cascaded through the water cycle with delayed responses in evapotranspiration, soil moisture, and eventually streamflow. Similarly, periods of 
                     rainfall in early 2011 did not show up in the streamflow signature until later in that year.</p>
                 </div>
+                <div class="caption-container">
+                  <div class="caption-text-child">
+                    <p>This map shows levels of water limitation for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Toggle the levels of water limitation on and off with these buttons. Hover over the map to see regional summaries.</p>
+                  </div>
+                  <div class="caption-legend-child">
+                    <div class="legend_item" id="legend-ws-low" >
+                      <label class="legend_wrap">
+                      <input type="legend" name="legend" class="legend-inp">
+                      <span class="legend_mark"></span>
+                        Abnormally low water
+                      </label>
+                    </div>
+                    <div class="legend_item" id="legend-ws-high" >
+                      <label class="legend_wrap">
+                      <input type="legend" name="legend" class="legend-inp">
+                      <span class="legend_mark"></span>
+                        Abnormally high water
+                      </label>
+                    </div>
+                  </div>
+                </div> 
                 <div class="viz-container">
                     <Reg class="reg-svg"></Reg>
                     <img
