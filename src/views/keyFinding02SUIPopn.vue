@@ -30,7 +30,7 @@
                     <!--p class="tab-content-text" v-html="tab.tabText" /-->
                     <p class="tab-content-text">
                       <span v-for="textChunk, index in tab.tabText" :key="textChunk.id">
-                        <span v-if="index > 0">&nbsp;</span>
+                        <span v-if="index > 0 && textChunk.startofSentence">&nbsp;</span>
                         <span v-html="textChunk.text"/>
                         <span v-for="reference, index in theseReferences.filter(item => `${textChunk.refs}`.includes(item.refID))" :key="index" class="tooltip">   
                           <sup class="in-text-number">{{ reference.referenceNumber }} </sup> 
@@ -38,8 +38,7 @@
                             <span v-html="reference.refID" />
                           </span>
                           <span v-if="index < theseReferences.filter(item => `${textChunk.refs}`.includes(item.refID)).length - 1">
-                            <sup class="in-text-number">
-                              ,&nbsp;
+                            <sup class="in-text-number">,&nbsp;
                             </sup>
                           </span>
                         </span>

@@ -24,13 +24,16 @@ export default {
                     tabText: [
                         {
                             id: 1,
+                            startofSentence: true,
                             text: "The overall balance between water supply and consumptive use is a primary consideration in water availability studies. Globally, the factors affecting human water security are highly correlated; the infrastructure that allows elevated water use also promotes water-quality degradation and decreases biotic integrity.",
                             refs: ["Vörösmarty2010"]
                         },
                         {
                             id:2,
+                            startofSentence: true,
                             text: "For example, intense water withdrawal, even if restored to the local system through return flow, can degrade water quality because the water may return with increased sediment, nutrients, or salinity.",
-                            refs: ["Lin2012", "Park2018"]
+                            refs: ["Lin2012", "Park2018"],
+                            phraseEnd: true
                         }
                     ]
                 },{
@@ -38,19 +41,56 @@ export default {
                     tabSubtitle: "Water availability is limited by surface water quality",
                     tabTitleID: "sw",
                     tabTitleIDname: "sw_wq",
-                    tabText: "Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, and pesticides. Sources of water quality contaminants include agriculture, wastewater, air pollution, other human sources such as mining and land-use change, and natural sources such as springs and streamflow. Areas of the country that strongly indicate surface water quality issues include the High Plains, Souris-Red-Rainy, and the Midwest regions, largely due to the application of fertilizer and manure for agriculture (Erickson et al., 2025)."
+                    tabText: [
+                        {
+                            id: 1,
+                            startofSentence: true,
+                            text: "Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, and pesticides. Sources of water quality contaminants include agriculture, wastewater, air pollution, other human sources such as mining and land-use change, and natural sources such as springs and streamflow. Areas of the country that strongly indicate surface water quality issues include the High Plains, Souris-Red-Rainy, and the Midwest regions, largely due to the application of fertilizer and manure for agriculture.",
+                            refs: ["Erickson2025"],
+                            phraseEnd: true
+                        }
+
+                    ]
                 },{
                     tabTitle: "Groundwater Quality",
                     tabSubtitle: "Water availability is limited by groundwater quality",
                     tabTitleID: "gw",
                     tabTitleIDname: "gw_wq",
-                    tabText: "Groundwater-derived drinking water can be affected by high concentrations of constituents from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, and lithium, as well as salinity and nitrogen. Mixtures of multiple groundwater contaminants can also have compounding effects, because different users may have elevated sensitivity when exposed to multiple water-quality issues at once (Kaushal et al., 2018; Waite et al., 2019, 2021). Threats to human health, corrosion of infrastructure, reduced crop yields, poor taste, impeded navigation, and economic impacts can all result from poor water quality (Erickson et al., 2025)."
+                    tabText: [
+                        {
+                            id: 1,
+                            startofSentence: true,
+                            text: "Groundwater-derived drinking water can be affected by high concentrations of constituents from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, and lithium, as well as salinity and nitrogen. Mixtures of multiple groundwater contaminants can also have compounding effects, because different users may have elevated sensitivity when exposed to multiple water-quality issues at once.",
+                            refs: ["Kaushal2018", "Waite2019", "Waite2021"],
+                            phraseEnd: true
+                        },
+                        {
+                            id: 2,
+                            startofSentence: true,
+                            text: "Threats to human health, corrosion of infrastructure, reduced crop yields, poor taste, impeded navigation, and economic impacts can all result from poor water quality.",
+                            refs: ["Erickson2025"],
+                            phraseEnd: true
+                        }
+                    ]
                 },{
                     tabTitle: "Ecoflows",
                     tabSubtitle: "Water availability for ecosystems is limited by altered natural flows",
                     tabTitleID: "eco",
                     tabTitleIDname: "ecoflow",
-                    tabText: "Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and covering land with impervious surfaces. We create water-management structures to improve quality of life by creating hydroelectric power, controlling flood risk, capturing and distributing drinking water, and irrigating crops. These structures can affect the flow regime through water storage and releases, potentially altering the timing, seasonality, frequency, and rate of change of flows (Kennedy et al., 2016; Eng et al., 2019; Moreira et al., 2019), even if total flow volume remains equivalent. Anthropogenic land cover, such as urban areas and impervious surfaces, can also affect flow attributes by increasing the rate of runoff, resulting in greater high-flow magnitude and frequency, while decreasing flow durations (Eng et al., 2019)."
+                    tabText: [
+                        {
+                            id: 1,
+                            startofSentence: true,
+                            text: "Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and covering land with impervious surfaces. We create water-management structures to improve quality of life by creating hydroelectric power, controlling flood risk, capturing and distributing drinking water, and irrigating crops. These structures can affect the flow regime through water storage and releases, potentially altering the timing, seasonality, frequency, and rate of change of flows",
+                            refs: ["Kennedy2016", "Eng2019", "Moreira2019"]
+                        },
+                        {
+                            id: 2,
+                            startofSentence: false,
+                            text: ", even if total flow volume remains equivalent. Anthropogenic land cover, such as urban areas and impervious surfaces, can also affect flow attributes by increasing the rate of runoff, resulting in greater high-flow magnitude and frequency, while decreasing flow durations.",
+                            refs: ["Eng2019"]
+                        }
+                    ]
                 },
             ]
         },
