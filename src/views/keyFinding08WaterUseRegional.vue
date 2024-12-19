@@ -221,7 +221,7 @@ function mouseoutMap(event) {
   }
 
   &#surface {
-    background-color: var(--ws-supply);
+    background-color: var(--wq-unimpaired);
   }
 
   &#ir_totalButton {

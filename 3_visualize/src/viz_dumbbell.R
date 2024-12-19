@@ -12,8 +12,7 @@ dumbbell_gw_v_sw <- function(in_sf,
       dplyr::mutate(x_long = sf::st_coordinates(sf::st_centroid(in_sf))[,1]) |> 
       dplyr::mutate(sw_total_wu = rowSums(dplyr::across(c(ps_sw, ir_sw, te_sw))),
                     gw_total_wu = rowSums(dplyr::across(c(ps_gw, ir_gw, te_gw))))
-  }
-  else if(wu_type != "all"){
+  } else if(wu_type != "all"){
     proc_in_sf <- in_sf |>
       dplyr::mutate(x_long = sf::st_coordinates(sf::st_centroid(in_sf))[,1]) |> 
       dplyr::rename(sw_total_wu = sprintf("%s_sw", wu_type),

@@ -18,8 +18,8 @@ plot_deviations <- function(data_in, region, width, height, png_out, color_schem
                       aes(x = date, y = norm_val, color = hi_lo)) +
     geom_linerange(aes(ymin = 0, ymax = norm_val), linewidth = 1.3) +
     facet_wrap(~ name, nrow = 4) +
-    scale_color_manual(values = c(color_scheme$wet_blue_light,
-                                  color_scheme$dry_red_vdark)) +
+    scale_color_manual(values = c(color_scheme$ws_demand,
+                                  color_scheme$ws_supply)) +
     scale_x_date(breaks = "1 year", date_labels = "%Y") +
     theme_void() +
     theme(legend.position = "none",
