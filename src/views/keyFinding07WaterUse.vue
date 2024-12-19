@@ -132,10 +132,10 @@ function handleViewChange() {
 
 // Define colors for each category group
 const categoryColors = {
-  'Public Supply': '#A04747',
-  'Irrigation': '#E8B86D',
-  'Thermoelectric (fresh)': '#0B2F9F',
-  'Thermoelectric (saline)': '#6CBEC7',
+  'Public Supply': 'var(--wu-ps)',
+  'Irrigation': 'var(--wu-agriculture)',
+  'Thermoelectric (fresh)': 'var(--wu-te-fresh)',
+  'Thermoelectric (saline)': 'var(--wu-te-saline)',
 };
 
 // Helper function to create valid CSS selectors by replacing special characters
@@ -439,16 +439,16 @@ onMounted(async () => {
   cursor: pointer;
   transition: all 0.1s;
   &#Public_Supply {
-    background-color: #A04747;
+    background-color: var(--wu-ps);
   }
   &#Irrigation {
-    background-color: #E8B86D;
+    background-color: var(--wu-agriculture);
   }
   &#Thermoelectric_fresh {
-    background-color: #0B2F9F;
+    background-color: var(--wu-te-fresh);
   }
   &#Thermoelectric_saline {
-    background-color: #6CBEC7;
+    background-color: var(--wu-te-saline);
   }
 }
 </style>

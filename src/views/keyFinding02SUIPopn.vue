@@ -90,26 +90,26 @@ function getIconImgHTML(image_name) {
 
 
   &#very_low_none {
-    background-color: #39424f;
+    background-color: var(--sui-none);
   }
 
   &#low {
-    background-color: #80909D;
+    background-color: var(--sui-low);
     color: black;
   }
 
   &#moderate {
-    background-color: #edeadf;
+    background-color: var(--sui-mod);
     color: black;
   }
 
   &#high {
-    background-color: #Cfacab;
+    background-color: var(--sui-high);
     color: black;
   }
 
   &#severe {
-    background-color: #965a6b;
+    background-color: var(--sui-severe);
   }
 }
 

@@ -137,8 +137,6 @@ p2_targets <- list(
   tar_target(p2_HUC12_join_wu_sf,
              p2_mainstem_HUC12_simple_sf |>
                # add in mean water use data 
-               dplyr::left_join(p2_wu_ternary_df,
-                                by = "HUC12") |>
                dplyr::left_join(p2_wu_te_saline_mean2000to2020_HUC12 |>
                                   select(HUC12, te_saline),
                                 by = "HUC12")
@@ -336,11 +334,6 @@ p2_targets <- list(
                                file = "public/wu_yearly.csv")
                return("public/wu_yearly.csv")},
              format = "file"),
-  tar_target(p2_wu_ternary_df,
-             total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC12,
-                                  ir_in = p2_wu_ir_mean2000to2020_HUC12,
-                                  te_in = p2_wu_te_mean2000to2020_HUC12,
-                                  color_scheme = p3_colors_wu)),
   
   # Public water supply
   tar_target(p2_wu_ps_gw_raw,

@@ -163,14 +163,14 @@ function getIconImgHTML(image_name) {
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 const categoryColors = {
-  'Biotic': '#EECEB9',
-  'Nutrients':  '#939185',
-  'Organics':  '#C8ACD6', 
-  'Metals':  '#80909D',
-  'Sediment': '#E8E8E3',
-  'Salinity': '#F3C623',
-  'Temperature': '#FFB0B0',
-  'Unimpaired': '#478CCF',
+  'Biotic': 'var(--wq-natural)',
+  'Nutrients':  'var(--wq-mod)',
+  'Organics':  'var(--wu-ps)', 
+  'Metals':  'var(--wq-metal)',
+  'Sediment': 'var(--wu-agriculture)',
+  'Salinity': 'var(--wq-salinity)',
+  'Temperature': 'var(--wq-temp)',
+  'Unimpaired': 'var(--wq-unimpaired)',
 }; 
 
 
@@ -657,49 +657,49 @@ function wrap(text, {
   transition: all 0.1s;
 
   &#Biotic {
-    background-color: #EECEB9;
+    background-color: var(--wq-natural);
   }
 
   &#Nutrients {
-    background-color: #939185;
+    background-color: var(--wq-mod);
   }
 
   &#Organics {
-    background-color: #C8ACD6;
+    background-color: var(--wu-ps);
   }
 
   &#Metals {
-    background-color: #80909D;
+    background-color: var(--wq-metal);
   }
 
   &#Sediment {
-    background-color: #E8E8E3;
+    background-color: var(--wu-agriculture);
   }
 
   &#Salinity {
-    background-color: #F3C623;
+    background-color: var(--wq-salinity);
   }
 
   &#Temperature {
-    background-color: #FFB0B0;
+    background-color: var(--wq-temp);
   }
 
   &#Unimpaired {
-    background-color: #478CCF;
+    background-color: var(--wq-unimpaired);
   }
 
   &#high {
-    background-color: #3B1E54;
+    background-color: var(--wq-high);
     color: white;
   }
 
   &#moderate {
-    background-color: #8F6EB4;
+    background-color: var(--wq-mod);
     color: white;
   }
 
   &#low {
-    background-color: #E7D9F2;
+    background-color: var(--wq-low);
   }
 }
 

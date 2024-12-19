@@ -104,8 +104,8 @@ const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-ava
 const defaultRegionID = "High_Plains";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
-const focalFill = "#5e7789";
-const defaultFill = "#d1cdc0";
+const focalFill = "var(--teal-dark)";
+const defaultFill = "var(--default-fill)";
 
 // toggle maps on and off
 const isChecked = ref({
@@ -119,25 +119,25 @@ const layers = reactive({
   ir_total: {
     visible: true,
     path: '08_wu_ir_map.png',
-    color: '#B0904F',
+    color: 'var(--wu-agriculture)',
     order: 1
   },
   ps_total: {
     visible: true,
     path: '08_wu_ps_map.png',
-    color: '#822734',
+    color: 'var(--wu-ps)',
     order: 2
   },
   te_total: {
     visible: true,
     path: '08_wu_te_fresh_map.png',
-    color: '#3E4C5B',
+    color: 'var(--wu-te-fresh)',
     order: 3
   },
   te_saline: {
     visible: true,
     path: '08_wu_te_saline_map.png',
-    color: '#09A7C3',
+    color: 'var(--wu-te-saline)',
     order: 4
   },
 });
@@ -217,27 +217,27 @@ function mouseoutMap(event) {
   transition: all 0.1s;
 
   &#groundwater {
-    background-color: #E29635;
+    background-color: var(--wu-gw);
   }
 
   &#surface {
-    background-color: #355B65;
+    background-color: var(--ws-supply);
   }
 
   &#ir_totalButton {
-    background-color: #B0904F;
+    background-color: var(--wu-agriculture);
   }
 
   &#ps_totalButton {
-    background-color: #822734;
+    background-color: var(--wu-ps);
   }
 
   &#te_totalButton {
-    background-color: #3E4C5B;
+    background-color: var(--wu-te-fresh);
   }
 
   &#te_salineButton {
-    background-color: #09A7C3;
+    background-color: var(--wu-te-saline);
   }
 }
 
@@ -250,22 +250,22 @@ function mouseoutMap(event) {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.1s;
-  background-color: lightgrey;
+  background-color: var(--inactive-grey);
 
   &#ir_totalButton {
-    background-color: lightgrey;
+    background-color: var(--inactive-grey);
   }
 
   &#ps_totalButton {
-    background-color: lightgrey;
+    background-color: var(--inactive-grey);
   }
 
   &#te_totalButton {
-    background-color: lightgrey;
+    background-color: var(--inactive-grey);
   }
 
   &#te_salineButton {
-    background-color: lightgrey;
+    background-color: var(--inactive-grey);
   }
 }
 

@@ -53,8 +53,8 @@ const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-ava
 const defaultRegionID = "Northern_High_Plains";
 const imgSrc = ref(getImgURL(defaultRegionID)); 
 const featureToggles = inject('featureToggles');
-const focalFill = "#5e7789";
-const defaultFill = "#d1cdc0";
+const focalFill = "var(--teal-dark)";
+const defaultFill = "var(--default-fill)";
 
 // functions called here
 onMounted(() => {
@@ -104,11 +104,11 @@ function mouseoutMap(event) {
   transition: all 0.1s;
 
   &#dry {
-    background-color: #965a5b;
+    background-color: var(--ws-demand);
   }
 
   &#wet {
-    background-color: #1687A5;
+    background-color: var(--ws-supply);
   }
 }
 </style>

@@ -101,11 +101,11 @@ const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevad
 
 // Colors for bar chart (need to be updated along with CSS below!)
 const categoryColors = {
-        'Agriculture': '#939185',
-        'Atmospheric deposition': '#C8ACD6',
-        'Natural sources': '#EECEB9',
-        'Other Human Sources': '#2E236C',
-        'Wastewater': '#478CCF'
+        'Agriculture': 'var(--wq-sediment)',
+        'Atmospheric deposition': 'var(--wq-air)',
+        'Natural sources': 'var(--wq-natural)',
+        'Other Human Sources': 'var(--wu-ps)',
+        'Wastewater': 'var(--ws-supply)'
       }; 
 
 // set up filtered chart data as computed property
@@ -439,7 +439,7 @@ function wrap(text, width) {
   }
 }
 .svg-icon path {
-  fill: #478CCF;
+  fill: var(--ws-supply);
 }
 
 .highlight {
@@ -452,23 +452,23 @@ function wrap(text, width) {
   transition: all 0.1s;
 
   &#Agriculture {
-    background-color: #939185;
+    background-color: var(--wq-sediment);
   }
 
   &#Atmosphericdeposition {
-    background-color: #C8ACD6;
+    background-color: var(--wq-air);
   }
 
   &#Otherhumansources {
-    background-color: #2E236C;
+    background-color: var(--wu-ps);
   }
 
   &#Wastewater {
-    background-color: #478CCF;
+    background-color: var(--ws-supply);
   }
 
   &#Naturalsources {
-    background-color: #EECEB9;
+    background-color: var(--wq-natural);
   }
 }
 $switchWidth: 7.9rem;

@@ -147,31 +147,31 @@ const layers = reactive({
   very_low_none: {
     visible: true,
     path: '01_stress_map_very_low_none.png',
-    color: '#39424f',
+    color: 'var(--sui-none)',
     order: 1
   },
   low: {
     visible: true,
     path: '01_stress_map_low.png',
-    color: '#80909D',
+    color: 'var(--sui-low)',
     order: 2
   },
   moderate: {
     visible: true,
     path: '01_stress_map_moderate.png',
-    color: '#edeadf',
+    color: 'var(--sui-mod)',
     order: 3
   },
   high: {
     visible: true,
     path: '01_stress_map_high.png',
-    color: '#Cfacab',
+    color: 'var(--sui-high)',
     order: 4
   },
   severe: {
     visible: true,
     path: '01_stress_map_severe.png',
-    color: '#965a6b',
+    color: 'var(--sui-severe)',
     order: 5
   }
 });
@@ -341,7 +341,7 @@ function createDotChart() {
             .attr("y", -20)
             .attr("width", 40)
             .attr("height", 40)
-            .attr("fill", "lightgrey");
+            .attr("fill", "var(--inactive-grey)");
 
           insertedSvg.selectAll(`g.${regionClass} path`)
             .attr("stroke", "black")
@@ -369,7 +369,7 @@ function createDotChart() {
         .attr('cx', d => xScale(d.supply_mean))
         .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
         .attr('r', 5)
-        .attr('fill', '#669999');
+        .attr('fill', 'var(--ws-supply)');
 
     dotGroup.selectAll(".circle-demand")
         .data(dataset)
@@ -378,7 +378,7 @@ function createDotChart() {
         .attr('cx', d => xScale(d.demand_mean))
         .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
         .attr('r', 5)
-        .attr('fill', '#F87A53');
+        .attr('fill', 'var(--ws-demand)');
 }
 </script>
 
@@ -468,60 +468,60 @@ function createDotChart() {
   transition: all 0.1s;
 
   &#supply {
-    background-color: #669999;
+    background-color: var(--ws-supply);
   }
 
   &#demand {
-    background-color: #F87A53;
+    background-color: var(--ws-demand);
   }
 
   &#very_low_none {
-    background-color: #39424f;
+    background-color: var(--sui-none);
   }
 
   &#low {
-    background-color: #80909D;
+    background-color: var(--sui-low);
     color: black;
   }
 
   &#moderate {
-    background-color: #edeadf;
+    background-color: var(--sui-mod);
     color: black;
   }
 
   &#high {
-    background-color: #Cfacab;
+    background-color: var(--sui-high);
     color: black;
   }
 
   &#severe {
-    background-color: #965a6b;
+    background-color: var(--sui-severe);
   }
 }
 .supply {
-  background-color: #669999;
+  background-color: var(--ws-supply);
 }
 
 .demand {
-  background-color: #F87A53;
+  background-color: var(--ws-demand);
 }
 .highlight.inactive-toggle {
-  background-color: lightgrey; 
+  background-color: var(--inactive-grey); 
   color: black;
   &#very_low_none {
-    background-color: lightgrey; 
+    background-color: var(--inactive-grey); 
   }
   &#low {
-    background-color: lightgrey; 
+    background-color: var(--inactive-grey); 
   }
   &#moderate {
-    background-color: lightgrey; 
+    background-color: var(--inactive-grey); 
   }
   &#high {
-    background-color: lightgrey; 
+    background-color: var(--inactive-grey); 
   }
   &#severe {
-    background-color: lightgrey; 
+    background-color: var(--inactive-grey); 
   }
 }
 
