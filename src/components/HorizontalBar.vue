@@ -1,0 +1,166 @@
+<template>
+    <div class="text-container">
+    <div ref="barContainer" class="bar-container"></div>
+</div>  
+</template>
+  
+  <script setup>
+  import { onMounted, ref, watch, defineProps } from 'vue';
+  import * as d3 from 'd3';
+  
+  // props to configure the bar chart
+  const props = defineProps({
+    categoricalVariable: { type: String, required: true },
+    continuousPercent: { type: String, required: true },
+    continuousRaw: { type: String, required: true },
+    layerPaths: { type: Object, required: true },
+    data: { type: Array, required: true },
+    regionName: { type: String, default: 'United States' },
+  });
+  
+  const barContainer = ref(null);
+  let svgBar;
+  
+onMounted(() => {
+  // create the SVG if it doesn't exist
+  if (!svgBar) {
+    svgBar = d3.select(barContainer.value)
+      .append('svg')
+      .attr('viewBox', `0 -30 700 100`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .classed('bar-chart-svg', true);
+
+    svgBar.append('g'); // add a <g> container
+  }
+
+  const aggregatedData = aggregateData(props.data);
+  updateBarChart(aggregatedData, 'United States');
+});
+
+//  aggregate data for the US
+const aggregateData = (data) => {
+  const totalByCategory = d3.rollups(
+    data,
+    (v) => d3.sum(v, (d) => +d[props.continuousRaw]),
+    (d) => d[props.categoricalVariable]
+  );
+
+  const totalValue = d3.sum(totalByCategory, (d) => d[1]);
+
+  return totalByCategory.map(([category, value]) => ({
+    [props.categoricalVariable]: category,
+    [props.continuousRaw]: (value / totalValue) * 100,
+  }));
+};
+
+const updateBarChart = (data, regionName) => {
+  if (!data.length) {
+    console.warn('No data provided for the bar chart.');
+    return;
+  }
+
+  /// Define dimensions and scales
+  const chartHeight = 300; 
+  const barHeight = 20;
+  const spacing = 10; // spacing between bars
+
+  const sortedData = [...data].sort((a, b) => {
+    const normalize = str => str.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
+    const orderA = props.layerPaths[normalize(a[props.categoricalVariable])]?.order || Infinity;
+    const orderB = props.layerPaths[normalize(b[props.categoricalVariable])]?.order || Infinity;
+    return orderA - orderB;
+  });
+
+  // Get the values for the horizontal scale
+  const values = sortedData.map(d => +d[props.continuousRaw]);
+
+  const yScale = d3.scaleBand()
+    .domain(data.map(d => d[props.categoricalVariable]))
+    .range([0, chartHeight-200])
+    .padding(0.3); // between bars
+
+  const xScale = d3.scaleLinear()
+    .domain([0, 10000])
+    .range([0, 700]);
+
+  const getColor = (category) => {
+    const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
+    return props.layerPaths[normalizedCategory]?.color || '#ccc'; // default color
+  };
+
+  const g = svgBar.select('g'); // reuse the <g> container
+
+  // create and update rectangles
+  g.selectAll('rect')
+    .data(sortedData)
+    .join(
+      enter => enter.append('rect')
+      .attr('y', d => yScale(d[props.categoricalVariable]))
+        .attr('x', 100) 
+        .attr('height', yScale.bandwidth())
+        .attr('width', 0) 
+        .attr('fill', d => getColor(d[props.categoricalVariable]))
+        .call(enter => enter.transition().duration(750)
+          .attr('width', d => xScale(d[props.continuousRaw]))
+        ),
+      update => update.transition().duration(750)
+        .attr('y', d => yScale(d[props.categoricalVariable]))
+        .attr('x', 100)
+        .attr('width', d => xScale(d[props.continuousRaw]))
+        .attr('fill', d => getColor(d[props.categoricalVariable])),
+    );
+
+  // update chart title
+  const displayTitle = regionName === 'United States' ? regionName : `${regionName} Region`;
+  g.selectAll('text.chart-title')
+    .data([regionName])
+    .join(
+      enter => enter.append('text')
+        .attr('class', 'chart-title')
+        .attr('x', 0)
+        .attr('y', -10)
+        .attr('fill', 'black')
+        .attr('font-size', '2.75rem')
+        .attr('font-weight', 'bold')
+        .text(displayTitle),
+      update => update.transition().duration(750).text(displayTitle)
+    );
+
+    g.selectAll('.category-label')
+        .data(data)
+        .join(
+        enter => enter.append('text')
+            .attr('class', 'category-label')
+            .attr('x', 90) // Adjust for left alignment
+            .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
+            .attr('dy', '0.35em') // Vertical alignment
+            .attr('text-anchor', 'end') 
+            .text(d => d[props.categoricalVariable]),
+        update => update.transition().duration(750)
+            .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
+            .text(d => d[props.categoricalVariable])
+        );
+
+
+};
+
+// watch for changes in data or regionName
+watch(
+    () => [props.data, props.regionName], 
+    ([data, regionName]) => {
+        const filteredData =
+        regionName === 'United States'
+        ? data
+        : data.filter(d => d.Region_nam === regionName)
+
+  updateBarChart(filteredData, regionName);
+});
+</script>
+
+<style>
+.bar-chart-svg {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+  </style>

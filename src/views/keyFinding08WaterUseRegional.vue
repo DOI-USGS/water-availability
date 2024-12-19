@@ -42,7 +42,7 @@
             </p> for each watershed. Click the name to turn off and on the layers in the map.
           </div>
           <div class="image-container">
-          <StackedBar 
+          <HorizontalBar 
             categoricalVariable="d3_category"
             continuousRaw="total_use"
             continuousPercent="d3_percentage"
@@ -108,7 +108,7 @@ import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
 import RegionMap from '../components/RegionMap.vue';
-import StackedBar from '../components/StackedBar.vue';
+import HorizontalBar from '../components/HorizontalBar.vue';
 
 // global variables
 const publicPath = import.meta.env.BASE_URL;
