@@ -223,7 +223,7 @@ summary_wu_by_Reg <- function(in_sf){
     group_by(Region_nam_nospace, Region_nam, AggReg_nam, use_category) |>
     summarize(total_use = round(sum(value, na.rm = TRUE), 4)) |>
     left_join(total_by_region) |>
-    mutate(d3_percentage = round(total_use/total_region, 4)) |>
+    mutate(d3_percentage = round(100*(total_use/total_region), 4)) |>
     rename(d3_category = use_category)
   
 }

@@ -69,7 +69,23 @@
         </p>
         </div>
         <div class="image-container">
+          <StackedBar 
+            categoricalVariable="d3_category"
+            continuousRaw="stress_by_reg"
+            continuousPercent="d3_percentage"
+            :layerPaths="{
+            very_low_none: { path: layers.very_low_none.path, color: layers.very_low_none.color, order: layers.very_low_none.order },
+            low: { path: layers.low.path, color: layers.low.color, order: layers.low.order },
+            moderate: { path: layers.moderate.path, color: layers.moderate.color, order: layers.moderate.order },
+            high: { path: layers.high.path, color: layers.high.color, order: layers.high.order },
+            severe: { path: layers.severe.path, color: layers.severe.color, order: layers.severe.order },
+          }"
+            :data="csvData"
+            :regionName="selectedRegion"
+          
+          />
           <RegionMap 
+          @regionSelected="updateSelectedRegion"
           :layerVisibility="{
             very_low_none: layers.very_low_none.visible,
             low: layers.low.visible,
@@ -86,12 +102,7 @@
           }"
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
-          csvDataUrl="wa_stress_stats.csv"
-          continuousRaw="stress_by_reg"
-          continuousPercent="d3_percentage"
-          categoricalVariable="d3_category"
           regionsVar="Region_nam_nospace"
-          regionsVarLabel="Region_nam"
 
         />
         </div>
@@ -112,6 +123,7 @@ import { onMounted, ref, reactive, inject } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
+import StackedBar from '../components/StackedBar.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
@@ -124,6 +136,9 @@ const mobileView = isMobile;
 const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
+const csvData = ref([]);
+const selectedRegion = ref('United States'); // default region
+
 let svg;
 const containerWidth = window.innerWidth * 0.45;
 const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5;
@@ -176,6 +191,14 @@ const layers = reactive({
   }
 });
 
+// regional selection data
+const csvWA = "wa_stress_stats.csv"
+
+function updateSelectedRegion(regionName) {
+  selectedRegion.value = regionName;
+}
+
+
 // function to toggle layer visibility
 const toggleLayer = (layerId) => {
   layers[layerId].visible = !layers[layerId].visible;
@@ -199,6 +222,7 @@ onMounted(async () => {
 
 async function loadDatasets() {
     dataSet1.value = await loadData('wa_supply_demand.csv');
+    csvData.value = await d3.csv(`${publicPath}${csvWA}`);
 }
 
 async function loadData(fileName) {

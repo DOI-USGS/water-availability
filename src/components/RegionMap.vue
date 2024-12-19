@@ -1,7 +1,4 @@
 <template>
-    <div class="text-container">
-      <div ref="barContainer" class="bar-container"></div>
-    </div>
     <div ref="mapContainer" class="map-container"></div>
   </template>
   
@@ -10,11 +7,12 @@
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
 
-  const publicPath = import.meta.env.BASE_URL; // this gets the base url for your application
+  const publicPath = import.meta.env.BASE_URL; // this gets the base url for the site
   
   const mapContainer = ref(null)
-  const barContainer = ref(null)
   let mapLayers;
+
+  const emit = defineEmits(['regionSelected']); 
 
 // props definition, allowing customized paths and datasets
 const props = defineProps({
@@ -34,27 +32,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  regionsVarLabel: {
-    type: String,
-    required: true
-  },
   usOutlineUrl: {
-    type: String,
-    required: true
-  },
-  csvDataUrl: {
-    type: String,
-    required: true
-  },
-  continuousRaw: { 
-    type: String,
-    required: true
-  },
-  continuousPercent: { 
-    type: String,
-    required: true
-  },
-  categoricalVariable: { 
     type: String,
     required: true
   }
@@ -128,125 +106,6 @@ watch(
     resizeSvg();
     window.addEventListener('resize', resizeSvg);
   
-    // svg for stacked bar chart
-    const svgBar = d3.select(barContainer.value)
-      .append('svg')
-      .attr('viewBox', `0 -30 700 100`)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
-      .classed('bar-chart-svg', true);
-  
-    let activeRegion = null; // start at national scale
-    const g = svgBar.append('g'); // Bar chart container
-  
-    // updating stacked bar chart to selected region or state
-    const updateBarChart = (data, regionName = 'United States') => {
-      if (!data.length) return;
-
-      // Sort data based on the order defined in layerPaths
-      const sortedData = [...data].sort((a, b) => {
-        const normalize = (str) => str.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
-        const orderA = props.layerPaths[normalize(a[props.categoricalVariable])]?.order || Infinity;
-        const orderB = props.layerPaths[normalize(b[props.categoricalVariable])]?.order || Infinity;
-        return orderA - orderB;
-      });
-
-      const categories = sortedData.map(d => d[props.categoricalVariable]);
-      const values = sortedData.map(d => +d[props.continuousPercent]);
-  
-      const xScale = d3.scaleLinear()
-        .domain([0, d3.sum(values)])
-        .range([0, 700]);
-
-        const getColor = (category) => {
-          const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
-          return props.layerPaths[normalizedCategory]?.color || "#ccc"; // Default to gray if no match
-        };
-
-  
-      g.selectAll('rect')
-        .data(sortedData)
-        .join(
-        enter => enter.append('rect')
-            .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
-            .attr('y', 0)
-            .attr('width', 0) 
-            .attr('height', 30)
-            .attr('fill', d => getColor(d[props.categoricalVariable]))
-            .call(enter => enter.transition()
-            .duration(750) 
-            .attr('width', d => xScale(d[props.continuousPercent]))),
-        update => update
-            .call(update => update.transition()
-            .duration(750)
-            .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
-            .attr('fill', d => getColor(d[props.categoricalVariable]))
-            .attrTween('width', function(d, i) {
-                const previousWidth = d3.select(this).attr('width') || 0; // fallback to 0 if no prior value
-                const interpolator = d3.interpolate(previousWidth, xScale(d[props.continuousPercent]));
-                return t => interpolator(t);
-            })),
-        exit => exit
-            .call(exit => exit.transition()
-            .duration(750)
-            .attr('width', 0) 
-            .remove())
-        );
-
-    // updating bar chart title with region name
-      g.selectAll('text.chart-title')
-        .data([regionName])
-        .join(
-          enter => enter.append('text')
-            .attr('class', 'chart-title')
-            .attr('x', 0)
-            .attr('y', -10)
-            .attr('fill', 'black')
-            .attr('font-size', '2.5rem')
-            .text(regionName),
-          update => update.call(update => update.transition()
-            .duration(750)
-            .text(regionName))
-        );
-
-  
-      const formatPercentage = d3.format('.0f');
-  
-      // percent labels on bar chart - currently overlap where very small
-      g.selectAll('.chart-labels')
-        .data(sortedData, d => d[props.categoricalVariable]) // unique key
-        .join(
-            enter => {
-            const enteringText = enter.append('text')
-                .attr('class', 'chart-labels')
-                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
-                .attr('y', 50)
-                .attr('fill', 'black')
-                .attr('text-anchor', 'middle')
-                .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
-                .style('opacity', 0); // start invisible
-
-            enteringText.transition()
-                .duration(750)
-                .style('opacity', 1); // fade in
-
-            return enteringText;
-            },
-            update => {
-              return update.transition()
-                  .duration(750)
-                  .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
-                  .text(d => `${formatPercentage(d[props.continuousPercent])}%`);
-            },
-            exit => {
-              return exit.transition()
-                  .duration(750)
-                  .style('opacity', 0)
-                  .remove(); // fade out and remove
-            }
-        );
-
-    };
-  
     try {
     // read in data
       // region shapes - feature collection
@@ -255,11 +114,7 @@ watch(
 
       // CONUS outline - single feature
       const topoUS = await d3.json(props.usOutlineUrl);
-      const geoUS = topojson.feature(topoUS, topoUS.objects['foo']);
-
-      // water stats by region
-      const csvData = await d3.csv(`${publicPath}${props.csvDataUrl}`);
-  
+      const geoUS = topojson.feature(topoUS, topoUS.objects['foo']);  
       const projection = d3.geoIdentity().reflectY(true).fitSize([width, height], geoRegions);
       const path = d3.geoPath().projection(projection);
   
@@ -276,23 +131,7 @@ watch(
         .attr('width', width * scale_size)
         .attr('height', height * scale_size);
   
-    // find national stats by category
-      const totalByCategory = d3.rollups(
-        csvData,
-        v => d3.sum(v, d => +d[props.continuousRaw]),
-        d => d[props.categoricalVariable]
-      );
-  
-      const totalValue = d3.sum(totalByCategory, d => d[1]);
-  
-      const aggregatedData = totalByCategory.map(([category, value]) => ({
-        [props.categoricalVariable]: category,
-        d3_percentage: (value / totalValue) * 100,
-      }));
-  
-      // init bar chart with aggregated data
-      updateBarChart(aggregatedData, 'United States');
-  
+
       // draw region boundaries
       const paths = svg.append('g')
         .selectAll('path')
@@ -332,26 +171,29 @@ watch(
             .attr('stroke-width', '1.2px');
 
             // reset bar chart to default aggregated data
-            updateBarChart(aggregatedData, 'United States');
+            emit('regionSelected', 'United States');
         })
         .on('click', (event, d) => {
-          activeRegion = d[props.RegionsVar];
+          d3.selectAll('.region')
+                .attr('fill','lightgrey')
+                .attr('opacity', 0.8)
+                .attr('stroke',"black")
+
+            // highlight the selected region with transparent fill
+            d3.select(this)
+                .attr('fill', 'transparent')
+                .attr('opacity', 1)
+                .attr('stroke', 'white')
+                .attr('stroke-width', '1.5px')
+                .raise(); // bring the selected region to the front
           highlightRegionAndUpdateChart(event, d);
         });
   
     // selection effects and filtering with interaction
       function highlightRegionAndUpdateChart(event, d) {
-        
         // update bar chart with regional data
         const regionClassFilter = d.properties.Region_nam;
-        const filteredData = csvData
-          .filter(row => row.Region_nam === regionClassFilter)
-          .map(row => ({
-            d3_category: row[props.categoricalVariable],
-            d3_percentage: (+row[props.continuousRaw] / d3.sum(csvData.filter(r => r.Region_nam === regionClassFilter), r => +r[props.continuousRaw])) * 100,
-          }));
-  
-        updateBarChart(filteredData, `${regionClassFilter} region`);
+        emit('regionSelected', regionClassFilter); // send region_nam to parent
       }
 
     // add double outline for CONUS

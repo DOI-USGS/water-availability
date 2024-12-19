@@ -42,7 +42,22 @@
             </p> for each watershed. Click the name to turn off and on the layers in the map.
           </div>
           <div class="image-container">
+          <HorizontalBar 
+            categoricalVariable="d3_category"
+            continuousRaw="total_use"
+            continuousPercent="d3_percentage"
+            :layerPaths="{
+              ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order, label: layers.ir_total.label },
+              ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order, label: layers.ps_total.label },
+              te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order, label: layers.te_total.label },
+              te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order, label: layers.te_saline.label },
+            }"
+            :data="csvData"
+            :regionName="selectedRegion"
+          
+          />
           <RegionMap 
+          @regionSelected="updateSelectedRegion"
           :layerVisibility="{
             ir_total: layers.ir_total.visible,
             ps_total: layers.ps_total.visible,
@@ -57,12 +72,7 @@
           }"
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
-          csvDataUrl="wu_regions.csv"
-          continuousRaw="total_use"
-          continuousPercent="d3_percentage"
-          categoricalVariable="d3_category"
           regionsVar="Region_nam_nospace"
-          regionsVarLabel="Region_nam"
 
         />
         </div>
@@ -91,64 +101,77 @@
 
 <script setup>
 import { ref, onMounted, inject, reactive } from 'vue';
-import * as d3Base from 'd3';
+import * as d3 from 'd3';
 import AggReg from "../../public/assets/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
 import RegionMap from '../components/RegionMap.vue';
+import HorizontalBar from '../components/HorizontalBar.vue';
 
 // global variables
+const publicPath = import.meta.env.BASE_URL;
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
 const defaultRegionID = "High_Plains";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
 const focalFill = "#5e7789";
 const defaultFill = "#d1cdc0";
+const csvData = ref([]);
+const selectedRegion = ref('United States'); // default region
 
 // toggle maps on and off
-const isChecked = ref({
-  ir_total: true,
-  ps_total: true,
-  te_total: true,
-  te_saline: true
-});
-
 const layers = reactive({
   ir_total: {
     visible: true,
     path: '08_wu_ir_map.png',
     color: '#B0904F',
-    order: 1
+    order: 1,
+    label: "Irrigation"
   },
   ps_total: {
     visible: true,
     path: '08_wu_ps_map.png',
     color: '#822734',
-    order: 2
+    order: 2,
+    label: "Public supply"
   },
   te_total: {
     visible: true,
     path: '08_wu_te_fresh_map.png',
     color: '#3E4C5B',
-    order: 3
+    order: 3,
+    label: "Thermoelectric fresh"
   },
   te_saline: {
     visible: true,
     path: '08_wu_te_saline_map.png',
     color: '#09A7C3',
-    order: 4
+    order: 4,
+    label: "Thermoelectric saline"
   },
 });
 
+// water use data for regions
+const csvWU = "wu_regions.csv"
+
+function updateSelectedRegion(regionName) {
+  selectedRegion.value = regionName;
+}
 
 // functions called here
-onMounted(() => {
+onMounted(async() => {
+  try {
+    const data = await d3.csv(`${publicPath}${csvWU}`);
+    csvData.value = data;
   addInteractions();
 
   // select default region to start
-  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+} catch (error) {
+    console.error("Error loading CSV data:", error);
+  }
 });
 
 function toggleCategory(category) {
@@ -181,7 +204,7 @@ function getImgURL(id) {
 
 
 function addInteractions() {
-  const mapSVG = d3Base.select('.agg-reg-svg');
+  const mapSVG = d3.select('.agg-reg-svg');
   mapSVG.selectAll('.AggReg_nam_nospace')
     .on("mouseover", mouseoverMap)
     .on("mouseout", mouseoutMap);
@@ -189,15 +212,15 @@ function addInteractions() {
 
 function mouseoverMap(event) {
   const regionID = event.target.id;
-  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
-  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
+  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
+  d3.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
   imgSrc.value = getImgURL(regionID)
 };
 
 function mouseoutMap(event) {
   const regionID = event.target.id;
-  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
-  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+  d3.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
+  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
   imgSrc.value = getImgURL(defaultRegionID)
 };
 
