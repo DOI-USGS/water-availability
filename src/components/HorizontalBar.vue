@@ -100,7 +100,7 @@ const updateBarChart = (data, regionName) => {
     .join(
       enter => enter.append('rect')
       .attr('y', d => yScale(d[props.categoricalVariable]))
-        .attr('x', 100) 
+        .attr('x', 160) 
         .attr('height', yScale.bandwidth())
         .attr('width', 0) 
         .attr('fill', d => getColor(d[props.categoricalVariable]))
@@ -109,7 +109,7 @@ const updateBarChart = (data, regionName) => {
         ),
       update => update.transition().duration(750)
         .attr('y', d => yScale(d[props.categoricalVariable]))
-        .attr('x', 100)
+        .attr('x', 160)
         .attr('width', d => xScale(d[props.continuousRaw]))
         .attr('fill', d => getColor(d[props.categoricalVariable])),
         exit => exit
@@ -139,7 +139,7 @@ const updateBarChart = (data, regionName) => {
         .join(
         enter => enter.append('text')
             .attr('class', 'category-label')
-            .attr('x', 90) // Adjust for left alignment
+            .attr('x', 150) // Adjust for left alignment
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .attr('dy', '0.35em') // Vertical alignment
             .attr('text-anchor', 'end') 
@@ -154,10 +154,37 @@ const updateBarChart = (data, regionName) => {
                 const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
                 return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
             }),
-        exit => exit.transition().duration(750) // Fade out and remove outdated labels
+        exit => exit.transition().duration(750) 
             .style('opacity', 0)
             .remove()
         );
+
+    g.selectAll('.value-label')
+        .data(completeData, d => d[props.categoricalVariable]) // Bind data with a unique key
+        .join(
+            enter => enter.append('text')
+            .attr('class', 'value-label')
+            .attr('x', d => xScale(d[props.continuousRaw]) + 165) 
+            .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
+            .attr('dy', '0.35em') 
+            .attr('text-anchor', 'start') 
+            .attr('font-size', '1.5rem')
+            .attr('fill', 'black')
+            .text(d => formatValue(d[props.continuousRaw])), 
+            update => update.transition().duration(750)
+            .attr('x', d => xScale(d[props.continuousRaw]) + 165) 
+            .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
+            .text(d => formatValue(d[props.continuousRaw])), 
+            exit => exit.transition().duration(750) 
+            .style('opacity', 0)
+            .remove()
+        );
+
+
+
+};
+const formatValue = (value) => {
+  return Math.round(value).toLocaleString(); // round and format with commas
 };
 
 // watch for changes in data or regionName
@@ -178,5 +205,6 @@ watch(
     width: 100%;
     height: auto;
     max-height: 100%;
+    overflow: visible;
   }
   </style>
