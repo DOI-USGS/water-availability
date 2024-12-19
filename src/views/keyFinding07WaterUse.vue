@@ -7,7 +7,51 @@
           An understanding of where, when, why, and how much water is extracted for human use is fundamental to the evaluation of the Nation’s water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for <span class="highlight" id="Irrigation">crop irrigation </span> followed by fresh water used in the process of creating energy from <span class="highlight" id="Thermoelectric_fresh"> Thermoelectric power</span> plants. Along with <span class="highlight" id="Public_Supply"> public supply </span>, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. <span class="highlight" id="Thermoelectric_saline"> Thermoelectric power (from saline water)</span> uses another approximately 21,000 million gallons per day.
         </p>
       </div>
-      
+      <div class="caption-container">
+        <div class="caption-text-child">
+          <p>This chart shows water use from 2010 through 2020. Use the buttons to switch between viewing the total annual use to viewing the annual use by category.</p>
+          <div class="checkbox_item">
+            <div class="checkbox_wrap">
+              <label>
+                <input type="radio" name="water-use" @change="handleViewChange" id="total-button" value="stacked"> Total use
+              </label>
+              <label>
+                <input type="radio" name="water-use" @change="handleViewChange" id="facet-button" value="faceted"> Use by category
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="caption-legend-child">
+          <div class="legend_item" id="legend-wu-ir" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Crop irrigation
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-ps" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Public supply
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-te-fresh" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Thermoelectric (fresh)
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-te-saline" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Thermoelectric (saline)
+            </label>
+          </div>
+        </div>
+      </div> 
       <!-- Dropdown for selecting view mode -->
       <div class="dropdown-container">
         <select v-model="selectedView" @change="handleViewChange">
