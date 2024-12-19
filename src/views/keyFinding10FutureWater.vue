@@ -63,7 +63,7 @@ const filteredMessages = SubPages.SubPages.filter(message => message.route === r
 const impactTabs = filteredMessages[0].tabData;
 
 // global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+const baseURL = "https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/"
 
 
 function getMapURL(suffix) {

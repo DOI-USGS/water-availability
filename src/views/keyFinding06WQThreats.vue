@@ -120,7 +120,7 @@ const mobileView = isMobile;
 
 
 // global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+const baseURL = "https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/"
 
 
 
