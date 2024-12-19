@@ -49,7 +49,7 @@ const aggregateData = (data) => {
 
   return totalByCategory.map(([category, value]) => ({
     [props.categoricalVariable]: category,
-    [props.continuousRaw]: (value / totalValue) * 100,
+    [props.continuousRaw]: value,
   }));
 };
 
@@ -64,15 +64,8 @@ const updateBarChart = (data, regionName) => {
   const barHeight = 20;
   const spacing = 10; // spacing between bars
 
-  const sortedData = [...data].sort((a, b) => {
-    const normalize = str => str.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
-    const orderA = props.layerPaths[normalize(a[props.categoricalVariable])]?.order || Infinity;
-    const orderB = props.layerPaths[normalize(b[props.categoricalVariable])]?.order || Infinity;
-    return orderA - orderB;
-  });
-
   // Get the values for the horizontal scale
-  const values = sortedData.map(d => +d[props.continuousRaw]);
+  const values = data.map(d => +d[props.continuousRaw]);
 
   const yScale = d3.scaleBand()
     .domain(data.map(d => d[props.categoricalVariable]))
@@ -92,7 +85,7 @@ const updateBarChart = (data, regionName) => {
 
   // create and update rectangles
   g.selectAll('rect')
-    .data(sortedData)
+    .data(data)
     .join(
       enter => enter.append('rect')
       .attr('y', d => yScale(d[props.categoricalVariable]))
