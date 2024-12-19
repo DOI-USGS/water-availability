@@ -7,22 +7,30 @@
                   </p>
             </div>
             <div class="caption-container">
-              <p>This chart shows the average annual water supply and demand in millimeters per year. </p>
-              <div class="toggle-container">
-                <button
-                  :class="{'active-toggle': showDemand, 'inactive-toggle': !showDemand}"
-                  @click="togglePoints('demand')"
-                  class="highlight demand toggle-button"
-                >
-                  {{ showDemand ? 'Hide Demand' : 'Show Demand' }}
-                </button>
-                <button
-                  :class="{'active-toggle': showSupply, 'inactive-toggle': !showSupply}"
-                  @click="togglePoints('supply')"
-                  class="highlight supply toggle-button"
-                >
-                  {{ showSupply ? 'Hide Supply' : 'Show Supply' }}
-                </button>
+              <div class="caption-text-child">
+                <p>This chart shows the average annual water supply and demand in millimeters per year. </p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="checkbox_item" id="checkbox-demand" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="togglePoints('demand')">
+                    Water demand
+                  <span class="checkbox_mark"></span>
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-supply" >
+                  <label class="checkbox_wrap">
+                    <input type="checkbox" 
+                    name="checkbox" 
+                    class="checkbox_inp" 
+                    @click="togglePoints('supply')">
+                      Water supply
+                    <span class="checkbox_mark"></span>
+                  </label>
+                </div>
               </div>
           </div>
         <div class="viz-container">
@@ -230,6 +238,7 @@ function initDotChart() {
 
     dotGroup = chartBounds.append('g');
 }
+
 
 function togglePoints(type) {
     if (type === "supply") {
@@ -447,21 +456,7 @@ function createDotChart() {
   background-color: #F87A53;
 }
 
-.toggle-container {
-  display: flex;
-  width: 300px;
-  margin-top: 20px;
-  margin: auto;
-  margin-bottom: 40px;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  button {
-    padding: 2px;
-    margin: 5px;
-    text-align: center;
-  }
-}
+
 
 .highlight {
   color: white;

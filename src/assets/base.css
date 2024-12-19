@@ -163,14 +163,123 @@ a:visited {
   justify-content: center;
 }
 
+
+/* caption div that contains the caption and buttons/legend */
 .caption-container {
-  padding: 0px 10px;
+  display: grid;
+  width: 55%;
+  min-width: 400px;
+  margin: 0 auto;
+  padding-top: 20px;
+  grid-template-columns: 1fr 1fr;
 }
-.caption-container p{
+/* caption div */
+.caption-text-child {
   font-size: 18px;
   font-weight: 400;
   font-style: italic
 }
+/* legend div */
+.toggle-legend-child {
+  display: flex;
+  width: 300px;
+  margin-top: 20px;
+  margin: auto;
+  margin-bottom: 40px;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  button {
+    padding: 2px;
+    margin: 5px;
+    text-align: center;
+  }
+}
+.checkbox_item .checkbox_wrap{
+	position: relative;
+	display: block;
+	cursor: pointer;
+	width: 100px;
+	margin: 0 auto 50px;
+}
+.checkbox_item:last-child .checkbox_wrap{
+	margin-bottom: 0;
+}
+.checkbox_item .checkbox_wrap .checkbox_inp{
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	z-index: 1;
+}
+.checkbox_item .checkbox_wrap .checkbox_mark{
+	display: inline-block;
+	position: relative;
+	border-radius: 25px;
+}
+.checkbox_item .checkbox_wrap .checkbox_mark:before,
+.checkbox_item .checkbox_wrap .checkbox_mark:after{
+	content: "";
+	position: absolute;
+	transition: all 0.5s ease;
+}
+/* flat styles */
+.checkbox_item .checkbox_wrap .checkbox_mark{
+  border: 5px solid cyan;
+	width: 100px;
+	height: 50px;
+	padding: 2px;
+}
+#checkbox-demand.checkbox_item .checkbox_wrap .checkbox_mark{
+  border: 5px solid var(--ws-demand);
+}
+#checkbox-supply.checkbox_item .checkbox_wrap .checkbox_mark{
+  border: 5px solid var(--ws-supply);
+}
+
+
+.checkbox_item .checkbox_wrap .checkbox_mark:before{
+	top: 2px;
+  left: 2px;
+  width: 44px;
+  height: 36px;
+  border-radius: 25px;
+  background-color: orchid;
+}
+#checkbox-demand.checkbox_item .checkbox_wrap .checkbox_mark:before{
+    background-color: var(--ws-demand);
+}
+#checkbox-supply.checkbox_item .checkbox_wrap .checkbox_mark:before{
+  background-color: var(--ws-supply);
+}
+#checkbox-demand.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark{
+	border-color: var(--inactive-grey);
+}
+#checkbox-supply.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark{
+	border-color: var(--inactive-grey);
+}
+#checkbox-demand.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before{
+	left: 44px;
+	background: var(--inactive-grey);
+}
+#checkbox-supply.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before{
+	left: 44px;
+	background: var(--inactive-grey);
+}
+/* .caption-legend-child{
+  background-color: var(--teal-dark);
+  color: var(--white-soft);
+  cursor:pointer;
+  padding: 18px;
+  width: 300px;
+  border: none;
+  text-align: left;
+  outline: none; 
+}
+.toggle-button:hover{
+  background-color: var(--blue-dark);
+  color: var(--white-soft);
+} */
 
 .report-link-container {
   padding: 40px 20px;
@@ -195,21 +304,7 @@ a:visited {
   color: white;
 }
 
-/* button for switching between images */
-.toggle-button{
-  background-color: var(--teal-dark);
-  color: var(--white-soft);
-  cursor:pointer;
-  padding: 18px;
-  width: 300px;
-  border: none;
-  text-align: left;
-  outline: none; 
-}
-.toggle-button:hover{
-  background-color: var(--blue-dark);
-  color: var(--white-soft);
-}
+
 
 /* container for the top of each page with key message */
 .wavy-container {
