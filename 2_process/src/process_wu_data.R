@@ -219,11 +219,26 @@ summary_wu_by_Reg <- function(in_sf){
     summarize(total_region = sum(value, na.rm = TRUE))
   
   # Calculate total water use by region and category
-  summary_sui <- longer_data |>
+  summary_wu <- longer_data |>
     group_by(Region_nam_nospace, Region_nam, AggReg_nam, use_category) |>
     summarize(total_use = round(sum(value, na.rm = TRUE), 4)) |>
     left_join(total_by_region) |>
     mutate(d3_percentage = round(100*(total_use/total_region), 4)) |>
     rename(d3_category = use_category)
+  
+  # calculate all regions together for d3
+  summary_all <- summary_wu |> group_by(d3_category) |> 
+    summarize(total_use = sum(total_use), 
+              d3_percentage = (total_use/241497.9)*100) |>
+    mutate(Region_nam_nospace = "All_regions",
+           Region_nam = "All Regions",
+           AggReg_nam = "All Regions",
+           total_region = sum(total_use))
+  
+  # rbind together
+  out <- summary_all |>
+    bind_rows(summary_wu)
+  
+  return(out)
   
 }
