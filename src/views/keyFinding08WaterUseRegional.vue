@@ -62,8 +62,21 @@
           continuousPercent="d3_percentage"
           categoricalVariable="d3_category"
           regionsVar="Region_nam_nospace"
-          regionsVarLabel="Region_nam"
 
+        />
+        <StackedBar 
+          categoricalVariable="d3_category"
+          continuousRaw="total_use"
+          continuousPercent="d3_percentage"
+          :layerPaths="{
+            ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
+            ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
+            te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
+            te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
+          }"
+          :data="csvData"
+          regionName="United States"
+        
         />
         </div>
           <div class="text-container">
@@ -91,30 +104,26 @@
 
 <script setup>
 import { ref, onMounted, inject, reactive } from 'vue';
-import * as d3Base from 'd3';
+import * as d3 from 'd3';
 import AggReg from "../../public/assets/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import References from '../components/References.vue';
 import RegionMap from '../components/RegionMap.vue';
+import StackedBar from '../components/StackedBar.vue';
 
 // global variables
+const publicPath = import.meta.env.BASE_URL;
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
 const defaultRegionID = "High_Plains";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
 const focalFill = "#5e7789";
 const defaultFill = "#d1cdc0";
+const csvData = ref([]);
 
 // toggle maps on and off
-const isChecked = ref({
-  ir_total: true,
-  ps_total: true,
-  te_total: true,
-  te_saline: true
-});
-
 const layers = reactive({
   ir_total: {
     visible: true,
@@ -142,13 +151,22 @@ const layers = reactive({
   },
 });
 
+// water use data for regions
+const csvWU = "wu_regions.csv"
 
 // functions called here
-onMounted(() => {
+onMounted(async() => {
+  try {
+    const data = await d3.csv(`${publicPath}${csvWU}`);
+    csvData.value = data;
+    console.log(csvData)
   addInteractions();
 
   // select default region to start
-  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+} catch (error) {
+    console.error("Error loading CSV data:", error);
+  }
 });
 
 function toggleCategory(category) {
@@ -181,7 +199,7 @@ function getImgURL(id) {
 
 
 function addInteractions() {
-  const mapSVG = d3Base.select('.agg-reg-svg');
+  const mapSVG = d3.select('.agg-reg-svg');
   mapSVG.selectAll('.AggReg_nam_nospace')
     .on("mouseover", mouseoverMap)
     .on("mouseout", mouseoutMap);
@@ -189,15 +207,15 @@ function addInteractions() {
 
 function mouseoverMap(event) {
   const regionID = event.target.id;
-  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
-  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
+  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
+  d3.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
   imgSrc.value = getImgURL(regionID)
 };
 
 function mouseoutMap(event) {
   const regionID = event.target.id;
-  d3Base.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
-  d3Base.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+  d3.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
+  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
   imgSrc.value = getImgURL(defaultRegionID)
 };
 

@@ -10,7 +10,7 @@
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
 
-  const publicPath = import.meta.env.BASE_URL; // this gets the base url for your application
+  const publicPath = import.meta.env.BASE_URL; // this gets the base url for the site
   
   const mapContainer = ref(null)
   const barContainer = ref(null)
@@ -31,10 +31,6 @@ const props = defineProps({
     required: true
   },
   regionsVar: {
-    type: String,
-    required: true
-  },
-  regionsVarLabel: {
     type: String,
     required: true
   },

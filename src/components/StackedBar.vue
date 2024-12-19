@@ -1,0 +1,122 @@
+<template>
+    <div ref="barContainer" class="bar-container"></div>
+</template>
+  
+  <script setup>
+  import { onMounted, ref, watch, defineProps, computed } from 'vue';
+  import * as d3 from 'd3';
+  
+  // props to configure the bar chart
+  const props = defineProps({
+    categoricalVariable: { type: String, required: true },
+    continuousPercent: { type: String, required: true },
+    continuousRaw: { type: String, required: true },
+    layerPaths: { type: Object, required: true },
+    data: { type: Array, required: true },
+    regionName: { type: String, default: 'United States' },
+  });
+  
+  const barContainer = ref(null);
+  let svgBar;
+  
+onMounted(() => {
+  // create the SVG if it doesn't exist
+  if (!svgBar) {
+    svgBar = d3.select(barContainer.value)
+      .append('svg')
+      .attr('viewBox', `0 -30 700 100`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .classed('bar-chart-svg', true);
+
+    svgBar.append('g'); // add a <g> container
+  }
+
+  // find national stats by category
+  const totalByCategory = d3.rollups(
+    props.data,
+    v => d3.sum(v, d => +d[props.continuousRaw]),
+    d => d[props.categoricalVariable]
+    );
+  
+    const totalValue = d3.sum(totalByCategory, d => d[1]);
+  
+    const aggregatedData = totalByCategory.map(([category, value]) => ({
+    [props.categoricalVariable]: category,
+    d3_percentage: (value / totalValue) * 100,
+    }));
+
+  // initialize the chart with the provided data
+  updateBarChart(aggregatedData, 'United States');
+});
+
+const updateBarChart = (data, regionName) => {
+  if (!data.length) {
+    console.warn('No data provided for the bar chart.');
+    return;
+  }
+
+  // sort data based on the order defined in layerPaths
+  const sortedData = [...data].sort((a, b) => {
+    const normalize = (str) => str.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
+    const orderA = props.layerPaths[normalize(a[props.categoricalVariable])]?.order || Infinity;
+    const orderB = props.layerPaths[normalize(b[props.categoricalVariable])]?.order || Infinity;
+    return orderA - orderB;
+  });
+
+  const values = sortedData.map(d => +d[props.continuousPercent]);
+  const xScale = d3.scaleLinear()
+    .domain([0, d3.sum(values)])
+    .range([0, 700]);
+
+  const getColor = (category) => {
+    const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
+    return props.layerPaths[normalizedCategory]?.color || '#ccc'; // default color
+  };
+
+  const g = svgBar.select('g'); // reuse the <g> container
+
+  // create and update rectangles
+  g.selectAll('rect')
+    .data(sortedData)
+    .join(
+      enter => enter.append('rect')
+        .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
+        .attr('y', 0)
+        .attr('width', 0)
+        .attr('height', 30)
+        .attr('fill', d => getColor(d[props.categoricalVariable]))
+        .call(enter => enter.transition().duration(750).attr('width', d => xScale(d[props.continuousPercent]))),
+      update => update.transition().duration(750)
+        .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
+        .attr('fill', d => getColor(d[props.categoricalVariable])),
+      exit => exit.transition().duration(750).attr('width', 0).remove()
+    );
+
+  // update chart title
+  g.selectAll('text.chart-title')
+    .data([regionName])
+    .join(
+      enter => enter.append('text')
+        .attr('class', 'chart-title')
+        .attr('x', 0)
+        .attr('y', -10)
+        .attr('fill', 'black')
+        .attr('font-size', '2.5rem')
+        .text(regionName),
+      update => update.transition().duration(750).text(regionName)
+    );
+};
+
+// watch for changes in data or regionName
+watch(() => [props.data, props.regionName], ([data, regionName]) => {
+  updateBarChart(data, regionName);
+});
+</script>
+
+<style>
+.bar-chart-svg {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+  </style>
