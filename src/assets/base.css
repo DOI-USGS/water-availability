@@ -272,6 +272,26 @@ a:visited {
       border-color: var(--wq-natural);
       background-color: var(--wq-natural);
     }
+    #legend-sui-none.legend_item .legend_wrap .legend_mark {
+      border-color: var(--sui-none);
+      background-color: var(--sui-none);
+    }
+    #legend-sui-low.legend_item .legend_wrap .legend_mark {
+      border-color: var(--sui-low);
+      background-color: var(--sui-low);
+    }
+    #legend-sui-mod.legend_item .legend_wrap .legend_mark {
+      border-color: var(--sui-mod);
+      background-color: var(--sui-mod);
+    }
+    #legend-sui-high.legend_item .legend_wrap .legend_mark {
+      border-color: var(--sui-high);
+      background-color: var(--sui-high);
+    }
+    #legend-sui-severe.legend_item .legend_wrap .legend_mark {
+      border-color: var(--sui-severe);
+      background-color: var(--sui-severe);
+    }
   .checkbox_item .checkbox_wrap .checkbox_mark{
     border-radius: 25px;
   }

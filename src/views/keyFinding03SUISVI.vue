@@ -3,20 +3,104 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-              <p>The availability of clean water for our communities is affected by hydrologic factors like water quantity, quality, and flow, to social factors like water infrastructure, access, and rights (xxx). Socioeconomic status and access to resources and public services can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
-              <br>
-              <p>These circles each represent one watershed (HUC8) in the U.S., and the size corresponds to the population living within that watershed (xx). Levels of water limitation are <span class="highlight" id="very_low_none"> very low or none </span>, <span class="highlight" id="low"> low </span>, <span class="highlight" id="moderate"> moderate </span>, <span class="highlight" id="high"> high </span>, and <span class="highlight" id="severe"> severe </span>.     </p>
+              <p>About 8% of the CONUS population, or 26.7 million people, live in areas of high or severe water limitation. The availability of clean water for our communities is affected by hydrologic factors like water quantity, quality, and flow, to social factors like water infrastructure, access, and rights (xxx). Socioeconomic status and access to resources and public services can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
+              
             </div>
+
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>These circles each show one watershed. The color is the level of water limitation, and the size of the bubble represents the population of people living in that watershed (xx). </p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="legend_item" id="legend-sui-none" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  Very low water limitation
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-sui-low" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  Low water limitation
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-sui-mod" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  Moderate water limitation
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-sui-high" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  High water limitation
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-sui-severe" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  Severe water limitation
+                  </label>
+                </div>
+              </div>
+            </div> 
             <div class="viz-container">
               <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_sui_popn_CONUS.png">
             </div>
             <div class="text-container">
-                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). For example, drinking-water violations in the U.S. are more prevalent in socially vulnerable communities based on socioeconomic status, race, language, and demographic and housing characteristics (Scanlon et al., 2023). In addition, cases of incomplete plumbing have been reported to be associated with communities of color, high poverty levels, low average income, low education rates, and renter-dominated communities (Deitz and Meehan, 2019; Meehan et al., 2020; Mueller and Gasteyer, 2021). Characteristics of a community, such as socioeconomic status or access to resources and public services, can determine a community’s adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
-                <h3>Social vulnerability is disproportionately high in areas of water limitation</h3>
-                <p>The overall balance between water supply and demand is quantified as water stress, which is calculated by comparing surface water-supply and consumptive uses. Although 8% of Americans living in the lower 48 states (27 million individuals) live in watersheds with high or severe water stress, more than half of this population belongs to the most socially vulnerable populations. </p>
-                <br>
-                <p>This map shows areas of high and low water limitation by color, with socially vulnerable populations indicated with darker shades of those colors. Click on the button to view the areas of high water limitation. These areas show almost exclusively dark red patches, meaning that most areas with high water limitation occur where people are socially vulnerable. </p>
+                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). </p>
             </div>
+            <div class="text-container">
+                <h3>Social vulnerability is disproportionately high in areas of water limitation</h3>
+                <p>Although 8% of Americans living in the lower 48 states live in watersheds with high or severe water stress, more than half of this population belongs to the most socially vulnerable populations. </p>
+            </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>This map shows areas of high and low water limitation by color, with socially vulnerable populations indicated with darker shades of those colors. Click on the button to view the areas of high water limitation. These areas show almost exclusively dark red patches, meaning that most areas with high water limitation occur where people are socially vulnerable. </p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="legend_item" id="legend-sui-none" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  Very low water limitation
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-sui-low" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  Low water limitation
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-sui-mod" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  Moderate water limitation
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-sui-high" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  High water limitation
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-sui-severe" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                  Severe water limitation
+                  </label>
+                </div>
+              </div>
+            </div> 
             <div class="viz-container">
                 <img 
                         id="first-image" 
