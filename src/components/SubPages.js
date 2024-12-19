@@ -32,8 +32,7 @@ export default {
                             id:2,
                             startofSentence: true,
                             text: "For example, intense water withdrawal, even if restored to the local system through return flow, can degrade water quality because the water may return with increased sediment, nutrients, or salinity.",
-                            refs: ["Lin2012", "Park2018"],
-                            phraseEnd: true
+                            refs: ["Lin2012", "Park2018"]
                         }
                     ]
                 },{
@@ -46,8 +45,7 @@ export default {
                             id: 1,
                             startofSentence: true,
                             text: "Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, and pesticides. Sources of water quality contaminants include agriculture, wastewater, air pollution, other human sources such as mining and land-use change, and natural sources such as springs and streamflow. Areas of the country that strongly indicate surface water quality issues include the High Plains, Souris-Red-Rainy, and the Midwest regions, largely due to the application of fertilizer and manure for agriculture.",
-                            refs: ["Erickson2025"],
-                            phraseEnd: true
+                            refs: ["Erickson2025"]
                         }
 
                     ]
@@ -61,15 +59,13 @@ export default {
                             id: 1,
                             startofSentence: true,
                             text: "Groundwater-derived drinking water can be affected by high concentrations of constituents from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, and lithium, as well as salinity and nitrogen. Mixtures of multiple groundwater contaminants can also have compounding effects, because different users may have elevated sensitivity when exposed to multiple water-quality issues at once.",
-                            refs: ["Kaushal2018", "Waite2019", "Waite2021"],
-                            phraseEnd: true
+                            refs: ["Kaushal2018", "Waite2019", "Waite2021"]
                         },
                         {
                             id: 2,
                             startofSentence: true,
                             text: "Threats to human health, corrosion of infrastructure, reduced crop yields, poor taste, impeded navigation, and economic impacts can all result from poor water quality.",
-                            refs: ["Erickson2025"],
-                            phraseEnd: true
+                            refs: ["Erickson2025"]
                         }
                     ]
                 },{
