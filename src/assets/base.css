@@ -186,6 +186,23 @@ a:visited {
   font-weight: 400;
   font-style: italic
 }
+@media only screen and (max-width: 768px) {
+  .caption-container {
+    display: grid;
+    width: 55%;
+    min-width: 400px;
+    margin: 0 auto;
+    padding-top: 20px;
+    grid-gap: 5px;
+    grid-template-columns: 1fr;
+  }
+  /* caption div */
+  .caption-text-child {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic
+  }
+}
 /* legend div */
 .toggle-legend-child {
   display: flex;
