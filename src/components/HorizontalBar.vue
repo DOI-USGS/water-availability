@@ -26,7 +26,7 @@ onMounted(() => {
   if (!svgBar) {
     svgBar = d3.select(barContainer.value)
       .append('svg')
-      .attr('viewBox', `0 -30 700 100`)
+      .attr('viewBox', `0 -30 700 150`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .classed('bar-chart-svg', true);
 
@@ -71,8 +71,8 @@ const updateBarChart = (data, regionName) => {
   });
 
   /// Define dimensions and scales
-  const chartHeight = 300; 
-  const barHeight = 20;
+  const chartHeight = 100; 
+  const barHeight = 14;
   const spacing = 10; // spacing between bars
 
   // Get the values for the horizontal scale
@@ -80,8 +80,8 @@ const updateBarChart = (data, regionName) => {
 
   const yScale = d3.scaleBand()
     .domain(data.map(d => d[props.categoricalVariable]))
-    .range([0, chartHeight-200])
-    .padding(0.3); // between bars
+    .range([0, chartHeight])
+    .padding(0.6); // between bars
 
   const xScale = d3.scaleLinear()
     .domain([0, 125000])
@@ -128,7 +128,7 @@ const updateBarChart = (data, regionName) => {
         .attr('x', 0)
         .attr('y', -10)
         .attr('fill', 'black')
-        .attr('font-size', '2.75rem')
+        .attr('font-size', '2.25rem')
         .attr('font-weight', 'bold')
         .text(displayTitle),
       update => update.transition().duration(750).text(displayTitle)
@@ -143,10 +143,17 @@ const updateBarChart = (data, regionName) => {
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .attr('dy', '0.35em') // Vertical alignment
             .attr('text-anchor', 'end') 
-            .text(d => d[props.categoricalVariable]),
+            .attr('font-size', '1.5rem')
+            .text(d => {
+                const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
+                return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
+            }),
         update => update.transition().duration(750)
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
-            .text(d => d[props.categoricalVariable]),
+            .text(d => {
+                const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
+                return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
+            }),
         exit => exit.transition().duration(750) // Fade out and remove outdated labels
             .style('opacity', 0)
             .remove()

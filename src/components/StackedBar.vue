@@ -119,7 +119,7 @@ const updateBarChart = (data, regionName) => {
         .attr('x', 0)
         .attr('y', -10)
         .attr('fill', 'black')
-        .attr('font-size', '2.75rem')
+        .attr('font-size', '2.25rem')
         .attr('font-weight', 'bold')
         .text(displayTitle),
       update => update.transition().duration(750).text(displayTitle)
@@ -134,7 +134,7 @@ const updateBarChart = (data, regionName) => {
             enter => {
             const enteringText = enter.append('text')
                 .attr('class', 'chart-labels')
-                .attr('font-size', '1.8rem')
+                .attr('font-size', '1.5rem')
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 45)
                 .attr('fill', 'black')

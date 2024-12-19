@@ -47,10 +47,10 @@
             continuousRaw="total_use"
             continuousPercent="d3_percentage"
             :layerPaths="{
-              ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
-              ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
-              te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
-              te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
+              ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order, label: layers.ir_total.label },
+              ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order, label: layers.ps_total.label },
+              te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order, label: layers.te_total.label },
+              te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order, label: layers.te_saline.label },
             }"
             :data="csvData"
             :regionName="selectedRegion"
@@ -127,25 +127,29 @@ const layers = reactive({
     visible: true,
     path: '08_wu_ir_map.png',
     color: '#B0904F',
-    order: 1
+    order: 1,
+    label: "Irrigation"
   },
   ps_total: {
     visible: true,
     path: '08_wu_ps_map.png',
     color: '#822734',
-    order: 2
+    order: 2,
+    label: "Public supply"
   },
   te_total: {
     visible: true,
     path: '08_wu_te_fresh_map.png',
     color: '#3E4C5B',
-    order: 3
+    order: 3,
+    label: "Thermoelectric fresh"
   },
   te_saline: {
     visible: true,
     path: '08_wu_te_saline_map.png',
     color: '#09A7C3',
-    order: 4
+    order: 4,
+    label: "Thermoelectric saline"
   },
 });
 
