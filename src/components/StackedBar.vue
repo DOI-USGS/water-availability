@@ -3,7 +3,7 @@
 </template>
   
   <script setup>
-  import { onMounted, ref, watch, defineProps, computed } from 'vue';
+  import { onMounted, ref, watch, defineProps } from 'vue';
   import * as d3 from 'd3';
   
   // props to configure the bar chart
@@ -108,7 +108,32 @@ const updateBarChart = (data, regionName) => {
 };
 
 // watch for changes in data or regionName
-watch(() => [props.data, props.regionName], ([data, regionName]) => {
+watch(
+    () => [props.data, props.regionName], 
+    ([data, regionName]) => {
+        const filteredData =
+        regionName === 'United States'
+            ? d3.rollups(
+                data,
+                v => d3.sum(v, d => +d[props.continuousPercent]),
+                d => d[props.categoricalVariable]
+            ).map(([category, value]) => ({
+                [props.categoricalVariable]: category,
+                [props.continuousPercent]: value,
+            }))
+            : data
+                .filter(d => d.Region_nam === regionName)
+                .map(d => ({
+                [props.categoricalVariable]: d[props.categoricalVariable],
+                [props.continuousPercent]:
+                    (+d[props.continuousPercent] /
+                    d3.sum(
+                        data.filter(r => r.Region_nam === regionName),
+                        r => +r[props.continuousPercent]
+                    )) *
+                    100,
+                }));
+
   updateBarChart(data, regionName);
 });
 </script>

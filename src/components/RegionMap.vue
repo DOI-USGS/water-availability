@@ -6,7 +6,7 @@
   </template>
   
   <script setup>
-  import { onMounted, ref, watch, defineProps } from 'vue'
+  import { onMounted, ref, watch, defineProps, defineEmits } from 'vue'
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
 
@@ -15,6 +15,8 @@
   const mapContainer = ref(null)
   const barContainer = ref(null)
   let mapLayers;
+
+  const emit = defineEmits(['regionSelected']); 
 
 // props definition, allowing customized paths and datasets
 const props = defineProps({
@@ -340,6 +342,8 @@ watch(
         
         // update bar chart with regional data
         const regionClassFilter = d.properties.Region_nam;
+        emit('regionSelected', regionClassFilter); // send region_nam to parent
+
         const filteredData = csvData
           .filter(row => row.Region_nam === regionClassFilter)
           .map(row => ({

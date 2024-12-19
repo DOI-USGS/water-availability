@@ -43,6 +43,7 @@
           </div>
           <div class="image-container">
           <RegionMap 
+          @regionSelected="updateSelectedRegion"
           :layerVisibility="{
             ir_total: layers.ir_total.visible,
             ps_total: layers.ps_total.visible,
@@ -75,7 +76,7 @@
             te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
           }"
           :data="csvData"
-          regionName="United States"
+          :regionName="selectedRegion"
         
         />
         </div>
@@ -122,6 +123,7 @@ const featureToggles = inject('featureToggles');
 const focalFill = "#5e7789";
 const defaultFill = "#d1cdc0";
 const csvData = ref([]);
+const selectedRegion = ref('United States'); // default region
 
 // toggle maps on and off
 const layers = reactive({
@@ -153,6 +155,10 @@ const layers = reactive({
 
 // water use data for regions
 const csvWU = "wu_regions.csv"
+
+function updateSelectedRegion(regionName) {
+  selectedRegion.value = regionName;
+}
 
 // functions called here
 onMounted(async() => {
