@@ -113,21 +113,4 @@ function mouseoutMap(event) {
 
 <style scoped>
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-  &#dry {
-    background-color: var(--ws-demand);
-  }
-
-  &#wet {
-    background-color: var(--ws-supply);
-  }
-}
 </style>

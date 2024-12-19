@@ -501,46 +501,6 @@ function createDotChart() {
 
 
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-  &#supply {
-    background-color: var(--ws-supply);
-  }
-
-  &#demand {
-    background-color: var(--ws-demand);
-  }
-
-  &#very_low_none {
-    background-color: var(--sui-none);
-  }
-
-  &#low {
-    background-color: var(--sui-low);
-    color: black;
-  }
-
-  &#moderate {
-    background-color: var(--sui-mod);
-    color: black;
-  }
-
-  &#high {
-    background-color: var(--sui-high);
-    color: black;
-  }
-
-  &#severe {
-    background-color: var(--sui-severe);
-  }
-}
 .supply {
   background-color: var(--ws-supply);
 }

@@ -5,7 +5,6 @@
           <div class="text-container">
                 <p>How we use water varies across the country, including the type of use (for example, crop irrigation, public supply, and thermoelectric power) and the source of water (groundwater versus surface water). Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some eastern States such as Ohio, New York, and New Jersey. Withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
           </div>
-
           <div class="caption-container">
               <div class="caption-text-child">
                 <p>This map shows total water use by category of use for each watershed (HUC12). The bar chart shows the total water use for that category. Toggle the categories of water use on and off with these buttons. Hover over the map to see regional summaries.</p>
@@ -90,10 +89,29 @@
         </div>
           <div class="text-container">
             <h3>Water from above and below</h3>
-            <p>Across the U.S., the source of water, whether from  <span class="highlight" id="groundwater">groundwater</span> or from <span class="highlight" id="surface">surface water</span> typically depends on the availability of these sources and on the category of use. On average during water years 2010-2020, about 62% of water withdrawals for the combination of public supply, crop irrigation, and thermoelectric power across the country were from surface water and 38% of withdrawals were from groundwater.  However, these proportions vary widely across the country, for example, for the High Plains area, 31% of withdrawals were from surface water compared to 69% from groundwater. This regional reversal of the national pattern reflects the heavy use of groundwater used for crop irrigation in the High Plains. Groundwater use also is prevalent for crop irrigation in the eastern U.S.; the western U.S. uses a nearly even mixture of groundwater and surface water for crop irrigation. In contrast, the eastern U.S., where thermoelectric power is generally the largest category of water use, is overall much more reliant on surface water. Sources of water for public-supply vary across the country, depending on the available the local water supply.</p>
-            <br><br>
-            <p>This data visualization shows the relative amount of water withdrawn for public supply that comes from <span class="highlight" id="groundwater">groundwater</span> or from <span class="highlight" id="surface">surface water</span> by region. The bars are placed from west to east based on the longitude (easting) of the center of each watershed. Hover over the map to see each individual region's data.</p>
+            <p>Across the U.S., the source of water, whether from  groundwater or from surface water typically depends on the availability of these sources and on the category of use. On average during water years 2010-2020, about 62% of water withdrawals for the combination of public supply, crop irrigation, and thermoelectric power across the country were from surface water and 38% of withdrawals were from groundwater.  However, these proportions vary widely across the country, for example, for the High Plains area, 31% of withdrawals were from surface water compared to 69% from groundwater. This regional reversal of the national pattern reflects the heavy use of groundwater used for crop irrigation in the High Plains. Groundwater use also is prevalent for crop irrigation in the eastern U.S.; the western U.S. uses a nearly even mixture of groundwater and surface water for crop irrigation. In contrast, the eastern U.S., where thermoelectric power is generally the largest category of water use, is overall much more reliant on surface water. Sources of water for public-supply vary across the country, depending on the available the local water supply.</p>
           </div>
+          <div class="caption-container">
+              <div class="caption-text-child">
+                <p>This data visualization shows the relative amount of water withdrawn for public supply that comes from surface water (bars that go up) or from groundwater (bars that go down) by region. The bars are placed from west to east based on the longitude (easting) of the center of each watershed. Hover over the map to see each individual region's data.</p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="legend_item" id="legend-wu-sw" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Surface water
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wu-gw" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Groundwater
+                  </label>
+                </div>
+              </div>
+          </div> 
           <div class="viz-container">
             <AggReg class="agg-reg-svg"></AggReg>
             <img
@@ -240,68 +258,5 @@ function mouseoutMap(event) {
 
 
 <style scoped>
-
-
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-  &#groundwater {
-    background-color: var(--wu-gw);
-  }
-
-  &#surface {
-    background-color: var(--ws-supply);
-  }
-
-  &#ir_totalButton {
-    background-color: var(--wu-agriculture);
-  }
-
-  &#ps_totalButton {
-    background-color: var(--wu-ps);
-  }
-
-  &#te_totalButton {
-    background-color: var(--wu-te-fresh);
-  }
-
-  &#te_salineButton {
-    background-color: var(--wu-te-saline);
-  }
-}
-
-
-.highlight.inactive-toggle {
-  color: black;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-  background-color: var(--inactive-grey);
-
-  &#ir_totalButton {
-    background-color: var(--inactive-grey);
-  }
-
-  &#ps_totalButton {
-    background-color: var(--inactive-grey);
-  }
-
-  &#te_totalButton {
-    background-color: var(--inactive-grey);
-  }
-
-  &#te_salineButton {
-    background-color: var(--inactive-grey);
-  }
-}
 
 </style>

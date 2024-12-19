@@ -472,35 +472,6 @@ function wrap(text, width) {
   fill: var(--ws-supply);
 }
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-  &#Agriculture {
-    background-color: var(--wq-sediment);
-  }
-
-  &#Atmosphericdeposition {
-    background-color: var(--wq-air);
-  }
-
-  &#Otherhumansources {
-    background-color: var(--wu-ps);
-  }
-
-  &#Wastewater {
-    background-color: var(--ws-supply);
-  }
-
-  &#Naturalsources {
-    background-color: var(--wq-natural);
-  }
-}
 $switchWidth: 7.9rem;
 .graph-buttons-switch {
   display: flex;

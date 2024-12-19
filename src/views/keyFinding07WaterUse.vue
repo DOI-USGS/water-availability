@@ -4,7 +4,7 @@
     <div class="content-container">
       <div class="text-container">
         <p>
-          An understanding of where, when, why, and how much water is extracted for human use is fundamental to the evaluation of the Nation’s water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for <span class="highlight" id="Irrigation">crop irrigation </span> followed by fresh water used in the process of creating energy from <span class="highlight" id="Thermoelectric_fresh"> Thermoelectric power</span> plants. Along with <span class="highlight" id="Public_Supply"> public supply </span>, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. <span class="highlight" id="Thermoelectric_saline"> Thermoelectric power (from saline water)</span> uses another approximately 21,000 million gallons per day.
+          An understanding of where, when, why, and how much water is extracted for human use is fundamental to the evaluation of the Nation’s water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for crop irrigation followed by fresh water used in the process of creating energy from Thermoelectric power plants. Along with public supply, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. Thermoelectric power (from saline water) uses another approximately 21,000 million gallons per day.
         </p>
       </div>
       <div class="caption-container">
@@ -467,25 +467,4 @@ onMounted(async () => {
   display: inline-block;
 }
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-  &#Public_Supply {
-    background-color: var(--wu-ps);
-  }
-  &#Irrigation {
-    background-color: var(--wu-agriculture);
-  }
-  &#Thermoelectric_fresh {
-    background-color: var(--wu-te-fresh);
-  }
-  &#Thermoelectric_saline {
-    background-color: var(--wu-te-saline);
-  }
-}
 </style>

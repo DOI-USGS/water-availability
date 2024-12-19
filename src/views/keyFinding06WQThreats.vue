@@ -725,62 +725,6 @@ function wrap(text, {
   max-width: 800px;
 }
 
-.highlight {
-  color: black;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-  &#Biotic {
-    background-color: var(--wq-natural);
-  }
-
-  &#Nutrients {
-    background-color: var(--wq-mod);
-  }
-
-  &#Organics {
-    background-color: var(--wu-ps);
-  }
-
-  &#Metals {
-    background-color: var(--wq-metal);
-  }
-
-  &#Sediment {
-    background-color: var(--wu-agriculture);
-  }
-
-  &#Salinity {
-    background-color: var(--wq-salinity);
-  }
-
-  &#Temperature {
-    background-color: var(--wq-temp);
-  }
-
-  &#Unimpaired {
-    background-color: var(--wq-unimpaired);
-  }
-
-  &#high {
-    background-color: var(--wq-high);
-    color: white;
-  }
-
-  &#moderate {
-    background-color: var(--wq-mod);
-    color: white;
-  }
-
-  &#low {
-    background-color: var(--wq-low);
-  }
-}
-
 .sankey-container {
   width: 80%;
   min-width: 600px;
