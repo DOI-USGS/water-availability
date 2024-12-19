@@ -110,6 +110,7 @@ const updateBarChart = (data, regionName) => {
     );
 
   // update chart title
+  const displayTitle = regionName === 'United States' ? regionName : `${regionName} Region`;
   g.selectAll('text.chart-title')
     .data([regionName])
     .join(
@@ -120,8 +121,8 @@ const updateBarChart = (data, regionName) => {
         .attr('fill', 'black')
         .attr('font-size', '2.75rem')
         .attr('font-weight', 'bold')
-        .text(regionName),
-      update => update.transition().duration(750).text(regionName)
+        .text(displayTitle),
+      update => update.transition().duration(750).text(displayTitle)
     );
 
     const formatPercentage = d3.format('.0f');
@@ -172,11 +173,7 @@ watch(
         const filteredData =
         regionName === 'United States'
         ? aggregateData(data)
-        : data.filter(d => d.Region_nam === regionName).map(d => ({
-            ...d, // preserve other properties
-            [props.continuousPercent]: d[props.continuousPercent] * 100, // convert to percentage
-          }));
-
+        : data.filter(d => d.Region_nam === regionName)
 
   updateBarChart(filteredData, regionName);
 });

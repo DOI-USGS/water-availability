@@ -42,6 +42,20 @@
             </p> for each watershed. Click the name to turn off and on the layers in the map.
           </div>
           <div class="image-container">
+          <StackedBar 
+            categoricalVariable="d3_category"
+            continuousRaw="total_use"
+            continuousPercent="d3_percentage"
+            :layerPaths="{
+              ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
+              ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
+              te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
+              te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
+            }"
+            :data="csvData"
+            :regionName="selectedRegion"
+          
+          />
           <RegionMap 
           @regionSelected="updateSelectedRegion"
           :layerVisibility="{
@@ -60,20 +74,6 @@
           usOutlineUrl="assets/USoutline.topojson"
           regionsVar="Region_nam_nospace"
 
-        />
-        <StackedBar 
-          categoricalVariable="d3_category"
-          continuousRaw="total_use"
-          continuousPercent="d3_percentage"
-          :layerPaths="{
-            ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
-            ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
-            te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
-            te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
-          }"
-          :data="csvData"
-          :regionName="selectedRegion"
-        
         />
         </div>
           <div class="text-container">
