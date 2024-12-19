@@ -59,6 +59,17 @@ const updateBarChart = (data, regionName) => {
     return;
   }
 
+  const allCategories = Object.keys(props.layerPaths).map(key => ({
+    [props.categoricalVariable]: key,
+    [props.continuousRaw]: 0, // Default value for missing categories
+  }));
+
+  // Merge all categories with current data
+  const completeData = allCategories.map(category => {
+    const current = data.find(d => d[props.categoricalVariable] === category[props.categoricalVariable]);
+    return current ? current : category; // Use current data if it exists, otherwise use default
+  });
+
   /// Define dimensions and scales
   const chartHeight = 300; 
   const barHeight = 20;
@@ -73,7 +84,7 @@ const updateBarChart = (data, regionName) => {
     .padding(0.3); // between bars
 
   const xScale = d3.scaleLinear()
-    .domain([0, 10000])
+    .domain([0, 125000])
     .range([0, 700]);
 
   const getColor = (category) => {
@@ -85,7 +96,7 @@ const updateBarChart = (data, regionName) => {
 
   // create and update rectangles
   g.selectAll('rect')
-    .data(data)
+    .data(completeData, d => d[props.categoricalVariable])
     .join(
       enter => enter.append('rect')
       .attr('y', d => yScale(d[props.categoricalVariable]))
@@ -101,6 +112,10 @@ const updateBarChart = (data, regionName) => {
         .attr('x', 100)
         .attr('width', d => xScale(d[props.continuousRaw]))
         .attr('fill', d => getColor(d[props.categoricalVariable])),
+        exit => exit
+            .call(exit => exit.transition()
+            .attr('width', 0) 
+            .remove())
     );
 
   // update chart title
@@ -120,7 +135,7 @@ const updateBarChart = (data, regionName) => {
     );
 
     g.selectAll('.category-label')
-        .data(data)
+    .data(completeData, d => d[props.categoricalVariable])
         .join(
         enter => enter.append('text')
             .attr('class', 'category-label')
@@ -131,10 +146,11 @@ const updateBarChart = (data, regionName) => {
             .text(d => d[props.categoricalVariable]),
         update => update.transition().duration(750)
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
-            .text(d => d[props.categoricalVariable])
+            .text(d => d[props.categoricalVariable]),
+        exit => exit.transition().duration(750) // Fade out and remove outdated labels
+            .style('opacity', 0)
+            .remove()
         );
-
-
 };
 
 // watch for changes in data or regionName
