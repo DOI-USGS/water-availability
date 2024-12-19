@@ -3,12 +3,12 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand. For most of the country, <span class="highlight" id="supply">water supply</span> is much higher than <span class="highlight" id="demand">water demand</span>, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the southwest and the high plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
+                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand. For most of the country, water supply is much higher than water demand, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the southwest and the high plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
                   </p>
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>This chart shows the average annual water supply and demand in millimeters per year. </p>
+                <p>This chart shows the average annual water supply and demand in millimeters per year. Toggle the layers on and off with these buttons. </p>
               </div>
               <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-demand" >
@@ -17,8 +17,8 @@
                   name="checkbox" 
                   class="checkbox_inp" 
                   @click="togglePoints('demand')">
-                    Water demand
                   <span class="checkbox_mark"></span>
+                  Water demand
                   </label>
                 </div>
                 <div class="checkbox_item" id="checkbox-supply" >
@@ -27,8 +27,8 @@
                     name="checkbox" 
                     class="checkbox_inp" 
                     @click="togglePoints('supply')">
-                      Water supply
                     <span class="checkbox_mark"></span>
+                    Water supply
                   </label>
                 </div>
               </div>
@@ -42,45 +42,65 @@
         <div class="text-container">
         <p>
           Water limitation occurs when water use is a high percentage of surface-water supply and therefore there is not enough water available to meet human and ecosystem needs. Water limitation is calculated based on a water supply and use index, which is a way of showing the imbalance between surface water-supply and consumptive uses. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
-        </p><br><br>
-        <p>Levels of water stress include: 
-          <span 
-            class="highlight" 
-            id="very_low_none" 
-            :class="{'active': layers.very_low_none.visible, 'inactive-toggle': !layers.very_low_none.visible}"
-            @click="toggleLayer('very_low_none')">
-            very low or none
-          </span>, 
-          <span 
-            class="highlight" 
-            id="low" 
-            :class="{'active': layers.low.visible, 'inactive-toggle': !layers.low.visible}"
-            @click="toggleLayer('low')">
-            low
-          </span>, 
-          <span 
-            class="highlight" 
-            id="moderate" 
-            :class="{'active': layers.moderate.visible, 'inactive-toggle': !layers.moderate.visible}"
-            @click="toggleLayer('moderate')">
-            moderate
-          </span>, 
-          <span 
-            class="highlight" 
-            id="high" 
-            :class="{'active': layers.high.visible, 'inactive-toggle': !layers.high.visible}"
-            @click="toggleLayer('high')">
-            high
-          </span>,
-          <span 
-            class="highlight" 
-            id="severe" 
-            :class="{'active': layers.severe.visible, 'inactive-toggle': !layers.severe.visible}"
-            @click="toggleLayer('severe')">
-            severe
-          </span>
         </p>
         </div>
+        <div class="caption-container">
+              <div class="caption-text-child">
+                <p>This map shows levels of water limitation for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Toggle the levels of water limitation on and off with these buttons. Hover over the map to see regional summaries.</p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="checkbox_item" id="checkbox-sui-none" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('very_low_none')">
+                  <span class="checkbox_mark"></span>
+                    Very low water limitation
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-low" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('low')">
+                  <span class="checkbox_mark"></span>
+                    Low water limitation
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-mod" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('moderate')">
+                  <span class="checkbox_mark"></span>
+                    Moderate water limitation
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-high" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('high')">
+                  <span class="checkbox_mark"></span>
+                    High water limitation
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-severe" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('severe')">
+                  <span class="checkbox_mark"></span>
+                    Severe
+                  </label>
+                </div>
+              </div>
+        </div>    
         <div class="image-container">
           <RegionMap 
           :layerVisibility="{
