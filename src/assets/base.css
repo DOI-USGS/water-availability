@@ -339,6 +339,22 @@ a:visited {
       border-color: var(--wq-low);
       background-color: var(--wq-low);
     }
+    #legend-wu-ir.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wu-agriculture);
+      background-color: var(--wu-agriculture);
+    }
+    #legend-wu-ps.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wu-ps);
+      background-color: var(--wu-ps);
+    }
+    #legend-wu-te-fresh.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wu-te-fresh);
+      background-color: var(--wu-te-fresh);
+    }
+    #legend-wu-te-saline.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wu-te-saline);
+      background-color: var(--wu-te-saline);
+    }
   .checkbox_item .checkbox_wrap .checkbox_mark{
     border-radius: 25px;
   }

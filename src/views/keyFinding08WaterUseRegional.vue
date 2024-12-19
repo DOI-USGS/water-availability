@@ -124,7 +124,7 @@ import HorizontalBar from '../components/HorizontalBar.vue';
 
 // global variables
 const publicPath = import.meta.env.BASE_URL;
-const baseURL = "https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/";
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
 const defaultRegionID = "High_Plains";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');

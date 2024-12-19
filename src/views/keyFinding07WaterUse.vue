@@ -52,14 +52,6 @@
           </div>
         </div>
       </div> 
-      <!-- Dropdown for selecting view mode -->
-      <div class="dropdown-container">
-        <select v-model="selectedView" @change="handleViewChange">
-          <option value="stacked">Show total annual use</option>
-          <option value="faceted">Show by use type</option>
-        </select>
-      </div>
-      
       <div class="viz-container">
         <div id="barplot-container"></div>
       </div>
@@ -167,6 +159,7 @@ function toggleToStacked() {
 
 // Handle dropdown selection change
 function handleViewChange() {
+  const selectedView = event.target;
   if (selectedView.value === "faceted") {
     toggleToFaceted();
   } else {
