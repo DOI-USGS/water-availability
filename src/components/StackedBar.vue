@@ -31,23 +31,27 @@ onMounted(() => {
     svgBar.append('g'); // add a <g> container
   }
 
-  // find national stats by category
-  const totalByCategory = d3.rollups(
-    props.data,
-    v => d3.sum(v, d => +d[props.continuousRaw]),
-    d => d[props.categoricalVariable]
-    );
-  
-    const totalValue = d3.sum(totalByCategory, d => d[1]);
-  
-    const aggregatedData = totalByCategory.map(([category, value]) => ({
-    [props.categoricalVariable]: category,
-    d3_percentage: (value / totalValue) * 100,
-    }));
+  const aggregatedData = aggregateData(props.data);
 
   // initialize the chart with the provided data
   updateBarChart(aggregatedData, 'United States');
 });
+
+//  aggregate data for the US
+const aggregateData = (data) => {
+  const totalByCategory = d3.rollups(
+    data,
+    (v) => d3.sum(v, (d) => +d[props.continuousRaw]),
+    (d) => d[props.categoricalVariable]
+  );
+
+  const totalValue = d3.sum(totalByCategory, (d) => d[1]);
+
+  return totalByCategory.map(([category, value]) => ({
+    [props.categoricalVariable]: category,
+    [props.continuousPercent]: (value / totalValue) * 100,
+  }));
+};
 
 const updateBarChart = (data, regionName) => {
   if (!data.length) {
@@ -85,11 +89,24 @@ const updateBarChart = (data, regionName) => {
         .attr('width', 0)
         .attr('height', 30)
         .attr('fill', d => getColor(d[props.categoricalVariable]))
-        .call(enter => enter.transition().duration(750).attr('width', d => xScale(d[props.continuousPercent]))),
-      update => update.transition().duration(750)
+        .call(enter => 
+            enter.transition()
+            .duration(750)
+            .attr('width', d => xScale(d[props.continuousPercent]))),
+      (update) => update.transition()
+        .duration(750)
         .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
-        .attr('fill', d => getColor(d[props.categoricalVariable])),
-      exit => exit.transition().duration(750).attr('width', 0).remove()
+        .attr('fill', d => getColor(d[props.categoricalVariable]))
+        .attrTween('width', function(d, i) {
+                const previousWidth = d3.select(this).attr('width') || 0; // fallback to 0 if no prior value
+                const interpolator = d3.interpolate(previousWidth, xScale(d[props.continuousPercent]));
+                return t => interpolator(t);
+            }),
+        exit => exit
+            .call(exit => exit.transition()
+            .duration(750)
+            .attr('width', 0) 
+            .remove())
     );
 
   // update chart title
@@ -101,7 +118,8 @@ const updateBarChart = (data, regionName) => {
         .attr('x', 0)
         .attr('y', -10)
         .attr('fill', 'black')
-        .attr('font-size', '2.5rem')
+        .attr('font-size', '2.2rem')
+        .attr('font-weight', 'bold')
         .text(regionName),
       update => update.transition().duration(750).text(regionName)
     );
@@ -134,7 +152,7 @@ watch(
                     100,
                 }));
 
-  updateBarChart(data, regionName);
+  updateBarChart(filteredData, regionName);
 });
 </script>
 
