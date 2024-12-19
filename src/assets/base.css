@@ -253,6 +253,18 @@ a:visited {
     #checkbox-sui-severe.checkbox_item .checkbox_wrap .checkbox_mark{
       border-color: var(--sui-severe);
     }
+    #checkbox-ir.checkbox_item .checkbox_wrap .checkbox_mark{
+      border-color: var(--wu-agriculture);
+    }
+    #checkbox-ps.checkbox_item .checkbox_wrap .checkbox_mark{
+      border-color: var(--wu-ps);
+    }
+    #checkbox-te-fresh.checkbox_item .checkbox_wrap .checkbox_mark{
+      border-color: var(--wu-te-fresh);
+    }
+    #checkbox-te-saline.checkbox_item .checkbox_wrap .checkbox_mark{
+      border-color: var(--wu-te-saline);
+    }
 .checkbox_item .checkbox_wrap .checkbox_mark:before{ /* when layer is on */
 	top: 1px;
   left: 2px;
@@ -282,6 +294,18 @@ a:visited {
     #checkbox-sui-severe.checkbox_item .checkbox_wrap .checkbox_mark:before{
     background-color: var(--sui-severe);
     }
+    #checkbox-ir.checkbox_item .checkbox_wrap .checkbox_mark:before{
+    background-color: var(--wu-agriculture);
+    }
+    #checkbox-ps.checkbox_item .checkbox_wrap .checkbox_mark:before{
+    background-color: var(--wu-ps);
+    }
+    #checkbox-te-fresh.checkbox_item .checkbox_wrap .checkbox_mark:before{
+    background-color: var(--wu-te-fresh);
+    }
+    #checkbox-te-saline.checkbox_item .checkbox_wrap .checkbox_mark:before{
+    background-color: var(--wu-te-saline);
+    }
 .checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark{  /* when layer is off */
   border-color: var(--inactive-grey);
 }
@@ -291,7 +315,11 @@ a:visited {
     #checkbox-sui-low.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark,
     #checkbox-sui-mod.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark,
     #checkbox-sui-high.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark,
-    #checkbox-sui-severe.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark{
+    #checkbox-sui-severe.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark,
+    #checkbox-ir.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark,
+    #checkbox-ps.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark,
+    #checkbox-te-fresh.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark,
+    #checkbox-te-saline.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark{
       border-color: var(--inactive-grey);
     }
 .checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before{  /* when layer is off */
@@ -304,7 +332,11 @@ a:visited {
     #checkbox-sui-low.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before,
     #checkbox-sui-mod.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before,
     #checkbox-sui-high.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before,
-    #checkbox-sui-severe.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before {
+    #checkbox-sui-severe.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before,
+    #checkbox-ir.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before,
+    #checkbox-ps.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before,
+    #checkbox-te-fresh.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before,
+    #checkbox-te-saline.checkbox_item .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before {
       left: 25px;
       background: var(--inactive-grey);
     }

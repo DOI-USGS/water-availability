@@ -5,42 +5,54 @@
           <div class="text-container">
                 <p>How we use water varies across the country, including the type of use (for example, crop irrigation, public supply, and thermoelectric power) and the source of water (groundwater versus surface water). Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some eastern States such as Ohio, New York, and New Jersey. Withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
           </div>
-          <div class="text-container">
-            <p>These maps show areas where water is used for 
-              <span 
-                class="highlight" 
-                id="ir_totalButton"
-                :class="{'active': layers.ir_total.visible, 'inactive-toggle': !layers.ir_total.visible}"
-                @click="toggleCategory('ir_total')"
-              >
-                crop irrigation
-              </span>, 
-              <span 
-                class="highlight" 
-                id="ps_totalButton"
-                :class="{'active': layers.ps_total.visible, 'inactive-toggle': !layers.ps_total.visible}"
-                @click="toggleCategory('ps_total')"
-              >
-                public supply
-              </span>, thermoelectric power sourced from 
-              <span 
-                class="highlight" 
-                id="te_totalButton"
-                :class="{'active': layers.te_total.visible, 'inactive-toggle': !layers.te_total.visible}"
-                @click="toggleCategory('te_total')"
-              >
-                fresh water
-              </span>, and thermoelectric power sourced from 
-              <span 
-                class="highlight" 
-                id="te_salineButton"
-                :class="{'active': layers.te_saline.visible, 'inactive-toggle': !layers.te_saline.visible}"
-                @click="toggleCategory('te_saline')"
-              >
-                saline water
-              </span>
-            </p> for each watershed. Click the name to turn off and on the layers in the map.
-          </div>
+
+          <div class="caption-container">
+              <div class="caption-text-child">
+                <p>This map shows total water use by category of use for each watershed (HUC12). The bar chart shows the total water use for that category. Toggle the categories of water use on and off with these buttons. Hover over the map to see regional summaries.</p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="checkbox_item" id="checkbox-ir" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleCategory('ir_total')">
+                  <span class="checkbox_mark"></span>
+                    Crop irrigation
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-ps" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleCategory('ps_total')">
+                  <span class="checkbox_mark"></span>
+                    Public supply
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-te-fresh" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleCategory('te_total')">
+                  <span class="checkbox_mark"></span>
+                    Thermoelectric (fresh)
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-te-saline" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleCategory('te_saline')">
+                  <span class="checkbox_mark"></span>
+                    Thermoelectric (saline)
+                  </label>
+                </div>
+              </div>
+          </div> 
           <div class="image-container">
           <RegionMap 
           :layerVisibility="{
