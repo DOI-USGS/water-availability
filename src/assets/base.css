@@ -44,6 +44,7 @@
   --ws-demand: #965a5b;
   --wu-gw: #355b65;
   --wq-natural: #85a457;
+  --wq-biotic: var(--wq-natural);
   --wq-temp: #ffb0b0;
   --wq-metal: #7a7f80;
   --wq-sediment: #D7CCC9;
@@ -54,9 +55,11 @@
   --wq-high: #270c3f;
   --wq-unimpaired: #6591d3;
   --wq-mod: #93658f;
+  --wq-nutrients: var(--wq-mod);
   --wq-low: #d8cde3;
   --wu-agriculture: #b0904f;
   --wu-ps: #822734;
+  --wq-organics: var(--wu-ps);
   --wu-te-fresh: #3E4C5B;
   --wu-te-saline: #09a7c3;
   --inactive-grey: lightgrey;
@@ -291,6 +294,50 @@ a:visited {
     #legend-sui-severe.legend_item .legend_wrap .legend_mark {
       border-color: var(--sui-severe);
       background-color: var(--sui-severe);
+    }
+    #legend-wq-unimpaired.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-unimpaired);
+      background-color: var(--wq-unimpaired);
+    }
+    #legend-wq-biotic.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-biotic);
+      background-color: var(--wq-biotic);
+    }
+    #legend-wq-nutrients.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-nutrients);
+      background-color: var(--wq-nutrients);
+    }
+    #legend-wq-organics.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-organics);
+      background-color: var(--wq-organics);
+    }
+    #legend-wq-metal.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-metal);
+      background-color: var(--wq-metal);
+    }
+    #legend-wq-sediment.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-sediment);
+      background-color: var(--wq-sediment);
+    }
+    #legend-wq-salinity.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-salinity);
+      background-color: var(--wq-salinity);
+    }
+    #legend-wq-temp.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-temp);
+      background-color: var(--wq-temp);
+    }
+    #legend-wq-high.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-high);
+      background-color: var(--wq-high);
+    }
+    #legend-wq-mod.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-mod);
+      background-color: var(--wq-mod);
+    }
+    #legend-wq-low.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-low);
+      background-color: var(--wq-low);
     }
   .checkbox_item .checkbox_wrap .checkbox_mark{
     border-radius: 25px;
