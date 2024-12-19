@@ -121,6 +121,45 @@ const updateBarChart = (data, regionName) => {
         .text(regionName),
       update => update.transition().duration(750).text(regionName)
     );
+
+    const formatPercentage = d3.format('.0f');
+  
+      // percent labels on bar chart 
+      g.selectAll('.chart-labels')
+        .data(sortedData, d => d[props.categoricalVariable]) // unique key
+        .join(
+            enter => {
+            const enteringText = enter.append('text')
+                .attr('class', 'chart-labels')
+                .attr('font-size', '1.5rem')
+                .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
+                .attr('y', 45)
+                .attr('fill', 'black')
+                .attr('text-anchor', 'middle')
+                .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
+                .style('opacity', 0); // start invisible
+
+            enteringText.transition()
+                .duration(750)
+                .style('opacity', 1); // fade in
+
+            return enteringText;
+            },
+            update => {
+              return update.transition()
+                  .duration(750)
+                  .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
+                  .text(d => `${formatPercentage(d[props.continuousPercent])}%`);
+            },
+            exit => {
+              return exit.transition()
+                  .duration(750)
+                  .style('opacity', 0)
+                  .remove(); // fade out and remove
+            }
+        );
+
+
 };
 
 // watch for changes in data or regionName
@@ -130,7 +169,11 @@ watch(
         const filteredData =
         regionName === 'United States'
         ? aggregateData(data)
-        : data.filter((d) => d.Region_nam === regionName);
+        : data.filter(d => d.Region_nam === regionName).map(d => ({
+            ...d, // preserve other properties
+            [props.continuousPercent]: d[props.continuousPercent] * 100, // convert to percentage
+          }));
+
 
   updateBarChart(filteredData, regionName);
 });
