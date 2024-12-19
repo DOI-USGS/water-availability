@@ -67,6 +67,7 @@ dumbbell_gw_v_sw <- function(in_sf,
     annotate("text", x = -Inf, y = 0, label = "W", vjust = -0.5, hjust = 0, color = "black")+
     annotate("text", x = Inf, y = 0, label = "E", vjust = -0.5, hjust = 1, color = "black")+
     geom_hline(yintercept = 0, linewidth = 0.4) +
+    ggtitle(agg_reg) +
     theme_void() 
   
   if(agg_reg == "CONUS"){

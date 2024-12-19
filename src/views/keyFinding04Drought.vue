@@ -47,7 +47,7 @@
                 </div>
 
             <div class="text-container">
-                <p>Precipitation and snowmelt improve quickflow, help fill streams, and can recharge the water available to plants in the ground. Soil moisture provides water for plants in the root zone and recycling water back to the atmosphere through plant transpiration and evaporation from bare soils (Legates et al., 2011). During summer months in the Souris-Red-Rainy, Texas, Southern High Plains, and Southwest Desert hydrologic regions soil moisture volumes are very low, indicating that the precipitation that falls during these times is directly lost to streamflow and/or plants and relatively little is partitioned to groundwater storage. 
+                <p>Precipitation and snowmelt improve streamflow and can recharge the water available to plants in the ground. Soil moisture provides water for plants in the root zone and recycling water back to the atmosphere through plant transpiration and evaporation from bare soils. During summer months in the Souris-Red-Rainy, Texas, Southern High Plains, and Southwest Desert hydrologic regions soil moisture volumes are very low, indicating that the precipitation that falls during these times is directly lost to streamflow and/or plants and relatively little is partitioned to groundwater storage. 
                 </p>
             </div>
             <Methods></Methods>

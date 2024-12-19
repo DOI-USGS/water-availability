@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-              <p>Nutrient effects on water availability for human and ecological use are widespread and at times substantial. Excessive nutrients commonly occur in surface water (Shoda et al., 2019) and can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses.</p>
+              <p>Nutrients are beneficial chemicals to support plant and animal growth. However, in high concentrations these can become pollutants harmful to human health, animals, and ecosystems.Nutrient effects on water availability for human and ecological use are widespread and at times substantial. Excessive nutrients commonly occur in surface water (Shoda et al., 2019) and can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses.</p>
               </div>
             <div class="text-container">
               <p>Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from 
@@ -80,7 +80,7 @@
               <h3>Effects of nutrients in the water</h3>
               <p>Increased water demands can facilitate mobilization (the release of previously trapped contaminants into the water supply) and transport of chemicals and elements in groundwater. This release and movement of contaminants happens because of altered groundwater chemistry and disturbances to the water cycle resulting from drought, managed aquifer recharge, and changes to groundwater level.</p>
               <br>
-              <p>Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and palatability, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication disrupts many other ecosystem functions (Wurtsbaugh et al., 2019), including food webs and species composition. Eutrophication is also an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
+              <p>Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
             <Methods></Methods>
             <References></References>

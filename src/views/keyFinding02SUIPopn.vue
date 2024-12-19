@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-            <p>The conditions that limit water availability, often occur together. For example, areas with limited water supply can be more vulnerable to water quality issues and alterations to ecological flow. The relative impact of these factors varies from region to region, and regions that have water limitation arising from more than one indicator may pose the greatest challenges to resource managers.</p>
+            <p>The conditions that limit water availability often occur together. For example, areas with limited water supply can be more vulnerable to water quality issues and alterations to ecological flow. The relative impact of these factors varies from region to region, and regions that have water limitation arising from more than one indicator may pose the greatest challenges to resource managers. The four indicators of integrated water availablity were the amount of water (water quanity), the quality of surface and groundwater, and alterations to natural flow (ecoflows). Within each indicator, high limitation indicates areas where water quality or quantity conditions exceed the requirements, or sensitivity, for a particular use. </p>
           </div>
           <div class="viz-container">
               <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">

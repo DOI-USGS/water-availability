@@ -27,7 +27,7 @@ export default {
                     tabSubtitle: "Water availability is limited by surface water quality",
                     tabTitleID: "sw",
                     tabTitleIDname: "sw_wq",
-                    tabText: "Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, and pesticides. Sources of water quality contaminants include agriculture, wastewater, air pollution, other human sources such as mining and land-use change, and natural sources such as springs and streamflow. Areas of the country that strongly indicate surface water quality issues include the High Plains, Souris-Red-Rainy, and the Midwest regions, largely due to the application of fertilizer and manure for agriculture (Erickson et al., 2025)."
+                    tabText: "Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, and pesticides. Sources of water quality contaminants include agriculture, wastewater, air pollution, other human sources such as mining and land-use change, and natural sources. Areas of the country that strongly indicate surface water quality issues include the High Plains, Souris-Red-Rainy, and the Midwest regions, largely due to the application of fertilizer and manure for agriculture (Erickson et al., 2025)."
                 },{
                     tabTitle: "Groundwater Quality",
                     tabSubtitle: "Water availability is limited by groundwater quality",
@@ -58,7 +58,6 @@ export default {
             shortTitle: 'Limited water supply can cause water imbalance',
             keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation and exacerbating water quality issues' ,
             references: [
-                "Legates2011",
                 "Gorski2025",
                 "Stets2025",
                 "Medalie2025",
@@ -113,21 +112,21 @@ export default {
                     tabSubtitle: "Crop irrigation is the largest use of water in the U.S.",
                     tabTitleID: "irrigation",
                     tabTitleIDname: "irrigation",
-                    tabText: "As the largest category of water use overall in the country, crop irrigation has the biggest effects on water availability. Irrigation directly reduces the amount of water locally available because a large proportion of water withdrawn is evapotranspired, and thus no longer available locally. Irrigation also increases runoff and can carry contaminants such as fertilizers and pesticides to waterbodies across large areas with long-lasting impacts (Tesoriero et al., 2013; Van Metre et al., 2016; Konar and Marston, 2020; Erickson et al., 2025)."
+                    tabText: "As the largest category of water use overall in the country, crop irrigation has the biggest effects on water availability. Irrigation directly reduces the amount of water locally available because a large proportion of water withdrawn is evaporated or transpired from plants, and thus no longer available locally. Irrigation also increases runoff and can carry contaminants such as fertilizers and pesticides to waterbodies across large areas with long-lasting impacts (Tesoriero et al., 2013; Van Metre et al., 2016; Konar and Marston, 2020; Erickson et al., 2025)."
                 },
                 {
                     tabTitle: "Public Supply",
                     tabSubtitle: "Public water supply is essential for our communities",
                     tabTitleID: "public",
                     tabTitleIDname: "public_supply",
-                    tabText: "Across CONUS, public suppliers provide drinking water to about 87% of the population, as well as to many commercial entities (hotels, restaurants, etc) and industries (Dieter et al, 2018). The total volume of withdrawals for public supply is low compared to crop irrigation or thermoelectric power. However, depending on the area, public-supply withdrawals and the return of most of that water to the natural water supply as wastewater are locally important to water availability and quality. Treatment of water at wastewater treatment facilities can mitigate some potentially harmful effects of introduced contaminants from users of public supply water. Nevertheless, local effects on water quantity and quality—including alteration of flows and flow timing, as well as introduction of disinfection byproducts and other constituents not removed from treated wastewater—can be substantial (Symonds et al., 2015; Eppehimer et al., 2021). In dry regions, discharge from wastewater treatment facilities can dominate base flow and contain contaminants like pharmaceutical products, which are hard and expensive to remove from wastewater and can reach high concentrations (Rice and Westerhoff, 2017). In areas with combined sewers, large storms can cause untreated sewage to overflow directly into downstream waters. "
+                    tabText: "Across CONUS, public suppliers provide drinking water to about 87% of the population, as well as to many commercial entities (hotels, restaurants, etc) and industries (Dieter et al, 2018). The total volume of withdrawals for public supply is low compared to crop irrigation or thermoelectric power. However, depending on the area, public-supply withdrawals and the return of most of that water to the natural water supply as wastewater are locally important to water availability and quality. In dry regions, discharge from wastewater treatment facilities can dominate base flow and contain contaminants like pharmaceutical products, which are hard and expensive to remove from wastewater and can exceed safety thresholds (Rice and Westerhoff, 2017). In areas with combined sewers, large storms can cause untreated sewage to overflow directly into downstream waters. "
                 },
                 {
                     tabTitle: "Thermoelectric Power",
                     tabSubtitle: "Thermoelectric water use uses, then returns, a large amount of water",
                     tabTitleID: "thermoelectric",
                     tabTitleIDname: "thermoelectric",
-                    tabText: "Water-availability effects from thermoelectric power are typically lower than for crop irrigation or public supply because most of the water is returned close to the point of withdrawal. However, withdrawals from surface water for thermoelectric power generation are large in some areas, particularly the eastern U.S. Thermoelectric water use can also degrade water quality through temperature pollution; this impact can be substantial, particularly for ecosystem uses (Raptis et al., 2016; Chini et al., 2020)."
+                    tabText: "Thermoelectric power plants use fuel- coal, natural gas, nuclear, and others - to evaporate water to turn turbines and generate electric power. Water-availability effects from thermoelectric power are typically lower than for crop irrigation or public supply because most of the water is returned close to the point of withdrawal. However, withdrawals from surface water for thermoelectric power generation are large in some areas, particularly the eastern U.S. Thermoelectric water use can also degrade water quality through temperature pollution; the impact from warmed waters can be substantial, particularly for ecosystem uses (Raptis et al., 2016; Chini et al., 2020)."
                 }
             ]
         },
@@ -193,7 +192,7 @@ export default {
                         "More common extreme heat events",
                         "Amplified drought events",
                         "Increased evaporative water loss",
-                        "Effects on aquatic habitats and fish health",
+                        "Decreased cold-water fish populations and habitat",
                         "Warmer and shorter winter season",
                         "Decreased frost and cold"
                     ]
@@ -215,11 +214,10 @@ export default {
                     tabSubtitle: "Potential impacts from drier conditions",
                     tabTitleID: "dry",
                     tabTitleIDname: "impact-dry",
-                    tabText: "Climate assessments indicate  that increases in drought and fire weather and aridity, will have the highest likelihood of impacting the Western region of the contiguous U.S.. Overall, the amount and timing of streamflow is expected to change, the demand for groundwater to increase, and stream baseflow  to decrease.",
+                    tabText: "Climate assessments indicate  that increases in drought and fire weather and aridity, will have the highest likelihood of impacting the Western region of the contiguous U.S.. Overall, the amount and timing of streamflow is expected to change, the demand for groundwater to increase, and streamflow  to decrease.",
                     listText: [
                         "Increased groundwater demand",
                         "Changes in streamflow amount and timing",
-                        "Reduced baseflow",
                         "Effects on agriculture",
                         "Impaired water quality",
                         "More frequent and long-lasting fire weather",
@@ -245,7 +243,7 @@ export default {
                     tabSubtitle: "Potential impacts from changing winds",
                     tabTitleID: "wind",
                     tabTitleIDname: "impact-wind",
-                    tabText: "The projected effects of wind on water availability vary from region to region. Climate assessments indicate a moderate degree of confidence that changes in wind will affect the Northwest and Southwest and moderate confidence that they will affect the rest of the U.S.. We expect to see decreased wind speeds, an increase in severe windstorms and sand and dust storms;, and stronger hurricanes. ",
+                    tabText: "Climate assessments indicate a moderate degree of confidence that changes in wind will affect the Northwest and Southwest and moderate confidence that they will affect the rest of the U.S.. We expect to see decreased wind speeds, an increase in severe windstorms and sand and dust storms;, and stronger hurricanes. ",
                     listText: [
                         "Decreased average wind speed",
                         "Increased sand and dust storms",

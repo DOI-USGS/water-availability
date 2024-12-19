@@ -7,7 +7,7 @@ export default {
         method: [
           {
             header: "Calculating supply and demand",
-            description: "Supply and demand were calculated as mean annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. Error bars on the supply and demand were calculated as standard deviations between the years of analysis.",
+            description: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. Error bars on the supply and demand were calculated as standard deviations between the years of analysis.",
           },
           {
             header: "Calculating water limitation",
@@ -19,6 +19,24 @@ export default {
         route: '/02SUI',
         method: [
           {
+            header: "Determining impacts of water quantity",
+            description: "The impact of water quantity on water availablity was determined by analyzing the water supply and use index, which expresses the imbalance between surface water-supply and consumptive uses was used."
+          }, {
+            header: "Determining impacts of surface water quality",
+            description: "For the surface water-quality indicator, surface water total nitrogen and total phosphorus were compared to the NRSA Good benchmark (U.S. Environmental Protection Agency, 2020; Erickson et al. 2025)."
+          }, {
+            header: "Determining impacts of groundwater quality",
+            description: "For the groundwater-quality indicator, predicted nitrate and arsenic concentrations were compared to the regulatory enforceable drinking water maximum contaminant levels."
+          }, {
+            header: "Determining impacts of ecoflows",
+            description: "For the flows indicator, predicted alteration of different aspects of the flow regime were compared to those aspects of the flow regime that have been shown to affect regional ecological health."
+          }
+        ]
+      },      {
+        page: 3,
+        route: '/03SVI',
+        method: [
+          {
             header: "Calculating water limitation",
             description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
           },
@@ -27,21 +45,8 @@ export default {
             description: "The population estimate within each HUC12 catchment was calculated using the 2020 U.S. Census Bureau tract-level population counts (U.S. Census Bureau, 2020). Census data were merged with water limitation data by watershed (HUC12)."
           },
           {
-            header: "Integrated water availability",
-            description: "The extent to which water quantity, surface water quality, groundwater quality, and reduction of natural flows limit water availability were analyzed against quantitative values for a particular use. For the surface-water quantity indicator, water-supply and use index was used. For the surface water-quality indicator, surface water total nitrogen and total phosphorus were compared to the NRSA Good benchmark (U.S. Environmental Protection Agency, 2020; Erickson et al. 2025). For the groundwater-quality indicator, predicted nitrate and arsenic concentrations were compared to the regulatory enforceable drinking water MCLs. For the flows indicator, predicted alteration of different aspects of the flow regime were compared to those aspects of the flow regime that have been shown to affect regional ecological health."
-          }
-        ]
-      },      {
-        page: 3,
-        route: '/03SVI',
-        method: [
-          {
             header: "Calculating social vulnerability",
-            description: "The Centers for Disease Control 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water stress (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan et al., 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were defined such that values less than 0.4 indicate low vulnerability, values between 0.4 and 0.6 indicate medium vulnerability, and values greater than 0.6 indicate high vulnerability.",
-          },
-          {
-            header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation were low indicating values less than 0.4, medium indicating values between 0.4 and 0.6, and high indicating values greater than 0.6."
+            description: "The Centers for Disease Control 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water limitation (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan et al., 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were defined such that values less than 0.4 indicate low vulnerability, values between 0.4 and 0.6 indicate medium vulnerability, and values greater than 0.6 indicate high vulnerability.",
           }
         ]
       },      {
@@ -54,7 +59,7 @@ export default {
           },
           {
             header: "Comparing water supply to normal",
-            description: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region. Then, the monthly values were compared to the average to calculate a normalized deviation from the mean for each month and region.",
+            description: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region. Then, the monthly values were compared to the average to calculate a normalized deviation from the average for each month and region.",
           }
         ]
       },      {

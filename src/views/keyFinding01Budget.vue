@@ -41,12 +41,12 @@
         </div>
         <div class="text-container">
         <p>
-          Water limitation occurs when water use is a high percentage of surface-water supply and therefore there is not enough water available to meet human and ecosystem needs. Water limitation is calculated based on a water supply and use index, which is a way of showing the imbalance between surface water-supply and consumptive uses. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
+          Water limitation occurs when water use is a high percentage of surface-water supply and therefore there is not enough water available to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
         </p>
         </div>
         <div class="caption-container">
               <div class="caption-text-child">
-                <p>This map shows levels of water limitation for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Toggle the levels of water limitation on and off with these buttons. Hover over the map to see regional summaries.</p>
+                <p>This map shows average levels of water limitation for each watershed (HUC12) from 2010 to 2020. The bar chart shows the proportion of each water limitation category. Toggle the levels of water limitation on and off with these buttons. Hover over the map to see regional summaries.</p>
               </div>
               <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-sui-none" >

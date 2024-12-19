@@ -9,7 +9,7 @@
 
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>These circles each show one watershed. The color is the level of water limitation, and the size of the bubble represents the population of people living in that watershed (xx). </p>
+                <p>These circles each represent one watershed (HUC12). The color is the level of water limitation, and the size of the bubble represents the population of people living in that watershed (xx). </p>
               </div>
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-sui-none" >
@@ -57,7 +57,7 @@
             </div>
             <div class="text-container">
                 <h3>Social vulnerability is disproportionately high in areas of water limitation</h3>
-                <p>Although 8% of Americans living in the lower 48 states live in watersheds with high or severe water stress, more than half of this population belongs to the most socially vulnerable populations. </p>
+                <p>Although 8% of Americans living in the lower 48 states live in watersheds with high or severe water limitation, more than half of this population belongs to the most socially vulnerable populations. </p>
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
@@ -110,7 +110,7 @@
                     >
             </div>
             <div class="text-container">
-                <h3>For socially vulnerable households, water quality is a limitation to water availability</h3>
+                <h3>Water quality also disproportionately limits water availability in socially vulnerable households</h3>
                 <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable. For example, the proportion of individuals with the highest levels of social vulnerability increases as the concentrations of total nitrogen and total phosphorus in streams goes up. While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain higher proportions of socially vulnerable individuals. These areas are relatively limited in spatial extent and have high population density, which emphasizes the impacts of highly developed, human-dominated watersheds to human health and wellbeing.</p>
             </div>
         <Methods></Methods>
