@@ -6,7 +6,7 @@
   </template>
   
   <script setup>
-  import { onMounted, ref, watch, defineProps, defineEmits } from 'vue'
+  import { onMounted, ref, watch, defineProps } from 'vue'
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
 
@@ -330,7 +330,7 @@ watch(
             .attr('stroke-width', '1.2px');
 
             // reset bar chart to default aggregated data
-            updateBarChart(aggregatedData, 'United States');
+            emit('regionSelected', 'United States');
         })
         .on('click', (event, d) => {
           activeRegion = d[props.RegionsVar];

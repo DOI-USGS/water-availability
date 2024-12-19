@@ -32,8 +32,6 @@ onMounted(() => {
   }
 
   const aggregatedData = aggregateData(props.data);
-
-  // initialize the chart with the provided data
   updateBarChart(aggregatedData, 'United States');
 });
 
@@ -131,26 +129,8 @@ watch(
     ([data, regionName]) => {
         const filteredData =
         regionName === 'United States'
-            ? d3.rollups(
-                data,
-                v => d3.sum(v, d => +d[props.continuousPercent]),
-                d => d[props.categoricalVariable]
-            ).map(([category, value]) => ({
-                [props.categoricalVariable]: category,
-                [props.continuousPercent]: value,
-            }))
-            : data
-                .filter(d => d.Region_nam === regionName)
-                .map(d => ({
-                [props.categoricalVariable]: d[props.categoricalVariable],
-                [props.continuousPercent]:
-                    (+d[props.continuousPercent] /
-                    d3.sum(
-                        data.filter(r => r.Region_nam === regionName),
-                        r => +r[props.continuousPercent]
-                    )) *
-                    100,
-                }));
+        ? aggregateData(data)
+        : data.filter((d) => d.Region_nam === regionName);
 
   updateBarChart(filteredData, regionName);
 });
