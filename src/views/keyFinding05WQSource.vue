@@ -14,28 +14,24 @@
               <div class="caption-text-child">
                 <p>This bar chart shows the source of nutrients for each hydrologic region. Use the buttons to change between viewing nitrogen versus phosphorus and to view either the total load or the percent of the total load</p>
                 <div class="checkbox_item">
-                  <label class="checkbox_wrap">
-                    <input type="checkbox" name="checkbox" class="checkbox-inp" @click="toggleScale">
-                    <span class="legend_mark"></span>
-                    {{ scaleType }}
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-none" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleScale">
-                  <span class="checkbox_mark"></span>
-                  {{ scaleType }}
-                  </label>
+                  <div class="checkbox_wrap">
+                    <label>
+                      <input type="radio" name="nutrient" @click="toggleNutrient" checked="checked"> Nitrogen
+                    </label>
+                    <label>
+                      <input type="radio" name="nutrient" @click="toggleNutrient"> Phosphorus
+                    </label>
+                  </div>
                 </div>
                 <div class="checkbox_item">
-                  <label class="checkbox_wrap">
-                    <input type="checkbox" name="checkbox" class="checkbox-inp" @click="toggleNutrient">
-                    <span class="legend_mark"></span>
-                    {{ showNutrientType }}
-                  </label>
+                  <div class="checkbox_wrap">
+                    <label>
+                      <input type="radio" name="scale" @click="toggleScale" checked="checked"> Total load
+                    </label>
+                    <label>
+                      <input type="radio" name="scale" @click="toggleScale"> Percent of load
+                    </label>
+                  </div>
                 </div>
               </div>
               <div class="caption-legend-child">
@@ -76,36 +72,6 @@
                 </div>
               </div>
             </div> 
-            <div
-            id="toggle-container"
-            class="text-container"
-            aria-hidden="true"
-            >
-              <p>These bars represent the 
-                <span>
-                  <button
-                  aria-pressed="scaleLoad" 
-                  class="button"
-                  :text="scaleType"
-                  @click="toggleScale"
-                  >
-                    {{ scaleType }}
-                  </button>
-                </span>
-              of 
-              <span>
-                  <button
-                  aria-pressed="showNitrogen" 
-                  class="button"
-                  :text="showNutrientType"
-                  @click="toggleNutrient"
-                  >
-                    {{ showNutrientType }}
-                  </button>
-                </span>
-                entering water by source and aggregated region of the U.S.A.
-              </p>
-            </div>
             <div class="viz-container">
                 <div id="barplot-container">    
                 </div>
@@ -138,10 +104,9 @@ import { isMobile } from 'mobile-device-detect';
 import RegionMap from "/assets/USregions.svg";
 
 
-const featureToggles = inject('featureToggles');
-
 // use for mobile logic
 const mobileView = isMobile;
+const featureToggles = inject('featureToggles');
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;

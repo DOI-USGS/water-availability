@@ -12,8 +12,8 @@ export default {
             page: 2,
             route: '/02SUI',
             mainTitle: 'Limits on water availability',
-            shortTitle: 'About 27 million people in the U.S. live in areas of high or severe water limitation',
-            keyMessage: 'About 8% of the CONUS population, or 26.7 million people, live in areas where human water use routinely meets or exceeds renewable water supply.',
+            shortTitle: 'Water availability is affected by water quantity, quality, and flow',
+            keyMessage: 'Many areas of the US show high or severe limitation in multiple aspects of water availability.',
             references: ["Census2020", "Stets2025", "Vörösmarty2010", "Lin2012", "Park2018", "Erickson2025", "Kaushal2018", "Waite2019", "Waite2021", "Kennedy2016", "Eng2019", "Moreira2019", "EPA2020"],
             tabData: [
                 {

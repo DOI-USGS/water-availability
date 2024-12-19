@@ -383,6 +383,42 @@ a:visited {
       left: 25px;
       background: var(--inactive-grey);
     }
+input[type=radio],
+input[type=radio] {
+  --s: 1em;     /* control the size */
+  --c: var(--teal-dark); /* the active color */
+  
+  height: var(--s);
+  aspect-ratio: 1;
+  border: calc(var(--s)/8) solid var(--inactive-grey);
+  padding: calc(var(--s)/8);
+  background: 
+      radial-gradient(farthest-side,var(--c) 94%,var(--teal-dark)) 
+      50%/0 0 no-repeat content-box;
+  border-radius: 50%;
+  outline-offset: calc(var(--s)/10);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  font-size: inherit;
+  transition: .3s;
+}
+input[type=radio]:checked,
+input[type=radio]:checked {
+  border-color: var(--teal-dark);
+  background-size: 100% 100%;
+}
+input[type=radio]:disabled,
+input[type=radio]:disabled  {
+  background: 
+      linear-gradient(var(--inactive-grey) 0 0) 
+      50%/100% 20% no-repeat content-box;
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+
 /* .caption-legend-child{
   background-color: var(--teal-dark);
   color: var(--white-soft);
