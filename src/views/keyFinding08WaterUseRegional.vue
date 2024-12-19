@@ -58,10 +58,6 @@
           }"
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
-          csvDataUrl="wu_regions.csv"
-          continuousRaw="total_use"
-          continuousPercent="d3_percentage"
-          categoricalVariable="d3_category"
           regionsVar="Region_nam_nospace"
 
         />
@@ -165,7 +161,6 @@ onMounted(async() => {
   try {
     const data = await d3.csv(`${publicPath}${csvWU}`);
     csvData.value = data;
-    console.log(csvData)
   addInteractions();
 
   // select default region to start

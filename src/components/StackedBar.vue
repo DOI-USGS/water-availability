@@ -1,5 +1,7 @@
 <template>
+    <div class="text-container">
     <div ref="barContainer" class="bar-container"></div>
+</div>  
 </template>
   
   <script setup>
@@ -116,7 +118,7 @@ const updateBarChart = (data, regionName) => {
         .attr('x', 0)
         .attr('y', -10)
         .attr('fill', 'black')
-        .attr('font-size', '2.2rem')
+        .attr('font-size', '2.75rem')
         .attr('font-weight', 'bold')
         .text(regionName),
       update => update.transition().duration(750).text(regionName)
@@ -131,7 +133,7 @@ const updateBarChart = (data, regionName) => {
             enter => {
             const enteringText = enter.append('text')
                 .attr('class', 'chart-labels')
-                .attr('font-size', '1.5rem')
+                .attr('font-size', '1.8rem')
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 45)
                 .attr('fill', 'black')
@@ -141,7 +143,7 @@ const updateBarChart = (data, regionName) => {
 
             enteringText.transition()
                 .duration(750)
-                .style('opacity', 1); // fade in
+                .style('opacity', d => (d[props.continuousPercent] > 1 ? 1 : 0));; // fade in
 
             return enteringText;
             },
@@ -149,7 +151,8 @@ const updateBarChart = (data, regionName) => {
               return update.transition()
                   .duration(750)
                   .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
-                  .text(d => `${formatPercentage(d[props.continuousPercent])}%`);
+                  .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
+                  .style('opacity', d => (d[props.continuousPercent] > 1 ? 1 : 0));;
             },
             exit => {
               return exit.transition()
