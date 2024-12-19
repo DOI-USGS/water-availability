@@ -7,10 +7,75 @@
               </div>
             <div class="text-container">
               <p>Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from 
-                <span class="highlight" id="Agriculture"> agriculture </span> or 
-                <span class="highlight" id="Atmosphericdeposition"> air pollution </span>, which generally has human origins; <span class="highlight" id="Wastewater"> wastewater  </span> treatment plant discharge, and <span class="highlight" id="Otherhumansources"> other human sources </span> such as dredging, mining, dams, and urbanization. <span class="highlight" id="Naturalsources"> Natural sources </span> of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
+                agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>This bar chart shows the source of nutrients for each hydrologic region. Use the buttons to change between viewing nitrogen versus phosphorus and to view either the total load or the percent of the total load</p>
+                <div class="checkbox_item">
+                  <label class="checkbox_wrap">
+                    <input type="checkbox" name="checkbox" class="checkbox-inp" @click="toggleScale">
+                    <span class="legend_mark"></span>
+                    {{ scaleType }}
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-none" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleScale">
+                  <span class="checkbox_mark"></span>
+                  {{ scaleType }}
+                  </label>
+                </div>
+                <div class="checkbox_item">
+                  <label class="checkbox_wrap">
+                    <input type="checkbox" name="checkbox" class="checkbox-inp" @click="toggleNutrient">
+                    <span class="legend_mark"></span>
+                    {{ showNutrientType }}
+                  </label>
+                </div>
+              </div>
+              <div class="caption-legend-child">
+                <div class="legend_item" id="legend-wq-agriculture" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Agriculture
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-air" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Air pollution
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-wastewater" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Wastewater
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-human" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Other human sources
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-natural" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Natural sources
+                  </label>
+                </div>
+              </div>
+            </div> 
             <div
             id="toggle-container"
             class="text-container"

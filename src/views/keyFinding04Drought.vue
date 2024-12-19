@@ -17,7 +17,7 @@
                 </div>
                 <div class="caption-container">
                   <div class="caption-text-child">
-                    <p>This map shows levels of water limitation for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Toggle the levels of water limitation on and off with these buttons. Hover over the map to see regional summaries.</p>
+                    <p>These charts show monthly values of precipitation, evapotranspiration, soil moisture, and streamflow compared to normal. The values are normalized for comparison, and thus do not have units. Hover over the map to see regional differences.</p>
                   </div>
                   <div class="caption-legend-child">
                     <div class="legend_item" id="legend-ws-low" >

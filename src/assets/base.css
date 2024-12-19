@@ -47,6 +47,8 @@
   --wq-temp: #ffb0b0;
   --wq-metal: #7a7f80;
   --wq-sediment: #D7CCC9;
+  --wq-agriculture: var(--wq-sediment);
+  --wq-wastewater: var(--ws-supply);
   --wq-air: #74CCE5;
   --wq-salinity: #418692;
   --wq-high: #270c3f;
@@ -249,6 +251,26 @@ a:visited {
     #legend-ws-high.legend_item .legend_wrap .legend_mark {
       border-color: var(--ws-supply);
       background-color: var(--ws-supply);
+    }
+    #legend-wq-agriculture.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-agriculture);
+      background-color: var(--wq-agriculture);
+    }
+    #legend-wq-air.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-air);
+      background-color: var(--wq-air);
+    }
+    #legend-wq-wastewater.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-wastewater);
+      background-color: var(--wq-wastewater);
+    }
+    #legend-wq-human.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wu-ps);
+      background-color: var(--wu-ps);
+    }
+    #legend-wq-natural.legend_item .legend_wrap .legend_mark {
+      border-color: var(--wq-natural);
+      background-color: var(--wq-natural);
     }
   .checkbox_item .checkbox_wrap .checkbox_mark{
     border-radius: 25px;
