@@ -21,7 +21,18 @@ export default {
                     tabSubtitle: "Water availability is limited by water quantity",
                     tabTitleID: "sui",
                     tabTitleIDname: "sui",
-                    tabText: "The overall balance between water supply and consumptive use is a primary consideration in water availability studies. Globally, the factors affecting human water security are highly correlated; the infrastructure that allows elevated water use also promotes water-quality degradation and decreases biotic integrity <span v-for='reference in theseReferences.filter(item => item.refID === 'Stets2025')' class='tooltip'> <sup class='in-text-number'>{{ reference.referenceNumber }} </sup> <span class='tooltiptext'> {{ reference.refID }}</span></span>(Vörösmarty et al., 2010). For example, intense water withdrawal, even if restored to the local system through return flow, can degrade water quality because the water may return with increased sediment, nutrients, or salinity (Lin and Garcia, 2012; Park et al., 2018)."
+                    tabText: [
+                        {
+                            id: 1,
+                            text: "The overall balance between water supply and consumptive use is a primary consideration in water availability studies. Globally, the factors affecting human water security are highly correlated; the infrastructure that allows elevated water use also promotes water-quality degradation and decreases biotic integrity.",
+                            refs: ["Vörösmarty2010"]
+                        },
+                        {
+                            id:2,
+                            text: "For example, intense water withdrawal, even if restored to the local system through return flow, can degrade water quality because the water may return with increased sediment, nutrients, or salinity.",
+                            refs: ["Lin2012", "Park2018"]
+                        }
+                    ]
                 },{
                     tabTitle: "Surface Water Quality",
                     tabSubtitle: "Water availability is limited by surface water quality",

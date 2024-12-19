@@ -3,9 +3,9 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-            <p>The availability of clean water for our communities is affected by interrelated issues from hydrological (water quantity, quality, and flow) to social (water infrastructure, access, and rights)<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Physical infrastructure, such as public-supply (or self-supply) facilities, household-level plumbing, wells, dams, reservoirs, and diversions, are critical for meeting local water demands. Treaties, water compacts, and other legal agreements also determine access at multiple scales from household and municipal to internationally shared water resources. Additionally, characteristics of a community, such as socioeconomic status or access to resources and public services, can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
+            <p>The availability of clean water for our communities is affected by interrelated issues from hydrological (water quantity, quality, and flow) to social (water infrastructure, access, and rights)<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Physical infrastructure, such as public-supply (or self-supply) facilities, household-level plumbing, wells, dams, reservoirs, and diversions, are critical for meeting local water demands. Treaties, water compacts, and other legal agreements also determine access at multiple scales from household and municipal to internationally shared water resources. Additionally, characteristics of a community, such as socioeconomic status or access to resources and public services, can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
             <br>
-            <p>These circles each represent one watershed (HUC8) in the U.S., and the size corresponds to the population living within that watershed <span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Levels of water limitation are <span class="highlight" id="very_low_none"> very low or none </span>, <span class="highlight" id="low"> low </span>, <span class="highlight" id="moderate"> moderate </span>, <span class="highlight" id="high"> high </span>, and <span class="highlight" id="severe"> severe </span>.     </p>
+            <p>These circles each represent one watershed (HUC8) in the U.S., and the size corresponds to the population living within that watershed <span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Levels of water limitation are <span class="highlight" id="very_low_none"> very low or none </span>, <span class="highlight" id="low"> low </span>, <span class="highlight" id="moderate"> moderate </span>, <span class="highlight" id="high"> high </span>, and <span class="highlight" id="severe"> severe </span>.     </p>
           </div>
 
           <div class="viz-container">
@@ -27,7 +27,24 @@
                     </h3>
                     <img class="tab-content-img" :src="getMapURL(tab.tabTitleIDname)">
                     <img class="tab-content-legend" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_legend.png">
-                    <p class="tab-content-text" v-html="tab.tabText" />
+                    <!--p class="tab-content-text" v-html="tab.tabText" /-->
+                    <p class="tab-content-text">
+                      <span v-for="textChunk, index in tab.tabText" :key="textChunk.id">
+                        <span v-if="index > 0">&nbsp;</span>
+                        <span v-html="textChunk.text"/>
+                        <span v-for="reference, index in theseReferences.filter(item => `${textChunk.refs}`.includes(item.refID))" :key="index" class="tooltip">   
+                          <sup class="in-text-number">{{ reference.referenceNumber }} </sup> 
+                          <span class="tooltiptext">
+                            <span v-html="reference.refID" />
+                          </span>
+                          <span v-if="index < theseReferences.filter(item => `${textChunk.refs}`.includes(item.refID)).length - 1">
+                            <sup class="in-text-number">
+                              ,&nbsp;
+                            </sup>
+                          </span>
+                        </span>
+                      </span>
+                    </p>
                   </div>
                 </tabItem>
               </tabsGroup>
@@ -41,7 +58,7 @@
 </template>
 
 <script setup>
-import {inject, computed, ref} from 'vue';
+import {inject, ref} from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -56,8 +73,6 @@ const featureToggles = inject('featureToggles');
 
 
 //////// references array //
-const path = computed(() => route.path)
-
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 
