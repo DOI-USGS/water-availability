@@ -96,7 +96,7 @@
                   class="checkbox_inp" 
                   @click="toggleLayer('severe')">
                   <span class="checkbox_mark"></span>
-                    Severe
+                    Severe water limitation
                   </label>
                 </div>
               </div>
@@ -115,8 +115,7 @@
           }"
             :data="csvData"
             :regionName="selectedRegion"
-          
-          />
+            />
           <RegionMap 
           @regionSelected="updateSelectedRegion"
           :layerVisibility="{
@@ -171,7 +170,6 @@ const dataSet1 = ref([]);
 const data = ref([]);
 const csvData = ref([]);
 const selectedRegion = ref('United States'); // default region
-
 let svg;
 const containerWidth = window.innerWidth * 0.45;
 const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5;
@@ -224,9 +222,10 @@ const layers = reactive({
   }
 });
 
+	
+ 
 // regional selection data
 const csvWA = "wa_stress_stats.csv"
-
 function updateSelectedRegion(regionName) {
   selectedRegion.value = regionName;
 }
@@ -254,8 +253,8 @@ onMounted(async () => {
 });
 
 async function loadDatasets() {
-    dataSet1.value = await loadData('wa_supply_demand.csv');
-    csvData.value = await d3.csv(`${publicPath}${csvWA}`);
+  dataSet1.value = await loadData('wa_supply_demand.csv');
+  csvData.value = await d3.csv(`${publicPath}${csvWA}`);
 }
 
 async function loadData(fileName) {
