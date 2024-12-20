@@ -21,18 +21,17 @@ export default {
                     tabSubtitle: "Water availability is limited by water quantity",
                     tabTitleID: "sui",
                     tabTitleIDname: "sui",
-                    tabText: "The overall balance between water supply and use is a primary consideration in water availability studies. Globally, the factors affecting human water security are highly correlated; the infrastructure that allows elevated water use also promotes water-quality degradation and decreases biotic integrity (Vörösmarty et al., 2010). Areas of the country with high water availability stress from water limitation are primarily located in the central U.S."
                     tabText: [
                         {
                             id: 1,
                             startofSentence: true,
-                            text: "The overall balance between water supply and consumptive use is a primary consideration in water availability studies. Globally, the factors affecting human water security are highly correlated; the infrastructure that allows elevated water use also promotes water-quality degradation and decreases biotic integrity.",
+                            text: "The overall balance between water supply and use is a primary consideration in water availability studies. Globally, the factors affecting human water security are highly correlated; the infrastructure that allows elevated water use also promotes water-quality degradation and decreases biotic integrity.",
                             refs: ["Vörösmarty2010"]
                         },
                         {
                             id:2,
                             startofSentence: true,
-                            text: "For example, intense water withdrawal, even if restored to the local system through return flow, can degrade water quality because the water may return with increased sediment, nutrients, or salinity.",
+                            text: "Areas of the country with high water availability stress from water limitation are primarily located in the central U.S.",
                             refs: ["Lin2012", "Park2018"]
                         }
                     ]
