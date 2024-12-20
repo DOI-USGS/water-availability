@@ -6,7 +6,8 @@
         <span>References</span><span class="symbol">+</span>
       </button>
       <div class="panel-references">
-        <div  v-for="reference in theseReferences">
+        <div class="references-container">
+          <div  v-for="reference in theseReferences">
             <p>
               <span v-html="reference.referenceNumber"/>.   
               <span v-html="reference.authors" /> (<span v-html="reference.year" />). 
@@ -22,6 +23,7 @@
                 </span>
                 <span v-if="reference.doi">DOI: {{ reference.doi }}</span>
             </p>
+          </div>
         </div>
       </div>
     <div class="report-link-container" v-if="featureToggles.showReportLinks">
