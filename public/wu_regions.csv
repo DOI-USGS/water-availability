@@ -1,4 +1,8 @@
 Region_nam_nospace,Region_nam,AggReg_nam,d3_category,total_use,total_region,d3_percentage
+All_regions,All Regions,All_regions,ir_total,105792,241497.9,43.8
+All_regions,All Regions,All_regions,ps_total,35085,241497.9,14.5
+All_regions,All Regions,All_regions,te_saline,20390,241497.9,8.44
+All_regions,All Regions,All_regions,te_total,80231,241497.9,33.2
 Atlantic_Coast,Atlantic Coast,Southeast,ir_total,1231.909,18715.865108891456,6.5822
 Atlantic_Coast,Atlantic Coast,Southeast,ps_total,2772.8801,18715.865108891456,14.8157
 Atlantic_Coast,Atlantic Coast,Southeast,te_saline,3192.2217,18715.865108891456,17.0562
