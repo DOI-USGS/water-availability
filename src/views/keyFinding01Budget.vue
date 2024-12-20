@@ -3,12 +3,12 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand. For most of the country, water supply is much higher than water demand, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the southwest and the high plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
+                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand. For most of the country, water supply is much higher than water demand, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the Southwest and the High Plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
                   </p>
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>This chart shows the average annual water supply and demand in millimeters per year. Toggle the layers on and off with these buttons. </p>
+                <p>This chart shows the average annual water supply and demand in millimeters per year from 2010 to 2020. Toggle the layers on and off with these buttons. </p>
               </div>
               <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-demand" >

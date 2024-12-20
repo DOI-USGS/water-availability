@@ -53,11 +53,8 @@
               <img class="viz-portrait" src="https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/02_sui_popn_CONUS.png">
             </div>
             <div class="text-container">
-                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). </p>
-            </div>
-            <div class="text-container">
                 <h3>Social vulnerability is disproportionately high in areas of water limitation</h3>
-                <p>Although 8% of Americans living in the lower 48 states live in watersheds with high or severe water limitation, more than half of this population belongs to the most socially vulnerable populations. </p>
+                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). </p>
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
@@ -71,25 +68,11 @@
                   Very low water limitation
                   </label>
                 </div>
-                <div class="legend_item" id="legend-sui-low" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                  Low water limitation
-                  </label>
-                </div>
                 <div class="legend_item" id="legend-sui-mod" >
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
                   <span class="legend_mark"></span>
                   Moderate water limitation
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-sui-high" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                  High water limitation
                   </label>
                 </div>
                 <div class="legend_item" id="legend-sui-severe" >
@@ -111,7 +94,7 @@
             </div>
             <div class="text-container">
                 <h3>Water quality also disproportionately limits water availability in socially vulnerable households</h3>
-                <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable. For example, the proportion of individuals with the highest levels of social vulnerability increases as the concentrations of total nitrogen and total phosphorus in streams goes up. While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain higher proportions of socially vulnerable individuals. These areas are relatively limited in spatial extent and have high population density, which emphasizes the impacts of highly developed, human-dominated watersheds to human health and wellbeing.</p>
+                <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable (Erickson2025xxx). For example, the proportion of individuals with the highest levels of social vulnerability increases as the concentrations of total nitrogen and total phosphorus in streams goes up. While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain higher proportions of socially vulnerable individuals. These areas are relatively limited in spatial extent and have high population density, which emphasizes the impacts of highly developed, human-dominated watersheds to human health and wellbeing.</p>
             </div>
         <Methods></Methods>
         <References></References>
@@ -129,7 +112,7 @@ import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 
 // global variables
-const baseURL = "https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/";
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
 const defaultImageID = "03_sui_svi_map";
 const stressImageID = "03_sui_svi_dry_map";
 let imgSrc = ref(getImgURL(defaultImageID));

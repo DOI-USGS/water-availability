@@ -968,13 +968,13 @@ h4 {
 .tab-container-text-list-img {
   display: grid;
   padding-bottom: 15px;
-  grid-template-columns: 200px minmax(300px, 80%);
+  grid-template-columns: 2fr 1fr;
   grid-template-rows: minmax(50px, 100px) 2fr 1fr minmax(1fr, 2fr);
   grid-template-areas: 
     "title title"
     "list img"
-    "legend img"
-    "text text";
+    "list legend"
+    "text legend";
 }
 .tab-container-text-img-legend {
   display: grid;
@@ -1028,7 +1028,6 @@ h4 {
   .tab-container-text-img-legend{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(50px, 100px) auto auto;
     grid-template-areas: 
         "title"
         "legend"
@@ -1046,7 +1045,7 @@ h4 {
 .tab-content-list{
   grid-area: list;
   padding-top: 15px;
-  padding-left: 15px;
+  padding-left: 35px;
 }
 .impact-list-items {
   margin: 7px 0;
@@ -1111,9 +1110,9 @@ h4 {
   font-weight: 600;
   text-align: center;
   list-style: none;
-  border: solid 5px var(--teal-dark);
+  border-top: solid 5px var(--teal-dark);
   border-bottom: none;
-  border-radius: 0px 16px 0 0; /* top left, top right, bottom right, bottom left */
+  border-radius: 0px 0 0 0; /* top left, top right, bottom right, bottom left */
 }
 .tabs-component-tab { /* each tab */
   display: flex;
@@ -1126,9 +1125,9 @@ h4 {
 .tabs-component-panels { /* cards */
   padding: 1em 2em ;
   background-color: var(--cream-background);
-  border: solid 5px var(--teal-dark);
+  border-bottom: solid 5px var(--teal-dark);
   border-top: none;
-  border-radius: 0 0px 16px 16px; /* top left, top right, bottom right, bottom left */
+  border-radius: 0 0px 0 0 ; /* top left, top right, bottom right, bottom left */
 }
 
 @media screen and (max-width: 600px) {
@@ -1265,4 +1264,9 @@ h4 {
 .symbol {
   font-size: 32px;
   font-weight: bold;
+}
+
+.water-list li{
+  list-style-image: url('../assets/images/key-finding_water-drop.png');
+  margin: 10px 0;
 }
