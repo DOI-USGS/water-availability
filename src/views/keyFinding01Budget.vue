@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand. For most of the country, water supply is much higher than water demand, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the Southwest and the High Plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
+                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. For most of the country, water supply is much higher than water demand, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the Southwest and the High Plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
                   </p>
             </div>
             <div class="caption-container">
@@ -140,10 +140,10 @@
         </div>
         <div class="text-container">
           <h2>Local and seasonal effects of water limitation</h2>
-          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest (Medalie et al., 2025). Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
+          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
         </div>
         <Methods></Methods>
-      <References></References>
+      <References :theseReferences="referenceList"></References>
       </div>
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
@@ -151,17 +151,47 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, inject } from 'vue';
+import { onMounted, ref, reactive, inject, computed } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
 import StackedBar from '../components/StackedBar.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import Methods from '../components/Methods.vue';
+import SubPages from '../components/SubPages';
+import references from './../assets/text/references.js';
 import References from '../components/References.vue';
+import Methods from '../components/Methods.vue';
 import { isMobile } from 'mobile-device-detect';
+import { useRoute } from 'vue-router';
+
 
 const featureToggles = inject('featureToggles');
+
+//////// references array //
+const route = useRoute();
+
+const path = computed(() => route.path)
+
+// filter to this page's key message
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
 
 const mobileView = isMobile;
 
@@ -501,31 +531,6 @@ function createDotChart() {
 
 
 
-.supply {
-  background-color: var(--ws-supply);
-}
 
-.demand {
-  background-color: var(--ws-demand);
-}
-.highlight.inactive-toggle {
-  background-color: var(--inactive-grey); 
-  color: black;
-  &#very_low_none {
-    background-color: var(--inactive-grey); 
-  }
-  &#low {
-    background-color: var(--inactive-grey); 
-  }
-  &#moderate {
-    background-color: var(--inactive-grey); 
-  }
-  &#high {
-    background-color: var(--inactive-grey); 
-  }
-  &#severe {
-    background-color: var(--inactive-grey); 
-  }
-}
 
 </style>
