@@ -329,7 +329,6 @@ function getImgURL(id) {
 function mouseoverMap(event) {
   const regionID = event.target.id;
   imgSrc.value = getImgURL(regionID)
-  console.log(regionID)
 };
 
 function mouseoutMap(event) {
