@@ -45,6 +45,7 @@
                   Severe water limitation
                   </label>
                 </div>
+
               </div>
             </div> 
             <div class="viz-container">
@@ -56,7 +57,7 @@
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>This map shows areas of high and low water limitation by color, with socially vulnerable populations indicated with darker shades of those colors. Click on the button to view the areas of high water limitation. These areas show almost exclusively dark red patches, meaning that most areas with high water limitation occur where people are socially vulnerable. </p>
+                <p>This map shows areas of high and low water limitation by color, with socially vulnerable populations indicated with darker shades of those colors. For example, light blue indicates low water limitation and low social vulnerability, while dark red indicates high water limitation and high social vulnerability. Click on the button to view the areas of high water limitation. These areas show almost exclusively dark red patches, meaning that most areas with high water limitation occur where people are socially vulnerable. </p>
               </div>
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-sui-none" >
@@ -66,7 +67,7 @@
                   Very low water limitation
                   </label>
                 </div>
-                <div class="legend_item" id="legend-sui-mod" >
+                <div class="legend_item" id="legend-sui-mod-svi" >
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
                   <span class="legend_mark"></span>
@@ -78,6 +79,16 @@
                   <input type="legend" name="legend" class="legend-inp">
                   <span class="legend_mark"></span>
                   Severe water limitation
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-svi" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleViz">
+                  <span class="checkbox_mark"></span>
+                  {{ buttonText }}
                   </label>
                 </div>
               </div>
@@ -149,14 +160,14 @@ function getImgURL(id) {
   return `${baseURL}${id}.png`;
 }
 
-function showStress() {
+function toggleViz() {
     if(imgSrc.value === getImgURL(defaultImageID)) {
         imgSrc.value = getImgURL(stressImageID);
-        buttonText = "only high levels";
+        buttonText = "Only high levels";
 
     } else {
         imgSrc.value = getImgURL(defaultImageID);
-        buttonText = "all levels";
+        buttonText = "View all levels";
 
     }
 }
