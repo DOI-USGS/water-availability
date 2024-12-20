@@ -14,7 +14,7 @@ export default {
             mainTitle: 'Limits on water availability',
             shortTitle: 'Water availability is affected by water quantity, quality, and flow',
             keyMessage: 'Many areas of the US show high or severe limitation in multiple aspects of water availability.',
-            references: ["Census2020", "Stets2025", "Vörösmarty2010", "Lin2012", "Park2018", "Erickson2025", "Kaushal2018", "Waite2019", "Waite2021", "Kennedy2016", "Eng2019", "Moreira2019", "EPA2020"],
+            references: ["Stets2025", "Vörösmarty2010", "Lin2012", "Park2018", "Erickson2025", "Kaushal2018", "Waite2019", "Waite2021", "Kennedy2016", "Eng2019", "Moreira2019", "EPA2020"],
             tabData: [
                 {
                     tabTitle: "Water Quantity",
@@ -96,7 +96,7 @@ export default {
             mainTitle: 'Unequal access to water',
             shortTitle: 'Socially vulnerable Americans have a higher risk of water limitation',
             keyMessage: 'Water limitation disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water.',
-            references: [ "Drakes2024", "Stets2025", "Meehan2020", "Mueller2021", "Scanlon2023", "Deitz2019", "Flanagan2011", "Erickson2025"]
+            references: [ "Census2020", "Drakes2024", "Stets2025", "Meehan2020", "Mueller2021", "Scanlon2023", "Deitz2019", "Flanagan2011", "Erickson2025"]
         },
         {
             page: 4,

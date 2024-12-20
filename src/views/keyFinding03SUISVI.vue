@@ -3,13 +3,11 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-              <p>About 8% of the CONUS population, or 26.7 million people, live in areas of high or severe water limitation. The availability of clean water for our communities is affected by hydrologic factors like water quantity, quality, and flow, to social factors like water infrastructure, access, and rights (xxx). Socioeconomic status and access to resources and public services can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
-              
+              <p>About 8% of the CONUS population, or 26.7 million people, live in areas of high or severe water limitation. The availability of clean water for our communities is affected by hydrologic factors like water quantity, quality, and flow, to social factors like water infrastructure, access, and rights.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> Socioeconomic status and access to resources and public services can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
             </div>
-
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>These circles each represent one watershed (HUC12). The color is the level of water limitation, and the size of the bubble represents the population of people living in that watershed (xx). </p>
+                <p>These circles each represent one watershed (HUC12). The color is the level of water limitation, and the size of the bubble represents the population of people living in that watershed.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
               </div>
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-sui-none" >
@@ -106,10 +104,13 @@
 
 <script setup>
 import { inject, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
+import references from './../assets/text/references.js';
 import References from '../components/References.vue';
+import SubPages from '../components/SubPages';
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
@@ -117,7 +118,30 @@ const defaultImageID = "03_sui_svi_map";
 const stressImageID = "03_sui_svi_dry_map";
 let imgSrc = ref(getImgURL(defaultImageID));
 
+const route = useRoute();
 const featureToggles = inject('featureToggles');
+
+//////// references array //
+// filter to this page's key message
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
 
 let buttonText = "all levels";
 
