@@ -80,6 +80,31 @@
               <h3>Effects of nutrients in the water</h3>
               <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>These maps show total nutrient load for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="checkbox_item">
+                  <div class="checkbox_wrap">
+                    <label>
+                      <input type="radio" name="nutrient" @click="toggleNutMap" checked="checked"> Nitrogen
+                    </label>
+                    <label>
+                      <input type="radio" name="nutrient" @click="toggleNutMap"> Phosphorus
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="viz-container">
+              <img
+              id="first-image"
+              class="viz-placeholder"
+              :src="imgSrc"
+              alt="xxx"
+              >
+            </div>
             <Methods></Methods>
             <References></References>
         </div>
@@ -107,6 +132,11 @@ const mobileView = isMobile;
 const featureToggles = inject('featureToggles');
 
 // Global variables 
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
+const tnImageID = "05_tn_map";
+const tpImageID = "05_tp_map";
+let imgSrc = ref(getImgURL(tnImageID));
+
 const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const dataSet2 = ref([]); 
@@ -122,6 +152,24 @@ let chartBounds, rectGroup;
 let nutrientScale, nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
+
+let buttonText = "nitrogen load";
+
+function getImgURL(id) {
+  return `${baseURL}${id}.png`;
+}
+
+function toggleNutMap() {
+    if(imgSrc.value === getImgURL(tnImageID)) {
+        imgSrc.value = getImgURL(tpImageID);
+        buttonText = "phosporus load";
+
+    } else {
+        imgSrc.value = getImgURL(tnImageID);
+        buttonText = "nitrogen load";
+
+    }
+}
 
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
