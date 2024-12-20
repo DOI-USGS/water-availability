@@ -51,7 +51,7 @@ const updateLayers = () => {
     .data(visibleLayers, d => d.key) // use key as the identifier
     .join(
       enter => enter.append('image')
-        .attr('xlink:href', d => 'https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/' + d.path)
+        .attr('xlink:href', d => 'https://labs.waterdata.usgs.gov/visualizations/images/water-availability/' + d.path)
         .attr('x', -80)
         .attr('y', -55)
         .attr('width', 800 * 1.2)
