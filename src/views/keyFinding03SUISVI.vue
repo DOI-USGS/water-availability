@@ -50,11 +50,11 @@
               </div>
             </div> 
             <div class="viz-container">
-              <img class="viz-portrait" src="https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/02_sui_popn_CONUS.png">
+              <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_sui_popn_CONUS.png">
             </div>
             <div class="text-container">
                 <h3>Social vulnerability is disproportionately high in areas of water limitation</h3>
-                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). </p>
+                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). </p>
             </div>
             <div class="caption-container">
               <div class="caption-text-child">

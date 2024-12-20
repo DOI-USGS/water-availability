@@ -17,7 +17,7 @@
                       {{ tab.tabSubtitle }}
                     </h3>
                     <img class="tab-content-img" :src="getMapURL(tab.tabTitleIDname)">
-                    <img class="tab-content-legend" src="https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/02_water_avail_legend.png">
+                    <img class="tab-content-legend" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_legend.png">
                     <p class="tab-content-text" v-html="tab.tabText" />
                   </div>
                 </tabItem>
@@ -52,7 +52,7 @@ const impactTabs = filteredMessages[0].tabData;
 console.log(impactTabs)
 
 // global objects
-const baseURL = "https://water-visualizations-prod-website.s3.us-west-2.amazonaws.com/visualizations/images/water-availability/"
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
 
 
 function getMapURL(suffix) {
