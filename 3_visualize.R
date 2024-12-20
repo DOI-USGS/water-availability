@@ -63,7 +63,11 @@ p3_targets <- list(
                  low_col = "#D585A9", 
                  moderate_col = "#93658E", 
                  high_col = "#554C7A",
-                 very_high_col = "#270C3F"
+                 very_high_col = "#270C3F",
+                 # wq pie charts - greyed out
+                 low_grey = "#d6ced9",
+                 mod_grey = "#b0a0b5",
+                 high_grey = "#897292"
                ))),
   tar_target(p3_popn_colors,
              col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
@@ -301,14 +305,24 @@ p3_targets <- list(
   #
   #
   # Groundwater geofacet - Percent of study area over health standards
-  tar_target(p3_wq_gw_geofacet_png,
-             wq_geofacet(in_df = p1_wq_gw_exceedences_df,
-                         in_states = p2_State_sf,
-                         in_geogrid = p2_aquifer_name_xwalk,
-                         png_out = "src/assets/images/R/06_wq_gw_geofacet.png",
-                         width = 9, height = 6
-                         ),
-             format = "file"
+  tarchetypes::tar_map(
+    values = tibble::tibble(aquifer_abbr = c(
+      "cacb", "cval", "clpt", "bnrf", "bnrc", "copl", "hpaq",  
+      "strv1", "rgaq", "edtr", "ozrk", "metx","secp", "strv2",
+      "cmor", "glac", "vpdc", "pied", "nacp", "surf", "bisc",
+      "flor", "clow", "overview")),
+    tar_target(p3_wq_gw_geofacet_png,
+               wq_geofacet(in_df = p1_wq_gw_exceedences_df,
+                           in_states = p2_State_detailed_sf,
+                           in_sf = p1_aquifers_sf,
+                           in_geogrid = p2_aquifer_name_xwalk,
+                           aquifer_abbr = aquifer_abbr,
+                           color_scheme = p3_colors_wq,
+                           png_out = sprintf("src/assets/images/R/06_wq_gw_%s.png", aquifer_abbr),
+                           width = 9, height = 6
+               ),
+               format = "file"),
+    names = aquifer_abbr
   ),
   
   

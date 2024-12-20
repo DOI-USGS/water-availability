@@ -78,8 +78,10 @@
               <p>These pie charts represent the overall groundwater quality in principal aquifers across the U.S. The charts show the percentage of the area of the aquifer that contained a contaminant in untreated groundwater samples at a <span class="highlight" id="high"> high</span>, <span class="highlight" id="moderate"> moderate</span> or <span class="highlight" id="low"> low </span> concentration relative to human-health benchmarks for drinking water. 
                 </p>
             </div>
-            <div class="viz-container">
-              <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/06_wq_gw_geofacet.png">
+            <div class="map-container">
+              <img class="map-overlay" 
+              :src="imgSrc">
+              <aquiferWedges id="aquifer-svg" />
             </div>
               <Methods></Methods>
               <References></References>
@@ -101,8 +103,14 @@ import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 import { text } from '@fortawesome/fontawesome-svg-core';
+import aquiferWedges from '@/assets/svgs/aquifers.svg';
+
+// aquifer map settings
+const defaultRegionID = "overview";
+const imgSrc = ref(getImgURL(defaultRegionID)); 
 
 
+// for preview site toggle
 const featureToggles = inject('featureToggles');
 
 
@@ -213,7 +221,55 @@ onMounted(async () => {
     } catch (error) {
         console.error('Error during component mounting', error);
     }
+
+    addInteractions()
 });
+
+function addInteractions() {
+        // set viewbox for svg with wedges
+        const aquiferSVG = d3.select("#aquifer-svg")
+            .attr("viewBox", "0 0 " + 2700 + " " + 1800)
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("width", '100%')
+            .attr("height", '100%')
+        
+        // Add interaction to wedges
+        aquiferSVG.selectAll('.st0')
+            .on("mouseover", (event) => mouseoverMap(event))
+            .on("mouseout", (event) => mouseoutMap(event))
+
+        // Add mouseleave to wrapper, which is a group that contains the wedges
+        aquiferSVG.selectAll('#wrapper')
+            .on("mouseleave", mouseleaveWrapper)
+};
+
+function getImgURL(id) {
+  return new URL(`${baseURL}06_wq_gw_${id}.png`);
+}
+
+
+function mouseoverMap(event) {
+  const regionID = event.target.id;
+  imgSrc.value = getImgURL(regionID)
+  console.log(regionID)
+};
+
+function mouseoutMap(event) {
+  const regionID = event.target.id;
+  imgSrc.value = getImgURL(defaultRegionID)
+};
+
+function mouseleaveWrapper() {
+    // Show the default map
+    const defaultMap = document.querySelector('#region-map-default');
+    defaultMap.classList.remove("hide");
+
+    // Make all wedges transparent
+    d3.selectAll(".wedge").selectAll('polygon')
+        .style("fill-opacity", 0)
+};
+
+
 
 async function loadDatasets() { // Created from R pipeline
   try {
@@ -559,13 +615,31 @@ function wrap(text, {
 </script>
 
 <style scoped>
-.viz-container {
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center; /* Center align the chart */
-  margin-top: 2rem;
+
+.map-container {
+  position: relative;
+  display: grid;
+  margin: 0 auto 0 auto;
+  grid-template-columns: minmax(50vw, 100%);
+  grid-template-rows:  minmax(20vh, 600px);
+  grid-template-areas:
+      "overlay-maps";
 }
+.map-overlay {
+  grid-area: overlay-maps;
+  place-self: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+#aquifer-svg {
+  grid-area: overlay-maps;
+  place-self: center;
+  width: 100%;
+  height: 100%;
+  fill-opacity: 0;
+}
+
+
 
 #DW-container, #fish-container, #rec-container {
   width: 100%;
