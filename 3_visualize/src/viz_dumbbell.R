@@ -12,8 +12,7 @@ dumbbell_gw_v_sw <- function(in_sf,
       dplyr::mutate(x_long = sf::st_coordinates(sf::st_centroid(in_sf))[,1]) |> 
       dplyr::mutate(sw_total_wu = rowSums(dplyr::across(c(ps_sw, ir_sw, te_sw))),
                     gw_total_wu = rowSums(dplyr::across(c(ps_gw, ir_gw, te_gw))))
-  }
-  else if(wu_type != "all"){
+  } else if(wu_type != "all"){
     proc_in_sf <- in_sf |>
       dplyr::mutate(x_long = sf::st_coordinates(sf::st_centroid(in_sf))[,1]) |> 
       dplyr::rename(sw_total_wu = sprintf("%s_sw", wu_type),
@@ -68,6 +67,7 @@ dumbbell_gw_v_sw <- function(in_sf,
     annotate("text", x = -Inf, y = 0, label = "W", vjust = -0.5, hjust = 0, color = "black")+
     annotate("text", x = Inf, y = 0, label = "E", vjust = -0.5, hjust = 1, color = "black")+
     geom_hline(yintercept = 0, linewidth = 0.4) +
+    ggtitle(agg_reg) +
     theme_void() 
   
   if(agg_reg == "CONUS"){

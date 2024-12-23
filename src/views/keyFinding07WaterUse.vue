@@ -4,25 +4,61 @@
     <div class="content-container">
       <div class="text-container">
         <p>
-          An understanding of where, when, why, and how much water is extracted for human use is fundamental to the evaluation of the Nation’s water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for <span class="highlight" id="Irrigation">crop irrigation </span> followed by fresh water used in the process of creating energy from <span class="highlight" id="Thermoelectric_fresh"> Thermoelectric power</span> plants. Along with <span class="highlight" id="Public_Supply"> public supply </span>, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. <span class="highlight" id="Thermoelectric_saline"> Thermoelectric power (from saline water)</span> uses another approximately 21,000 million gallons per day.
+          An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for crop irrigation followed by fresh water used in the process of creating energy from thermoelectric power plants. Along with public supply, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. Thermoelectric power (from saline water) uses another approximately 21,000 million gallons per day. 
         </p>
       </div>
-      
-      <!-- Dropdown for selecting view mode -->
-      <div class="dropdown-container">
-        <select v-model="selectedView" @change="handleViewChange">
-          <option value="stacked">Show total annual use</option>
-          <option value="faceted">Show by use type</option>
-        </select>
-      </div>
-      
+      <div class="caption-container">
+        <div class="caption-text-child">
+          <p>This chart shows water use from 2010 through 2020. Use the buttons to switch between viewing the total annual use to viewing the annual use by category. Note that the y-scale is not constant for each use when viewing use by category.</p>
+          <div class="checkbox_item">
+            <div class="checkbox_wrap">
+              <label>
+                <input type="radio" name="water-use" @change="handleViewChange" id="total-button" value="stacked"> Total use
+              </label>
+              <label>
+                <input type="radio" name="water-use" @change="handleViewChange" id="facet-button" value="faceted"> Use by category
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="caption-legend-child">
+          <div class="legend_item" id="legend-wu-ir" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Crop irrigation
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-ps" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Public supply
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-te-fresh" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Thermoelectric (fresh)
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-te-saline" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Thermoelectric (saline)
+            </label>
+          </div>
+        </div>
+      </div> 
       <div class="viz-container">
         <div id="barplot-container"></div>
       </div>
       
       <div class="text-container">
         <p>
-          Water use reflects human dependence on freshwater resources and has dual effects on water availability. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Therefore, areas with more intensive water demands have a higher potential to degrade the resource than areas with less intense water demands. 
+          Water use affects water availability in two ways. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Therefore, areas with more intensive water demands have a higher potential to degrade the resource than areas with less intense water demands. 
         </p>
       </div>
       <div class="viz-container">
@@ -39,6 +75,9 @@
                   </div>
                 </tabItem>
               </tabsGroup>
+      </div>
+      <div class="text-container">
+        <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
       </div>
       
       <Methods></Methods>
@@ -123,6 +162,7 @@ function toggleToStacked() {
 
 // Handle dropdown selection change
 function handleViewChange() {
+  const selectedView = event.target;
   if (selectedView.value === "faceted") {
     toggleToFaceted();
   } else {
@@ -132,10 +172,10 @@ function handleViewChange() {
 
 // Define colors for each category group
 const categoryColors = {
-  'Public Supply': '#A04747',
-  'Irrigation': '#E8B86D',
-  'Thermoelectric (fresh)': '#0B2F9F',
-  'Thermoelectric (saline)': '#6CBEC7',
+  'Public Supply': 'var(--wu-ps)',
+  'Irrigation': 'var(--wu-agriculture)',
+  'Thermoelectric (fresh)': 'var(--wu-te-fresh)',
+  'Thermoelectric (saline)': 'var(--wu-te-saline)',
 };
 
 // Helper function to create valid CSS selectors by replacing special characters
@@ -430,25 +470,4 @@ onMounted(async () => {
   display: inline-block;
 }
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-  &#Public_Supply {
-    background-color: #A04747;
-  }
-  &#Irrigation {
-    background-color: #E8B86D;
-  }
-  &#Thermoelectric_fresh {
-    background-color: #0B2F9F;
-  }
-  &#Thermoelectric_saline {
-    background-color: #6CBEC7;
-  }
-}
 </style>

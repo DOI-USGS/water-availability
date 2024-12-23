@@ -37,8 +37,8 @@ p3_targets <- list(
                  #tern_6 = "#53697A",
                  #tern_7 = "#637B73",
                  #tern_8 = "#F9D689",
-                 dumbbell_sw = "#065867",
-                 dumbbell_gw = "#F09300"))),
+                 dumbbell_sw = "#1687A5",
+                 dumbbell_gw = "#355b65"))),
   tar_target(p3_colors_balance,
              p3_colors_website |> bind_cols(
                tibble(
@@ -52,16 +52,16 @@ p3_targets <- list(
                  dry_red_vdark = "#492525",
                  dry_red_dark = "#965a5b",
                  dry_red_light = "#CFACAB",
-                 drier_than_normal = "#965a5b",
-                 wetter_than_normal = "#1687A5"
+                 ws_demand = "#965a5b",
+                 ws_supply = "#1687A5"
                ))),
   tar_target(p3_colors_wq,
              p3_colors_website |> bind_cols(
                tibble(
-                 # Wq loads 
-                 very_low_col = "#E7CAE1",
-                 low_col = "#D585A9", 
-                 moderate_col = "#93658E", 
+                 # Wq loads (acton from scico)
+                 very_low_col = "#E8CDE3",
+                 low_col = "#D485AA", 
+                 moderate_col = "#93658F", 
                  high_col = "#554C7A",
                  very_high_col = "#270C3F",
                  # wq pie charts - greyed out

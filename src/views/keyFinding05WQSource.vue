@@ -3,53 +3,107 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-              <p>Nutrient effects on water availability for human and ecological use are widespread and at times substantial. Excessive nutrients commonly occur in surface water (Shoda et al., 2019) and can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses.</p>
+              <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations these can become pollutants harmful to human health, animals, and ecosystems. Nutrient effects on water availability for human and ecological use are widespread and at times substantial. Excessive nutrients commonly occur in surface water (Shoda et al., 2019) and can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses.</p>
               </div>
             <div class="text-container">
               <p>Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from 
-                <span class="highlight" id="Agriculture"> agriculture </span> or 
-                <span class="highlight" id="Atmosphericdeposition"> air pollution </span>, which generally has human origins; <span class="highlight" id="Wastewater"> wastewater  </span> treatment plant discharge, and <span class="highlight" id="Otherhumansources"> other human sources </span> such as dredging, mining, dams, and urbanization. <span class="highlight" id="Naturalsources"> Natural sources </span> of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
+                agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
-            <div
-            id="toggle-container"
-            class="text-container"
-            aria-hidden="true"
-            >
-              <p>These bars represent the 
-                <span>
-                  <button
-                  aria-pressed="scaleLoad" 
-                  class="button"
-                  :text="scaleType"
-                  @click="toggleScale"
-                  >
-                    {{ scaleType }}
-                  </button>
-                </span>
-              of 
-              <span>
-                  <button
-                  aria-pressed="showNitrogen" 
-                  class="button"
-                  :text="showNutrientType"
-                  @click="toggleNutrient"
-                  >
-                    {{ showNutrientType }}
-                  </button>
-                </span>
-                entering water by source and aggregated region of the U.S.A.
-              </p>
-            </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>This bar chart shows the source of nutrients for each hydrologic region. Use the buttons to change between viewing nitrogen versus phosphorus and to view either the total load or the percent of the total load</p>
+                <div class="checkbox_item">
+                  <div class="checkbox_wrap">
+                    <label>
+                      <input type="radio" name="nutrient" @click="toggleNutrient" checked="checked"> Nitrogen
+                    </label>
+                    <label>
+                      <input type="radio" name="nutrient" @click="toggleNutrient"> Phosphorus
+                    </label>
+                  </div>
+                </div>
+                <div class="checkbox_item">
+                  <div class="checkbox_wrap">
+                    <label>
+                      <input type="radio" name="scale" @click="toggleScale" checked="checked"> Total load
+                    </label>
+                    <label>
+                      <input type="radio" name="scale" @click="toggleScale"> Percent of load
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="caption-legend-child">
+                <div class="legend_item" id="legend-wq-agriculture" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Agriculture
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-air" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Air pollution
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-wastewater" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Wastewater
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-human" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Other human sources
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-natural" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Natural sources
+                  </label>
+                </div>
+              </div>
+            </div> 
             <div class="viz-container">
                 <div id="barplot-container">    
                 </div>
             </div>
             <div class="text-container">
               <h3>Effects of nutrients in the water</h3>
-              <p>Increased water demands can facilitate mobilization (the release of previously trapped contaminants into the water supply) and transport of chemicals and elements in groundwater. This release and movement of contaminants happens because of altered groundwater chemistry and disturbances to the water cycle resulting from drought, managed aquifer recharge, and changes to groundwater level.</p>
-              <br>
-              <p>Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and palatability, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication disrupts many other ecosystem functions (Wurtsbaugh et al., 2019), including food webs and species composition. Eutrophication is also an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
+              <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
+            </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>These maps show total nutrient load for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="checkbox_item">
+                  <div class="checkbox_wrap">
+                    <label>
+                      <input type="radio" name="nutrient" @click="toggleNutMap" checked="checked"> Nitrogen
+                    </label>
+                    <label>
+                      <input type="radio" name="nutrient" @click="toggleNutMap"> Phosphorus
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="viz-container">
+              <img
+              id="first-image"
+              class="viz-placeholder"
+              :src="imgSrc"
+              alt="xxx"
+              >
             </div>
             <Methods></Methods>
             <References></References>
@@ -73,12 +127,16 @@ import { isMobile } from 'mobile-device-detect';
 import RegionMap from "/assets/USregions.svg";
 
 
-const featureToggles = inject('featureToggles');
-
 // use for mobile logic
 const mobileView = isMobile;
+const featureToggles = inject('featureToggles');
 
 // Global variables 
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
+const tnImageID = "05_tn_map";
+const tpImageID = "05_tp_map";
+let imgSrc = ref(getImgURL(tnImageID));
+
 const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const dataSet2 = ref([]); 
@@ -95,17 +153,35 @@ let nutrientScale, nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
+let buttonText = "nitrogen load";
+
+function getImgURL(id) {
+  return `${baseURL}${id}.png`;
+}
+
+function toggleNutMap() {
+    if(imgSrc.value === getImgURL(tnImageID)) {
+        imgSrc.value = getImgURL(tpImageID);
+        buttonText = "phosporus load";
+
+    } else {
+        imgSrc.value = getImgURL(tnImageID);
+        buttonText = "nitrogen load";
+
+    }
+}
+
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
 "Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
 
 // Colors for bar chart (need to be updated along with CSS below!)
 const categoryColors = {
-        'Agriculture': '#939185',
-        'Atmospheric deposition': '#C8ACD6',
-        'Natural sources': '#EECEB9',
-        'Other Human Sources': '#2E236C',
-        'Wastewater': '#478CCF'
+        'Agriculture': 'var(--wq-sediment)',
+        'Atmospheric deposition': 'var(--wq-air)',
+        'Natural sources': 'var(--wq-natural)',
+        'Other Human Sources': 'var(--wu-ps)',
+        'Wastewater': 'var(--ws-supply)'
       }; 
 
 // set up filtered chart data as computed property
@@ -439,38 +515,9 @@ function wrap(text, width) {
   }
 }
 .svg-icon path {
-  fill: #478CCF;
+  fill: var(--ws-supply);
 }
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-  &#Agriculture {
-    background-color: #939185;
-  }
-
-  &#Atmosphericdeposition {
-    background-color: #C8ACD6;
-  }
-
-  &#Otherhumansources {
-    background-color: #2E236C;
-  }
-
-  &#Wastewater {
-    background-color: #478CCF;
-  }
-
-  &#Naturalsources {
-    background-color: #EECEB9;
-  }
-}
 $switchWidth: 7.9rem;
 .graph-buttons-switch {
   display: flex;

@@ -136,9 +136,10 @@ p2_targets <- list(
   # Join spatial data with water data 
   tar_target(p2_HUC12_join_wu_sf,
              p2_mainstem_HUC12_simple_sf |>
-               # add in mean water use data 
+               # needed for dumbbell
                dplyr::left_join(p2_wu_ternary_df,
                                 by = "HUC12") |>
+               # add in mean water use data 
                dplyr::left_join(p2_wu_te_saline_mean2000to2020_HUC12 |>
                                   select(HUC12, te_saline),
                                 by = "HUC12")
@@ -336,6 +337,7 @@ p2_targets <- list(
                                file = "public/wu_yearly.csv")
                return("public/wu_yearly.csv")},
              format = "file"),
+  # needed for dumbbell charts
   tar_target(p2_wu_ternary_df,
              total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC12,
                                   ir_in = p2_wu_ir_mean2000to2020_HUC12,

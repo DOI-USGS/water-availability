@@ -3,69 +3,44 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand. For most of the country, <span class="highlight" id="supply">water supply</span> is much higher than <span class="highlight" id="demand">water demand</span>, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the southwest and the high plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
+                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. For most of the country, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
         <div class="viz-container">
           <div id="dotplot-container">             
-            <div class="toggle-container">
-              <button
-                :class="{'active-toggle': showDemand, 'inactive-toggle': !showDemand}"
-                @click="togglePoints('demand')"
-                class="highlight demand toggle-button"
-              >
-                {{ showDemand ? 'Hide Demand' : 'Show Demand' }}
-              </button>
-              <button
-            :class="{'active-toggle': showSupply, 'inactive-toggle': !showSupply}"
-            @click="togglePoints('supply')"
-            class="highlight supply toggle-button"
-          >
-            {{ showSupply ? 'Hide Supply' : 'Show Supply' }}
-          </button>
-          </div>
         </div>   
         </div>
+        <div class="caption-container">
+              <div class="caption-legend-child">
+                <div class="checkbox_item" id="checkbox-demand" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="togglePoints('demand')">
+                  <span class="checkbox_mark"></span>
+                  Water demand
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-supply" >
+                  <label class="checkbox_wrap">
+                    <input type="checkbox" 
+                    name="checkbox" 
+                    class="checkbox_inp" 
+                    @click="togglePoints('supply')">
+                    <span class="checkbox_mark"></span>
+                    Water supply
+                  </label>
+                </div>
+              </div>
+              <div class="caption-text-child">
+                <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
+              </div>
+          </div>
         <div class="text-container">
+          <h2>Water limitation in the U.S.</h2>
         <p>
-          Water limitation occurs when water use is a high percentage of surface-water supply and therefore there is not enough water available to meet human and ecosystem needs. Water limitation is calculated based on a water supply and use index, which is a way of showing the imbalance between surface water-supply and consumptive uses. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
-        </p><br><br>
-        <p>Levels of water stress include: 
-          <span 
-            class="highlight" 
-            id="very_low_none" 
-            :class="{'active': layers.very_low_none.visible, 'inactive-toggle': !layers.very_low_none.visible}"
-            @click="toggleLayer('very_low_none')">
-            very low or none
-          </span>, 
-          <span 
-            class="highlight" 
-            id="low" 
-            :class="{'active': layers.low.visible, 'inactive-toggle': !layers.low.visible}"
-            @click="toggleLayer('low')">
-            low
-          </span>, 
-          <span 
-            class="highlight" 
-            id="moderate" 
-            :class="{'active': layers.moderate.visible, 'inactive-toggle': !layers.moderate.visible}"
-            @click="toggleLayer('moderate')">
-            moderate
-          </span>, 
-          <span 
-            class="highlight" 
-            id="high" 
-            :class="{'active': layers.high.visible, 'inactive-toggle': !layers.high.visible}"
-            @click="toggleLayer('high')">
-            high
-          </span>,
-          <span 
-            class="highlight" 
-            id="severe" 
-            :class="{'active': layers.severe.visible, 'inactive-toggle': !layers.severe.visible}"
-            @click="toggleLayer('severe')">
-            severe
-          </span>
+          Water limitation occurs when there is not enough water available to meet human and ecosystem needs. This happens when water use (demand) is near or exceeds supply. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
         </p>
         </div>
         <div class="image-container">
@@ -82,8 +57,7 @@
           }"
             :data="csvData"
             :regionName="selectedRegion"
-          
-          />
+            />
           <RegionMap 
           @regionSelected="updateSelectedRegion"
           :layerVisibility="{
@@ -106,12 +80,70 @@
 
         />
         </div>
+        <div class="caption-container"><b>Water limitation:</b> 
+              <div class="caption-legend-child">
+                <div class="checkbox_item" id="checkbox-sui-none" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('very_low_none')">
+                  <span class="checkbox_mark"></span>
+                    Very low
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-low" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('low')">
+                  <span class="checkbox_mark"></span>
+                    Low
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-mod" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('moderate')">
+                  <span class="checkbox_mark"></span>
+                    Moderate
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-high" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('high')">
+                  <span class="checkbox_mark"></span>
+                    High
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-severe" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('severe')">
+                  <span class="checkbox_mark"></span>
+                    Severe
+                  </label>
+                </div>
+              </div>
+              <br/>
+              <div class="caption-text-child">
+                <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
+              </div>
+        </div>    
         <div class="text-container">
           <h2>Local and seasonal effects of water limitation</h2>
-          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest (Medalie et al., 2025). Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
+          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
         </div>
         <Methods></Methods>
-      <References></References>
+      <References :theseReferences="referenceList"></References>
       </div>
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
@@ -119,17 +151,47 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, inject } from 'vue';
+import { onMounted, ref, reactive, inject, computed } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
 import StackedBar from '../components/StackedBar.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import Methods from '../components/Methods.vue';
+import SubPages from '../components/SubPages';
+import references from './../assets/text/references.js';
 import References from '../components/References.vue';
+import Methods from '../components/Methods.vue';
 import { isMobile } from 'mobile-device-detect';
+import { useRoute } from 'vue-router';
+
 
 const featureToggles = inject('featureToggles');
+
+//////// references array //
+const route = useRoute();
+
+const path = computed(() => route.path)
+
+// filter to this page's key message
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
 
 const mobileView = isMobile;
 
@@ -138,10 +200,14 @@ const dataSet1 = ref([]);
 const data = ref([]);
 const csvData = ref([]);
 const selectedRegion = ref('United States'); // default region
-
 let svg;
-const containerWidth = window.innerWidth * 0.45;
-const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5;
+const containerWidth = 900;
+const maxHeight = 900; 
+const containerHeight = Math.min(
+  mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5,
+  maxHeight
+);
+
 let margin = { top: 50, right: 50, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
@@ -162,38 +228,39 @@ const layers = reactive({
   very_low_none: {
     visible: true,
     path: '01_stress_map_very_low_none.png',
-    color: '#39424f',
+    color: 'var(--sui-none)',
     order: 1
   },
   low: {
     visible: true,
     path: '01_stress_map_low.png',
-    color: '#80909D',
+    color: 'var(--sui-low)',
     order: 2
   },
   moderate: {
     visible: true,
     path: '01_stress_map_moderate.png',
-    color: '#edeadf',
+    color: 'var(--sui-mod)',
     order: 3
   },
   high: {
     visible: true,
     path: '01_stress_map_high.png',
-    color: '#Cfacab',
+    color: 'var(--sui-high)',
     order: 4
   },
   severe: {
     visible: true,
     path: '01_stress_map_severe.png',
-    color: '#965a6b',
+    color: 'var(--sui-severe)',
     order: 5
   }
 });
 
+	
+ 
 // regional selection data
 const csvWA = "wa_stress_stats.csv"
-
 function updateSelectedRegion(regionName) {
   selectedRegion.value = regionName;
 }
@@ -221,8 +288,8 @@ onMounted(async () => {
 });
 
 async function loadDatasets() {
-    dataSet1.value = await loadData('wa_supply_demand.csv');
-    csvData.value = await d3.csv(`${publicPath}${csvWA}`);
+  dataSet1.value = await loadData('wa_supply_demand.csv');
+  csvData.value = await d3.csv(`${publicPath}${csvWA}`);
 }
 
 async function loadData(fileName) {
@@ -240,8 +307,9 @@ function initDotChart() {
 
     svg = d3.select('#dotplot-container')
       .append('svg')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight-50}`)
       .style('width', '100%')
+      .style('max-height', `${maxHeight}px`) 
       .style('height', 'auto');
 
     chartBounds = svg.append('g')
@@ -249,6 +317,7 @@ function initDotChart() {
 
     dotGroup = chartBounds.append('g');
 }
+
 
 function togglePoints(type) {
     if (type === "supply") {
@@ -365,7 +434,7 @@ function createDotChart() {
             .attr("y", -20)
             .attr("width", 40)
             .attr("height", 40)
-            .attr("fill", "lightgrey");
+            .attr("fill", "var(--inactive-grey)");
 
           insertedSvg.selectAll(`g.${regionClass} path`)
             .attr("stroke", "black")
@@ -393,7 +462,7 @@ function createDotChart() {
         .attr('cx', d => xScale(d.supply_mean))
         .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
         .attr('r', 5)
-        .attr('fill', '#669999');
+        .attr('fill', 'var(--ws-supply)');
 
     dotGroup.selectAll(".circle-demand")
         .data(dataset)
@@ -401,8 +470,10 @@ function createDotChart() {
         .attr('class', 'circle-demand')
         .attr('cx', d => xScale(d.demand_mean))
         .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('r', 5)
-        .attr('fill', '#F87A53');
+        .attr('r', 4)
+        .attr('stroke', 'var(--ws-demand)')
+        .attr('stroke-width', '2px')
+        .attr("fill", "var(--white)");
 }
 </script>
 
@@ -421,7 +492,7 @@ function createDotChart() {
 }
 #dotplot-container{
   width: 100%;
-  min-height: 600px;
+  max-height: 900px;
 }
 .text-container {
   margin: 20px auto;
@@ -466,87 +537,8 @@ function createDotChart() {
   background-color: #F87A53;
 }
 
-.toggle-container {
-  display: flex;
-  width: 300px;
-  margin-top: 20px;
-  margin: auto;
-  margin-bottom: 40px;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  button {
-    padding: 2px;
-    margin: 5px;
-    text-align: center;
-  }
-}
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
 
-  &#supply {
-    background-color: #669999;
-  }
 
-  &#demand {
-    background-color: #F87A53;
-  }
-
-  &#very_low_none {
-    background-color: #39424f;
-  }
-
-  &#low {
-    background-color: #80909D;
-    color: black;
-  }
-
-  &#moderate {
-    background-color: #edeadf;
-    color: black;
-  }
-
-  &#high {
-    background-color: #Cfacab;
-    color: black;
-  }
-
-  &#severe {
-    background-color: #965a6b;
-  }
-}
-.supply {
-  background-color: #669999;
-}
-
-.demand {
-  background-color: #F87A53;
-}
-.highlight.inactive-toggle {
-  background-color: lightgrey; 
-  color: black;
-  &#very_low_none {
-    background-color: lightgrey; 
-  }
-  &#low {
-    background-color: lightgrey; 
-  }
-  &#moderate {
-    background-color: lightgrey; 
-  }
-  &#high {
-    background-color: lightgrey; 
-  }
-  &#severe {
-    background-color: lightgrey; 
-  }
-}
 
 </style>

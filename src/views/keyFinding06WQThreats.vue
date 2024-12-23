@@ -2,19 +2,72 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-
-            <div  class="text-container">
-              <h2>Surface water quality contamination</h2>
-              <p>Surface water quality differs by source and use. Broad sources of water contamination include   
-                    <span class="highlight" id="Biotic"> biotic threats </span>,
-                    <span class="highlight" id="Nutrients"> nutrients </span>,
-                    <span class="highlight" id="Organics"> organics  </span>,
-                    <span class="highlight" id="Metals"> metals </span>, 
-                    <span class="highlight" id="Sediment"> sediment </span>, 
-                    <span class="highlight" id="Salinity"> salinity </span>, and
-                    <span class="highlight" id="Temperature"> temperature </span>. Some areas of surface water are not threatened and are considered
-                    <span class="highlight" id="Unimpaired"> unimpaired </span>. The charts below show threats to the quality of surface water in the U.S. by source and water-use category. The height of each ribbon in the chart represents the total river miles impaired or unimpaired, and the broad categories on the left are broken out into their respective threats on the right. 
-                </p>
+            <div class="text-container">
+              <h3>Surface water contamination</h3>
+              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
+            </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>These visualizations show the number of river miles that are threatened by different categories of contamination (left side), plus those that are considered unimpaired (XXX). Each larger threat is broken down into its consituents (right side). The threats are sorted on each side by the number of river miles, with the largest categories toward the top.</p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="legend_item" id="legend-wq-unimpaired" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Unimpaired water
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-biotic" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Biotic
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-nutrients" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Nutrients
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-organics" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Organics
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-metal" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Metals
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-sediment" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Sediment
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-salinity" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Salinity
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-temp" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Temperature
+                  </label>
+                </div>
+              </div>
             </div>
             <div class="viz-container">
               <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
@@ -29,9 +82,9 @@
                       <section id="DW-container" ref="chart"></section>
                     </div>
                     <div class="tab-content-text">
-                      <p>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels. Human-derived metals may also be released in more toxic and mobile forms than natural sources (Vareda et al., 2019).</p>
+                      <p>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels.</p>
                       <br>
-                      <p>Salinity effects on water availability are more spatially limited than metals, but salinity can cause considerable local issues for human beneficial uses and ecosystem needs. There has been a growing recognition of the threat that salinization (increasing salinity) of surface waters poses to water availability (Cañedo-Argüelles, 2020). Over one-third of the drainage area of the lower 48 states has experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal et al., 2018; Cañedo-Argüelles, 2020). Trend assessments at many sites across the United States show increasing salinity over time, particularly in urban areas, and at concentrations that indicate potential corrosion of drinking-water infrastructure (Stets et al. 2020).</p>
+                      <p>Salinity is sourced from natural sources, such as groundwater, saline springs, and rock formations, as well as by human sources, such as irrigation, urbanization, pasture, and road deicers. Salinity can cause considerable local issues for human beneficial uses and ecosystem needs. Over one-third of the drainage area of the lower 48 states has experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal et al., 2018; Cañedo-Argüelles, 2020). Trend assessments at many sites across the United States show increasing salinity over time, particularly in urban areas, and at concentrations that indicate potential corrosion of drinking-water infrastructure (Stets et al. 2020).</p>
                     </div>
                   </div>
                 </tabItem>
@@ -46,11 +99,11 @@
                       <section id="fish-container" ref="chart"></section>
                     </div>
                     <div class="tab-content-text">
-                      <p>Communities that rely on fishing for a larger proportion of their dietary intake can be particularly vulnerable to the effects of limited water availability on ecosystems and fish communities. Financial insecurity may increase the dependence on fishing to meet caloric needs, and transportation barriers can limit access to alternative fishing locations or food sources. Remote communities in particular are more likely to use subsistence fishing for their diet (Gillespie et al., 2018). American Indian and Arctic Native communities have a high dependence on wild-caught fish and are more likely to experience health effects from mercury pollution (Arctic Monitoring and Assessment Programme, 2009). Low-income populations and those with English as a second language can also be particularly vulnerable to contaminated fish from heavy metals, organics, and other factors because of communication barriers reducing the effectiveness of fish-consumption advisories (Bruce Lauber et al., 2017). </p>
+                      <p>Communities that rely on fishing for a larger proportion of their dietary intake can be particularly vulnerable to the effects of water quality in surface waters. Remote communities in particular are more likely to use subsistence fishing for their diet (Gillespie et al., 2018). American Indian and Arctic Native communities have a high dependence on wild-caught fish and are more likely to experience health effects from mercury pollution (Arctic Monitoring and Assessment Programme, 2009). Low-income populations and those with English as a second language can also be particularly vulnerable to contaminated fish from heavy metals, organics, and other factors because of communication barriers reducing the effectiveness of fish-consumption advisories (Bruce Lauber et al., 2017). </p>
                       <br>
-                      <p>Mercury can harm aquatic organisms and limit the amount of fish and other aquatic species that are safe for humans to eat. Mercury has geogenic sources (volcanoes, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. The methylated form of mercury is highly bioavailable—meaning it can be absorbed in the body—and can accumulate in fish higher in the food chain, like tuna, at concentrations that make fish consumption unhealthy for humans (Wentz et al., 2014). Young children and developing fetuses are particularly vulnerable to mercury exposure. </p>
+                      <p>Mercury can harm aquatic organisms and limit the amount of fish and other aquatic species that are safe for humans to eat. Mercury has geogenic sources (volcanoes, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. Young children and developing fetuses are particularly vulnerable to mercury exposure through fish consumption. </p>
                       <br>
-                      <p>PCBs are endocrine-disrupting compounds that were once commonly used in industry and commercial products and are associated a wide range of human-health risks. PCBs are generally stable and persistent in the environment and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou et al., 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption. Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites and hydrologically connected locations About 30 of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou et al., 2022).</p>
+                      <p>PCBs are endocrine-disrupting compounds that were once commonly used in industry and commercial products and are associated a wide range of human-health risks. PCBs are persistent in the environment and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou et al., 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption. Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites and hydrologically connected locations. About 30% of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou et al., 2022).</p>
                     </div>
                   </div>
                 </tabItem>
@@ -65,7 +118,7 @@
                       <section id="rec-container" ref="chart"></section>
                     </div>
                     <div class="tab-content-text">
-                      <p>Microbial pathogens, especially bacteria (U.S. Environmental Protection Agency, 2023c), primarily threaten human health through ingestion and recreational activities like swimming. Bacteria can originate from natural or human activities that cause contamination including wastewater treatment plant discharge, leaky septic systems, stormwater runoff, animal waste, and runoff from animal pastures, feedlots, or manure storage (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Each year in the United States, an estimated 560,000 people suffer from moderate-to-severe waterborne infection. An additional 1.7 million people suffer from mild-to-moderate waterborne infections, and an estimated 1,200 people die from waterborne infections (Morris and Levine, 1995). Young children are particularly vulnerable to waterborne diseases.</p>
+                      <p>Microbial pathogens like bacteria primarily threaten human health through ingestion and recreational activities like swimming (U.S. Environmental Protection Agency, 2023c). Bacteria can originate from natural or human activities that cause contamination including wastewater treatment plant discharge, leaky septic systems, stormwater runoff, animal waste, and runoff from animal pastures, feedlots, or manure storage (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Each year in the United States, an estimated 560,000 people suffer from moderate-to-severe waterborne infection and an estimated 1,200 people die from waterborne infections (Morris and Levine, 1995). Young children are particularly vulnerable to waterborne diseases.</p>
                     </div>
                   </div>
                 </tabItem>
@@ -73,10 +126,35 @@
             </div>
             <div  class="text-container">
               <h2>Groundwater quality contamination</h2>
-              <p>The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic constituent concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
-              <br>
-              <p>These pie charts represent the overall groundwater quality in principal aquifers across the U.S. The charts show the percentage of the area of the aquifer that contained a contaminant in untreated groundwater samples at a <span class="highlight" id="high"> high</span>, <span class="highlight" id="moderate"> moderate</span> or <span class="highlight" id="low"> low </span> concentration relative to human-health benchmarks for drinking water. 
-                </p>
+              <p>The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic nutrient concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
+            </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>These pie charts represent the overall groundwater quality in principal aquifers. The values shown in the pie chart represent the proportion of the aquifer under three categories of water quality relative to the human-health benchmark for drinking water. For this analysis, 16 contaminants were analyzed, including arsenic, manganese, lead, and nitrate. </p>
+              </div>
+              <div class="caption-legend-child">
+                <div class="legend_item" id="legend-wq-high" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Exceeds benchmark
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-mod" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Exceeds half of the benchmark
+                  </label>
+                </div>
+                <div class="legend_item" id="legend-wq-low" >
+                  <label class="legend_wrap">
+                  <input type="legend" name="legend" class="legend-inp">
+                  <span class="legend_mark"></span>
+                    Does not exceed benchmark
+                  </label>
+                </div>
+              </div>
             </div>
             <div class="map-container">
               <img class="map-overlay" 
@@ -163,14 +241,14 @@ function getIconImgHTML(image_name) {
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 const categoryColors = {
-  'Biotic': '#EECEB9',
-  'Nutrients':  '#939185',
-  'Organics':  '#C8ACD6', 
-  'Metals':  '#80909D',
-  'Sediment': '#E8E8E3',
-  'Salinity': '#F3C623',
-  'Temperature': '#FFB0B0',
-  'Unimpaired': '#478CCF',
+  'Biotic': 'var(--wq-natural)',
+  'Nutrients':  'var(--wq-mod)',
+  'Organics':  'var(--wu-ps)', 
+  'Metals':  'var(--wq-metal)',
+  'Sediment': 'var(--wu-agriculture)',
+  'Salinity': 'var(--wq-salinity)',
+  'Temperature': 'var(--wq-temp)',
+  'Unimpaired': 'var(--wq-unimpaired)',
 }; 
 
 
@@ -251,7 +329,6 @@ function getImgURL(id) {
 function mouseoverMap(event) {
   const regionID = event.target.id;
   imgSrc.value = getImgURL(regionID)
-  console.log(regionID)
 };
 
 function mouseoutMap(event) {
@@ -645,62 +722,6 @@ function wrap(text, {
   width: 100%;
   height: 100%;
   max-width: 800px;
-}
-
-.highlight {
-  color: black;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-  &#Biotic {
-    background-color: #EECEB9;
-  }
-
-  &#Nutrients {
-    background-color: #939185;
-  }
-
-  &#Organics {
-    background-color: #C8ACD6;
-  }
-
-  &#Metals {
-    background-color: #80909D;
-  }
-
-  &#Sediment {
-    background-color: #E8E8E3;
-  }
-
-  &#Salinity {
-    background-color: #F3C623;
-  }
-
-  &#Temperature {
-    background-color: #FFB0B0;
-  }
-
-  &#Unimpaired {
-    background-color: #478CCF;
-  }
-
-  &#high {
-    background-color: #3B1E54;
-    color: white;
-  }
-
-  &#moderate {
-    background-color: #8F6EB4;
-    color: white;
-  }
-
-  &#low {
-    background-color: #E7D9F2;
-  }
 }
 
 .sankey-container {
