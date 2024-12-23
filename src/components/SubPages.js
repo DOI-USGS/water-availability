@@ -15,80 +15,6 @@ export default {
             shortTitle: 'Water availability is affected by water quantity, quality, and flow',
             keyMessage: 'Many areas of the US show high or severe limitation in multiple aspects of water availability.',
             references: ["Stets2025", "Vörösmarty2010", "Lin2012", "Park2018", "Erickson2025", "Kaushal2018", "Waite2019", "Waite2021", "Kennedy2016", "Eng2019", "Moreira2019", "EPA2020"],
-            tabData: [
-                {
-                    tabTitle: "Water Quantity",
-                    tabSubtitle: "Water availability is limited by water quantity",
-                    tabTitleID: "sui",
-                    tabTitleIDname: "sui",
-                    tabText: [
-                        {
-                            id: 1,
-                            startofSentence: true,
-                            text: "The overall balance between water supply and use is a primary consideration in water availability studies. Globally, the factors affecting human water security are highly correlated; the infrastructure that allows elevated water use also promotes water-quality degradation and decreases biotic integrity.",
-                            refs: ["Vörösmarty2010"]
-                        },
-                        {
-                            id:2,
-                            startofSentence: true,
-                            text: "Areas of the country with high water availability stress from water limitation are primarily located in the central U.S.",
-                            refs: ["Lin2012", "Park2018"]
-                        }
-                    ]
-                },{
-                    tabTitle: "Surface Water Quality",
-                    tabSubtitle: "Water availability is limited by surface water quality",
-                    tabTitleID: "sw",
-                    tabTitleIDname: "sw_wq",
-                    tabText: [
-                        {
-                            id: 1,
-                            startofSentence: true,
-                            text: "Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, and pesticides. Sources of water quality contaminants include agriculture, wastewater, air pollution, other human sources such as mining and land-use change, and natural sources such as springs and streamflow. Areas of the country that strongly indicate surface water quality issues include the High Plains, Souris-Red-Rainy, and the Midwest regions, largely due to the application of fertilizer and manure for agriculture.",
-                            refs: ["Erickson2025"]
-                        }
-
-                    ]
-                },{
-                    tabTitle: "Groundwater Quality",
-                    tabSubtitle: "Water availability is limited by groundwater quality",
-                    tabTitleID: "gw",
-                    tabTitleIDname: "gw_wq",
-                    tabText: [
-                        {
-                            id: 1,
-                            startofSentence: true,
-                            text: "Groundwater-derived drinking water can be affected by high concentrations of constituents from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, and lithium, as well as salinity and nitrogen. Mixtures of multiple groundwater contaminants can also have compounding effects, because different users may have elevated sensitivity when exposed to multiple water-quality issues at once.",
-                            refs: ["Kaushal2018", "Waite2019", "Waite2021"]
-                        },
-                        {
-                            id: 2,
-                            startofSentence: true,
-                            text: "Threats to human health, corrosion of infrastructure, reduced crop yields, poor taste, impeded navigation, and economic impacts can all result from poor water quality.",
-                            refs: ["Erickson2025"]
-                        }
-                    ]
-                },{
-                    tabTitle: "Ecoflows",
-                    tabSubtitle: "Water availability for ecosystems is limited by altered natural flows",
-                    tabTitleID: "eco",
-                    tabTitleIDname: "ecoflow",
-                    tabText: [
-                        {
-                            id: 1,
-                            startofSentence: true,
-                            text: "Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and covering land with impervious surfaces. We create water-management structures to improve quality of life by creating hydroelectric power, controlling flood risk, capturing and distributing drinking water, and irrigating crops. These structures can affect the flow regime through water storage and releases, potentially altering the timing, seasonality, frequency, and rate of change of flows",
-                            refs: ["Kennedy2016", "Eng2019", "Moreira2019"]
-                        },
-                        {
-                            id: 2,
-                            startofSentence: false,
-                            text: ", even if total flow volume remains equivalent. Anthropogenic land cover, such as urban areas and impervious surfaces, can also affect flow attributes by increasing the rate of runoff, resulting in greater high-flow magnitude and frequency, while decreasing flow durations.",
-                            refs: ["Eng2019"]
-                        }
-                    ]
-                },
-            ]
         },
         {
             page: 3,
@@ -152,30 +78,7 @@ export default {
             mainTitle: 'For farm, home, and energy',
             shortTitle: 'The largest demands for water are for crop irrigation, public supply, and thermoelectric power',
             keyMessage: 'About 224,000 million gallons of freshwater are used every day for irrigation (48%), public supply (16%), and thermoelectric power (36%).',
-            references: ["Medalie2025", "Tesoriero2013", "VanMetre2020", "Konar2020", "Erickson2025", "Dieter2018", "Symonds2015", "Eppehimer2021", "Rice2017", "Raptis2016", "Chini2020", "Galanter2023", "Luukkonen2023", "Martin2023", "Haynes2024"],
-            tabData: [
-                {
-                    tabTitle: "Crop Irrigation",
-                    tabSubtitle: "Crop irrigation is the largest use of water in the U.S.",
-                    tabTitleID: "irrigation",
-                    tabTitleIDname: "irrigation",
-                    tabText: "As the largest category of water use overall in the country, crop irrigation has the biggest effects on water availability. Irrigation directly reduces the amount of water locally available because a large proportion of water withdrawn is evaporated or transpired from plants, and thus no longer available locally. Irrigation also increases runoff and can carry contaminants such as fertilizers and pesticides to waterbodies across large areas with long-lasting impacts (Tesoriero et al., 2013; Van Metre et al., 2016; Konar and Marston, 2020; Erickson et al., 2025)."
-                },
-                {
-                    tabTitle: "Public Supply",
-                    tabSubtitle: "Public water supply is essential for our communities",
-                    tabTitleID: "public",
-                    tabTitleIDname: "public_supply",
-                    tabText: "Across CONUS, public suppliers provide drinking water to about 87% of the population, as well as to many industries and commercial entities like hotels and restaurants (Dieter et al, 2018). The total volume of withdrawals for public supply is low compared to crop irrigation or thermoelectric power. However, depending on the area, public-supply withdrawals and the return of most of that water to the natural water supply as wastewater are locally important to water availability and quality. In dry regions, discharge from wastewater treatment facilities can be a large proportion of streamflow and can contain contaminants like pharmaceutical products. Contaminants are hard and expensive to remove from wastewater and can exceed safety thresholds (Rice and Westerhoff, 2017).  "
-                },
-                {
-                    tabTitle: "Thermoelectric Power",
-                    tabSubtitle: "Thermoelectric water use uses, then returns, a large amount of water",
-                    tabTitleID: "thermoelectric",
-                    tabTitleIDname: "thermoelectric",
-                    tabText: "Thermoelectric power plants use fuel such as coal, natural gas, nuclear, and others to evaporate water to turn turbines and generate electric power. Water-availability effects from thermoelectric power are typically lower than for crop irrigation or public supply because most of the water is returned near the point of withdrawal. However, withdrawals from surface water for thermoelectric power generation are large in some areas, particularly the eastern U.S. Thermoelectric water use can also degrade water quality through temperature pollution. The impact from warmed waters can be substantial, particularly for ecosystem uses (Raptis et al., 2016; Chini et al., 2020)."
-                }
-            ]
+            references: ["Medalie2025", "Tesoriero2013", "VanMetre2020", "Konar2020", "Erickson2025", "Dieter2018", "Symonds2015", "Eppehimer2021", "Rice2017", "Raptis2016", "Chini2020", "Galanter2023", "Luukkonen2023", "Martin2023", "Haynes2024"]
         },
         {
             page: 8,
