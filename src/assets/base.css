@@ -565,6 +565,9 @@ input[type=radio]:disabled  {
 .caption-legend-child {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
 }
 
 /* .caption-legend-child{
