@@ -3,13 +3,14 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. For most of the country, water supply is much higher than water demand, meaning there is more than enough water available to meet our needs. However, in arid and semiarid parts of the U.S. such as the Southwest and the High Plains, the differences between water supply and demand are smaller, and limitations on water are more common.  
+                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. For most of the country, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
-            <div class="caption-container">
-              <div class="caption-text-child">
-                <p>This chart shows the average annual water supply and demand in millimeters per year from 2010 to 2020. Toggle the layers on and off with these buttons. </p>
-              </div>
+        <div class="viz-container">
+          <div id="dotplot-container">             
+        </div>   
+        </div>
+        <div class="caption-container">
               <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-demand" >
                   <label class="checkbox_wrap">
@@ -32,75 +33,16 @@
                   </label>
                 </div>
               </div>
+              <div class="caption-text-child">
+                <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
+              </div>
           </div>
-        <div class="viz-container">
-          
-          <div id="dotplot-container">             
-            
-        </div>   
-        </div>
         <div class="text-container">
+          <h2>Water limitation in the U.S.</h2>
         <p>
-          Water limitation occurs when water use is a high percentage of surface-water supply and therefore there is not enough water available to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
+          Water limitation occurs when there is not enough water available to meet human and ecosystem needs. This happens when water use (demand) is near or exceeds supply. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
         </p>
         </div>
-        <div class="caption-container">
-              <div class="caption-text-child">
-                <p>This map shows average levels of water limitation for each watershed (HUC12) from 2010 to 2020. The bar chart shows the proportion of each water limitation category. Toggle the levels of water limitation on and off with these buttons. Hover over the map to see regional summaries.</p>
-              </div>
-              <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-sui-none" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('very_low_none')">
-                  <span class="checkbox_mark"></span>
-                    Very low water limitation
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-low" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('low')">
-                  <span class="checkbox_mark"></span>
-                    Low water limitation
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-mod" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('moderate')">
-                  <span class="checkbox_mark"></span>
-                    Moderate water limitation
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-high" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('high')">
-                  <span class="checkbox_mark"></span>
-                    High water limitation
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-severe" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('severe')">
-                  <span class="checkbox_mark"></span>
-                    Severe water limitation
-                  </label>
-                </div>
-              </div>
-        </div>    
         <div class="image-container">
           <StackedBar 
             categoricalVariable="d3_category"
@@ -138,6 +80,64 @@
 
         />
         </div>
+        <div class="caption-container"><b>Water limitation:</b> 
+              <div class="caption-legend-child">
+                <div class="checkbox_item" id="checkbox-sui-none" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('very_low_none')">
+                  <span class="checkbox_mark"></span>
+                    Very low
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-low" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('low')">
+                  <span class="checkbox_mark"></span>
+                    Low
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-mod" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('moderate')">
+                  <span class="checkbox_mark"></span>
+                    Moderate
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-high" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('high')">
+                  <span class="checkbox_mark"></span>
+                    High
+                  </label>
+                </div>
+                <div class="checkbox_item" id="checkbox-sui-severe" >
+                  <label class="checkbox_wrap">
+                  <input type="checkbox" 
+                  name="checkbox" 
+                  class="checkbox_inp" 
+                  @click="toggleLayer('severe')">
+                  <span class="checkbox_mark"></span>
+                    Severe
+                  </label>
+                </div>
+              </div>
+              <br/>
+              <div class="caption-text-child">
+                <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
+              </div>
+        </div>    
         <div class="text-container">
           <h2>Local and seasonal effects of water limitation</h2>
           <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
@@ -201,8 +201,13 @@ const data = ref([]);
 const csvData = ref([]);
 const selectedRegion = ref('United States'); // default region
 let svg;
-const containerWidth = window.innerWidth * 0.45;
-const containerHeight = mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5;
+const containerWidth = 900;
+const maxHeight = 900; 
+const containerHeight = Math.min(
+  mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5,
+  maxHeight
+);
+
 let margin = { top: 50, right: 50, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
@@ -302,8 +307,9 @@ function initDotChart() {
 
     svg = d3.select('#dotplot-container')
       .append('svg')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight-50}`)
       .style('width', '100%')
+      .style('max-height', `${maxHeight}px`) 
       .style('height', 'auto');
 
     chartBounds = svg.append('g')
@@ -464,8 +470,10 @@ function createDotChart() {
         .attr('class', 'circle-demand')
         .attr('cx', d => xScale(d.demand_mean))
         .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('r', 5)
-        .attr('fill', 'var(--ws-demand)');
+        .attr('r', 4)
+        .attr('stroke', 'var(--ws-demand)')
+        .attr('stroke-width', '2px')
+        .attr("fill", "var(--white)");
 }
 </script>
 
@@ -484,7 +492,7 @@ function createDotChart() {
 }
 #dotplot-container{
   width: 100%;
-  min-height: 600px;
+  max-height: 900px;
 }
 .text-container {
   margin: 20px auto;
