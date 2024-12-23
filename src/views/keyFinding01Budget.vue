@@ -9,12 +9,8 @@
         <div class="viz-container">
           <div id="dotplot-container">             
         </div>   
-        
         </div>
         <div class="caption-container">
-              <div class="caption-text-child">
-                <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
-              </div>
               <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-demand" >
                   <label class="checkbox_wrap">
@@ -36,6 +32,9 @@
                     Water supply
                   </label>
                 </div>
+              </div>
+              <div class="caption-text-child">
+                <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
               </div>
           </div>
         <div class="text-container">
@@ -82,10 +81,7 @@
         />
         </div>
         <div class="caption-container">
-              <div class="caption-text-child">
-                <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
-              </div>
-              <div class="caption-legend-child">
+              <div class="caption-legend-child"> Show map layers: 
                 <div class="checkbox_item" id="checkbox-sui-none" >
                   <label class="checkbox_wrap">
                   <input type="checkbox" 
@@ -93,7 +89,7 @@
                   class="checkbox_inp" 
                   @click="toggleLayer('very_low_none')">
                   <span class="checkbox_mark"></span>
-                    Very low water limitation
+                    Very low
                   </label>
                 </div>
                 <div class="checkbox_item" id="checkbox-sui-low" >
@@ -103,7 +99,7 @@
                   class="checkbox_inp" 
                   @click="toggleLayer('low')">
                   <span class="checkbox_mark"></span>
-                    Low water limitation
+                    Low
                   </label>
                 </div>
                 <div class="checkbox_item" id="checkbox-sui-mod" >
@@ -113,7 +109,7 @@
                   class="checkbox_inp" 
                   @click="toggleLayer('moderate')">
                   <span class="checkbox_mark"></span>
-                    Moderate water limitation
+                    Moderate
                   </label>
                 </div>
                 <div class="checkbox_item" id="checkbox-sui-high" >
@@ -123,7 +119,7 @@
                   class="checkbox_inp" 
                   @click="toggleLayer('high')">
                   <span class="checkbox_mark"></span>
-                    High water limitation
+                    High
                   </label>
                 </div>
                 <div class="checkbox_item" id="checkbox-sui-severe" >
@@ -133,9 +129,13 @@
                   class="checkbox_inp" 
                   @click="toggleLayer('severe')">
                   <span class="checkbox_mark"></span>
-                    Severe water limitation
+                    Severe
                   </label>
                 </div>
+              </div>
+              <br/>
+              <div class="caption-text-child">
+                <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
               </div>
         </div>    
         <div class="text-container">
@@ -307,7 +307,7 @@ function initDotChart() {
 
     svg = d3.select('#dotplot-container')
       .append('svg')
-      .attr('viewBox', `0 -25 ${containerWidth} ${containerHeight}`)
+      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight-50}`)
       .style('width', '100%')
       .style('max-height', `${maxHeight}px`) 
       .style('height', 'auto');
