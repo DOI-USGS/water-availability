@@ -82,7 +82,7 @@
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>These maps show total nutrient load for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
+                <p>These maps show total nutrient load in kilograms per year for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
               </div>
               <div class="caption-legend-child">
                 <div class="checkbox_item">
