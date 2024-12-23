@@ -80,8 +80,8 @@
 
         />
         </div>
-        <div class="caption-container">
-              <div class="caption-legend-child"> Show map layers: 
+        <div class="caption-container"><b>Water limitation:</b> 
+              <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-sui-none" >
                   <label class="checkbox_wrap">
                   <input type="checkbox" 

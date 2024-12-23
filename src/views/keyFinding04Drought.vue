@@ -4,29 +4,18 @@
         <div class="content-container">
             <div class="text-container">
                 <h2>The water cycle of the U.S.</h2>
-                <p>The water cycle describes how water moves through natural and human-modified landscapes. Water evaporates from the ocean and land into the atmosphere, where its movement is driven by wind. In the atmosphere, water condenses to form precipitation, which falls to the Earth's surface in the form of rain or snow. Precipitation that falls on land has many fates:</p>
-                <ul class="water-list">
-                  <li>Precipitation can stay on the landscape temporarily as snow or soil moisture</li>
-                  <li>Precipitation can be stored temporarily in lakes or reservoirs</li>
-                  <li>Precipitation can return to the atmosphere through evaporation or transpiration (the process by which plants lose water through the pores in their leaves)</li>
-                  <li>Precipitation can run off into streams and rivers eventually discharging into the ocean</li>
-                  <li>Precipitation can percolate more deeply to recharge groundwater</li>
-                </ul>
-                <p>In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.</p>
+                <p>The water cycle describes how water moves through natural and human-modified landscapes. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.</p>
                 </div>
                 <div class="viz-container">
                     <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_watercycle.png">
                 </div>
                 <div class="text-container">
-                    <p>As water moves through the water cycle it can spend different amounts of time in the various stages. For example, water that falls as snow could remain on the landscape for months until it melts in the spring, while water that makes its way into groundwater may remain for decades or longer. This means that periods of abnormally low precipitation affect different parts of the water cycle at different times. </p>
+                    <p>As water moves through the water cycle it can spend different amounts of time in the various stages. Water that falls as snow could remain on the landscape for months until it melts in the spring. Water that makes its way into groundwater may remain for decades or longer. This means that periods of abnormally low precipitation affect different parts of the water cycle at different times. </p>
                   <br>
-                    <p>During periods of low precipitation, less water in streams and rivers can lead to more groundwater use resulting in groundwater declines that may take years to recover. By assessing all parts of the water budget together, we can visualize how these changes are reflected in different parts of water cycle, and how they relate to water availability across the nation. For example, in 2012 the Northern High Plains had abnormally low precipitation, which cascaded through the water cycle with delayed responses in evapotranspiration, soil moisture, and eventually streamflow. Similarly, periods of 
+                    <p>During periods of low precipitation, less water in streams and rivers can lead to more groundwater use resulting in groundwater declines that may take years to recover. By assessing all parts of the water budget together, we can see how they are connected. For example, in 2012 the Northern High Plains had abnormally low precipitation, which cascaded through the water cycle with delayed responses in evapotranspiration, soil moisture, and eventually streamflow. Similarly, periods of 
                     rainfall in early 2011 did not show up in the streamflow signature until later in that year.</p>
                 </div>
                 <div class="caption-container">
-                  <div class="caption-text-child">
-                    <p>These charts show monthly values of precipitation, evapotranspiration, soil moisture, and streamflow compared to normal. The values are normalized for comparison, and thus do not have units. Hover over the map to see regional differences.</p>
-                  </div>
                   <div class="caption-legend-child">
                     <div class="legend_item" id="legend-ws-low" >
                       <label class="legend_wrap">
@@ -53,6 +42,15 @@
                         alt=""
                     >    
                 </div>
+                <div class="caption-container">
+                  <div class="caption-legend-child">
+                <div class="caption-text-child">
+                    <p>Monthly values of precipitation, evapotranspiration, soil moisture, and streamflow compared to normal conditions. The values are normalized for comparison, and thus do not have units. Hover over the map to see regional patterns.</p>
+                  </div>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
             <Methods></Methods>
             <References></References>
         </div>

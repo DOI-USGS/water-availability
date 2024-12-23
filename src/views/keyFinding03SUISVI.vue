@@ -81,6 +81,7 @@
                   Severe water limitation
                   </label>
                 </div>
+                <br/>
                 <div class="checkbox_item" id="checkbox-svi" >
                   <label class="checkbox_wrap">
                   <input type="checkbox" 
