@@ -5,35 +5,47 @@
           <div class="text-container">
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
+              <div class="caption-container">
+              <div class="checkbox_item">
+              <!-- Nutrient Toggle -->
+              <div class="checkbox_wrap toggle-container">
+                <label class="toggle-label">
+                  <span class="toggle-text" :class="{ active: !showNitrogen }">Phosphorus</span>
+                  <input 
+                    type="checkbox" 
+                    class="toggle-input" 
+                    @click="toggleNutrient" 
+                    v-model="showNitrogen"
+                  />
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-text" :class="{ active: showNitrogen }">Nitrogen</span>
+                </label>
+              </div>
+            </div>
+
+                <div class="checkbox_item">
+                  <!-- Scale Toggle -->
+                  <div class="checkbox_wrap toggle-container">
+                    <label class="toggle-label">
+                      <span class="toggle-text" :class="{ active: !showTotalLoad }">Total load</span>
+                      <input 
+                        type="checkbox" 
+                        class="toggle-input" 
+                        @click="toggleScale" 
+                        v-model="showTotalLoad"
+                        /> 
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-text" :class="{ active: !showPercentLoad }">Percent load</span>
+                    </label>
+                  </div>
+                </div>
+                </div>
           <div class="viz-container">
                 <div id="barplot-container">    
                 </div>
             </div>
             <div class="caption-container">
-              <div class="checkbox_item">
-                  <div class="checkbox_wrap">
-                    <label>
-                      <input type="radio" name="nutrient" @click="toggleNutrient" checked="checked"> Nitrogen
-                    </label>
-                    <label>
-                      <input type="radio" name="nutrient" @click="toggleNutrient"> Phosphorus
-                    </label>
-                  </div>
-                </div>
-                <div class="checkbox_item">
-                  <div class="checkbox_wrap">
-                    <label>
-                      <input type="radio" name="scale" @click="toggleScale" checked="checked"> Total load
-                    </label>
-                    <label>
-                      <input type="radio" name="scale" @click="toggleScale"> Percent of load
-                    </label>
-                  </div>
-                </div>
-              <div class="caption-text-child">
-                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (Mg/year) or the percent of the total load</p>
-              </div>
-              <div class="caption-legend-child">
+                <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wq-agriculture" >
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
@@ -70,19 +82,15 @@
                   </label>
                 </div>
               </div>
+              <div class="caption-text-child">
+                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (Mg/year) or the percent of the total load</p>
+              </div>
             </div> 
             <div class="text-container">
-              <p> Excess nutrients in surface water (Shoda et al., 2019) can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses. Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
+              <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
-            <div class="text-container">
-              <h3>Effects of nutrients in the water</h3>
-              <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
-            </div>
             <div class="caption-container">
-              <div class="caption-text-child">
-                <p>These maps show total nutrient load in kilograms per year for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
-              </div>
               <div class="caption-legend-child">
                 <div class="checkbox_item">
                   <div class="checkbox_wrap">
@@ -103,6 +111,15 @@
               :src="imgSrc"
               alt="xxx"
               >
+            </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>These maps show total nutrient load in kilograms per year for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
+              </div>
+              </div>
+            <div class="text-container">
+              <h3>Effects of nutrients in the water</h3>
+              <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
             <Methods></Methods>
             <References></References>
@@ -140,7 +157,7 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-const containerWidth = Math.min(window.innerWidth * 0.9, 1100); // Max width 900px
+const containerWidth = Math.min(window.innerWidth * 0.9, 1200); 
 const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
 const maxHeight = 900; 
 const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { top: 100, right: 100, bottom: 40, left: 300 };
@@ -150,8 +167,6 @@ let chartBounds, rectGroup;
 let nutrientScale, nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
-
-let buttonText = "nitrogen load";
 
 function getImgURL(id) {
   return `${baseURL}${id}.png`;
@@ -615,5 +630,68 @@ $switchWidth: 7.9rem;
     height: 2.2rem;
   }
 }
+toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
 
+/* toggle label for positioning */
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* text styles for words on left and right */
+.toggle-text {
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  color: var(--black-soft);
+}
+
+.toggle-text.active {
+  color: var(--blue-bright); /* highlighted color */
+}
+
+/* toggle input (hidden) */
+.toggle-input {
+  display: none;
+}
+
+/* toggle slider styles */
+.toggle-slider {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: lightgrey;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+
+/* move slider to the right when checked */
+.toggle-input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+/* change slider background when checked */
+.toggle-input:checked + .toggle-slider {
+  background-color: var(--blue-bright);
+}
 </style>
