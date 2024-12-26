@@ -4,7 +4,7 @@
   <defs>
     <style>
       .st0 {
-        fill: #85a457;
+        fill: var(--wq-biotic);
       }
 
       .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7 {
@@ -14,31 +14,31 @@
       }
 
       .st1 {
-        fill: #418692;
+        fill: var(--wq-salinity);
       }
 
       .st2 {
-        fill: #822734;
+        fill: var(--wq-organics);
       }
 
       .st3 {
-        fill: #93658f;
+        fill: var(--wq-nutrients);
       }
 
       .st4 {
-        fill: #ffb0b0;
+        fill: var(--wq-temp);
       }
 
       .st5 {
-        fill: #7a7f80;
+        fill: var(--wq-metal);
       }
 
       .st6 {
-        fill: #6591d3;
+        fill: var(--wq-unimpaired);
       }
 
       .st7 {
-        fill: #d7ccc9;
+        fill: var(--wq-sediment);
       }
     </style>
   </defs>
