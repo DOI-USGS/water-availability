@@ -74,10 +74,10 @@
             </div>
             <div class="viz-container">
               <div class="treemap-container-mobile" v-if="isMobile">
-                <treeMapSVGmobile id="treemap-svg"></treeMapSVGmobile>
+                <treemapSVGmobile id="treemap-svg"></treemapSVGmobile>
               </div>
               <div class="treemap-container-desktop" v-if="!isMobile">
-                <treeMapSVG id="treemap-svg"></treeMapSVG>
+                <treemapSVG id="treemap-svg"></treemapSVG>
               </div>
             </div>
             <div class="text-container">
@@ -175,8 +175,8 @@ import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 import { text } from '@fortawesome/fontawesome-svg-core';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
-import treeMapSVG from '@/assets/svgs/treemap_desktop.svg';
-import treeMapSVGmobile from '@/assets/svgs/treemap_mobile.svg';
+import treemapSVG from '@/assets/svgs/treemap_desktop.svg';
+import treemapSVGmobile from '@/assets/svgs/treemap_mobile.svg';
 
 // aquifer map settings
 const defaultRegionID = "overview";
@@ -290,8 +290,14 @@ function mouseoverTreemap(event) {
   const categorySpaces = categoryID.replace(/_/g, " ").replace(1, "").replace(2,"");
   const paragraph = document.getElementById("category-label");
   paragraph.innerHTML = categorySpaces;
-  console.log(treemapLabel)
+
+  // select all objects of matching ids
+  d3.select(".treemap-svg").selectAll(`${categoryID}`)
+    .style("fill", "#800080")
+
 }
+
+
 
 function mouseoutMap(event) {
   const regionID = event.target.id;
@@ -299,7 +305,7 @@ function mouseoutMap(event) {
 };
 
 function mouseoutTreemap(event) {
-  treemapLabel = "Hover-out"
+  treemapLabel = "Hover to view category names"
 };
 
 
