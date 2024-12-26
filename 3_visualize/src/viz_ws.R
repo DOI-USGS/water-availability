@@ -18,10 +18,11 @@ plot_deviations <- function(data_in, region, width, height, png_out, color_schem
                       aes(x = date, y = norm_val, color = hi_lo)) +
     geom_linerange(aes(ymin = 0, ymax = norm_val), linewidth = 1.3) +
     facet_wrap(~ name, nrow = 4) +
-    scale_color_manual(values = c(color_scheme$drier_than_normal,
-                                  color_scheme$wetter_than_normal)) +
+    scale_color_manual(values = c(color_scheme$ws_demand,
+                                  color_scheme$ws_supply)) +
     scale_x_date(breaks = "1 year", date_labels = "%Y") +
-    theme_void() +
+    ggtitle(region) |>
+    theme_void(base_size = 11) +
     theme(legend.position = "none",
           panel.grid.major.x = element_line(color = color_scheme$shadow, linewidth = 0.1),
           axis.text.x = element_text(color = color_scheme$shadow, size = 8),

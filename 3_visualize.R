@@ -37,8 +37,8 @@ p3_targets <- list(
                  #tern_6 = "#53697A",
                  #tern_7 = "#637B73",
                  #tern_8 = "#F9D689",
-                 dumbbell_sw = "#065867",
-                 dumbbell_gw = "#F09300"))),
+                 dumbbell_sw = "#1687A5",
+                 dumbbell_gw = "#355b65"))),
   tar_target(p3_colors_balance,
              p3_colors_website |> bind_cols(
                tibble(
@@ -52,18 +52,22 @@ p3_targets <- list(
                  dry_red_vdark = "#492525",
                  dry_red_dark = "#965a5b",
                  dry_red_light = "#CFACAB",
-                 drier_than_normal = "#965a5b",
-                 wetter_than_normal = "#1687A5"
+                 ws_demand = "#965a5b",
+                 ws_supply = "#1687A5"
                ))),
   tar_target(p3_colors_wq,
              p3_colors_website |> bind_cols(
                tibble(
-                 # Wq loads (from scico palette "acton")
+                 # Wq loads (acton from scico)
                  very_low_col = "#E8CDE3",
                  low_col = "#D485AA", 
                  moderate_col = "#93658F", 
                  high_col = "#554C7A",
-                 very_high_col = "#270C3F"
+                 very_high_col = "#270C3F",
+                 # wq pie charts - greyed out
+                 low_grey = "#d6ced9",
+                 mod_grey = "#b0a0b5",
+                 high_grey = "#897292"
                ))),
   tar_target(p3_popn_colors,
              col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
@@ -297,14 +301,24 @@ p3_targets <- list(
   #
   #
   # Groundwater geofacet - Percent of study area over health standards
-  tar_target(p3_wq_gw_geofacet_png,
-             wq_geofacet(in_df = p1_wq_gw_exceedences_df,
-                         in_states = p2_State_sf,
-                         in_geogrid = p2_aquifer_name_xwalk,
-                         png_out = "src/assets/images/R/06_wq_gw_geofacet.png",
-                         width = 9, height = 6
-                         ),
-             format = "file"
+  tarchetypes::tar_map(
+    values = tibble::tibble(aquifer_abbr = c(
+      "cacb", "cval", "clpt", "bnrf", "bnrc", "copl", "hpaq",  
+      "strv1", "rgaq", "edtr", "ozrk", "metx","secp", "strv2",
+      "cmor", "glac", "vpdc", "pied", "nacp", "surf", "bisc",
+      "flor", "clow", "overview")),
+    tar_target(p3_wq_gw_geofacet_png,
+               wq_geofacet(in_df = p1_wq_gw_exceedences_df,
+                           in_states = p2_State_detailed_sf,
+                           in_sf = p1_aquifers_sf,
+                           in_geogrid = p2_aquifer_name_xwalk,
+                           aquifer_abbr = aquifer_abbr,
+                           color_scheme = p3_colors_wq,
+                           png_out = sprintf("src/assets/images/R/06_wq_gw_%s.png", aquifer_abbr),
+                           width = 9, height = 6
+               ),
+               format = "file"),
+    names = aquifer_abbr
   ),
   
   

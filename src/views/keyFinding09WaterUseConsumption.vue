@@ -3,10 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Not all water withdrawn for human water use returns to the local environment. Some water is lost as consumptive use because it is evaporated, transpired, incorporated into products or crops, consumed by humans or livestock, or otherwise made unavailable for immediate use. A major category of consumptive water use is the evaporation and transpiration of water used for crop irrigation. Between 2010 and 2020, approximately 83,000 mgd (37% of total withdrawals from freshwater) were lost as consumptive water use in the lower 48 states across all water use categories. Crop irrigation accounted for 90% of the consumptive losses, whereas thermoelectric and public supply accounted for only 3% and 7%, respectively (Medalie et al., 2025).</p>
-            </div>
-            <div class="viz-container">
-                <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/09_cu_overview.png">
+                <p>Not all water withdrawn for human water use returns to the local environment. Some water is lost as consumptive use because it is evaporated, transpired, incorporated into products or crops, consumed by humans or livestock, or otherwise made unavailable for immediate use. Between 2010 and 2020, approximately 83,000 mgd (37% of total withdrawals from freshwater) were lost as consumptive water use in the lower 48 states across all water use categories. Crop irrigation accounted for 90% of the consumptive losses, whereas thermoelectric and public supply accounted for only 3% and 7%, respectively (Medalie et al., 2025).</p>
             </div>
             <div class="viz-container">
                 <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">

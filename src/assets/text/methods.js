@@ -7,7 +7,7 @@ export default {
         method: [
           {
             header: "Calculating supply and demand",
-            description: "Supply and demand were calculated as mean annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. Error bars on the supply and demand were calculated as standard deviations between the years of analysis.",
+            description: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. ",
           },
           {
             header: "Calculating water limitation",
@@ -19,16 +19,17 @@ export default {
         route: '/02SUI',
         method: [
           {
-            header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
-          },
-          {
-            header: "Mapping Census Data",
-            description: "The population estimate within each HUC12 catchment was calculated using the 2020 U.S. Census Bureau tract-level population counts (U.S. Census Bureau, 2020). Census data were merged with water limitation data by watershed (HUC12)."
-          },
-          {
-            header: "Integrated water availability",
-            description: "The extent to which water quantity, surface water quality, groundwater quality, and reduction of natural flows limit water availability were analyzed against quantitative values for a particular use. For the surface-water quantity indicator, water-supply and use index was used. For the surface water-quality indicator, surface water total nitrogen and total phosphorus were compared to the NRSA Good benchmark (U.S. Environmental Protection Agency, 2020; Erickson et al. 2025). For the groundwater-quality indicator, predicted nitrate and arsenic concentrations were compared to the regulatory enforceable drinking water MCLs. For the flows indicator, predicted alteration of different aspects of the flow regime were compared to those aspects of the flow regime that have been shown to affect regional ecological health."
+            header: "Determining impacts of water quantity",
+            description: "The impact of water quantity on water availablity was determined by analyzing the water supply and use index, which expresses the imbalance between surface water-supply and consumptive uses was used."
+          }, {
+            header: "Determining impacts of surface water quality",
+            description: "For the surface water-quality indicator, surface water total nitrogen and total phosphorus were compared to the NRSA Good benchmark (U.S. Environmental Protection Agency, 2020; Erickson et al. 2025)."
+          }, {
+            header: "Determining impacts of groundwater quality",
+            description: "For the groundwater-quality indicator, predicted nitrate and arsenic concentrations were compared to the regulatory enforceable drinking water maximum contaminant levels."
+          }, {
+            header: "Determining impacts of ecoflows",
+            description: "For the flows indicator, predicted alteration of different aspects of the flow regime were compared to those aspects of the flow regime that have been shown to affect regional ecological health."
           }
         ]
       },      {
@@ -36,12 +37,16 @@ export default {
         route: '/03SVI',
         method: [
           {
-            header: "Calculating social vulnerability",
-            description: "The Centers for Disease Control 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water stress (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan et al., 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were defined such that values less than 0.4 indicate low vulnerability, values between 0.4 and 0.6 indicate medium vulnerability, and values greater than 0.6 indicate high vulnerability.",
+            header: "Calculating water limitation",
+            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. For the population bubbles, categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8. To simplify the map with social vulnerability, the categories were low, below 0.4, moderate, between 0.4 and 0.6, and high, which was above 0.6."
           },
           {
-            header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average surface water-supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation were low indicating values less than 0.4, medium indicating values between 0.4 and 0.6, and high indicating values greater than 0.6."
+            header: "Mapping Census Data",
+            description: "The population estimate within each HUC12 catchment was calculated using the 2020 U.S. Census Bureau tract-level population counts (U.S. Census Bureau, 2020). Census data were merged with water limitation data by watershed (HUC12)."
+          },
+          {
+            header: "Calculating social vulnerability",
+            description: "The Centers for Disease Control 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water limitation (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan et al., 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were defined such that values less than 0.4 indicate low vulnerability, values between 0.4 and 0.6 indicate medium vulnerability, and values greater than 0.6 indicate high vulnerability.",
           }
         ]
       },      {
@@ -49,12 +54,12 @@ export default {
         route: '/04Drought',
         method: [
           {
-            header: "Calculating the national water cycle",
+            header: "Modeling the national water cycle",
             description: "The annual average hydrologic fluxes across the conterminous United States was calculated for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States (Foks et al. in prep) and evapotranspiration and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System (Foks et al. in prep) and the Weather Research and Forecasting model hydrologic modeling system (Sampson et al., in prep). Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation (Medalie et al. 2025).",
           },
           {
             header: "Comparing water supply to normal",
-            description: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region. Then, the monthly values were compared to the average to calculate a normalized deviation from the mean for each month and region.",
+            description: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region. Then, the monthly values were compared to the average to calculate a normalized deviation from the average for each month and region.",
           }
         ]
       },      {
@@ -62,8 +67,12 @@ export default {
         route: '/05WQSource',
         method: [
           {
-            header: "Calculating nutrient sources",
-            description: "Total and source-specific nutrient loads from five spatially explicit modeling studies (SPARROW) models were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise et al., 2019). Common sources across regions were generalized to enable a simple comparison.",
+            header: "Modeling nutrient sources",
+            description: "Total and source-specific nutrient loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise et al., 2019). Common sources across regions were generalized to enable a simple comparison.",
+          },
+          {
+            header: "Mapping nutrient loads",
+            description: "Predicted total nitrogen and phosphorus loads were modeled from 2012 mean annual 'Spatially referenced regressions on watershed' attributes models (Schwarz et al., 2006). Loads were merged spatially with watershed (HUC12) locations for mapping.",
           }
         ]
       },      {
@@ -72,7 +81,11 @@ export default {
         method: [
           {
             header: "Calculating threats to water",
-            description: "Water use type (drinking water, fish consumption, recreation), threat category, and threat is quantified by total river miles. These data were obtained from the United States Environmental Protection Agency (USEPA) Assessment, Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS) database (U.S. Environmental Protection Agency, 2023c).",
+            description: "Water use type (drinking water, fish consumption, recreation), threat category, and threat are quantified by total river miles. These data were obtained from the United States Environmental Protection Agency (USEPA) Assessment, Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS) database (U.S. Environmental Protection Agency, 2023c).",
+          },
+          {
+            header: "Calculating aquifer quality",
+            description: "Colored pie charts indicate the percentage of the area studied that contained a constituent in untreated groundwater at a concentration that exceeds a human-health benchmark for drinking water (high) or one-half of that value (moderate). Data from Belitz and others (2022).",
           }
         ]
       },      {
@@ -112,7 +125,7 @@ export default {
         method: [
           {
             header: "Determining future impacts",
-            description: "The impacts to future water availability were determined by a review of recent literature in peer-reviewed journals and synthesis of information in the Intergovernmental Panel on Climate Change Sixth Assessment Report (IPCC AR6) ( Intergovernmental Panel on Climate Change, 2021) and Fifth National Climate Assessment ( U.S. Global Change Research Program, 2023). The framework of climatic impact drivers outlined in the (IPCC AR6) was used to show primary drivers of physical changes in water cycle processes and to explain projected changes in future water availability.",
+            description: "The impacts to future water availability were determined by a review of recent literature in peer-reviewed journals and synthesis of information in the Intergovernmental Panel on Climate Change Sixth Assessment Report (IPCC AR6) (Intergovernmental Panel on Climate Change, 2021) and Fifth National Climate Assessment (U.S. Global Change Research Program, 2023). The framework of climatic impact drivers outlined in the (IPCC AR6) was used to show primary drivers of physical changes in water cycle processes and to explain projected changes in future water availability.",
           }
         ]
       }
