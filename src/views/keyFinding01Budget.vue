@@ -484,12 +484,6 @@ function createDotChart() {
   margin: 0 auto;
   padding: 0px;
 }
-#viz-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-  display: block;
-}
 #dotplot-container{
   width: 100%;
   max-height: 900px;

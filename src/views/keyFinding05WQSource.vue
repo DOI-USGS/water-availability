@@ -3,17 +3,14 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-              <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations these can become pollutants harmful to human health, animals, and ecosystems. Nutrient effects on water availability for human and ecological use are widespread and at times substantial. Excessive nutrients commonly occur in surface water (Shoda et al., 2019) and can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses.</p>
+              <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
-            <div class="text-container">
-              <p>Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from 
-                agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
-                </p>
+          <div class="viz-container">
+                <div id="barplot-container">    
+                </div>
             </div>
             <div class="caption-container">
-              <div class="caption-text-child">
-                <p>This bar chart shows the source of nutrients for each hydrologic region. Use the buttons to change between viewing nitrogen versus phosphorus and to view either the total load or the percent of the total load</p>
-                <div class="checkbox_item">
+              <div class="checkbox_item">
                   <div class="checkbox_wrap">
                     <label>
                       <input type="radio" name="nutrient" @click="toggleNutrient" checked="checked"> Nitrogen
@@ -33,6 +30,8 @@
                     </label>
                   </div>
                 </div>
+              <div class="caption-text-child">
+                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (Mg/year) or the percent of the total load</p>
               </div>
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wq-agriculture" >
@@ -72,34 +71,9 @@
                 </div>
               </div>
             </div> 
-            <div class="viz-container">
-                <div id="barplot-container">    
-                </div>
-            </div>
-            <div
-            id="toggle-container"
-            class="text-container"
-            aria-hidden="true"
-            >
-              <p>This map shows 
-                <span>
-                  <button
-                  class="button"
-                  :text="scaleType"
-                  @click="showPhosphorus"
-                  >
-                    {{ buttonText }}
-                  </button>
-                </span>
-              </p>
-            </div>
-            <div class="viz-container">
-                <img 
-                        id="first-image" 
-                        class="viz-placeholder" 
-                        :src="imgSrc" 
-                        alt="xxx"
-                    >
+            <div class="text-container">
+              <p> Excess nutrients in surface water (Shoda et al., 2019) can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses. Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
+                </p>
             </div>
             <div class="text-container">
               <h3>Effects of nutrients in the water</h3>
@@ -150,39 +124,9 @@ import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 
-
 // use for mobile logic
 const mobileView = isMobile;
 const featureToggles = inject('featureToggles');
-
-///// placeholder sparrow maps /////
-
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
-const tnImageID = "05_tn_map";
-const tpImageID = "05_tp_map";
-let imgSrc = ref(getImgURL(tnImageID));
-
-let buttonText = "nitrogen load";
-
-function getImgURL(id) {
-  return `${baseURL}${id}.png`;
-}
-
-function showPhosphorus() {
-    if(imgSrc.value === getImgURL(tnImageID)) {
-        imgSrc.value = getImgURL(tpImageID);
-        buttonText = "phosporus load";
-
-    } else {
-        imgSrc.value = getImgURL(tnImageID);
-        buttonText = "nitrogen load";
-
-    }
-}
-
-
-////// 
-
 
 // Global variables 
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
@@ -196,8 +140,9 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-const containerWidth = Math.min(window.innerWidth * 0.9, 900); // Max width 900px
+const containerWidth = Math.min(window.innerWidth * 0.9, 1100); // Max width 900px
 const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
+const maxHeight = 900; 
 const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { top: 100, right: 100, bottom: 40, left: 300 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
@@ -324,16 +269,13 @@ function initBarChart({
       .attr('class', 'barplotSVG')
       .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
       .style('width', containerWidth)
-      .style('height', containerHeight);
+      .style('height', containerHeight)
+      .style('max-height', `${maxHeight}px`);
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
-      .style("transform", `translate(${
-        margin.left
-      }px, ${
-        margin.top
-      }px)`)
+      .style("transform", `translate(${margin.left}px, ${margin.top}px)`)
 
     // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = chartBounds.append('g')
@@ -345,7 +287,6 @@ function createBarChart({
   scaleLoad
 }) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
-  //const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
   const stackedData = d3.stack()
@@ -552,14 +493,13 @@ function wrap(text, width) {
   align-items: center;
   width: 100%; 
   min-height: 600px; 
+  max-height: 900px;
   margin: auto;
 }
 
 #barplot-container {
-  width: 90vw; 
-  max-width: 900px; 
-  min-height: 600px; 
-  margin: 0 auto; 
+  width: 100%; 
+  max-height: 900px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -571,7 +511,6 @@ function wrap(text, width) {
   fill: var(--ws-supply);
 }
 
-<<<<<<< HEAD
 .highlight {
   color: white;
   padding: 0.25px 5px;
@@ -602,8 +541,6 @@ function wrap(text, width) {
   }
 
 }
-=======
->>>>>>> c1c67904e48414d285fc7878ffe79b9bdd6810bb
 $switchWidth: 7.9rem;
 .graph-buttons-switch {
   display: flex;
