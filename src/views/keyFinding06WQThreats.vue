@@ -165,7 +165,6 @@
 import { onMounted, ref, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
-import * as d3sankey from 'd3-sankey';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
