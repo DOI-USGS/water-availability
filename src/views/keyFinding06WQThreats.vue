@@ -83,9 +83,6 @@
             <div class="text-container">
               <div class="temporary">
                   <div class="tab-container-text-d3">
-                    <h3 class="tab-content-title">
-                          About one-third of stream miles that are sources of drinking-water supply are impaired for drinking-water use, most commonly because of non-mercury metals and salinity. 
-                    </h3>
                     <div class="tab-content-text">
                       <p>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels.</p>
                       <br>
@@ -289,13 +286,14 @@ function mouseoverTreemap(event) {
   const categorySpaces = categoryID.replace(/_/g, " ").replace(1, "").replace(2,"");
   const paragraph = document.getElementById("category-label");
   paragraph.innerHTML = categorySpaces;
-
+  const category0 = `${categorySpaces}`.replace(/\s/g, "_")
+  const category1 = `${categorySpaces}1`.replace(/\s/g, "_")
+  const category2 = `${categorySpaces}2`.replace(/\s/g, "_")
   // select all objects of matching ids
-  d3.select(".treemap-svg").selectAll(`${categoryID}`)
-    .style("fill", "#800080")
-
+  d3.select("#treemap-svg").selectAll('rect').style("opacity", 0.6)
+  d3.select("#treemap-svg").selectAll(`#${category0}, #${category1}, #${category2}`)
+    .style("opacity", 1)
 }
-
 
 
 function mouseoutMap(event) {
@@ -304,7 +302,11 @@ function mouseoutMap(event) {
 };
 
 function mouseoutTreemap(event) {
-  treemapLabel = "Hover to view category names"
+  const categoryID = event.target.id;
+
+  const paragraphOut = document.getElementById("category-label");
+  paragraphOut.innerHTML = "Hover to view category names";
+  d3.select("#treemap-svg").selectAll('rect').style("opacity", 1)
 };
 
 
