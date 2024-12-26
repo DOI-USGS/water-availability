@@ -52,7 +52,7 @@
                 </div>
               </div>
             <Methods></Methods>
-            <References></References>
+            <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
@@ -61,12 +61,15 @@
 
 <script setup>
 import { ref, onMounted, inject } from 'vue';
+import { useRoute } from 'vue-router';
 import * as d3Base from 'd3';
 import Reg from "../../public/assets/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
+import references from '../assets/text/references.js';
 import References from '../components/References.vue';
+import SubPages from '../components/SubPages.js';
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_";
@@ -75,6 +78,31 @@ const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
 const focalFill = "var(--teal-dark)";
 const defaultFill = "var(--default-fill)";
+
+
+const route = useRoute();
+
+//////// references array //
+// filter to this page's key message
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
 
 // functions called here
 onMounted(() => {

@@ -106,7 +106,7 @@
               >
             </div>
             <Methods></Methods>
-            <References></References>
+            <References :theseReferences="referenceList"></References>
         </div>
 
 
@@ -118,11 +118,14 @@
 
 <script setup>
 import { onMounted, ref, computed, inject } from 'vue';
+import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
+import references from './../assets/text/references.js';
 import References from '../components/References.vue';
+import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 import RegionMap from "/assets/USregions.svg";
 
@@ -130,6 +133,7 @@ import RegionMap from "/assets/USregions.svg";
 // use for mobile logic
 const mobileView = isMobile;
 const featureToggles = inject('featureToggles');
+const route = useRoute();
 
 // Global variables 
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
@@ -154,6 +158,30 @@ const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
 let buttonText = "nitrogen load";
+
+
+//////// references array //
+// filter to this page's key message
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
+
 
 function getImgURL(id) {
   return `${baseURL}${id}.png`;

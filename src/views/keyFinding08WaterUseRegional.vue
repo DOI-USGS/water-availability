@@ -122,7 +122,7 @@
             >    
           </div>
           <Methods></Methods>
-          <References></References>
+          <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
@@ -131,12 +131,15 @@
 
 <script setup>
 import { ref, onMounted, inject, reactive } from 'vue';
+import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import AggReg from "../../public/assets/AggReg.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
+import references from './../assets/text/references.js';
 import References from '../components/References.vue';
+import SubPages from '../components/SubPages';
 import RegionMap from '../components/RegionMap.vue';
 import HorizontalBar from '../components/HorizontalBar.vue';
 
@@ -150,6 +153,29 @@ const focalFill = "var(--teal-dark)";
 const defaultFill = "var(--default-fill)";
 const csvData = ref([]);
 const selectedRegion = ref('United States'); // default region
+
+const route = useRoute();
+//////// references array //
+// filter to this page's key message
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
 
 // toggle maps on and off
 const layers = reactive({
