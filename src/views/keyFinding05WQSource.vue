@@ -87,7 +87,7 @@
               </div>
             </div> 
             <div class="text-container">
-              <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
+              <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
             <div class="caption-container">
@@ -104,14 +104,30 @@
                 </div>
               </div>
             </div>
-            <div class="viz-container">
+       <!--      <div class="viz-container">
               <img
               id="first-image"
               class="viz-placeholder"
               :src="imgSrc"
               alt="xxx"
               >
-            </div>
+            </div> -->
+            <RegionMap 
+              @regionSelected="updateSelectedRegion"
+              :layerVisibility="{
+                nitrogen: layers.nitrogen.visible,
+                phosphorus: layers.phosphorus.visible
+              }"
+              :layerPaths="{
+                nitrogen: { path: layers.nitrogen.path, color: layers.nitrogen.color, order: layers.nitrogen.order },
+                phosphorus: { path: layers.phosphorus.path, color: layers.phosphorus.color, order: layers.phosphorus.order }
+              }"
+              regionsDataUrl="assets/Regions.topojson"
+              usOutlineUrl="assets/USoutline.topojson"
+              regionsVar="Region_nam_nospace"
+              layerMag="1"
+
+            />
             <div class="caption-container">
               <div class="caption-text-child">
                 <p>These maps show total nutrient load in kilograms per year for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
@@ -119,7 +135,7 @@
               </div>
             <div class="text-container">
               <h3>Effects of nutrients in the water</h3>
-              <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
+              <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely phosphorus dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
             <Methods></Methods>
             <References></References>
@@ -133,13 +149,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, inject } from 'vue';
+import { onMounted, ref, computed, inject, reactive } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
+import RegionMap from '../components/RegionMap.vue';
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -168,6 +185,21 @@ let nutrientScale, nutrientAxis;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
+const layers = reactive({
+  nitrogen: {
+    visible: true,
+    path: '05_tn_map.png',
+    color: 'var(--nitrogen)',
+    order: 1
+  },
+  phosphorus: {
+    visible: true,
+    path: '05_tp_map.png',
+    color: 'var(--phosphorus)',
+    order: 2
+  }
+});
+
 function getImgURL(id) {
   return `${baseURL}${id}.png`;
 }
@@ -188,7 +220,7 @@ const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevad
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
 "Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
 
-// Colors for bar chart (need to be updated along with CSS below!)
+// Colors for bar chart (need to be updated along with CSS bephosphorus!)
 const categoryColors = {
         'Agriculture': 'var(--wq-sediment)',
         'Atmospheric deposition': 'var(--wq-air)',

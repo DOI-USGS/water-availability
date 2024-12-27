@@ -24,6 +24,10 @@ const props = defineProps({
     type: Object,
     required: true
   },
+  layerMag: {
+    type: String,
+    required: true
+  },
   regionsDataUrl: {
     type: String,
     required: true
@@ -54,8 +58,8 @@ const updateLayers = () => {
         .attr('xlink:href', d => 'https://labs.waterdata.usgs.gov/visualizations/images/water-availability/' + d.path)
         .attr('x', -80)
         .attr('y', -55)
-        .attr('width', 800 * 1.2)
-        .attr('height', 550 * 1.2)
+        .attr('width', 800 * props.layerMag)
+        .attr('height', 550 * props.layerMag)
         .style('opacity', d => (d.visible ? 1 : 0))
         .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
       update => update

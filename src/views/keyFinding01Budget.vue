@@ -77,6 +77,7 @@
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
           regionsVar="Region_nam_nospace"
+          layerMag="1.2"
 
         />
         </div>
