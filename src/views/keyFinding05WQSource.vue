@@ -178,7 +178,7 @@ const categoryColors = {
         'Atmospheric deposition': 'var(--wq-air)',
         'Natural sources': 'var(--wq-natural)',
         'Other Human Sources': 'var(--wu-ps)',
-        'Wastewater': 'var(--ws-supply)'
+        'Wastewater': 'var(--ws-wastewater)'
       }; 
 
 onMounted(async () => {
