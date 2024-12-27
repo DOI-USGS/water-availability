@@ -507,7 +507,7 @@ watch(showNitrogen, (newValue) => {
   }
 
   &#Wastewater {
-    background-color: #478CCF;
+    background-color: var(--wq-wastewater);
   }
 
   &#Naturalsources {
