@@ -33,7 +33,7 @@ map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
   if(nutrient == "tn") {
     breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, Inf)
   } else {
-    breaks <- c(10, 40, 85, 160, 290, 520, 100, 2500, 10000, Inf)
+    breaks <- c(10, 40, 85, 160, 290, 520, 1000, 2500, 10000, Inf)
   }
   
   n_breaks <- 10
