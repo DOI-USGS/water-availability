@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-  import { reactive, inject } from 'vue';
+  import { inject } from 'vue';
   import SubPages from '@/components/SubPages.js';
 
 

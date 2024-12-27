@@ -145,7 +145,7 @@ watch(
   
 
       // draw region boundaries
-      const paths = svg.append('g')
+      svg.append('g')
         .selectAll('path')
         .data(geoRegions.features)
         .join('path')
