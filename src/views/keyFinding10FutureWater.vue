@@ -9,6 +9,7 @@
                 <h3>Potential impacts from rising temperature</h3>
             </div>
             <div class="viz-container">
+                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_temp-mobile.png"/>
                 <ul class="tab-content-list">
                     <li class="impact-list-items">Increased average air temperature</li>
                     <li>More common extreme heat events</li>
@@ -18,12 +19,12 @@
                     <li>Warmer and shorter winter season</li>
                     <li>Decreased frost and cold</li>
                 </ul>
-                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_temp-mobile.png"/>
             </div>
             <div class="text-container">
                 <h3>Potential impacts from wetter conditions</h3>
             </div>
             <div class="viz-container">
+                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_water-mobile.png"/>
                 <ul class="tab-content-list">
                     <li class="impact-list-items">Increased average air temperature</li>
                     <li>Increased mean precipitation</li>
@@ -32,12 +33,12 @@
                     <li>Effects on agriculture</li>
                     <li>Impaired water quality</li>
                 </ul>
-                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_water-mobile.png"/>
             </div>
             <div class="text-container">
                 <h3>Potential impacts from drier conditions</h3>
             </div>
             <div class="viz-container">
+                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_dry-mobile.png"/>
                 <ul class="tab-content-list">
                     <li class="impact-list-items">Increased groundwater demand</li>
                     <li>Changes in streamflow amount and timing</li>
@@ -46,12 +47,12 @@
                     <li>More frequent and long-lasting fire weather</li>
                     <li>Amplified drought events</li>
                 </ul>
-                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_dry-mobile.png"/>
             </div>
             <div class="text-container">
                 <h3>Potential impacts from changing snow and ice</h3>
             </div>
             <div class="viz-container">
+                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_ice-mobile.png"/>
                 <ul class="tab-content-list">
                     <li>Decreased snowfall</li>
                     <li>Earlier snowmelt runoff</li>
@@ -61,12 +62,12 @@
                     <li>Thawing permafrost</li>
                     <li>Altered rain and snow patterns</li>
                 </ul>
-                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_ice-mobile.png"/>
             </div>
             <div class="text-container">
                 <h3>Potential impacts from changing winds</h3>
             </div>
             <div class="viz-container">
+                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_wind-mobile.png"/>
                 <ul class="tab-content-list">
                     <li>Decreased average wind speed</li>
                     <li>Increased sand and dust storms</li>
@@ -74,19 +75,18 @@
                     <li>Increased severe wind storms</li>
                     <li>Increased erosion</li>
                 </ul>
-                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_wind-mobile.png"/>
             </div>
             <div class="text-container">
                 <h3>Potential impacts from coastal change</h3>
             </div>
             <div class="viz-container">
+                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_coastal-mobile.png"/>
                 <ul class="tab-content-list">
                     <li>Rising sea levels</li>
                     <li>Increased storm surge</li>
                     <li>Increased saltwater intrusion</li>
                     <li>Increased frequency and severity of coastal flooding</li>
                 </ul>
-                <img class="viz-double-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/10_coastal-mobile.png"/>
             </div>
             <div class="text-container">
                 <h3>Impacts from other aspects of the water cycle</h3>
