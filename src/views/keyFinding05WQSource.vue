@@ -120,7 +120,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, inject, reactive, watch } from 'vue';
+import { onMounted, ref, inject, reactive, watch } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -135,8 +135,6 @@ const mobileView = isMobile;
 const featureToggles = inject('featureToggles');
 
 // Global variables 
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
-
 const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const dataSet2 = ref([]); 
@@ -150,11 +148,10 @@ const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { to
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 let chartBounds, rectGroup;
-let nutrientScale, nutrientAxis;
+let nutrientScale;
 
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
-const showTotalLoad = ref(true)
 
 const layers = reactive({
   nitrogen: {
@@ -171,11 +168,6 @@ const layers = reactive({
   }
 });
 
-function getImgURL(id) {
-  return `${baseURL}${id}.png`;
-}
-
-
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
 "Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
@@ -188,16 +180,6 @@ const categoryColors = {
         'Other Human Sources': 'var(--wu-ps)',
         'Wastewater': 'var(--ws-supply)'
       }; 
-
-// set up filtered chart data as computed property
-const scaleType = computed(() => {
-    return scaleLoad.value ? 'total load' : 'percent of total load'
-});
-    
-// set up filtered chart data as computed property
-const showNutrientType = computed(() => {
-    return showNitrogen.value ? 'nitrogen' : 'phosphorus'
-});
 
 onMounted(async () => {
   // sync initial state with toggles
@@ -248,42 +230,6 @@ async function loadData(fileName) {
     return [];
   }
 };
-
-function toggleScale() {
-  // dynamically update labels and data in the chart
-  if (showTotalLoad.value) {
-    console.log('Showing Total Load');
-    createBarChart({
-      dataset: data.value, // pass the current dataset
-      scaleLoad: true // total load
-    });
-  } else {
-    console.log('Showing Percent Load');
-    createBarChart({
-      dataset: data.value, // pass the current dataset
-      scaleLoad: false // percent load
-    });
-  }
-
-  // also update the chart labels
-  updateLabels();
-}
-
-function toggleNutrient() {
-  showNitrogen.value = !showNitrogen.value;
-
-  // toggle layer visibility based on state
-  layers.nitrogen.visible = showNitrogen.value;
-  layers.phosphorus.visible = !showNitrogen.value;
-
-  // redraw stacked bar chart
-  data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
-  createBarChart({
-    dataset: data.value,
-    scaleLoad: scaleLoad.value
-  });
-  updateLabels(); // update the labels when the nutrient changes
-}
 
 function initBarChart({
   containerWidth,
@@ -374,7 +320,7 @@ function createBarChart({
   });
 
   // x-axis at the bottom
-  nutrientAxis = chartBounds.append('g')
+  chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
     .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
     .attr('class', 'axis-text');
@@ -484,32 +430,6 @@ function updateLabels() {
   explainedLabel.exit().remove(); 
 }
 
-
-// https://gist.github.com/mbostock/7555321
-function wrap(text, width) {
-  text.each(function() {
-    var text = d3.select(this),
-    words = text.text().split(/\s|-+/).reverse(),
-    word,
-    line = [],
-    lineNumber = 0,
-    lineHeight = mobileView ? 0.6 : 0.8, // ems
-    y = text.attr("y"),
-    dy = parseFloat(text.attr("dy")),
-    tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-    while ((word = words.pop())) {
-      line.push(word);
-      tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-        line.pop();
-        tspan.text(line.join(" "));
-        line = [word];
-        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-        }
-    }
-  }
-)};
-
 // watch for changes to scaleLoad
 watch(scaleLoad, (newValue) => {
   // update the chart based on the new scale
@@ -521,7 +441,23 @@ watch(scaleLoad, (newValue) => {
   // update chart labels to match scale
   updateLabels();
 });
+// watch for changes to showNitrogen
+watch(showNitrogen, (newValue) => {
+  // update the chart based on the nutrient type
+  data.value = newValue ? dataSet1.value : dataSet2.value;
 
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: scaleLoad.value 
+  });
+
+  // update chart labels
+  updateLabels();
+
+  // toggle map layer visibility based on the nutrient selected
+  layers.nitrogen.visible = newValue;          // show nitrogen layer
+  layers.phosphorus.visible = !newValue;      // hide phosphorus layer
+});
 </script>
 
 <style scoped lang="scss">
