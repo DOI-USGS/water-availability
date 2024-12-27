@@ -1,91 +1,163 @@
 d3_category,Region_nam,AggReg_nam,category_hucs,total_load,total_hucs,d3_percentage
-High,Atlantic Coast,Southeast,2076,200673687.6303,5121,0.4054
-High,California-Nevada,Western,264,26039800.5627,7285,0.0362
-High,Central High Plains,High Plains,398,37809381.5281,3552,0.112
-High,Central Rockies,Western,33,3035918.3613,4855,0.0068
-High,Columbia-Snake,Western,251,24856577.0811,6883,0.0365
-High,Florida,Southeast,463,49121466.2763,1184,0.391
-High,Great Lakes,Northeast through Midwest,1502,153616973.0446,4485,0.3349
-High,Gulf Coast,Southeast,1880,182945799.609,4192,0.4485
-High,Midwest,Northeast through Midwest,1330,145097301.4799,7423,0.1792
-High,Mississippi Embayment,Southeast,395,40687068.1196,1145,0.345
-High,Northeast,Northeast through Midwest,2194,226625763.0089,5895,0.3722
-High,Northern High Plains,High Plains,37,3239817.6569,5853,0.0063
-High,Pacific Northwest,Western,592,61586758.1575,2488,0.2379
-High,Souris-Red-Rainy,Northeast through Midwest,1021,107340168.7945,2739,0.3728
-High,Southern High Plains,High Plains,798,77555462.6858,4730,0.1687
-High,Southwest Desert,Western,4,418776.4521,4623,9e-4
-High,Tennessee-Missouri,Southeast,2999,308722604.8198,6717,0.4465
-High,Texas,Western,367,34886846.2525,3851,0.0953
-Low,Atlantic Coast,Southeast,100,2048362.1495,5121,0.0195
-Low,California-Nevada,Western,1827,24222553.2772,7285,0.2508
-Low,Central High Plains,High Plains,1557,20225535.4664,3552,0.4383
-Low,Central Rockies,Western,1204,14946828.498,4855,0.248
-Low,Columbia-Snake,Western,3652,44259653.2842,6883,0.5306
-Low,Florida,Southeast,8,116834.8338,1184,0.0068
-Low,Great Lakes,Northeast through Midwest,76,1483727.7352,4485,0.0169
-Low,Gulf Coast,Southeast,77,1289516.1372,4192,0.0184
-Low,Midwest,NA,0,0,NA,0
-Low,Mississippi Embayment,Southeast,5,111152.2585,1145,0.0044
-Low,Northeast,Northeast through Midwest,221,4048529.4789,5895,0.0375
-Low,Northern High Plains,High Plains,3459,42169927.4653,5853,0.591
-Low,Pacific Northwest,Western,581,9630974.8358,2488,0.2335
-Low,Souris-Red-Rainy,Northeast through Midwest,91,1467999.3693,2739,0.0332
-Low,Southern High Plains,High Plains,1617,22674693.3683,4730,0.3419
-Low,Southwest Desert,Western,608,6282081.6861,4623,0.1315
-Low,Tennessee-Missouri,Southeast,10,214839.3426,6717,0.0015
-Low,Texas,Western,1511,18267426.0287,3851,0.3924
-Moderate,Atlantic Coast,Southeast,2261,107499400.3628,5121,0.4415
-Moderate,California-Nevada,Western,983,37137014.2758,7285,0.1349
-Moderate,Central High Plains,High Plains,955,38675921.2625,3552,0.2689
-Moderate,Central Rockies,Western,301,11151769.4796,4855,0.062
-Moderate,Columbia-Snake,Western,950,36013850.3456,6883,0.138
-Moderate,Florida,Southeast,169,8839082.1731,1184,0.1427
-Moderate,Great Lakes,Northeast through Midwest,1366,64801443.2237,4485,0.3046
-Moderate,Gulf Coast,Southeast,1582,78941884.5385,4192,0.3774
-Moderate,Midwest,Northeast through Midwest,348,18867765.9668,7423,0.0469
-Moderate,Mississippi Embayment,Southeast,314,14547674.3532,1145,0.2742
-Moderate,Northeast,Northeast through Midwest,1625,75302050.6934,5895,0.2757
-Moderate,Northern High Plains,High Plains,810,28616760.5289,5853,0.1384
-Moderate,Pacific Northwest,Western,766,30574158.9012,2488,0.3079
-Moderate,Souris-Red-Rainy,Northeast through Midwest,481,23030200.023,2739,0.1756
-Moderate,Southern High Plains,High Plains,1537,64609515.324,4730,0.3249
-Moderate,Southwest Desert,Western,68,2659939.3009,4623,0.0147
-Moderate,Tennessee-Missouri,Southeast,1305,67510435.4705,6717,0.1943
-Moderate,Texas,Western,783,32806434.9227,3851,0.2033
-Very high,Atlantic Coast,Southeast,678,206988522.9385,5121,0.1324
-Very high,California-Nevada,Western,442,247215007.6609,7285,0.0607
-Very high,Central High Plains,High Plains,95,27078009.3541,3552,0.0267
-Very high,Central Rockies,Western,4,1145588.8026,4855,8e-4
-Very high,Columbia-Snake,Western,215,135841317.7486,6883,0.0312
-Very high,Florida,Southeast,348,82450020.7763,1184,0.2939
-Very high,Great Lakes,Northeast through Midwest,1541,415978680.6631,4485,0.3436
-Very high,Gulf Coast,Southeast,646,249303721.6336,4192,0.1541
-Very high,Midwest,Northeast through Midwest,5745,2493059255.2307,7423,0.7739
-Very high,Mississippi Embayment,Southeast,431,122110803.6379,1145,0.3764
-Very high,Northeast,Northeast through Midwest,1844,665190584.6319,5895,0.3128
-Very high,Northern High Plains,High Plains,6,937159.1017,5853,0.001
-Very high,Pacific Northwest,Western,522,168645034.2617,2488,0.2098
-Very high,Souris-Red-Rainy,Northeast through Midwest,1135,335672329.3612,2739,0.4144
-Very high,Southern High Plains,High Plains,268,65369983.1739,4730,0.0567
-Very high,Southwest Desert,Western,63,40525954.2882,4623,0.0136
-Very high,Tennessee-Missouri,Southeast,2403,674751952.8425,6717,0.3577
-Very high,Texas,Western,218,90528568.9196,3851,0.0566
-Very low,Atlantic Coast,Southeast,6,11403.4495,5121,0.0012
-Very low,California-Nevada,Western,3769,6236431.527,7285,0.5174
-Very low,Central High Plains,High Plains,547,1920351.3576,3552,0.154
-Very low,Central Rockies,Western,3313,5551573.5559,4855,0.6824
-Very low,Columbia-Snake,Western,1815,5721273.5465,6883,0.2637
-Very low,Florida,Southeast,196,10230.0656,1184,0.1655
-Very low,Great Lakes,NA,0,0,NA,0
-Very low,Gulf Coast,Southeast,7,15884.5535,4192,0.0017
-Very low,Midwest,NA,0,0,NA,0
-Very low,Mississippi Embayment,NA,0,0,NA,0
-Very low,Northeast,Northeast through Midwest,11,18785.6191,5895,0.0019
-Very low,Northern High Plains,High Plains,1541,5294347.8229,5853,0.2633
-Very low,Pacific Northwest,Western,27,99026.5832,2488,0.0109
-Very low,Souris-Red-Rainy,Northeast through Midwest,11,28023.6592,2739,0.004
-Very low,Southern High Plains,High Plains,510,1560396.827,4730,0.10780000000000001
-Very low,Southwest Desert,Western,3880,6484441.9579,4623,0.8393
-Very low,Tennessee-Missouri,NA,0,0,NA,0
-Very low,Texas,Western,972,2879140.4029,3851,0.2524
+>120000,Atlantic Coast,Southeast,1065,258409685.154,5121,0.208
+>120000,California-Nevada,Western,505,255513309.1145,7285,0.0693
+>120000,Central High Plains,High Plains,154,34923245.0914,3552,0.0434
+>120000,Central Rockies,Western,10,1974927.9203,4855,0.0021
+>120000,Columbia-Snake,Western,270,143244337.773,6883,0.0392
+>120000,Florida,Southeast,495,102182834.6456,1184,0.4181
+>120000,Great Lakes,Northeast through Midwest,1951,470848331.6459,4485,0.435
+>120000,Gulf Coast,Southeast,1007,297468899.7379,4192,0.2402
+>120000,Midwest,Northeast through Midwest,6242,2560184563.4859,7423,0.8409
+>120000,Mississippi Embayment,Southeast,536,136153657.3125,1145,0.4681
+>120000,Northeast,Northeast through Midwest,2450,746348768.3525,5895,0.4156
+>120000,Northern High Plains,High Plains,9,1326123.8224,5853,0.0015
+>120000,Pacific Northwest,Western,696,192112752.351,2488,0.2797
+>120000,Souris-Red-Rainy,Northeast through Midwest,1438,376298199.8894,2739,0.525
+>120000,Southern High Plains,High Plains,421,85627616.2932,4730,0.089
+>120000,Southwest Desert,Western,65,40808978.9286,4623,0.0141
+>120000,Tennessee-Missouri,Southeast,3196,780885574.6098,6717,0.4758
+>120000,Texas,Western,273,97873954.723,3851,0.0709
+0 - 100,Atlantic Coast,Southeast,1,25.0056,5121,2e-4
+0 - 100,California-Nevada,Western,10,258.5826,7285,0.0014
+0 - 100,Central High Plains,NA,0,0,NA,0
+0 - 100,Central Rockies,NA,0,0,NA,0
+0 - 100,Columbia-Snake,Western,12,0,6883,0.0017
+0 - 100,Florida,Southeast,192,0,1184,0.1622
+0 - 100,Great Lakes,NA,0,0,NA,0
+0 - 100,Gulf Coast,NA,0,0,NA,0
+0 - 100,Midwest,NA,0,0,NA,0
+0 - 100,Mississippi Embayment,NA,0,0,NA,0
+0 - 100,Northeast,NA,0,0,NA,0
+0 - 100,Northern High Plains,High Plains,9,0,5853,0.0015
+0 - 100,Pacific Northwest,NA,0,0,NA,0
+0 - 100,Souris-Red-Rainy,Northeast through Midwest,3,0,2739,0.0011
+0 - 100,Southern High Plains,High Plains,1,0,4730,2e-4
+0 - 100,Southwest Desert,Western,38,2345.1334,4623,0.0082
+0 - 100,Tennessee-Missouri,NA,0,0,NA,0
+0 - 100,Texas,NA,0,0,NA,0
+100 - 500,Atlantic Coast,Southeast,1,191.6342,5121,2e-4
+100 - 500,California-Nevada,Western,704,234346.6348,7285,0.0966
+100 - 500,Central High Plains,High Plains,1,472.1805,3552,3e-4
+100 - 500,Central Rockies,Western,517,192548.3005,4855,0.1065
+100 - 500,Columbia-Snake,Western,75,28318.2393,6883,0.0109
+100 - 500,Florida,NA,0,0,NA,0
+100 - 500,Great Lakes,NA,0,0,NA,0
+100 - 500,Gulf Coast,NA,0,0,NA,0
+100 - 500,Midwest,NA,0,0,NA,0
+100 - 500,Mississippi Embayment,NA,0,0,NA,0
+100 - 500,Northeast,Northeast through Midwest,3,1080.2606,5895,5e-4
+100 - 500,Northern High Plains,High Plains,4,1135.7401,5853,7e-4
+100 - 500,Pacific Northwest,NA,0,0,NA,0
+100 - 500,Souris-Red-Rainy,NA,0,0,NA,0
+100 - 500,Southern High Plains,NA,0,0,NA,0
+100 - 500,Southwest Desert,Western,602,193190.5664,4623,0.1302
+100 - 500,Tennessee-Missouri,NA,0,0,NA,0
+100 - 500,Texas,Western,30,12281.2992,3851,0.0078
+1000 - 2000,Atlantic Coast,Southeast,2,4942.838,5121,4e-4
+1000 - 2000,California-Nevada,Western,491,1205474.3875,7285,0.0674
+1000 - 2000,Central High Plains,High Plains,89,223158.8688,3552,0.0251
+1000 - 2000,Central Rockies,Western,428,1063409.9951,4855,0.0882
+1000 - 2000,Columbia-Snake,Western,300,764987.0529,6883,0.0436
+1000 - 2000,Florida,Southeast,1,2796.4733,1184,8e-4
+1000 - 2000,Great Lakes,NA,0,0,NA,0
+1000 - 2000,Gulf Coast,Southeast,1,2748.5657,4192,2e-4
+1000 - 2000,Midwest,NA,0,0,NA,0
+1000 - 2000,Mississippi Embayment,NA,0,0,NA,0
+1000 - 2000,Northeast,Northeast through Midwest,4,9573.5059,5895,7e-4
+1000 - 2000,Northern High Plains,High Plains,321,815381.9533,5853,0.0548
+1000 - 2000,Pacific Northwest,Western,6,15332.2766,2488,0.0024
+1000 - 2000,Souris-Red-Rainy,NA,0,0,NA,0
+1000 - 2000,Southern High Plains,High Plains,156,386228.5187,4730,0.033
+1000 - 2000,Southwest Desert,Western,618,1515104.9,4623,0.1337
+1000 - 2000,Tennessee-Missouri,NA,0,0,NA,0
+1000 - 2000,Texas,Western,157,386967.605,3851,0.0408
+2000 - 3000,Atlantic Coast,Southeast,1,4705.062,5121,2e-4
+2000 - 3000,California-Nevada,Western,747,3268946.4835,7285,0.1025
+2000 - 3000,Central High Plains,High Plains,422,1893172.7898,3552,0.1188
+2000 - 3000,Central Rockies,Western,667,2925628.2301,4855,0.1374
+2000 - 3000,Columbia-Snake,Western,1211,5441977.0612,6883,0.1759
+2000 - 3000,Florida,Southeast,1,5100.7734,1184,8e-4
+2000 - 3000,Great Lakes,NA,0,0,NA,0
+2000 - 3000,Gulf Coast,Southeast,2,8233.3702,4192,5e-4
+2000 - 3000,Midwest,NA,0,0,NA,0
+2000 - 3000,Mississippi Embayment,NA,0,0,NA,0
+2000 - 3000,Northeast,Northeast through Midwest,1,4562.1852,5895,2e-4
+2000 - 3000,Northern High Plains,High Plains,1168,5233851.2586,5853,0.1996
+2000 - 3000,Pacific Northwest,Western,21,92419.180300000007,2488,0.0084
+2000 - 3000,Souris-Red-Rainy,Northeast through Midwest,8,41921.3913,2739,0.0029
+2000 - 3000,Southern High Plains,High Plains,265,1157524.9152,4730,0.056
+2000 - 3000,Southwest Desert,Western,653,2763446.2182,4623,0.1413
+2000 - 3000,Tennessee-Missouri,NA,0,0,NA,0
+2000 - 3000,Texas,Western,595,2692834.6888,3851,0.1545
+3000 - 6000,Atlantic Coast,Southeast,1,6344.9925,5121,2e-4
+3000 - 6000,California-Nevada,Western,758,6620193.6577,7285,0.104
+3000 - 6000,Central High Plains,High Plains,707,6247037.0238,3552,0.199
+3000 - 6000,Central Rockies,Western,581,5039317.6354,4855,0.1197
+3000 - 6000,Columbia-Snake,Western,1889,16350973.6619,6883,0.2744
+3000 - 6000,Florida,Southeast,4,36286.1308,1184,0.0034
+3000 - 6000,Great Lakes,Northeast through Midwest,3,34842.8875,4485,7e-4
+3000 - 6000,Gulf Coast,Southeast,18,166960.1233,4192,0.0043
+3000 - 6000,Midwest,NA,0,0,NA,0
+3000 - 6000,Mississippi Embayment,NA,0,0,NA,0
+3000 - 6000,Northeast,Northeast through Midwest,25,236566.9915,5895,0.0042
+3000 - 6000,Northern High Plains,High Plains,1737,15105407.6038,5853,0.2968
+3000 - 6000,Pacific Northwest,Western,102,958777.2293,2488,0.041
+3000 - 6000,Souris-Red-Rainy,Northeast through Midwest,15,127349.1672,2739,0.0055
+3000 - 6000,Southern High Plains,High Plains,618,5581312.9914,4730,0.1307
+3000 - 6000,Southwest Desert,Western,354,2850893.4552,4623,0.0766
+3000 - 6000,Tennessee-Missouri,Southeast,1,9515.9823,6717,1e-4
+3000 - 6000,Texas,Western,765,6564200.128,3851,0.1986
+30000 - 120000,Atlantic Coast,Southeast,3776,251981723.0048,5121,0.73740000000000006
+30000 - 120000,California-Nevada,Western,882,46762241.7916,7285,0.1211
+30000 - 120000,Central High Plains,High Plains,1082,62871756.9124,3552,0.3046
+30000 - 120000,Central Rockies,Western,235,10836548.9729,4855,0.0484
+30000 - 120000,Columbia-Snake,Western,816,44568501.5771,6883,0.1186
+30000 - 120000,Florida,Southeast,483,38170649.6172,1184,0.4079
+30000 - 120000,Great Lakes,Northeast through Midwest,2355,160727900.8426,4485,0.5251
+30000 - 120000,Gulf Coast,Southeast,3032,211806325.8793,4192,0.7233
+30000 - 120000,Midwest,Northeast through Midwest,1178,96756140.7037,7423,0.1587
+30000 - 120000,Mississippi Embayment,Southeast,573,40346190.5749,1145,0.5004
+30000 - 120000,Northeast,Northeast through Midwest,3039,216027393.9243,5895,0.5155
+30000 - 120000,Northern High Plains,High Plains,538,23266107.348,5853,0.0919
+30000 - 120000,Pacific Northwest,Western,1012,64050261.0045,2488,0.4068
+30000 - 120000,Souris-Red-Rainy,Northeast through Midwest,1152,88465040.9268,2739,0.4206
+30000 - 120000,Southern High Plains,High Plains,1876,113657714.5479,4730,0.3966
+30000 - 120000,Southwest Desert,Western,51,2289133.6431,4623,0.011
+30000 - 120000,Tennessee-Missouri,Southeast,3482,269281039.5554,6717,0.5184
+30000 - 120000,Texas,Western,945,56293704.2051,3851,0.2454
+500 - 1000,Atlantic Coast,Southeast,1,1538.9097,5121,2e-4
+500 - 1000,California-Nevada,Western,1919,2114787.576,7285,0.2634
+500 - 1000,Central High Plains,High Plains,93,136749.438,3552,0.0262
+500 - 1000,Central Rockies,Western,1786,1858820.3183,4855,0.3679
+500 - 1000,Columbia-Snake,Western,390,483097.6631,6883,0.0567
+500 - 1000,Florida,Southeast,2,2332.819,1184,0.0017
+500 - 1000,Great Lakes,NA,0,0,NA,0
+500 - 1000,Gulf Coast,Southeast,4,4902.6176,4192,0.001
+500 - 1000,Midwest,NA,0,0,NA,0
+500 - 1000,Mississippi Embayment,NA,0,0,NA,0
+500 - 1000,Northeast,Northeast through Midwest,3,3569.6675,5895,5e-4
+500 - 1000,Northern High Plains,High Plains,226,320951.0767,5853,0.0386
+500 - 1000,Pacific Northwest,Western,2,2890.8397,2488,8e-4
+500 - 1000,Souris-Red-Rainy,Northeast through Midwest,3,3663.0941,2739,0.0011
+500 - 1000,Southern High Plains,High Plains,117,183693.8969,4730,0.0247
+500 - 1000,Southwest Desert,Western,2040,2418443.4266,4623,0.4413
+500 - 1000,Tennessee-Missouri,NA,0,0,NA,0
+500 - 1000,Texas,Western,289,355886.1692,3851,0.075
+6000 - 12000,Atlantic Coast,Southeast,273,6812219.9297,5121,0.0533
+6000 - 12000,California-Nevada,Western,1269,25131249.0755,7285,0.1742
+6000 - 12000,Central High Plains,High Plains,1004,19413606.6639,3552,0.2827
+6000 - 12000,Central Rockies,Western,631,11940477.3248,4855,0.13
+6000 - 12000,Columbia-Snake,Western,1920,35810478.9777,6883,0.2789
+6000 - 12000,Florida,Southeast,6,137633.6659,1184,0.0051
+6000 - 12000,Great Lakes,Northeast through Midwest,176,4269749.2905,4485,0.0392
+6000 - 12000,Gulf Coast,Southeast,128,3038736.1778,4192,0.0305
+6000 - 12000,Midwest,Northeast through Midwest,3,83618.4878,7423,4e-4
+6000 - 12000,Mississippi Embayment,Southeast,36,956850.4818,1145,0.0314
+6000 - 12000,Northeast,Northeast through Midwest,370,8554198.5448,5895,0.0628
+6000 - 12000,Northern High Plains,High Plains,1841,34189053.7728,5853,0.3145
+6000 - 12000,Pacific Northwest,Western,649,13303519.8581,2488,0.2609
+6000 - 12000,Souris-Red-Rainy,Northeast through Midwest,120,2602546.7383,2739,0.0438
+6000 - 12000,Southern High Plains,High Plains,1276,25175960.2157,4730,0.2698
+6000 - 12000,Southwest Desert,Western,202,3529657.4136,4623,0.0437
+6000 - 12000,Tennessee-Missouri,Southeast,38,1023702.328,6717,0.0057
+6000 - 12000,Texas,Western,797,15188587.7081,3851,0.207

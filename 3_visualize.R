@@ -67,7 +67,15 @@ p3_targets <- list(
                  # wq pie charts - greyed out
                  low_grey = "#d6ced9",
                  mod_grey = "#b0a0b5",
-                 high_grey = "#897292"
+                 high_grey = "#897292",
+                 unimpaired = "#6591d3",
+                 biotic = "#85a457",
+                 organics = "#822734",
+                 sediment = "#d7ccc9",
+                 salinity = "#418692",
+                 temp = "#ffb0b0",
+                 nutrients = "#93658f",
+                 metals = "#7a7f80"
                ))),
   tar_target(p3_popn_colors,
              col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
@@ -289,6 +297,27 @@ p3_targets <- list(
                       width = 9, height = 6),
                format = "file"),
     names = nutrient
+  ),
+  ## Create treemaps for Drinking water, fish consumption, and recreation
+  tar_map(
+    values = tibble(useAbbr = c("DW", "Fish", "Rec")),
+    tar_target(p2_wq_treemap_png,
+               wq_treemap(in_df = p2_wq_threats_df,
+                          useAbbr = useAbbr,
+                          color_scheme = p3_colors_wq,
+                          png_out = sprintf("src/assets/images/R/06_wq_treemap_%s.pdf", useAbbr),
+                          width = 3,
+                          height = 4),
+               format = "file"),
+    tar_target(p2_wq_treemap_mobile_png,
+               wq_treemap(in_df = p2_wq_threats_df,
+                          useAbbr = useAbbr,
+                          color_scheme = p3_colors_wq,
+                          png_out = sprintf("src/assets/images/R/06_wq_treemap_mobile_%s.pdf", useAbbr),
+                          width = 4,
+                          height = 2),
+               format = "file"),
+    names = useAbbr
   ),
   
   

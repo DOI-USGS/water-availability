@@ -51,15 +51,39 @@ summary_wq_by_state <- function(in_sf, nutrient, out_csv){
   
   load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
   
-  category_sf <- in_sf |> 
-    filter(!is.na(!!load_column)) |> 
-    mutate(load_level = case_when(
-      !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
-      !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
-      !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
-      !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
-      !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
-    ))
+  if(nutrient == "tn") {
+    breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, Inf)
+    category_sf <- in_sf |> 
+      filter(!is.na(!!load_column)) |> 
+      mutate(load_level = case_when(
+        !!load_column <= breaks[1] ~ "0 - 100",
+        !!load_column <= breaks[2] ~ "100 - 500", 
+        !!load_column <= breaks[3] ~ "500 - 1000",
+        !!load_column <= breaks[4] ~ "500 - 1000",
+        !!load_column <= breaks[5] ~ "1000 - 2000",
+        !!load_column <= breaks[6] ~ "2000 - 3000",
+        !!load_column <= breaks[7] ~ "3000 - 6000",
+        !!load_column <= breaks[8] ~ "6000 - 12000",
+        !!load_column <= breaks[9] ~ "30000 - 120000",
+        !!load_column <= breaks[10] ~ ">120000",
+      ))
+  } else {
+    breaks <- c(10, 40, 85, 160, 290, 520, 1000, 2500, 10000, Inf)
+    category_sf <- in_sf |> 
+      filter(!is.na(!!load_column)) |> 
+      mutate(load_level = case_when(
+        !!load_column <= breaks[1] ~ "0 - 10",
+        !!load_column <= breaks[2] ~ "10 - 40", 
+        !!load_column <= breaks[3] ~ "40 - 85",
+        !!load_column <= breaks[4] ~ "85 - 160",
+        !!load_column <= breaks[5] ~ "160 - 290",
+        !!load_column <= breaks[6] ~ "290 - 520",
+        !!load_column <= breaks[7] ~ "520 - 1000",
+        !!load_column <= breaks[8] ~ "1000 - 2500",
+        !!load_column <= breaks[9] ~ "2500 - 10000",
+        !!load_column <= breaks[10] ~ ">120000",
+      ))
+  }
   
   # Expand each HUC to its state (some hucs overlap states)
   expand_states <- category_sf |>
@@ -93,15 +117,41 @@ summary_wq_by_region <- function(in_sf, nutrient, out_csv){
   
   load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
   
-  category_sf <- in_sf |> 
-    filter(!is.na(!!load_column)) |> 
-    mutate(load_level = case_when(
-      !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
-      !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
-      !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
-      !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
-      !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
-    ))
+  if(nutrient == "tn") {
+    breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, Inf)
+    category_sf <- in_sf |> 
+      filter(!is.na(!!load_column)) |> 
+      mutate(load_level = case_when(
+        !!load_column <= breaks[1] ~ "0 - 100",
+        !!load_column <= breaks[2] ~ "100 - 500", 
+        !!load_column <= breaks[3] ~ "500 - 1000",
+        !!load_column <= breaks[4] ~ "500 - 1000",
+        !!load_column <= breaks[5] ~ "1000 - 2000",
+        !!load_column <= breaks[6] ~ "2000 - 3000",
+        !!load_column <= breaks[7] ~ "3000 - 6000",
+        !!load_column <= breaks[8] ~ "6000 - 12000",
+        !!load_column <= breaks[9] ~ "30000 - 120000",
+        !!load_column <= breaks[10] ~ ">120000",
+      ))
+  } else {
+    breaks <- c(10, 40, 85, 160, 290, 520, 1000, 2500, 10000, Inf)
+    category_sf <- in_sf |> 
+      filter(!is.na(!!load_column)) |> 
+      mutate(load_level = case_when(
+        !!load_column <= breaks[1] ~ "0 - 10",
+        !!load_column <= breaks[2] ~ "10 - 40", 
+        !!load_column <= breaks[3] ~ "40 - 85",
+        !!load_column <= breaks[4] ~ "85 - 160",
+        !!load_column <= breaks[5] ~ "160 - 290",
+        !!load_column <= breaks[6] ~ "290 - 520",
+        !!load_column <= breaks[7] ~ "520 - 1000",
+        !!load_column <= breaks[8] ~ "1000 - 2500",
+        !!load_column <= breaks[9] ~ "2500 - 10000",
+        !!load_column <= breaks[10] ~ ">120000",
+      ))
+  }
+  
+
   
   # summarize by region and category
   region_summary <- category_sf |>

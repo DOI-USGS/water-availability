@@ -75,7 +75,7 @@
     position: relative;
     width: 40px;
     height: 20px;
-    background-color: lightgrey;
+    background-color: var(--inactive-grey);
     border-radius: 20px;
     transition: background-color 0.3s ease;
   }
