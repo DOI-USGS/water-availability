@@ -101,6 +101,7 @@
             />
             <HistogramLegend 
               :layerPaths="legendConfig"
+              :data="legendData"
             />
             <div class="caption-container">
               <div class="caption-text-child">
@@ -144,10 +145,8 @@ const route = useRoute();
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
-const dataSet1 = ref([]); 
-const dataSet2 = ref([]); 
-const selectedDataSet = ref('dataSet1');
-const data = ref([]);
+
+// Chart dimensions
 let svg;
 const containerWidth = Math.min(window.innerWidth * 0.9, 1200); 
 const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
@@ -158,11 +157,16 @@ const height = containerHeight - margin.top - margin.bottom;
 let chartBounds, rectGroup;
 let nutrientScale;
 
+// Reactive data elements
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
+const legendData = ref([]);
+const dataSet1 = ref([]); 
+const dataSet2 = ref([]); 
+const selectedDataSet = ref('dataSet1');
+const data = ref([]);
 
-
-//////// references array //
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 
@@ -182,6 +186,7 @@ theseReferences.forEach((item, index) => {
 
 const referenceList = ref(theseReferences);
 
+// Define layers and data mappings for RegionMap component
 const layers = reactive({
   nitrogen: {
     visible: true,
@@ -190,7 +195,8 @@ const layers = reactive({
     breaks: [0, 10, 40, 85, 160, 290, 520, 1000, 2500, 10000, 100000],
     colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-high)',
-    order: 1
+    order: 1,
+    data: 'wq_loads_Reg_tn.csv',
   },
   phosphorus: {
     visible: false,
@@ -199,7 +205,8 @@ const layers = reactive({
     breaks: [0, 100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, 1000000],
     colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-mod)',
-    order: 2
+    order: 2,
+    data: 'wq_loads_Reg_tp.csv',
   }
 });
 
@@ -216,10 +223,24 @@ const categoryColors = {
         'Wastewater': 'var(--wq-wastewater)'
       }; 
 
+async function loadLegendData() {
+  const activeLayer = showNitrogen.value ? layers.nitrogen : layers.phosphorus; // determine active layer
+  const filePath = `${publicPath}${activeLayer.data}`; // construct file path
+
+  try {
+    const data = await d3.csv(filePath);
+    legendData.value = data; // update reactive variable
+  } catch (error) {
+    console.error('Error loading legend data:', error);
+  }
+}
+
+
 onMounted(async () => {
   // sync initial state with toggles
   layers.nitrogen.visible = showNitrogen.value;
   layers.phosphorus.visible = !showNitrogen.value;
+  await loadLegendData(); 
 
     try {
         await loadDatasets();
@@ -271,6 +292,8 @@ function initBarChart({
   containerHeight,
   margin
 }) {
+
+    d3.select('#barplot-container').select('svg').remove();
 
     // draw svg canvas for barplot
     svg = d3.select('#barplot-container')
@@ -465,6 +488,7 @@ function updateLabels() {
   explainedLabel.exit().remove(); 
 }
 
+// COMPUTED VARIABLES 
 // compute legendConfig dynamically based on the toggle
 const legendConfig = computed(() => {
   return showNitrogen.value
@@ -472,7 +496,7 @@ const legendConfig = computed(() => {
     : { breaks: layers.phosphorus.breaks, colors: layers.phosphorus.colors };
 });
 
-
+// WATCHERS
 // watch for changes to scaleLoad
 watch(scaleLoad, (newValue) => {
   // update the chart based on the new scale
@@ -486,10 +510,10 @@ watch(scaleLoad, (newValue) => {
 });
 
 // watch for changes to showNitrogen
-watch(showNitrogen, (newValue) => {
+watch(showNitrogen, async (newValue) => {
   // update the chart based on the nutrient type
   data.value = newValue ? dataSet1.value : dataSet2.value;
- 
+  await loadLegendData(); // reload data when the toggle changes
 
   createBarChart({
     dataset: data.value,
