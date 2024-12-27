@@ -35,7 +35,7 @@
         </div>   
     </div>
     <div class="content-container" v-for="(message, index) in filteredMessages" :key="index">
-        <div class="text-container">
+        <div class="kf-container">
             <h4 class="subheading"> {{ message.keyMessage }}</h4>
         </div>
     </div>
