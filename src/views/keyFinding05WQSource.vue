@@ -511,7 +511,7 @@ watch(showNitrogen, (newValue) => {
   }
 
   &#Naturalsources {
-    background-color: #EECEB9;
+    background-color: var(--wq-natural);
   }
 
 }
