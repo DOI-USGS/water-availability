@@ -55,33 +55,18 @@
       <div class="viz-container">
         <div id="barplot-container"></div>
       </div>
-      
       <div class="text-container">
         <p>
           Water use affects water availability in two ways. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Therefore, areas with more intensive water demands have a higher potential to degrade the resource than areas with less intense water demands. 
         </p>
       </div>
-      <div class="viz-container">
-        <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
-                <tabItem 
-                v-for="tab in impactTabs" 
-                :name="tab.tabTitle" 
-                :key="tab.tabTitleID" 
-                :prefix="getIconImgHTML(tab.tabTitleID)"> 
-                  <div class="tab-container-text-img">
-                    <h3> {{ tab.tabSubtitle }}</h3>
-                    <img class="tab-content-img" :src="getPhotoURL(tab.tabTitleIDname)">
-                    <p class="tab-content-text" v-html="tab.tabText" />
-                  </div>
-                </tabItem>
-              </tabsGroup>
-      </div>
+      
       <div class="text-container">
         <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
       </div>
       
       <Methods></Methods>
-      <References></References>
+      <References :theseReferences="referenceList"></References>
     </div>
     <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
@@ -95,6 +80,7 @@ import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
+import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
@@ -106,23 +92,28 @@ const route = useRoute();
 const path = computed(() => route.path)
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-// extract list of tab items for this page
-const impactTabs = filteredMessages[0].tabData;
+
+//////// references array //
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
+
 // global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
-
-// tab functions
-function getPhotoURL(suffix) {
-    return baseURL + `07_${suffix}_photo.png`
-}
-function getIconURL(suffix) {
-    return baseURL + `07_icon_${suffix}.png`
-}
-function getIconImgHTML(image_name) {
-    const imgURL = getIconURL(image_name);
-    return `<img class='tab-image' src=${imgURL}>`
-}
-
 
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
 const selectedView = ref("stacked"); // Tracks the dropdown selection
@@ -448,26 +439,6 @@ onMounted(async () => {
   margin: auto;
   display: flex;
   justify-content: center;
-}
-
-.dropdown-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  width: 100%;
-  text-align: center;
-}
-
-.dropdown-container select {
-  padding: 10px 20px;
-  font-size: 2rem;
-  font-weight: 300;
-  color: rgb(54, 53, 53);
-  border: 1px solid rgb(54, 53, 53);
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: transparent;
-  display: inline-block;
 }
 
 </style>

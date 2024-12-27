@@ -109,7 +109,7 @@
               <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely phosphorus dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
             <Methods></Methods>
-            <References></References>
+            <References :theseReferences="referenceList"></References>
         </div>
 
 
@@ -120,12 +120,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, reactive, watch } from 'vue';
+import { onMounted, ref, computed, inject, reactive, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
+import references from './../assets/text/references.js';
 import References from '../components/References.vue';
+import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
@@ -133,6 +136,7 @@ import ToggleSwitch from '../components/ToggleSwitch.vue';
 // use for mobile logic
 const mobileView = isMobile;
 const featureToggles = inject('featureToggles');
+const route = useRoute();
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
@@ -152,6 +156,46 @@ let nutrientScale;
 
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
+
+
+//////// references array //
+// filter to this page's key message
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+
+// extract list of references for this page
+const filteredReferences = filteredMessages[0].references;
+
+// Sort references
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
+
+// extract references that match the refID from global list
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
+
+// add numbers
+theseReferences.forEach((item, index) => {
+  item.referenceNumber = `${index + 1}`;
+});
+
+const referenceList = ref(theseReferences);
+
+/////////
+
+
+function getImgURL(id) {
+  return `${baseURL}${id}.png`;
+}
+
+function toggleNutMap() {
+    if(imgSrc.value === getImgURL(tnImageID)) {
+        imgSrc.value = getImgURL(tpImageID);
+        buttonText = "phosporus load";
+
+    } else {
+        imgSrc.value = getImgURL(tnImageID);
+        buttonText = "nitrogen load";
+
+    }
+}
 
 const layers = reactive({
   nitrogen: {
@@ -178,7 +222,7 @@ const categoryColors = {
         'Atmospheric deposition': 'var(--wq-air)',
         'Natural sources': 'var(--wq-natural)',
         'Other Human Sources': 'var(--wu-ps)',
-        'Wastewater': 'var(--ws-wastewater)'
+        'Wastewater': 'var(--wq-wastewater)'
       }; 
 
 onMounted(async () => {
@@ -461,15 +505,6 @@ watch(showNitrogen, (newValue) => {
 </script>
 
 <style scoped lang="scss">
-.viz-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%; 
-  min-height: 600px; 
-  max-height: 900px;
-  margin: auto;
-}
 
 #barplot-container {
   width: 100%; 
@@ -481,176 +516,5 @@ watch(showNitrogen, (newValue) => {
     width: 100%; 
   }
 }
-.svg-icon path {
-  fill: var(--ws-supply);
-}
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-  &#Agriculture {
-    background-color: var(--wq-agriculture);
-  }
-
-  &#Atmosphericdeposition {
-    background-color: var(--wq-air);
-  }
-
-  &#Otherhumansources {
-    background-color: var(--wu-ps);
-  }
-
-  &#Wastewater {
-    background-color: var(--wq-wastewater);
-  }
-
-  &#Naturalsources {
-    background-color: var(--wq-natural);
-  }
-
-}
-$switchWidth: 7.9rem;
-.graph-buttons-switch {
-  display: flex;
-  height: 2.8rem;
-  width: $switchWidth * 2.03;
-  border-radius: 0.2rem;
-  position: relative;
-  margin: 0rem 0.5rem 0rem 0.5rem;
-  background: rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: inset 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1), 0 0.1remx rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1), 0 0.1rem rgba(255, 255, 255, 0.1);
-
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-      -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
-  @media screen and (max-width: 600px) {
-    height: 2.6rem;
-  }
-}
-.graph-buttons-switch-label {
-  position: relative;
-  z-index: 2;
-  float: left;
-  width: $switchWidth;
-  line-height: 2.4rem;
-  text-align: center;
-  cursor: pointer;
-  @media screen and (max-width: 600px) {
-    line-height: 2.2rem;
-    width: $switchWidth * 1.02;
-  }
-}
-.graph-buttons-switch-label-off {
-  padding-left: 0.2rem;
-  padding-right: 0.2rem;
-}
-.graph-buttons-switch-label-on {
-  padding-left: 0.2rem;
-  padding-right: 0.2rem;
-}
-.graph-buttons-switch-input {display: none;}
-.graph-buttons-switch-input:checked + .graph-buttons-switch-label {
-  font-weight: bold;
-  -webkit-transition: 0.3s ease-out;
-  -moz-transition: 0.3s ease-out;
-  -o-transition: 0.3s ease-out;
-  transition: 0.3s ease-out;
-}
-.graph-buttons-switch-input:checked + .graph-buttons-switch-label-on ~ .graph-buttons-switch-selection {left: $switchWidth;}
-.graph-buttons-switch-selection {
-  display: block;
-  position: absolute;
-  z-index: 1;
-  top: 0.2rem;
-  left: 0.2rem;
-  width: $switchWidth;
-  height: 2.4rem;
-  background: rgba(255, 255, 255,1);
-  border-radius: 0.2rem;
-  -webkit-box-shadow: inset 0 0.1rem rgba(255, 255, 255,0.6), 0 0 0.2rem rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0.1rem rgba(255, 255, 255,0.6), 0 0 0.2rem rgba(0, 0, 0, 0.3);
-  -webkit-transition: left 0.3s ease-out,background 0.3s;
-  -moz-transition: left 0.3s ease-out,background 0.3s;
-  -o-transition: left 0.3s ease-out,background 0.3s;
-  transition: left 0.3s ease-out,background 0.3s ;
-/* 	transition: background 0.3s ; */
-  @media screen and (max-width: 600px) {
-    height: 2.2rem;
-  }
-}
-toggle-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-/* toggle label for positioning */
-.toggle-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  position: relative;
-}
-
-/* text styles for words on left and right */
-.toggle-text {
-  font-size: 16px;
-  font-weight: 600;
-  transition: color 0.3s ease;
-  color: var(--black-soft);
-}
-
-.toggle-text.active {
-  color: var(--blue-bright); /* highlighted color */
-}
-
-/* toggle input (hidden) */
-.toggle-input {
-  display: none;
-}
-
-/* toggle slider styles */
-.toggle-slider {
-  position: relative;
-  width: 40px;
-  height: 20px;
-  background-color: lightgrey;
-  border-radius: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.toggle-slider::before {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background-color: white;
-  border-radius: 50%;
-  top: 2px;
-  left: 2px;
-  transition: transform 0.3s ease;
-}
-
-/* move slider to the right when checked */
-.toggle-input:checked + .toggle-slider::before {
-  transform: translateX(20px);
-}
-
-/* change slider background when checked */
-.toggle-input:checked + .toggle-slider {
-  background-color: var(--blue-bright);
-}
 </style>

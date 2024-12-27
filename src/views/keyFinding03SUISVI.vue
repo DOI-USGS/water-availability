@@ -107,7 +107,7 @@
                 <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable (Erickson2025xxx). For example, the proportion of individuals with the highest levels of social vulnerability increases as the concentrations of total nitrogen and total phosphorus in streams goes up. While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain higher proportions of socially vulnerable individuals. These areas are relatively limited in spatial extent and have high population density, which emphasizes the impacts of highly developed, human-dominated watersheds to human health and wellbeing.</p>
             </div>
         <Methods></Methods>
-        <References></References>
+        <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>

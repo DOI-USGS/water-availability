@@ -211,3 +211,40 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
   
   return(png_out)
 }
+
+wq_treemap <- function(in_df, useAbbr, color_scheme,
+                        png_out, width, height){
+
+  plot_df <- in_df |> filter(UseAbbr == useAbbr)
+  
+  # png(png_out,
+  #     width = width,
+  #     height = height,
+  #     res = 300,
+  #     units = "px")
+  pdf(file = png_out,
+      width = width,
+      height = height)
+  out_plot <- treemap(dtf = plot_df,
+          index = c("Category", "Parameter"),
+          vSize = "riverMiles",
+          vColor = "Category",
+          type = "categorical",
+          border.col = "white",
+          border.lwds = c(0.4,0.4),
+          bg.labels = 255,
+          position.legend = "none",
+          palette = c(color_scheme$biotic,
+                      color_scheme$metals,
+                      color_scheme$nutrients,
+                      color_scheme$organics,
+                      color_scheme$salinity,
+                      color_scheme$sediment,
+                      color_scheme$temp,
+                      color_scheme$unimpaired),
+          fontsize.title = 0,
+          fontsize.labels = 0)
+  dev.off()
+  
+  return(png_out)
+}
