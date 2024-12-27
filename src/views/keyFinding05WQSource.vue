@@ -163,7 +163,7 @@ const layers = reactive({
   phosphorus: {
     visible: false,
     path: '05_tp_map.png',
-    color: 'var(--phosphorus)',
+    color: 'var(--wq-mod)',
     order: 2
   }
 });
