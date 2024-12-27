@@ -3,38 +3,33 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-              <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations these can become pollutants harmful to human health, animals, and ecosystems. Nutrient effects on water availability for human and ecological use are widespread and at times substantial. Excessive nutrients commonly occur in surface water (Shoda et al., 2019) and can limit water availability for ecological needs, human recreation, and drinking-water beneficial uses.</p>
+              <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
-            <div class="text-container">
-              <p>Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from 
-                agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamflow and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
-                </p>
+              <div class="caption-container">
+              <div class="checkbox_item">
+              <!-- Nutrient Toggle -->
+              <ToggleSwitch 
+                v-model="showNitrogen" 
+                leftLabel="Phosphorus" 
+                rightLabel="Nitrogen" 
+              />
+            </div>
+
+                <div class="checkbox_item">
+                  <!-- Scale Toggle -->
+                  <ToggleSwitch 
+                    v-model="scaleLoad" 
+                    leftLabel="Percent load" 
+                    rightLabel="Total load" 
+                  />
+                </div>
+              </div>
+          <div class="viz-container">
+                <div id="barplot-container">    
+                </div>
             </div>
             <div class="caption-container">
-              <div class="caption-text-child">
-                <p>This bar chart shows the source of nutrients for each hydrologic region. Use the buttons to change between viewing nitrogen versus phosphorus and to view either the total load or the percent of the total load</p>
-                <div class="checkbox_item">
-                  <div class="checkbox_wrap">
-                    <label>
-                      <input type="radio" name="nutrient" @click="toggleNutrient" checked="checked"> Nitrogen
-                    </label>
-                    <label>
-                      <input type="radio" name="nutrient" @click="toggleNutrient"> Phosphorus
-                    </label>
-                  </div>
-                </div>
-                <div class="checkbox_item">
-                  <div class="checkbox_wrap">
-                    <label>
-                      <input type="radio" name="scale" @click="toggleScale" checked="checked"> Total load
-                    </label>
-                    <label>
-                      <input type="radio" name="scale" @click="toggleScale"> Percent of load
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="caption-legend-child">
+                <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wq-agriculture" >
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
@@ -71,39 +66,47 @@
                   </label>
                 </div>
               </div>
+              <div class="caption-text-child">
+                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (Mg/year) or the percent of the total load</p>
+              </div>
             </div> 
-            <div class="viz-container">
-                <div id="barplot-container">    
-                </div>
-            </div>
             <div class="text-container">
-              <h3>Effects of nutrients in the water</h3>
-              <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
+              <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
+                </p>
             </div>
+            <div class="checkbox_item">
+              <ToggleSwitch 
+                v-model="showNitrogen" 
+                leftLabel="Phosphorus" 
+                rightLabel="Nitrogen" 
+              />
+            </div>
+            <RegionMap 
+              @regionSelected="updateSelectedRegion"
+              :layerVisibility="{
+                nitrogen: layers.nitrogen.visible,
+                phosphorus: layers.phosphorus.visible
+              }"
+              :layerPaths="{
+                nitrogen: { path: layers.nitrogen.path, color: layers.nitrogen.color, order: layers.nitrogen.order },
+                phosphorus: { path: layers.phosphorus.path, color: layers.phosphorus.color, order: layers.phosphorus.order }
+              }"
+              regionsDataUrl="assets/Regions.topojson"
+              usOutlineUrl="assets/USoutline.topojson"
+              regionsVar="Region_nam_nospace"
+              layerMag="1.11"
+              layerX="-44"
+              layerY="-11"
+
+            />
             <div class="caption-container">
               <div class="caption-text-child">
                 <p>These maps show total nutrient load in kilograms per year for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
               </div>
-              <div class="caption-legend-child">
-                <div class="checkbox_item">
-                  <div class="checkbox_wrap">
-                    <label>
-                      <input type="radio" name="nutrient" @click="toggleNutMap" checked="checked"> Nitrogen
-                    </label>
-                    <label>
-                      <input type="radio" name="nutrient" @click="toggleNutMap"> Phosphorus
-                    </label>
-                  </div>
-                </div>
               </div>
-            </div>
-            <div class="viz-container">
-              <img
-              id="first-image"
-              class="viz-placeholder"
-              :src="imgSrc"
-              alt="xxx"
-              >
+            <div class="text-container">
+              <h3>Effects of nutrients in the water</h3>
+              <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely phosphorus dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
             <Methods></Methods>
             <References :theseReferences="referenceList"></References>
@@ -117,7 +120,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, inject } from 'vue';
+import { onMounted, ref, computed, inject, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
@@ -127,8 +130,8 @@ import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
-import RegionMap from "/assets/USregions.svg";
-
+import RegionMap from '../components/RegionMap.vue';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -136,28 +139,23 @@ const featureToggles = inject('featureToggles');
 const route = useRoute();
 
 // Global variables 
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
-const tnImageID = "05_tn_map";
-const tpImageID = "05_tp_map";
-let imgSrc = ref(getImgURL(tnImageID));
-
 const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const dataSet2 = ref([]); 
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 let svg;
-const containerWidth = Math.min(window.innerWidth * 0.9, 900); // Max width 900px
+const containerWidth = Math.min(window.innerWidth * 0.9, 1200); 
 const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
+const maxHeight = 900; 
 const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { top: 100, right: 100, bottom: 40, left: 300 };
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 let chartBounds, rectGroup;
-let nutrientScale, nutrientAxis;
+let nutrientScale;
+
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
-
-let buttonText = "nitrogen load";
 
 
 //////// references array //
@@ -199,30 +197,39 @@ function toggleNutMap() {
     }
 }
 
+const layers = reactive({
+  nitrogen: {
+    visible: true,
+    path: '05_tn_map.png',
+    color: 'var(--wq-high)',
+    order: 1
+  },
+  phosphorus: {
+    visible: false,
+    path: '05_tp_map.png',
+    color: 'var(--wq-mod)',
+    order: 2
+  }
+});
+
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
 "Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
 
-// Colors for bar chart (need to be updated along with CSS below!)
+// Colors for bar chart (need to be updated along with CSS bephosphorus!)
 const categoryColors = {
-        'Agriculture': 'var(--wq-sediment)',
+        'Agriculture': 'var(--wq-agriculture)',
         'Atmospheric deposition': 'var(--wq-air)',
         'Natural sources': 'var(--wq-natural)',
         'Other Human Sources': 'var(--wu-ps)',
-        'Wastewater': 'var(--ws-supply)'
+        'Wastewater': 'var(--wq-wastewater)'
       }; 
 
-// set up filtered chart data as computed property
-const scaleType = computed(() => {
-    return scaleLoad.value ? 'total load' : 'percent of total load'
-});
-    
-// set up filtered chart data as computed property
-const showNutrientType = computed(() => {
-    return showNitrogen.value ? 'nitrogen' : 'phosphorus'
-});
-
 onMounted(async () => {
+  // sync initial state with toggles
+  layers.nitrogen.visible = showNitrogen.value;
+  layers.phosphorus.visible = !showNitrogen.value;
+
     try {
         await loadDatasets();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
@@ -268,25 +275,6 @@ async function loadData(fileName) {
   }
 };
 
-function toggleScale() {
-  scaleLoad.value = !scaleLoad.value;
-  createBarChart({
-    dataset: data.value,
-    scaleLoad: scaleLoad.value
-  });
-  updateLabels(); // update the labels when the scale changes
-}
-
-function toggleNutrient() {
-  showNitrogen.value = !showNitrogen.value;
-  data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
-  createBarChart({
-    dataset: data.value,
-    scaleLoad: scaleLoad.value
-  });
-  updateLabels(); // update the labels when the nutrient changes
-}
-
 function initBarChart({
   containerWidth,
   containerHeight,
@@ -299,16 +287,13 @@ function initBarChart({
       .attr('class', 'barplotSVG')
       .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
       .style('width', containerWidth)
-      .style('height', containerHeight);
+      .style('height', containerHeight)
+      .style('max-height', `${maxHeight}px`);
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
-      .style("transform", `translate(${
-        margin.left
-      }px, ${
-        margin.top
-      }px)`)
+      .style("transform", `translate(${margin.left}px, ${margin.top}px)`)
 
     // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = chartBounds.append('g')
@@ -320,7 +305,6 @@ function createBarChart({
   scaleLoad
 }) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
-  //const regionGroups = d3.union(d3.map(dataset, d => d.region_nam));
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
   const stackedData = d3.stack()
@@ -380,7 +364,7 @@ function createBarChart({
   });
 
   // x-axis at the bottom
-  nutrientAxis = chartBounds.append('g')
+  chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
     .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
     .attr('class', 'axis-text');
@@ -490,134 +474,46 @@ function updateLabels() {
   explainedLabel.exit().remove(); 
 }
 
+// watch for changes to scaleLoad
+watch(scaleLoad, (newValue) => {
+  // update the chart based on the new scale
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: newValue // dynamically pass the toggle state
+  });
 
-// https://gist.github.com/mbostock/7555321
-function wrap(text, width) {
-  text.each(function() {
-    var text = d3.select(this),
-    words = text.text().split(/\s|-+/).reverse(),
-    word,
-    line = [],
-    lineNumber = 0,
-    lineHeight = mobileView ? 0.6 : 0.8, // ems
-    y = text.attr("y"),
-    dy = parseFloat(text.attr("dy")),
-    tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-    while ((word = words.pop())) {
-      line.push(word);
-      tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-        line.pop();
-        tspan.text(line.join(" "));
-        line = [word];
-        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-        }
-    }
-  }
-)};
+  // update chart labels to match scale
+  updateLabels();
+});
+// watch for changes to showNitrogen
+watch(showNitrogen, (newValue) => {
+  // update the chart based on the nutrient type
+  data.value = newValue ? dataSet1.value : dataSet2.value;
 
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: scaleLoad.value 
+  });
 
+  // update chart labels
+  updateLabels();
 
+  // toggle map layer visibility based on the nutrient selected
+  layers.nitrogen.visible = newValue;          // show nitrogen layer
+  layers.phosphorus.visible = !newValue;      // hide phosphorus layer
+});
 </script>
 
 <style scoped lang="scss">
-.viz-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%; 
-  min-height: 600px; 
-  margin: auto;
-}
 
 #barplot-container {
-  width: 90vw; 
-  max-width: 900px; 
-  min-height: 600px; 
-  margin: 0 auto; 
+  width: 100%; 
+  max-height: 900px;
 }
 
 @media only screen and (max-width: 768px) {
   #barplot-container {
     width: 100%; 
-  }
-}
-.svg-icon path {
-  fill: var(--ws-supply);
-}
-
-$switchWidth: 7.9rem;
-.graph-buttons-switch {
-  display: flex;
-  height: 2.8rem;
-  width: $switchWidth * 2.03;
-  border-radius: 0.2rem;
-  position: relative;
-  margin: 0rem 0.5rem 0rem 0.5rem;
-  background: rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: inset 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1), 0 0.1remx rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1), 0 0.1rem rgba(255, 255, 255, 0.1);
-
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-      -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
-  @media screen and (max-width: 600px) {
-    height: 2.6rem;
-  }
-}
-.graph-buttons-switch-label {
-  position: relative;
-  z-index: 2;
-  float: left;
-  width: $switchWidth;
-  line-height: 2.4rem;
-  text-align: center;
-  cursor: pointer;
-  @media screen and (max-width: 600px) {
-    line-height: 2.2rem;
-    width: $switchWidth * 1.02;
-  }
-}
-.graph-buttons-switch-label-off {
-  padding-left: 0.2rem;
-  padding-right: 0.2rem;
-}
-.graph-buttons-switch-label-on {
-  padding-left: 0.2rem;
-  padding-right: 0.2rem;
-}
-.graph-buttons-switch-input {display: none;}
-.graph-buttons-switch-input:checked + .graph-buttons-switch-label {
-  font-weight: bold;
-  -webkit-transition: 0.3s ease-out;
-  -moz-transition: 0.3s ease-out;
-  -o-transition: 0.3s ease-out;
-  transition: 0.3s ease-out;
-}
-.graph-buttons-switch-input:checked + .graph-buttons-switch-label-on ~ .graph-buttons-switch-selection {left: $switchWidth;}
-.graph-buttons-switch-selection {
-  display: block;
-  position: absolute;
-  z-index: 1;
-  top: 0.2rem;
-  left: 0.2rem;
-  width: $switchWidth;
-  height: 2.4rem;
-  background: rgba(255, 255, 255,1);
-  border-radius: 0.2rem;
-  -webkit-box-shadow: inset 0 0.1rem rgba(255, 255, 255,0.6), 0 0 0.2rem rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0.1rem rgba(255, 255, 255,0.6), 0 0 0.2rem rgba(0, 0, 0, 0.3);
-  -webkit-transition: left 0.3s ease-out,background 0.3s;
-  -moz-transition: left 0.3s ease-out,background 0.3s;
-  -o-transition: left 0.3s ease-out,background 0.3s;
-  transition: left 0.3s ease-out,background 0.3s ;
-/* 	transition: background 0.3s ; */
-  @media screen and (max-width: 600px) {
-    height: 2.2rem;
   }
 }
 

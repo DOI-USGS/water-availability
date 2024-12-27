@@ -77,6 +77,9 @@
           regionsDataUrl="assets/Regions.topojson"
           usOutlineUrl="assets/USoutline.topojson"
           regionsVar="Region_nam_nospace"
+          layerMag="1.2"
+          layerX="-80"
+          layerY="-55"
 
         />
         </div>
@@ -483,12 +486,6 @@ function createDotChart() {
   display: block;
   margin: 0 auto;
   padding: 0px;
-}
-#viz-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-  display: block;
 }
 #dotplot-container{
   width: 100%;

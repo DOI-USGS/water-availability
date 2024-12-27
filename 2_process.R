@@ -151,20 +151,6 @@ p2_targets <- list(
                tar_group(),
              iteration = "group"),
   
-  # Summarize WU by state
-  tar_target(p2_states_wu_df,
-             summary_wu_by_state(in_sf = p2_HUC12_join_wu_AggRegGrp_sf)),  
-  # write summary to csv
-  tar_target(p2_states_wu_csv,
-             readr::write_csv(p2_states_wu_df,
-                              file = "public/wu_state.csv")),
-  # Summarize WU by Region
-  tar_target(p2_Reg_wu_df,
-             summary_wu_by_Reg(in_sf = p2_HUC12_join_wu_AggRegGrp_sf)),  
-  # write summary to csv
-  tar_target(p2_Reg_wu_csv,
-             readr::write_csv(p2_Reg_wu_df,
-                              file = "public/wu_regions.csv")),
   
   # Join with SUI/water stress and SVI/vulnerability indices
   tar_target(p2_HUC12_join_sui_svi_sf,
@@ -224,6 +210,23 @@ p2_targets <- list(
                                 by = "Region_nam")
   ),
 
+  ### Spatial summaries for d3 charts
+  
+  # Summarize WU by state
+  tar_target(p2_states_wu_df,
+             summary_wu_by_state(in_sf = p2_HUC12_join_wu_AggRegGrp_sf)),  
+  # write WU state summary to csv
+  tar_target(p2_states_wu_csv,
+             readr::write_csv(p2_states_wu_df,
+                              file = "public/wu_state.csv")),
+  # Summarize WU by Region
+  tar_target(p2_Reg_wu_df,
+             summary_wu_by_Reg(in_sf = p2_HUC12_join_wu_AggRegGrp_sf)),  
+  # write WU regional summary to csv
+  tar_target(p2_Reg_wu_csv,
+             readr::write_csv(p2_Reg_wu_df,
+                              file = "public/wu_regions.csv")),
+  
   # Summarize SUI by state
   tar_target(p2_states_sui_df,
              summary_sui_by_state(in_sf = p2_HUC12_join_sui_svi_sf)),
@@ -231,6 +234,25 @@ p2_targets <- list(
   tar_target(p2_states_sui_csv,
              readr::write_csv(p2_states_sui_df,
                               file = "public/sui_state.csv")),
+  # summarize SUI by region
+  tar_target(p2_water_stress_stats_csv,
+             create_stats(in_sf = p2_HUC12_join_sui_svi_sf,
+                          out_csv = "public/wa_stress_stats.csv")),
+  
+  # Summarize WQ water quality
+  tarchetypes::tar_map(
+    values = tibble::tibble(nutrient = c("tn", "tp")),
+    tar_target(p2_states_wq_csv,
+               summary_wq_by_state(in_sf = p2_HUC12_join_wq_sf,
+                                   nutrient = nutrient,
+                                   out_csv = sprintf("public/wq_loads_state_%s.csv", nutrient))),
+    tar_target(p2_Reg_wq_csv,
+               summary_wq_by_region(in_sf = p2_HUC12_join_wq_sf,
+                                   nutrient = nutrient,
+                                   out_csv = sprintf("public/wq_loads_Reg_%s.csv", nutrient))),
+    names = nutrient
+  ),
+
   
   ##############################################
   # 
@@ -318,6 +340,7 @@ p2_targets <- list(
                                 file = sprintf("public/wq_sources_%s.csv", nutrient))),
     names = nutrient
   ),
+
   
   ##############################################
   # 
@@ -448,9 +471,6 @@ p2_targets <- list(
                                file = "public/wa_supply_demand.csv")
                return("public/wa_supply_demand.csv")},
              format = "file"),
-  tar_target(p2_water_stress_stats_csv,
-             create_stats(in_sf = p2_HUC12_join_sui_svi_sf,
-                          out_csv = "public/wa_stress_stats.csv")),
   
   ##############################################
   # 

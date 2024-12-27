@@ -1,4 +1,4 @@
-# total loads by HUC8
+# total loads by HUC12
 process_wq_HUC12 <- function(in_csv, in_COMID_xwalk){
   
   # read in COMID crosswalk
@@ -35,6 +35,8 @@ process_wq_HUC8 <- function(data_in){
   
   return(data_out)
 }
+
+
 
 
 # loads by category
