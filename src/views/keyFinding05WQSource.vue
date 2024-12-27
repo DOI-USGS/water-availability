@@ -503,7 +503,7 @@ watch(showNitrogen, (newValue) => {
   }
 
   &#Otherhumansources {
-    background-color: #2E236C;
+    background-color: var(--wu-ps);
   }
 
   &#Wastewater {
