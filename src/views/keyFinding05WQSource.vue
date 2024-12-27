@@ -157,7 +157,7 @@ const layers = reactive({
   nitrogen: {
     visible: true,
     path: '05_tn_map.png',
-    color: 'var(--nitrogen)',
+    color: 'var(--wq-high)',
     order: 1
   },
   phosphorus: {
