@@ -290,9 +290,9 @@ a:visited {
 .checkbox_item .checkbox_wrap .checkbox_mark:before{ /* when layer is on */
 	top: 1px;
   left: 1px;
-  width: 17px;
-  height: 17px;
-  border-radius: 17px;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
 }
   .legend_item .legend_wrap .legend_mark {
     border-radius: 1px;
