@@ -182,32 +182,13 @@ theseReferences.forEach((item, index) => {
 
 const referenceList = ref(theseReferences);
 
-/////////
-
-
-function getImgURL(id) {
-  return `${baseURL}${id}.png`;
-}
-
-function toggleNutMap() {
-    if(imgSrc.value === getImgURL(tnImageID)) {
-        imgSrc.value = getImgURL(tpImageID);
-        buttonText = "phosporus load";
-
-    } else {
-        imgSrc.value = getImgURL(tnImageID);
-        buttonText = "nitrogen load";
-
-    }
-}
-
 const layers = reactive({
   nitrogen: {
     visible: true,
     path: '05_tn_map.png',
     order: 1,
-    breaks: [0, 10, 25, 30],
-    colors: ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF5722'],
+    breaks: [0, 10, 40, 85, 160, 290, 520, 1000, 2500, 10000, 100000],
+    colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-high)',
     order: 1
   },
@@ -215,8 +196,8 @@ const layers = reactive({
     visible: false,
     path: '05_tp_map.png',
     order: 2,
-    breaks: [0, 10, 25, 30],
-    colors: ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF5722'],
+    breaks: [0, 100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, 1000000],
+    colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-mod)',
     order: 2
   }
@@ -486,8 +467,11 @@ function updateLabels() {
 
 // compute legendConfig dynamically based on the toggle
 const legendConfig = computed(() => {
-  return showNitrogen.value ? layers.nitrogen : layers.phosphorus;
+  return showNitrogen.value
+    ? { breaks: layers.nitrogen.breaks, colors: layers.nitrogen.colors }
+    : { breaks: layers.phosphorus.breaks, colors: layers.phosphorus.colors };
 });
+
 
 // watch for changes to scaleLoad
 watch(scaleLoad, (newValue) => {
