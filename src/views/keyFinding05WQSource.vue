@@ -90,28 +90,6 @@
               <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
-            <div class="caption-container">
-              <div class="caption-legend-child">
-                <div class="checkbox_item">
-                  <div class="checkbox_wrap">
-                    <label>
-                      <input type="radio" name="nutrient" @click="toggleNutMap" checked="checked"> Nitrogen
-                    </label>
-                    <label>
-                      <input type="radio" name="nutrient" @click="toggleNutMap"> Phosphorus
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-       <!--      <div class="viz-container">
-              <img
-              id="first-image"
-              class="viz-placeholder"
-              :src="imgSrc"
-              alt="xxx"
-              >
-            </div> -->
             <RegionMap 
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
@@ -184,6 +162,7 @@ const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 let chartBounds, rectGroup;
 let nutrientScale, nutrientAxis;
+
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 
@@ -195,7 +174,7 @@ const layers = reactive({
     order: 1
   },
   phosphorus: {
-    visible: true,
+    visible: false,
     path: '05_tp_map.png',
     color: 'var(--phosphorus)',
     order: 2
@@ -242,6 +221,10 @@ const showNutrientType = computed(() => {
 });
 
 onMounted(async () => {
+  // sync initial state with toggles
+  layers.nitrogen.visible = showNitrogen.value;
+  layers.phosphorus.visible = !showNitrogen.value;
+
     try {
         await loadDatasets();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
@@ -298,6 +281,12 @@ function toggleScale() {
 
 function toggleNutrient() {
   showNitrogen.value = !showNitrogen.value;
+
+  // toggle layer visibility based on state
+  layers.nitrogen.visible = showNitrogen.value;
+  layers.phosphorus.visible = !showNitrogen.value;
+
+  // redraw stacked bar chart
   data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
   createBarChart({
     dataset: data.value,
