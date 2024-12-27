@@ -25,21 +25,13 @@
 
                 <div class="checkbox_item">
                   <!-- Scale Toggle -->
-                  <div class="checkbox_wrap toggle-container">
-                    <label class="toggle-label">
-                      <span class="toggle-text" :class="{ active: !showTotalLoad }">Total load</span>
-                      <input 
-                        type="checkbox" 
-                        class="toggle-input" 
-                        @click="toggleScale" 
-                        v-model="showTotalLoad"
-                        /> 
-                        <span class="toggle-slider"></span>
-                        <span class="toggle-text" :class="{ active: !showPercentLoad }">Percent load</span>
-                    </label>
-                  </div>
+                  <ToggleSwitch 
+                    v-model="scaleLoad" 
+                    leftLabel="Percent load" 
+                    rightLabel="Total load" 
+                  />
                 </div>
-                </div>
+              </div>
           <div class="viz-container">
                 <div id="barplot-container">    
                 </div>
@@ -144,7 +136,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, inject, reactive } from 'vue';
+import { onMounted, ref, computed, inject, reactive, watch } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -152,6 +144,7 @@ import Methods from '../components/Methods.vue';
 import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 import RegionMap from '../components/RegionMap.vue';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -159,9 +152,6 @@ const featureToggles = inject('featureToggles');
 
 // Global variables 
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
-const tnImageID = "05_tn_map";
-const tpImageID = "05_tp_map";
-let imgSrc = ref(getImgURL(tnImageID));
 
 const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
@@ -180,6 +170,7 @@ let nutrientScale, nutrientAxis;
 
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
+const showTotalLoad = ref(true)
 
 const layers = reactive({
   nitrogen: {
@@ -200,17 +191,6 @@ function getImgURL(id) {
   return `${baseURL}${id}.png`;
 }
 
-function toggleNutMap() {
-    if(imgSrc.value === getImgURL(tnImageID)) {
-        imgSrc.value = getImgURL(tpImageID);
-        buttonText = "phosporus load";
-
-    } else {
-        imgSrc.value = getImgURL(tnImageID);
-        buttonText = "nitrogen load";
-
-    }
-}
 
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
@@ -286,12 +266,23 @@ async function loadData(fileName) {
 };
 
 function toggleScale() {
-  scaleLoad.value = !scaleLoad.value;
-  createBarChart({
-    dataset: data.value,
-    scaleLoad: scaleLoad.value
-  });
-  updateLabels(); // update the labels when the scale changes
+  // dynamically update labels and data in the chart
+  if (showTotalLoad.value) {
+    console.log('Showing Total Load');
+    createBarChart({
+      dataset: data.value, // pass the current dataset
+      scaleLoad: true // total load
+    });
+  } else {
+    console.log('Showing Percent Load');
+    createBarChart({
+      dataset: data.value, // pass the current dataset
+      scaleLoad: false // percent load
+    });
+  }
+
+  // also update the chart labels
+  updateLabels();
 }
 
 function toggleNutrient() {
@@ -535,7 +526,17 @@ function wrap(text, width) {
   }
 )};
 
+// watch for changes to scaleLoad
+watch(scaleLoad, (newValue) => {
+  // update the chart based on the new scale
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: newValue // dynamically pass the toggle state
+  });
 
+  // update chart labels to match scale
+  updateLabels();
+});
 
 </script>
 
