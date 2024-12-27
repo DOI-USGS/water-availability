@@ -223,19 +223,6 @@ const categoryColors = {
         'Wastewater': 'var(--wq-wastewater)'
       }; 
 
-async function loadLegendData() {
-  const activeLayer = showNitrogen.value ? layers.nitrogen : layers.phosphorus; // determine active layer
-  const filePath = `${publicPath}${activeLayer.data}`; // construct file path
-
-  try {
-    const data = await d3.csv(filePath);
-    legendData.value = data; // update reactive variable
-  } catch (error) {
-    console.error('Error loading legend data:', error);
-  }
-}
-
-
 onMounted(async () => {
   // sync initial state with toggles
   layers.nitrogen.visible = showNitrogen.value;
@@ -487,6 +474,23 @@ function updateLabels() {
 
   explainedLabel.exit().remove(); 
 }
+// REGION MAP
+// load in region data for map paired chart
+async function loadLegendData() {
+  const activeLayer = showNitrogen.value ? layers.nitrogen : layers.phosphorus; // select layer
+  const filePath = `${publicPath}${activeLayer.data}`; 
+
+  try {
+    const rawData = await d3.csv(filePath);
+
+    legendData.value = rawData.map(d => ({
+      category: d.d3_category, 
+      value: +d.d3_percentage,
+    }));
+  } catch (error) {
+    console.error('Error loading legend data:', error);
+  }
+}
 
 // COMPUTED VARIABLES 
 // compute legendConfig dynamically based on the toggle
@@ -494,6 +498,7 @@ const legendConfig = computed(() => {
   return showNitrogen.value
     ? { breaks: layers.nitrogen.breaks, colors: layers.nitrogen.colors }
     : { breaks: layers.phosphorus.breaks, colors: layers.phosphorus.colors };
+    
 });
 
 // WATCHERS

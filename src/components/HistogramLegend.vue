@@ -13,80 +13,96 @@
     layerPaths: { 
       type: Object, 
       required: true // expects breaks and colors
+    },
+    data: { 
+      type: Array, 
+      required: true // expects histogram data
     }
   });
   
   const legendSvg = ref(null);
   
-  // render legend on mount and update
+  // render legend initially and watch for changes
   onMounted(renderLegend);
-
-  // watch breaks and colors specifically
-    watch(
-    () => [props.layerPaths.breaks, props.layerPaths.colors],
+  
+  // watch all relevant props for updates
+  watch(
+    () => [props.layerPaths, props.data],
     renderLegend,
     { deep: true }
-    );
+  );
+  
+  // render legend
+  function renderLegend() {
+    // clear existing legend
+    d3.select(legendSvg.value).selectAll('*').remove();
+  
+    const { breaks, colors } = props.layerPaths;
+  
+    // validate input
+    if (!breaks || !colors || breaks.length !== colors.length + 1) {
+      console.warn('Invalid breaks or colors configuration:', breaks, colors);
+      return;
+    }
+  
+    // dimensions
+    const width = 400;
+    const height = 150;
+    const rectHeight = 100;
+    const marginTop = 20;
+  
+    const svg = d3.select(legendSvg.value)
+      .attr('width', width)
+      .attr('height', height);
 
-    function renderLegend() {
-  // remove any existing legend
-  const svgContainer = d3.select(legendSvg.value);
-  svgContainer.selectAll('*').remove();
+      console.log(props.data)
+  
+    // x scale for breaks
+  const xScale = d3.scaleBand()
+    .domain(breaks.map((_, i) => i)) // indexes for bars
+    .range([0, width - 20])
+    .padding(0.1);
 
-  const { breaks, colors } = props.layerPaths;
+  // y scale for heights
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(props.data, d => d.value)]) // scale based on max height
+    .range([0, rectHeight]);
 
-  // validate inputs
-  if (!breaks || !colors || breaks.length !== colors.length + 1) {
-    console.warn('Invalid breaks or colors configuration');
-    return;
-  }
-
-  // svg dimensions
-  const width = 700;
-  const height = 50;
-  const rectHeight = 10;
-
-  const svg = svgContainer
-    .attr('width', width)
-    .attr('height', height);
-
-  // calculate width of each rectangle based on breaks
-  const rectWidth = width / (breaks.length - 3);
-
-  // add rectangles for legend colors
+  // draw histogram bars
   svg.selectAll('rect')
-    .data(colors)
+    .data(props.data)
     .enter()
     .append('rect')
-    .attr('x', (d, i) => i * rectWidth+50) // position based on index
-    .attr('y', 20) // vertical position
-    .attr('width', rectWidth) // uniform width
-    .attr('height', rectHeight) // fixed height
-    .style('fill', d => d);
+    .attr('x', (d, i) => xScale(i))
+    .attr('y', d => rectHeight - yScale(d.value)) // scale heights
+    .attr('width', xScale.bandwidth())
+    .attr('height', d => yScale(d.value))
+    .style('fill', (d, i) => colors[i]);
 
-  // add labels for breaks
+  // draw bin labels
   svg.selectAll('text')
     .data(breaks)
     .enter()
     .append('text')
-    .attr('x', (d, i) => i * rectWidth+50) // align with rectangles
-    .attr('y', 45) // below the rectangles
-    .attr('text-anchor', i => (i === breaks.length - 1 ? 'end' : 'middle')) // align labels
+    .attr('x', (_, i) => xScale(i) + xScale.bandwidth() / 2) // center align
+    .attr('y', rectHeight + marginTop) // position below bars
+    .attr('text-anchor', 'middle')
     .style('font-size', '12px')
-    .text((d, i) =>  i === breaks.length - 1  ? '>' + breaks[i - 1]  : d ); // custom label for last break
-}
-</script>
-
-<style scoped>
-.legend-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 10px 0;
-}
-.legend-svg {
-  width: 100%;
-  height: auto;
-}
-</style>
+    .text((d, i) => (i === breaks.length - 1 ? `>${breaks[i - 1]}` : d)); // label last bin as '>'
+  }
+  </script>
+  
+  <style scoped>
+  .legend-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+  }
+  .legend-svg {
+    width: 100%;
+    height: auto;
+  }
+  </style>
+  
