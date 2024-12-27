@@ -499,7 +499,7 @@ watch(showNitrogen, (newValue) => {
   }
 
   &#Atmosphericdeposition {
-    background-color: #C8ACD6;
+    background-color: var(--wq-air);
   }
 
   &#Otherhumansources {
