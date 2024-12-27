@@ -495,7 +495,7 @@ watch(showNitrogen, (newValue) => {
   transition: all 0.1s;
 
   &#Agriculture {
-    background-color: #939185;
+    background-color: var(--wq-agriculture);
   }
 
   &#Atmosphericdeposition {
