@@ -174,7 +174,7 @@ const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevad
 
 // Colors for bar chart (need to be updated along with CSS bephosphorus!)
 const categoryColors = {
-        'Agriculture': 'var(--wq-sediment)',
+        'Agriculture': 'var(--wq-agriculture)',
         'Atmospheric deposition': 'var(--wq-air)',
         'Natural sources': 'var(--wq-natural)',
         'Other Human Sources': 'var(--wu-ps)',
