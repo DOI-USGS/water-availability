@@ -90,6 +90,21 @@
               <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
+            <div class="checkbox_item">
+              <div class="checkbox_wrap toggle-container">
+                <label class="toggle-label">
+                  <span class="toggle-text" :class="{ active: !showNitrogen }">Phosphorus</span>
+                  <input 
+                    type="checkbox" 
+                    class="toggle-input" 
+                    @click="toggleNutrient" 
+                    v-model="showNitrogen"
+                  />
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-text" :class="{ active: showNitrogen }">Nitrogen</span>
+                </label>
+              </div>
+            </div>
             <RegionMap 
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
