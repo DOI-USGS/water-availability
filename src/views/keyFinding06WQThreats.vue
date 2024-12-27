@@ -2,9 +2,15 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
+
+            
             <div class="text-container">
-              <h3>Effects of surface water quality on human health</h3>
-              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
+              <p id="category-label"> Hover to view category names </p>
+            </div>
+            <div class="viz-container">
+              <div class="treemap-container-mobile" >
+                <treemapSVGmobile id="treemap-svg"></treemapSVGmobile>
+              </div>
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
@@ -70,15 +76,8 @@
               </div>
             </div>
             <div class="text-container">
-              <p id="category-label"> Hover to view category names </p>
-            </div>
-            <div class="viz-container">
-              <div class="treemap-container-mobile" v-if="isMobile">
-                <treemapSVGmobile id="treemap-svg"></treemapSVGmobile>
-              </div>
-              <div class="treemap-container-desktop" v-if="!isMobile">
-                <treemapSVG id="treemap-svg"></treemapSVG>
-              </div>
+              <h3>Surface water quality</h3>
+              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
             </div>
             <div class="text-container">
               <h4>Metals</h4>
@@ -93,7 +92,7 @@
               <p>Microbial pathogens like bacteria primarily threaten human health through ingestion and recreational activities like swimming (U.S. Environmental Protection Agency, 2023c). Bacteria can originate from natural or human activities that cause contamination including wastewater treatment plant discharge, leaky septic systems, stormwater runoff, animal waste, and runoff from animal pastures, feedlots, or manure storage (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Each year in the United States, an estimated 560,000 people suffer from moderate-to-severe waterborne infection and an estimated 1,200 people die from waterborne infections (Morris and Levine, 1995). Young children are particularly vulnerable to waterborne diseases.</p>
             </div>
             <div  class="text-container">
-              <h2>Effects of groundwater quality on drinking water</h2>
+              <h2>Groundwater quality</h2>
               <p>The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic nutrient concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
             </div>
             <div class="caption-container">
@@ -241,7 +240,7 @@ function addInteractions() {
 
         // set viewbox for svg with treemap
         const treemapSVG = d3.select("#treemap-svg")
-          .attr("viewBox", isMobile ? "0 0 " + 400 + " " + 661 : "0 0 " + 600 + " " + 418 )
+          .attr("viewBox", "0 0 " + 400 + " " + 661)
           .attr("preserveAspectRatio", "xMidYMid meet")
           .attr("width", '100%')
           .attr("height", '100%')
