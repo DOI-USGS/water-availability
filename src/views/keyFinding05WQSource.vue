@@ -205,28 +205,20 @@ const layers = reactive({
   nitrogen: {
     visible: true,
     path: '05_tn_map.png',
-<<<<<<< HEAD
-    color: 'var(--nitrogen)',
     order: 1,
     breaks: [0, 10, 25, 30],
-    colors: ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF5722']
-=======
+    colors: ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF5722'],
     color: 'var(--wq-high)',
     order: 1
->>>>>>> e88c0cb788401af4909e1ed707f7f91e92d5e166
   },
   phosphorus: {
     visible: false,
     path: '05_tp_map.png',
-<<<<<<< HEAD
-    color: 'var(--phosphorus)',
     order: 2,
     breaks: [0, 10, 25, 30],
-    colors: ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF5722']
-=======
+    colors: ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF5722'],
     color: 'var(--wq-mod)',
     order: 2
->>>>>>> e88c0cb788401af4909e1ed707f7f91e92d5e166
   }
 });
 
