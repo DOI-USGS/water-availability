@@ -173,8 +173,6 @@ const featureToggles = inject('featureToggles');
 //////// references array //
 const route = useRoute();
 
-const path = computed(() => route.path)
-
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 
@@ -220,12 +218,6 @@ let originalXScaleDomain;
 
 let showSupply = ref(true);
 let showDemand = ref(true);
-
-const orderedRegions = [
-    "Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
-    "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", 
-    "Florida", "Souris-Red-Rainy", "Midwest", "Great Lakes", "Northeast"
-];
 
 const layers = reactive({
   very_low_none: {
@@ -416,7 +408,8 @@ function createDotChart() {
         .attr('class', 'y-axis')
         .call(d3.axisLeft(yScale));
 
-    const regionAxis = dotGroup.select('.y-axis')
+    // region axis
+    dotGroup.select('.y-axis')
       .selectAll(".tick")
       .select("text")
       .attr("x", -44)
