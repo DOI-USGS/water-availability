@@ -28,6 +28,14 @@ const props = defineProps({
     type: String,
     required: true
   },
+  layerX: {
+    type: String,
+    required: true
+  },
+  layerY: {
+    type: String,
+    required: true
+  },
   regionsDataUrl: {
     type: String,
     required: true
@@ -56,8 +64,8 @@ const updateLayers = () => {
     .join(
       enter => enter.append('image')
         .attr('xlink:href', d => 'https://labs.waterdata.usgs.gov/visualizations/images/water-availability/' + d.path)
-        .attr('x', -80)
-        .attr('y', -55)
+        .attr('x', props.layerX)
+        .attr('y', props.layerY)
         .attr('width', 800 * props.layerMag)
         .attr('height', 550 * props.layerMag)
         .style('opacity', d => (d.visible ? 1 : 0))

@@ -125,7 +125,9 @@
               regionsDataUrl="assets/Regions.topojson"
               usOutlineUrl="assets/USoutline.topojson"
               regionsVar="Region_nam_nospace"
-              layerMag="1"
+              layerMag="1.11"
+              layerX="-44"
+              layerY="-11"
 
             />
             <div class="caption-container">
