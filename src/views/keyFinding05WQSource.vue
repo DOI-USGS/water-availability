@@ -8,19 +8,11 @@
               <div class="caption-container">
               <div class="checkbox_item">
               <!-- Nutrient Toggle -->
-              <div class="checkbox_wrap toggle-container">
-                <label class="toggle-label">
-                  <span class="toggle-text" :class="{ active: !showNitrogen }">Phosphorus</span>
-                  <input 
-                    type="checkbox" 
-                    class="toggle-input" 
-                    @click="toggleNutrient" 
-                    v-model="showNitrogen"
-                  />
-                  <span class="toggle-slider"></span>
-                  <span class="toggle-text" :class="{ active: showNitrogen }">Nitrogen</span>
-                </label>
-              </div>
+              <ToggleSwitch 
+                v-model="showNitrogen" 
+                leftLabel="Phosphorus" 
+                rightLabel="Nitrogen" 
+              />
             </div>
 
                 <div class="checkbox_item">
@@ -83,19 +75,11 @@
                 </p>
             </div>
             <div class="checkbox_item">
-              <div class="checkbox_wrap toggle-container">
-                <label class="toggle-label">
-                  <span class="toggle-text" :class="{ active: !showNitrogen }">Phosphorus</span>
-                  <input 
-                    type="checkbox" 
-                    class="toggle-input" 
-                    @click="toggleNutrient" 
-                    v-model="showNitrogen"
-                  />
-                  <span class="toggle-slider"></span>
-                  <span class="toggle-text" :class="{ active: showNitrogen }">Nitrogen</span>
-                </label>
-              </div>
+              <ToggleSwitch 
+                v-model="showNitrogen" 
+                leftLabel="Phosphorus" 
+                rightLabel="Nitrogen" 
+              />
             </div>
             <RegionMap 
               @regionSelected="updateSelectedRegion"
