@@ -99,6 +99,9 @@
               layerY="-11"
 
             />
+            <HistogramLegend 
+              :layerPaths="legendConfig"
+            />
             <div class="caption-container">
               <div class="caption-text-child">
                 <p>These maps show total nutrient load in kilograms per year for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
@@ -120,7 +123,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, reactive, watch } from 'vue';
+import { onMounted, ref, inject, reactive, watch, computed } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -129,6 +132,7 @@ import References from '../components/References.vue';
 import { isMobile } from 'mobile-device-detect';
 import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
+import HistogramLegend from '../components/HistogramLegend.vue';
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -158,13 +162,17 @@ const layers = reactive({
     visible: true,
     path: '05_tn_map.png',
     color: 'var(--nitrogen)',
-    order: 1
+    order: 1,
+    breaks: [0, 10, 25, 30],
+    colors: ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF5722']
   },
   phosphorus: {
     visible: false,
     path: '05_tp_map.png',
     color: 'var(--phosphorus)',
-    order: 2
+    order: 2,
+    breaks: [0, 10, 25, 30],
+    colors: ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF5722']
   }
 });
 
@@ -430,6 +438,11 @@ function updateLabels() {
   explainedLabel.exit().remove(); 
 }
 
+// compute legendConfig dynamically based on the toggle
+const legendConfig = computed(() => {
+  return showNitrogen.value ? layers.nitrogen : layers.phosphorus;
+});
+
 // watch for changes to scaleLoad
 watch(scaleLoad, (newValue) => {
   // update the chart based on the new scale
@@ -441,10 +454,12 @@ watch(scaleLoad, (newValue) => {
   // update chart labels to match scale
   updateLabels();
 });
+
 // watch for changes to showNitrogen
 watch(showNitrogen, (newValue) => {
   // update the chart based on the nutrient type
   data.value = newValue ? dataSet1.value : dataSet2.value;
+ 
 
   createBarChart({
     dataset: data.value,
