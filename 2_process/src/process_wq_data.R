@@ -51,39 +51,21 @@ summary_wq_by_state <- function(in_sf, nutrient, out_csv){
   
   load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
   
+  # set load level breaks
   if(nutrient == "tn") {
     breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, Inf)
-    category_sf <- in_sf |> 
-      filter(!is.na(!!load_column)) |> 
-      mutate(load_level = case_when(
-        !!load_column <= breaks[1] ~ "0 - 100",
-        !!load_column <= breaks[2] ~ "100 - 500", 
-        !!load_column <= breaks[3] ~ "500 - 1000",
-        !!load_column <= breaks[4] ~ "500 - 1000",
-        !!load_column <= breaks[5] ~ "1000 - 2000",
-        !!load_column <= breaks[6] ~ "2000 - 3000",
-        !!load_column <= breaks[7] ~ "3000 - 6000",
-        !!load_column <= breaks[8] ~ "6000 - 12000",
-        !!load_column <= breaks[9] ~ "30000 - 120000",
-        !!load_column <= breaks[10] ~ ">120000",
-      ))
+    labels <- c("0 - 100", "100 - 500", "500 - 1000", "1000 - 2000", "2000 - 3000", 
+                "3000 - 6000", "6000 - 12000", "12000 - 30000", ">30000")
   } else {
     breaks <- c(10, 40, 85, 160, 290, 520, 1000, 2500, 10000, Inf)
-    category_sf <- in_sf |> 
-      filter(!is.na(!!load_column)) |> 
-      mutate(load_level = case_when(
-        !!load_column <= breaks[1] ~ "0 - 10",
-        !!load_column <= breaks[2] ~ "10 - 40", 
-        !!load_column <= breaks[3] ~ "40 - 85",
-        !!load_column <= breaks[4] ~ "85 - 160",
-        !!load_column <= breaks[5] ~ "160 - 290",
-        !!load_column <= breaks[6] ~ "290 - 520",
-        !!load_column <= breaks[7] ~ "520 - 1000",
-        !!load_column <= breaks[8] ~ "1000 - 2500",
-        !!load_column <= breaks[9] ~ "2500 - 10000",
-        !!load_column <= breaks[10] ~ ">120000",
-      ))
+    labels <- c("0 - 10", "10 - 40", "40 - 85", "85 - 160", "160 - 290", 
+                "290 - 520", "520 - 1000", "1000 - 2500", ">2500")
   }
+  
+  # categorize load levels
+  category_sf <- in_sf |> 
+    filter(!is.na(!!load_column)) |> 
+    mutate(load_level = cut(!!load_column, breaks = breaks, labels = labels))
   
   # Expand each HUC to its state (some hucs overlap states)
   expand_states <- category_sf |>
@@ -117,68 +99,52 @@ summary_wq_by_region <- function(in_sf, nutrient, out_csv){
   
   load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
   
+  # set load level breaks
   if(nutrient == "tn") {
     breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, Inf)
-    category_sf <- in_sf |> 
-      filter(!is.na(!!load_column)) |> 
-      mutate(load_level = case_when(
-        !!load_column <= breaks[1] ~ "0 - 100",
-        !!load_column <= breaks[2] ~ "100 - 500", 
-        !!load_column <= breaks[3] ~ "500 - 1000",
-        !!load_column <= breaks[4] ~ "500 - 1000",
-        !!load_column <= breaks[5] ~ "1000 - 2000",
-        !!load_column <= breaks[6] ~ "2000 - 3000",
-        !!load_column <= breaks[7] ~ "3000 - 6000",
-        !!load_column <= breaks[8] ~ "6000 - 12000",
-        !!load_column <= breaks[9] ~ "30000 - 120000",
-        !!load_column <= breaks[10] ~ ">120000",
-      ))
+    labels <- c("0 - 100", "100 - 500", "500 - 1000", "1000 - 2000", "2000 - 3000", 
+                "3000 - 6000", "6000 - 12000", "12000 - 30000", ">30000")
   } else {
     breaks <- c(10, 40, 85, 160, 290, 520, 1000, 2500, 10000, Inf)
-    category_sf <- in_sf |> 
-      filter(!is.na(!!load_column)) |> 
-      mutate(load_level = case_when(
-        !!load_column <= breaks[1] ~ "0 - 10",
-        !!load_column <= breaks[2] ~ "10 - 40", 
-        !!load_column <= breaks[3] ~ "40 - 85",
-        !!load_column <= breaks[4] ~ "85 - 160",
-        !!load_column <= breaks[5] ~ "160 - 290",
-        !!load_column <= breaks[6] ~ "290 - 520",
-        !!load_column <= breaks[7] ~ "520 - 1000",
-        !!load_column <= breaks[8] ~ "1000 - 2500",
-        !!load_column <= breaks[9] ~ "2500 - 10000",
-        !!load_column <= breaks[10] ~ ">120000",
-      ))
+    labels <- c("0 - 10", "10 - 40", "40 - 85", "85 - 160", "160 - 290", 
+                "290 - 520", "520 - 1000", "1000 - 2500", ">2500")
   }
   
-
+  # categorize load levels
+  category_sf <- in_sf |> 
+    filter(!is.na(!!load_column)) |> 
+    mutate(load_level = cut(!!load_column, breaks = breaks, labels = labels))
   
   # summarize by region and category
   region_summary <- category_sf |>
     sf::st_drop_geometry() |>
     rename(load = !!load_column) |>
-    select(HUC12, Region_nam, AggReg_nam, load, load_level) |>
+    select(HUC12, Region_nam, AggReg_nam, load, load_level, Area_sqkm) |>
     group_by(Region_nam, AggReg_nam, load_level) |>
     summarize(category_hucs = n(),
+              category_sqkm = sum(Area_sqkm, na.rm = TRUE),
               total_load = round(sum(load, na.rm = TRUE), 4))
   
   # Calculate total number of HUCS per state
   HUC_per_region <- category_sf |> 
     sf::st_drop_geometry() |>
     group_by(Region_nam) |>
-    summarize(total_hucs = n()) 
+    summarize(total_hucs = n(),
+              total_sqkm = sum(Area_sqkm, na.rm = TRUE)) 
   
   # Calculate total hucs in each sui category by state and proportion
   summary_out <- region_summary |>
     left_join(HUC_per_region, by = "Region_nam") |>
-    mutate(prop_cat = round((category_hucs / total_hucs), 4)) |>
+    mutate(prop_cat = round((category_hucs / total_hucs), 4),
+           prop_sqkm = round((category_sqkm / total_sqkm), 4)) |>
     rename(d3_percentage = prop_cat,
            d3_category = load_level) |>
     ungroup() |>
     complete(d3_category, Region_nam,
              fill = list(d3_percentage = 0,
                          category_hucs = 0,
-                         total_load = 0))
+                         total_load = 0,
+                         prop_sqkm = 0))
   
   
   
