@@ -44,51 +44,61 @@
       console.warn('Invalid breaks or colors configuration:', breaks, colors);
       return;
     }
+
+    // sort the binned groups based on the first number in the labels
+    const sortedData = props.data
+        .map(d => {
+            const numericValue = d.category.match(/\d+/); // find first number, strip symbols
+            return { ...d, numericValue }; 
+        })
+        .sort((a, b) => a.numericValue - b.numericValue); // and sort 
+
   
     // dimensions
-    const width = 400;
-    const height = 150;
-    const rectHeight = 100;
+    const width = 700;
+    const height = 100;
+    const rectHeight = 70;
     const marginTop = 20;
   
     const svg = d3.select(legendSvg.value)
       .attr('width', width)
       .attr('height', height);
 
-      console.log(props.data)
-  
     // x scale for breaks
-  const xScale = d3.scaleBand()
-    .domain(breaks.map((_, i) => i)) // indexes for bars
-    .range([0, width - 20])
-    .padding(0.1);
+    const xScale = d3.scaleBand()
+        //.domain(breaks.map((_, i) => i)) // indexes for bars
+        .domain(sortedData.map(d => d.category))
+        .range([0, width - 20])
+        .padding(0.1);
 
-  // y scale for heights
-  const yScale = d3.scaleLinear()
-    .domain([0, d3.max(props.data, d => d.value)]) // scale based on max height
-    .range([0, rectHeight]);
+    // y scale for heights
+    const yScale = d3.scaleLinear()
+        .domain([0, 1])//d3.max(sortedData, d => d.value)]) // scale based on max height
+        .range([0, rectHeight]);
 
-  // draw histogram bars
-  svg.selectAll('rect')
-    .data(props.data)
-    .enter()
-    .append('rect')
-    .attr('x', (d, i) => xScale(i))
-    .attr('y', d => rectHeight - yScale(d.value)) // scale heights
-    .attr('width', xScale.bandwidth())
-    .attr('height', d => yScale(d.value))
-    .style('fill', (d, i) => colors[i]);
+    // draw histogram bars
+    svg.selectAll('rect')
+        .data(sortedData)
+        .enter()
+        .append('rect')
+        .attr('x', (d) => xScale(d.category))
+        .attr('y', d => rectHeight - yScale(d.value)) // scale heights
+        .attr('width', xScale.bandwidth())
+        .attr('height', d => yScale(d.value))
+        .style('fill', (d, i) => colors[i]);
 
-  // draw bin labels
-  svg.selectAll('text')
-    .data(breaks)
-    .enter()
-    .append('text')
-    .attr('x', (_, i) => xScale(i) + xScale.bandwidth() / 2) // center align
-    .attr('y', rectHeight + marginTop) // position below bars
-    .attr('text-anchor', 'middle')
-    .style('font-size', '12px')
-    .text((d, i) => (i === breaks.length - 1 ? `>${breaks[i - 1]}` : d)); // label last bin as '>'
+    // draw bin labels
+    svg.selectAll('text')
+        .data(props.data)
+        .enter()
+        .append('text')
+        //.attr('x', (_, i) => xScale(i) + xScale.bandwidth() / 2) // center align
+        .attr('x', d => xScale(d.category) + xScale.bandwidth() / 2)
+        .attr('y', rectHeight + marginTop) // position below bars
+        .attr('text-anchor', 'middle')
+        .style('font-size', '12px')
+        .text(d => d.category)
+        //.text((d, i) => (i === breaks.length - 1 ? `>${breaks[i - 1]}` : d)); // label last bin as '>'
   }
   </script>
   
