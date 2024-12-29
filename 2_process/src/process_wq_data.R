@@ -81,7 +81,7 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
   summary_data <- category_sf |> 
     sf::st_drop_geometry() |> 
     group_by(!!sym(group_col), load_level) |> 
-    summarize(category_hucs = n(),
+    summarize(category_hucs = length(unique(HUC12)),
               category_sqkm = sum(Area_sqkm, na.rm = TRUE),
               total_load = round(sum(!!load_column, na.rm = TRUE), 4)) |> 
     ungroup()
@@ -89,17 +89,16 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
   total_summary <- category_sf |> 
     sf::st_drop_geometry() |> 
     group_by(!!sym(group_col)) |> 
-    summarize(total_hucs = n(),
+    summarize(total_hucs = length(unique(HUC12)),
               total_sqkm = sum(Area_sqkm, na.rm = TRUE))
   
-  # merge summaries and calculate proportions
+  # merge summaries and calculate proportions for areas
   summary_out <- summary_data |> 
     left_join(total_summary, by = group_col) |> 
     mutate(prop_sqkm = round((category_sqkm / total_sqkm), 4),
            d3_percentage = round((category_hucs / total_hucs), 4)) |> 
-    rename(d3_category = load_level) |> 
     ungroup() |> 
-    complete(!!sym(group_col), d3_category, 
+    complete(!!sym(group_col), load_level, 
              fill = list(category_hucs = 0, 
                          category_sqkm = 0, 
                          total_load = 0, 
@@ -107,20 +106,28 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
                          d3_percentage = 0))
   
   # add total row for the United States 
-  us_total <- summary_out |> 
-    group_by(d3_category) |> 
+  category_total <- category_sf |>
+    sf::st_drop_geometry() |> 
     summarize(
       !!sym(group_col) := "United States",
-      category_hucs = sum(category_hucs, na.rm = TRUE),
-      category_sqkm = sum(category_sqkm, na.rm = TRUE),
-      total_load = sum(total_load, na.rm = TRUE),
-      total_hucs = sum(total_hucs, na.rm = TRUE),
-      total_sqkm = sum(total_sqkm, na.rm = TRUE),
-      prop_sqkm = round((sum(category_sqkm, na.rm = TRUE) / sum(total_sqkm, na.rm = TRUE)), 4),
-      d3_percentage = round((sum(category_hucs, na.rm = TRUE) / sum(total_hucs, na.rm = TRUE)), 4)
-    ) |> ungroup()
+      total_hucs = length(unique(HUC12)),
+      total_sqkm = sum(Area_sqkm, na.rm = TRUE))
   
-  summary_out <- bind_rows(summary_out, us_total)
+  us_total <- category_sf |> 
+    sf::st_drop_geometry() |> 
+    group_by(load_level) |> 
+    summarize(
+      !!sym(group_col) := "United States",
+      category_hucs = length(unique(HUC12)),
+      category_sqkm = sum(Area_sqkm, na.rm = TRUE)) |>
+    left_join(category_total) |>
+    mutate(
+      prop_sqkm = round(category_sqkm / total_sqkm, 4),
+      d3_percentage = round(category_hucs / total_hucs, 4)
+    )
+  
+  summary_out <- bind_rows(summary_out, us_total) |>
+    rename(d3_category = load_level)
   
   # save to csv
   readr::write_csv(summary_out, file = out_csv)
