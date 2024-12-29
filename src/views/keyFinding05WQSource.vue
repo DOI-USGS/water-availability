@@ -228,10 +228,12 @@ onMounted(async () => {
   // sync initial state with toggles
   layers.nitrogen.visible = showNitrogen.value;
   layers.phosphorus.visible = !showNitrogen.value;
-  await loadLegendData(); 
+  filterRegionData();
+  loadLegendData(); 
+
 
     try {
-        await loadDatasets();
+        await loadSourceData();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
             initBarChart({
@@ -253,7 +255,7 @@ onMounted(async () => {
     }
 });
 
-async function loadDatasets() {
+async function loadSourceData() {
   try {
     dataSet1.value = await loadData('wq_sources_tn.csv');
     dataSet2.value = await loadData('wq_sources_tp.csv');
@@ -273,7 +275,14 @@ async function loadData(fileName) {
     return [];
   }
 };
+async function filterRegionData() {
+  const fileName = showNitrogen.value ? layers.nitrogen.data : layers.phosphorus.data;
+  const newData = await loadData(fileName);
+  data.value = newData.filter(d => d.Region_nam === selectedRegion.value);
+  console.log(data.value)
 
+
+}
 function initBarChart({
   containerWidth,
   containerHeight,
@@ -487,6 +496,8 @@ async function loadLegendData() {
       category: d.d3_category, 
       value: +d.d3_percentage,
     }));
+    filterRegionData
+
   } catch (error) {
     console.error('Error loading legend data:', error);
   }
@@ -535,6 +546,8 @@ watch(showNitrogen, async (newValue) => {
   layers.nitrogen.visible = newValue;          // show nitrogen layer
   layers.phosphorus.visible = !newValue;      // hide phosphorus layer
 });
+
+watch([selectedRegion], filterRegionData)
 </script>
 
 <style scoped lang="scss">
