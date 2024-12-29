@@ -29,153 +29,106 @@
   let svg;
   
   // render legend initially and watch for changes
-  onMounted(initLegend);
+  onMounted(() => {
+    initLegend(props.data);
+    });
     
-  // render legend
-  function initLegend() {
-    // clear existing legend
-    d3.select(legendSvg.value).selectAll('*').remove();
-  
-    const { breaks, colors } = props.layerPaths;
+    // Watch for updates in data or region name
+watch(
+  () => [props.data, props.regionName],
+  ([newData, newRegion]) => {
+    updateLegend(newData, newRegion);
+  },
+  { deep: true }
+);
 
-    // sort the binned groups based on the first number in the labels
-    const sortedData = props.data
-    .map(d => ({
-      ...d,
-      numericValue: parseFloat(d.category.match(/\d+/)) || 0 // extract first number
-    }))
-    .sort((a, b) => a.numericValue - b.numericValue);
-
-    // dimensions
-    const width = 700;
-    const height = 100;
-    const rectHeight = 70;
-    const marginTop = 20;
-  
-    const svg = d3.select(legendSvg.value)
-      .attr('width', width)
-      .attr('height', height);
-
-    // x scale for breaks
-    const xScale = d3.scaleBand()
-        //.domain(breaks.map((_, i) => i)) // indexes for bars
-        .domain(sortedData.map(d => d.category))
-        .range([0, width - 20])
-        .padding(0.1);
-
-    // y scale for heights
-    const yScale = d3.scaleLinear()
-        .domain([0, 1])//d3.max(sortedData, d => d.value)]) // scale based on max height
-        .range([0, rectHeight]);
-
-    // draw histogram bars
-    svg.selectAll('rect')
-        .data(sortedData)
-        .enter()
-        .append('rect')
-        .attr('x', (d) => xScale(d.category))
-        .attr('y', d => rectHeight - yScale(d.value)) // scale heights
-        .attr('width', xScale.bandwidth())
-        .attr('height', d => yScale(d.value))
-        .style('fill', (d, i) => colors[i]);
-
-    // draw bin labels
-    svg.selectAll('text')
-        .data(props.data)
-        .enter()
-        .append('text')
-        //.attr('x', (_, i) => xScale(i) + xScale.bandwidth() / 2) // center align
-        .attr('x', d => xScale(d.category) + xScale.bandwidth() / 2)
-        .attr('y', rectHeight + marginTop) // position below bars
-        .attr('text-anchor', 'middle')
-        .style('font-size', '12px')
-        .text(d => d.category)
-        //.text((d, i) => (i === breaks.length - 1 ? `>${breaks[i - 1]}` : d)); // label last bin as '>'
-  }
-function updateLegend(data, region) {
-
-// ensure svg exists before proceeding
-  if (!svg) {
-    return; 
-  }
-    // process and sort data
-    const sortedData = props.data
-    .map(d => ({
-      ...d,
-      numericValue: parseFloat(d.category.match(/\d+/)) || 0 // extract first number
-    }))
-    .sort((a, b) => a.numericValue - b.numericValue);
-
+// Initialize Legend
+function initLegend(data) {
   const { colors } = props.layerPaths;
+
+  // Sort data
+  const sortedData = processData(data);
+
+  // Dimensions
+  const width = 700;
+  const height = 100;
+  const rectHeight = 70;
+  const marginTop = 20;
+
+  svg = d3.select(legendSvg.value)
+    .attr('width', width)
+    .attr('height', height);
+
+  const xScale = d3.scaleBand()
+    .domain(sortedData.map(d => d.category))
+    .range([0, width - 20])
+    .padding(0.1);
+
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(sortedData, d => d.value)])
+    .range([0, rectHeight]);
+
+  // Bars
+  svg.selectAll('rect')
+    .data(sortedData)
+    .enter()
+    .append('rect')
+    .attr('x', d => xScale(d.category))
+    .attr('y', d => rectHeight - yScale(d.value))
+    .attr('width', xScale.bandwidth())
+    .attr('height', d => yScale(d.value))
+    .style('fill', (d, i) => colors[i % colors.length]);
+
+  // Labels
+  svg.selectAll('text')
+    .data(sortedData)
+    .enter()
+    .append('text')
+    .attr('x', d => xScale(d.category) + xScale.bandwidth() / 2)
+    .attr('y', rectHeight + marginTop)
+    .attr('text-anchor', 'middle')
+    .style('font-size', '12px')
+    .text(d => d.category);
+}
+
+// Update Legend
+function updateLegend(data, region) {
+  const sortedData = processData(data);
   const rectHeight = 70;
 
-  // x scale for categories
+  const { colors } = props.layerPaths;
+
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => d.category))
     .range([0, 700 - 20])
     .padding(0.1);
 
-  // y scale for heights
   const yScale = d3.scaleLinear()
-    .domain([0, d3.max(sortedData, d => +d.value)]) // dynamically scale to new data
+    .domain([0, d3.max(sortedData, d => d.value)])
     .range([0, rectHeight]);
 
-  // select and update histogram bars
   svg.selectAll('rect')
     .data(sortedData)
-    .transition() // smooth transition
-    .duration(750) // animation duration
-    .attr('y', d => rectHeight - yScale(d.value)) // transition heights
-    .attr('height', d => yScale(d.value)) // transition heights
-    .style('fill', (d, i) => colors[i % colors.length]); // update colors
+    .transition()
+    .duration(750)
+    .attr('y', d => rectHeight - yScale(d.value))
+    .attr('height', d => yScale(d.value))
+    .style('fill', (d, i) => colors[i % colors.length]);
 
-  // update labels
   svg.selectAll('text')
     .data(sortedData)
-    .transition() // smooth transition for labels
+    .transition()
     .duration(750)
     .text(d => d.category);
 }
 
-// WATCHERS
-// watch all relevant props for updates
-watch(
-    () => [props.layerPaths, props.data],
-    initLegend,
-    { deep: true }
-  );
-  watch(
-  () => [props.data, props.regionName],
-  ([data, regionName]) => {
-    // check if svg is initialized, if not, init
-    if (!svg) {
-      initLegend();
-    }
-    // if it exists
-    // filter data for the given region
-    const filteredData =
-      regionName === 'United States'
-        ? data // show all data for US
-        : data.filter(d => d.Region_nam === regionName); // filter for selected region
-
-    updateLegend(filteredData, regionName); // transition 
-  },
-  { deep: true }
-);
-
+// Helper Function to Process Data
+function processData(data) {
+  return data
+    .map(d => ({
+      ...d,
+      numericValue: parseFloat(d.category.match(/\\d+/)) || 0
+    }))
+    .sort((a, b) => a.numericValue - b.numericValue);
+}
 </script>
-  
-  <style scoped>
-  .legend-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 10px 0;
-  }
-  .legend-svg {
-    width: 100%;
-    height: auto;
-  }
-  </style>
-  

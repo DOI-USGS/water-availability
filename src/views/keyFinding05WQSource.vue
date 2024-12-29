@@ -196,7 +196,6 @@ const layers = reactive({
     breaks: [0, 10, 40, 85, 160, 290, 520, 1000, 2500, 10000, 100000],
     colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-high)',
-    order: 1,
     data: 'wq_loads_Reg_tn.csv',
   },
   phosphorus: {
@@ -206,7 +205,6 @@ const layers = reactive({
     breaks: [0, 100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, 1000000],
     colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-mod)',
-    order: 2,
     data: 'wq_loads_Reg_tp.csv',
   }
 });
@@ -278,9 +276,8 @@ async function loadData(fileName) {
 async function filterRegionData() {
   const fileName = showNitrogen.value ? layers.nitrogen.data : layers.phosphorus.data;
   const newData = await loadData(fileName);
-  data.value = newData.filter(d => d.Region_nam === selectedRegion.value);
-  console.log(data.value)
-
+  legendData.value = newData.filter(d => d.Region_nam === selectedRegion.value);
+  console.log(selectedRegion.value)
 
 }
 function initBarChart({
@@ -548,6 +545,7 @@ watch(showNitrogen, async (newValue) => {
 });
 
 watch([selectedRegion], filterRegionData)
+
 </script>
 
 <style scoped lang="scss">
