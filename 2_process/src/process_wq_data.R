@@ -53,19 +53,22 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
   
   # set load level breaks
   if(nutrient == "tn") {
-    breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, Inf)
-    labels <- c("0 - 100", "100 - 500", "500 - 1000", "1000 - 2000", "2000 - 3000", 
-                "3000 - 6000", "6000 - 12000", "12000 - 30000", ">30000")
+    breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000)
   } else {
-    breaks <- c(10, 40, 85, 160, 290, 520, 1000, 2500, 10000, Inf)
-    labels <- c("0 - 10", "10 - 40", "40 - 85", "85 - 160", "160 - 290", 
-                "290 - 520", "520 - 1000", "1000 - 2500", ">2500")
+    breaks <- c(10, 40, 85, 160, 290, 520, 1000, 2500, 10000)
   }
+  
+  # calculate lower bounds based on breaks
+  lower_breaks <- c(0, head(breaks, -1))
+  upper_breaks <- breaks
+  labels <- paste0(lower_breaks, " - ", upper_breaks)
   
   # categorize load levels
   category_sf <- in_sf |> 
     filter(!is.na(!!load_column)) |> 
-    mutate(load_level = cut(!!load_column, breaks = breaks, labels = labels))
+    mutate(load_level = cut(!!load_column, 
+                            breaks = c(0, breaks, Inf), 
+                            labels = c(labels, paste0(">", max(breaks))), right = FALSE))
   
   # determine grouping column
   group_col <- if (by == "state") "STATES" else "Region_nam"
@@ -97,9 +100,28 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
     rename(d3_category = load_level) |> 
     ungroup() |> 
     complete(!!sym(group_col), d3_category, 
-             fill = list(category_hucs = 0, category_sqkm = 0, total_load = 0, prop_sqkm = 0, d3_percentage = 0))
+             fill = list(category_hucs = 0, 
+                         category_sqkm = 0, 
+                         total_load = 0, 
+                         prop_sqkm = 0, 
+                         d3_percentage = 0))
+  
+  # add total row for the United States 
+  us_total <- summary_out |> 
+    group_by(d3_category) |> 
+    summarize(
+      !!sym(group_col) := "United States",
+      category_hucs = sum(category_hucs, na.rm = TRUE),
+      category_sqkm = sum(category_sqkm, na.rm = TRUE),
+      total_load = sum(total_load, na.rm = TRUE),
+      total_hucs = sum(total_hucs, na.rm = TRUE),
+      total_sqkm = sum(total_sqkm, na.rm = TRUE),
+      prop_sqkm = round((sum(category_sqkm, na.rm = TRUE) / sum(total_sqkm, na.rm = TRUE)), 4),
+      d3_percentage = round((sum(category_hucs, na.rm = TRUE) / sum(total_hucs, na.rm = TRUE)), 4)
+    ) |> ungroup()
+  
+  summary_out <- bind_rows(summary_out, us_total)
   
   # save to csv
   readr::write_csv(summary_out, file = out_csv)
-  
 }
