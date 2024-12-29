@@ -33,14 +33,18 @@
     initLegend(props.data);
     });
     
-    // Watch for updates in data or region name
-watch(
+    watch(
   () => [props.data, props.regionName],
-  ([newData, newRegion]) => {
-    updateLegend(newData, newRegion);
+  ([newData]) => {
+    if (!svg) {
+      initLegend(newData); // Initialize if SVG doesn't exist
+    } else {
+      updateLegend(newData); // Update existing legend
+    }
   },
   { deep: true }
 );
+
 
 // Initialize Legend
 function initLegend(data) {
@@ -125,10 +129,15 @@ function updateLegend(data, region) {
 // Helper Function to Process Data
 function processData(data) {
   return data
-    .map(d => ({
-      ...d,
-      numericValue: parseFloat(d.category.match(/\\d+/)) || 0
-    }))
+    .map(d => {
+      // Validate and handle missing or invalid 'category' field
+      const category = d.category && typeof d.category === 'string' ? d.category : '0';
+      return {
+        ...d,
+        numericValue: parseFloat(category.match(/\d+/)) || 0 // Extract number or default to 0
+      };
+    })
     .sort((a, b) => a.numericValue - b.numericValue);
 }
+
 </script>

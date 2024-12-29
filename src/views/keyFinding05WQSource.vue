@@ -102,6 +102,7 @@
             <HistogramLegend 
               :layerPaths="legendConfig"
               :data="legendData"
+              :regionName="selectedRegion"
             />
             <div class="caption-container">
               <div class="caption-text-child">
@@ -277,7 +278,6 @@ async function filterRegionData() {
   const fileName = showNitrogen.value ? layers.nitrogen.data : layers.phosphorus.data;
   const newData = await loadData(fileName);
   legendData.value = newData.filter(d => d.Region_nam === selectedRegion.value);
-  console.log(selectedRegion.value)
 
 }
 function initBarChart({
