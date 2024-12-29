@@ -165,6 +165,7 @@ const dataSet1 = ref([]);
 const dataSet2 = ref([]); 
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
+const selectedRegion = ref('United States'); // default region
 
 // References logic
 // filter to this page's key message
@@ -256,7 +257,6 @@ async function loadDatasets() {
   try {
     dataSet1.value = await loadData('wq_sources_tn.csv');
     dataSet2.value = await loadData('wq_sources_tp.csv');
-    console.log('data in');
   } catch (error) {
     console.error('Error loading datasets', error);
   }
@@ -490,6 +490,9 @@ async function loadLegendData() {
   } catch (error) {
     console.error('Error loading legend data:', error);
   }
+}
+function updateSelectedRegion(regionName) {
+  selectedRegion.value = regionName;
 }
 
 // COMPUTED VARIABLES 
