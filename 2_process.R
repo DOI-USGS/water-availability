@@ -246,12 +246,14 @@ p2_targets <- list(
                summary_wq_by_area(in_sf = p2_HUC12_join_wq_sf,
                                    nutrient = nutrient,
                                    out_csv = sprintf("public/wq_loads_state_%s.csv", nutrient),
-                                   by = "state")),
+                                   by = "state"),
+               format = 'file'),
     tar_target(p2_Reg_wq_csv,
                summary_wq_by_area(in_sf = p2_HUC12_join_wq_sf,
                                    nutrient = nutrient,
                                    out_csv = sprintf("public/wq_loads_Reg_%s.csv", nutrient),
-                                   by = "region")),
+                                   by = "region"),
+               format = 'file'),
     names = nutrient
   ),
 

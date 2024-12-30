@@ -126,4 +126,6 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
   
   # save to csv
   readr::write_csv(summary_out, file = out_csv)
+  
+  return(out_csv)
 }
