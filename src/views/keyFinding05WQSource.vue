@@ -162,6 +162,7 @@ let nutrientScale;
 const scaleLoad = ref(true);
 const showNitrogen = ref(true);
 const legendData = ref([]);
+const rawData = ref([]);
 const dataSet1 = ref([]); 
 const dataSet2 = ref([]); 
 const selectedDataSet = ref('dataSet1');
@@ -171,21 +172,10 @@ const selectedRegion = ref('United States'); // default region
 // References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
-});
-
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
 
 // Define layers and data mappings for RegionMap component
@@ -210,6 +200,7 @@ const layers = reactive({
   }
 });
 
+// WQ source bar chart configs
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
 "Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
@@ -223,17 +214,22 @@ const categoryColors = {
         'Wastewater': 'var(--wq-wastewater)'
       }; 
 
+      // run of show
 onMounted(async () => {
-  // sync initial state with toggles
+
+  // set initial toggle state 
   layers.nitrogen.visible = showNitrogen.value;
   layers.phosphorus.visible = !showNitrogen.value;
-  filterRegionData(); 
 
+  // load data that draws histogram based on nutrient toggle
+  loadRegionData(); 
 
     try {
         await loadSourceData();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
+
+          // create svg for WQ source bar chart
             initBarChart({
               containerWidth: containerWidth,
               containerHeight: containerHeight,
@@ -252,17 +248,8 @@ onMounted(async () => {
         console.error('Error during component mounting', error);
     }
 });
-// 3 functions that all load data and handle it depending on which way the nutrient toggle is
-// and if a region is selected
-async function loadSourceData() {
-  try {
-    dataSet1.value = await loadData('wq_sources_tn.csv');
-    dataSet2.value = await loadData('wq_sources_tp.csv');
-  } catch (error) {
-    console.error('Error loading datasets', error);
-  }
-};
 
+// general file loading fxn
 async function loadData(fileName) {
   try {
     const data = await d3.csv(publicPath + fileName, d => { 
@@ -274,11 +261,34 @@ async function loadData(fileName) {
     return [];
   }
 };
-function initBarChart({
-  containerWidth,
-  containerHeight,
-  margin
-}) {
+async function loadSourceData() {
+    dataSet1.value = await loadData('wq_sources_tn.csv');
+    dataSet2.value = await loadData('wq_sources_tp.csv');
+};
+// load in region data for map paired chart and filter to selected region
+async function loadRegionData() {
+  const activeLayer = showNitrogen.value ? layers.nitrogen : layers.phosphorus; // select layer
+  rawData.value = await loadData(activeLayer.data); // Load data only once and store it
+  filterRegionData(); // Filter based on the current selected region
+}
+
+function filterRegionData() {
+  if (!rawData.value) return; // Ensure rawData is loaded
+  legendData.value = rawData.value
+    .filter(d => d.Region_nam === selectedRegion.value)
+    .map(d => ({
+      category: d.d3_category, 
+      value: +d.d3_percentage,
+    }));
+}
+
+function updateSelectedRegion(regionName) {
+  selectedRegion.value = regionName;
+}
+
+/////// WQ source bar chart
+// init chart svg
+function initBarChart({ containerWidth, containerHeight, margin }) {
 
     d3.select('#barplot-container').select('svg').remove();
 
@@ -301,10 +311,8 @@ function initBarChart({
       .attr('id', 'rectangle_group')
 
 }
-function createBarChart({
-  dataset,
-  scaleLoad
-}) {
+// build initial chart
+function createBarChart({ dataset, scaleLoad}) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
@@ -438,7 +446,7 @@ function createBarChart({
     );
 }
 
-// update x-axis labels
+// update x-axis labels with toggles
 function updateLabels() {
 
   const label = svg.selectAll(".upper-right-label")
@@ -474,29 +482,6 @@ function updateLabels() {
 
   explainedLabel.exit().remove(); 
 }
-// REGION MAP
-// load in region data for map paired chart
-async function filterRegionData() {
-  const activeLayer = showNitrogen.value ? layers.nitrogen : layers.phosphorus; // select layer
-  const filePath = `${publicPath}${activeLayer.data}`; 
-
-  try {
-    const rawData = await d3.csv(filePath);
-    legendData.value = rawData
-      .filter(d => d.Region_nam === selectedRegion.value)
-      .map(d => ({
-        category: d.d3_category, 
-        value: +d.d3_percentage,
-      }));
-
-  } catch (error) {
-    console.error('Error loading legend data:', error);
-  }
-}
-
-function updateSelectedRegion(regionName) {
-  selectedRegion.value = regionName;
-}
 
 // COMPUTED VARIABLES 
 // compute legendConfig dynamically based on the toggle
@@ -524,7 +509,7 @@ watch(scaleLoad, (newValue) => {
 watch(showNitrogen, async (newValue) => {
   // update the chart based on the nutrient type
   data.value = newValue ? dataSet1.value : dataSet2.value;
-  await filterRegionData(); // reload data when the toggle changes
+  await loadRegionData(); // reload data when the toggle changes
 
   createBarChart({
     dataset: data.value,
@@ -535,8 +520,8 @@ watch(showNitrogen, async (newValue) => {
   updateLabels();
 
   // toggle map layer visibility based on the nutrient selected
-  layers.nitrogen.visible = newValue;          // show nitrogen layer
-  layers.phosphorus.visible = !newValue;      // hide phosphorus layer
+  layers.nitrogen.visible = newValue;   // show nitrogen layer
+  layers.phosphorus.visible = !newValue; // hide phosphorus layer
 });
 
 watch([selectedRegion], filterRegionData)
