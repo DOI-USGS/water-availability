@@ -227,7 +227,7 @@ onMounted(async () => {
   // sync initial state with toggles
   layers.nitrogen.visible = showNitrogen.value;
   layers.phosphorus.visible = !showNitrogen.value;
-  loadLegendData(); 
+  filterRegionData(); 
 
 
     try {
@@ -252,7 +252,8 @@ onMounted(async () => {
         console.error('Error during component mounting', error);
     }
 });
-
+// 3 functions that all load data and handle it depending on which way the nutrient toggle is
+// and if a region is selected
 async function loadSourceData() {
   try {
     dataSet1.value = await loadData('wq_sources_tn.csv');
@@ -273,12 +274,6 @@ async function loadData(fileName) {
     return [];
   }
 };
-async function filterRegionData() {
-  const fileName = showNitrogen.value ? layers.nitrogen.data : layers.phosphorus.data;
-  const newData = await loadData(fileName);
-  legendData.value = newData.filter(d => d.Region_nam === selectedRegion.value);
-
-}
 function initBarChart({
   containerWidth,
   containerHeight,
@@ -481,7 +476,7 @@ function updateLabels() {
 }
 // REGION MAP
 // load in region data for map paired chart
-async function loadLegendData() {
+async function filterRegionData() {
   const activeLayer = showNitrogen.value ? layers.nitrogen : layers.phosphorus; // select layer
   const filePath = `${publicPath}${activeLayer.data}`; 
 
@@ -498,6 +493,7 @@ async function loadLegendData() {
     console.error('Error loading legend data:', error);
   }
 }
+
 function updateSelectedRegion(regionName) {
   selectedRegion.value = regionName;
 }
@@ -528,7 +524,7 @@ watch(scaleLoad, (newValue) => {
 watch(showNitrogen, async (newValue) => {
   // update the chart based on the nutrient type
   data.value = newValue ? dataSet1.value : dataSet2.value;
-  await loadLegendData(); // reload data when the toggle changes
+  await filterRegionData(); // reload data when the toggle changes
 
   createBarChart({
     dataset: data.value,
