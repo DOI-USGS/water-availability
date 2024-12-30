@@ -41,7 +41,7 @@
     updateLegend(props.data);
     });
     
-    // Watch for updates in data or region name
+ // Watch for updates in data or region name
 watch(
   () => [props.data, props.regionName],
   ([newData, newRegion]) => {
@@ -71,7 +71,9 @@ function initLegend(data) {
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => d.category))
     .range([0, width - 40])
-    .padding(0.1);
+    .paddingInner(0) 
+    .paddingOuter(0)
+    .align(0);
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
@@ -87,6 +89,20 @@ function initLegend(data) {
     .attr('height', d => rectHeight - yScale(d.value))
     .style('fill', d => colorScale(d.category));
 
+  const axisBottom = d3.axisBottom(xScale)
+   //.tickFormat(d => cleanLabel(d)) 
+   .tickSize(3)
+   .tickPadding(0);
+
+   svg.select('.x-axis').remove();
+
+   svg.append('g')
+    .attr('class', 'x-axis')
+    .attr('transform', `translate(0, ${rectHeight})`)
+    .call(axisBottom);
+
+// Remove existing y-axis before adding a new one
+svg.select('.y-axis').remove();
 
 // add y-axis
  const axisRight = d3.axisRight(yScale).ticks(3).tickFormat(d => `${d * 100}%`).tickSize(3);
@@ -97,7 +113,7 @@ function initLegend(data) {
     .call(axisRight) 
 
   // Labels
-  svg.selectAll('.category-label')
+/*   svg.selectAll('.category-label')
     .data(sortedData, d => d.category)
     .join('text')
     .attr('class', 'category-label')
@@ -105,7 +121,7 @@ function initLegend(data) {
     .attr('y', rectHeight + marginTop)
     .attr('text-anchor', 'middle')
     .style('font-size', '12px')
-    .text(d => d.category);
+    .text(d => d.category); */
 
   const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
 
@@ -129,9 +145,10 @@ function updateLegend(data) {
   const sortedData = data;
 
   const xScale = d3.scaleBand()
-    .domain(sortedData.map(d => d.category))
+    .domain(sortedData.map(d => cleanLabel(d.category)))
     .range([0, width - 40])
-    .padding(0.1);
+    .paddingInner(0) 
+    .paddingOuter(0);
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
@@ -145,7 +162,7 @@ function updateLegend(data) {
     .data(sortedData, d => d.category)
     .join(
       enter => enter.append('rect')
-        .attr('x', d => xScale(d.category))
+      .attr('x', d => xScale(cleanLabel(d.category)))
         .attr('y', d => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
@@ -205,6 +222,11 @@ function processData(data) {
       };
     })
     .sort((a, b) => a.numericValue - b.numericValue);
+}
+// Clean labels by extracting first number in string
+function cleanLabel(label) {
+  const match = label.match(/\d+/); // Extract first number
+  return match ? match[0] : label;  // Return number or original label
 }
 
 </script>

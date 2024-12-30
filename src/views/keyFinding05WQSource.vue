@@ -74,6 +74,7 @@
               <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
+            <div class="image-container">
             <div class="checkbox_item">
               <ToggleSwitch 
                 v-model="showNitrogen" 
@@ -104,9 +105,10 @@
               :data="legendData"
               :regionName="selectedRegion"
             />
+          </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>These maps show total nutrient load in kilograms per year for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
+                <p>Maps of total Nitrogran and Phosphorus load in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the United States, or a region when selected.</p>
               </div>
               </div>
             <div class="text-container">
@@ -533,6 +535,13 @@ watch([selectedRegion], filterRegionData)
 #barplot-container {
   width: 100%; 
   max-height: 900px;
+}
+.image-container {
+  position: relative;
+  width: 100%; 
+  max-width: 1800px;
+  margin: auto; 
+  overflow: hidden;
 }
 
 @media only screen and (max-width: 768px) {
