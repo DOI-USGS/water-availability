@@ -136,7 +136,7 @@ p3_targets <- list(
   #
   ## National water stress map
   tar_target(p3_map_stress_png,
-             map_stress(in_sf = p2_HUC12_join_sui_svi_sf,
+             map_sui(in_sf = p2_HUC12_join_sui_svi_sf,
                         color_scheme = p3_colors_balance,
                         in_regions = p2_Reg_sf,
                         png_out = "src/assets/images/R/01_stress_map.png",
@@ -145,7 +145,7 @@ p3_targets <- list(
   tarchetypes::tar_map( 
     values = tibble::tibble(level = c("low", "very_low_none", "moderate", "severe", "high")),
     tar_target(p3_map_stress_levels_png,
-               map_stress(in_sf = p2_HUC12_join_sui_svi_sf |>
+               map_sui(in_sf = p2_HUC12_join_sui_svi_sf |>
                             dplyr::filter(sui_cat_clean == level),
                           in_regions = p2_Reg_sf,
                           color_scheme = p3_colors_balance,
@@ -153,7 +153,12 @@ p3_targets <- list(
                           width = 8, height = 6)),
     names = level
           ),
-  
+  ## National water limitation timeline
+  tar_target(p3_sui_monthly_bars,
+             plot_monthly_sui(in_df = p2_sui_monthly_CONUS,
+                              color_scheme = p3_colors_balance,
+                              png_out = "src/assets/images/R/01_monthly_sui_bars.png",
+                              width = 8, height = 4)),
   
   ##############################################
   # 

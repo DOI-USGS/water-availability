@@ -39,7 +39,7 @@ map_svi_sui <- function(in_sf,
   
 }
 
-map_stress <- function(in_sf,
+map_sui <- function(in_sf,
                        in_regions,
                        color_scheme,
                        png_out,
@@ -67,6 +67,40 @@ map_stress <- function(in_sf,
          filename = png_out, device = "png", bg = "transparent",
          dpi = 300, units = "in", width = width, height = height)
   
+}
+
+plot_monthly_sui <- function(in_df, 
+                             color_scheme,
+                             png_out,
+                             width,
+                             height) {
+  
+  plot_df <- in_df |>
+    mutate(
+      year = substr(year_month, 1, 4),
+      month = substr(year_month, 6, 7),
+      date = as_date(paste(year, month, '01', sep = '-')))
+  
+  ggplot(data = plot_df, aes(x = date,
+                           y = n_hucs, 
+                           fill = sui_category)) +
+           geom_bar(position = "fill",
+                    stat = "identity") +
+    scale_fill_manual(values = c(color_scheme$wet_blue_dark,
+                                 color_scheme$wet_blue_light,
+                                 color_scheme$svg_col_default,
+                                 color_scheme$dry_red_light,
+                                 color_scheme$dry_red_dark)) +
+    scale_x_date(breaks = "1 year", date_labels = "%Y",
+                 limits = c(as.Date("2010-01-01"), as.Date("2020-01-01"))) +
+    theme_void(base_size = 11) +
+    theme(legend.position = "none",
+          panel.grid.major.x = element_line(color = color_scheme$shadow, linewidth = 0.1),
+          axis.text.x = element_text(color = color_scheme$shadow, size = 8))
+  
+  
+  ggsave(filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
 }
 
 viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
