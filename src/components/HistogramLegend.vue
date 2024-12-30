@@ -30,8 +30,8 @@
   
   // chart dimensions
   const width = 700;
-  const height = 100;
-  const rectHeight = 70;
+  const height = 120;
+  const rectHeight = 80;
   const marginTop = 20;
 
 
@@ -75,22 +75,32 @@ function initLegend(data) {
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
-    .range([0, rectHeight]);
+    .range([rectHeight, 0]);
 
   // Bars
   svg.selectAll('rect')
     .data(sortedData, d => d.category)
     .join('rect')
     .attr('x', d => xScale(d.category))
-    .attr('y', d => rectHeight - yScale(d.value))
+    .attr('y', d => yScale(d.value))
     .attr('width', xScale.bandwidth())
-    .attr('height', d => yScale(d.value))
+    .attr('height', d => rectHeight - yScale(d.value))
     .style('fill', d => colorScale(d.category));
 
+
+// add y-axis
+ const axisRight = d3.axisRight(yScale).ticks(5).tickFormat(d => `${d * 100}%`).tickSize(3);
+
+  svg.append('g')
+    .attr('class', 'y-axis')
+    .attr('transform', `translate(${width-20}, 0)`)
+    .call(axisRight) 
+
   // Labels
-  svg.selectAll('text')
+  svg.selectAll('.category-label')
     .data(sortedData, d => d.category)
     .join('text')
+    .attr('class', 'category-label')
     .attr('x', d => xScale(d.category) + xScale.bandwidth() / 2)
     .attr('y', rectHeight + marginTop)
     .attr('text-anchor', 'middle')
@@ -99,8 +109,8 @@ function initLegend(data) {
 
   const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
 
-  svg.selectAll('text')
-    .data(props.regionName)
+  svg.selectAll('.chart-title')
+    .data([displayTitle])
     .join(
       enter => enter.append('text')
         .attr('class', 'chart-title')
@@ -116,7 +126,7 @@ function initLegend(data) {
 function updateLegend(data) {
   
   const { colors } = props.layerPaths;
-  const sortedData = processData(data);
+  const sortedData = data;
 
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => d.category))
@@ -125,7 +135,7 @@ function updateLegend(data) {
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
-    .range([0, rectHeight]);
+    .range([rectHeight, 0]);
 
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
@@ -135,31 +145,31 @@ function updateLegend(data) {
     .data(sortedData, d => d.category)
     .join(
       enter => enter.append('rect')
-        .attr('y', d => rectHeight - yScale(d.value))
-        .attr('width', 0)
-        .attr('height', d => yScale(d.value))
+        .attr('x', d => xScale(d.category))
+        .attr('y', d => yScale(d.value))
+        .attr('width', xScale.bandwidth())
+        .attr('height', 0)
         .style('fill', d => colorScale(d.category))
         .call(enter => 
             enter.transition()
             .duration(750)
-            .attr('height', d => yScale(d.value))),
-      (update) => update.transition()
+            .attr('y', d => yScale(d.value))
+            .attr('height', d => rectHeight - yScale(d.value))
+        ),
+      update => update.transition()
         .duration(750)
-        .style('fill', d => colorScale(d.category))
-        .attrTween('height', function(d, i) {
-                const previousHeight = d3.select(this).attr('height') || 0; 
-                const interpolator = d3.interpolate(previousHeight, yScale(d.value));
-                return t => interpolator(t);
-            }),
-        exit => exit
-            .call(exit => exit.transition()
-            .duration(750)
-            .attr('height', 0) 
-            .remove())
+        .attr('y', d => yScale(d.value)) // Adjust position
+        .attr('height', d => rectHeight - yScale(d.value)) // Adjust height
+        .style('fill', d => colorScale(d.category)),
+      exit => exit.transition()
+        .duration(750)
+        .attr('y', rectHeight) // Collapse downwards
+        .attr('height', rectHeight - 0) // Shrink height
+        .remove()
     );
 
 
-  svg.selectAll('text')
+  svg.selectAll('.category-label')
     .data(sortedData)
     .transition()
     .duration(750)
@@ -169,9 +179,15 @@ function updateLegend(data) {
   const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
 
   svg.selectAll('text.chart-title')
-    .data(props.regionName)
+    .data([displayTitle])
     .join(
       enter => enter.append('text')
+        .attr('class', 'chart-title')
+        .attr('x', 10)
+        .attr('y', 30)
+        .attr('fill', 'black')
+        .attr('font-size', '2.25rem')
+        .attr('font-weight', 'bold')
         .text(displayTitle),
       update => update.transition().duration(750).text(displayTitle)
     );
@@ -192,6 +208,7 @@ function processData(data) {
 }
 
 </script>
+
 <style scoped>
 
 .legend-svg {
