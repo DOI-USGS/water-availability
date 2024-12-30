@@ -71,7 +71,6 @@ function initLegend(data) {
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => d.category))
     .range([0, width - 40])
-    .paddingInner(0) 
     .paddingOuter(0)
     .align(0);
 
@@ -90,7 +89,7 @@ function initLegend(data) {
     .style('fill', d => colorScale(d.category));
 
   const axisBottom = d3.axisBottom(xScale)
-   //.tickFormat(d => cleanLabel(d)) 
+   .tickFormat(d => d)
    .tickSize(3)
    .tickPadding(0);
 
@@ -176,7 +175,7 @@ function updateLegend(data) {
       exit => exit.transition()
         .duration(750)
         .attr('y', rectHeight) // Collapse downwards
-        .attr('height', rectHeight - 0) // Shrink height
+        .attr('height', 0) // Shrink height
         .remove()
     );
 
