@@ -227,7 +227,6 @@ onMounted(async () => {
   // sync initial state with toggles
   layers.nitrogen.visible = showNitrogen.value;
   layers.phosphorus.visible = !showNitrogen.value;
-  filterRegionData();
   loadLegendData(); 
 
 
@@ -488,12 +487,12 @@ async function loadLegendData() {
 
   try {
     const rawData = await d3.csv(filePath);
-
-    legendData.value = rawData.map(d => ({
-      category: d.d3_category, 
-      value: +d.d3_percentage,
-    }));
-    filterRegionData
+    legendData.value = rawData
+      .filter(d => d.Region_nam === selectedRegion.value)
+      .map(d => ({
+        category: d.d3_category, 
+        value: +d.d3_percentage,
+      }));
 
   } catch (error) {
     console.error('Error loading legend data:', error);
