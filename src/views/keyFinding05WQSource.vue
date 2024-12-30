@@ -186,7 +186,6 @@ const layers = reactive({
     visible: true,
     path: '05_tn_map.png',
     order: 1,
-    breaks: [0, 10, 40, 85, 160, 290, 520, 1000, 2500, 10000, 100000],
     colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-high)',
     data: 'wq_loads_Reg_tn.csv',
@@ -195,7 +194,6 @@ const layers = reactive({
     visible: false,
     path: '05_tp_map.png',
     order: 2,
-    breaks: [0, 100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000, 1000000],
     colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-mod)',
     data: 'wq_loads_Reg_tp.csv',
@@ -280,7 +278,7 @@ function filterRegionData() {
     .filter(d => d.Region_nam === selectedRegion.value)
     .map(d => ({
       category: d.d3_category, 
-      value: +d.d3_percentage,
+      value: +d.prop_sqkm,
     }));
 }
 
@@ -489,8 +487,8 @@ function updateLabels() {
 // compute legendConfig dynamically based on the toggle
 const legendConfig = computed(() => {
   return showNitrogen.value
-    ? { breaks: layers.nitrogen.breaks, colors: layers.nitrogen.colors }
-    : { breaks: layers.phosphorus.breaks, colors: layers.phosphorus.colors };
+    ? { colors: layers.nitrogen.colors }
+    : { colors: layers.phosphorus.colors };
     
 });
 
