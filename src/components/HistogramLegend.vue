@@ -96,7 +96,17 @@ function initLegend(data) {
    svg.append('g')
     .attr('class', 'x-axis')
     .attr('transform', `translate(0, ${rectHeight})`)
-    .call(axisBottom); 
+    .call(axisBottom)
+    .selectAll('text') // select axis labels
+    .style('text-anchor', 'start') // align to the start (left)
+    .attr('x', 0); 
+
+  svg.selectAll('.x-axis .tick') // select all ticks
+  .attr('transform', function(d) {
+    // manually shift tick positions to the left edge of the bars
+    return `translate(${xScale(d)}, 0)`;
+  });
+
 
 // add y-axis
  const axisRight = d3.axisRight(yScale).ticks(3).tickFormat(d => `${d * 100}%`).tickSize(3);
@@ -105,7 +115,7 @@ function initLegend(data) {
     .attr('class', 'y-axis')
     .attr('transform', `translate(${width-40}, 0)`)
     .call(axisRight) 
-    
+
   const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
 
   svg.selectAll('.chart-title')
@@ -171,14 +181,26 @@ function updateLegend(data) {
   const axisBottom = d3.axisBottom(xScale)
    .tickFormat(d => d)
    .tickSize(3)
-   .tickPadding(0);
+   .tickValues(sortedData.map(d => d.category))
+   .tickPadding(0)
+   .tickSizeOuter(0);
 
    d3.select('.x-axis').remove() // clear before updating
 
    svg.append('g')
     .attr('class', 'x-axis')
     .attr('transform', `translate(0, ${rectHeight})`)
-    .call(axisBottom);
+    .call(axisBottom)
+    .selectAll('text') // select axis labels
+    .style('text-anchor', 'start') // align to the start (left)
+    .attr('x', 0);
+
+  svg.selectAll('.x-axis .tick') // select all ticks
+    .attr('transform', function(d) {
+      // manually shift tick positions to the left edge of the bars
+      return `translate(${xScale(d)}, 0)`;
+    });
+
 
   // update chart title
   const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
