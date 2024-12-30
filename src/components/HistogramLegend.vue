@@ -59,13 +59,10 @@ function setupSVG() {
 
 // Initialize Legend
 function initLegend(data) {
-  console.log('Input Data:', data);
   const { colors } = props.layerPaths;
 
   // Sort data
   const sortedData = processData(data);
-  console.log('Processed Data:', sortedData);
-
 
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
@@ -82,7 +79,7 @@ function initLegend(data) {
 
   // Bars
   svg.selectAll('rect')
-    .data(sortedData)
+    .data(sortedData, d => d.category)
     .join('rect')
     .attr('x', d => xScale(d.category))
     .attr('y', d => rectHeight - yScale(d.value))
@@ -92,13 +89,27 @@ function initLegend(data) {
 
   // Labels
   svg.selectAll('text')
-    .data(sortedData)
+    .data(sortedData, d => d.category)
     .join('text')
     .attr('x', d => xScale(d.category) + xScale.bandwidth() / 2)
     .attr('y', rectHeight + marginTop)
     .attr('text-anchor', 'middle')
     .style('font-size', '12px')
     .text(d => d.category);
+
+  const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
+
+  svg.selectAll('text')
+    .data(props.regionName)
+    .join(
+      enter => enter.append('text')
+        .attr('class', 'chart-title')
+        .attr('x', 10)
+        .attr('y', 30)
+        .attr('color', 'black')
+        .attr('font-size', '2.25rem')
+        .attr('font-weight', 'bold')
+        .text(displayTitle))
 }
 
 // Update Legend
@@ -121,18 +132,49 @@ function updateLegend(data) {
     .range(colors)
 
   svg.selectAll('rect')
-    .data(sortedData)
-    .transition()
-    .duration(500)
-    .attr('y', d => rectHeight - yScale(d.value))
-    .attr('height', d => yScale(d.value))
-    .style('fill', d => colorScale(d.category));
+    .data(sortedData, d => d.category)
+    .join(
+      enter => enter.append('rect')
+        .attr('y', d => rectHeight - yScale(d.value))
+        .attr('width', 0)
+        .attr('height', d => yScale(d.value))
+        .style('fill', d => colorScale(d.category))
+        .call(enter => 
+            enter.transition()
+            .duration(750)
+            .attr('height', d => yScale(d.value))),
+      (update) => update.transition()
+        .duration(750)
+        .style('fill', d => colorScale(d.category))
+        .attrTween('height', function(d, i) {
+                const previousHeight = d3.select(this).attr('height') || 0; 
+                const interpolator = d3.interpolate(previousHeight, yScale(d.value));
+                return t => interpolator(t);
+            }),
+        exit => exit
+            .call(exit => exit.transition()
+            .duration(750)
+            .attr('height', 0) 
+            .remove())
+    );
+
 
   svg.selectAll('text')
     .data(sortedData)
     .transition()
     .duration(750)
     .text(d => d.category);
+
+  // update chart title
+  const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
+
+  svg.selectAll('text.chart-title')
+    .data(props.regionName)
+    .join(
+      enter => enter.append('text')
+        .text(displayTitle),
+      update => update.transition().duration(750).text(displayTitle)
+    );
 }
 
 // Process Data
