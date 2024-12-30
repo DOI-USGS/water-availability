@@ -38,14 +38,14 @@
   // render legend initially and watch for changes
   onMounted(() => {
     setupSVG();
-    updateLegend(props.data);
+    initLegend(props.data);
     });
     
  // Watch for updates in data or region name
 watch(
   () => [props.data, props.regionName],
   ([newData, newRegion]) => {
-    initLegend(newData, newRegion);
+    updateLegend(newData, newRegion);
   },
   { deep: true }
 );
@@ -94,15 +94,10 @@ function initLegend(data) {
    .tickSize(3)
    .tickPadding(0);
 
-   svg.select('.x-axis').remove();
-
    svg.append('g')
     .attr('class', 'x-axis')
     .attr('transform', `translate(0, ${rectHeight})`)
     .call(axisBottom);
-
-// Remove existing y-axis before adding a new one
-svg.select('.y-axis').remove();
 
 // add y-axis
  const axisRight = d3.axisRight(yScale).ticks(3).tickFormat(d => `${d * 100}%`).tickSize(3);
@@ -145,7 +140,7 @@ function updateLegend(data) {
   const sortedData = data;
 
   const xScale = d3.scaleBand()
-    .domain(sortedData.map(d => cleanLabel(d.category)))
+    .domain(sortedData.map(d => d.category))
     .range([0, width - 40])
     .paddingInner(0) 
     .paddingOuter(0);
@@ -162,7 +157,7 @@ function updateLegend(data) {
     .data(sortedData, d => d.category)
     .join(
       enter => enter.append('rect')
-      .attr('x', d => xScale(cleanLabel(d.category)))
+      .attr('x', d => xScale(d.category))
         .attr('y', d => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
