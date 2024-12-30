@@ -70,12 +70,12 @@ function initLegend(data) {
 
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => d.category))
-    .range([0, width - 20])
+    .range([0, width - 40])
     .padding(0.1);
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
-    .range([rectHeight, 0]);
+    .range([rectHeight, 20]);
 
   // Bars
   svg.selectAll('rect')
@@ -89,11 +89,11 @@ function initLegend(data) {
 
 
 // add y-axis
- const axisRight = d3.axisRight(yScale).ticks(5).tickFormat(d => `${d * 100}%`).tickSize(3);
+ const axisRight = d3.axisRight(yScale).ticks(3).tickFormat(d => `${d * 100}%`).tickSize(3);
 
   svg.append('g')
     .attr('class', 'y-axis')
-    .attr('transform', `translate(${width-20}, 0)`)
+    .attr('transform', `translate(${width-40}, 0)`)
     .call(axisRight) 
 
   // Labels
@@ -130,12 +130,12 @@ function updateLegend(data) {
 
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => d.category))
-    .range([0, width - 20])
+    .range([0, width - 40])
     .padding(0.1);
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
-    .range([rectHeight, 0]);
+    .range([rectHeight, 20]);
 
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
