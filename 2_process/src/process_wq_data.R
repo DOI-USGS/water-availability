@@ -65,6 +65,7 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
   
   # categorize load levels
   category_sf <- in_sf |> 
+    sf::st_drop_geometry() |> 
     filter(!is.na(!!load_column)) |> 
     mutate(load_level = cut(!!load_column, 
                             breaks = c(0, breaks, Inf), 
@@ -79,7 +80,6 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
   
   # calculate summaries
   summary_data <- category_sf |> 
-    sf::st_drop_geometry() |> 
     group_by(!!sym(group_col), load_level) |> 
     summarize(category_hucs = length(unique(HUC12)),
               category_sqkm = sum(Area_sqkm, na.rm = TRUE),
@@ -91,7 +91,6 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
                          total_load = 0))
   
   total_summary <- category_sf |> 
-    sf::st_drop_geometry() |> 
     group_by(!!sym(group_col)) |> 
     summarize(total_hucs = length(unique(HUC12)),
               total_sqkm = sum(Area_sqkm, na.rm = TRUE))
@@ -105,14 +104,12 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
   
   # add total row for the United States 
   category_total <- category_sf |>
-    sf::st_drop_geometry() |> 
     summarize(
       !!sym(group_col) := "United States",
       total_hucs = length(unique(HUC12)),
       total_sqkm = sum(Area_sqkm, na.rm = TRUE)) 
   
   us_total <- category_sf |> 
-    sf::st_drop_geometry() |> 
     group_by(load_level) |> 
     summarize(
       !!sym(group_col) := "United States",
