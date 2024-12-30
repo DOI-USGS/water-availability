@@ -54,7 +54,8 @@ watch(
 function setupSVG() {
   svg = d3.select(legendSvg.value)
     .attr('width', width)
-    .attr('height', height);
+    .attr('height', height)
+    .attr('viewBox', `-20 0 ${width+20} ${height}`);
 }
 
 // Initialize Legend
@@ -69,7 +70,7 @@ function initLegend(data) {
     .range(colors)
 
     const xScale = d3.scaleBand()
-    .domain(sortedData.map(d => d.category))
+    .domain(sortedData.map(d => cleanLabel(d.category)))
     .range([0, width - 40])
     .paddingInner(0) 
     .paddingOuter(0);
@@ -80,9 +81,9 @@ function initLegend(data) {
 
   // Bars
   svg.selectAll('rect')
-    .data(sortedData, d => d.category)
+    .data(sortedData, d => cleanLabel(d.category))
     .join('rect')
-    .attr('x', d => xScale(d.category))
+    .attr('x', d => xScale(cleanLabel(d.category)))
     .attr('y', d => yScale(d.value))
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
@@ -91,14 +92,14 @@ function initLegend(data) {
   const axisBottom = d3.axisBottom(xScale)
    .tickFormat(d => d)
    .tickSize(3)
-   .tickPadding(0);
+   .tickPadding(2);
 
    svg.append('g')
     .attr('class', 'x-axis')
     .attr('transform', `translate(0, ${rectHeight})`)
     .call(axisBottom)
     .selectAll('text') // select axis labels
-    .style('text-anchor', 'start') // align to the start (left)
+    .style('text-anchor', 'middle') // align to the start (left)
     .attr('x', 0); 
 
   svg.selectAll('.x-axis .tick') // select all ticks
@@ -138,7 +139,7 @@ function updateLegend(data) {
   const sortedData = data;
 
   const xScale = d3.scaleBand()
-    .domain(sortedData.map(d => d.category))
+    .domain(sortedData.map(d => cleanLabel(d.category)))
     .range([0, width - 40])
     .paddingInner(0) 
     .paddingOuter(0);
@@ -152,10 +153,10 @@ function updateLegend(data) {
     .range(colors)
 
   svg.selectAll('rect')
-    .data(sortedData, d => d.category)
+    .data(sortedData, d => cleanLabel(d.category))
     .join(
       enter => enter.append('rect')
-      .attr('x', d => xScale(d.category))
+      .attr('x', d => xScale(cleanLabel(d.category)))
         .attr('y', d => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
@@ -181,9 +182,9 @@ function updateLegend(data) {
   const axisBottom = d3.axisBottom(xScale)
    .tickFormat(d => d)
    .tickSize(3)
-   .tickValues(sortedData.map(d => d.category))
-   .tickPadding(0)
-   .tickSizeOuter(0);
+   .tickValues(sortedData.map(d => cleanLabel(d.category)))
+   .tickPadding(2)
+   //.tickSizeOuter(0);
 
    d3.select('.x-axis').remove() // clear before updating
 
@@ -192,7 +193,7 @@ function updateLegend(data) {
     .attr('transform', `translate(0, ${rectHeight})`)
     .call(axisBottom)
     .selectAll('text') // select axis labels
-    .style('text-anchor', 'start') // align to the start (left)
+    .style('text-anchor', 'middle') // align to the start (left)
     .attr('x', 0);
 
   svg.selectAll('.x-axis .tick') // select all ticks
