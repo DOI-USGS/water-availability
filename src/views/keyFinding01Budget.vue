@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. For most of the country, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
+                <p>To understand water limitation, it is first important to understand the how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. On an annual average basis, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
         <div class="viz-container">
@@ -38,9 +38,9 @@
               </div>
           </div>
         <div class="text-container">
-          <h2>Water limitation in the U.S.</h2>
+          <h2>Regional patterns of water limitation</h2>
         <p>
-          Water limitation occurs when there is not enough water available to meet human and ecosystem needs. This happens when water use (demand) is near or exceeds supply. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
+          Although there is enough water supply to meet demand overall, many regions face local water limitation, which means there not enough water available locally to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
         </p>
         </div>
         <div class="image-container">
@@ -142,9 +142,17 @@
               </div>
         </div>    
         <div class="text-container">
-          <h2>Local and seasonal effects of water limitation</h2>
-          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
+          <h2>Seasonal patterns of water limitation</h2>
+          <p>Water shortages can happen on for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
         </div>
+        <div class="viz-container">
+          <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >
+        </div>
+        <div class="caption-container">
+              <div class="caption-text-child">
+                <p>Water limitation across the lower 48 by month from January 2010 through January 2020. The bars show the proportion of each water limitation category.</p>
+              </div>
+        </div>  
         <Methods></Methods>
       <References :theseReferences="referenceList"></References>
       </div>

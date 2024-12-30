@@ -21,7 +21,7 @@ plot_deviations <- function(data_in, region, width, height, png_out, color_schem
     scale_color_manual(values = c(color_scheme$ws_demand,
                                   color_scheme$ws_supply)) +
     scale_x_date(breaks = "1 year", date_labels = "%Y") +
-    ggtitle(region) |>
+    ggtitle(region) +
     theme_void(base_size = 11) +
     theme(legend.position = "none",
           panel.grid.major.x = element_line(color = color_scheme$shadow, linewidth = 0.1),
