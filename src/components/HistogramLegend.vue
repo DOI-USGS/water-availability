@@ -68,15 +68,15 @@ function initLegend(data) {
     .domain(sortedData.map(d => d.category))
     .range(colors)
 
-  const xScale = d3.scaleBand()
+    const xScale = d3.scaleBand()
     .domain(sortedData.map(d => d.category))
     .range([0, width - 40])
-    .paddingOuter(0)
-    .align(0);
+    .paddingInner(0) 
+    .paddingOuter(0);
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
-    .range([rectHeight, 20]);
+    .range([rectHeight, 10]);
 
   // Bars
   svg.selectAll('rect')
@@ -96,7 +96,7 @@ function initLegend(data) {
    svg.append('g')
     .attr('class', 'x-axis')
     .attr('transform', `translate(0, ${rectHeight})`)
-    .call(axisBottom);
+    .call(axisBottom); 
 
 // add y-axis
  const axisRight = d3.axisRight(yScale).ticks(3).tickFormat(d => `${d * 100}%`).tickSize(3);
@@ -105,18 +105,7 @@ function initLegend(data) {
     .attr('class', 'y-axis')
     .attr('transform', `translate(${width-40}, 0)`)
     .call(axisRight) 
-
-  // Labels
-/*   svg.selectAll('.category-label')
-    .data(sortedData, d => d.category)
-    .join('text')
-    .attr('class', 'category-label')
-    .attr('x', d => xScale(d.category) + xScale.bandwidth() / 2)
-    .attr('y', rectHeight + marginTop)
-    .attr('text-anchor', 'middle')
-    .style('font-size', '12px')
-    .text(d => d.category); */
-
+    
   const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
 
   svg.selectAll('.chart-title')
@@ -163,28 +152,33 @@ function updateLegend(data) {
         .style('fill', d => colorScale(d.category))
         .call(enter => 
             enter.transition()
-            .duration(750)
+            .duration(550)
             .attr('y', d => yScale(d.value))
             .attr('height', d => rectHeight - yScale(d.value))
         ),
       update => update.transition()
-        .duration(750)
+        .duration(550)
         .attr('y', d => yScale(d.value)) // Adjust position
         .attr('height', d => rectHeight - yScale(d.value)) // Adjust height
         .style('fill', d => colorScale(d.category)),
       exit => exit.transition()
-        .duration(750)
+        .duration(550)
         .attr('y', rectHeight) // Collapse downwards
         .attr('height', 0) // Shrink height
         .remove()
     );
 
+  const axisBottom = d3.axisBottom(xScale)
+   .tickFormat(d => d)
+   .tickSize(3)
+   .tickPadding(0);
 
-  svg.selectAll('.category-label')
-    .data(sortedData)
-    .transition()
-    .duration(750)
-    .text(d => d.category);
+   d3.select('.x-axis').remove() // clear before updating
+
+   svg.append('g')
+    .attr('class', 'x-axis')
+    .attr('transform', `translate(0, ${rectHeight})`)
+    .call(axisBottom);
 
   // update chart title
   const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
