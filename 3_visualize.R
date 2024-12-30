@@ -55,6 +55,16 @@ p3_targets <- list(
                  ws_demand = "#965a5b",
                  ws_supply = "#1687A5"
                ))),
+  tar_target(p3_colors_sui,
+             p3_colors_website |> bind_cols(
+               tibble(
+                 # Water balance (wet/dry) (scico nuuk palette)
+                 sui_severe = "#FEFEB2",
+                 sui_high = "#C3C284",
+                 sui_mod = "#A0A597",
+                 sui_low = "#527685",
+                 sui_none = "#05598C" 
+               ))),
   tar_target(p3_colors_wq,
              p3_colors_website |> bind_cols(
                tibble(
@@ -137,7 +147,7 @@ p3_targets <- list(
   ## National water stress map
   tar_target(p3_map_stress_png,
              map_sui(in_sf = p2_HUC12_join_sui_svi_sf,
-                        color_scheme = p3_colors_balance,
+                        color_scheme = p3_colors_sui,
                         in_regions = p2_Reg_sf,
                         png_out = "src/assets/images/R/01_stress_map.png",
                         width = 8, height = 6)),
@@ -148,7 +158,7 @@ p3_targets <- list(
                map_sui(in_sf = p2_HUC12_join_sui_svi_sf |>
                             dplyr::filter(sui_cat_clean == level),
                           in_regions = p2_Reg_sf,
-                          color_scheme = p3_colors_balance,
+                          color_scheme = p3_colors_sui,
                           png_out = sprintf("src/assets/images/R/01_stress_map_%s.png", level),
                           width = 8, height = 6)),
     names = level
@@ -156,7 +166,7 @@ p3_targets <- list(
   ## National water limitation timeline
   tar_target(p3_sui_monthly_bars,
              plot_monthly_sui(in_df = p2_sui_monthly_CONUS,
-                              color_scheme = p3_colors_balance,
+                              color_scheme = p3_colors_sui,
                               png_out = "src/assets/images/R/01_monthly_sui_bars.png",
                               width = 8, height = 4)),
   

@@ -35,11 +35,11 @@
 
 /* variables for this project */
 :root {
-  --sui-severe: #965a6b;
-  --sui-high: #cfacab;
-  --sui-mod: #edeadf;
-  --sui-low: #80909D;
-  --sui-none: #39424f; 
+  --sui-severe: #FEFEB2;
+  --sui-high: #C3C284;
+  --sui-mod: #A0A597;
+  --sui-low: #527685;
+  --sui-none: #05598C; 
   --ws-supply: #1687A5;
   --ws-demand: #965a5b;
   --wu-gw: #355b65;

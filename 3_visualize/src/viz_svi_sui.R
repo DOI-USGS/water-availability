@@ -47,11 +47,11 @@ map_sui <- function(in_sf,
                        height){
   
   plot_sf <- in_sf |>
-    mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$wet_blue_dark,
-                                 sui_category_5 == "Low" ~ color_scheme$wet_blue_light,
-                                 sui_category_5 == "Moderate" ~ color_scheme$svg_col_default,
-                                 sui_category_5 == "High" ~ color_scheme$dry_red_light,
-                                 sui_category_5 == "Severe" ~ color_scheme$dry_red_dark))
+    mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$sui_none,
+                                 sui_category_5 == "Low" ~ color_scheme$sui_low,
+                                 sui_category_5 == "Moderate" ~ color_scheme$sui_mod,
+                                 sui_category_5 == "High" ~ color_scheme$sui_high,
+                                 sui_category_5 == "Severe" ~ color_scheme$sui_severe))
   
   map <- ggplot(plot_sf) +
     geom_sf(data = in_regions, 
@@ -85,12 +85,12 @@ plot_monthly_sui <- function(in_df,
                            y = n_hucs, 
                            fill = sui_category)) +
            geom_bar(position = "fill",
-                    stat = "identity") +
-    scale_fill_manual(values = c(color_scheme$wet_blue_dark,
-                                 color_scheme$wet_blue_light,
-                                 color_scheme$svg_col_default,
-                                 color_scheme$dry_red_light,
-                                 color_scheme$dry_red_dark)) +
+                    stat = "identity", width = 32) +
+    scale_fill_manual(values = c(color_scheme$sui_none,
+                                 color_scheme$sui_low,
+                                 color_scheme$sui_mod,
+                                 color_scheme$sui_high,
+                                 color_scheme$sui_severe)) +
     scale_x_date(breaks = "1 year", date_labels = "%Y",
                  limits = c(as.Date("2010-01-01"), as.Date("2020-01-01"))) +
     theme_void(base_size = 11) +
