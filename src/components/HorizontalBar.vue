@@ -1,5 +1,5 @@
 <template>
-    <div class="text-container">
+    <div class="chart-container">
     <div ref="barContainer" class="bar-container"></div>
 </div>  
 </template>

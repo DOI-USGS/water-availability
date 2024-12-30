@@ -1,5 +1,5 @@
 <template>
-    <div class="legend-container">
+    <div class="chart-container">
       <svg ref="legendSvg" class="legend-svg"></svg>
     </div>
   </template>
@@ -193,14 +193,10 @@ function processData(data) {
 
 </script>
 <style scoped>
-.legend-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-}
+
 .legend-svg {
   width: 100%;
   height: auto;
+  max-height: 100%;
 }
 </style>
