@@ -458,13 +458,16 @@ p2_targets <- list(
              readr::read_csv(p1_sui_csv,
                              show_col_types = FALSE)),
 
-  # By HUC12 and Year
+  # Average annual water limitation
   tar_target(p2_sui_2020_HUC12,
              mean_sui(data_in = p2_sui_raw,
                       HUC_level = 12,
                       min_year = 2010, 
                       max_year = 2020,
                       by_yearL = FALSE)),
+  # Monthly water limitation, national basis
+  tar_target(p2_sui_monthly_CONUS,
+             monthly_sui(data_in = p2_sui_raw)),
   # water supply and demand for each region from Ted
   tar_target(p2_supply_v_demand_df,
              process_supply_v_demand(data_path = p1_supply_v_demand_csv)),
