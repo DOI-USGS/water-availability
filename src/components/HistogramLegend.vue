@@ -100,13 +100,24 @@ function initLegend(data) {
     .call(axisBottom)
     .selectAll('text') // select axis labels
     .style('text-anchor', 'middle') // align to the start (left)
-    .attr('x', 0); 
+    .attr('x', 0)
+    .style('font-size', '14px'); 
 
   svg.selectAll('.x-axis .tick') // select all ticks
   .attr('transform', function(d) {
     // manually shift tick positions to the left edge of the bars
     return `translate(${xScale(d)}, 0)`;
   });
+
+  // add x-axis title below chart title
+  svg.append('text')
+    .attr('class', 'x-axis-label')
+    .attr('x', 10) 
+    .attr('y', 50) 
+    .attr('text-anchor', 'start') 
+    .style('font-size', '14px') 
+    .style('fill', 'black') 
+    .text(`Total ${props.layerPaths.name} load (kg/yr)`); 
 
 
 // add y-axis
@@ -219,6 +230,16 @@ function updateLegend(data) {
         .text(displayTitle),
       update => update.transition().duration(750).text(displayTitle)
     );
+    d3.select('.x-axis-label').remove()
+  // add x-axis title below chart title
+  svg.append('text')
+    .attr('class', 'x-axis-label')
+    .attr('x', 10) 
+    .attr('y', 50) 
+    .attr('text-anchor', 'start') 
+    .style('font-size', '14px') 
+    .style('fill', 'black') 
+    .text(`Total ${props.layerPaths.name} load (kg/yr)`); 
 }
 
 // Process Data

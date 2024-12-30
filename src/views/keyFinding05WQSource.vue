@@ -108,7 +108,7 @@
           </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>Maps of total Nitrogran and Phosphorus load in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the United States, or a region when selected.</p>
+                <p>Maps of total Nitrogen and Phosphorus load in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the United States, or a region when selected.</p>
               </div>
               </div>
             <div class="text-container">
@@ -487,8 +487,8 @@ function updateLabels() {
 // compute legendConfig dynamically based on the toggle
 const legendConfig = computed(() => {
   return showNitrogen.value
-    ? { colors: layers.nitrogen.colors }
-    : { colors: layers.phosphorus.colors };
+    ? { colors: layers.nitrogen.colors, name: 'Nitrogen' }
+    : { colors: layers.phosphorus.colors, name: 'Phosphorus' };
     
 });
 
