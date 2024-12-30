@@ -243,13 +243,17 @@ p2_targets <- list(
   tarchetypes::tar_map(
     values = tibble::tibble(nutrient = c("tn", "tp")),
     tar_target(p2_states_wq_csv,
-               summary_wq_by_state(in_sf = p2_HUC12_join_wq_sf,
+               summary_wq_by_area(in_sf = p2_HUC12_join_wq_sf,
                                    nutrient = nutrient,
-                                   out_csv = sprintf("public/wq_loads_state_%s.csv", nutrient))),
+                                   out_csv = sprintf("public/wq_loads_state_%s.csv", nutrient),
+                                   by = "state"),
+               format = 'file'),
     tar_target(p2_Reg_wq_csv,
-               summary_wq_by_region(in_sf = p2_HUC12_join_wq_sf,
+               summary_wq_by_area(in_sf = p2_HUC12_join_wq_sf,
                                    nutrient = nutrient,
-                                   out_csv = sprintf("public/wq_loads_Reg_%s.csv", nutrient))),
+                                   out_csv = sprintf("public/wq_loads_Reg_%s.csv", nutrient),
+                                   by = "region"),
+               format = 'file'),
     names = nutrient
   ),
 

@@ -89,7 +89,7 @@ import { isMobile } from 'mobile-device-detect';
 const featureToggles = inject('featureToggles');
 
 const route = useRoute();
-const path = computed(() => route.path)
+
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 
@@ -347,7 +347,7 @@ function transitionToFaceted() {
       .selectAll('.tick line').remove();
       
     // move group to its own facet
-    const groupSelection = d3.select(`g #${sanitizeSelector(group)}`)
+    d3.select(`g #${sanitizeSelector(group)}`)
       .transition(t)
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`);
 

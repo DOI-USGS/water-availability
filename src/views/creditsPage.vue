@@ -126,8 +126,6 @@ const authorsVizlab = authorsVizlabUnsort.sort((a, b) => a.fullOrder - b.fullOrd
 
 const authorSMEs = authorList.scientists;
 
-let container = ref();
-let data = ref();
 let menuOpen = ref(false);
 
 //const props = {

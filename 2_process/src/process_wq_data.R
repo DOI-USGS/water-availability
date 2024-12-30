@@ -46,93 +46,86 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
     arrange(-riverMiles)
 }
 
-
-summary_wq_by_state <- function(in_sf, nutrient, out_csv){
+summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state")){
+  by <- match.arg(by)
   
   load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
   
+  # set load level breaks
+  if(nutrient == "tn") {
+    breaks <- c(100, 500, 1000, 2000, 3000, 6000, 12000, 30000, 120000)
+  } else {
+    breaks <- c(10, 40, 85, 160, 290, 520, 1000, 2500, 10000)
+  }
+  
+  # calculate lower bounds based on breaks
+  lower_breaks <- c(0, head(breaks, -1))
+  upper_breaks <- breaks
+  labels <- paste0(lower_breaks, " - ", upper_breaks)
+  
+  # categorize load levels
   category_sf <- in_sf |> 
+    sf::st_drop_geometry() |> 
     filter(!is.na(!!load_column)) |> 
-    mutate(load_level = case_when(
-      !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
-      !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
-      !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
-      !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
-      !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
-    ))
+    mutate(load_level = cut(!!load_column, 
+                            breaks = c(0, breaks, Inf), 
+                            labels = c(labels, paste0(">", max(breaks))), right = FALSE))
   
-  # Expand each HUC to its state (some hucs overlap states)
-  expand_states <- category_sf |>
-    select(STATES, HUC12, Region_nam, AggReg_nam, !!load_column, load_level) |>
-    separate_rows(STATES, sep = ",")
+  # determine grouping column
+  group_col <- if (by == "state") "STATES" else "Region_nam"
   
-  # Calculate total number of HUCS per state
-  HUC_per_state <- expand_states |> 
-    sf::st_drop_geometry() |>
-    group_by(STATES) |>
-    mutate(total_hucs = n()) |>
-    ungroup()
+  if(by == "state") {
+    category_sf <- category_sf |> separate_rows(STATES, sep = ",")
+  }
   
-  # Calculate total hucs in each sui category by state and proportion
-  summary_out <- HUC_per_state |>
-    group_by(load_level, STATES, total_hucs) |>
-    summarize(n_cat = n()) |>
-    mutate(prop_cat = n_cat / total_hucs) |>
-    rename(d3_percentage = prop_cat,
-           d3_category = load_level) |>
-    ungroup() |>
-    complete(STATES, d3_category)
-  
-  
-  # save to csv
-  readr::write_csv(summary_out, file = out_csv)
-  
-}
-
-summary_wq_by_region <- function(in_sf, nutrient, out_csv){
-  
-  load_column <- sym(ifelse(nutrient == "tn", "tn_load", "tp_load"))
-  
-  category_sf <- in_sf |> 
-    filter(!is.na(!!load_column)) |> 
-    mutate(load_level = case_when(
-      !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
-      !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
-      !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
-      !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
-      !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
-    ))
-  
-  # summarize by region and category
-  region_summary <- category_sf |>
-    sf::st_drop_geometry() |>
-    rename(load = !!load_column) |>
-    select(HUC12, Region_nam, AggReg_nam, load, load_level) |>
-    group_by(Region_nam, AggReg_nam, load_level) |>
-    summarize(category_hucs = n(),
-              total_load = round(sum(load, na.rm = TRUE), 4))
-  
-  # Calculate total number of HUCS per state
-  HUC_per_region <- category_sf |> 
-    sf::st_drop_geometry() |>
-    group_by(Region_nam) |>
-    summarize(total_hucs = n()) 
-  
-  # Calculate total hucs in each sui category by state and proportion
-  summary_out <- region_summary |>
-    left_join(HUC_per_region, by = "Region_nam") |>
-    mutate(prop_cat = round((category_hucs / total_hucs), 4)) |>
-    rename(d3_percentage = prop_cat,
-           d3_category = load_level) |>
-    ungroup() |>
-    complete(d3_category, Region_nam,
-             fill = list(d3_percentage = 0,
-                         category_hucs = 0,
+  # calculate summaries
+  summary_data <- category_sf |> 
+    group_by(!!sym(group_col), load_level) |> 
+    summarize(category_hucs = length(unique(HUC12)),
+              category_sqkm = sum(Area_sqkm, na.rm = TRUE),
+              total_load = round(sum(!!load_column, na.rm = TRUE), 4)) |> 
+    ungroup() |> 
+    complete(!!sym(group_col), load_level, 
+             fill = list(category_hucs = 0, 
+                         category_sqkm = 0, 
                          total_load = 0))
   
+  total_summary <- category_sf |> 
+    group_by(!!sym(group_col)) |> 
+    summarize(total_hucs = length(unique(HUC12)),
+              total_sqkm = sum(Area_sqkm, na.rm = TRUE))
   
+  # merge summaries and calculate proportions for areas
+  summary_out <- summary_data |> 
+    left_join(total_summary, by = group_col) |> 
+    mutate(prop_sqkm = round((category_sqkm / total_sqkm), 4),
+           d3_percentage = round((category_hucs / total_hucs), 4)) |> 
+    ungroup() 
+  
+  # add total row for the United States 
+  category_total <- category_sf |>
+    summarize(
+      !!sym(group_col) := "United States",
+      total_hucs = length(unique(HUC12)),
+      total_sqkm = sum(Area_sqkm, na.rm = TRUE)) 
+  
+  us_total <- category_sf |> 
+    group_by(load_level) |> 
+    summarize(
+      !!sym(group_col) := "United States",
+      category_hucs = length(unique(HUC12)),
+      category_sqkm = sum(Area_sqkm, na.rm = TRUE)) |>
+    left_join(category_total) |>
+    mutate(
+      prop_sqkm = round(category_sqkm / total_sqkm, 4),
+      d3_percentage = round(category_hucs / total_hucs, 4)
+    )
+  
+  summary_out <- bind_rows(summary_out, us_total) |>
+    rename(d3_category = load_level)
   
   # save to csv
   readr::write_csv(summary_out, file = out_csv)
   
+  return(out_csv)
 }
