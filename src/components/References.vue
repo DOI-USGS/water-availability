@@ -52,7 +52,8 @@ onMounted(() => {
   const acc = document.getElementsByClassName("references-accordion");
   for (let i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function () {
-      this.classList.toggle("references-active");
+      // toggle class
+      this.classList.toggle("active");
       const referencesPanel = this.nextElementSibling;
       const symbol = this.querySelector('.symbol');
       if (referencesPanel.style.display === "block") {
