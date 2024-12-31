@@ -179,35 +179,25 @@ import Methods from '../components/Methods.vue';
 import { isMobile } from 'mobile-device-detect';
 import { useRoute } from 'vue-router';
 
-
+// dependency injections
 const featureToggles = inject('featureToggles');
+const animateTime = inject('animateTime')
 
 //////// references array //
 const route = useRoute();
-
-// filter to this page's key message
-const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
+const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);// filter to this page's key message
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));// Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))// extract references that match the refID from global list
 // add numbers
 theseReferences.forEach((item, index) => {
   item.referenceNumber = `${index + 1}`;
 });
-
 const referenceList = ref(theseReferences);
-
 /////////
 
+// global variables
 const mobileView = isMobile;
-
 const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
@@ -221,6 +211,7 @@ const containerHeight = Math.min(
   maxHeight
 );
 
+// chart dimensions for supply vs demand chart
 let margin = { top: 50, right: 50, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
@@ -228,6 +219,7 @@ let chartBounds, dotGroup;
 let xScale;
 let originalXScaleDomain;
 
+// reactive variables
 let showSupply = ref(true);
 let showDemand = ref(true);
 
@@ -264,8 +256,6 @@ const layers = reactive({
   }
 });
 
-	
- 
 // regional selection data
 const csvWA = "wa_stress_stats.csv"
 function updateSelectedRegion(regionName) {
@@ -278,7 +268,7 @@ const toggleLayer = (layerId) => {
   layers[layerId].visible = !layers[layerId].visible;
 }
 
-
+// run of show
 onMounted(async () => {
     try {
         await loadDatasets();
@@ -346,31 +336,31 @@ function togglePoints(type) {
     // Transition the x-axis
     d3.selectAll(".x-axis-bottom")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .call(d3.axisBottom(xScale).ticks(5));
 
     d3.selectAll(".x-axis-top")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .call(d3.axisTop(xScale).ticks(5));
 
     // Update the position of the circles and hide/show based on the toggles
     d3.selectAll(".circle-supply")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .attr('cx', d => xScale(d.supply_mean))
         .style("opacity", showSupply.value ? 1 : 0); // toggle opacity based on showSupply
 
     d3.selectAll(".circle-demand")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .attr('cx', d => xScale(d.demand_mean))
         .style("opacity", showDemand.value ? 1 : 0); // toggle opacity based on showDemand
 
     // Transition the lines connecting supply and demand
     d3.selectAll(".line")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .attr('x1', d => xScale(d.supply_mean))
         .attr('x2', d => xScale(d.demand_mean))
         .style("opacity", showSupply.value && showDemand.value ? 0.4 : 0); // only show if both supply and demand are visible

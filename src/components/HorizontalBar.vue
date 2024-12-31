@@ -5,9 +5,11 @@
 </template>
   
   <script setup>
-  import { onMounted, ref, watch, defineProps } from 'vue';
+  import { onMounted, ref, watch, defineProps, inject } from 'vue';
   import * as d3 from 'd3';
-  
+
+  const animateTime = inject('animateTime')
+
   // props to configure the bar chart
   const props = defineProps({
     categoricalVariable: { type: String, required: true },
@@ -26,11 +28,17 @@ onMounted(() => {
   if (!svgBar) {
     svgBar = d3.select(barContainer.value)
       .append('svg')
-      .attr('viewBox', `0 -30 700 150`)
+      .attr('viewBox', `0 0 700 150`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .classed('bar-chart-svg', true);
 
     svgBar.append('g'); // add a <g> container
+
+    svgBar.select('g').append('text')
+      .attr('class', 'chart-text')
+      .attr('x', 0)
+      .attr('y', 45)
+      .text(`Total water use for the top four water use categories in the U.S. in ??million gallons per year??`)
   }
 
   const aggregatedData = aggregateData(props.data);
@@ -44,8 +52,6 @@ const aggregateData = (data) => {
     (v) => d3.sum(v, (d) => +d[props.continuousRaw]),
     (d) => d[props.categoricalVariable]
   );
-
-  const totalValue = d3.sum(totalByCategory, (d) => d[1]);
 
   return totalByCategory.map(([category, value]) => ({
     [props.categoricalVariable]: category,
@@ -71,21 +77,17 @@ const updateBarChart = (data, regionName) => {
   });
 
   /// Define dimensions and scales
-  const chartHeight = 100; 
-  const barHeight = 14;
-  const spacing = 10; // spacing between bars
+  const chartHeight = 140; 
 
-  // Get the values for the horizontal scale
-  const values = data.map(d => +d[props.continuousRaw]);
-
-  const yScale = d3.scaleBand()
+   const yScale = d3.scaleBand()
     .domain(data.map(d => d[props.categoricalVariable]))
-    .range([0, chartHeight])
+    .range([45, chartHeight])
     .padding(0.6); // between bars
 
+  // Currently using a static max for x-axis
   const xScale = d3.scaleLinear()
     .domain([0, 125000])
-    .range([0, 700]);
+    .range([0, 700-160]);
 
   const getColor = (category) => {
     const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
@@ -104,10 +106,10 @@ const updateBarChart = (data, regionName) => {
         .attr('height', yScale.bandwidth())
         .attr('width', 0) 
         .attr('fill', d => getColor(d[props.categoricalVariable]))
-        .call(enter => enter.transition().duration(750)
+        .call(enter => enter.transition().duration(animateTime)
           .attr('width', d => xScale(d[props.continuousRaw]))
         ),
-      update => update.transition().duration(750)
+      update => update.transition().duration(animateTime)
         .attr('y', d => yScale(d[props.categoricalVariable]))
         .attr('x', 160)
         .attr('width', d => xScale(d[props.continuousRaw]))
@@ -126,9 +128,12 @@ const updateBarChart = (data, regionName) => {
       enter => enter.append('text')
         .attr('class', 'chart-title')
         .attr('x', 0)
-        .attr('y', -10)
-        .text(displayTitle),
-      update => update.transition().duration(750).text(displayTitle)
+        .attr('y', 25)
+        .text(`Water use in the ${displayTitle}`),
+      update => update
+        .transition()
+        .duration(animateTime)
+        .text(`Water use in the ${displayTitle}`)
     );
 
     g.selectAll('.category-label')
@@ -145,13 +150,13 @@ const updateBarChart = (data, regionName) => {
                 const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
                 return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
             }),
-        update => update.transition().duration(750)
+        update => update.transition().duration(animateTime)
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .text(d => {
                 const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
                 return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
             }),
-        exit => exit.transition().duration(750) 
+        exit => exit.transition().duration(animateTime) 
             .style('opacity', 0)
             .remove()
         );
@@ -168,11 +173,11 @@ const updateBarChart = (data, regionName) => {
             .attr('font-size', '1.5rem')
             .attr('fill', 'black')
             .text(d => formatValue(d[props.continuousRaw])), 
-            update => update.transition().duration(750)
+            update => update.transition().duration(animateTime)
             .attr('x', d => xScale(d[props.continuousRaw]) + 165) 
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .text(d => formatValue(d[props.continuousRaw])), 
-            exit => exit.transition().duration(750) 
+            exit => exit.transition().duration(animateTime) 
             .style('opacity', 0)
             .remove()
         );

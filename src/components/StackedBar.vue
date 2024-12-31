@@ -135,16 +135,15 @@ const updateBarChart = (data, regionName) => {
     const formatPercentage = d3.format('.0f');
   
       // percent labels on bar chart 
-      g.selectAll('.chart-labels')
+      g.selectAll('.chart-text .percent-label')
         .data(sortedData, d => d[props.categoricalVariable]) // unique key
         .join(
             enter => {
             const enteringText = enter.append('text')
-                .attr('class', 'chart-labels')
-                .attr('font-size', '1.5rem')
+                .attr('id', 'percent-label')
+                .attr('class', 'chart-text')
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 65)
-                .attr('fill', 'black')
                 .attr('text-anchor', 'middle')
                 .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
                 .style('opacity', 0); // start invisible

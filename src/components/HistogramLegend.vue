@@ -111,11 +111,11 @@ function initLegend(data) {
 
   // add x-axis title below chart title
   svg.append('text')
-    .attr('class', 'chart-subtitle')
+    .attr('class', 'chart-text')
     .attr('x', -5) 
     .attr('y', 40) 
     .attr('text-anchor', 'start') 
-    .text(`Total load (kg/yr) by area shown on map`); 
+    .text(`Total nutrient load (kg/yr) by area`); 
 
 
 // add y-axis
@@ -221,14 +221,14 @@ function updateLegend(data) {
         .text(`${props.layerPaths.name} concentrations in the ${displayTitle}`),
       update => update.transition().duration(750).text(`${props.layerPaths.name} concentrations in the ${displayTitle}`)
     );
-    d3.select('.chart-subtitle').remove()
+    d3.select('.chart-text').remove()
   // add x-axis title below chart title
   svg.append('text')
-    .attr('class', 'chart-subtitle')
+    .attr('class', 'chart-text')
     .attr('x', -5) 
     .attr('y', 40) 
     .attr('text-anchor', 'start') 
-    .text(`Total load (kg/yr)`); 
+    .text(`Total nutrient load (kg/yr) by area`); 
 }
 
 // Process Data
