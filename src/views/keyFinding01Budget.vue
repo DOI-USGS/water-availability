@@ -11,28 +11,16 @@
         </div>   
         </div>
         <div class="caption-container">
-              <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-demand" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="togglePoints('demand')">
-                  <span class="checkbox_mark"></span>
-                  Water demand
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-supply" >
-                  <label class="checkbox_wrap">
-                    <input type="checkbox" 
-                    name="checkbox" 
-                    class="checkbox_inp" 
-                    @click="togglePoints('supply')">
-                    <span class="checkbox_mark"></span>
-                    Water supply
-                  </label>
-                </div>
-              </div>
+          <ToggleSwitch 
+            v-model="demandEnabled" 
+            label="Water demand" 
+            @update:modelValue="togglePoints('demand')" 
+          />
+          <ToggleSwitch 
+            v-model="supplyEnabled" 
+            label="Water supply" 
+            @update:modelValue="togglePoints('supply')" 
+          />
               <div class="caption-text-child">
                 <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
               </div>
@@ -83,59 +71,42 @@
 
         />
         </div>
-        <div class="caption-container"><b>Water limitation:</b> 
-              <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-sui-none" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('very_low_none')">
-                  <span class="checkbox_mark"></span>
-                    Very low
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-low" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('low')">
-                  <span class="checkbox_mark"></span>
-                    Low
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-mod" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('moderate')">
-                  <span class="checkbox_mark"></span>
-                    Moderate
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-high" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('high')">
-                  <span class="checkbox_mark"></span>
-                    High
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-severe" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('severe')">
-                  <span class="checkbox_mark"></span>
-                    Severe
-                  </label>
-                </div>
-              </div>
+        <div class="caption-container">
+          <b>Water limitation:</b> 
+              <!-- Very Low -->
+              <ToggleSwitch 
+                v-model="veryLowEnabled" 
+                label="Very low" 
+                @update:modelValue="toggleLayer('very_low_none')" 
+              />
+
+              <!-- Low -->
+              <ToggleSwitch 
+                v-model="lowEnabled" 
+                label="Low" 
+                @update:modelValue="toggleLayer('low')" 
+              />
+
+              <!-- Moderate -->
+              <ToggleSwitch 
+                v-model="moderateEnabled" 
+                label="Moderate" 
+                @update:modelValue="toggleLayer('moderate')" 
+              />
+
+              <!-- High -->
+              <ToggleSwitch 
+                v-model="highEnabled" 
+                label="High" 
+                @update:modelValue="toggleLayer('high')" 
+              />
+
+              <!-- Severe -->
+              <ToggleSwitch 
+                v-model="severeEnabled" 
+                label="Severe" 
+                @update:modelValue="toggleLayer('severe')" 
+              />
               <br/>
               <div class="caption-text-child">
                 <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
@@ -174,6 +145,7 @@ import References from '../components/References.vue';
 import Methods from '../components/Methods.vue';
 import { isMobile } from 'mobile-device-detect';
 import { useRoute } from 'vue-router';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
