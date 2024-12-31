@@ -63,8 +63,9 @@
   --wq-organics: var(--wu-ps);
   --wu-te-fresh: #3E4C5B;
   --wu-te-saline: #09a7c3;
-  --inactive-grey: lightgrey;
+  --inactive-grey: #ACB6BE;
   --default-fill: #d1cdc0;
+  --focal-fill: #5E686D;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -595,6 +596,8 @@ input[type=radio]:disabled  {
   background-color: var(--blue-dark);
   color: var(--white-soft);
 } */
+
+
 
 .report-link-container {
   padding: 40px 20px;
