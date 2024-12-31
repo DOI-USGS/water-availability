@@ -6,24 +6,20 @@
                 <p>To understand water limitation, it is first important to understand the how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. On an annual average basis, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
-        <div class="viz-container">
-          <div id="dotplot-container">             
-        </div>   
-        </div>
-        <div class="caption-container">
-              <div class="caption-legend-child">
+            <div class="text-container">
+            <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-demand" >
-                  <label class="checkbox_wrap">
+                  <label class="checkbox_wrap chart-title">
                   <input type="checkbox" 
                   name="checkbox" 
                   class="checkbox_inp" 
                   @click="togglePoints('demand')">
                   <span class="checkbox_mark"></span>
-                  Water demand
+                  Water demand vs.
                   </label>
                 </div>
                 <div class="checkbox_item" id="checkbox-supply" >
-                  <label class="checkbox_wrap">
+                  <label class="checkbox_wrap chart-title">
                     <input type="checkbox" 
                     name="checkbox" 
                     class="checkbox_inp" 
@@ -33,6 +29,14 @@
                   </label>
                 </div>
               </div>
+            </div>
+        <div class="viz-container">
+          
+          <div id="dotplot-container">             
+        </div>   
+        </div>
+        <div class="caption-container">
+              
               <div class="caption-text-child">
                 <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
               </div>
