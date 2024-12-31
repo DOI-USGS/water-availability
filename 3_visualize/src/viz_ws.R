@@ -8,11 +8,11 @@ plot_deviations <- function(data_in, region, width, height, png_out, color_schem
                                     "Evapotranspiration", 
                                     "Soil moisture",
                                     "Streamflow"))) |>
-    mutate(date = as_date(paste(water_year, month, '01', sep = '-'))) |>
+    mutate(date = as_date(paste(year, month, '01', sep = '-'))) |>
     # filter to Northern High Plains
     filter(Region_nam == region) |>
     # fewer years in view
-    filter(water_year >= 2010, water_year <= 2015)
+    filter(year >= 2010, year <= 2015)
   
   main_plot <- ggplot(data = plot_df,
                       aes(x = date, y = norm_val, color = hi_lo)) +
