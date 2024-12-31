@@ -137,9 +137,6 @@ function initLegend(data) {
         .attr('class', 'chart-title')
         .attr('x', 10)
         .attr('y', 30)
-        .attr('color', 'black')
-        .attr('font-size', '2.25rem')
-        .attr('font-weight', 'bold')
         .text(displayTitle))
 }
 
@@ -224,9 +221,6 @@ function updateLegend(data) {
         .attr('class', 'chart-title')
         .attr('x', 10)
         .attr('y', 30)
-        .attr('fill', 'black')
-        .attr('font-size', '2.25rem')
-        .attr('font-weight', 'bold')
         .text(displayTitle),
       update => update.transition().duration(750).text(displayTitle)
     );
