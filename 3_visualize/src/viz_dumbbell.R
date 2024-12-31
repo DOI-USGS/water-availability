@@ -59,11 +59,11 @@ dumbbell_gw_v_sw <- function(in_sf,
     geom_linerange(aes(x = x_long,
                        ymax = sw_total_wu,
                        ymin = 0),
-                   color = "#999999", alpha = 0.2) +
+                   color = color_scheme$svg_fill_default, alpha = 0.2) +
     geom_linerange(aes(x = x_long,
                        ymin = gw_total_wu*-1,
                        ymax = 0),
-                   color = "#999999", alpha = 0.2) +
+                   color = color_scheme$svg_fill_default, alpha = 0.2) +
     annotate("text", x = max_sw$x_long,
              y = max_sw$sw_total_wu, 
              label = sprintf("%s mgd", round(max_sw$sw_total_wu)),

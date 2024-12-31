@@ -76,8 +76,8 @@ const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-ava
 const defaultRegionID = "Northern_High_Plains";
 const imgSrc = ref(getImgURL(defaultRegionID)); 
 const featureToggles = inject('featureToggles');
-const focalFill = "var(--teal-dark)";
-const defaultFill = "var(--default-fill)";
+const focalFill = "var(--focal-fill)";
+const defaultFill = "var(--inactive-grey)";
 
 
 const route = useRoute();

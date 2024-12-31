@@ -16,9 +16,9 @@ p3_targets <- list(
   tar_target(p3_colors_website,
              tibble(
                # elements for website components, not category specific
-               svg_fill_default = "#d1cdc0",
-               svg_col_default = "#edeadf", # background color of page
-               shadow = "#926c68"
+               svg_fill_default = "#ACB6BE",
+               svg_col_default = "#ffffff", # background color of page
+               shadow = "#5E686D"
              )),
   tar_target(p3_colors_wu,
              p3_colors_website |> bind_cols(
@@ -103,14 +103,14 @@ p3_targets <- list(
              create_svg_for_web(in_sf = p2_AggReg_sf,
                                 identifier = "AggReg_nam_nospace",
                                 width = 6, height = 9,
-                                file_out = "src/assets/svgs/AggReg.svg",
+                                file_out = "public/assets/AggReg.svg",
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_svg,
              create_svg_for_web(in_sf = p2_Reg_sf,
                                 identifier = "Region_nam_nospace",
                                 width = 6, height = 9,
-                                file_out = "src/assets/svgs/Regions.svg",
+                                file_out = "public/assets/Regions.svg",
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_json,

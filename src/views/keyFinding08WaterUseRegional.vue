@@ -116,7 +116,7 @@
               </div>
           </div> 
           <div class="viz-container">
-            <dumbellReg class="dumbbell-reg-svg"></dumbellReg>
+            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
             <img
                 class="viz-half"
                 id="dumbbells"
@@ -137,7 +137,6 @@ import { ref, onMounted, inject, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import Reg from "../../public/assets/Regions.svg";
-import dumbellReg from "../../public/assets/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -153,8 +152,8 @@ const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-ava
 const defaultRegionID = "California-Nevada";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
-const focalFill = "var(--teal-dark)";
-const defaultFill = "var(--default-fill)";
+const focalFill = "var(--focal-fill)";
+const defaultFill = "var(--inactive-grey)";
 const csvData = ref([]);
 const selectedRegion = ref('United States'); // default region
 
