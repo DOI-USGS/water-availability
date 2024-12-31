@@ -216,7 +216,16 @@ const layers = reactive({
   }
 });
 
-	
+// initialize toggle states based on layer visibility
+const veryLowEnabled = ref(layers.very_low_none.visible);
+const lowEnabled = ref(layers.low.visible);  
+const moderateEnabled = ref(layers.moderate.visible);    
+const highEnabled = ref(layers.high.visible);  
+const severeEnabled = ref(layers.severe.visible);    
+
+// toggles for water supply and demand
+const demandEnabled = ref(true);
+const supplyEnabled = ref(true);
  
 // regional selection data
 const csvWA = "wa_stress_stats.csv"
@@ -228,7 +237,7 @@ function updateSelectedRegion(regionName) {
 // function to toggle layer visibility
 const toggleLayer = (layerId) => {
   layers[layerId].visible = !layers[layerId].visible;
-}
+};
 
 
 onMounted(async () => {
@@ -278,12 +287,12 @@ function initDotChart() {
 }
 
 
-function togglePoints(type) {
-    if (type === "supply") {
-        showSupply.value = !showSupply.value;
-    } else if (type === "demand") {
-        showDemand.value = !showDemand.value;
-    }
+const togglePoints = (type) => {
+  if (type === "supply") {
+    supplyEnabled.value = !supplyEnabled.value;
+  } else if (type === "demand") {
+    demandEnabled.value = !demandEnabled.value;
+  }
 
     // Get the visible supply and demand points based on the toggles
     const visibleSupply = showSupply.value ? data.value.map(d => +d.supply_mean) : [];
