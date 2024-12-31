@@ -7,29 +7,29 @@ water_avail_map <- function(in_df, wa_type, color_scheme, png_out, width, height
     sf::st_as_sf()
   
   if(wa_type == "wa_sw_wq") {
-    col_pal <- c("very low" = "#F0EAF9",
-                 "low" = "#E8CAE1",
-                 "moderate" = "#DCA1C2",
-                 "high" = "#AB5F90",
-                 "severe" = "#6B3858")
+    col_pal <- c("very low" = "#E8E8E9",
+                 "low" = "#ADB3BD",
+                 "moderate" = "#8B91A2",
+                 "high" = "#61677A",
+                 "severe" = "#323234")
   } else if(wa_type == "wa_sui") {
-    col_pal <- c("very low" = "#E6C398",
-                 "low" = "#E5AA7F",
-                 "moderate" = "#EA906D",
-                 "high" = "#E07560",
-                 "severe" = "#733303")
+    col_pal <- c("very low" = "#E9E0C0",
+                 "low" = "#DACC96",
+                 "moderate" = "#BF8B67",
+                 "high" = "#9D5353",
+                 "severe" = "#632626")
   } else if(wa_type == "wa_gw_wq") {
-    col_pal <- c("very low" = "#AB99B8",
-                 "low" = "#7D628E",
-                 "moderate" = "#585380",
-                 "high" = "#403261",
-                 "severe" = "#260C3F")
+    col_pal <- c("very low" = "#CEC5C5",
+                 "low" = "#B2A4A4",
+                 "moderate" = "#8A7575",
+                 "high" = "#5E5050",
+                 "severe" = "#3E3232")
   } else if(wa_type == "wa_ecoflow") {
-    col_pal <- c("very low" = "#C6EFB1",
-                 "low" = "#94CB78",
-                 "moderate" = "#7FA35C",
-                 "high" = "#788554",
-                 "severe" = "#545E3B")
+    col_pal <- c("very low" = "#B8C7BF",
+                 "low" = "#96ABA1",
+                 "moderate" = "#6B8A7A",
+                 "high" = "#51695E",
+                 "severe" = "#223F32")
   }
   
   ggplot(plot_data) +
