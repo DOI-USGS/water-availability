@@ -103,7 +103,6 @@ function getImgURL(id) {
   return new URL(`${baseURL}${id}.png`);
 }
 
-
 function addInteractions() {
   const mapSVG = d3Base.select('.reg-svg');
   mapSVG.selectAll('.Region_nam_nospace')
