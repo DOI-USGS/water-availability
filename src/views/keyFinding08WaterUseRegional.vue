@@ -116,7 +116,7 @@
               </div>
           </div> 
           <div class="viz-container">
-            <AggReg class="agg-reg-svg"></AggReg>
+            <dumbellReg class="dumbbell-reg-svg"></dumbellReg>
             <img
                 class="viz-half"
                 id="dumbbells"
@@ -136,7 +136,8 @@
 import { ref, onMounted, inject, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
-import AggReg from "../../public/assets/AggReg.svg";
+import Reg from "../../public/assets/Regions.svg";
+import dumbellReg from "../../public/assets/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -149,7 +150,7 @@ import HorizontalBar from '../components/HorizontalBar.vue';
 // global variables
 const publicPath = import.meta.env.BASE_URL;
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
-const defaultRegionID = "High_Plains";
+const defaultRegionID = "California-Nevada";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
 const focalFill = "var(--teal-dark)";
@@ -227,8 +228,8 @@ onMounted(async() => {
   addInteractions();
 
   // select default region to start
-  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
-} catch (error) {
+  d3.select('.dumbbell-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+  } catch (error) {
     console.error("Error loading CSV data:", error);
   }
 });
@@ -263,23 +264,23 @@ function getImgURL(id) {
 
 
 function addInteractions() {
-  const mapSVG = d3.select('.agg-reg-svg');
-  mapSVG.selectAll('.AggReg_nam_nospace')
+  const mapSVG = d3.select('.dumbbell-reg-svg');
+  mapSVG.selectAll('.Region_nam_nospace')
     .on("mouseover", mouseoverMap)
     .on("mouseout", mouseoutMap);
 };
 
 function mouseoverMap(event) {
   const regionID = event.target.id;
-  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
-  d3.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
+  d3.select('.dumbbell-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
+  d3.select('.dumbbell-reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
   imgSrc.value = getImgURL(regionID)
 };
 
 function mouseoutMap(event) {
   const regionID = event.target.id;
-  d3.select('.agg-reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
-  d3.select('.agg-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+  d3.select('.dumbbell-reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
+  d3.select('.dumbbell-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
   imgSrc.value = getImgURL(defaultRegionID)
 };
 

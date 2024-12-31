@@ -403,45 +403,25 @@ p3_targets <- list(
   
   # Dumbbells
   tar_map(
-    values = tibble::tibble(reg = c("Western", "High Plains", "Southeast", "Northeast through Midwest", "CONUS"),
-                            reg_noname = c("Western", "High_Plains", "Southeast", "Northeast_through_Midwest", "CONUS")),
-    tar_target(p3_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
-                                agg_reg = reg,
-                                wu_type = "all", 
-                                color_scheme = p3_colors_wu,
-                                width = 6,
-                                height = 4,
-                                png_out = sprintf("src/assets/images/R/08_allWU_gw_sw_dumbbell_%s.png", reg_noname)),
-               format = "file"),
-    tar_target(p3_te_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
-                                agg_reg = reg,
-                                wu_type = "te", #"te", "ir", "ps"
-                                color_scheme = p3_colors_wu,
-                                width = 6,
-                                height = 4,
-                                png_out = sprintf("src/assets/images/R/08_TE_gw_sw_dumbbell_%s.png", reg_noname)),
-               format = "file"),
+    values = tibble::tibble(reg = c("Northeast", "Atlantic Coast", "Florida", 
+                                    "Great Lakes", "Midwest", "Tennessee-Missouri",  
+                                    "Mississippi Embayment", "Gulf Coast",   
+                                    "Souris-Red-Rainy", "Northern High Plains",
+                                    "Central High Plains", "Southern High Plains",
+                                    "Texas", "Columbia-Snake",
+                                    "Central Rockies", "Southwest Desert",
+                                    "Pacific Northwest", "California-Nevada"),
+                            reg_noSpace = stringr::str_replace_all(reg, " ", "_")),
     tar_target(p3_ps_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
-                                agg_reg = reg,
+                                region = reg,
                                 wu_type = "ps", #"te", "ir", "ps"
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("src/assets/images/R/08_PS_gw_sw_dumbbell_%s.png", reg_noname)),
+                                png_out = sprintf("src/assets/images/R/08_PS_gw_sw_dumbbell_%s.png", reg_noSpace)),
                format = "file"),
-    tar_target(p3_ir_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
-                                agg_reg = reg,
-                                wu_type = "ir", #"te", "ir", "ps"
-                                color_scheme = p3_colors_wu,
-                                width = 6,
-                                height = 4,
-                                png_out = sprintf("src/assets/images/R/08_IR_gw_sw_dumbbell_%s.png", reg_noname)),
-               format = "file"),
-    names = reg
+    names = reg_noSpace
   )
   
   ##############################################
