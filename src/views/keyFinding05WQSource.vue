@@ -119,8 +119,6 @@
             <References :theseReferences="referenceList"></References>
         </div>
 
-
-         
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>

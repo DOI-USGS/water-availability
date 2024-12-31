@@ -148,60 +148,28 @@ import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
-import { isMobile } from 'mobile-device-detect';
-import { text } from '@fortawesome/fontawesome-svg-core';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
-import treemapSVG from '@/assets/svgs/treemap_desktop.svg';
 import treemapSVGmobile from '@/assets/svgs/treemap_mobile.svg';
 
 // aquifer map settings
 const defaultRegionID = "overview";
 const imgSrc = ref(getImgURL(defaultRegionID)); 
 
-
 // for preview site toggle
 const featureToggles = inject('featureToggles');
 const route = useRoute();
 
-//////// references array //
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
-});
-
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
-
-/////////
-
-// use for mobile logic
-const mobileView = isMobile;
-
 
 // global objects
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
-
-
-
-// Global variables 
-const publicPath = import.meta.env.BASE_URL;
-let svg;
-const chart = ref(null);
-let chartDimensions;
-let chartBounds;
-let treemapLabel = "Hover to reveal category names"
-
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 const categoryColors = {
@@ -215,12 +183,13 @@ const categoryColors = {
   'Unimpaired': 'var(--wq-unimpaired)',
 }; 
 
-
-
+// Run of show
 onMounted(async () => {
     addInteractions()
 });
 
+
+// Methods
 function addInteractions() {
         // set viewbox for svg with wedges
         const aquiferSVG = d3.select("#aquifer-svg")
@@ -299,9 +268,6 @@ function mouseleaveWrapper() {
     d3.selectAll(".wedge").selectAll('polygon')
         .style("fill-opacity", 0)
 };
-
-
-
 
 </script>
 
