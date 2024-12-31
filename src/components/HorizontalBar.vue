@@ -127,9 +127,6 @@ const updateBarChart = (data, regionName) => {
         .attr('class', 'chart-title')
         .attr('x', 0)
         .attr('y', -10)
-        //.attr('fill', 'black')
-        //.attr('font-size', '2.25rem')
-        //.attr('font-weight', 'bold')
         .text(displayTitle),
       update => update.transition().duration(750).text(displayTitle)
     );
