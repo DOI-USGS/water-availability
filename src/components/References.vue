@@ -37,7 +37,7 @@
 </template>
   
 <script setup>
-import { computed, inject, onMounted, ref } from 'vue';
+import { inject, onMounted } from 'vue';
 const featureToggles = inject('featureToggles');
 
 defineProps({
