@@ -1097,7 +1097,7 @@ h4 {
   color: black;
 }
 
-.panel, .references-panel {
+.panel, .panel-references {
   display: none; 
   overflow: hidden;
   margin-bottom: -15px;
