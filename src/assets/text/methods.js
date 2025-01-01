@@ -76,7 +76,7 @@ export default {
           },
           {
             header: "Calculating aquifer quality",
-            description: "Colored pie charts indicate the percentage of the area studied that contained a constituent in untreated groundwater at a concentration that exceeds a human-health benchmark for drinking water (high) or one-half of that value (moderate). Data from Belitz and others (2022).",
+            description: "Colored pie charts indicate the percentage of the area studied that contained a constituent in untreated groundwater at a concentration that exceeds a human-health benchmark for drinking water (high) or one-half of that value (moderate) [cite Belitz and others (2022), chapter]. For this analysis, 16 drinking water contaminants were analyzed, including arsenic, manganese, lead, and nitrate. ",
           }
         ]
       },      {
@@ -84,8 +84,8 @@ export default {
         route: '/07WaterUse',
         method: [
           {
-            header: "Calculating water use by year",
-            description: "Total water used for crop irrigation, public supply, and thermoelectric water use for the conterminous United States was calculated for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
+            header: "Modeling water use by year",
+            description: "Total water used for crop irrigation, public supply, and thermoelectric power for the conterminous United States was modeled for water years 2010 through 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
           }
         ]
       },      {
@@ -93,12 +93,8 @@ export default {
         route: '/08WaterUseRegional',
         method: [
           {
-            header: "Spatial patterns in water use",
-            description: "The proportion of use by category (public supply, irrigation, and thermoelectric water use) were calculated based on annual average withdrawals for each watershed (HUC12) in the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024).",
-          },
-          {
-            header: "Comparing water sources by use",
-            description: "The total water withdrawn from groundwater versus surface water was compared by use category and across all uses. The values for each watershed (HUC12) were calculated as average annual withdrawals for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024).",
+            header: "Modeling water use",
+            description: "Total water used for crop irrigation, public supply, and thermoelectric power for the conterminous United States was modeled water year 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. The proportion of use by public supply and crop irrigation were calculated for each watershed, and that proportion was used to map the transparency of the watershed (more transparent indicates less water use). All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
           }
         ]
       },      {

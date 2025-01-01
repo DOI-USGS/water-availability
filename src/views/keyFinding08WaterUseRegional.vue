@@ -5,10 +5,47 @@
           <div class="text-container">
                 <p>How we use water varies across the country, including the type of use (for example, crop irrigation, public supply, and thermoelectric power) and the source of water (groundwater versus surface water). Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some urban areas, and withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. </p>
           </div>
-          <div class="caption-container">
-              <div class="caption-text-child">
-                <p>This map shows total water use by category of use for each watershed (HUC12) as average annual values from 2010 to 2020. The bar chart shows the total water use for that category. Toggle the categories of water use on and off with these buttons. Hover over the map to see regional summaries.</p>
-              </div>
+          <div class="viz-container">
+          <HorizontalBar 
+            categoricalVariable="d3_category"
+            continuousRaw="total_use"
+            continuousPercent="d3_percentage"
+            :layerPaths="{
+              ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order, label: layers.ir_total.label },
+              ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order, label: layers.ps_total.label },
+              te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order, label: layers.te_total.label },
+              te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order, label: layers.te_saline.label },
+            }"
+            :data="csvData"
+            :regionName="selectedRegion"
+          
+          />
+          </div>
+          <div class="viz-container">
+          <RegionMap 
+          @regionSelected="updateSelectedRegion"
+          :layerVisibility="{
+            ir_total: layers.ir_total.visible,
+            ps_total: layers.ps_total.visible,
+            te_total: layers.te_total.visible,
+            te_saline: layers.te_saline.visible,
+          }"
+          :layerPaths="{
+            ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
+            ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
+            te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
+            te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
+          }"
+          regionsDataUrl="assets/Regions.topojson"
+          usOutlineUrl="assets/USoutline.topojson"
+          regionsVar="Region_nam_nospace"
+          layerMag="1.2"
+          layerX="-80"
+          layerY="-55"
+
+        />
+        </div>
+        <div class="caption-container">
               <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-ir" >
                   <label class="checkbox_wrap">
@@ -51,53 +88,29 @@
                   </label>
                 </div>
               </div>
+              <div class="caption-text-child">
+                <p>Map showing the distribution of modeled water use by category for each watershed (HUC12) in the lower 48 United States. Crop irrigation and public supply are shaded by the proportion of use for each watershed. The thermoelectric points are scaled to represent total withdraws for each watershed where thermoelectric water withdrawal occurs. The histogram shows the total daily water use for that category for the lower 48 United States. Select a region on the map to view histograms for that region [cite VM].  Toggle each category of use on or off from the map.</p>
+              </div>
           </div> 
-          <div class="image-container">
-          <HorizontalBar 
-            categoricalVariable="d3_category"
-            continuousRaw="total_use"
-            continuousPercent="d3_percentage"
-            :layerPaths="{
-              ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order, label: layers.ir_total.label },
-              ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order, label: layers.ps_total.label },
-              te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order, label: layers.te_total.label },
-              te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order, label: layers.te_saline.label },
-            }"
-            :data="csvData"
-            :regionName="selectedRegion"
-          
-          />
-          <RegionMap 
-          @regionSelected="updateSelectedRegion"
-          :layerVisibility="{
-            ir_total: layers.ir_total.visible,
-            ps_total: layers.ps_total.visible,
-            te_total: layers.te_total.visible,
-            te_saline: layers.te_saline.visible,
-          }"
-          :layerPaths="{
-            ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
-            ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
-            te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
-            te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
-          }"
-          regionsDataUrl="assets/Regions.topojson"
-          usOutlineUrl="assets/USoutline.topojson"
-          regionsVar="Region_nam_nospace"
-          layerMag="1.2"
-          layerX="-80"
-          layerY="-55"
-
-        />
-        </div>
           <div class="text-container">
             <h3>Water from above and below</h3>
             <p>Across the U.S., the source of water, whether from  groundwater or from surface water typically depends on the availability of these sources and on the category of use. On average during water years 2010-2020, about 62% of water withdrawals for the combination of public supply, crop irrigation, and thermoelectric power across the country were from surface water and 38% of withdrawals were from groundwater. However, these proportions vary widely across the country, and are affected by water use type as well as local and federal water use ordinances and water rights.</p>
           </div>
+          <div class="chart-title-container">
+            <p class="chart-title">Groundwater versus surface water use</p>
+            <p class="chart-subtitle">Total daily water use (million gallons per day) by watershed (HUC12) sourced from surface water versus groundwater</p>
+          </div>
+          <div class="viz-container">
+            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
+            <img
+                class="viz-half"
+                id="dumbbells"
+                :src="imgSrc"
+                alt=""
+            >    
+          </div>
           <div class="caption-container">
-              <div class="caption-text-child">
-                <p>This data visualization shows the relative amount of water withdrawn for public supply that comes from surface water (bars that go up) or from groundwater (bars that go down) by region. The bars are placed from west to east based on the longitude (easting) of the center of each watershed. Hover over the map to see each individual region's data.</p>
-              </div>
+
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wu-sw" >
                   <label class="legend_wrap">
@@ -114,15 +127,9 @@
                   </label>
                 </div>
               </div>
-          </div> 
-          <div class="viz-container">
-            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
-            <img
-                class="viz-half"
-                id="dumbbells"
-                :src="imgSrc"
-                alt=""
-            >    
+              <div class="caption-text-child">
+                <p>Bar charts showing the relative amount of modeled water withdrawn for public supply that comes from surface water (bars that go up) or from groundwater (bars that go down) for the lower 48 United States (cite van meter). The bars are placed from west to east based on the longitude (easting) of the center of each watershed. The watershed with the largest daily water use in that region are labeled for each source. Select a region on the map to view bar charts for that region.</p>
+              </div>
           </div>
           <Methods></Methods>
           <References :theseReferences="referenceList"></References>
@@ -149,13 +156,13 @@ import HorizontalBar from '../components/HorizontalBar.vue';
 // global variables
 const publicPath = import.meta.env.BASE_URL;
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
-const defaultRegionID = "California-Nevada";
+const defaultRegionID = "CONUS";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
 const focalFill = "var(--focal-fill)";
 const defaultFill = "var(--inactive-grey)";
 const csvData = ref([]);
-const selectedRegion = ref('United States'); // default region
+const selectedRegion = ref('lower 48 United States'); // default region
 
 const route = useRoute();
 //////// references array //
