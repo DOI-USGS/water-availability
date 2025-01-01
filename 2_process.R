@@ -140,7 +140,7 @@ p2_targets <- list(
                dplyr::left_join(p2_wu_ternary_df,
                                 by = "HUC12") |>
                # add in mean water use data 
-               dplyr::left_join(p2_wu_te_saline_mean2000to2020_HUC12 |>
+               dplyr::left_join(p2_wu_te_saline_2020_HUC12 |>
                                   select(HUC12, te_saline),
                                 by = "HUC12")
   ),
@@ -366,9 +366,9 @@ p2_targets <- list(
              format = "file"),
   # needed for dumbbell charts
   tar_target(p2_wu_ternary_df,
-             total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC12,
-                                  ir_in = p2_wu_ir_mean2000to2020_HUC12,
-                                  te_in = p2_wu_te_mean2000to2020_HUC12,
+             total_wu_proportions(ps_in = p2_wu_ps_2020_HUC12,
+                                  ir_in = p2_wu_ir_2020_HUC12,
+                                  te_in = p2_wu_te_2020_HUC12,
                                   color_scheme = p3_colors_wu)),
   
   # Public water supply
@@ -387,11 +387,11 @@ p2_targets <- list(
                           use_type = "ps",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_ps_mean2000to2020_HUC12,
+  tar_target(p2_wu_ps_2020_HUC12,
              mean_wu_HUC12(p2_wu_ps_gw_raw,
                            p2_wu_ps_sw_raw,
                            p2_wu_ps_tot_raw,
-                           min_year = 2010,
+                           min_year = 2020,
                            max_year = 2020) 
   ),
   # Irrigation
@@ -410,11 +410,11 @@ p2_targets <- list(
                           use_type = "ir",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_ir_mean2000to2020_HUC12,
+  tar_target(p2_wu_ir_2020_HUC12,
              mean_wu_HUC12(p2_wu_ir_gw_raw,
                           p2_wu_ir_sw_raw,
                           p2_wu_ir_tot_raw,
-                          min_year = 2010,
+                          min_year = 2020,
                           max_year = 2020) 
   ),
   # Thermoelectric
@@ -438,16 +438,16 @@ p2_targets <- list(
                           use_type = "te",
                           source_type = "saline") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_te_mean2000to2020_HUC12,
+  tar_target(p2_wu_te_2020_HUC12,
              mean_wu_HUC12(p2_wu_te_gw_raw,
                           p2_wu_te_sw_raw,
                           p2_wu_te_tot_raw,
-                          min_year = 2010,
+                          min_year = 2020,
                           max_year = 2020) 
   ),
-  tar_target(p2_wu_te_saline_mean2000to2020_HUC12,
+  tar_target(p2_wu_te_saline_2020_HUC12,
              mean_wu_HUC12(p2_wu_te_tot_saline_raw,
-                           min_year = 2010,
+                           min_year = 2020,
                            max_year = 2020) 
   ),
   
