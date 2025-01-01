@@ -85,8 +85,9 @@ import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 
-
+// dependency injections
 const featureToggles = inject('featureToggles');
+const animateTime = inject('animateTime')
 
 const route = useRoute();
 
@@ -125,13 +126,12 @@ let categoryGroups, yearGroups, stackedData;
 let yearScale, useScale, categoryRectGroups;
 
 // Adjust margins to equalize space
-const labelWidth = 30; // Estimated width of the "mgd" label
-const containerWidth = Math.min(window.innerWidth * 0.8, 800); // Constrain to 700px max
-const containerHeight = mobileView ? window.innerHeight * 0.85 : 700;
+const containerWidth = 700; // Constrain to 700px max
+const containerHeight = 700;
 
 const margin = mobileView
   ? { top: 60, right: 10, bottom: 50, left: 40 } // Increased bottom margin for mobile
-  : { top: 80, right: labelWidth + 20, bottom: 60, left: 100 }; // Increased bottom margin for desktop
+  : { top: 80, right: 10, bottom: 60, left: 0 }; // Increased bottom margin for desktop
 
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
@@ -193,7 +193,7 @@ function initBarChart() {
   svg = d3.select('#barplot-container')
     .append('svg')
     .attr('class', 'barplotSVG')
-    .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+    .attr('viewBox', `-40 0 ${containerWidth+20} ${containerHeight}`)
     .style('width', containerWidth)
     .style('height', containerHeight);
 
@@ -275,26 +275,21 @@ function createBarChart({ dataset }) {
       .attr('width', yearScale.bandwidth() - 5)
       .style('fill', d => colorScale(d.key)));
 
-  // mgd label
+  // chart title
   svg.append("text")
-    .attr("class", "y-axis-label")
-    .attr("x", margin.left / 2) // position to the upper left
+    .attr("class", "chart-title")
+    .attr("x", margin.left / 2) 
     .attr("y", margin.top / 2)
-    .attr("text-anchor", "left")
-    .style("font-size", "2.5rem")
-    .style("font-weight", "bold")
-    .text("mgd");
+    .attr("text-anchor", "start")
+    .text("??Average daily water use");
 
-  // written out mgd label
+  // chart subtitle
   svg.append("text")
-    .attr("class", "y-axis-label-explained")
-    .attr("x", (margin.left / 2) + labelWidth*2) 
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "left")
-    .style("font-size", "2.5rem")
-    .style("font-style", "italic")
-    .style('font-weight', "300")
-    .text("million gallons per day");
+    .attr("class", "chart-text")
+    .attr("x", margin.left/2) 
+    .attr("y", margin.top-20)
+    .attr("text-anchor", "start")
+    .text("Millions of gallons of water used for crop irrigation, public supply, and thermoelectric power generation");
 }
 
 // Toggle between stacked and faceted views
@@ -317,7 +312,7 @@ function transitionToFaceted() {
   const totalPadding = (categoryGroups.length - 1) * facetPadding; 
   const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
 
-  const t = d3.transition().duration(1000);
+  const t = d3.transition().duration(animateTime);
 
   // move each category to its own facet along the y-axis
   categoryGroups.forEach((group, i) => {
@@ -378,7 +373,7 @@ function transitionToFaceted() {
 
 // transition the chart back to a stacked view
 function transitionToStacked() {
-  const t = d3.transition().duration(1000);
+  const t = d3.transition().duration(animateTime);
 
    // transition the bars back to the stacked position
    categoryRectGroups 
@@ -434,7 +429,7 @@ onMounted(async () => {
 
 <style scoped>
 #barplot-container {
-  max-width: 800px;
+  max-width: 100%;
   width: 100%;
   margin: auto;
   display: flex;

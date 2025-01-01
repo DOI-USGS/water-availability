@@ -33,6 +33,7 @@
                     </div>
                   </div>
                 </div> 
+                
                 <div class="viz-container">
                     <Reg class="reg-svg"></Reg>
                     <img
