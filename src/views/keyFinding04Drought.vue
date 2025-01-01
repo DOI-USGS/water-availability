@@ -9,11 +9,31 @@
                 <div class="viz-container">
                     <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_watercycle.png">
                 </div>
+                <div class="caption-container">
+                  <div class="caption-text-child">
+                    <p>Diagram showing average annual water cycle fluxes in billion gallons per day (bgd) across the lower 48 United States (cite models)</p>
+                  </div>
+                </div>  
                 <div class="text-container">
                     <p>As water moves through the water cycle it can spend different amounts of time in the various stages. Water that falls as snow could remain on the landscape for months until it melts in the spring. Water that makes its way into groundwater may remain for decades or longer. This means that periods of abnormally low precipitation affect different parts of the water cycle at different times. </p>
                   <br>
                     <p>During periods of low precipitation, less water in streams and rivers can lead to more groundwater use resulting in groundwater declines that may take years to recover. By assessing all parts of the water budget together, we can see how they are connected. For example, in 2012 the Northern High Plains had abnormally low precipitation, which cascaded through the water cycle with delayed responses in evapotranspiration, soil moisture, and eventually streamflow. Similarly, periods of 
                     rainfall in early 2011 did not show up in the streamflow signature until later in that year.</p>
+                </div>
+            <div class="chart-title-container">
+                <p class="chart-title">Water supply dynamics by region</p>
+                <p class="chart-text">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
+            </div>
+                
+                
+                <div class="viz-container">
+                    <Reg class="reg-svg"></Reg>
+                    <img
+                        class="viz-portrait"
+                        id="cascades"
+                        :src="imgSrc"
+                        alt=""
+                    >    
                 </div>
                 <div class="caption-container">
                   <div class="caption-legend-child">
@@ -32,26 +52,10 @@
                       </label>
                     </div>
                   </div>
-                </div> 
-                
-                <div class="viz-container">
-                    <Reg class="reg-svg"></Reg>
-                    <img
-                        class="viz-portrait"
-                        id="cascades"
-                        :src="imgSrc"
-                        alt=""
-                    >    
-                </div>
-                <div class="caption-container">
-                  <div class="caption-legend-child">
-                <div class="caption-text-child">
-                    <p>Monthly values of precipitation, evapotranspiration, soil moisture, and streamflow compared to normal conditions. The values are normalized for comparison, and thus do not have units. Hover over the map to see regional patterns.</p>
+                  <div class="caption-text-child">
+                    <p>Bar chart showing monthly values of precipitation, evapotranspiration, soil moisture, and streamflow as compared to normal conditions for each hydrologic region (cite Van Meter) in the lower 48 United States. The values are normalized for comparison from 2010 through 2020, and thus do not have units. Select a region on the map to view bar charts for that region.</p>
                   </div>
-                  <br/>
-                  <br/>
-                </div>
-              </div>
+                </div> 
             <Methods></Methods>
             <References :theseReferences="referenceList"></References>
         </div>

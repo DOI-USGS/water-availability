@@ -54,7 +54,7 @@ export default {
           },
           {
             header: "Comparing water supply to normal",
-            description: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region. Then, the monthly values were compared to the average to calculate a normalized deviation from the average for each month and region.",
+            description: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region [cite VM]. Then, the monthly values were compared to the average to calculate a normalized deviation from the average for each month and region.",
           }
         ]
       },      {
