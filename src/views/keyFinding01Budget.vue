@@ -8,7 +8,7 @@
           </div>
           <div class="chart-title-container">
               <p class="chart-title">Water supply versus demand</p>
-              <p class="chart-text">The dots represent the values of supply and demand for each hydrologic region</p>
+              <p class="chart-subtitle">The dots represent the values of supply and demand for each hydrologic region</p>
           </div>
           <div class="viz-container">
             <div id="dotplot-container">    
@@ -151,7 +151,7 @@
           </div>
           <div class="chart-title-container">
               <p class="chart-title">Monthly water limitation</p>
-              <p class="chart-text">Bars show what percent of the region has very low, low, moderate, high, and severe water limitation</p>
+              <p class="chart-subtitle">Bars show what percent of the region has very low, low, moderate, high, and severe water limitation</p>
           </div>
           <div class="viz-container">
             <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >

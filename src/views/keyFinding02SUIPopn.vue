@@ -19,7 +19,7 @@
           </div>
           <div class="chart-title-container">
             <p class="chart-title">Impacts on water availability</p>
-            <p class="chart-text">Darker colors indicate were aspects of water availability are more limited</p>
+            <p class="chart-subtitle">Darker colors indicate were aspects of water availability are more limited</p>
           </div>
           <div class="text-container">
             <div class="availability-container">

@@ -8,9 +8,7 @@
         </p>
       </div>
       <div class="caption-container">
-        <div class="caption-text-child">
-          <p>This chart shows water use from 2010 through 2020. Use the buttons to switch between viewing the total annual use to viewing the annual use by category. Note that the y-scale is not constant for each use when viewing use by category.</p>
-          <div class="checkbox_item">
+        <div class="checkbox_item">
             <div class="checkbox_wrap">
               <label>
                 <input type="radio" name="water-use" @change="handleViewChange" id="total-button" value="stacked"> Total use
@@ -19,8 +17,12 @@
                 <input type="radio" name="water-use" @change="handleViewChange" id="facet-button" value="faceted"> Use by category
               </label>
             </div>
-          </div>
         </div>
+      </div>
+      <div class="viz-container">
+        <div id="barplot-container"></div>
+      </div>
+      <div class="caption-container">
         <div class="caption-legend-child">
           <div class="legend_item" id="legend-wu-ir" >
             <label class="legend_wrap">
@@ -50,10 +52,10 @@
               Thermoelectric (saline)
             </label>
           </div>
+          </div>
+          <div class="caption-text-child">
+          <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. Note that the y-scale is not constant across use categories when viewing use by category.</p>
         </div>
-      </div> 
-      <div class="viz-container">
-        <div id="barplot-container"></div>
       </div>
       <div class="text-container">
         <p>
@@ -281,15 +283,15 @@ function createBarChart({ dataset }) {
     .attr("x", margin.left / 2) 
     .attr("y", margin.top / 2)
     .attr("text-anchor", "start")
-    .text("??Average daily water use");
+    .text("Water use by year");
 
   // chart subtitle
   svg.append("text")
-    .attr("class", "chart-text")
+    .attr("class", "chart-subtitle")
     .attr("x", margin.left/2) 
     .attr("y", margin.top-20)
     .attr("text-anchor", "start")
-    .text("Millions of gallons of water used for crop irrigation, public supply, and thermoelectric power generation");
+    .text("Bars show total daily water use (million gallons per day) for the lower 48 United States by category of use");
 }
 
 // Toggle between stacked and faceted views

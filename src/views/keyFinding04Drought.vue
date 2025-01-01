@@ -22,7 +22,7 @@
                 </div>
             <div class="chart-title-container">
                 <p class="chart-title">Water supply dynamics by region</p>
-                <p class="chart-text">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
+                <p class="chart-subtitle">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
             </div>
                 
                 
