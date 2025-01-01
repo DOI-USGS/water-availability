@@ -15,7 +15,7 @@
     continuousRaw: { type: String, required: true },
     layerPaths: { type: Object, required: true },
     data: { type: Array, required: true },
-    regionName: { type: String, default: 'United States' },
+    regionName: { type: String, default: 'lower 48 United States' },
   });
   
   const barContainer = ref(null);
@@ -40,7 +40,7 @@ onMounted(() => {
   }
 
   const aggregatedData = aggregateData(props.data);
-  updateBarChart(aggregatedData, 'United States');
+  updateBarChart(aggregatedData, 'lower 48 United States');
 });
 
 //  aggregate data for the US
@@ -116,7 +116,7 @@ const updateBarChart = (data, regionName) => {
     );
 
   // update chart title
-  const displayTitle = regionName === 'United States' ? regionName : `${regionName} Region`;
+  const displayTitle = regionName === 'lower 48 United States' ? regionName : `${regionName} Region`;
 
     g.selectAll('text.chart-title')
     .data([regionName])
@@ -177,7 +177,7 @@ watch(
     () => [props.data, props.regionName], 
     ([data, regionName]) => {
         const filteredData =
-        regionName === 'United States'
+        regionName === 'lower 48 United States'
         ? aggregateData(data)
         : data.filter(d => d.Region_nam === regionName)
 

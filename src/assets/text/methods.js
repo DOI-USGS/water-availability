@@ -7,11 +7,11 @@ export default {
         method: [
           {
             header: "Calculating supply and demand",
-            description: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. ",
+            description: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020 [cite Stets, Medalie, Gorksi, MillerDataRelease]. Water supply was calculated as the sum of annual runoff for all watersheds (HUC12) in the region divided by the area of the region. Consumptive use was calculated as the sum of water consumed for crop irrigation, thermoelectric power, and public supply within all watersheds (HUC8) in the region divided by the area of the region. Hydrologic regions are based on Van Metre et al. (2020) river basins [cite VM].",
           },
           {
             header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
+            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the lower 48 United States for water years 2010 through 2020. The surface water-supply and use index was calculated from the balance of water supply and consumptive use at a monthly timestep on a watershed (HUC12) basis (Stets and others, in prep.)."
           }
         ]
         },      {

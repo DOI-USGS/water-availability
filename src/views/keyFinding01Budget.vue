@@ -2,161 +2,165 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-            <div class="text-container">
-                <p>To understand water limitation, it is first important to understand the how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. On an annual average basis, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
-                  </p>
-            </div>
-            <div class="text-container">
+          <div class="text-container">
+              <p>To understand water limitation, it is first important to understand the how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. On an annual average basis, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
+              </p>
+          </div>
+          <div class="chart-title-container">
+              <p class="chart-title">Water supply versus demand</p>
+              <p class="chart-text">The dots represent the values of supply and demand for each hydrologic region</p>
+          </div>
+          <div class="viz-container">
+            <div id="dotplot-container">    
+            </div>         
+          </div>  
+          <div class="text-container">
             <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-demand" >
-                  <label class="checkbox_wrap chart-title">
+              <div class="checkbox_item" id="checkbox-demand" >
+                <label class="checkbox_wrap chart-title">
+                <input type="checkbox" 
+                name="checkbox" 
+                class="checkbox_inp" 
+                @click="togglePoints('demand')">
+                <span class="checkbox_mark"></span>
+                Water demand
+                </label>
+              </div>
+              <div class="checkbox_item" id="checkbox-supply" >
+                <label class="checkbox_wrap chart-title">
                   <input type="checkbox" 
                   name="checkbox" 
                   class="checkbox_inp" 
-                  @click="togglePoints('demand')">
+                  @click="togglePoints('supply')">
                   <span class="checkbox_mark"></span>
-                  Water demand vs.
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-supply" >
-                  <label class="checkbox_wrap chart-title">
+                  Water supply
+                </label>
+              </div>
+            </div>
+            <div class="caption-text-child">
+              <p>Dot and line chart showing water supply versus demand (consumptive use) (link to kf9 or glossary) in milliliters per year by hydrologic region in the lower 48 United States. <span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> Values are averaged across water years 2010 through 2020.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> Toggle the values of water supply off to zoom into demand.</p>
+            </div>
+          </div>
+          <div class="text-container">
+            <h2>Regional patterns of water limitation</h2>
+            <p>
+              Although there is enough water supply to meet demand overall, many regions face local water limitation, which means there not enough water available locally to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
+            </p>
+          </div>
+          <div class="image-container">
+            <StackedBar 
+              categoricalVariable="d3_category"
+              continuousRaw="stress_by_reg"
+              continuousPercent="d3_percentage"
+              :layerPaths="{
+              very_low_none: { path: layers.very_low_none.path, color: layers.very_low_none.color, order: layers.very_low_none.order },
+              low: { path: layers.low.path, color: layers.low.color, order: layers.low.order },
+              moderate: { path: layers.moderate.path, color: layers.moderate.color, order: layers.moderate.order },
+              high: { path: layers.high.path, color: layers.high.color, order: layers.high.order },
+              severe: { path: layers.severe.path, color: layers.severe.color, order: layers.severe.order },
+            }"
+              :data="csvData"
+              :regionName="selectedRegion"
+              />
+            <RegionMap 
+            @regionSelected="updateSelectedRegion"
+            :layerVisibility="{
+              very_low_none: layers.very_low_none.visible,
+              low: layers.low.visible,
+              moderate: layers.moderate.visible,
+              high: layers.high.visible,
+              severe: layers.severe.visible,
+            }"
+            :layerPaths="{
+              very_low_none: { path: layers.very_low_none.path, color: layers.very_low_none.color, order: layers.very_low_none.order },
+              low: { path: layers.low.path, color: layers.low.color, order: layers.low.order },
+              moderate: { path: layers.moderate.path, color: layers.moderate.color, order: layers.moderate.order },
+              high: { path: layers.high.path, color: layers.high.color, order: layers.high.order },
+              severe: { path: layers.severe.path, color: layers.severe.color, order: layers.severe.order },
+            }"
+            regionsDataUrl="assets/Regions.topojson"
+            usOutlineUrl="assets/USoutline.topojson"
+            regionsVar="Region_nam_nospace"
+            layerMag="1.2"
+            layerX="-80"
+            layerY="-55"
+
+          />
+          </div>
+          <div class="caption-container"><b>Water limitation:</b> 
+                <div class="caption-legend-child">
+                  <div class="checkbox_item" id="checkbox-sui-none" >
+                    <label class="checkbox_wrap">
                     <input type="checkbox" 
                     name="checkbox" 
                     class="checkbox_inp" 
-                    @click="togglePoints('supply')">
+                    @click="toggleLayer('very_low_none')">
                     <span class="checkbox_mark"></span>
-                    Water supply
-                  </label>
+                      Very low (0-0.2)
+                    </label>
+                  </div>
+                  <div class="checkbox_item" id="checkbox-sui-low" >
+                    <label class="checkbox_wrap">
+                    <input type="checkbox" 
+                    name="checkbox" 
+                    class="checkbox_inp" 
+                    @click="toggleLayer('low')">
+                    <span class="checkbox_mark"></span>
+                      Low (0.2-0.4)
+                    </label>
+                  </div>
+                  <div class="checkbox_item" id="checkbox-sui-mod" >
+                    <label class="checkbox_wrap">
+                    <input type="checkbox" 
+                    name="checkbox" 
+                    class="checkbox_inp" 
+                    @click="toggleLayer('moderate')">
+                    <span class="checkbox_mark"></span>
+                      Moderate (0.4-0.6)
+                    </label>
+                  </div>
+                  <div class="checkbox_item" id="checkbox-sui-high" >
+                    <label class="checkbox_wrap">
+                    <input type="checkbox" 
+                    name="checkbox" 
+                    class="checkbox_inp" 
+                    @click="toggleLayer('high')">
+                    <span class="checkbox_mark"></span>
+                      High (0.6-0.8)
+                    </label>
+                  </div>
+                  <div class="checkbox_item" id="checkbox-sui-severe" >
+                    <label class="checkbox_wrap">
+                    <input type="checkbox" 
+                    name="checkbox" 
+                    class="checkbox_inp" 
+                    @click="toggleLayer('severe')">
+                    <span class="checkbox_mark"></span>
+                      Severe (0.8-1.0)
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </div>
-        <div class="viz-container">
-          
-          <div id="dotplot-container">             
-        </div>   
-        </div>
-        <div class="caption-container">
-              
-              <div class="caption-text-child">
-                <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
-              </div>
+                <br/>
+                <div class="caption-text-child">
+                  <p>Map showing the categories of water limitation across the lower 48 United States. Categories are based on the average water-supply and use index from water years 2010 through 2020 for each watershed (HUC12) (link to glossary). A higher number implies that more of the natural water supply is depleted. The bar chart shows the proportion of each water limitation category. Select a hydrologic region (cite van metre) to view the proportions for that region. Toggle each category on or off from the map.</p>
+                </div>
+          </div>    
+          <div class="text-container">
+            <h2>Seasonal patterns of water limitation</h2>
+            <p>Water shortages can happen on for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
           </div>
-        <div class="text-container">
-          <h2>Regional patterns of water limitation</h2>
-        <p>
-          Although there is enough water supply to meet demand overall, many regions face local water limitation, which means there not enough water available locally to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
-        </p>
-        </div>
-        <div class="image-container">
-          <StackedBar 
-            categoricalVariable="d3_category"
-            continuousRaw="stress_by_reg"
-            continuousPercent="d3_percentage"
-            :layerPaths="{
-            very_low_none: { path: layers.very_low_none.path, color: layers.very_low_none.color, order: layers.very_low_none.order },
-            low: { path: layers.low.path, color: layers.low.color, order: layers.low.order },
-            moderate: { path: layers.moderate.path, color: layers.moderate.color, order: layers.moderate.order },
-            high: { path: layers.high.path, color: layers.high.color, order: layers.high.order },
-            severe: { path: layers.severe.path, color: layers.severe.color, order: layers.severe.order },
-          }"
-            :data="csvData"
-            :regionName="selectedRegion"
-            />
-          <RegionMap 
-          @regionSelected="updateSelectedRegion"
-          :layerVisibility="{
-            very_low_none: layers.very_low_none.visible,
-            low: layers.low.visible,
-            moderate: layers.moderate.visible,
-            high: layers.high.visible,
-            severe: layers.severe.visible,
-          }"
-          :layerPaths="{
-            very_low_none: { path: layers.very_low_none.path, color: layers.very_low_none.color, order: layers.very_low_none.order },
-            low: { path: layers.low.path, color: layers.low.color, order: layers.low.order },
-            moderate: { path: layers.moderate.path, color: layers.moderate.color, order: layers.moderate.order },
-            high: { path: layers.high.path, color: layers.high.color, order: layers.high.order },
-            severe: { path: layers.severe.path, color: layers.severe.color, order: layers.severe.order },
-          }"
-          regionsDataUrl="assets/Regions.topojson"
-          usOutlineUrl="assets/USoutline.topojson"
-          regionsVar="Region_nam_nospace"
-          layerMag="1.2"
-          layerX="-80"
-          layerY="-55"
-
-        />
-        </div>
-        <div class="caption-container"><b>Water limitation:</b> 
-              <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-sui-none" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('very_low_none')">
-                  <span class="checkbox_mark"></span>
-                    Very low
-                  </label>
+          <div class="chart-title-container">
+              <p class="chart-title">Monthly water limitation</p>
+              <p class="chart-text">Bars show what percent of the region has very low, low, moderate, high, and severe water limitation</p>
+          </div>
+          <div class="viz-container">
+            <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >
+          </div>
+          <div class="caption-container">
+                <div class="caption-text-child">
+                  <p>Bar chart showing the proportion of the categories of water limitation by month from 2010 to 2020 across the lower 48 United States. Categories are based on the modeled water-supply and use index for each watershed (HUC12) (link to glossary). A higher number implies that more of the natural water supply is depleted. </p>
                 </div>
-                <div class="checkbox_item" id="checkbox-sui-low" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('low')">
-                  <span class="checkbox_mark"></span>
-                    Low
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-mod" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('moderate')">
-                  <span class="checkbox_mark"></span>
-                    Moderate
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-high" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('high')">
-                  <span class="checkbox_mark"></span>
-                    High
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-severe" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('severe')">
-                  <span class="checkbox_mark"></span>
-                    Severe
-                  </label>
-                </div>
-              </div>
-              <br/>
-              <div class="caption-text-child">
-                <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
-              </div>
-        </div>    
-        <div class="text-container">
-          <h2>Seasonal patterns of water limitation</h2>
-          <p>Water shortages can happen on for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
-        </div>
-        <div class="viz-container">
-          <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >
-        </div>
-        <div class="caption-container">
-              <div class="caption-text-child">
-                <p>Water limitation across the lower 48 by month from January 2010 through January 2020. The bars show the proportion of each water limitation category.</p>
-              </div>
-        </div>  
+          </div>  
         <Methods></Methods>
       <References :theseReferences="referenceList"></References>
       </div>
@@ -202,7 +206,7 @@ const publicPath = import.meta.env.BASE_URL;
 const dataSet1 = ref([]); 
 const data = ref([]);
 const csvData = ref([]);
-const selectedRegion = ref('United States'); // default region
+const selectedRegion = ref('lower 48 United States'); // default region
 let svg;
 const containerWidth = 900;
 const maxHeight = 900; 
