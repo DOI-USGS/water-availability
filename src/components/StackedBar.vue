@@ -33,7 +33,7 @@ onMounted(() => {
     svgBar.append('g'); // add a <g> container
 
     svgBar.select('g').append('text')
-      .attr('class', 'chart-text')
+      .attr('class', 'chart-subtitle')
       .attr('x', 0)
       .attr('y', 10)
       .text(`Bars show what percent of the region has very low, low, moderate, high, and severe water limitation.`)

@@ -5,10 +5,6 @@
           <div class="text-container">
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
           </div>
-          <div class="chart-title-container">
-            <p class="chart-title">Nutrient loads by source and region</p>
-            <p class="chart-title">Bars show what portion of the region's nutrient loads come from varying sources</p>
-          </div>
           <div class="caption-container">
               <div class="checkbox_item">
               <!-- Nutrient Toggle -->
@@ -88,6 +84,12 @@
                 rightLabel="Nitrogen" 
               />
             </div>
+
+            <HistogramLegend 
+              :layerPaths="legendConfig"
+              :data="legendData"
+              :regionName="selectedRegion"
+            />
             <RegionMap 
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
@@ -105,11 +107,6 @@
               layerX="-44"
               layerY="-11"
 
-            />
-            <HistogramLegend 
-              :layerPaths="legendConfig"
-              :data="legendData"
-              :regionName="selectedRegion"
             />
           </div>
             <div class="caption-container">
@@ -394,19 +391,27 @@ function createBarChart({ dataset, scaleLoad}) {
     .attr("class", "chart-title")
     .attr('x', margin.left)
     //.attr("x", containerWidth - margin.right-100) 
-    .attr("y", margin.top / 2)
+    .attr("y", (margin.top/2) - 10)
     .attr("text-anchor", "start") // anchor to the end of the text
-    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus"); 
+    .text(showNitrogen.value ? "Nitrogen by source and region" : "Phosphorus by source and region"); 
 
   // italic units label
   svg.append("text")
     .attr("class", "axis-units chart-title")
     .attr("x", containerWidth - margin.right) 
-    .attr("y", margin.top / 2) 
+    .attr("y",  (margin.top/2) - 10) 
     .attr("text-anchor", "end")
     .style("font-style", "italic")
     .style("font-weight", "300")
     .text(scaleLoad.value ? "Percent" : "Mg/year");
+
+  svg.append("text")
+    .attr("class", "chart-subtitle")
+    .attr('x', margin.left)
+    //.attr("x", containerWidth - margin.right-100) 
+    .attr("y", (margin.top/2) + 10)
+    .attr("text-anchor", "start") // anchor to the end of the text
+    .text("Bars show what portion of the region's nutrient loads come from varying sources"); 
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -464,7 +469,7 @@ function updateLabels() {
     .style("font-size", "2rem")
     .style("font-weight", "bold")
     .merge(label) 
-    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus");
+    .text(showNitrogen.value ? "Nitrogen by source and region" : "Phosphorus by source and region");
 
   label.exit().remove(); // Ensure old labels are removed
 

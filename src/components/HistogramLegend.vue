@@ -111,7 +111,7 @@ function initLegend(data) {
 
   // add x-axis title below chart title
   svg.append('text')
-    .attr('class', 'chart-text')
+    .attr('class', 'chart-subtitle')
     .attr('x', -5) 
     .attr('y', 40) 
     .attr('text-anchor', 'start') 

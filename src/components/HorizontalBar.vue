@@ -17,7 +17,7 @@
     continuousRaw: { type: String, required: true },
     layerPaths: { type: Object, required: true },
     data: { type: Array, required: true },
-    regionName: { type: String, default: 'United States' },
+    regionName: { type: String, default: 'lower 48 United States' },
   });
   
   const barContainer = ref(null);
@@ -35,14 +35,14 @@ onMounted(() => {
     svgBar.append('g'); // add a <g> container
 
     svgBar.select('g').append('text')
-      .attr('class', 'chart-text')
+      .attr('class', 'chart-subtitle')
       .attr('x', 0)
       .attr('y', 45)
-      .text(`Total water use for the top four water use categories in the U.S. in ??million gallons per year??`)
+      .text(`Total daily water use (million gallons per day) by watershed (HUC12)`)
   }
 
   const aggregatedData = aggregateData(props.data);
-  updateBarChart(aggregatedData, 'United States');
+  updateBarChart(aggregatedData, 'lower 48 United States');
 });
 
 //  aggregate data for the US
@@ -121,7 +121,7 @@ const updateBarChart = (data, regionName) => {
     );
 
   // update chart title
-  const displayTitle = regionName === 'United States' ? regionName : `${regionName} Region`;
+  const displayTitle = regionName === 'lower 48 United States' ? regionName : `${regionName} Region`;
   g.selectAll('text.chart-title')
     .data([regionName])
     .join(
@@ -194,7 +194,7 @@ watch(
     () => [props.data, props.regionName], 
     ([data, regionName]) => {
         const filteredData =
-        regionName === 'United States'
+        regionName === 'lower 48 United States'
         ? data
         : data.filter(d => d.Region_nam === regionName)
 
