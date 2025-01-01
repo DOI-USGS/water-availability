@@ -111,13 +111,11 @@ function initLegend(data) {
 
   // add x-axis title below chart title
   svg.append('text')
-    .attr('class', 'x-axis-label')
-    .attr('x', 10) 
-    .attr('y', 50) 
+    .attr('class', 'chart-text')
+    .attr('x', -5) 
+    .attr('y', 40) 
     .attr('text-anchor', 'start') 
-    .style('font-size', '14px') 
-    .style('fill', 'black') 
-    .text(`Total ${props.layerPaths.name} load (kg/yr)`); 
+    .text(`Total nutrient load (kg/yr) by area`); 
 
 
 // add y-axis
@@ -135,12 +133,9 @@ function initLegend(data) {
     .join(
       enter => enter.append('text')
         .attr('class', 'chart-title')
-        .attr('x', 10)
-        .attr('y', 30)
-        .attr('color', 'black')
-        .attr('font-size', '2.25rem')
-        .attr('font-weight', 'bold')
-        .text(displayTitle))
+        .attr('x', -5)
+        .attr('y', 20)
+        .text(`${props.layerPaths.name} concentrations in the ${displayTitle}`))
 }
 
 // Update Legend
@@ -174,17 +169,17 @@ function updateLegend(data) {
         .style('fill', d => colorScale(d.category))
         .call(enter => 
             enter.transition()
-            .duration(550)
+            .duration(300)
             .attr('y', d => yScale(d.value))
             .attr('height', d => rectHeight - yScale(d.value))
         ),
       update => update.transition()
-        .duration(550)
+        .duration(300)
         .attr('y', d => yScale(d.value)) // Adjust position
         .attr('height', d => rectHeight - yScale(d.value)) // Adjust height
         .style('fill', d => colorScale(d.category)),
       exit => exit.transition()
-        .duration(550)
+        .duration(300)
         .attr('y', rectHeight) // Collapse downwards
         .attr('height', 0) // Shrink height
         .remove()
@@ -194,8 +189,7 @@ function updateLegend(data) {
    .tickFormat(d => d)
    .tickSize(3)
    .tickValues(sortedData.map(d => cleanLabel(d.category)))
-   .tickPadding(2)
-   //.tickSizeOuter(0);
+   .tickPadding(2);
 
    d3.select('.x-axis').remove() // clear before updating
 
@@ -222,24 +216,19 @@ function updateLegend(data) {
     .join(
       enter => enter.append('text')
         .attr('class', 'chart-title')
-        .attr('x', 10)
-        .attr('y', 30)
-        .attr('fill', 'black')
-        .attr('font-size', '2.25rem')
-        .attr('font-weight', 'bold')
-        .text(displayTitle),
-      update => update.transition().duration(750).text(displayTitle)
+        .attr('x', -5)
+        .attr('y', 20)
+        .text(`${props.layerPaths.name} concentrations in the ${displayTitle}`),
+      update => update.transition().duration(750).text(`${props.layerPaths.name} concentrations in the ${displayTitle}`)
     );
-    d3.select('.x-axis-label').remove()
+    d3.select('.chart-text').remove()
   // add x-axis title below chart title
   svg.append('text')
-    .attr('class', 'x-axis-label')
-    .attr('x', 10) 
-    .attr('y', 50) 
+    .attr('class', 'chart-text')
+    .attr('x', -5) 
+    .attr('y', 40) 
     .attr('text-anchor', 'start') 
-    .style('font-size', '14px') 
-    .style('fill', 'black') 
-    .text(`Total ${props.layerPaths.name} load (kg/yr)`); 
+    .text(`Total nutrient load (kg/yr) by area`); 
 }
 
 // Process Data
