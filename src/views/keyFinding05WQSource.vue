@@ -4,8 +4,12 @@
         <div class="content-container">
           <div class="text-container">
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
-              </div>
-              <div class="caption-container">
+          </div>
+          <div class="chart-title-container">
+            <p class="chart-title">Nutrient loads by source and region</p>
+            <p class="chart-title">Bars show what portion of the region's nutrient loads come from varying sources</p>
+          </div>
+          <div class="caption-container">
               <div class="checkbox_item">
               <!-- Nutrient Toggle -->
               <ToggleSwitch 
@@ -28,6 +32,8 @@
                 <div id="barplot-container">    
                 </div>
             </div>
+          
+
             <div class="caption-container">
                 <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wq-agriculture" >
@@ -67,7 +73,7 @@
                 </div>
               </div>
               <div class="caption-text-child">
-                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (Mg/year) or the percent of the total load</p>
+                <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States (cite van meter). Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
             </div> 
             <div class="text-container">
@@ -108,7 +114,7 @@
           </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>Maps of total Nitrogen and Phosphorus load in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the United States, or a region when selected.</p>
+                <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the lower 48 United States. Select a region on the map to view histograms for that region. Toggle to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
               </div>
             <div class="text-container">

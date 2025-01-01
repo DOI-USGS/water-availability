@@ -62,12 +62,8 @@ export default {
         route: '/05WQSource',
         method: [
           {
-            header: "Modeling nutrient sources",
-            description: "Total and source-specific nutrient loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise et al., 2019). Common sources across regions were generalized to enable a simple comparison.",
-          },
-          {
-            header: "Mapping nutrient loads",
-            description: "Predicted total nitrogen and phosphorus loads were modeled from 2012 mean annual 'Spatially referenced regressions on watershed' attributes models (Schwarz et al., 2006). Loads were merged spatially with watershed (HUC12) locations for mapping.",
+            header: "Modeling nutrient loads",
+            description: "Total and source-specific nutrient loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise et al., 2019). Predicted total nitrogen and phosphorus loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise et al., 2019). Sources were generalized to enable a simple comparison.",
           }
         ]
       },      {
