@@ -63,11 +63,19 @@ map_te <- function(in_sf,
   map <- ggplot(in_regions) +
     geom_sf(fill = NA,
             color = NA, linewidth = 0.1) +
-    geom_point(data = plot_sf, 
-               aes(geometry = geometry),
-               color = color_dot,
+    geom_point(data = plot_sf, shape = 21,
+               aes(geometry = geometry, size = mgd),
+               color = "white", fill = "white", stroke = 0.2,
                stat = "sf_coordinates") +
-    scale_alpha_identity() +
+    theme_void() +
+    geom_point(data = plot_sf, shape = 21,
+               aes(geometry = geometry, size = mgd),
+               color = color_dot, fill = color_dot, stroke = 0,
+               stat = "sf_coordinates") +
+    geom_point(data = plot_sf, shape = 21,
+               aes(geometry = geometry, size = mgd),
+               color = "white", fill = color_dot, stroke = 0.2, alpha = 0.4,
+               stat = "sf_coordinates") +
     theme_void() +
     theme(legend.position = "none")
   
