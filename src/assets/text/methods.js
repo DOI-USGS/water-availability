@@ -19,17 +19,12 @@ export default {
         route: '/02SUI',
         method: [
           {
-            header: "Determining impacts of water quantity",
-            description: "The impact of water quantity on water availablity was determined by analyzing the water supply and use index, which expresses the imbalance between surface water-supply and consumptive uses was used."
-          }, {
-            header: "Determining impacts of surface water quality",
-            description: "For the surface water-quality indicator, surface water total nitrogen and total phosphorus were compared to the NRSA Good benchmark (U.S. Environmental Protection Agency, 2020; Erickson et al. 2025)."
-          }, {
-            header: "Determining impacts of groundwater quality",
-            description: "For the groundwater-quality indicator, predicted nitrate and arsenic concentrations were compared to the regulatory enforceable drinking water maximum contaminant levels."
-          }, {
-            header: "Determining impacts of ecoflows",
-            description: "For the flows indicator, predicted alteration of different aspects of the flow regime were compared to those aspects of the flow regime that have been shown to affect regional ecological health."
+            header: "Determining impacts on water availability",
+            description: "The multi-faceted analysis of water availability was developed using metrics for the following indicators of water availability: water budget, surface-water quality, groundwater quality, and ecological flows. For each metric, values were aggregated by hydrologic region and then ranked, as described herein, to create a relative value of water stress for that indicator. The hydrologic regions were then assigned an index value from 1 to 5 based on their ranking and natural breaks in the distribution. <ol><li>Water quantity impact assessment categories were based on the surface water-supply and use index, which was calculated from the balance of water supply and consumptive use at a monthly timestep on a 12-digit hydrologic unit code (HUC12) basis (Stets and others, in prep.). Regional SUI rankings were based on the percentage of area with high or severe SUI, corresponding to greater than (>) 60 percent depletion of normal water supply (Stets and others, in prep.).</li><li>Surface-water quality impact assessment categories were based on the combined results of SPAtially Referenced Regressions On Watershed attributes model estimates of surface-water total nitrogen and total phosphorus (Cashman and others, in prep.; chap. C, Erickson and others, 202X). We ranked the hydrologic regions based on the percentage of area having total nitrogen or total phosphorus concentrations >4 times higher than the Environmental Protection Agency National Rivers and Streams Assessment (EPA NRSA) regional “Good” standard (chap. C, Erickson and others,202X). </li><li>Groundwater quality impact assessment categories were based on CONUS models for nitrate and arsenic (Lombard and others, 2021; Ransom and others, 2022). The hydrologic regions were assigned index values from 1 to 5 for nitrate and arsenic based on their concentrations for each.</li><li>Ecological water availability impact assessment categories were based on a combination of the regional flow-ecology relationships established by Carlisle and others (2019) with machine-learning predictions of flow regime at the National Hydrography Dataset Plus v2.1 stream reach scale. Alteration status (in other words, altered or unaltered) was determined for high- and low-flow magnitude, duration, and variability metrics by Carlisle (2019).</li></ol>"
+          },
+          {
+            header: "Determining future impacts",
+            description: "The impacts to future water availability were determined by a review of recent literature in peer-reviewed journals and synthesis of information in the Intergovernmental Panel on Climate Change Sixth Assessment Report (IPCC AR6) (Intergovernmental Panel on Climate Change, 2021) and Fifth National Climate Assessment (U.S. Global Change Research Program, 2023). The framework of climatic impact drivers outlined in the (IPCC AR6) was used to show primary drivers of physical changes in water cycle processes and to explain projected changes in future water availability.",
           }
         ]
       },      {
