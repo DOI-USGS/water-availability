@@ -195,6 +195,7 @@ p3_targets <- list(
   #
   tar_target(p3_popn_circles_png,
              viz_popn_circles(in_sf = p2_popn_bubbles_df,
+                              in_svi = p2_svi_mean_HUC12,
                               color_scheme = p3_colors_sui,
                               png_out = "src/assets/images/R/03_sui_popn_CONUS.png",
                               width = 9,
