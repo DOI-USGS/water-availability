@@ -31,6 +31,12 @@ onMounted(() => {
       .classed('bar-chart-svg', true);
 
     svgBar.append('g'); // add a <g> container
+
+    svgBar.select('g').append('text')
+      .attr('class', 'chart-text')
+      .attr('x', 0)
+      .attr('y', 10)
+      .text(`Bars show what percent of the region has very low, low, moderate, high, and severe water limitation.`)
   }
 
   const aggregatedData = aggregateData(props.data);
@@ -85,7 +91,7 @@ const updateBarChart = (data, regionName) => {
     .join(
       enter => enter.append('rect')
         .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
-        .attr('y', 0)
+        .attr('y', 20)
         .attr('width', 0)
         .attr('height', 30)
         .attr('fill', d => getColor(d[props.categoricalVariable]))
@@ -111,33 +117,33 @@ const updateBarChart = (data, regionName) => {
 
   // update chart title
   const displayTitle = regionName === 'United States' ? regionName : `${regionName} Region`;
-  g.selectAll('text.chart-title')
+
+    g.selectAll('text.chart-title')
     .data([regionName])
     .join(
       enter => enter.append('text')
         .attr('class', 'chart-title')
         .attr('x', 0)
         .attr('y', -10)
-        .attr('fill', 'black')
-        .attr('font-size', '2.25rem')
-        .attr('font-weight', 'bold')
-        .text(displayTitle),
-      update => update.transition().duration(750).text(displayTitle)
+        .text(`Water limitation in the ${displayTitle}`),
+        //.text(displayTitle),
+      update => update.transition()
+        .duration(750)
+        .text(`Water limitation in the ${displayTitle}`)
     );
 
     const formatPercentage = d3.format('.0f');
   
       // percent labels on bar chart 
-      g.selectAll('.chart-labels')
+      g.selectAll('.percent-label')
         .data(sortedData, d => d[props.categoricalVariable]) // unique key
         .join(
             enter => {
             const enteringText = enter.append('text')
-                .attr('class', 'chart-labels')
+                .attr('class', 'percent-label')
                 .attr('font-size', '1.5rem')
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
-                .attr('y', 45)
-                .attr('fill', 'black')
+                .attr('y', 65)
                 .attr('text-anchor', 'middle')
                 .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
                 .style('opacity', 0); // start invisible

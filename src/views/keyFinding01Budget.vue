@@ -6,24 +6,20 @@
                 <p>To understand water limitation, it is first important to understand the how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. On an annual average basis, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
-        <div class="viz-container">
-          <div id="dotplot-container">             
-        </div>   
-        </div>
-        <div class="caption-container">
-              <div class="caption-legend-child">
+            <div class="text-container">
+            <div class="caption-legend-child">
                 <div class="checkbox_item" id="checkbox-demand" >
-                  <label class="checkbox_wrap">
+                  <label class="checkbox_wrap chart-title">
                   <input type="checkbox" 
                   name="checkbox" 
                   class="checkbox_inp" 
                   @click="togglePoints('demand')">
                   <span class="checkbox_mark"></span>
-                  Water demand
+                  Water demand vs.
                   </label>
                 </div>
                 <div class="checkbox_item" id="checkbox-supply" >
-                  <label class="checkbox_wrap">
+                  <label class="checkbox_wrap chart-title">
                     <input type="checkbox" 
                     name="checkbox" 
                     class="checkbox_inp" 
@@ -33,6 +29,14 @@
                   </label>
                 </div>
               </div>
+            </div>
+        <div class="viz-container">
+          
+          <div id="dotplot-container">             
+        </div>   
+        </div>
+        <div class="caption-container">
+              
               <div class="caption-text-child">
                 <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
               </div>
@@ -175,8 +179,10 @@ import Methods from '../components/Methods.vue';
 import { isMobile } from 'mobile-device-detect';
 import { useRoute } from 'vue-router';
 
-const route = useRoute();
+
+// dependency injections
 const featureToggles = inject('featureToggles');
+const animateTime = inject('animateTime')
 
 // References logic
 // filter to this page's key message
@@ -186,9 +192,11 @@ const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors
 const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
 theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
-const mobileView = isMobile;
 
+// global vars
+const mobileView = isMobile;
 const publicPath = import.meta.env.BASE_URL;
+const route = useRoute();
 const dataSet1 = ref([]); 
 const data = ref([]);
 const csvData = ref([]);
@@ -201,6 +209,7 @@ const containerHeight = Math.min(
   maxHeight
 );
 
+// chart dimensions for supply vs demand chart
 let margin = { top: 50, right: 50, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
@@ -208,6 +217,7 @@ let chartBounds, dotGroup;
 let xScale;
 let originalXScaleDomain;
 
+// reactive variables
 let showSupply = ref(true);
 let showDemand = ref(true);
 
@@ -244,8 +254,6 @@ const layers = reactive({
   }
 });
 
-	
- 
 // regional selection data
 const csvWA = "wa_stress_stats.csv"
 function updateSelectedRegion(regionName) {
@@ -258,7 +266,7 @@ const toggleLayer = (layerId) => {
   layers[layerId].visible = !layers[layerId].visible;
 }
 
-
+// run of show
 onMounted(async () => {
     try {
         await loadDatasets();
@@ -326,31 +334,31 @@ function togglePoints(type) {
     // Transition the x-axis
     d3.selectAll(".x-axis-bottom")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .call(d3.axisBottom(xScale).ticks(5));
 
     d3.selectAll(".x-axis-top")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .call(d3.axisTop(xScale).ticks(5));
 
     // Update the position of the circles and hide/show based on the toggles
     d3.selectAll(".circle-supply")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .attr('cx', d => xScale(d.supply_mean))
         .style("opacity", showSupply.value ? 1 : 0); // toggle opacity based on showSupply
 
     d3.selectAll(".circle-demand")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .attr('cx', d => xScale(d.demand_mean))
         .style("opacity", showDemand.value ? 1 : 0); // toggle opacity based on showDemand
 
     // Transition the lines connecting supply and demand
     d3.selectAll(".line")
         .transition()
-        .duration(500)
+        .duration(animateTime)
         .attr('x1', d => xScale(d.supply_mean))
         .attr('x2', d => xScale(d.demand_mean))
         .style("opacity", showSupply.value && showDemand.value ? 0.4 : 0); // only show if both supply and demand are visible
