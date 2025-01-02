@@ -233,8 +233,9 @@ watch([supplyEnabled, demandEnabled], () => {
   togglePoints();
 });
  
-// stacked bar chart data
-const csvWA = "wa_stress_stats.csv"
+// data for D3 charts
+const csvSUI = 'wa_stress_stats.csv' // stacked bar chart data
+const csvSupplyDemand = 'wa_supply_demand.csv'
 
 // update region name stored in reactive data variable when selected on regionMap
 function updateSelectedRegion(regionName) {
@@ -250,10 +251,11 @@ const toggleLayer = (layerId) => {
 onMounted(async () => {
     try {
       // first load the data
-        await loadDatasets();
-        data.value = dataSet1.value; // 
+        data.value = await loadData(csvSupplyDemand); // supply and demand data
+        csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
+
         if (data.value.length > 0) {
-            initDotChart();
+            initDotChart(); // initialize svg for supply and demand chart
             createDotChart();
         } else {
             console.error('Error loading data');
@@ -263,11 +265,8 @@ onMounted(async () => {
     }
 });
 
-async function loadDatasets() {
-  dataSet1.value = await loadData('wa_supply_demand.csv');
-  csvData.value = await d3.csv(`${publicPath}${csvWA}`);
-}
-
+// METHODS
+// general data loading fxn
 async function loadData(fileName) {
     try {
         const data = await d3.csv(publicPath + fileName, d => d);
@@ -277,7 +276,7 @@ async function loadData(fileName) {
         return [];
     }
 }
-
+// initialize svg for chart
 function initDotChart() {
     d3.select('#dotplot-container').select('svg').remove();
 
@@ -293,62 +292,8 @@ function initDotChart() {
 
     dotGroup = chartBounds.append('g');
 }
-
-
-const togglePoints = (type) => {
-  if (type === "supply") {
-    supplyEnabled.value = !supplyEnabled.value;
-  } else if (type === "demand") {
-    demandEnabled.value = !demandEnabled.value;
-  }
-
-    // update the x-axis domain and visibility based on toggle state
-    const visibleSupply = supplyEnabled.value ? data.value.map(d => +d.supply_mean) : [];
-    const visibleDemand = demandEnabled.value ? data.value.map(d => +d.demand_mean) : [];
-
-    const visiblePoints = [...visibleSupply, ...visibleDemand];
-    const newDomain = visiblePoints.length > 0 ? d3.extent(visiblePoints) : originalXScaleDomain;
-
-    // Update the x-axis domain based on supply and demand toggles
-    xScale.domain(newDomain).nice();
-
-    // Transition the x-axis
-    d3.selectAll(".x-axis-bottom")
-        .transition()
-        .duration(animateTime)
-        .call(d3.axisBottom(xScale).ticks(5));
-
-    // there's an x-axis on top and bottom of the chart so it's readable on different screen sizes
-    d3.selectAll(".x-axis-top")
-        .transition()
-        .duration(animateTime)
-        .call(d3.axisTop(xScale).ticks(5));
-
-    // Update the position of the circles and hide/show based on the toggles
-    d3.selectAll(".circle-supply")
-        .transition()
-        .duration(animateTime)
-        .attr('cx', d => xScale(d.supply_mean))
-        .style("opacity", supplyEnabled.value ? 1 : 0); // toggle opacity based on supplyEnabled
-
-    d3.selectAll(".circle-demand")
-        .transition()
-        .duration(animateTime)
-        .attr('cx', d => xScale(d.demand_mean))
-        .style("opacity", demandEnabled.value ? 1 : 0); // toggle opacity based on demandEnabled
-
-    // Transition the lines connecting supply and demand
-    d3.selectAll(".line")
-        .transition()
-        .duration(animateTime)
-        .attr('x1', d => xScale(d.supply_mean))
-        .attr('x2', d => xScale(d.demand_mean))
-        .style("opacity", supplyEnabled.value && demandEnabled.value ? 0.4 : 0); // only show if both supply and demand are visible
-}
-
-
-
-
+// make dot plot w/ connecting bars
+// and mini regional maps in y-axis labels
 function createDotChart() {
     const dataset = data.value;
 
@@ -357,12 +302,14 @@ function createDotChart() {
         return;
     }
 
+    // scales
     const yAccessor = d => d["Region_nam"];
 
     const xScaleDomain = d3.extent([
         ...dataset.map(d => +d.supply_mean),
         ...dataset.map(d => +d.demand_mean)
     ]);
+
     xScale = d3.scaleLinear()
         .domain(xScaleDomain)
         .range([0, width - 2 * margin.right])
@@ -397,6 +344,7 @@ function createDotChart() {
       .attr("x", -44)
       .attr("dy", "0.32em");
 
+    // add mini maps to each label
     d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
       const svgNode = xml.documentElement;
 
@@ -421,6 +369,7 @@ function createDotChart() {
         });
     });
 
+    // connecting lines
     dotGroup.selectAll(".line")
         .data(dataset)
         .enter().append('line')
@@ -433,6 +382,7 @@ function createDotChart() {
         .attr('stroke-width', 3)
         .attr("stroke-opacity", 0.5);
 
+    // supply circle
     dotGroup.selectAll(".circle-supply")
         .data(dataset)
         .enter().append('circle')
@@ -442,6 +392,7 @@ function createDotChart() {
         .attr('r', 5)
         .attr('fill', 'var(--ws-supply)');
 
+    // demand circle
     dotGroup.selectAll(".circle-demand")
         .data(dataset)
         .enter().append('circle')
@@ -453,8 +404,54 @@ function createDotChart() {
         .attr('stroke-width', '2px')
         .attr("fill", "var(--white)");
 }
-</script>
 
+// turn points on and off with toggle, trnasition x-axis to fit the data
+const togglePoints = (type) => {
+ 
+ // update the x-axis domain and visibility based on toggle state
+ const visibleSupply = supplyEnabled.value ? data.value.map(d => +d.supply_mean) : [];
+ const visibleDemand = demandEnabled.value ? data.value.map(d => +d.demand_mean) : [];
+
+ const visiblePoints = [...visibleSupply, ...visibleDemand];
+ const newDomain = visiblePoints.length > 0 ? d3.extent(visiblePoints) : originalXScaleDomain;
+
+ // Update the x-axis domain based on supply and demand toggles
+ xScale.domain(newDomain).nice();
+
+ // Transition the x-axis
+ d3.selectAll(".x-axis-bottom")
+     .transition()
+     .duration(animateTime)
+     .call(d3.axisBottom(xScale).ticks(5));
+
+ // there's an x-axis on top and bottom of the chart so it's readable on different screen sizes
+ d3.selectAll(".x-axis-top")
+     .transition()
+     .duration(animateTime)
+     .call(d3.axisTop(xScale).ticks(5));
+
+ // Update the position of the circles and hide/show based on the toggles
+ d3.selectAll(".circle-supply")
+     .transition()
+     .duration(animateTime)
+     .attr('cx', d => xScale(d.supply_mean))
+     .style("opacity", supplyEnabled.value ? 1 : 0); // toggle opacity based on supplyEnabled
+
+ d3.selectAll(".circle-demand")
+     .transition()
+     .duration(animateTime)
+     .attr('cx', d => xScale(d.demand_mean))
+     .style("opacity", demandEnabled.value ? 1 : 0); // toggle opacity based on demandEnabled
+
+ // Transition the lines connecting supply and demand
+ d3.selectAll(".line")
+     .transition()
+     .duration(animateTime)
+     .attr('x1', d => xScale(d.supply_mean))
+     .attr('x2', d => xScale(d.demand_mean))
+     .style("opacity", supplyEnabled.value && demandEnabled.value ? 0.4 : 0); // only show if both supply and demand are visible
+}
+</script>
 
 <style scoped>
 .content-container {
