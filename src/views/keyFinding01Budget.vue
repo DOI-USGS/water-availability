@@ -244,20 +244,9 @@ const csvSupplyDemand = 'wa_supply_demand.csv'
 
 // run of show
 onMounted(async () => {
-    try {
       // first load the data
         data.value = await loadData(csvSupplyDemand); // supply and demand data
         csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
-
-        if (data.value.length > 0) {
-           // initDotChart(); // initialize svg for supply and demand chart
-           // createDotChart();
-        } else {
-            console.error('Error loading data');
-        }
-    } catch (error) {
-        console.error('Error during component mounting', error);
-    }
 });
 
 // METHODS
