@@ -9,48 +9,30 @@
               <div class="caption-text-child">
                 <p>This map shows total water use by category of use for each watershed (HUC12) as average annual values from 2010 to 2020. The bar chart shows the total water use for that category. Toggle the categories of water use on and off with these buttons. Hover over the map to see regional summaries.</p>
               </div>
-              <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-ir" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleCategory('ir_total')">
-                  <span class="checkbox_mark"></span>
-                    Crop irrigation
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-ps" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleCategory('ps_total')">
-                  <span class="checkbox_mark"></span>
-                    Public supply
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-te-fresh" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleCategory('te_total')">
-                  <span class="checkbox_mark"></span>
-                    Thermoelectric (fresh)
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-te-saline" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleCategory('te_saline')">
-                  <span class="checkbox_mark"></span>
-                    Thermoelectric (saline)
-                  </label>
-                </div>
-              </div>
+              <<ToggleSwitch 
+                v-model="layers.ir_total.visible" 
+                :label="layers.ir_total.label"
+                :rightColor="layers.ir_total.color"
+              />
+
+              <ToggleSwitch 
+                v-model="layers.ps_total.visible" 
+                :label="layers.ps_total.label"
+                :rightColor="layers.ps_total.color"
+              />
+
+              <ToggleSwitch 
+                v-model="layers.te_total.visible" 
+                :label="layers.te_total.label"
+                :rightColor="layers.te_total.color"
+              />
+
+              <ToggleSwitch 
+                v-model="layers.te_saline.visible" 
+                :label="layers.te_saline.label"
+                :rightColor="layers.te_saline.color"
+              />
+
           </div> 
           <div class="image-container">
           <HorizontalBar 
@@ -145,6 +127,7 @@ import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import RegionMap from '../components/RegionMap.vue';
 import HorizontalBar from '../components/HorizontalBar.vue';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
 // global variables
 const publicPath = import.meta.env.BASE_URL;

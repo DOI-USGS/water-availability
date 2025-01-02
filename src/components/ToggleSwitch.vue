@@ -26,15 +26,18 @@
       <span 
         v-if="rightLabel" 
         class="toggle-text" 
-        :class="{ tactive: modelValue }"
+        :class="{ tactive: modelValue, inactive: !modelValue }"
       >
       {{ rightLabel }}
     </span>
-    <span v-else-if="label" 
-      class="toggle-text"
+     <!-- Single label -->
+     <span 
+        v-else-if="label" 
+        class="toggle-text"
+        :class="{ tactive: modelValue, inactive: !modelValue }"
       >
-      {{ label }}
-    </span>
+        {{ label }}
+      </span>
     </label>
   </div>
 </template>
@@ -121,7 +124,6 @@ defineEmits(['update:modelValue']);
   position: relative;
   width: 40px;
   height: 20px;
-  background-color: red;
   border-radius: 20px;
   transition: background-color 0.3s ease;
 }
