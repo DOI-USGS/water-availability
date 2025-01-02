@@ -111,6 +111,24 @@ p2_targets <- list(
                inner_join(p2_CONUS_crosswalk_HUC12_df, by = "HUC12") |>
                filter(! is.na(Region_nam)) 
   ),
+  # Shapefiles for plotting
+  tar_target(p2_mainstem_HUC8_simple_sf,
+             p1_mainstem_HUC8_raw_sf |> 
+               dplyr::mutate(
+                 HUC2 = str_sub(HUC, 1, 2),
+                 region_group = case_when(
+                   HUC2 == "19" ~ "AK",
+                   HUC2 == "20" ~ "HI",
+                   HUC2 == "21" ~ "PR",
+                   HUC2 == "22" ~ "other",
+                   .default = "CONUS"
+                 )
+               ) |> 
+               rename(HUC8 = HUC) |>
+               # remove everything outside of CONUS for now
+               filter(region_group == "CONUS") 
+  ),
+  
   # simplified for small inset maps
   tar_target(
     p2_State_sf,

@@ -1,39 +1,61 @@
 viz_popn_circles <- function(in_df,
+                             in_sf,
                              color_scheme,
                              png_out,
                              width,
                              height){
   
+  # remove unnecessary columns of in_df
+  df_simpler <- in_df |>
+    select(HUC8, mean_sui, sui_category_5, popn) |>
+    filter(!is.na(popn)) |>
+    group_by(HUC8) |>
+    summarize(mean_sui = mean(mean_sui, na.rm = TRUE),
+              total_popn = sum(popn, na.rm = TRUE))
+  
+  # join data to sf
+  plot_sf <- in_sf |>
+    left_join(df_simpler, by = "HUC8") |>
+    select(HUC8, geometry, mean_sui, total_popn) |>
+    filter(! is.na(total_popn))
+    
+  # create cartogram
+  st_cartogram <- cartogram::cartogram_dorling(plot_sf, "total_popn")
+  
+  plot <- ggplot(st_cartogram) +
+    geom_sf(aes(fill = sui_category_5)) +
+    theme_void()
+  
   # process data for circle packing
-  in_df <- in_df |> arrange(-mean_sui, AggRegion_nam)
-  packing <- packcircles::circleProgressiveLayout(in_df$popn, 
-                                                  sizetype = "area")
-  circle_pack_data <- cbind(in_df, packing)
-  dat.gg <- packcircles::circleLayoutVertices(packing, npoints = 50)
-  dat.gg$value <- rep(in_df$sui_category_5, each = 51)
+  # in_df <- in_df |> arrange(-mean_sui, AggRegion_nam)
+  # packing <- packcircles::circleProgressiveLayout(in_df$popn, 
+  #                                                 sizetype = "area")
+  # circle_pack_data <- cbind(in_df, packing)
+  # dat.gg <- packcircles::circleLayoutVertices(packing, npoints = 50)
+  # dat.gg$value <- rep(in_df$sui_category_5, each = 51)
+  # 
+  # plot_data <- dat.gg
+  # 
+  # # circle packing plot
+  # (circle_plot <- ggplot() + 
+  #     geom_polygon(data = dat.gg, 
+  #                  aes(x, y, group = id, fill = as.factor(value)), 
+  #                  linewidth = 0.1,
+  #                  colour = "black", alpha = 0.3) + 
+  #     geom_polygon(data = plot_data, 
+  #                  aes(x, y, group = id, fill = as.factor(value)), 
+  #                  linewidth = 0.1,
+  #                  colour = "black") + 
+  #     scale_fill_manual(values = color_scheme, 
+  #                       breaks = c("Severe", "High", "Moderate", "Low", "Very low/\nnone"), 
+  #                       name = "Water Stress Level") +
+  #     theme_void() + 
+  #     theme(legend.position="none", 
+  #           plot.margin = unit(c(1,1,1,1),"cm")) + 
+  #     coord_equal()
+  # )
   
-  plot_data <- dat.gg
-  
-  # circle packing plot
-  (circle_plot <- ggplot() + 
-      geom_polygon(data = dat.gg, 
-                   aes(x, y, group = id, fill = as.factor(value)), 
-                   linewidth = 0.1,
-                   colour = "black", alpha = 0.3) + 
-      geom_polygon(data = plot_data, 
-                   aes(x, y, group = id, fill = as.factor(value)), 
-                   linewidth = 0.1,
-                   colour = "black") + 
-      scale_fill_manual(values = color_scheme, 
-                        breaks = c("Severe", "High", "Moderate", "Low", "Very low/\nnone"), 
-                        name = "Water Stress Level") +
-      theme_void() + 
-      theme(legend.position="none", 
-            plot.margin = unit(c(1,1,1,1),"cm")) + 
-      coord_equal()
-  )
-  
-  ggsave(filename = png_out, 
+  ggsave(plot = plot, filename = png_out, 
          width = width, height = height, dpi = 300, bg = "transparent")
   
   return(png_out)

@@ -31,7 +31,8 @@ tar_option_set(packages = c(
   "tigris",
   "geofacet",
   "ggnewscale",
-  "treemap"))
+  "treemap",
+  "cartogram"))
 
 ### Naming conventions:
 # Water Supply = ws

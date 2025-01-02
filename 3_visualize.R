@@ -179,29 +179,12 @@ p3_targets <- list(
   #
     tar_target(p3_popn_circles_png,
                viz_popn_circles(in_df = p2_sui_popn_df,
+                                in_sf = p2_mainstem_HUC8_simple_sf,
                                 color_scheme = p3_popn_colors,
                                 png_out = "src/assets/images/R/02_sui_popn_CONUS.png",
-                                width = 6,
+                                width = 9,
                                 height = 6),
                format = "file"
-  ),
-  tar_target(p3_popn_bar_vert_png,
-             viz_popn_bar_vert(in_df = p2_popn_bar_df, 
-                               color_scheme = p3_popn_colors, 
-                               fonts = p3_fonts_website,
-                               png_out = "src/assets/images/R/02_sui_popn_vert_bar.png",
-                               width = 2,
-                               height = 6),
-             format = "file"
-  ),
-  tar_target(p3_popn_bar_hori_png,
-             viz_popn_bar_hori(in_df = p2_popn_bar_df, 
-                               color_scheme = p3_popn_colors, 
-                               fonts = p3_fonts_website,
-                               png_out = "src/assets/images/R/02_sui_popn_hori_bar.png",
-                               width = 6,
-                               height = 2),
-             format = "file"
   ),
   tar_map(
     values = tibble::tibble(wa_types = c("wa_sw_wq", "wa_sui", "wa_gw_wq", "wa_ecoflow")),
