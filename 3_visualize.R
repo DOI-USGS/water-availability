@@ -171,14 +171,7 @@ p3_targets <- list(
   #             high/severe water imbalance
   #
   #
-    tar_target(p3_popn_circles_png,
-               viz_popn_circles(in_sf = p2_popn_bubbles_df,
-                                color_scheme = p3_colors_sui,
-                                png_out = "src/assets/images/R/02_sui_popn_CONUS.png",
-                                width = 9,
-                                height = 6),
-               format = "file"
-  ),
+  
   tar_map(
     values = tibble::tibble(wa_types = c("wa_sw_wq", "wa_sui", "wa_gw_wq", "wa_ecoflow")),
     tar_target(p3_water_avail_png,
@@ -200,44 +193,20 @@ p3_targets <- list(
   #             are considered to be socially vulnerable.
   #
   #
-  tar_target(p3_map_sui_svi_grob,
-             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
-                         dry_onlyL = FALSE,
-                         color_scheme = p3_colors_balance)),
-  tar_target(p3_map_dry_sui_svi_grob,
-             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
-                         dry_onlyL = TRUE,
-                         color_scheme = p3_colors_balance)),
-  tar_target(p3_legend_n_grob,
-             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
-                                legend_type = "Number",
-                                color_scheme = p3_colors_balance)),
-  tar_target(p3_legend_prop_grob,
-             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
-                                legend_type = "Proportion",
-                                color_scheme = p3_colors_balance)),
-  tar_target(p3_legend_explainer_grob,
-             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
-                                legend_type = "Explainer",
-                                color_scheme = p3_colors_balance)),
+  tar_target(p3_popn_circles_png,
+             viz_popn_circles(in_sf = p2_popn_bubbles_df,
+                              color_scheme = p3_colors_sui,
+                              png_out = "src/assets/images/R/03_sui_popn_CONUS.png",
+                              width = 9,
+                              height = 6),
+             format = "file"
+  ),
   tar_target(p3_map_sui_svi_png,
-             compose_svi_plot(in_map = p3_map_sui_svi_grob,
-                              legend_n = p3_legend_n_grob,
-                              legend_prop = p3_legend_prop_grob,
-                              legend_explain = p3_legend_explainer_grob,
-                              png_out = "src/assets/images/R/03_sui_svi_map.png",
-                              width = 6, 
-                              height = 5),
-             format = "file"),
-  tar_target(p3_map_dry_sui_svi_png,
-             compose_svi_plot(in_map = p3_map_dry_sui_svi_grob,
-                              legend_n = p3_legend_n_grob,
-                              legend_prop = p3_legend_prop_grob,
-                              legend_explain = p3_legend_explainer_grob,
-                              png_out = "src/assets/images/R/03_sui_svi_dry_map.png",
-                              width = 6,
-                              height = 5),
-             format = "file"),
+             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
+                         color_scheme = p3_colors_balance,
+                         png_out = "src/assets/images/R/03_svi_CONUS.png",
+                         width = 9,
+                         height = 6)),
   
   
   ##############################################

@@ -11,21 +11,34 @@ viz_popn_circles <- function(in_sf,
                                  sui_category_5 == "High" ~ color_scheme$sui_high,
                                  sui_category_5 == "Severe" ~ color_scheme$sui_severe))
   
+  points <- sf::st_centroid(plot_sf)
   
-  plot <- ggplot(plot_sf) +    
-    geom_sf(fill = "white",
-            color = NA, size = 0)  +
-    geom_sf(data = plot_sf |> filter(sui_category_5 == "Very low/\nnone"),
-            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) + 
-    geom_sf(data = plot_sf |> filter(sui_category_5 == "Low"),
-            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
-    geom_sf(data = plot_sf |> filter(sui_category_5 == "Moderate"),
-            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
-    geom_sf(data = plot_sf |> filter(sui_category_5 == "High"),
-            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
-    geom_sf(data = plot_sf |> filter(sui_category_5 == "Severe"),
-            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
-    scale_fill_identity() +
+  plot <- ggplot(points) +    
+    #geom_sf(fill = "white",
+    #        color = NA, linewidth = 0)  +
+    geom_sf(aes(size = total_popn), color = "white") +
+    geom_sf(data = points |> filter(sui_category_5 == "Very low/\nnone"),
+            aes(size = total_popn, color = color_hex), alpha = 0.7) +
+    geom_sf(data = points |> filter(sui_category_5 == "Low"),
+            aes(size = total_popn, color = color_hex), alpha = 0.7) +
+    geom_sf(data = points |> filter(sui_category_5 == "Moderate"),
+            aes(size = total_popn, color = color_hex), alpha = 0.7) +
+    geom_sf(data = points |> filter(sui_category_5 == "High"),
+            aes(size = total_popn, color = color_hex), alpha = 0.7) +
+    geom_sf(data = points |> filter(sui_category_5 == "Severe"),
+            aes(size = total_popn, color = color_hex), alpha = 0.7) +
+    scale_size(range = c(0.5, 14)) +
+    # geom_sf(data = plot_sf |> filter(sui_category_5 == "Very low/\nnone"),
+    #         aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) + 
+    # geom_sf(data = plot_sf |> filter(sui_category_5 == "Low"),
+    #         aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
+    # geom_sf(data = plot_sf |> filter(sui_category_5 == "Moderate"),
+    #         aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
+    # geom_sf(data = plot_sf |> filter(sui_category_5 == "High"),
+    #         aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
+    # geom_sf(data = plot_sf |> filter(sui_category_5 == "Severe"),
+    #         aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
+    scale_color_identity() +
     theme_void() +
     theme(legend.position = "none")
   
