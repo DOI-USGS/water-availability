@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, computed } from 'vue';
+import { onMounted, ref, inject, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -101,15 +101,12 @@ const referenceList = ref(theseReferences);
 
 // global objects
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
-const selectedView = ref("stacked"); // Tracks the dropdown selection
 const mobileView = isMobile; // Detect mobile view for responsive design
 
 // Global variables to hold chart elements and data
 let svg, chartBounds, rectGroup, useAxis, yearAxis;
 let categoryGroups, yearGroups, stackedData;
 let yearScale, useScale, categoryRectGroups;
-
-// Adjust margins to equalize space
 const containerWidth = 700; // Constrain to 700px max
 const containerHeight = 700;
 
@@ -120,31 +117,6 @@ const margin = mobileView
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 
-// Define toggle functions for switching between
-function toggleToFaceted() {
-  if (!isFaceted.value) {
-    isFaceted.value = true;
-    transitionToFaceted();
-  }
-}
-
-function toggleToStacked() {
-  if (isFaceted.value) {
-    isFaceted.value = false;
-    transitionToStacked();
-  }
-}
-
-// Handle dropdown selection change
-function handleViewChange() {
-  const selectedView = event.target;
-  if (selectedView.value === "faceted") {
-    toggleToFaceted();
-  } else {
-    toggleToStacked();
-  }
-}
-
 // Define colors for each category group
 const categoryColors = {
   'Public Supply': 'var(--wu-ps)',
@@ -153,14 +125,25 @@ const categoryColors = {
   'Thermoelectric (saline)': 'var(--wu-te-saline)',
 };
 
+// Data references
+const dataSet = ref([]);
+const data = ref([]);
+
+// Watcher to handle toggle changes
+watch(isFaceted, (newValue) => {
+  if (newValue) {
+    transitionToFaceted();
+  } else {
+    transitionToStacked();
+  }
+});
+
+
+// METHODS
 // Helper function to create valid CSS selectors by replacing special characters
 function sanitizeSelector(str) {
   return str.replace(/[ ()]/g, '_');
 }
-
-// Data references
-const dataSet = ref([]);
-const data = ref([]);
 
 // Function to load the datasets
 async function loadDatasets() {
