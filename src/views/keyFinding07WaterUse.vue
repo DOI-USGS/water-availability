@@ -283,7 +283,7 @@ function createBarChart({ dataset }) {
     .attr("x", margin.left / 2) 
     .attr("y", margin.top / 2)
     .attr("text-anchor", "start")
-    .text("Water use by year");
+    .text("Average daily water use");
 
   // chart subtitle
   svg.append("text")
@@ -291,7 +291,7 @@ function createBarChart({ dataset }) {
     .attr("x", margin.left/2) 
     .attr("y", margin.top-20)
     .attr("text-anchor", "start")
-    .text("Bars show total daily water use (million gallons per day) for the lower 48 United States by category of use");
+    .text("Bars show average daily water use (million gallons per day) for the lower 48 United States by use type");
 }
 
 // Toggle between stacked and faceted views

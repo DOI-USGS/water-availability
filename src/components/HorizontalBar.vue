@@ -38,7 +38,7 @@ onMounted(() => {
       .attr('class', 'chart-subtitle')
       .attr('x', 0)
       .attr('y', 45)
-      .text(`Total daily water use (million gallons per day) by watershed (HUC12)`)
+      .text(`Daily water use (million gallons per day) in 2020`)
   }
 
   const aggregatedData = aggregateData(props.data);
