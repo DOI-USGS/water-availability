@@ -61,7 +61,7 @@ defineProps({
   // colors for each label and inactive state
   leftColor: {
     type: String,
-    default: 'var(--soft-black)' 
+    default: 'var(--inactive-grey)' 
   },
   rightColor: {
     type: String,

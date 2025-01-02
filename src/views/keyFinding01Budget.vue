@@ -19,11 +19,13 @@
         <div class="caption-container">
           <ToggleSwitch 
             v-model="demandEnabled" 
-            label="Water demand" 
+            rightLabel="Water demand" 
+            rightColor="black"
           />
           <ToggleSwitch 
             v-model="supplyEnabled" 
-            label="Water supply" 
+            rightLabel="Water supply" 
+            rightColor="black"
           />
           
           <!-- Supply and Demand capation -->
@@ -86,35 +88,40 @@
               <!-- Very Low -->
               <ToggleSwitch 
                 v-model="veryLowEnabled" 
-                label="Very low" 
+                rightLabel="Very low" 
+                rightColor="black"
                 @update:modelValue="toggleLayer('very_low_none')" 
               />
 
               <!-- Low -->
               <ToggleSwitch 
                 v-model="lowEnabled" 
-                label="Low" 
+                rightLabel="Low" 
+                rightColor="black"
                 @update:modelValue="toggleLayer('low')" 
               />
 
               <!-- Moderate -->
               <ToggleSwitch 
                 v-model="moderateEnabled" 
-                label="Moderate" 
+                rightLabel="Moderate" 
+                rightColor="black"
                 @update:modelValue="toggleLayer('moderate')" 
               />
 
               <!-- High -->
               <ToggleSwitch 
                 v-model="highEnabled" 
-                label="High" 
+                rightLabel="High" 
+                rightColor="black"
                 @update:modelValue="toggleLayer('high')" 
               />
 
               <!-- Severe -->
               <ToggleSwitch 
                 v-model="severeEnabled" 
-                label="Severe" 
+                rightLabel="Severe" 
+                rightColor="black"
                 @update:modelValue="toggleLayer('severe')" 
               />
               <br/>
