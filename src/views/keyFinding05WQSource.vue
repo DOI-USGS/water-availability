@@ -12,6 +12,8 @@
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
               />
             </div>
 
@@ -21,6 +23,9 @@
                     v-model="scaleLoad" 
                     leftLabel="Percent load" 
                     rightLabel="Total load" 
+                    rightColor="black"
+                    leftColor="black"
+                    inactiveColor="grey"
                   />
                 </div>
               </div>
@@ -80,6 +85,8 @@
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
               />
             </div>
             <RegionMap 
