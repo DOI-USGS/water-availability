@@ -47,13 +47,13 @@ popn_for_bubbles <- function(in_df, in_svi, in_sf){
     select(HUC8, geometry, mean_sui, total_popn) |>
     filter(! is.na(total_popn))
   
-  in_svi_huc8 <- in_svi |>
+  in_svi_HUC8 <- in_svi |>
     mutate(HUC8 = substr(HUC12, 1, 8)) |>
     group_by(HUC8) |>
     summarize(mean_svi = mean(mean_svi, na.rm = TRUE))
   
   plot_sf_join <- plot_sf |>
-    left_join(in_svi_huc8, by = "HUC8")  |> 
+    left_join(in_svi_HUC8, by = "HUC8")  |> 
     filter(!is.na(mean_svi)) |>
     mutate(plot_svi = mean_svi*100000)
   

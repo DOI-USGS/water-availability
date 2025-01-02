@@ -532,6 +532,6 @@ p2_targets <- list(
   tar_target(p2_popn_bubbles_df,
              popn_for_bubbles(in_df = p2_sui_popn_df,
                               in_svi = p2_svi_mean_HUC12,
-                          in_sf = p2_mainstem_HUC8_simple_sf))
+                              in_sf = p2_mainstem_HUC8_simple_sf))
   
 )
