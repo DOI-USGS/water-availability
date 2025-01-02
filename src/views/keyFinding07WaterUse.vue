@@ -10,17 +10,15 @@
       <div class="caption-container">
         <div class="caption-text-child">
           <p>This chart shows water use from 2010 through 2020. Use the buttons to switch between viewing the total annual use to viewing the annual use by category. Note that the y-scale is not constant for each use when viewing use by category.</p>
-          <div class="checkbox_item">
-            <div class="checkbox_wrap">
-              <label>
-                <input type="radio" name="water-use" @change="handleViewChange" id="total-button" value="stacked"> Total use
-              </label>
-              <label>
-                <input type="radio" name="water-use" @change="handleViewChange" id="facet-button" value="faceted"> Use by category
-              </label>
-            </div>
-          </div>
         </div>
+        <!-- Scale toggle -->
+        <ToggleSwitch 
+          v-model="isFaceted"
+          leftLabel="Total use"
+          rightLabel="Use by category"
+          leftColor="black"
+          rightColor="black"
+        />
         <div class="caption-legend-child">
           <div class="legend_item" id="legend-wu-ir" >
             <label class="legend_wrap">
@@ -84,6 +82,7 @@ import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
 // dependency injections
 const featureToggles = inject('featureToggles');
@@ -347,12 +346,10 @@ function transitionToFaceted() {
 
     // add label for grouping
     chartBounds.append('text')
-      .attr("class", "facet-label")
+      .attr("class", "facet-label chart-text")
       .attr('x', 5)       
       .attr('y', i * (facetHeight + facetPadding + 5))  
       .attr('text-anchor', 'start')  
-      .attr('font-weight', '600')
-      .attr('class', 'chart-text')   
       .text(group);       
 
   });
