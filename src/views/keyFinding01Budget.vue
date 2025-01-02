@@ -20,12 +20,12 @@
           <ToggleSwitch 
             v-model="demandEnabled" 
             rightLabel="Water demand" 
-            rightColor="black"
+            :rightColor="'var(--ws-demand)'"
           />
           <ToggleSwitch 
             v-model="supplyEnabled" 
             rightLabel="Water supply" 
-            rightColor="black"
+            :rightColor="'var(--ws-supply)'"
           />
           
           <!-- Supply and Demand capation -->
@@ -89,7 +89,7 @@
               <ToggleSwitch 
                 v-model="veryLowEnabled" 
                 rightLabel="Very low" 
-                rightColor="black"
+                :rightColor="layers.very_low_none.color"
                 @update:modelValue="toggleLayer('very_low_none')" 
               />
 
@@ -97,7 +97,7 @@
               <ToggleSwitch 
                 v-model="lowEnabled" 
                 rightLabel="Low" 
-                rightColor="black"
+                :rightColor="layers.low.color"
                 @update:modelValue="toggleLayer('low')" 
               />
 
@@ -105,7 +105,7 @@
               <ToggleSwitch 
                 v-model="moderateEnabled" 
                 rightLabel="Moderate" 
-                rightColor="black"
+                :rightColor="layers.moderate.color"
                 @update:modelValue="toggleLayer('moderate')" 
               />
 
@@ -113,7 +113,7 @@
               <ToggleSwitch 
                 v-model="highEnabled" 
                 rightLabel="High" 
-                rightColor="black"
+                :rightColor="layers.high.color"
                 @update:modelValue="toggleLayer('high')" 
               />
 
@@ -121,7 +121,7 @@
               <ToggleSwitch 
                 v-model="severeEnabled" 
                 rightLabel="Severe" 
-                rightColor="black"
+                :rightColor="layers.severe.color"
                 @update:modelValue="toggleLayer('severe')" 
               />
               <br/>
@@ -300,23 +300,6 @@ const toggleLayer = (layerId) => {
   left: 0;
   width: 100%;
   height: 100%;
-}
-.region-label {
-  font-size: 14px;
-  font-weight: bold;
-  fill: black; 
-  pointer-events: none; /* Prevents the label from interfering with mouse events */
-}
-
-
-#toggle-supply {
-  margin-left: 10px;
-  background-color: #669999;
-}
-
-#toggle-demand {
-  margin-left: 10px;
-  background-color: #F87A53;
 }
 
 </style>

@@ -6,7 +6,6 @@
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
               <div class="caption-container">
-              <div class="checkbox_item">
               <!-- Nutrient Toggle -->
               <ToggleSwitch 
                 v-model="showNitrogen" 
@@ -15,9 +14,7 @@
                 rightColor="black"
                 leftColor="black"
               />
-            </div>
 
-                <div class="checkbox_item">
                   <!-- Scale Toggle -->
                   <ToggleSwitch 
                     v-model="scaleLoad" 
@@ -27,7 +24,6 @@
                     leftColor="black"
                     inactiveColor="grey"
                   />
-                </div>
               </div>
           <div class="viz-container">
                 <div id="barplot-container">    
@@ -80,15 +76,13 @@
                 </p>
             </div>
             <div class="image-container">
-            <div class="checkbox_item">
               <ToggleSwitch 
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
-                rightColor="bl"
+                rightColor="black"
                 leftColor="black"
               />
-            </div>
             <RegionMap 
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
