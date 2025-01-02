@@ -149,12 +149,11 @@ const publicPath = import.meta.env.BASE_URL;
 
 // Chart dimensions
 let svg;
-const containerWidth = Math.min(window.innerWidth * 0.9, 1200); 
-const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
+const containerWidth = 700; 
 const maxHeight = 900; 
-const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { top: 100, right: 100, bottom: 40, left: 300 };
-const width = containerWidth - margin.left - margin.right;
-const height = containerHeight - margin.top - margin.bottom;
+const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+const width = containerWidth + margin.left + margin.right;
+const height = Math.min(window.innerHeight * 0.7, maxHeight) - margin.top - margin.bottom;
 let chartBounds, rectGroup;
 let nutrientScale;
 
@@ -228,13 +227,7 @@ onMounted(async () => {
         if (data.value.length > 0) {
 
           // create svg for WQ source bar chart
-            initBarChart({
-              containerWidth: containerWidth,
-              containerHeight: containerHeight,
-              margin: margin,
-              width: width,
-              height: height
-            });
+            initBarChart();
             createBarChart({
               dataset: data.value,
               scaleLoad: scaleLoad.value
@@ -286,23 +279,23 @@ function updateSelectedRegion(regionName) {
 
 /////// WQ source bar chart
 // init chart svg
-function initBarChart({ containerWidth, containerHeight, margin }) {
-
+function initBarChart() {
+    // remove any existing SVG before redrawing
     d3.select('#barplot-container').select('svg').remove();
 
     // draw svg canvas for barplot
     svg = d3.select('#barplot-container')
       .append('svg')
       .attr('class', 'barplotSVG')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
-      .style('width', containerWidth)
-      .style('height', containerHeight)
-      .style('max-height', `${maxHeight}px`);
+      .attr('viewBox', `0 0 ${containerWidth+margin.right} ${maxHeight}`)
+      .style('width', '100%')
+      .style('max-height', `${maxHeight}px`)
+      .style('height', 'auto');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
-      .style("transform", `translate(${margin.left}px, ${margin.top}px)`)
+      .style("transform", `translate(${margin.left}px, 70px)`)
 
     // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = chartBounds.append('g')
@@ -372,13 +365,13 @@ function createBarChart({ dataset, scaleLoad}) {
   // x-axis at the bottom
   chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
+    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
   // x-axis at the top
   chartBounds.append('g')
     .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
-    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
+    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
   // updating title
