@@ -15,7 +15,7 @@
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>These circles each represent one watershed (HUC12). The color is the level of water limitation, and the size of the bubble represents the population of people living in that watershed.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
+                <p>These circles each represent one hydrologic unit (HUC8). The color is the level of water limitation, and the size of the bubble represents the social vulnerability score, with larger bubbles representing more social vulnerability.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
               </div>
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-sui-none" >

@@ -67,9 +67,10 @@ viz_popn_barchart <- function(in_sf, width, height, color_scheme, png_out){
                                           "High social vulnerability",
                                           "Severe social vulnerability"))) |>
     group_by(svi_factor, sui_category_5, color_hex) |>
-    summarize(n = n())
+    summarize(n = n(),
+              total_popn = sum(total_popn, na.rm = TRUE))
   
-  ggplot(plot_sf, aes(y = svi_factor, x = n,
+  ggplot(plot_sf, aes(y = svi_factor, x = total_popn,
                       fill = color_hex)) +
     geom_bar(position = "fill", stat = "identity", orientation = "y", width = 0.8) +
     scale_fill_identity() +

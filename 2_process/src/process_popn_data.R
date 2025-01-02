@@ -54,16 +54,10 @@ popn_for_bubbles <- function(in_df, in_svi, in_sf){
   
   plot_sf_join <- plot_sf |>
     left_join(in_svi_HUC8, by = "HUC8")  |> 
-    filter(!is.na(mean_svi)) |>
-    mutate(plot_svi = mean_svi*100000)
-  
-  # create cartogram
-  st_cartogram <- cartogram::cartogram_dorling(plot_sf_join, 
-                                               weight = "plot_svi",
-                                               m_weight = 0)
+    filter(!is.na(mean_svi)) 
   
   # set up categories of water limitation
-  st_cartogram <- st_cartogram |>
+  st_cartogram <- plot_sf_join |>
     mutate(sui_category_5 = case_when(mean_sui >= 0 & mean_sui <= 0.2 ~ "Very low/\nnone",
                                       mean_sui > 0.2 & mean_sui <= 0.4 ~ "Low",
                                       mean_sui > 0.4 & mean_sui <= 0.6 ~ "Moderate",
