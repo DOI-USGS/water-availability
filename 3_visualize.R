@@ -425,7 +425,7 @@ p3_targets <- list(
                                     "Central High Plains", "Southern High Plains",
                                     "Texas", "Columbia-Snake",
                                     "Central Rockies", "Southwest Desert",
-                                    "Pacific Northwest", "California-Nevada"),
+                                    "Pacific Northwest", "California-Nevada", "CONUS"),
                             reg_noSpace = stringr::str_replace_all(reg, " ", "_")),
     tar_target(p3_ps_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
