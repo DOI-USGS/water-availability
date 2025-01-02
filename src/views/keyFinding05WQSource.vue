@@ -312,7 +312,6 @@ function initBarChart({ containerWidth, containerHeight, margin }) {
 // build initial chart
 function createBarChart({ dataset, scaleLoad}) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
-  console.log(scaleLoad)
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
   const stackedData = d3.stack()
@@ -382,24 +381,22 @@ function createBarChart({ dataset, scaleLoad}) {
     .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
     .attr('class', 'axis-text');
 
-  // updating x-axis label
+  // updating title
+  svg.select('.chart-title').remove();
   svg.append("text")
     .attr("class", "chart-title")
-    .attr('x', margin.left)
-    //.attr("x", containerWidth - margin.right-100) 
-    .attr("y", margin.top / 2)
+    .attr('x', margin.left) 
+    .attr("y", 20)
     .attr("text-anchor", "start") // anchor to the end of the text
-    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus"); 
+    .text(`Sources of ${showNitrogen.value ? "Nitrogen" : "Phosphorus"}`); 
 
-  // italic units label
+  svg.select('.chart-text').remove();
   svg.append("text")
-    .attr("class", "axis-units chart-title")
-    .attr("x", containerWidth - margin.right) 
-    .attr("y", margin.top / 2) 
-    .attr("text-anchor", "end")
-    .style("font-style", "italic")
-    .style("font-weight", "300")
-    .text(scaleLoad.value ? "Percent" : "kg/year");
+    .attr("class", "chart-text")
+    .attr("x", margin.left) 
+    .attr("y", 40) 
+    .attr("text-anchor", "start")
+    .text(scaleLoad.value ? "As a percent of total load" : "Total load in kg/year");
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -445,38 +442,8 @@ function createBarChart({ dataset, scaleLoad}) {
 // update x-axis labels with toggles
 function updateLabels() {
 
-  const label = svg.selectAll(".chart-title")
-    .data([null]); // Use a dummy data binding to handle enter/update/exit
-
-  label.enter()
-    .append("text")
-    .attr("class", "chart-title")
-    .attr("x", containerWidth - margin.right -100)
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "end")
-    .style("font-size", "2rem")
-    .style("font-weight", "bold")
-    .merge(label) 
-    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus");
-
-  label.exit().remove(); // Ensure old labels are removed
-
-  const explainedLabel = svg.selectAll(".axis-units")
-    .data([null]); 
-
-  explainedLabel.enter()
-    .append("text")
-    .attr("class", "axis-units")
-    .attr("x", containerWidth - margin.right)
-    .attr("y", margin.top / 2 )
-    .attr("text-anchor", "end")
-    .style("font-size", "2rem")
-    .style("font-style", "italic")
-    .style("font-weight", "300")
-    .merge(explainedLabel) 
-    .text(scaleLoad.value ? "kg/year" : "Percent");
-
-  explainedLabel.exit().remove(); 
+  svg.select(".chart-text")
+    .text(scaleLoad.value ? "Total load in kg/year" : "As a percent of total load");
 }
 
 // COMPUTED VARIABLES 
@@ -496,9 +463,9 @@ watch(scaleLoad, (newValue) => {
     dataset: data.value,
     scaleLoad: newValue // dynamically pass the toggle state
   });
+  updateLabels()
 
-  // update chart labels to match scale
-  updateLabels();
+
 });
 
 // watch for changes to showNitrogen
@@ -512,8 +479,7 @@ watch(showNitrogen, async (newValue) => {
     scaleLoad: scaleLoad.value 
   });
 
-  // update chart labels
-  updateLabels();
+  updateLabels()
 
   // toggle map layer visibility based on the nutrient selected
   layers.nitrogen.visible = newValue;   // show nitrogen layer
