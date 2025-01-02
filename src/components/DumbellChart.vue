@@ -53,12 +53,19 @@ const initChart = () => {
   svg.append('text')
     .attr('class', 'chart-title')
     .attr('x', margin.left) 
-    .attr('y', 30) 
-    .text('Water Supply and Demand vary regionally'); // title text
+    .attr('y', 20) 
+    .text('Water supply and demand'); // title text
+
+ svg.select('.chart-text').remove(); 
+  svg.append('text')
+    .attr('class', 'chart-text')
+    .attr('x', margin.left) 
+    .attr('y', 40) 
+    .text('Regional estimates in mm/year'); // title text
 
   // add chart area group
   chartBounds = svg.append('g')
-    .attr('transform', `translate(${margin.left}, 60)`); // leave space for the title
+    .attr('transform', `translate(${margin.left}, 70)`); // leave space for the title
 
     dotGroup = chartBounds.append('g');
 };
@@ -139,7 +146,7 @@ const drawChart = () => {
         });
     });
 
-  //add circles
+  //add connecting lines
   chartBounds.selectAll('.line')
     .data(dataset.value)
     .enter().append('line')
@@ -148,6 +155,7 @@ const drawChart = () => {
     .attr('x2', d => xScale(d.demand_mean))
     .attr('y1', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
     .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
+    .style('opacity', 0.4)
     .attr('stroke', '#ccc')
     .attr('stroke-width', 3);
 
