@@ -6,10 +6,15 @@
                 <p>To understand water limitation, it is first important to understand the how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. On an annual average basis, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
+
+        <!-- Supply and Demand dumbell chart -->
         <div class="viz-container">
-          <div id="dotplot-container">             
-        </div>   
+          <DumbellChart 
+            :data="data" 
+            :animateTime="animateTime"
+          /> 
         </div>
+        <!-- Supply and Demand dumbell toggles -->
         <div class="caption-container">
           <ToggleSwitch 
             v-model="demandEnabled" 
@@ -29,6 +34,7 @@
           Although there is enough water supply to meet demand overall, many regions face local water limitation, which means there not enough water available locally to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
         </p>
         </div>
+        <!-- SUI map with updating stacked bar chart using van metre regions -->
         <div class="image-container">
           <StackedBar 
             categoricalVariable="d3_category"
@@ -69,6 +75,7 @@
 
         />
         </div>
+        <!-- SUI category on and off toggles -->
         <div class="caption-container">
           <b>Water limitation:</b> 
               <!-- Very Low -->
@@ -110,6 +117,7 @@
                 <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
               </div>
         </div>    
+        <!-- Seasonal patterns -->
         <div class="text-container">
           <h2>Seasonal patterns of water limitation</h2>
           <p>Water shortages can happen on for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
@@ -144,6 +152,7 @@ import Methods from '../components/Methods.vue';
 import { isMobile } from 'mobile-device-detect';
 import { useRoute } from 'vue-router';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
+import DumbellChart from '../components/DumbellChart.vue';
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
@@ -505,9 +514,5 @@ const togglePoints = (type) => {
   margin-left: 10px;
   background-color: #F87A53;
 }
-
-
-
-
 
 </style>
