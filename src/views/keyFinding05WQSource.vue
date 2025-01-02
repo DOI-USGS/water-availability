@@ -85,7 +85,7 @@
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
-                rightColor="black"
+                rightColor="bl"
                 leftColor="black"
               />
             </div>

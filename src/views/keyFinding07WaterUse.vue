@@ -101,7 +101,6 @@ theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`
 const referenceList = ref(theseReferences);
 
 // global objects
-
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
 const selectedView = ref("stacked"); // Tracks the dropdown selection
 const mobileView = isMobile; // Detect mobile view for responsive design
@@ -226,8 +225,8 @@ function createBarChart({ dataset }) {
     .tickFormat(xAxisTickFormat) // Apply custom format based on mobile view
     .tickSize(0)
   )
-  .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
   .selectAll('.tick text')
+  .attr('class', 'axis-text')
   .style('text-anchor', 'middle') // Center align the labels
   .attr('dx', '-0.2em'); // Move labels slightly to the left
 
@@ -239,7 +238,8 @@ function createBarChart({ dataset }) {
     chartBounds.append('g')
       .attr('class', `y-axis y-axis-${i}`)
       .call(d3.axisLeft(useScale).ticks(4).tickFormat(d3.format("~s")))
-      .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
+      .selectAll('.tick text')
+      .attr('class', 'chart-text');
   });
 
   // Create color scale for the bars
@@ -267,7 +267,7 @@ function createBarChart({ dataset }) {
     .attr("x", margin.left / 2) 
     .attr("y", margin.top / 2)
     .attr("text-anchor", "start")
-    .text("??Average daily water use");
+    .text("Total annual water withdrawals");
 
   // chart subtitle
   svg.append("text")
@@ -275,7 +275,7 @@ function createBarChart({ dataset }) {
     .attr("x", margin.left/2) 
     .attr("y", margin.top-20)
     .attr("text-anchor", "start")
-    .text("Millions of gallons of water used for crop irrigation, public supply, and thermoelectric power generation");
+    .text("Millions of gallons of water used per day");
 }
 
 // Toggle between stacked and faceted views
@@ -318,7 +318,9 @@ function transitionToFaceted() {
     d3.select(`.y-axis-${i}`)
       .transition(t)
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`)
-      .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")));
+      .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")))
+      .selectAll('.tick text')
+      .attr('class', 'chart-text');
 
        // transition the x-axis into place for each category group
     d3.select(`.x-axis-${i}`)
@@ -333,9 +335,9 @@ function transitionToFaceted() {
       .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`);
 
     // ensure the data is properly bound to each rect
-    d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
+    d3.select(`g #${sanitizeSelector(group)}`)
+      .selectAll('rect')
       .data(groupData)
-      //.join(enter => enter.append('rect')) 
       .transition(t)
       .attr('x', d => yearScale(d.water_year)) 
       .attr('width', yearScale.bandwidth() - 5)
@@ -350,7 +352,7 @@ function transitionToFaceted() {
       .attr('y', i * (facetHeight + facetPadding + 5))  
       .attr('text-anchor', 'start')  
       .attr('font-weight', '600')
-      .style('font-size', '1.5rem')   
+      .attr('class', 'chart-text')   
       .text(group);       
 
   });
@@ -383,7 +385,9 @@ function transitionToStacked() {
       .call(d3.axisLeft(useScale)
         .ticks(4)
         .tickFormat(d3.format("~s"))
-      );
+      )
+      .selectAll('.tick text')
+      .attr('class', 'chart-text');
   });
 
   // transition the 4 x-axes back to overlap on top of each other
@@ -392,10 +396,11 @@ function transitionToStacked() {
       .transition(t)
       .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(yearScale).tickSize(0))
-      .selectAll('.tick line').remove();
+      .selectAll('.tick line')
+      .remove();
   });
 
-  d3.selectAll('text.facet-label') 
+ chartBounds.selectAll('.facet-label') 
     .transition(t)
     .style('opacity', 0) 
     .remove();
