@@ -123,8 +123,6 @@
             <References :theseReferences="referenceList"></References>
         </div>
 
-
-         
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
@@ -318,6 +316,7 @@ function initBarChart({ containerWidth, containerHeight, margin }) {
 // build initial chart
 function createBarChart({ dataset, scaleLoad}) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
+  console.log(scaleLoad)
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
   const stackedData = d3.stack()
@@ -404,7 +403,7 @@ function createBarChart({ dataset, scaleLoad}) {
     .attr("text-anchor", "end")
     .style("font-style", "italic")
     .style("font-weight", "300")
-    .text(scaleLoad.value ? "Percent" : "Mg/year");
+    .text(scaleLoad.value ? "Percent" : "kg/year");
 
   svg.append("text")
     .attr("class", "chart-subtitle")
@@ -487,7 +486,7 @@ function updateLabels() {
     .style("font-style", "italic")
     .style("font-weight", "300")
     .merge(explainedLabel) 
-    .text(scaleLoad.value ? "Mg/year" : "Percent");
+    .text(scaleLoad.value ? "kg/year" : "Percent");
 
   explainedLabel.exit().remove(); 
 }

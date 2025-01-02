@@ -85,11 +85,6 @@ const navigateRight = () => {
   router.push(SubPages.SubPages[currentIndex.value].route).then(() => window.scrollTo(0, 0));
 };
 
-// go home
-const returnToHome = () => {
-  currentIndex.value = 0;  // set index to 0 for home button
-  router.push("/");  // og home bb
-};
 
 </script>
   
