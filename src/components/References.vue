@@ -28,9 +28,9 @@
       </div>
     <div class="report-link-container" v-if="featureToggles.showReportLinks">
           <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
-          <h3> Read the report</h3>
+          <h2> Read the report</h2>
           </a>        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
-          <h3> Access the data</h3>
+          <h2> Access the data</h2>
           </a>
         </div>
     </div>
@@ -86,16 +86,10 @@ onMounted(() => {
   padding-bottom: 0;
   width: 100%;
   border: none;
-  text-align: left;
   outline: none;
-  line-height: 1.2;
   transition: 0.4s;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 2.15rem;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 600;
   position: relative;
   border-bottom: 2px solid var(--teal-dark);
 }

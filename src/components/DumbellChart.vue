@@ -31,10 +31,10 @@ const dataset = ref([]);
 let svg, chartBounds, xScale, originalXScaleDomain, dotGroup;
 const publicPath = import.meta.env.BASE_URL;
 const containerWidth = 700;
-const maxHeight = 500;
-const margin = { top: 50, right: 50, bottom: 40, left: 200 };
-const width = containerWidth - margin.left - margin.right;
-const height = Math.min(window.innerHeight * 0.5, maxHeight) - margin.top - margin.bottom;
+const maxHeight = 700;
+const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+const width = containerWidth + margin.left + margin.right;
+const height = Math.min(window.innerHeight * 0.7, maxHeight) - margin.top - margin.bottom;
   
 // initialize chart
 const initChart = () => {
@@ -43,7 +43,7 @@ const initChart = () => {
 
   svg = d3.select('#dotplot-container')
     .append('svg')
-    .attr('viewBox', `0 0 ${containerWidth} ${maxHeight}`)
+    .attr('viewBox', `0 0 ${containerWidth+margin.right} ${maxHeight}`)
     .style('width', '100%')
     .style('max-height', `${maxHeight}px`)
     .style('height', 'auto');
@@ -119,6 +119,7 @@ const drawChart = () => {
     dotGroup.select('.y-axis')
       .selectAll(".tick")
       .select("text")
+      .attr('class', 'chart-text')
       .attr("x", -44)
       .attr("dy", "0.32em");
 
@@ -270,6 +271,7 @@ watch(() => props.data, (newData) => {
 }
 #dotplot-container {
     width: 100%;
+    margin: auto;
     min-width: 700px;
 }
 </style>
