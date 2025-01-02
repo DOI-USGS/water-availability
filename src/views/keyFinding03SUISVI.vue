@@ -15,7 +15,7 @@
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>These circles each represent one hydrologic unit (HUC8). The color is the level of water limitation, and the size of the bubble represents the social vulnerability score, with larger bubbles representing more social vulnerability.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
+                <p>Map showing circles for each hydrologic unit (HUC8). The color of the circle is the level of water limitation, and the size of the bubble represents the social vulnerability score, with larger bubbles representing more social vulnerability.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
               </div>
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-sui-none" >
@@ -62,11 +62,16 @@
             </div>
             <div class="text-container">
               <p class="chart-title">Social vulnerability and water limitation</p>
-              <p class="chart-subtitle">Bars show the proportion of people living in varying levels of water limitation by social vulnerability. </p>
+              <p class="chart-subtitle">Bars show the proportion of the population living in varying levels of water limitation by social vulnerability classification. </p>
             </div>
             <div class="text-container">
               <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_bar.png">
             </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>Bar charts showing the proportion of the popululation of the lower 48 United States living in varying categories of social vulnerability and water limitation. The color is the level of water limitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
+              </div>
+            </div> 
             <div class="text-container">
                 <h3>Water quality also disproportionately limits water availability in socially vulnerable households</h3>
                 <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable (Erickson2025xxx). For example, the proportion of individuals with the highest levels of social vulnerability increases as the concentrations of total nitrogen and total phosphorus in streams goes up. While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain higher proportions of socially vulnerable individuals. These areas are relatively limited in spatial extent and have high population density, which emphasizes the impacts of highly developed, human-dominated watersheds to human health and wellbeing.</p>
