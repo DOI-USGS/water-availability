@@ -154,7 +154,6 @@ import SubPages from '../components/SubPages';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import Methods from '../components/Methods.vue';
-import { isMobile } from 'mobile-device-detect';
 import { useRoute } from 'vue-router';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import DumbellChart from '../components/DumbellChart.vue';

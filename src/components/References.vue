@@ -3,7 +3,7 @@
 
     <div class="methods-container">
       <button class="references-accordion">
-        <span>References</span><span class="symbol">+</span>
+        <h4>References</h4><span class="symbol">+</span>
       </button>
       <div class="panel-references">
         <div class="references-container">
@@ -29,7 +29,8 @@
     <div class="report-link-container" v-if="featureToggles.showReportLinks">
           <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
           <h2> Read the report</h2>
-          </a>        <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
+          </a>        
+          <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
           <h2> Access the data</h2>
           </a>
         </div>
@@ -70,66 +71,13 @@ onMounted(() => {
 </script>
   
 <style scoped lang="scss">
-    .journal-name {
-      font-style: italic;
-    }
-    .report {
-      font-style: italic;
-    }
+  .journal-name {
+    font-style: italic;
+  }
+  .report {
+    font-style: italic;
+  }
 
 
-.references-accordion {
-  background-color: var(--cream-background);
-  color: var(--soft-black);
-  cursor: pointer;
-  padding: 5px;
-  padding-bottom: 0;
-  width: 100%;
-  border: none;
-  outline: none;
-  transition: 0.4s;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  border-bottom: 2px solid var(--teal-dark);
-}
-
-.references-accordion::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border: 2px solid transparent;
-  z-index: -1;
-  transition: border-color 0.3s;
-}
-
-.references-accordion:hover::before, .references-accordion.active::before {
-  border-color: var(--cream-background);
-}
-
-.active, .references-accordion:hover {
-  background-color: var(--blue-light); 
-  color: black;
-}
-
-.panel {
-  display: none; 
-  overflow: hidden;
-  margin-bottom: -15px;
-  margin-top: -15px;
-}
-
-.panel p {
-  margin: 20px 25px 0px 25px;
-  font-size: 18px;
-}
-  
-.symbol {
-  font-size: 32px;
-  font-weight: bold;
-}
 </style>
   
