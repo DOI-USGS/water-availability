@@ -87,12 +87,6 @@ p3_targets <- list(
                  nutrients = "#93658f",
                  metals = "#7a7f80"
                ))),
-  tar_target(p3_popn_colors,
-             col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
-                          "High" = p3_colors_balance$dry_red_light, 
-                          "Moderate" = p3_colors_balance$svg_col_default, 
-                          "Low" = p3_colors_balance$wet_blue_light, 
-                          "Very low/\nnone" = p3_colors_balance$wet_blue_dark)),
   
   tar_target(p3_fonts_website,
              tibble(
@@ -178,9 +172,8 @@ p3_targets <- list(
   #
   #
     tar_target(p3_popn_circles_png,
-               viz_popn_circles(in_df = p2_sui_popn_df,
-                                in_sf = p2_mainstem_HUC8_simple_sf,
-                                color_scheme = p3_popn_colors,
+               viz_popn_circles(in_sf = p2_popn_bubbles_df,
+                                color_scheme = p3_colors_sui,
                                 png_out = "src/assets/images/R/02_sui_popn_CONUS.png",
                                 width = 9,
                                 height = 6),

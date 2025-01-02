@@ -1,30 +1,33 @@
-viz_popn_circles <- function(in_df,
-                             in_sf,
+viz_popn_circles <- function(in_sf,
                              color_scheme,
                              png_out,
                              width,
                              height){
   
-  # remove unnecessary columns of in_df
-  df_simpler <- in_df |>
-    select(HUC8, mean_sui, sui_category_5, popn) |>
-    filter(!is.na(popn)) |>
-    group_by(HUC8) |>
-    summarize(mean_sui = mean(mean_sui, na.rm = TRUE),
-              total_popn = sum(popn, na.rm = TRUE))
-  
-  # join data to sf
   plot_sf <- in_sf |>
-    left_join(df_simpler, by = "HUC8") |>
-    select(HUC8, geometry, mean_sui, total_popn) |>
-    filter(! is.na(total_popn))
-    
-  # create cartogram
-  st_cartogram <- cartogram::cartogram_dorling(plot_sf, "total_popn")
+    mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$sui_none,
+                                 sui_category_5 == "Low" ~ color_scheme$sui_low,
+                                 sui_category_5 == "Moderate" ~ color_scheme$sui_mod,
+                                 sui_category_5 == "High" ~ color_scheme$sui_high,
+                                 sui_category_5 == "Severe" ~ color_scheme$sui_severe))
   
-  plot <- ggplot(st_cartogram) +
-    geom_sf(aes(fill = sui_category_5)) +
-    theme_void()
+  
+  plot <- ggplot(plot_sf) +    
+    geom_sf(fill = "white",
+            color = NA, size = 0)  +
+    geom_sf(data = plot_sf |> filter(sui_category_5 == "Very low/\nnone"),
+            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) + 
+    geom_sf(data = plot_sf |> filter(sui_category_5 == "Low"),
+            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
+    geom_sf(data = plot_sf |> filter(sui_category_5 == "Moderate"),
+            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
+    geom_sf(data = plot_sf |> filter(sui_category_5 == "High"),
+            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
+    geom_sf(data = plot_sf |> filter(sui_category_5 == "Severe"),
+            aes(fill = color_hex), alpha = 0.7, color = "white", linewidth = 0.1) +
+    scale_fill_identity() +
+    theme_void() +
+    theme(legend.position = "none")
   
   # process data for circle packing
   # in_df <- in_df |> arrange(-mean_sui, AggRegion_nam)
