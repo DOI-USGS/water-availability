@@ -181,7 +181,7 @@ a:visited {
   font-weight: 400;
   fill: var(--color-text);
 }
-.chart-text {
+.chart-text, .category-label, .value-label {
   font-size: 1rem; /* same as regular text */
   font-family: var(--default-font);
   font-weight: 400;
