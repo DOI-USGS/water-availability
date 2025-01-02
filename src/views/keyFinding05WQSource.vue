@@ -85,11 +85,7 @@
               />
             </div>
 
-            <HistogramLegend 
-              :layerPaths="legendConfig"
-              :data="legendData"
-              :regionName="selectedRegion"
-            />
+
             <RegionMap 
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
@@ -107,6 +103,11 @@
               layerX="-44"
               layerY="-11"
 
+            />
+            <HistogramLegend 
+              :layerPaths="legendConfig"
+              :data="legendData"
+              :regionName="selectedRegion"
             />
           </div>
             <div class="caption-container">

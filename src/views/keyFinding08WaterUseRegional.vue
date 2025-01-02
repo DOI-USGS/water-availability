@@ -97,8 +97,8 @@
             <p>Across the U.S., the source of water, whether from  groundwater or from surface water typically depends on the availability of these sources and on the category of use. On average during water years 2010-2020, about 62% of water withdrawals for the combination of public supply, crop irrigation, and thermoelectric power across the country were from surface water and 38% of withdrawals were from groundwater. However, these proportions vary widely across the country, and are affected by water use type as well as local and federal water use ordinances and water rights.</p>
           </div>
           <div class="chart-title-container">
-            <p class="chart-title">Groundwater versus surface water use</p>
-            <p class="chart-subtitle">Total daily water use (million gallons per day) by watershed (HUC12) sourced from surface water versus groundwater</p>
+            <p class="chart-title">Source of public supply water in the {{ regionTitle }}</p>
+            <p class="chart-subtitle">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
           </div>
           <div class="viz-container">
             <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
@@ -163,6 +163,7 @@ const focalFill = "var(--focal-fill)";
 const defaultFill = "var(--inactive-grey)";
 const csvData = ref([]);
 const selectedRegion = ref('lower 48 United States'); // default region
+let regionTitle = "lower 48 United States"
 
 const route = useRoute();
 //////// references array //
@@ -280,14 +281,16 @@ function mouseoverMap(event) {
   const regionID = event.target.id;
   d3.select('.dumbbell-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
   d3.select('.dumbbell-reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
-  imgSrc.value = getImgURL(regionID)
+  imgSrc.value = getImgURL(regionID);
+  regionTitle = regionID.replaceAll("_", " ") + " Region"; // default region
 };
 
 function mouseoutMap(event) {
   const regionID = event.target.id;
   d3.select('.dumbbell-reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
   d3.select('.dumbbell-reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
-  imgSrc.value = getImgURL(defaultRegionID)
+  imgSrc.value = getImgURL(defaultRegionID);
+  regionTitle = "lower 48 United States";
 };
 
 </script>

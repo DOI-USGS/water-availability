@@ -155,12 +155,8 @@ a:visited {
   font-weight: 700;
   color: 'black';
 }
-.chart-subtitle {
-  font-size: 1.75rem;
-  font-weight: 400;
-  color: "black"
-}
-.chart-text {
+
+.chart-text, .chart-subtitle {
   font-size: 1.5rem;
   font-weight: 400;
   color: "black";

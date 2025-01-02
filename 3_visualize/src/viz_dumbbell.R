@@ -77,7 +77,7 @@ dumbbell_gw_v_sw <- function(in_sf,
     annotate("text", x = -Inf, y = 0, label = "W", vjust = -0.5, hjust = 0, color = "black")+
     annotate("text", x = Inf, y = 0, label = "E", vjust = -0.5, hjust = 1, color = "black")+
     geom_hline(yintercept = 0, linewidth = 0.4) +
-    ggtitle(region_title, subtitle = sprintf("%s%% of water sourced from groundwater", summary$proportion_gw)) +
+    #ggtitle(region_title, subtitle = sprintf("%s%% of water sourced from groundwater", summary$proportion_gw)) +
     theme_void() 
   
   if(region == "CONUS"){

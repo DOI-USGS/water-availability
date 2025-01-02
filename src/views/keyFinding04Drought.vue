@@ -21,7 +21,7 @@
                     rainfall in early 2011 did not show up in the streamflow signature until later in that year.</p>
                 </div>
             <div class="chart-title-container">
-                <p class="chart-title">Water supply dynamics by region</p>
+                <p class="chart-title">Water supply dynamics in the {{ regionTitle }}</p>
                 <p class="chart-subtitle">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
             </div>
                 
@@ -83,6 +83,7 @@ const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
 const focalFill = "var(--focal-fill)";
 const defaultFill = "var(--inactive-grey)";
+let regionTitle = defaultRegionID.replaceAll("_", " ") + " Region"
 
 
 const route = useRoute();
@@ -133,14 +134,16 @@ function mouseoverMap(event) {
   const regionID = event.target.id;
   d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", defaultFill);
   d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", focalFill);
-  imgSrc.value = getImgURL(regionID)
+  imgSrc.value = getImgURL(regionID);
+  regionTitle = regionID.replaceAll("_", " ") + " Region";
 };
 
 function mouseoutMap(event) {
   const regionID = event.target.id;
   d3Base.select('.reg-svg').selectAll(`#${regionID}`).style("fill", defaultFill);
   d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
-  imgSrc.value = getImgURL(defaultRegionID)
+  imgSrc.value = getImgURL(defaultRegionID);
+  regionTitle = defaultRegionID.replaceAll("_", " ") + " Region";
 };
 
 </script>

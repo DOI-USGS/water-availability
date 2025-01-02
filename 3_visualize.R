@@ -113,14 +113,18 @@ p3_targets <- list(
              create_svg_for_web(in_sf = p2_AggReg_sf,
                                 identifier = "AggReg_nam_nospace",
                                 width = 6, height = 9,
-                                file_out = "public/assets/AggReg.svg",
+                                file_out = "3_visualize/out/AggReg.svg",
+                                # changed where this is saved to keep manual
+                                # remove of the svggrid timestamp 
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_svg,
              create_svg_for_web(in_sf = p2_Reg_sf,
                                 identifier = "Region_nam_nospace",
                                 width = 6, height = 9,
-                                file_out = "public/assets/Regions.svg",
+                                file_out = "3_visualize/out/Regions.svg",
+                                # changed where this is saved to keep manual
+                                # remove of the svggrid timestamp 
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_json,
