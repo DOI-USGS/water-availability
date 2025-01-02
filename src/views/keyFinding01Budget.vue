@@ -8,12 +8,13 @@
             </div>
 
         <!-- Supply and Demand dumbell chart -->
-        <div class="viz-container">
           <DumbellChart 
             :data="data" 
             :animateTime="animateTime"
+            v-model:supplyEnabled="supplyEnabled" 
+            v-model:demandEnabled="demandEnabled"
           /> 
-        </div>
+
         <!-- Supply and Demand dumbell toggles -->
         <div class="caption-container">
           <ToggleSwitch 
@@ -24,17 +25,21 @@
             v-model="supplyEnabled" 
             label="Water supply" 
           />
-              <div class="caption-text-child">
-                <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
-              </div>
+          
+          <!-- Supply and Demand capation -->
+          <div class="caption-text-child">
+            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
           </div>
+        </div>
+
+        <!-- Regional SUI section -->
         <div class="text-container">
           <h2>Regional patterns of water limitation</h2>
         <p>
           Although there is enough water supply to meet demand overall, many regions face local water limitation, which means there not enough water available locally to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
         </p>
         </div>
-        <!-- SUI map with updating stacked bar chart using van metre regions -->
+        <!-- Regional SUI map with updating stacked bar chart -->
         <div class="image-container">
           <StackedBar 
             categoricalVariable="d3_category"
@@ -117,7 +122,7 @@
                 <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
               </div>
         </div>    
-        <!-- Seasonal patterns -->
+         <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>Seasonal patterns of water limitation</h2>
           <p>Water shortages can happen on for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
@@ -126,9 +131,9 @@
           <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >
         </div>
         <div class="caption-container">
-              <div class="caption-text-child">
-                <p>Water limitation across the lower 48 by month from January 2010 through January 2020. The bars show the proportion of each water limitation category.</p>
-              </div>
+          <div class="caption-text-child">
+            <p>Water limitation across the lower 48 by month from January 2010 through January 2020. The bars show the proportion of each water limitation category.</p>
+          </div>
         </div>  
         <Methods></Methods>
       <References :theseReferences="referenceList"></References>
@@ -182,12 +187,8 @@ const containerHeight = Math.min(
 let margin = { top: 50, right: 50, bottom: 40, left: 200 };
 let width = containerWidth - margin.left - margin.right;
 let height = containerHeight - margin.top - margin.bottom;
-let chartBounds, dotGroup;
-let xScale;
-let originalXScaleDomain;
 
 // Reactive data bindings 
-const dataSet1 = ref([]); 
 const data = ref([]);
 const csvData = ref([]);
 const selectedRegion = ref('United States'); // default region
@@ -237,24 +238,9 @@ const severeEnabled = ref(layers.severe.visible);
 const demandEnabled = ref(true);
 const supplyEnabled = ref(true);
 
-// watch for changes in toggle states
-watch([supplyEnabled, demandEnabled], () => {
-  togglePoints();
-});
- 
 // data for D3 charts
 const csvSUI = 'wa_stress_stats.csv' // stacked bar chart data
 const csvSupplyDemand = 'wa_supply_demand.csv'
-
-// update region name stored in reactive data variable when selected on regionMap
-function updateSelectedRegion(regionName) {
-  selectedRegion.value = regionName;
-}
-
-// toggle layer visibility on regionMap
-const toggleLayer = (layerId) => {
-  layers[layerId].visible = !layers[layerId].visible;
-};
 
 // run of show
 onMounted(async () => {
@@ -264,8 +250,8 @@ onMounted(async () => {
         csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
 
         if (data.value.length > 0) {
-            initDotChart(); // initialize svg for supply and demand chart
-            createDotChart();
+           // initDotChart(); // initialize svg for supply and demand chart
+           // createDotChart();
         } else {
             console.error('Error loading data');
         }
@@ -285,181 +271,17 @@ async function loadData(fileName) {
         return [];
     }
 }
-// initialize svg for chart
-function initDotChart() {
-    d3.select('#dotplot-container').select('svg').remove();
 
-    svg = d3.select('#dotplot-container')
-      .append('svg')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight-50}`)
-      .style('width', '100%')
-      .style('max-height', `${maxHeight}px`) 
-      .style('height', 'auto');
-
-    chartBounds = svg.append('g')
-      .attr('transform', `translate(${margin.left}, 20)`);
-
-    dotGroup = chartBounds.append('g');
-}
-// make dot plot w/ connecting bars
-// and mini regional maps in y-axis labels
-function createDotChart() {
-    const dataset = data.value;
-
-    if (!dataset || dataset.length === 0) {
-        console.error("No dataset available for creating the dot chart");
-        return;
-    }
-
-    // scales
-    const yAccessor = d => d["Region_nam"];
-
-    const xScaleDomain = d3.extent([
-        ...dataset.map(d => +d.supply_mean),
-        ...dataset.map(d => +d.demand_mean)
-    ]);
-
-    xScale = d3.scaleLinear()
-        .domain(xScaleDomain)
-        .range([0, width - 2 * margin.right])
-        .nice();
-
-    originalXScaleDomain = xScale.domain(); 
-
-    const yScale = d3.scaleBand()
-        .domain(dataset.map(yAccessor))
-        .range([0, height])
-        .padding(0.1);
-
-    dotGroup.selectAll("*").remove();
-
-    dotGroup.append('g')
-        .attr('class', 'x-axis-bottom x-axis')
-        .attr('transform', `translate(0, ${height})`)
-        .call(d3.axisBottom(xScale).ticks(5));
-
-    dotGroup.append('g')
-        .attr('class', 'x-axis-top x-axis')
-        .call(d3.axisTop(xScale).ticks(5));
-
-    dotGroup.append('g')
-        .attr('class', 'y-axis')
-        .call(d3.axisLeft(yScale));
-
-    // region axis
-    dotGroup.select('.y-axis')
-      .selectAll(".tick")
-      .select("text")
-      .attr("x", -44)
-      .attr("dy", "0.32em");
-
-    // add mini maps to each label
-    d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
-      const svgNode = xml.documentElement;
-
-      dotGroup.select('.y-axis')
-        .selectAll(".tick")
-        .each(function(d) {
-          const regionClass = d.replace(/\s+/g, '_');
-          const svgClone = svgNode.cloneNode(true);
-
-          const insertedSvg = d3.select(this)
-            .insert(() => svgClone, "text")
-            .attr("x", -40)
-            .attr("y", -20)
-            .attr("width", 40)
-            .attr("height", 40)
-            .attr("fill", "var(--inactive-grey)");
-
-          insertedSvg.selectAll(`g.${regionClass} path`)
-            .attr("stroke", "black")
-            .attr("stroke-width", 3)
-            .attr("fill", "black");
-        });
-    });
-
-    // connecting lines
-    dotGroup.selectAll(".line")
-        .data(dataset)
-        .enter().append('line')
-        .attr('class', 'line')
-        .attr('x1', d => xScale(d.supply_mean))
-        .attr('x2', d => xScale(d.demand_mean))
-        .attr('y1', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('stroke', '#ccc')
-        .attr('stroke-width', 3)
-        .attr("stroke-opacity", 0.5);
-
-    // supply circle
-    dotGroup.selectAll(".circle-supply")
-        .data(dataset)
-        .enter().append('circle')
-        .attr('class', 'circle-supply')
-        .attr('cx', d => xScale(d.supply_mean))
-        .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('r', 5)
-        .attr('fill', 'var(--ws-supply)');
-
-    // demand circle
-    dotGroup.selectAll(".circle-demand")
-        .data(dataset)
-        .enter().append('circle')
-        .attr('class', 'circle-demand')
-        .attr('cx', d => xScale(d.demand_mean))
-        .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('r', 4)
-        .attr('stroke', 'var(--ws-demand)')
-        .attr('stroke-width', '2px')
-        .attr("fill", "var(--white)");
+// update region name stored in reactive data variable when selected on regionMap
+function updateSelectedRegion(regionName) {
+  selectedRegion.value = regionName;
 }
 
-// turn points on and off with toggle, trnasition x-axis to fit the data
-const togglePoints = (type) => {
- 
- // update the x-axis domain and visibility based on toggle state
- const visibleSupply = supplyEnabled.value ? data.value.map(d => +d.supply_mean) : [];
- const visibleDemand = demandEnabled.value ? data.value.map(d => +d.demand_mean) : [];
+// toggle layer visibility on regionMap
+const toggleLayer = (layerId) => {
+  layers[layerId].visible = !layers[layerId].visible;
+};
 
- const visiblePoints = [...visibleSupply, ...visibleDemand];
- const newDomain = visiblePoints.length > 0 ? d3.extent(visiblePoints) : originalXScaleDomain;
-
- // Update the x-axis domain based on supply and demand toggles
- xScale.domain(newDomain).nice();
-
- // Transition the x-axis
- d3.selectAll(".x-axis-bottom")
-     .transition()
-     .duration(animateTime)
-     .call(d3.axisBottom(xScale).ticks(5));
-
- // there's an x-axis on top and bottom of the chart so it's readable on different screen sizes
- d3.selectAll(".x-axis-top")
-     .transition()
-     .duration(animateTime)
-     .call(d3.axisTop(xScale).ticks(5));
-
- // Update the position of the circles and hide/show based on the toggles
- d3.selectAll(".circle-supply")
-     .transition()
-     .duration(animateTime)
-     .attr('cx', d => xScale(d.supply_mean))
-     .style("opacity", supplyEnabled.value ? 1 : 0); // toggle opacity based on supplyEnabled
-
- d3.selectAll(".circle-demand")
-     .transition()
-     .duration(animateTime)
-     .attr('cx', d => xScale(d.demand_mean))
-     .style("opacity", demandEnabled.value ? 1 : 0); // toggle opacity based on demandEnabled
-
- // Transition the lines connecting supply and demand
- d3.selectAll(".line")
-     .transition()
-     .duration(animateTime)
-     .attr('x1', d => xScale(d.supply_mean))
-     .attr('x2', d => xScale(d.demand_mean))
-     .style("opacity", supplyEnabled.value && demandEnabled.value ? 0.4 : 0); // only show if both supply and demand are visible
-}
 </script>
 
 <style scoped>
