@@ -67,7 +67,7 @@
                 </div>
               </div>
               <div class="caption-text-child">
-                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (Mg/year) or the percent of the total load</p>
+                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (kg/year) or the percent of the total load</p>
               </div>
             </div> 
             <div class="text-container">
@@ -119,8 +119,6 @@
             <References :theseReferences="referenceList"></References>
         </div>
 
-
-         
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
@@ -314,6 +312,7 @@ function initBarChart({ containerWidth, containerHeight, margin }) {
 // build initial chart
 function createBarChart({ dataset, scaleLoad}) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
+  console.log(scaleLoad)
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
   const stackedData = d3.stack()
@@ -400,7 +399,7 @@ function createBarChart({ dataset, scaleLoad}) {
     .attr("text-anchor", "end")
     .style("font-style", "italic")
     .style("font-weight", "300")
-    .text(scaleLoad.value ? "Percent" : "Mg/year");
+    .text(scaleLoad.value ? "Percent" : "kg/year");
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -475,7 +474,7 @@ function updateLabels() {
     .style("font-style", "italic")
     .style("font-weight", "300")
     .merge(explainedLabel) 
-    .text(scaleLoad.value ? "Mg/year" : "Percent");
+    .text(scaleLoad.value ? "kg/year" : "Percent");
 
   explainedLabel.exit().remove(); 
 }

@@ -80,30 +80,16 @@ const featureToggles = inject('featureToggles');
 const focalFill = "var(--focal-fill)";
 const defaultFill = "var(--inactive-grey)";
 
-
 const route = useRoute();
 
-//////// references array //
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
-});
-
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
-
-/////////
 
 // functions called here
 onMounted(() => {
@@ -113,10 +99,10 @@ onMounted(() => {
   d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
 });
 
+// Methods
 function getImgURL(id) {
   return new URL(`${baseURL}${id}.png`);
 }
-
 
 function addInteractions() {
   const mapSVG = d3Base.select('.reg-svg');
