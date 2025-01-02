@@ -123,19 +123,34 @@ a:visited {
   }
 }
 .text-container {
-  width: 60%;
+  width: 65%;
   min-width: 600px;
   margin: 0 auto;
   padding-bottom: 10px;
 }
 .chart-container {
-  width: 60%;
+  width: 65%;
   min-width: 700px;
   margin: 0 auto;
   padding-bottom: 0px;
 }
+.chart-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: 'black';
+}
+.chart-subtitle {
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: "black"
+}
+.chart-text {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: "black";
+}
 .kf-container {
-  width: 60%;
+  width: 65%;
   min-width: 600px;
   margin: 0 auto;
 }
@@ -146,13 +161,13 @@ a:visited {
   }
 }
 .references-container{
-  width: 95%;
+  width: 98%;
   min-width: 600px;
   margin: 0 auto;
   padding-top: 20px;
 }
 .methods-container{
-  width: 60%;
+  width: 65%;
   min-width: 600px;
   margin: 0 auto;
   padding-top: 20px;
@@ -167,11 +182,11 @@ a:visited {
 }
 @media only screen and (max-width: 768px) {
   .references-container {
-    width: 90%;
+    width: 95%;
     min-width: 200px;
   }
   .methods-container {
-    width: 90%;
+    width: 95%;
     min-width: 200px;
   }
 }
@@ -197,7 +212,7 @@ a:visited {
 /* caption div */
 .caption-text-child {
   flex: 1;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 400;
   font-style: italic
 }
@@ -582,20 +597,6 @@ input[type=radio]:disabled  {
   justify-content: flex-start;
 }
 
-/* .caption-legend-child{
-  background-color: var(--teal-dark);
-  color: var(--white-soft);
-  cursor:pointer;
-  padding: 18px;
-  width: 300px;
-  border: none;
-  text-align: left;
-  outline: none; 
-}
-.toggle-button:hover{
-  background-color: var(--blue-dark);
-  color: var(--white-soft);
-} */
 
 
 

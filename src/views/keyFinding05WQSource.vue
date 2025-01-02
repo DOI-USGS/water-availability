@@ -341,7 +341,6 @@ function createBarChart({ dataset, scaleLoad}) {
     .select("text")
     .attr("x", -80) // shift text to the left to make space for the mini maps
     .attr("dy", "0.32em")
-    //.attr("font-weight", "bold");
 
     // load SVG and add it to each tick
     d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
@@ -385,21 +384,19 @@ function createBarChart({ dataset, scaleLoad}) {
 
   // updating x-axis label
   svg.append("text")
-    .attr("class", "upper-right-label")
-    .attr("x", containerWidth - margin.right-100) 
+    .attr("class", "chart-title")
+    .attr('x', margin.left)
+    //.attr("x", containerWidth - margin.right-100) 
     .attr("y", margin.top / 2)
-    .attr("text-anchor", "end") // anchor to the end of the text
-    .style("font-size", "2.5rem")
-    .style("font-weight", "bold")
+    .attr("text-anchor", "start") // anchor to the end of the text
     .text(showNitrogen.value ? "Nitrogen" : "Phosphorus"); 
 
   // italic units label
   svg.append("text")
-    .attr("class", "upper-right-label-explained")
+    .attr("class", "axis-units chart-title")
     .attr("x", containerWidth - margin.right) 
     .attr("y", margin.top / 2) 
     .attr("text-anchor", "end")
-    .style("font-size", "2.5rem")
     .style("font-style", "italic")
     .style("font-weight", "300")
     .text(scaleLoad.value ? "Percent" : "kg/year");
@@ -448,12 +445,12 @@ function createBarChart({ dataset, scaleLoad}) {
 // update x-axis labels with toggles
 function updateLabels() {
 
-  const label = svg.selectAll(".upper-right-label")
+  const label = svg.selectAll(".chart-title")
     .data([null]); // Use a dummy data binding to handle enter/update/exit
 
   label.enter()
     .append("text")
-    .attr("class", "upper-right-label")
+    .attr("class", "chart-title")
     .attr("x", containerWidth - margin.right -100)
     .attr("y", margin.top / 2)
     .attr("text-anchor", "end")
@@ -464,12 +461,12 @@ function updateLabels() {
 
   label.exit().remove(); // Ensure old labels are removed
 
-  const explainedLabel = svg.selectAll(".upper-right-label-explained")
+  const explainedLabel = svg.selectAll(".axis-units")
     .data([null]); 
 
   explainedLabel.enter()
     .append("text")
-    .attr("class", "upper-right-label-explained")
+    .attr("class", "axis-units")
     .attr("x", containerWidth - margin.right)
     .attr("y", margin.top / 2 )
     .attr("text-anchor", "end")
