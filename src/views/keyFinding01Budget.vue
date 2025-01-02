@@ -173,20 +173,7 @@ theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`
 const referenceList = ref(theseReferences);
 
 // global variables
-const mobileView = isMobile;
 const publicPath = import.meta.env.BASE_URL;
-
-// chart dimensions for supply vs demand chart
-let svg;
-const containerWidth = 900;
-const maxHeight = 900; 
-const containerHeight = Math.min(
-  mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5,
-  maxHeight
-);
-let margin = { top: 50, right: 50, bottom: 40, left: 200 };
-let width = containerWidth - margin.left - margin.right;
-let height = containerHeight - margin.top - margin.bottom;
 
 // Reactive data bindings 
 const data = ref([]);
