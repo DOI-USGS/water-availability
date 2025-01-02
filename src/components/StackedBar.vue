@@ -141,7 +141,6 @@ const updateBarChart = (data, regionName) => {
             enter => {
             const enteringText = enter.append('text')
                 .attr('class', 'percent-label')
-                .attr('font-size', '1.5rem')
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 65)
                 .attr('text-anchor', 'middle')
