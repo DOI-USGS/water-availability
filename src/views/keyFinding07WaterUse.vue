@@ -120,6 +120,7 @@ let categoryGroups, yearGroups, dataStacked;
 let yearScale, useScale, categoryRectGroups;
 const containerWidth = 700; 
 const containerHeight = 600;
+const padding = 30;
 
 // chart dimensions
 const margin = mobileView
@@ -138,7 +139,6 @@ const categoryColors = {
 };
 
 // Data references
-const dataSet = ref([]);
 const data = ref([]);
 
 // Watcher to handle toggle changes
@@ -171,8 +171,7 @@ async function loadDatasets() {
       .value(([, D], key) => D.get(key)['mgd'])
       (d3.index(data_in, d => d.water_year, d => d.Use));
 
-    // assign data to reactive obj
-    dataSet.value = data_in;
+    data.value = data_in // raw data
 
   } catch (error) {
     console.error('Error loading data:', error);
@@ -200,7 +199,7 @@ function initBarChart() {
 }
 
 // Function to create the initial bar chart in stacked form
-function createBarChart({ dataset, dataStacked }) {
+function createBarChart(dataStacked) {
 
   // X-axis (year scale)
   yearScale = d3.scaleBand()
@@ -279,7 +278,6 @@ function createBarChart({ dataset, dataStacked }) {
 }
 function transitionToFaceted() {
   const t = d3.transition().duration(animateTime); // animation transition
-  const padding = 30; // padding between facets
 
   // calculate max values for each group and total max for scaling
   const groupMaxValues = categoryGroups.map(group =>
@@ -422,15 +420,22 @@ function transitionToStacked() {
 
 // On mounted loads data and initializes the chart
 onMounted(async () => {
-  await loadDatasets();
-  if (dataSet.value.length > 0) {
-    data.value = dataSet.value;
-    initBarChart();
-    createBarChart({ dataset: data.value, dataStacked: dataStacked });
 
-    // watch toggle AFTER initialization
+  // load the data
+  await loadDatasets();
+
+  // once it's in
+  if (data.value.length > 0) {
+
+    // init the bar chart svg and g elements
+    initBarChart();
+
+    // and add data to the chart
+    createBarChart(dataStacked);
+
+    // then watch the y-axis/facet toggle for any changes
     watch(isFaceted, (newValue) => {
-      // ensure DOM updates complete first
+      // if the toggle changes update the y-axi,s facets, and bar positions
       nextTick(() => {
         if (newValue) {
           transitionToFaceted(); // trigger faceted transition
