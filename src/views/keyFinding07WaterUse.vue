@@ -66,6 +66,16 @@
       <div class="text-container">
         <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
       </div>
+
+      <div class="text-container">
+        <h3>Not all the water withdrawn for human water use returns to the local environment</h3>
+      </div>
+      <div class="viz-container">
+        <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/07_consumptive_labels.png"/>
+      </div>
+      <div class="text-container">
+        <p>Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across the lower 48 United States, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power. </p>
+      </div>
       
       <Methods></Methods>
       <References :theseReferences="referenceList"></References>

@@ -86,6 +86,11 @@ export default {
           {
             header: "Modeling water use by year",
             description: "Total water used for crop irrigation, public supply, and thermoelectric power for the conterminous United States was modeled for water years 2010 through 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
+          },
+
+          {
+            header: "Calculating consumptive use",
+            description: "For this analysis, the percent of consumptive use for each use category (public supply, irrigation, and thermoelectric water use) was calculated as the amount of water consumed divided by the total water withdrawn. The amount of water withdrawn or consumed were calculated based on average annual values for the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024).",
           }
         ]
       },      {
@@ -95,24 +100,6 @@ export default {
           {
             header: "Modeling water use",
             description: "Total water used for crop irrigation, public supply, and thermoelectric power for the conterminous United States was modeled water year 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
-          }
-        ]
-      },      {
-        page: 9,
-        route: '/09Consumption',
-        method: [
-          {
-            header: "Calculating consumptive use",
-            description: "For this analysis, the percent of consumptive use for each use category (public supply, irrigation, and thermoelectric water use) was calculated as the amount of water consumed divided by the total water withdrawn. The amount of water withdrawn or consumed were calculated based on average annual values for the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024).",
-          }
-        ]
-      },      {
-        page: 10,
-        route: '/10Future',
-        method: [
-          {
-            header: "Determining future impacts",
-            description: "The impacts to future water availability were determined by a review of recent literature in peer-reviewed journals and synthesis of information in the Intergovernmental Panel on Climate Change Sixth Assessment Report (IPCC AR6) (Intergovernmental Panel on Climate Change, 2021) and Fifth National Climate Assessment (U.S. Global Change Research Program, 2023). The framework of climatic impact drivers outlined in the (IPCC AR6) was used to show primary drivers of physical changes in water cycle processes and to explain projected changes in future water availability.",
           }
         ]
       }
