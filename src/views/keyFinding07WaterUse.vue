@@ -125,8 +125,8 @@ const barSpace = 5;
 
 // chart dimensions
 const margin = mobileView
-  ? { top: 80, right: 10, bottom: 50, left: 40 } //  mobile
-  : { top: 80, right: 10, bottom: 50, left: 40 }; // desktop
+  ? { top: 100, right: 10, bottom: 50, left: 40 } //  mobile
+  : { top: 100, right: 10, bottom: 50, left: 40 }; // desktop
 
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
@@ -272,7 +272,7 @@ function createBarChart(dataStacked) {
   svg.append("text")
     .attr("class", "chart-title")
     .attr("x", margin.left / 2) 
-    .attr("y", margin.top / 2)
+    .attr("y", margin.top -60)
     .attr("text-anchor", "start")
     .text("Average daily water use");
 
@@ -280,7 +280,7 @@ function createBarChart(dataStacked) {
   svg.append("text")
     .attr("class", "chart-subtitle")
     .attr("x", margin.left/2) 
-    .attr("y", margin.top-20)
+    .attr("y", margin.top-40)
     .attr("text-anchor", "start")
     .text("Million gallons per day by use type for the lower 48 United States");
 }
