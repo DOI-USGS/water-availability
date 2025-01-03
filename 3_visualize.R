@@ -108,6 +108,8 @@ p3_targets <- list(
                                 identifier = "AggReg_nam_nospace",
                                 width = 6, height = 9,
                                 file_out = "3_visualize/out/AggReg.svg",
+                                # changed where this is saved to keep manual
+                                # remove of the svggrid timestamp 
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_svg,
@@ -115,6 +117,8 @@ p3_targets <- list(
                                 identifier = "Region_nam_nospace",
                                 width = 6, height = 9,
                                 file_out = "3_visualize/out/Regions.svg",
+                                # changed where this is saved to keep manual
+                                # remove of the svggrid timestamp 
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_json,
@@ -372,7 +376,7 @@ p3_targets <- list(
                                     "Central High Plains", "Southern High Plains",
                                     "Texas", "Columbia-Snake",
                                     "Central Rockies", "Southwest Desert",
-                                    "Pacific Northwest", "California-Nevada"),
+                                    "Pacific Northwest", "California-Nevada", "CONUS"),
                             reg_noSpace = stringr::str_replace_all(reg, " ", "_")),
     tar_target(p3_ps_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 

@@ -17,6 +17,10 @@
 
             <p>Within each indicator, high limitation indicates areas where water quality or quantity conditions exceed the requirements, or sensitivity, for a particular use.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
           </div>
+          <div class="chart-title-container">
+            <p class="chart-title">Impacts on water availability</p>
+            <p class="chart-subtitle">Darker colors indicate were aspects of water availability are more limited</p>
+          </div>
           <div class="text-container">
             <div class="availability-container">
               <div class="wa-map" id="sui-map">
@@ -39,7 +43,7 @@
           </div>
           <div class="caption-container">
               <div class="caption-text-child">
-                <p>Maps showing the relative impact on water availability from four different categories by hydrologic region. Categories include water limitation; surface-water quality from model estimates of total nitrogen and total phosphorus (Cashman and others, in prep); groundwater quality from models of nitrate and arsenic (Ransom and others, 2022; Lombard and others, 2021); and percentage of river miles in each region with ecological flow alterations, adapted from Carlisle (2019). Darker colors indicate increasing limitation for each category.</p>
+                <p>Maps showing the relative impacts on water availability from water quantity, quality, and altered flows for each hydrologic region in the lower 48 United States (cite van meter) (cite budget chapter). Darker colors in each map indicate regions with higher impacts on water availability from that component.</p>
               </div>
           </div>  
           <div class="text-container">
@@ -75,33 +79,18 @@ import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
-import { isMobile } from 'mobile-device-detect';
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
 
-
-//////// references array //
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
-});
-
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
-
-/////////
 
 </script>
 

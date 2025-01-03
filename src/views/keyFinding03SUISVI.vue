@@ -69,7 +69,7 @@
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>Bar charts showing the proportion of the popululation of the lower 48 United States living in varying categories of social vulnerability and water limitation. The color is the level of water limitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
+                <p>Bar charts showing the proportion of the population of the lower 48 United States living in varying categories of social vulnerability and water limitation. The color is the level of water limitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
               </div>
             </div> 
             <div class="text-container">
@@ -85,7 +85,7 @@
 </template>
 
 <script setup>
-import { inject, ref } from 'vue';
+import { inject, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -93,6 +93,7 @@ import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
@@ -100,48 +101,34 @@ const defaultImageID = "03_sui_svi_map";
 const stressImageID = "03_sui_svi_dry_map";
 let imgSrc = ref(getImgURL(defaultImageID));
 
+// toggle state
+const showHighLevelsOnly = ref(false);
+
 const route = useRoute();
 const featureToggles = inject('featureToggles');
 
-//////// references array //
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
-});
-
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
 
-/////////
-
-let buttonText = "all levels";
-
+// Methods
 function getImgURL(id) {
   return `${baseURL}${id}.png`;
 }
 
-function toggleViz() {
-    if(imgSrc.value === getImgURL(defaultImageID)) {
-        imgSrc.value = getImgURL(stressImageID);
-        buttonText = "Only high levels";
-
+watch(showHighLevelsOnly, (newValue) => {
+    if (newValue) {
+        imgSrc.value = getImgURL(stressImageID); // switch to high levels image
     } else {
-        imgSrc.value = getImgURL(defaultImageID);
-        buttonText = "View all levels";
-
+        imgSrc.value = getImgURL(defaultImageID); // switch back to all levels image
     }
-}
+});
+
 
 </script>
 

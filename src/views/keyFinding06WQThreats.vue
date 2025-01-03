@@ -95,10 +95,18 @@
               <h2>Groundwater quality</h2>
               <p>The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic nutrient concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
             </div>
+            
+          <div class="chart-title-container">
+              <p class="chart-title">Groundwater drinking contamination levels</p>
+              <p class="chart-subtitle">Pie charts show the proportion of each aquifer with levels that exceed human-health guidelines for 16 drinking water contaminants</p>
+          </div>
+            <div class="map-container">
+              <img class="map-overlay" 
+              :src="imgSrc">
+              <aquiferWedges id="aquifer-svg" />
+            </div>
             <div class="caption-container">
-              <div class="caption-text-child">
-                <p>These pie charts represent the overall groundwater quality in principal aquifers. The values shown in the pie chart represent the proportion of the aquifer under three categories of water quality relative to the human-health benchmark for drinking water. For this analysis, 16 contaminants were analyzed, including arsenic, manganese, lead, and nitrate. </p>
-              </div>
+
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wq-high" >
                   <label class="legend_wrap">
@@ -122,11 +130,9 @@
                   </label>
                 </div>
               </div>
-            </div>
-            <div class="map-container">
-              <img class="map-overlay" 
-              :src="imgSrc">
-              <aquiferWedges id="aquifer-svg" />
+              <div class="caption-text-child">
+                <p>Pie charts showing the overall groundwater quality in principal aquifers of the lower 48 United States (cite chapter). The values shown in the pie chart represent the proportion of the aquifer under three categories of water quality relative to the human-health benchmark for drinking water. For this analysis, 16 contaminants were analyzed, including arsenic, manganese, lead, and nitrate. (cite chapter). Results for selected individual constituents are also accessible in an interactive searchable map (link).</p>
+              </div>
             </div>
               <Methods></Methods>
               <References :theseReferences="referenceList"></References>
@@ -148,60 +154,28 @@ import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
-import { isMobile } from 'mobile-device-detect';
-import { text } from '@fortawesome/fontawesome-svg-core';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
-import treemapSVG from '@/assets/svgs/treemap_desktop.svg';
 import treemapSVGmobile from '@/assets/svgs/treemap_mobile.svg';
 
 // aquifer map settings
 const defaultRegionID = "overview";
 const imgSrc = ref(getImgURL(defaultRegionID)); 
 
-
 // for preview site toggle
 const featureToggles = inject('featureToggles');
 const route = useRoute();
 
-//////// references array //
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
-});
-
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
-
-/////////
-
-// use for mobile logic
-const mobileView = isMobile;
-
 
 // global objects
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
-
-
-
-// Global variables 
-const publicPath = import.meta.env.BASE_URL;
-let svg;
-const chart = ref(null);
-let chartDimensions;
-let chartBounds;
-let treemapLabel = "Hover to reveal category names"
-
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 const categoryColors = {
@@ -215,12 +189,13 @@ const categoryColors = {
   'Unimpaired': 'var(--wq-unimpaired)',
 }; 
 
-
-
+// Run of show
 onMounted(async () => {
     addInteractions()
 });
 
+
+// Methods
 function addInteractions() {
         // set viewbox for svg with wedges
         const aquiferSVG = d3.select("#aquifer-svg")
@@ -299,9 +274,6 @@ function mouseleaveWrapper() {
     d3.selectAll(".wedge").selectAll('polygon')
         .style("fill-opacity", 0)
 };
-
-
-
 
 </script>
 

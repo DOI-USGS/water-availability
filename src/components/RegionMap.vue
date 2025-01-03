@@ -183,7 +183,7 @@ watch(
             .attr('stroke-width', '1.2px');
 
             // reset bar chart to default aggregated data
-            emit('regionSelected', 'United States');
+            emit('regionSelected', 'lower 48 United States');
         })
         .on('click', (event, d) => {
           d3.selectAll('.region')

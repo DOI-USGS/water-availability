@@ -20,6 +20,7 @@ dumbbell_gw_v_sw <- function(in_sf,
       summarize(ps_gw_total = sum(gw_total_wu, na.rm = TRUE),
                 ps_total_sum = sum(ps_total, na.rm = TRUE),
                 proportion_gw = round((ps_gw_total/ps_total_sum)*100),0)
+    region_title = "Lower 48 United States"
   } else if(region != "CONUS") {
     summary <- proc_in_sf |>
       filter(Region_nam == region) |>
@@ -27,6 +28,7 @@ dumbbell_gw_v_sw <- function(in_sf,
       summarize(ps_gw_total = sum(gw_total_wu, na.rm = TRUE),
                 ps_total_sum = sum(ps_total, na.rm = TRUE),
                 proportion_gw = round((ps_gw_total/ps_total_sum)*100),0)
+    region_title = region
   }
   
   if(region == "CONUS"){
@@ -75,7 +77,7 @@ dumbbell_gw_v_sw <- function(in_sf,
     annotate("text", x = -Inf, y = 0, label = "W", vjust = -0.5, hjust = 0, color = "black")+
     annotate("text", x = Inf, y = 0, label = "E", vjust = -0.5, hjust = 1, color = "black")+
     geom_hline(yintercept = 0, linewidth = 0.4) +
-    ggtitle(region, subtitle = sprintf("%s%% of water sourced from groundwater", summary$proportion_gw)) +
+    #ggtitle(region_title, subtitle = sprintf("%s%% of water sourced from groundwater", summary$proportion_gw)) +
     theme_void() 
   
   if(region == "CONUS"){
