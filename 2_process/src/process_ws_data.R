@@ -26,7 +26,7 @@ compare_ws_mean <- function(data_in, supply_name, min_year, max_year, xwalk){
   # Calculate weighted mean of the supply by area
   weighted_mean <- joined |>
     filter(!is.na(Area_sqkm)) |>
-    group_by(Region_nam, AggRegion_nam, month, water_year, supply_category) |>
+    group_by(Region_nam, AggRegion_nam, month, year, supply_category) |>
     summarise_at(
       "supply",
       ~ weighted.mean(x = .x, w = Area_sqkm, na.rm = TRUE)) 

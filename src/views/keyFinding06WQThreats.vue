@@ -108,10 +108,18 @@
               <h2>Groundwater quality</h2>
               <p>The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic nutrient concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
             </div>
+            
+          <div class="chart-title-container">
+              <p class="chart-title">Groundwater drinking contamination levels</p>
+              <p class="chart-subtitle">Pie charts show the proportion of each aquifer with levels that exceed human-health guidelines for 16 drinking water contaminants</p>
+          </div>
+            <div class="map-container">
+              <img class="map-overlay" 
+              :src="imgSrc">
+              <aquiferWedges id="aquifer-svg" />
+            </div>
             <div class="caption-container">
-              <div class="caption-text-child">
-                <p>These pie charts represent the overall groundwater quality in principal aquifers. The values shown in the pie chart represent the proportion of the aquifer under three categories of water quality relative to the human-health benchmark for drinking water. For this analysis, 16 contaminants were analyzed, including arsenic, manganese, lead, and nitrate. </p>
-              </div>
+
               <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wq-high" >
                   <label class="legend_wrap">
@@ -135,11 +143,9 @@
                   </label>
                 </div>
               </div>
-            </div>
-            <div class="map-container">
-              <img class="map-overlay" 
-              :src="imgSrc">
-              <aquiferWedges id="aquifer-svg" />
+              <div class="caption-text-child">
+                <p>Pie charts showing the overall groundwater quality in principal aquifers of the lower 48 United States (cite chapter). The values shown in the pie chart represent the proportion of the aquifer under three categories of water quality relative to the human-health benchmark for drinking water. For this analysis, 16 contaminants were analyzed, including arsenic, manganese, lead, and nitrate. (cite chapter). Results for selected individual constituents are also accessible in an interactive searchable map (link).</p>
+              </div>
             </div>
               <Methods></Methods>
               <References :theseReferences="referenceList"></References>

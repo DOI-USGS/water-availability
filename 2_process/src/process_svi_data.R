@@ -23,9 +23,10 @@ mean_svi <- function(data_in,
   
   # add categories
   out_categorized <- out_mean |>
-    mutate(svi_category = case_when(mean_svi <= thresholds$lower ~ "Low SVI",
-                                    mean_svi <= thresholds$upper ~ "Moderate SVI",
-                                    mean_svi <= 1.0 ~ "High SVI",
+    mutate(svi_category = case_when(mean_svi <= 0.25 ~ "Low SVI",
+                                    mean_svi <= 0.50 ~ "Moderate SVI",
+                                    mean_svi <= 0.75 ~ "High SVI",
+                                    mean_svi <= 1.0 ~ "Severe SVI",
                                     TRUE ~ NA)) 
 
   return(out_categorized)

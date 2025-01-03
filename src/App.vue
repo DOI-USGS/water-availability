@@ -24,6 +24,7 @@
 
   const windowSizeStore = useWindowSizeStore();
   const typeOfEnv = import.meta.env.VITE_APP_TIER;
+  const animateTime = 400;
 
   // define feature toggles
   // reactive feature toggles
@@ -49,6 +50,7 @@
 
   // provide feature toggles to the entire app
   provide('featureToggles', featureToggles);
+  provide('animateTime', animateTime);
 
 
   // Declare behavior on mounted

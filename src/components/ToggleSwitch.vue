@@ -2,7 +2,13 @@
   <div class="checkbox_wrap toggle-container">
     <label class="toggle-label">
       <!-- Left label for either/or use case -->
-      <span v-if="leftLabel" class="toggle-text" :class="{ active: !modelValue }">{{ leftLabel }}</span>
+      <span 
+        v-if="leftLabel" 
+        class="toggle-text" 
+        :class="{ tactive: !modelValue }"
+      >
+        {{ leftLabel }}
+      </span>
       
       <!-- Toggle switch -->
       <input 
@@ -11,11 +17,27 @@
         :checked="modelValue"
         @change="$emit('update:modelValue', !modelValue)"
       />
-      <span class="toggle-slider"></span>
+      <span 
+       class="toggle-slider"
+       :style="{ backgroundColor: modelValue ? rightColor : leftColor }"
+       ></span>
 
       <!-- Right label for either/or use case or single toggle label -->
-      <span v-if="rightLabel" class="toggle-text" :class="{ active: modelValue }">{{ rightLabel }}</span>
-      <span v-else-if="label" class="toggle-text">{{ label }}</span>
+      <span 
+        v-if="rightLabel" 
+        class="toggle-text" 
+        :class="{ tactive: modelValue, inactive: !modelValue }"
+      >
+      {{ rightLabel }}
+    </span>
+     <!-- Single label -->
+     <span 
+        v-else-if="label" 
+        class="toggle-text"
+        :class="{ tactive: modelValue, inactive: !modelValue }"
+      >
+        {{ label }}
+      </span>
     </label>
   </div>
 </template>
@@ -38,6 +60,19 @@ defineProps({
   label: {
     type: String,
     required: false
+  },
+  // colors for each label and inactive state
+  leftColor: {
+    type: String,
+    default: 'var(--inactive-grey)' 
+  },
+  rightColor: {
+    type: String,
+    default: 'var(--soft-black)' 
+  },
+  inactiveColor: {
+    type: String,
+    default: 'var(--inactive-grey)' 
   }
 });
 
@@ -45,7 +80,7 @@ defineEmits(['update:modelValue']);
 </script>
 
 <style scoped>
-/* toggle container */
+
 .toggle-container {
   display: flex;
   align-items: center;
@@ -64,14 +99,19 @@ defineEmits(['update:modelValue']);
 
 /* text styles */
 .toggle-text {
-  font-size: 16px;
-  font-weight: 600;
   transition: color 0.3s ease;
-  color: var(--black-soft);
+  color: var(--inactive-grey);
 }
 
-.toggle-text.active {
-  color: var(--blue-bright);
+.toggle-text.tactive {
+  color: var(--black-soft); /* active label is black */
+}
+.toggle-input:focus-visible {
+  outline: none; /* removes focus outline */
+}
+
+.toggle-label:focus-visible {
+  outline: none; /* removes focus outline */
 }
 
 /* toggle input (hidden) */
@@ -84,7 +124,6 @@ defineEmits(['update:modelValue']);
   position: relative;
   width: 40px;
   height: 20px;
-  background-color: var(--inactive-grey);
   border-radius: 20px;
   transition: background-color 0.3s ease;
 }

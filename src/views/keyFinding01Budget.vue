@@ -6,7 +6,7 @@
                 <p>To understand water limitation, it is first important to understand the how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. On an annual average basis, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
-
+  
         <!-- Supply and Demand dumbell chart -->
           <DumbellChart 
             :data="data" 
@@ -14,18 +14,19 @@
             v-model:supplyEnabled="supplyEnabled" 
             v-model:demandEnabled="demandEnabled"
           /> 
-
-        <!-- Supply and Demand dumbell toggles -->
-        <div class="caption-container">
+          <!-- Supply and Demand dumbell toggles -->
           <ToggleSwitch 
             v-model="demandEnabled" 
-            label="Water demand" 
+            rightLabel="Water demand" 
+            :rightColor="'var(--ws-demand)'"
           />
           <ToggleSwitch 
             v-model="supplyEnabled" 
-            label="Water supply" 
+            rightLabel="Water supply" 
+            :rightColor="'var(--ws-supply)'"
           />
-          
+
+        <div class="caption-container">
           <!-- Supply and Demand capation -->
           <div class="caption-text-child">
             <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
@@ -86,35 +87,40 @@
               <!-- Very Low -->
               <ToggleSwitch 
                 v-model="veryLowEnabled" 
-                label="Very low" 
+                rightLabel="Very low" 
+                :rightColor="layers.very_low_none.color"
                 @update:modelValue="toggleLayer('very_low_none')" 
               />
 
               <!-- Low -->
               <ToggleSwitch 
                 v-model="lowEnabled" 
-                label="Low" 
+                rightLabel="Low" 
+                :rightColor="layers.low.color"
                 @update:modelValue="toggleLayer('low')" 
               />
 
               <!-- Moderate -->
               <ToggleSwitch 
                 v-model="moderateEnabled" 
-                label="Moderate" 
+                rightLabel="Moderate" 
+                :rightColor="layers.moderate.color"
                 @update:modelValue="toggleLayer('moderate')" 
               />
 
               <!-- High -->
               <ToggleSwitch 
                 v-model="highEnabled" 
-                label="High" 
+                rightLabel="High" 
+                :rightColor="layers.high.color"
                 @update:modelValue="toggleLayer('high')" 
               />
 
               <!-- Severe -->
               <ToggleSwitch 
                 v-model="severeEnabled" 
-                label="Severe" 
+                rightLabel="Severe" 
+                :rightColor="layers.severe.color"
                 @update:modelValue="toggleLayer('severe')" 
               />
               <br/>
@@ -181,7 +187,7 @@ const publicPath = import.meta.env.BASE_URL;
 // Reactive data bindings 
 const data = ref([]);
 const csvData = ref([]);
-const selectedRegion = ref('United States'); // default region
+const selectedRegion = ref('lower 48 United States'); // default region
 
 // props for regionMap with toggleable layers
 const layers = reactive({
@@ -297,23 +303,6 @@ const toggleLayer = (layerId) => {
   left: 0;
   width: 100%;
   height: 100%;
-}
-.region-label {
-  font-size: 14px;
-  font-weight: bold;
-  fill: black; 
-  pointer-events: none; /* Prevents the label from interfering with mouse events */
-}
-
-
-#toggle-supply {
-  margin-left: 10px;
-  background-color: #669999;
-}
-
-#toggle-demand {
-  margin-left: 10px;
-  background-color: #F87A53;
 }
 
 </style>

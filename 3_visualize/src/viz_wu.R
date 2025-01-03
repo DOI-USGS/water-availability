@@ -9,14 +9,33 @@ map_ir_or_ps <- function(in_sf,
   if(layer == "ir") {
     plot_sf <- in_sf |> 
       dplyr::filter(ir_prop > 0) |>
-      rename(prop_use = ir_prop)
+      rename(prop_use = ir_prop,
+             mgd = ir_total) 
+    
+    mgd_values <- plot_sf$mgd
+    
+    plot_sf <- plot_sf |>
+      mutate(alpha = case_when(mgd < quantile(mgd_values, probs = 0.25) ~ 0.1,
+                               mgd < quantile(mgd_values, probs = 0.50) ~ 0.4,
+                               mgd < quantile(mgd_values, probs = 0.75) ~ 0.7,
+                               mgd < quantile(mgd_values, probs = 1.00) ~ 1.0)) |>
+      filter(mgd > 0)
     
     color_fill = color_scheme$ir_gw_main
   } else {
     plot_sf <- in_sf |> 
       dplyr::filter(ps_prop > 0) |>
-      rename(prop_use = ps_prop)
+      rename(prop_use = ps_prop,
+             mgd = ps_total)
     
+    mgd_values <- plot_sf$mgd
+    
+    plot_sf <- plot_sf |>
+      mutate(alpha = case_when(mgd < quantile(mgd_values, probs = 0.25) ~ 0.1,
+                               mgd < quantile(mgd_values, probs = 0.50) ~ 0.4,
+                               mgd < quantile(mgd_values, probs = 0.75) ~ 0.7,
+                               mgd < quantile(mgd_values, probs = 1.00) ~ 1.0)) |>
+      filter(mgd > 0)
     color_fill = color_scheme$ps_gw_main
   }
  
@@ -24,7 +43,7 @@ map_ir_or_ps <- function(in_sf,
   map <- ggplot(in_regions) +
     geom_sf(fill = NA,
             color = NA, linewidth = 0.1) +
-    geom_sf(data = plot_sf, fill = color_fill, aes(alpha = prop_use),
+    geom_sf(data = plot_sf, fill = color_fill, aes(alpha = alpha),
             color = NA, size = 0)  +
     scale_alpha_identity() +
     theme_void() +
@@ -63,11 +82,19 @@ map_te <- function(in_sf,
   map <- ggplot(in_regions) +
     geom_sf(fill = NA,
             color = NA, linewidth = 0.1) +
-    geom_point(data = plot_sf, 
-               aes(geometry = geometry),
-               color = color_dot,
+    geom_point(data = plot_sf, shape = 21,
+               aes(geometry = geometry, size = mgd),
+               color = "white", fill = "white", stroke = 0.2,
                stat = "sf_coordinates") +
-    scale_alpha_identity() +
+    theme_void() +
+    geom_point(data = plot_sf, shape = 21,
+               aes(geometry = geometry, size = mgd),
+               color = color_dot, fill = color_dot, stroke = 0,
+               stat = "sf_coordinates") +
+    geom_point(data = plot_sf, shape = 21,
+               aes(geometry = geometry, size = mgd),
+               color = "white", fill = color_dot, stroke = 0.2, alpha = 0.4,
+               stat = "sf_coordinates") +
     theme_void() +
     theme(legend.position = "none")
   
