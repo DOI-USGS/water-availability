@@ -164,7 +164,7 @@ const layers = reactive({
     path: '08_wu_ir_map.png',
     color: 'var(--wu-agriculture)',
     order: 1,
-    label: "Irrigation"
+    label: "Crop irrigation"
   },
   ps_total: {
     visible: true,
