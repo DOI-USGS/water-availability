@@ -115,12 +115,13 @@ const isFaceted = ref(false); // Track the current view state (stacked or facete
 const mobileView = isMobile; // Detect mobile view for responsive design
 
 // Global variables to hold chart elements and data
-let svg, chartBounds, rectGroup, useAxis, yearAxis, xAxisGroup;
+let svg, chartBounds, rectGroup, xAxisGroup;
 let categoryGroups, yearGroups, dataStacked, data;
-let yearScale, useScale, categoryRectGroups;
+let yearScale, useScale, categoryRectGroups, totalHeight, adjustedHeight;
 const containerWidth = 700; 
 const containerHeight = 600;
 const padding = 30;
+const barSpace = 5;
 
 // chart dimensions
 const margin = mobileView
@@ -169,7 +170,16 @@ async function loadDatasets() {
       .value(([, D], key) => D.get(key)['mgd'])
       (d3.index(data_in, d => d.water_year, d => d.Use));
 
-    data = data_in // raw data in long form 
+    // calculate heights before initializing chart
+    const groupMaxValues = categoryGroups.map(group =>
+      d3.max(data_in.filter(d => d.Use === group), d => +d.mgd)
+    );
+    const totalMaxValue = d3.sum(groupMaxValues);
+    const facetHeights = groupMaxValues.map(max => (max / totalMaxValue) * height);
+    totalHeight = facetHeights.reduce((sum, h) => sum + h, 0);
+    adjustedHeight = totalHeight + (facetHeights.length * 30) + margin.top;
+
+    data = data_in // store raw data in long form 
 
   } catch (error) {
     console.error('Error loading data:', error);
@@ -222,14 +232,14 @@ function createBarChart(dataStacked) {
     .attr('text-align', 'center') 
 
   // Remove tick lines from x-axis
-  chartBounds.selectAll('.x-axis .tick line').remove();
+  xAxisGroup.selectAll('.x-axis .tick line').remove();
 
   // y-axis (water use scale)
   useScale = d3.scaleLinear()
     .domain([0, d3.max(dataStacked, d => d3.max(d, d => d[1]))])
     .range([height, 0]);
 
-  // add axis to chart
+  // add axis to chart for each use group
   categoryGroups.forEach((group, i) => {
     chartBounds.append('g')
       .attr('class', `y-axis y-axis-${i}`)
@@ -238,12 +248,12 @@ function createBarChart(dataStacked) {
       .attr('class', 'chart-text');
   });
 
-  // Create color scale for the bars
+  // Create categorical color scale for the bars
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
     .range(categoryGroups.map(item => categoryColors[item]));
 
-  // Create grouped bars for each category
+  // Create groups for each category
   categoryRectGroups = rectGroup.selectAll('g')
     .data(dataStacked, d => d.key)
     .join(enter => enter.append('g')
@@ -255,7 +265,7 @@ function createBarChart(dataStacked) {
       .attr('x', d => yearScale(d.data[0]))
       .attr('y', d => useScale(d[1]))
       .attr('height', d => useScale(d[0]) - useScale(d[1]))
-      .attr('width', yearScale.bandwidth() - 5)
+      .attr('width', yearScale.bandwidth() - barSpace)
       .style('fill', d => colorScale(d.key)));
 
   // chart title
@@ -272,7 +282,7 @@ function createBarChart(dataStacked) {
     .attr("x", margin.left/2) 
     .attr("y", margin.top-20)
     .attr("text-anchor", "start")
-    .text("Bars show average daily water use (million gallons per day) for the lower 48 United States by use type");
+    .text("Million gallons per day by use type for the lower 48 United States");
 }
 function transitionToFaceted() {
   const t = d3.transition().duration(animateTime); // animation transition
@@ -281,10 +291,6 @@ function transitionToFaceted() {
   const groupMaxValues = categoryGroups.map(group =>
     d3.max(data.filter(d => d.Use === group), d => +d.mgd)
   );
-
-  // calculate proportional heights for each group
-  const totalMaxValue = d3.sum(groupMaxValues);
-  const facetHeights = groupMaxValues.map(max => (max / totalMaxValue) * height);
 
   // dynamically compute exact positions based on scaled heights
   let facetPositions = [];
@@ -329,7 +335,7 @@ function transitionToFaceted() {
       .data(groupData)
       .transition(t)
       .attr('x', d => yearScale(d.water_year))
-      .attr('width', yearScale.bandwidth() - 5)
+      .attr('width', yearScale.bandwidth() - barSpace)
       .attr('y', d => groupScale(+d.mgd))
       .attr('height', d => facetHeights[i] - groupScale(+d.mgd))
       .style('fill', categoryColors[group]);
@@ -343,21 +349,19 @@ function transitionToFaceted() {
       .text(group);
   });
 
-  // resize the SVG height dynamically based on the total height
-  // compute the total height needed for the facets
-const totalHeight = facetPositions[facetPositions.length - 1] + facetHeights[facetHeights.length - 1];
+  // update x-axis position dynamically
+  xAxisGroup.select('.x-axis')
+    .transition(t)
+    .attr('transform', `translate(0, ${adjustedHeight})`) // move to the new position
+   //.call(d3.axisBottom(yearScale).tickSize(0)) // redraw axis
+  xAxisGroup.selectAll('.tick text')
+    .attr('class', 'chart-text')
+    .style('text-anchor', 'middle'); // ensure labels are styled
 
-// update x-axis position dynamically
-xAxisGroup.select('x-axis').transition(t)
-  .attr('transform', `translate(0, ${totalHeight})`) // move to the new position
-  .call(d3.axisBottom(yearScale).tickSize(0)) // redraw axis
-  .selectAll('.tick text')
-  .attr('class', 'axis-text')
-  .style('text-anchor', 'middle'); // ensure labels are styled
+  const diff = totalHeight-height
 
-
-  // dynamically resize the SVG height to fit all groups and x-axis
-svg.transition(t).attr('viewBox', `-40 0 ${containerWidth + 20} ${containerHeight + 100}`); // add 50px padding below x-axis
+    // dynamically resize the SVG height to fit all groups and x-axis
+  svg.transition(t).attr('viewBox', `0 0 ${containerWidth} ${containerHeight+diff}`); 
 
 }
 
@@ -377,7 +381,7 @@ function transitionToStacked() {
     .attr('x', d => yearScale(d.data[0])) // re-position x
     .attr('y', d => useScale(d[1])) // stacked y-position (top of bar)
     .attr('height', d => useScale(d[0]) - useScale(d[1])) 
-    .attr('width', yearScale.bandwidth() - 5); 
+    .attr('width', yearScale.bandwidth() - barSpace); 
 
   // transition the 4 y-axes back to overlap on top of each other
   categoryGroups.forEach((group, i) => {
@@ -391,6 +395,7 @@ function transitionToStacked() {
       .selectAll('.tick text')
       .attr('class', 'chart-text');
   });
+  
 
   // transition the 4 x-axes back to overlap on top of each other
   categoryGroups.forEach((group, i) => {
@@ -402,16 +407,18 @@ function transitionToStacked() {
       .remove();
   });
 
+// remove facet labels
  chartBounds.selectAll('.facet-label') 
     .transition(t)
     .style('opacity', 0) 
     .remove();
 
-  xAxisGroup.transition(t)
+  xAxisGroup.select('.x-axis')
+   .transition(t)
     .attr('transform', `translate(0, ${height})`) // move back to bottom
     .call(d3.axisBottom(yearScale).tickSize(0))
     .selectAll('.tick text')
-    .attr('class', 'axis-text')
+    .attr('class', 'chart-text')
     .style('text-anchor', 'middle');
   
 }
