@@ -51,7 +51,11 @@
         </div>
       </div> 
       <div class="viz-container">
-        <div id="barplot-container"></div>
+        <WaterUseChart
+          :isFaceted="isFaceted"
+          :dataSet="dataSet"
+          :mobileView="mobileView"
+        />
       </div>
       <div class="text-container">
         <p>
@@ -83,6 +87,7 @@ import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
+import WaterUseChart from '../components/WaterUseChart.vue';
 
 // dependency injections
 const featureToggles = inject('featureToggles');
@@ -232,7 +237,8 @@ function createBarChart({ dataset }) {
   // Create grouped bars for each category
   categoryRectGroups = rectGroup.selectAll('g')
     .data(stackedData, d => d.key)
-    .join(enter => enter.append('g').attr('id', d => sanitizeSelector(d.key)));
+    .join(enter => enter.append('g')
+    .attr('id', d => sanitizeSelector(d.key)));
 
   categoryRectGroups.selectAll('rect')
     .data(D => D.map(d => (d.key = D.key, d)))
