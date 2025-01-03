@@ -26,42 +26,42 @@ const router = createRouter({
       component: VisualizationView
     },
     {
-      path: '/01Budget',
+      path: '/01-water-limitation',
       name: 'Page 1',
       component: page1
     },
     {
-      path: '/02SUI',
+      path: '/02-water-availability',
       name: 'Page 2',
       component: page2
     },
     {
-      path: '/03SVI',
+      path: '/03-vulnerability',
       name: 'Page 3',
       component: page3
     },
     {
-      path: '/04Drought',
+      path: '/04-water-supply',
       name: 'Page 4',
       component: page4
     },
     {
-      path: '/05WQSource',
+      path: '/05-nutrients',
       name: 'Page 5',
       component: page5
     },
     {
-      path: '/06WQThreats',
+      path: '/06-water-quality',
       name: 'Page 6',
       component: page6
     },
     {
-      path: '/07WaterUse',
+      path: '/07-water-use',
       name: 'Page 7',
       component: page7
     },
     {
-      path: '/08WaterUseRegional',
+      path: '/08-regional-wu',
       name: 'Page 8',
       component: page8
     },

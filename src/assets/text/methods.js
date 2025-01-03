@@ -3,7 +3,7 @@ export default {
       // Description of methods
       {
         page: 1,
-        route: '/01Budget',
+        route: '/01-water-limitation',
         method: [
           {
             header: "Calculating supply and demand",
@@ -16,7 +16,7 @@ export default {
         ]
         },      {
         page: 2,
-        route: '/02SUI',
+        route: '/02-water-availability',
         method: [
           {
             header: "Determining impacts on water availability",
@@ -29,7 +29,7 @@ export default {
         ]
       },      {
         page: 3,
-        route: '/03SVI',
+        route: '/03-vulnerability',
         method: [
           {
             header: "Calculating water limitation",
@@ -46,7 +46,7 @@ export default {
         ]
       },      {
         page: 4,
-        route: '/04Drought',
+        route: '/04-water-supply',
         method: [
           {
             header: "Modeling the national water cycle",
@@ -59,7 +59,7 @@ export default {
         ]
       },      {
         page: 5,
-        route: '/05WQSource',
+        route: '/05-nutrients',
         method: [
           {
             header: "Modeling nutrient loads",
@@ -68,7 +68,7 @@ export default {
         ]
       },      {
         page: 6,
-        route: '/06WQThreats',
+        route: '/06-water-quality',
         method: [
           {
             header: "Calculating aquifer benchmarks",
@@ -81,7 +81,7 @@ export default {
         ]
       },      {
         page: 7,
-        route: '/07WaterUse',
+        route: '/07-water-use',
         method: [
           {
             header: "Modeling water use by year",
@@ -95,7 +95,7 @@ export default {
         ]
       },      {
         page: 8,
-        route: '/08WaterUseRegional',
+        route: '/08-regional-wu',
         method: [
           {
             header: "Modeling water use",

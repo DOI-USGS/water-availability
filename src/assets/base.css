@@ -510,6 +510,9 @@ a:visited {
   background-color: var(--blue-dark);
   color: white;
 }
+.report-link:hover h2 {
+  color: white;
+}
 
 
 /* container for the top of each page with key message */
