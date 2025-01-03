@@ -139,6 +139,7 @@ const categoryColors = {
   'Thermoelectric (saline)': 'var(--wu-te-saline)',
 };
 
+const facetOrder = ['Irrigation', 'Public Supply', 'Thermoelectric (saline)', 'Thermoelectric (fresh)']; 
 
 // Watcher to handle toggle changes
 watch(isFaceted, (newValue) => {
@@ -160,18 +161,26 @@ async function loadDatasets() {
   try {
     const data_in = await d3.csv('wu_yearly.csv', d => d);
 
-    // Extract unique categories and years
-    categoryGroups = [...new Set(data_in.map(d => d.Use))];
+    // extract unique categories and years, but enforce custom order
+    categoryGroups = facetOrder.filter(order => 
+      data_in.some(d => d.Use === order) // only include categories in the data
+    );
+
     yearGroups = d3.union(data_in.map(d => d.water_year));
 
     // Stack the data for the stacked bar chart
     dataStacked = d3.stack()
-      .keys(categoryGroups)
+      .keys(facetOrder)
       .value(([, D], key) => D.get(key)['mgd'])
       (d3.index(data_in, d => d.water_year, d => d.Use));
 
+      dataStacked.sort((a, b) => {
+        return facetOrder.indexOf(a.key) - facetOrder.indexOf(b.key);
+      });
+
+
     // calculate heights before initializing chart
-    const groupMaxValues = categoryGroups.map(group =>
+    const groupMaxValues = facetOrder.map(group =>
       d3.max(data_in.filter(d => d.Use === group), d => +d.mgd)
     );
     const totalMaxValue = d3.sum(groupMaxValues);
@@ -296,7 +305,9 @@ function transitionToFaceted() {
   let facetPositions = [];
   let currentPosition = 0;
 
-  categoryGroups.forEach((group, i) => {
+  facetOrder.forEach((group, i) => {
+    const groupIndex = facetOrder.indexOf(group); // enforce custom order
+
     // get dataset for the group
     const groupData = data.filter(d => d.Use === group);
     const groupMaxMgd = groupMaxValues[i];
@@ -311,9 +322,8 @@ function transitionToFaceted() {
       .range([0, width]) 
       .padding(0.02); 
 
-
     // set position accounting for actual height and padding
-    facetPositions.push(currentPosition);
+    facetPositions[groupIndex] = currentPosition;
     currentPosition += facetHeights[i] + padding; // add padding between groups
 
     // update y-axis position
@@ -327,7 +337,7 @@ function transitionToFaceted() {
     // update bar group position
     d3.select(`g #${sanitizeSelector(group)}`)
       .transition(t)
-      .attr('transform', `translate(0, ${facetPositions[i]})`);
+      .attr('transform', `translate(0, ${facetPositions[facetOrder.indexOf(group)]})`);
 
     // update bars
     d3.select(`g #${sanitizeSelector(group)}`)
