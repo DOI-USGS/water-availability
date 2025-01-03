@@ -384,16 +384,17 @@ function initHeatmap({dataset}) {
 
   console.log(dataset[1].Category)
 
-  const xScale = d3.scaleBand()
+
+  const xScale = d3.scaleLinear()
+    .domain([0, d3.max(dataset, d => d.percentMiles)])
+    .range([0, chartDimensions.boundedWidth - chartDimensions.margin.right])
+
+  const yScale = d3.scaleBand()
     .domain(dataset.map(d => d.Parameter))
-    .range([chartDimensions.margin.left, chartDimensions.width - chartDimensions.margin.right])
+    .range([chartDimensions.boundedHeight, 0])
     .padding(0.1);
 
-  const yScale = d3.scaleLinear()
-    .domain([0, d3.max(dataset, d => d.riverMiles)])
-    .range([chartDimensions.height - chartDimensions.margin.bottom, chartDimensions.margin.top])
-  
-  const xAxis = d3.axisBottom(xScale)
+  const yAxis = d3.axisLeft(yScale)
     .tickSizeOuter(0)
 
    // Create a bar for each letter.
@@ -403,11 +404,27 @@ function initHeatmap({dataset}) {
       .data(dataset)
       .join("rect")
       .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
-      .attr("x", d => xScale(d.Parameter))
-      .attr("y", d => yScale(d.riverMiles))
-      .attr("height", d => yScale(0) - yScale(d.riverMiles))
-      .attr("width", xScale.bandwidth());
+      .attr("x", d => xScale(0))
+      .attr("y", d => yScale(d.Parameter))
+      .attr("width", d => xScale(d.percentMiles) - xScale(0))
+      .attr("height", yScale.bandwidth());
 
+        // Append a label for each letter.
+  svg.append("g")
+      .attr("fill", "white")
+      .attr("text-anchor", "end")
+    .selectAll()
+    .data(dataset)
+    .join("text")
+      .attr("x", (d) => xScale(d.percentMiles))
+      .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
+      .attr("dy", "0.35em")
+      .attr("dx", -4)
+      .text((d) => d.percentMiles)
+    .call((text) => text.filter(d => xScale(d.percentMiles) - xScale(0) < 20) // short bars
+      .attr("dx", +4)
+      .attr("fill", "black")
+      .attr("text-anchor", "start"));
 }
 // Enter update for sorting
 function updateHeatmap() {
