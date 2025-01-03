@@ -29,6 +29,8 @@
                 <div id="barplot-container">    
                 </div>
             </div>
+          
+
             <div class="caption-container">
                 <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wq-agriculture" >
@@ -68,7 +70,7 @@
                 </div>
               </div>
               <div class="caption-text-child">
-                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (kg/year) or the percent of the total load</p>
+                <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States (cite van meter). Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
             </div> 
             <div class="text-container">
@@ -109,7 +111,7 @@
           </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>Maps of total Nitrogen and Phosphorus load in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the United States, or a region when selected.</p>
+                <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the lower 48 United States. Select a region on the map to view histograms for that region. Toggle to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
               </div>
             <div class="text-container">
@@ -391,6 +393,14 @@ function createBarChart({ dataset, scaleLoad}) {
     .attr("y", 40) 
     .attr("text-anchor", "start")
     .text(scaleLoad.value ? "As a percent of total load" : "Total load in kg/year");
+
+  svg.append("text")
+    .attr("class", "chart-subtitle")
+    .attr('x', margin.left)
+    //.attr("x", containerWidth - margin.right-100) 
+    .attr("y", (margin.top/2) + 10)
+    .attr("text-anchor", "start") // anchor to the end of the text
+    .text("Bars show what portion of the region's nutrient loads come from varying sources"); 
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)

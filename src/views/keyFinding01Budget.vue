@@ -187,7 +187,7 @@ const publicPath = import.meta.env.BASE_URL;
 // Reactive data bindings 
 const data = ref([]);
 const csvData = ref([]);
-const selectedRegion = ref('United States'); // default region
+const selectedRegion = ref('lower 48 United States'); // default region
 
 // props for regionMap with toggleable layers
 const layers = reactive({

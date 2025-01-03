@@ -664,18 +664,6 @@ export default {
         doi: ""
       }, 
       {
-        refID: "VanMetre2020",
-        authors: "Van Metre, P.C., Qi, S., Deacon, J., ..., and Wolock, D.",
-        year: "2020",
-        title: "Prioritizing river basins for intensive monitoring and assessment by the U.S. Geological Survey",
-        journal: true,
-        journal_name: "Environmental Monitoring and Assessment",
-        journal_issue: "192",
-        data_release: false,
-        link: "https://doi.org/10.1007/s10661-020-08403-1",
-        doi: "10.1007/s10661-020-08403-1"
-      }, 
-      {
         refID: "Crimmins2023",
         authors: "Crimmins, A.R., Avery, C.W., Easterling, D.R., ..., and Maycock, T.K.",
         year: "2023",
@@ -893,7 +881,7 @@ export default {
       } ,
       {
         refID: "VanMetre2020",
-        authors: "Van Metre, P.C., Qi, S., Deacon, J., ..., Wolock, D.",
+        authors: "Van Metre, P.C., Qi, S., Deacon, J., ..., and Wolock, D.",
         year: "2024",
         title: "Prioritizing river basins for intensive monitoring and assessment by the US Geological Survey",
         journal: true,

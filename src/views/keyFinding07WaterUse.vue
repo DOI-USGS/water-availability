@@ -7,6 +7,10 @@
           An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for crop irrigation followed by fresh water used in the process of creating energy from thermoelectric power plants. Along with public supply, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. Thermoelectric power (from saline water) uses another approximately 21,000 million gallons per day. 
         </p>
       </div>
+
+      <div class="viz-container">
+        <div id="barplot-container"></div>
+      </div>
       <div class="caption-container">
         <div class="caption-text-child">
           <p>This chart shows water use from 2010 through 2020. Use the buttons to switch between viewing the total annual use to viewing the annual use by category. Note that the y-scale is not constant for each use when viewing use by category.</p>
@@ -48,10 +52,10 @@
               Thermoelectric (saline)
             </label>
           </div>
+          </div>
+          <div class="caption-text-child">
+          <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. Note that the y-scale is not constant across use categories when viewing use by category.</p>
         </div>
-      </div> 
-      <div class="viz-container">
-        <div id="barplot-container"></div>
       </div>
       <div class="text-container">
         <p>
@@ -61,6 +65,16 @@
       
       <div class="text-container">
         <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
+      </div>
+
+      <div class="text-container">
+        <h3>Not all the water withdrawn for human water use returns to the local environment</h3>
+      </div>
+      <div class="viz-container">
+        <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/07_consumptive_labels.png"/>
+      </div>
+      <div class="text-container">
+        <p>Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across the lower 48 United States, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power. </p>
       </div>
       
       <Methods></Methods>
@@ -258,15 +272,15 @@ function createBarChart({ dataset, dataStacked }) {
     .attr("x", margin.left / 2) 
     .attr("y", margin.top / 2)
     .attr("text-anchor", "start")
-    .text("Total annual water withdrawals");
+    .text("Average daily water use");
 
   // chart subtitle
   svg.append("text")
-    .attr("class", "chart-text")
+    .attr("class", "chart-subtitle")
     .attr("x", margin.left/2) 
     .attr("y", margin.top-20)
     .attr("text-anchor", "start")
-    .text("Millions of gallons of water used per day");
+    .text("Bars show average daily water use (million gallons per day) for the lower 48 United States by use type");
 }
 function transitionToFaceted() {
 

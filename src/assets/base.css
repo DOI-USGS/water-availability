@@ -146,6 +146,15 @@ a:visited {
   width: 100%;
   padding: 10px 0 10px 0;
 }
+.chart-title-container {
+  display: flex;
+  flex-direction: column; 
+  align-items: left;
+  justify-content: center;
+  width: 65%;
+  margin: 0 auto;
+  padding: 10px 0 10px 0;
+}
 @media only screen and (max-width: 768px) {
   .viz-container {
       flex-direction: column;
@@ -153,6 +162,13 @@ a:visited {
       width: 100vw;
       max-width: none;
       justify-content: flex-start;
+  }
+  .chart-title-container {
+    flex-direction: column;
+    padding: 0 5px;
+    width: 100vw;
+    max-width: none;
+    justify-content: flex-start;
   }
 }
 .text-container {
@@ -898,7 +914,7 @@ section .waves .wave#wave4{
   color: black;
 }
 
-.panel, .references-panel {
+.panel, .panel-references {
   display: none; 
   overflow: hidden;
   margin-bottom: -15px;

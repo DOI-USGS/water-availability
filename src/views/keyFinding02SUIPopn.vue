@@ -17,6 +17,10 @@
 
             <p>Within each indicator, high limitation indicates areas where water quality or quantity conditions exceed the requirements, or sensitivity, for a particular use.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
           </div>
+          <div class="chart-title-container">
+            <p class="chart-title">Impacts on water availability</p>
+            <p class="chart-subtitle">Darker colors indicate were aspects of water availability are more limited</p>
+          </div>
           <div class="text-container">
             <div class="availability-container">
               <div class="wa-map" id="sui-map">
@@ -39,7 +43,7 @@
           </div>
           <div class="caption-container">
               <div class="caption-text-child">
-                <p>Maps showing the relative impact on water availability from four different categories by hydrologic region. Categories include water limitation; surface-water quality from model estimates of total nitrogen and total phosphorus (Cashman and others, in prep); groundwater quality from models of nitrate and arsenic (Ransom and others, 2022; Lombard and others, 2021); and percentage of river miles in each region with ecological flow alterations, adapted from Carlisle (2019). Darker colors indicate increasing limitation for each category.</p>
+                <p>Maps showing the relative impacts on water availability from water quantity, quality, and altered flows for each hydrologic region in the lower 48 United States (cite van meter) (cite budget chapter). Darker colors in each map indicate regions with higher impacts on water availability from that component.</p>
               </div>
           </div>  
           <div class="text-container">
@@ -57,6 +61,28 @@
           <div class="text-container">
             <h3>Water availability for ecosystems is limited by altered natural flows</h3>
             <p>Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces. Ecological communities often rely on  local, natural flow conditions (Lennox and others, 2019; Freeman and others, 2022). Alterations to the natural flow regime therefore have the potential to limit ecological water availability. Limitations include direct stress on organisms (Bipa and others, 2024), mismatches to life-history requirements (Arthington and Balcombe, 2011; Amtstaetter and others, 2021), and changes to the functional flows necessary to create and sustain required habitats (Wharton and others, 2017; Lennox and others, 2019; Hitt and others, 2020; Comte and others, 2021; Kemp and Kemp, 2023; Cashman and others, in prep.). </p>
+          </div>
+          <div class="text-container">
+            <h3>Future water availability</h3>
+            <p>The steady rise in global temperature as a result of human activity is causing changes in Earth's water cycle. The amount of water stored within and moving between vapor, liquid and frozen components of the water cycle is shifting, with significant consequences for water availability. Examples of potential threats to the quantity and quality of water available for humans and ecosystems in North America include increases in drought, aridification, and fire weather; heavy precipitation and flooding; cryosphere decline; rising surface-water temperatures; and saltwater intrusion in coastal areas. [cite IPCC, Ranasinghe and others (2021) , and Scholl 2025]</p>
+            <h4>Potential future impacts to water quantity</h4>
+            <ul class="tab-content-list">
+                    <li>Temperature impacts, including amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing</li>
+                    <li>Snow and ice impacts, including reduced snow cover extent and duration, decreased glaciers and increasing meltwater, thawing permafrost, and altered rain and snow patterns</li>
+                    <li>Other impacts, including stronger hurricanes, rising sea levels, and increased storm surges and coastal flooding</li>
+                  </ul>
+                <h4>Potential future impacts to water quality</h4>
+                  <ul class="tab-content-list">
+                    <li>Temperature impacts, including temperature pollution, amplified drought events, and increased groundwater demand</li>
+                    <li>Snow and ice impacts, including thawing permafrost, decreased glaciers and increasing meltwater, warmer and shorter winter seasons</li>
+                    <li>Other impacts, including increased erosion, increased sand and dust storms, increased saltwater intrusion, and impacts to agriculture</li>
+                  </ul>
+                <h4>Potential future impacts to natural flows</h4>
+                  <ul class="tab-content-list">
+                    <li>Temperature impacts, including amplified drought events, increased groundwater demand, decreased cold-water fish populations and habitat, and changes in streamflow amount and timing</li>
+                    <li>Snow and ice impacts, changes in snowmelt timing and amount, decreased lake and river ice extent, reduced snow cover extent and duration, and thawing permafrost</li>
+                    <li>Other impacts, including stronger hurricanes, stronger severe wind storms, increased erosion, increased storm surge and coastal flooding, and increased saltwater intrusion</li>
+                  </ul>
           </div>
           <Methods></Methods>
           <References :theseReferences="referenceList"></References>
