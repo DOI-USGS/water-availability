@@ -20,7 +20,7 @@
     },
     regionName: { 
         type: String, 
-        default: 'United States',
+        default: 'lower 48 United States',
         require: true
     },
   });
@@ -126,7 +126,7 @@ function initLegend(data) {
     .attr('transform', `translate(${width-40}, 0)`)
     .call(axisRight) 
 
-  const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
+  const displayTitle = props.regionName === 'lower 48 United States' ? props.regionName : `${props.regionName} Region`;
 
   svg.selectAll('.chart-title')
     .data([displayTitle])
@@ -209,7 +209,7 @@ function updateLegend(data) {
 
 
   // update chart title
-  const displayTitle = props.regionName === 'United States' ? props.regionName : `${props.regionName} Region`;
+  const displayTitle = props.regionName === 'lower 48 United States' ? props.regionName : `${props.regionName} Region`;
 
   svg.selectAll('text.chart-title')
     .data([displayTitle])
