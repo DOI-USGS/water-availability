@@ -138,120 +138,8 @@ const selectedUse = ref('Drinking Water'); // default region
 
 const chartSVG = ref(null);
 let chartDimensions;
-
-
-// Colors for threat categories, Needs to be updated with CSS for text legend
-// props for regionMap with toggleable layers
-const layers = reactive({
-  OtherMetals: {
-    color: 'var(--wq-metals)', // css color for layer variable
-    orderDW: 1, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 4, //
-    orderFish: 5
-  },  
-  Salinity: {
-    color: 'var(--wq-salinity)', // css color for layer variable
-    orderDW: 2, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 10, //
-    orderFish: 14
-  },
-  Sediment: {
-    color: 'var(--wq-sediment)', // css color for layer variable
-    orderDW: 3, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 6, //
-    orderFish: 10
-  },
-  Temperature: {
-    color: 'var(--wq-temp)', // css color for layer variable
-    orderDW: 4, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 7, //
-    orderFish: 7
-  },
-  Pathogens: {
-    color: 'var(--wq-biotic)', // css color for layer variable
-    orderDW: 5, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 1, //
-    orderFish: 3
-  },
-  OxygenDepletion: {
-    color: 'var(--wq-metals)', // css color for layer variable
-    orderDW: 6, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 3, //
-    orderFish: 6
-  },
-  OtherNutrients: {
-    color: 'var(--wq-nutrients)', // css color for layer variable
-    orderDW: 7, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 2, //
-    orderFish: 9
-  },
-  Turbidity: {
-    color: 'var(--wq-sediment)', // css color for layer variable
-    orderDW: 8, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 8, //
-    orderFish: 11
-  },
-  AciditypH: {
-    color: 'var(--wq-metals)', // css color for layer variable
-    orderDW: 9, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 12, //
-    orderFish: 8
-  },
-  Pesticides: {
-    color: 'var(--wq-organics)', // css color for layer variable
-    orderDW: 10, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 11, //
-    orderFish: 4
-  },
-  Mercury: {
-    color: 'var(--wq-metals)', // css color for layer variable
-    orderDW: 11, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 9, //
-    orderFish: 2
-  },
-  PCBs: {
-    color: 'var(--wq-metals)', // css color for layer variable
-    orderDW: 12, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 5, //
-    orderFish: 1
-  },
-  Biotoxins: {
-    color: 'var(--wq-biotic)', // css color for layer variable
-    orderDW: 13, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 13, //
-    orderFish: 18
-  },
-  AlgalGrowth: {
-    color: 'var(--wq-biotic)', // css color for layer variable
-    orderDW: 14, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 14, //
-    orderFish: 16
-  },
-  Dioxins: {
-    color: 'var(--wq-organics)', // css color for layer variable
-    orderDW: 15, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 15, //
-    orderFish: 12
-  },
-  ToxicOrganics: {
-    color: 'var(--wq-organics)', // css color for layer variable
-    orderDW: 16, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 17, //
-    orderFish: 13
-  },
-  Ammonia: {
-    color: 'var(--wq-nutrients)', // css color for layer variable
-    orderDW: 17, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 16, //
-    orderFish: 15
-  },
-  OilandGrease: {
-    color: 'var(--wq-organics)', // css color for layer variable
-    orderDW: 18, // order of color in stacked bar chart when drinking water is selected
-    orderRec: 18, //
-    orderFish: 17
-  },
-});
+let chartBounds;
+let rectGroup;
 
 const heatmapSVG = ref(null);
 let svg;
@@ -285,6 +173,7 @@ onMounted(async () => {
                 setupSVG();
                 initHeatmap({
                   dataset: dataDW.value.concat(dataFish.value, dataRec.value),
+                  sortBy: 'DW'
                 });
                 updateHeatmap();
 
@@ -325,35 +214,47 @@ async function loadData(fileName) {
 };
 
 function toggleUse(value) {
-  
-  data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
-  createBarChart({
-    dataset: data.value,
-    scaleLoad: scaleLoad.value
+  console.log(value)
+  initHeatmap({
+    dataset: dataDW.value.concat(dataFish.value, dataRec.value),
+    sortBy: value
   });
-  updateLabels(); // update the labels when the nutrient changes
 }
 
 
 
 // create svg only once
 function setupSVG() {
+
+    // remove any existing SVG before redrawing
+    d3.select('#heatmap-svg').select('svg').remove();
+
   svg = d3.select("#heatmap-svg")
     .append('svg')
     .attr('width', chartDimensions.width)
     .attr('height', chartDimensions.height)
     .attr('viewBox', `0 0 ${chartDimensions.width} ${chartDimensions.height}`);
+  
+  // Add group to chart bounds to hold all chart rectangle groups
+    rectGroup = svg.append('g')
+      .attr('id', 'rectangle_group')
 }
 
 // Initialize Legend
-function initHeatmap({dataset}) {
+function initHeatmap({dataset, sortBy}) {
+
+  // change order of threats for each use category
+  const sortRank = dataset.filter(dataset => dataset.UseAbbr === sortBy);
+  
+  // sort dataset based on sortOrder
+  const sortedDataset = dataset.sort((a, b) => a.sortOrder - b.sortOrder)
 
   const xScale = d3.scaleBand()
-    .domain(dataset.map(d => d.Use))
+    .domain(sortedDataset.map(d => d.Use))
     .range([chartDimensions.margin.left, chartDimensions.width - chartDimensions.margin.right])
 
   const yScale = d3.scaleBand()
-    .domain(dataset.map(d => d.Parameter))
+    .domain(sortRank.map(d => d.Parameter)) // uses rank based on selected use
     .range([chartDimensions.boundedHeight, chartDimensions.margin.top])
     .padding(0.1);
 
@@ -364,32 +265,53 @@ function initHeatmap({dataset}) {
     .range(["#F4E0AF", "#482F0F"])
     .domain([1, 26])
 
+  // set up transition timing
+  const dur = 1000;
+  const t = d3.transition().duration(dur);
+
    // Create a bar for each category.
-   const bar = svg.append("g")
-      .attr("fill", "steelblue")
+   const bar = rectGroup.append("g")
       .selectAll("rect")
-        .data(dataset)
-        .join("rect")
-          .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
-          .attr("x", d => xScale(d.Use))
-          .attr("y", d => yScale(d.Parameter))
-          .attr("width", d => xScale.bandwidth())
-          .attr("height", yScale.bandwidth())
-          .style("fill", d => colorScale(d.percentMiles))
+        .data(sortedDataset)
+        .join(
+          enter => enter.append("rect")
+            .attr("x", d => xScale(d.Use))
+            .attr("y", d => yScale(d.Parameter))
+            .attr('width', xScale.bandwidth())
+            .attr('height', yScale.bandwidth())
+            .style("fill", d => colorScale(d.percentMiles))
+            .transition(t),
+
+          update => update.transition(t),
+
+          exit => exit.transition(t)
+            .style("opacity", 0)
+            .remove()
+        );
 
         // Append a label for each rect
     svg.append("g")
       .attr("fill", "black")
       .attr("text-anchor", "end")
       .selectAll()
-      .data(dataset)
-        .join("text")
-          .attr("class", "chart-text")
-          .attr("x", (d) => xScale(d.Use) + xScale.bandwidth())
-          .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
-          .attr("dy", "0.35em")
-          .attr("dx", -4)
-          .text((d) => d.percentMiles + '%')
+      .data(sortedDataset)
+        .join(
+          enter => enter.append("text")
+            .attr("class", "chart-text")
+            .attr("x", (d) => xScale(d.Use) + xScale.bandwidth())
+            .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
+            .attr("dy", "0.35em")
+            .attr("dx", -4)
+            .text((d) => d.percentMiles + '%')
+            .transition(t),
+          
+          update => update.transition(t),
+
+          exit => exit.transition(t)
+            .style("opacity", 0)
+            .remove()
+        )
+
 
       // Create the axes.
     svg.append("g")
@@ -402,6 +324,7 @@ function initHeatmap({dataset}) {
         .attr("transform", `translate(${chartDimensions.margin.left},0)`)
         .call(d3.axisLeft(yScale).tickSizeOuter(0))
         .attr("class", "chart-text");
+
 }
 // Enter update for sorting
 function updateHeatmap() {
