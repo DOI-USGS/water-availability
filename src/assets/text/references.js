@@ -199,8 +199,8 @@ export default {
         doi: "10.1017/9781009157896.014"
       },
       {
-        refID: "Dettingher2005", 
-        label: "Dettingher 2005",
+        refID: "Dettinger2005", 
+        label: "Dettinger 2005",
         authors: "Dettinger, M.",
         year: "2005",
         title: "Changes in streamflow timing in the western United States in recent decades: U.S. Geological Survey Fact Sheet 2005–3018",
