@@ -1,41 +1,22 @@
 map_svi_sui <- function(in_sf,
-                        dry_onlyL,
-                        color_scheme){
+                        color_scheme, png_out, width, height){
   
   plot_sf <- in_sf |>
     filter( ! is.na(sui_category_3), ! is.na(svi_category)) |>
-    mutate(join_category = sprintf("%s-%s", sui_category_3, svi_category),
-           join_factor = factor(join_category,
-                                levels = c(
-                                  "High SUI-High SVI",
-                                  "High SUI-Moderate SVI",
-                                  "High SUI-Low SVI",
-                                  "Medium SUI-High SVI",
-                                  "Medium SUI-Moderate SVI",
-                                  "Medium SUI-Low SVI",
-                                  "Low SUI-High SVI",
-                                  "Low SUI-Moderate SVI",
-                                  "Low SUI-Low SVI")))
-  
-  conditional_palette <- c(
-    color_scheme$dry_red_vdark,
-    color_scheme$dry_red_dark,
-    color_scheme$dry_red_light,
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$mid_vdark),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$mid_dark),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$mid_cream),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_dark),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_light),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_vlight))
+    mutate(svi_factor = factor(svi_category,
+                               levels = c("Severe SVI", "High SVI", "Moderate SVI", "Low SVI"),
+                               labels = c("Severe", "High", "Moderate", "Low")))
   
   map <- ggplot(plot_sf) +
-    geom_sf(aes(fill = join_factor),
+    geom_sf(aes(fill = svi_factor),
             color = NA, size = 0)  +
-    scale_fill_manual(values = conditional_palette) +
-    theme_void() +
-    theme(legend.position = "none")
+    scico::scale_fill_scico_d(palette = "glasgow", begin  = 0.25, end = 0.6) +
+    theme_void() 
   
-  return(map)
+  
+  ggsave(plot = map,
+         filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
   
 }
 
