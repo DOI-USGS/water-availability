@@ -22,35 +22,35 @@
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
                   <span class="legend_mark"></span>
-                  Very low water limitation
+                  Very low water limitation (0 - 0.2)
                   </label>
                 </div>
                 <div class="legend_item" id="legend-sui-low" >
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
                   <span class="legend_mark"></span>
-                  Low water limitation
+                  Low water limitation (0.2 - 0.4)
                   </label>
                 </div>
                 <div class="legend_item" id="legend-sui-mod" >
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
                   <span class="legend_mark"></span>
-                  Moderate water limitation
+                  Moderate water limitation (0.4 - 0.6)
                   </label>
                 </div>
                 <div class="legend_item" id="legend-sui-high" >
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
                   <span class="legend_mark"></span>
-                  High water limitation
+                  High water limitation (0.6 - 0.8)
                   </label>
                 </div>
                 <div class="legend_item" id="legend-sui-severe" >
                   <label class="legend_wrap">
                   <input type="legend" name="legend" class="legend-inp">
                   <span class="legend_mark"></span>
-                  Severe water limitation
+                  Severe water limitation (0.8 - 1.0)
                   </label>
                 </div>
 
