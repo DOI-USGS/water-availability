@@ -38,9 +38,7 @@
       keyFinding05: previewSiteLogic ? false : true,
       keyFinding06: previewSiteLogic ? false : true,
       keyFinding07: previewSiteLogic ? false : true,
-      keyFinding08: previewSiteLogic ? false : true,
-      keyFinding09: previewSiteLogic ? false : true,
-      keyFinding10: previewSiteLogic ? false : true,
+      keyFinding08: previewSiteLogic ? false : true
     },
     showReportLinks: previewSiteLogic ? false : true, // buttons that say "read the report" and "download the data"
     showPageCarousel: previewSiteLogic ? false : true, // page carousel at bottom of key finding pages
