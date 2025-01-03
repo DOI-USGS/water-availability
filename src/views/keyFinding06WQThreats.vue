@@ -2,12 +2,9 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-
           <div class="viz-container">
             <div ref="heatmapSVG" id="heatmap-svg"></div>
           </div>
-            
-            
             <div class="caption-container">
               <div class="caption-text-child">
                 <p>These visualizations show the number of river miles that are threatened by different categories of contamination (left side), plus those that are considered unimpaired (XXX). Each larger threat is broken down into its consituents (right side). The threats are sorted on each side by the number of river miles, with the largest categories toward the top.</p>
@@ -147,15 +144,16 @@ import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
-import SortingHeatMap from '../components/SortingHeatMap.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
+import { isMobile } from 'mobile-device-detect';
 
 // global objects
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
 const publicPath = import.meta.env.BASE_URL;
+const mobileView = isMobile;
 
 // aquifer map settings
 const defaultRegionID = "overview";
@@ -179,6 +177,10 @@ const dataDW = ref([]);
 const dataRec = ref([]);
 const dataFish = ref([]);
 const selectedUse = ref('Drinking Water'); // default region
+
+const chartSVG = ref(null);
+let chartDimensions;
+
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 // props for regionMap with toggleable layers
@@ -293,34 +295,125 @@ const layers = reactive({
   },
 });
 
-// data for D3 charts
-const csvDW = 'wq_threats_DW.csv' // stacked bar chart data
-const csvRec = 'wq_threats_Rec.csv'
-const csvFish = 'wq_threats_Fish.csv'
+const heatmapSVG = ref(null);
+let svg;
+
+// chart dimensions
+const width = 700;
+const height = 700;
+const rectHeight = 30; //approx: height - margin / 18 classes with room for wiggle
+const marginTop = 20;
 
 // Run of show
 onMounted(async () => {
 
-    // first load the data
-    dataDW.value = await loadData(csvDW); // drinking water data
-    dataRec.value = await loadData(csvRec);  // recreation data
-    dataFish.value = await loadData(csvFish) // fish data
+  try {
+        await loadDatasets();
+
+        if (dataDW.value.length > 0) {
+          // set up chart dimensions
+          chartDimensions = {
+                    width: width,
+                    height: height,
+                    margin: {
+                        top: mobileView ? 60 : 50,
+                        right: mobileView ? 145 : 200,
+                        bottom: mobileView ? 15 : 10,
+                        left: mobileView ? 0 : 170
+                    },
+                }
+                chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
+                chartDimensions.boundedHeight = chartDimensions.height - chartDimensions.margin.top - chartDimensions.margin.bottom
+
+                // build charts
+                setupSVG();
+                initHeatmap({
+                  dataset: dataDW.value,
+                });
+                updateHeatmap();
+
+              } else {
+                console.error('Error loading data');
+            }
+        } catch (error) {
+            console.error('Error during component mounting', error);
+        }
 
     // for aquifer pie chart
-    addInteractions()
+    addInteractions();
 });
 
 // METHODS
 // general data loading fxn
+async function loadDatasets() { // Created from R pipeline
+  try {
+    dataDW.value = await loadData('wq_threats_DW.csv');
+    dataRec.value = await loadData('wq_threats_Rec.csv');
+    dataFish.value = await loadData('wq_threats_Fish.csv');
+    console.log('data in');
+  } catch (error) {
+    console.error('Error loading datasets', error);
+  }
+};
+
 async function loadData(fileName) {
-    try {
-        const data = await d3.csv(publicPath + fileName, d => d);
-        return data;
-    } catch (error) {
-        console.error(`Error loading data from ${fileName}`, error);
-        return [];
-    }
+  try {
+    const data = await d3.csv(publicPath + fileName, d => { 
+      return d;
+    });
+    return data;
+  } catch (error) {
+    console.error(`Error loading data from ${fileName}`, error);
+    return [];
+  }
+};
+
+
+
+// create svg only once
+function setupSVG() {
+  svg = d3.select("#heatmap-svg")
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .attr('viewBox', `-20 0 ${width+20} ${height}`);
+
 }
+// Initialize Legend
+function initHeatmap({dataset}) {
+
+  console.log(dataset[1].Category)
+
+  const xScale = d3.scaleBand()
+    .domain(dataset.map(d => d.Parameter))
+    .range([chartDimensions.margin.left, chartDimensions.width - chartDimensions.margin.right])
+    .padding(0.1);
+
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(dataset, d => d.riverMiles)])
+    .range([chartDimensions.height - chartDimensions.margin.bottom, chartDimensions.margin.top])
+  
+  const xAxis = d3.axisBottom(xScale)
+    .tickSizeOuter(0)
+
+   // Create a bar for each letter.
+   const bar = svg.append("g")
+      .attr("fill", "steelblue")
+      .selectAll("rect")
+      .data(dataset)
+      .join("rect")
+      .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
+      .attr("x", d => xScale(d.Parameter))
+      .attr("y", d => yScale(d.riverMiles))
+      .attr("height", d => yScale(0) - yScale(d.riverMiles))
+      .attr("width", xScale.bandwidth());
+
+}
+// Enter update for sorting
+function updateHeatmap() {
+  console.log("update called")
+}
+
 
 // Methods for aquifer map
 function addInteractions() {
@@ -340,17 +433,6 @@ function addInteractions() {
         aquiferSVG.selectAll('#wrapper')
             .on("mouseleave", mouseleaveWrapper)
 
-        // set viewbox for svg with treemap
-        const treemapSVG = d3.select("#treemap-svg")
-          .attr("viewBox", "0 0 " + 400 + " " + 661)
-          .attr("preserveAspectRatio", "xMidYMid meet")
-          .attr("width", '100%')
-          .attr("height", '100%')
-
-        // Add interaction to wedges
-        treemapSVG.selectAll('.st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7')
-          .on("mouseover", (event) => mouseoverTreemap(event))
-          .on("mouseout", (event) => mouseoutTreemap(event))
 };
 
 function getImgURL(id) {
@@ -362,24 +444,21 @@ function mouseoverMap(event) {
   imgSrc.value = getImgURL(regionID)
 };
 
-function mouseoverTreemap(event) {
-  const categoryID = event.target.id;
-  const categorySpaces = categoryID.replace(/_/g, " ").replace(1, "").replace(2,"");
-  const paragraph = document.getElementById("category-label");
-  paragraph.innerHTML = categorySpaces;
-  const category0 = `${categorySpaces}`.replace(/\s/g, "_")
-  const category1 = `${categorySpaces}1`.replace(/\s/g, "_")
-  const category2 = `${categorySpaces}2`.replace(/\s/g, "_")
-  // select all objects of matching ids
-  d3.select("#treemap-svg").selectAll('rect').style("opacity", 0.6)
-  d3.select("#treemap-svg").selectAll(`#${category0}, #${category1}, #${category2}`)
-    .style("opacity", 1)
-}
-
 function mouseoutMap(event) {
   const regionID = event.target.id;
   imgSrc.value = getImgURL(defaultRegionID)
 };
+
+function mouseleaveWrapper() {
+    // Show the default map
+    const defaultMap = document.querySelector('#region-map-default');
+    defaultMap.classList.remove("hide");
+
+    // Make all wedges transparent
+    d3.selectAll(".wedge").selectAll('polygon')
+        .style("fill-opacity", 0)
+};
+
 
 </script>
 
