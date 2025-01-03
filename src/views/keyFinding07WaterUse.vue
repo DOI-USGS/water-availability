@@ -116,7 +116,7 @@ const mobileView = isMobile; // Detect mobile view for responsive design
 
 // Global variables to hold chart elements and data
 let svg, chartBounds, rectGroup, useAxis, yearAxis, xAxisGroup;
-let categoryGroups, yearGroups, dataStacked;
+let categoryGroups, yearGroups, dataStacked, data;
 let yearScale, useScale, categoryRectGroups;
 const containerWidth = 700; 
 const containerHeight = 600;
@@ -138,8 +138,6 @@ const categoryColors = {
   'Thermoelectric (saline)': 'var(--wu-te-saline)',
 };
 
-// Data references
-const data = ref([]);
 
 // Watcher to handle toggle changes
 watch(isFaceted, (newValue) => {
@@ -171,7 +169,7 @@ async function loadDatasets() {
       .value(([, D], key) => D.get(key)['mgd'])
       (d3.index(data_in, d => d.water_year, d => d.Use));
 
-    data.value = data_in // raw data
+    data = data_in // raw data in long form 
 
   } catch (error) {
     console.error('Error loading data:', error);
@@ -281,7 +279,7 @@ function transitionToFaceted() {
 
   // calculate max values for each group and total max for scaling
   const groupMaxValues = categoryGroups.map(group =>
-    d3.max(data.value.filter(d => d.Use === group), d => +d.mgd)
+    d3.max(data.filter(d => d.Use === group), d => +d.mgd)
   );
 
   // calculate proportional heights for each group
@@ -294,7 +292,7 @@ function transitionToFaceted() {
 
   categoryGroups.forEach((group, i) => {
     // get dataset for the group
-    const groupData = data.value.filter(d => d.Use === group);
+    const groupData = data.filter(d => d.Use === group);
     const groupMaxMgd = groupMaxValues[i];
 
     // compute y-scale for the group
@@ -425,7 +423,7 @@ onMounted(async () => {
   await loadDatasets();
 
   // once it's in
-  if (data.value.length > 0) {
+  if (data.length > 0) {
 
     // init the bar chart svg and g elements
     initBarChart();
