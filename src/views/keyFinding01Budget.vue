@@ -161,9 +161,12 @@ import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import Methods from '../components/Methods.vue';
 import { useRoute } from 'vue-router';
+import { isMobile } from 'mobile-device-detect';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import DumbellChart from '../components/DumbellChart.vue';
 
+
+// dependency injections
 const route = useRoute();
 const featureToggles = inject('featureToggles');
 const animateTime = inject('animateTime')
@@ -177,7 +180,8 @@ const theseReferences = refArray.filter((item) => filteredReferences.includes(it
 theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
 
-// global variables
+// global vars
+const mobileView = isMobile;
 const publicPath = import.meta.env.BASE_URL;
 
 // Reactive data bindings 
