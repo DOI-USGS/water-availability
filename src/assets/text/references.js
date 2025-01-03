@@ -281,6 +281,7 @@ export default {
       },
       {
         refID: "Stets2025", 
+        label: "Stets et al., 2025",
         authors: "Stets, E.G., Cashman, M.J., Miller, O.A., and Powlen, K.A.",
         year: "2025",
         title: "Chapter F: Integrated Water Availability in the Conterminous United States, 2010–20",

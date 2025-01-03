@@ -6,7 +6,7 @@ export default {
             mainTitle: 'Do we have enough water? Yes, and no',
             shortTitle: 'The U.S. has enough water, but not everywhere and not at all times',
             keyMessage: 'At the national scale, water supply is much higher than our demand for water. However, this pattern is not true for all regions or times.',
-            references: ["VanMetre2020", "Stets2025", "Medalie2025", "Gorkski2025"]
+            references: ["Stets2025", "VanMetre2020", "Medalie2025", "Gorski2025"]
         },
         {
             page: 2,
