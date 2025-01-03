@@ -1,4 +1,5 @@
 Use,Category,Parameter,riverMiles,d3parameterMatch,percentMiles,UseAbbr
+Fish Consumption Use,Biotics,Biotoxins,0,Biotics,0,Fish
 Fish Consumption Use,Organics,Oil and Grease,137,OilandGrease,0,Fish
 Fish Consumption Use,Biotic,Algal Growth,1732,AlgalGrowth,0.5,Fish
 Fish Consumption Use,Nutrients,Ammonia,1997,Ammonia,0.6,Fish

@@ -299,10 +299,8 @@ const heatmapSVG = ref(null);
 let svg;
 
 // chart dimensions
-const width = 700;
+const width = mobileView ? 400 : 700;
 const height = 700;
-const rectHeight = 30; //approx: height - margin / 18 classes with room for wiggle
-const marginTop = 20;
 
 // Run of show
 onMounted(async () => {
@@ -317,9 +315,9 @@ onMounted(async () => {
                     height: height,
                     margin: {
                         top: mobileView ? 60 : 50,
-                        right: mobileView ? 145 : 200,
+                        right: mobileView ? 10 : 10,
                         bottom: mobileView ? 15 : 10,
-                        left: mobileView ? 0 : 170
+                        left: mobileView ? 130 : 130
                     },
                 }
                 chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
@@ -328,7 +326,7 @@ onMounted(async () => {
                 // build charts
                 setupSVG();
                 initHeatmap({
-                  dataset: dataDW.value,
+                  dataset: dataDW.value.concat(dataFish.value, dataRec.value),
                 });
                 updateHeatmap();
 
@@ -374,67 +372,67 @@ async function loadData(fileName) {
 function setupSVG() {
   svg = d3.select("#heatmap-svg")
     .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .attr('viewBox', `-20 0 ${width+20} ${height}`);
-
+    .attr('width', chartDimensions.width)
+    .attr('height', chartDimensions.height)
+    .attr('viewBox', `0 0 ${chartDimensions.width} ${chartDimensions.height}`);
 }
 // Initialize Legend
 function initHeatmap({dataset}) {
 
-  console.log(dataset[1].Category)
-
-
-  const xScale = d3.scaleLinear()
-    .domain([0, 30])
-    .range([0, chartDimensions.boundedWidth - chartDimensions.margin.right])
+  const xScale = d3.scaleBand()
+    .domain(dataset.map(d => d.Use))
+    .range([chartDimensions.margin.left, chartDimensions.width - chartDimensions.margin.right])
 
   const yScale = d3.scaleBand()
     .domain(dataset.map(d => d.Parameter))
-    .range([chartDimensions.boundedHeight, 0])
+    .range([chartDimensions.boundedHeight, chartDimensions.margin.top])
     .padding(0.1);
 
   const yAxis = d3.axisLeft(yScale)
     .tickSizeOuter(0)
 
-   // Create a bar for each letter.
+  const colorScale = d3.scaleLinear()
+    .range(["#F4E0AF", "#482F0F"])
+    .domain([1, 26])
+
+   // Create a bar for each category.
    const bar = svg.append("g")
       .attr("fill", "steelblue")
       .selectAll("rect")
       .data(dataset)
       .join("rect")
       .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
-      .attr("x", d => xScale(0))
+      .attr("x", d => xScale(d.Use))
       .attr("y", d => yScale(d.Parameter))
-      .attr("width", d => xScale(d.percentMiles) - xScale(0))
-      .attr("height", yScale.bandwidth());
+      .attr("width", d => xScale.bandwidth())
+      .attr("height", yScale.bandwidth())
+      .style("fill", d => colorScale(d.percentMiles))
 
         // Append a label for each letter.
     svg.append("g")
-      .attr("fill", "white")
+      .attr("fill", "black")
       .attr("text-anchor", "end")
       .selectAll()
       .data(dataset)
       .join("text")
-      .attr("x", (d) => xScale(d.percentMiles))
+      .attr("class", "chart-text")
+      .attr("x", (d) => xScale(d.Use) + xScale.bandwidth())
       .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
       .attr("dy", "0.35em")
       .attr("dx", -4)
       .text((d) => d.percentMiles + '%')
-      .call((text) => text.filter(d => xScale(d.percentMiles) - xScale(0) < 20) // short bars
-      .attr("dx", +4)
-      .attr("fill", "black")
-      .attr("text-anchor", "start"));
 
       // Create the axes.
     svg.append("g")
-        .attr("transform", `translate(0,${marginTop})`)
-        .call(d3.axisTop(xScale).ticks(5))
-        .call(g => g.select(".domain").remove());
+        .attr("transform", `translate(0,${chartDimensions.margin.top})`)
+        .call(d3.axisTop(xScale).ticks(3))
+        .call(g => g.select(".domain").remove())
+        .attr("class", "chart-text");
 
     svg.append("g")
         .attr("transform", `translate(${chartDimensions.margin.left},0)`)
-        .call(d3.axisLeft(yScale).tickSizeOuter(0));
+        .call(d3.axisLeft(yScale).tickSizeOuter(0))
+        .attr("class", "chart-text");
 }
 // Enter update for sorting
 function updateHeatmap() {
