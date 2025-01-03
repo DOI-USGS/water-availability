@@ -71,12 +71,12 @@ export default {
         route: '/06WQThreats',
         method: [
           {
-            header: "Calculating threats to water",
-            description: "Water use type (drinking water, fish consumption, recreation), threat category, and threat are quantified by total river miles. These data were obtained from the United States Environmental Protection Agency (USEPA) Assessment, Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS) database (U.S. Environmental Protection Agency, 2023c).",
+            header: "Calculating aquifer benchmarks",
+            description: "Pie charts display the percentage of the area studied that contained a constituent in untreated groundwater at a concentration that exceeds a human-health benchmark for drinking water (high) or one-half of that value (moderate) [cite Belitz and others (2022), chapter]. For this analysis, 16 drinking water contaminants were analyzed, including arsenic, manganese, lead, and nitrate. ",
           },
           {
-            header: "Calculating aquifer quality",
-            description: "Pie charts display the percentage of the area studied that contained a constituent in untreated groundwater at a concentration that exceeds a human-health benchmark for drinking water (high) or one-half of that value (moderate) [cite Belitz and others (2022), chapter]. For this analysis, 16 drinking water contaminants were analyzed, including arsenic, manganese, lead, and nitrate. ",
+            header: "Calculating threats to surface water",
+            description: "Water use type (drinking water, fish consumption, recreation), threat category, and threat are quantified by total river miles. These data were obtained from the United States Environmental Protection Agency (USEPA) Assessment, Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS) database (U.S. Environmental Protection Agency, 2023c).",
           }
         ]
       },      {
