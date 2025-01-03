@@ -290,6 +290,7 @@ function initHeatmap({dataset, sortBy}) {
         );
 
         // Append a label for each rect
+    svg.selectAll("#percent-labels").remove()
     svg.append("g")
       .attr("fill", "black")
       .attr("text-anchor", "end")
@@ -298,6 +299,7 @@ function initHeatmap({dataset, sortBy}) {
         .join(
           enter => enter.append("text")
             .attr("class", "chart-text")
+            .attr("id", "percent-labels")
             .attr("x", (d) => xScale(d.Use) + xScale.bandwidth())
             .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
             .attr("dy", "0.35em")
@@ -310,7 +312,7 @@ function initHeatmap({dataset, sortBy}) {
           exit => exit.transition(t)
             .style("opacity", 0)
             .remove()
-        )
+        );
 
 
       // Create the axes.
@@ -320,10 +322,16 @@ function initHeatmap({dataset, sortBy}) {
         .call(g => g.select(".domain").remove())
         .attr("class", "chart-text");
 
+    svg.select("#y-axis").remove();
+
     svg.append("g")
         .attr("transform", `translate(${chartDimensions.margin.left},0)`)
         .call(d3.axisLeft(yScale).tickSizeOuter(0))
-        .attr("class", "chart-text");
+        .attr("class", "chart-text")
+        .attr("id", "y-axis");
+  
+
+    
 
 }
 // Enter update for sorting
