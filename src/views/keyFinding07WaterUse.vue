@@ -12,9 +12,6 @@
         <div id="barplot-container"></div>
       </div>
       <div class="caption-container">
-        <div class="caption-text-child">
-          <p>This chart shows water use from 2010 through 2020. Use the buttons to switch between viewing the total annual use to viewing the annual use by category. Note that the y-scale is not constant for each use when viewing use by category.</p>
-        </div>
         <!-- Scale toggle -->
         <ToggleSwitch 
           v-model="isFaceted"
@@ -119,11 +116,10 @@ const mobileView = isMobile; // Detect mobile view for responsive design
 
 // Global variables to hold chart elements and data
 let svg, chartBounds, rectGroup, useAxis, yearAxis, xAxisGroup;
-let categoryGroups, yearGroups;
+let categoryGroups, yearGroups, dataStacked;
 let yearScale, useScale, categoryRectGroups;
 const containerWidth = 700; 
 const containerHeight = 600;
-const t = d3.transition().duration(animateTime); // animation transition
 
 // chart dimensions
 const margin = mobileView
@@ -144,8 +140,6 @@ const categoryColors = {
 // Data references
 const dataSet = ref([]);
 const data = ref([]);
-const dataStacked = ref([])
-
 
 // Watcher to handle toggle changes
 watch(isFaceted, (newValue) => {
@@ -172,11 +166,12 @@ async function loadDatasets() {
     yearGroups = d3.union(data_in.map(d => d.water_year));
 
     // Stack the data for the stacked bar chart
-    dataStacked.value = d3.stack()
+    dataStacked = d3.stack()
       .keys(categoryGroups)
       .value(([, D], key) => D.get(key)['mgd'])
-      (d3.index(dataset, d => d.water_year, d => d.Use));
+      (d3.index(data_in, d => d.water_year, d => d.Use));
 
+    // assign data to reactive obj
     dataSet.value = data_in;
 
   } catch (error) {
@@ -283,7 +278,7 @@ function createBarChart({ dataset, dataStacked }) {
     .text("Bars show average daily water use (million gallons per day) for the lower 48 United States by use type");
 }
 function transitionToFaceted() {
-
+  const t = d3.transition().duration(animateTime); // animation transition
   const padding = 30; // padding between facets
 
   // calculate max values for each group and total max for scaling
@@ -417,11 +412,11 @@ function transitionToStacked() {
     .remove();
 
   xAxisGroup.transition(t)
-  .attr('transform', `translate(0, ${height})`) // move back to bottom
-  .call(d3.axisBottom(yearScale).tickSize(0))
-  .selectAll('.tick text')
-  .attr('class', 'axis-text')
-  .style('text-anchor', 'middle');
+    .attr('transform', `translate(0, ${height})`) // move back to bottom
+    .call(d3.axisBottom(yearScale).tickSize(0))
+    .selectAll('.tick text')
+    .attr('class', 'axis-text')
+    .style('text-anchor', 'middle');
   
 }
 
@@ -431,7 +426,7 @@ onMounted(async () => {
   if (dataSet.value.length > 0) {
     data.value = dataSet.value;
     initBarChart();
-    createBarChart({ dataset: data.value, dataStacked.value });
+    createBarChart({ dataset: data.value, dataStacked: dataStacked });
 
     // watch toggle AFTER initialization
     watch(isFaceted, (newValue) => {
