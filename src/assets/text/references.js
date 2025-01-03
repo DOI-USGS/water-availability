@@ -954,9 +954,9 @@ export default {
       } ,
       {
         refID: "VanMetre2020",
-        label: "Van Metre er al. 2020",
+        label: "Van Metre et al. 2020",
         authors: "Van Metre, P.C., Qi, S., Deacon, J., ..., and Wolock, D.",
-        year: "2024",
+        year: "2020",
         title: "Prioritizing river basins for intensive monitoring and assessment by the US Geological Survey",
         journal: true,
         journal_name: "Environmental Monitoring and Assessment",
