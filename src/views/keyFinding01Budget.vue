@@ -3,46 +3,44 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water balance is the difference between how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. For most of the country, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
+                <p>To understand water limitation, it is first important to understand the how much clean water is in supply and how much water is in demand <span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. On an annual average basis, water supply is much higher than water demand, and there is more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
-        <div class="viz-container">
-          <div id="dotplot-container">             
-        </div>   
-        </div>
+  
+        <!-- Supply and Demand dumbell chart -->
+          <DumbellChart 
+            :data="data" 
+            :animateTime="animateTime"
+            v-model:supplyEnabled="supplyEnabled" 
+            v-model:demandEnabled="demandEnabled"
+          /> 
+          <!-- Supply and Demand dumbell toggles -->
+          <ToggleSwitch 
+            v-model="demandEnabled" 
+            rightLabel="Water demand" 
+            :rightColor="'var(--ws-demand)'"
+          />
+          <ToggleSwitch 
+            v-model="supplyEnabled" 
+            rightLabel="Water supply" 
+            :rightColor="'var(--ws-supply)'"
+          />
+
         <div class="caption-container">
-              <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-demand" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="togglePoints('demand')">
-                  <span class="checkbox_mark"></span>
-                  Water demand
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-supply" >
-                  <label class="checkbox_wrap">
-                    <input type="checkbox" 
-                    name="checkbox" 
-                    class="checkbox_inp" 
-                    @click="togglePoints('supply')">
-                    <span class="checkbox_mark"></span>
-                    Water supply
-                  </label>
-                </div>
-              </div>
-              <div class="caption-text-child">
-                <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
-              </div>
+          <!-- Supply and Demand capation -->
+          <div class="caption-text-child">
+            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
           </div>
+        </div>
+
+        <!-- Regional SUI section -->
         <div class="text-container">
-          <h2>Water limitation in the U.S.</h2>
+          <h2>Regional patterns of water limitation</h2>
         <p>
-          Water limitation occurs when there is not enough water available to meet human and ecosystem needs. This happens when water use (demand) is near or exceeds supply. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
+          Although there is enough water supply to meet demand overall, many regions face local water limitation, which means there not enough water available locally to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
         </p>
         </div>
+        <!-- Regional SUI map with updating stacked bar chart -->
         <div class="image-container">
           <StackedBar 
             categoricalVariable="d3_category"
@@ -83,68 +81,66 @@
 
         />
         </div>
-        <div class="caption-container"><b>Water limitation:</b> 
-              <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-sui-none" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('very_low_none')">
-                  <span class="checkbox_mark"></span>
-                    Very low
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-low" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('low')">
-                  <span class="checkbox_mark"></span>
-                    Low
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-mod" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('moderate')">
-                  <span class="checkbox_mark"></span>
-                    Moderate
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-high" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('high')">
-                  <span class="checkbox_mark"></span>
-                    High
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-sui-severe" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleLayer('severe')">
-                  <span class="checkbox_mark"></span>
-                    Severe
-                  </label>
-                </div>
-              </div>
+        <!-- SUI category on and off toggles -->
+        <div class="caption-container">
+          <b>Water limitation:</b> 
+              <!-- Very Low -->
+              <ToggleSwitch 
+                v-model="veryLowEnabled" 
+                rightLabel="Very low" 
+                :rightColor="layers.very_low_none.color"
+                @update:modelValue="toggleLayer('very_low_none')" 
+              />
+
+              <!-- Low -->
+              <ToggleSwitch 
+                v-model="lowEnabled" 
+                rightLabel="Low" 
+                :rightColor="layers.low.color"
+                @update:modelValue="toggleLayer('low')" 
+              />
+
+              <!-- Moderate -->
+              <ToggleSwitch 
+                v-model="moderateEnabled" 
+                rightLabel="Moderate" 
+                :rightColor="layers.moderate.color"
+                @update:modelValue="toggleLayer('moderate')" 
+              />
+
+              <!-- High -->
+              <ToggleSwitch 
+                v-model="highEnabled" 
+                rightLabel="High" 
+                :rightColor="layers.high.color"
+                @update:modelValue="toggleLayer('high')" 
+              />
+
+              <!-- Severe -->
+              <ToggleSwitch 
+                v-model="severeEnabled" 
+                rightLabel="Severe" 
+                :rightColor="layers.severe.color"
+                @update:modelValue="toggleLayer('severe')" 
+              />
               <br/>
               <div class="caption-text-child">
                 <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
               </div>
         </div>    
+         <!-- Temporal SUI section -->
         <div class="text-container">
-          <h2>Local and seasonal effects of water limitation</h2>
-          <p>Even in regions where average conditions show lower water limitation, water shortages can happen on local scales or for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Thus, lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
+          <h2>Seasonal patterns of water limitation</h2>
+          <p>Water shortages can happen on for short periods such as during droughts or dry seasons. In many parts of the U.S., water use peaks during dry summer months when crop irrigation demands are at their maximum and outdoor use of public-supply water is highest <span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Lower supply is often matched with increased use, which increases water limitation for local watersheds.</p>
         </div>
+        <div class="viz-container">
+          <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >
+        </div>
+        <div class="caption-container">
+          <div class="caption-text-child">
+            <p>Water limitation across the lower 48 by month from January 2010 through January 2020. The bars show the proportion of each water limitation category.</p>
+          </div>
+        </div>  
         <Methods></Methods>
       <References :theseReferences="referenceList"></References>
       </div>
@@ -154,7 +150,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, inject, computed } from 'vue';
+import { onMounted, ref, reactive, inject, watch } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
@@ -164,75 +160,42 @@ import SubPages from '../components/SubPages';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import Methods from '../components/Methods.vue';
-import { isMobile } from 'mobile-device-detect';
 import { useRoute } from 'vue-router';
+import { isMobile } from 'mobile-device-detect';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
+import DumbellChart from '../components/DumbellChart.vue';
 
 
-const featureToggles = inject('featureToggles');
-
-//////// references array //
+// dependency injections
 const route = useRoute();
+const featureToggles = inject('featureToggles');
+const animateTime = inject('animateTime')
 
-const path = computed(() => route.path)
-
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
-});
-
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
 
-/////////
-
+// global vars
 const mobileView = isMobile;
-
 const publicPath = import.meta.env.BASE_URL;
-const dataSet1 = ref([]); 
+
+// Reactive data bindings 
 const data = ref([]);
 const csvData = ref([]);
-const selectedRegion = ref('United States'); // default region
-let svg;
-const containerWidth = 900;
-const maxHeight = 900; 
-const containerHeight = Math.min(
-  mobileView ? window.innerHeight * 0.8 : window.innerHeight * 0.5,
-  maxHeight
-);
+const selectedRegion = ref('lower 48 United States'); // default region
 
-let margin = { top: 50, right: 50, bottom: 40, left: 200 };
-let width = containerWidth - margin.left - margin.right;
-let height = containerHeight - margin.top - margin.bottom;
-let chartBounds, dotGroup;
-let xScale;
-let originalXScaleDomain;
-
-let showSupply = ref(true);
-let showDemand = ref(true);
-
-const orderedRegions = [
-    "Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
-    "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", 
-    "Florida", "Souris-Red-Rainy", "Midwest", "Great Lakes", "Northeast"
-];
-
+// props for regionMap with toggleable layers
 const layers = reactive({
   very_low_none: {
-    visible: true,
-    path: '01_stress_map_very_low_none.png',
-    color: 'var(--sui-none)',
-    order: 1
+    visible: true, // is it visible when loaded
+    path: '01_stress_map_very_low_none.png', // file for map layer
+    color: 'var(--sui-none)', // css color for layer variable
+    order: 1 // order of color in stacked bar chart
   },
   low: {
     visible: true,
@@ -260,41 +223,30 @@ const layers = reactive({
   }
 });
 
-	
- 
-// regional selection data
-const csvWA = "wa_stress_stats.csv"
-function updateSelectedRegion(regionName) {
-  selectedRegion.value = regionName;
-}
+// initialize toggle states based on layer visibility
+const veryLowEnabled = ref(layers.very_low_none.visible);
+const lowEnabled = ref(layers.low.visible);  
+const moderateEnabled = ref(layers.moderate.visible);    
+const highEnabled = ref(layers.high.visible);  
+const severeEnabled = ref(layers.severe.visible);    
 
+// toggles for water supply and demand
+const demandEnabled = ref(true);
+const supplyEnabled = ref(true);
 
-// function to toggle layer visibility
-const toggleLayer = (layerId) => {
-  layers[layerId].visible = !layers[layerId].visible;
-}
+// data for D3 charts
+const csvSUI = 'wa_stress_stats.csv' // stacked bar chart data
+const csvSupplyDemand = 'wa_supply_demand.csv'
 
-
+// run of show
 onMounted(async () => {
-    try {
-        await loadDatasets();
-        data.value = dataSet1.value;
-        if (data.value.length > 0) {
-            initDotChart();
-            createDotChart();
-        } else {
-            console.error('Error loading data');
-        }
-    } catch (error) {
-        console.error('Error during component mounting', error);
-    }
+      // first load the data
+        data.value = await loadData(csvSupplyDemand); // supply and demand data
+        csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
 });
 
-async function loadDatasets() {
-  dataSet1.value = await loadData('wa_supply_demand.csv');
-  csvData.value = await d3.csv(`${publicPath}${csvWA}`);
-}
-
+// METHODS
+// general data loading fxn
 async function loadData(fileName) {
     try {
         const data = await d3.csv(publicPath + fileName, d => d);
@@ -305,181 +257,17 @@ async function loadData(fileName) {
     }
 }
 
-function initDotChart() {
-    d3.select('#dotplot-container').select('svg').remove();
-
-    svg = d3.select('#dotplot-container')
-      .append('svg')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight-50}`)
-      .style('width', '100%')
-      .style('max-height', `${maxHeight}px`) 
-      .style('height', 'auto');
-
-    chartBounds = svg.append('g')
-      .attr('transform', `translate(${margin.left}, 20)`);
-
-    dotGroup = chartBounds.append('g');
+// update region name stored in reactive data variable when selected on regionMap
+function updateSelectedRegion(regionName) {
+  selectedRegion.value = regionName;
 }
 
+// toggle layer visibility on regionMap
+const toggleLayer = (layerId) => {
+  layers[layerId].visible = !layers[layerId].visible;
+};
 
-function togglePoints(type) {
-    if (type === "supply") {
-        showSupply.value = !showSupply.value;
-    } else if (type === "demand") {
-        showDemand.value = !showDemand.value;
-    }
-
-    // Get the visible supply and demand points based on the toggles
-    const visibleSupply = showSupply.value ? data.value.map(d => +d.supply_mean) : [];
-    const visibleDemand = showDemand.value ? data.value.map(d => +d.demand_mean) : [];
-
-    const visiblePoints = [...visibleSupply, ...visibleDemand];
-    const newDomain = visiblePoints.length > 0 ? d3.extent(visiblePoints) : originalXScaleDomain;
-
-    // Update the x-axis domain based on visible points
-    xScale.domain(newDomain).nice();
-
-    // Transition the x-axis
-    d3.selectAll(".x-axis-bottom")
-        .transition()
-        .duration(500)
-        .call(d3.axisBottom(xScale).ticks(5));
-
-    d3.selectAll(".x-axis-top")
-        .transition()
-        .duration(500)
-        .call(d3.axisTop(xScale).ticks(5));
-
-    // Update the position of the circles and hide/show based on the toggles
-    d3.selectAll(".circle-supply")
-        .transition()
-        .duration(500)
-        .attr('cx', d => xScale(d.supply_mean))
-        .style("opacity", showSupply.value ? 1 : 0); // toggle opacity based on showSupply
-
-    d3.selectAll(".circle-demand")
-        .transition()
-        .duration(500)
-        .attr('cx', d => xScale(d.demand_mean))
-        .style("opacity", showDemand.value ? 1 : 0); // toggle opacity based on showDemand
-
-    // Transition the lines connecting supply and demand
-    d3.selectAll(".line")
-        .transition()
-        .duration(500)
-        .attr('x1', d => xScale(d.supply_mean))
-        .attr('x2', d => xScale(d.demand_mean))
-        .style("opacity", showSupply.value && showDemand.value ? 0.4 : 0); // only show if both supply and demand are visible
-}
-
-
-
-
-function createDotChart() {
-    const dataset = data.value;
-
-    if (!dataset || dataset.length === 0) {
-        console.error("No dataset available for creating the dot chart");
-        return;
-    }
-
-    const yAccessor = d => d["Region_nam"];
-
-    const xScaleDomain = d3.extent([
-        ...dataset.map(d => +d.supply_mean),
-        ...dataset.map(d => +d.demand_mean)
-    ]);
-    xScale = d3.scaleLinear()
-        .domain(xScaleDomain)
-        .range([0, width - 2 * margin.right])
-        .nice();
-
-    originalXScaleDomain = xScale.domain(); 
-
-    const yScale = d3.scaleBand()
-        .domain(dataset.map(yAccessor))
-        .range([0, height])
-        .padding(0.1);
-
-    dotGroup.selectAll("*").remove();
-
-    dotGroup.append('g')
-        .attr('class', 'x-axis-bottom x-axis')
-        .attr('transform', `translate(0, ${height})`)
-        .call(d3.axisBottom(xScale).ticks(5));
-
-    dotGroup.append('g')
-        .attr('class', 'x-axis-top x-axis')
-        .call(d3.axisTop(xScale).ticks(5));
-
-    dotGroup.append('g')
-        .attr('class', 'y-axis')
-        .call(d3.axisLeft(yScale));
-
-    const regionAxis = dotGroup.select('.y-axis')
-      .selectAll(".tick")
-      .select("text")
-      .attr("x", -44)
-      .attr("dy", "0.32em");
-
-    d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
-      const svgNode = xml.documentElement;
-
-      dotGroup.select('.y-axis')
-        .selectAll(".tick")
-        .each(function(d) {
-          const regionClass = d.replace(/\s+/g, '_');
-          const svgClone = svgNode.cloneNode(true);
-
-          const insertedSvg = d3.select(this)
-            .insert(() => svgClone, "text")
-            .attr("x", -40)
-            .attr("y", -20)
-            .attr("width", 40)
-            .attr("height", 40)
-            .attr("fill", "var(--inactive-grey)");
-
-          insertedSvg.selectAll(`g.${regionClass} path`)
-            .attr("stroke", "black")
-            .attr("stroke-width", 3)
-            .attr("fill", "black");
-        });
-    });
-
-    dotGroup.selectAll(".line")
-        .data(dataset)
-        .enter().append('line')
-        .attr('class', 'line')
-        .attr('x1', d => xScale(d.supply_mean))
-        .attr('x2', d => xScale(d.demand_mean))
-        .attr('y1', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('stroke', '#ccc')
-        .attr('stroke-width', 3)
-        .attr("stroke-opacity", 0.5);
-
-    dotGroup.selectAll(".circle-supply")
-        .data(dataset)
-        .enter().append('circle')
-        .attr('class', 'circle-supply')
-        .attr('cx', d => xScale(d.supply_mean))
-        .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('r', 5)
-        .attr('fill', 'var(--ws-supply)');
-
-    dotGroup.selectAll(".circle-demand")
-        .data(dataset)
-        .enter().append('circle')
-        .attr('class', 'circle-demand')
-        .attr('cx', d => xScale(d.demand_mean))
-        .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-        .attr('r', 4)
-        .attr('stroke', 'var(--ws-demand)')
-        .attr('stroke-width', '2px')
-        .attr("fill", "var(--white)");
-}
 </script>
-
 
 <style scoped>
 .content-container {
@@ -516,26 +304,5 @@ function createDotChart() {
   width: 100%;
   height: 100%;
 }
-.region-label {
-  font-size: 14px;
-  font-weight: bold;
-  fill: black; 
-  pointer-events: none; /* Prevents the label from interfering with mouse events */
-}
-
-
-#toggle-supply {
-  margin-left: 10px;
-  background-color: #669999;
-}
-
-#toggle-demand {
-  margin-left: 10px;
-  background-color: #F87A53;
-}
-
-
-
-
 
 </style>

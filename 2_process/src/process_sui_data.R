@@ -7,7 +7,7 @@ mean_sui <- function(data_in,
   # Clean data
   raw <- data_in |>
     rename(HUC12 = huc) |>
-    mutate(year = as.numeric(substr(year_month, 1, 4)),
+    mutate(year = as.numeric(substr(wy_month, 1, 4)),
            HUC8 = substr(HUC12, 1, 8)) 
   
   # Filter by year if min_year and max_year are provided
@@ -44,6 +44,24 @@ mean_sui <- function(data_in,
                                       TRUE ~ NA)) 
 
   return(out_categorized)
+}
+
+### for timeline, calculate number of hucs in each sui category by month
+monthly_sui <- function(data_in){
+
+  monthly <- data_in |>
+    rename(HUC12 = huc) |>
+    # group by month, SUI category
+    group_by(year_month, wy_month, SUIclass) |>
+    summarize(n_hucs = n()) |>
+    # factor categories for plotting
+    mutate(sui_category = factor(SUIclass, 
+                                 levels = c("Very low/none",
+                                            "Low",
+                                            "Moderate",
+                                            "High",
+                                            "Severe")))
+  
 }
 
 process_supply_v_demand <- function(data_path){

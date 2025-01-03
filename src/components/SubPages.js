@@ -6,7 +6,7 @@ export default {
             mainTitle: 'Do we have enough water? Yes, and no',
             shortTitle: 'The U.S. has enough water, but not everywhere and not at all times',
             keyMessage: 'At the national scale, water supply is much higher than our demand for water. However, this pattern is not true for all regions or times.',
-            references: ["Stets2025", "Medalie2025"]
+            references: ["VanMetre2020", "Stets2025", "Medalie2025", "Gorkski2025"]
         },
         {
             page: 2,
@@ -14,7 +14,20 @@ export default {
             mainTitle: 'Limits on water availability',
             shortTitle: 'Water availability is affected by water quantity, quality, and flow',
             keyMessage: 'Many areas of the US show high or severe limitation in multiple aspects of water availability.',
-            references: ["Stets2025", "Vörösmarty2010", "Lin2012", "Park2018", "Erickson2025", "Kaushal2018", "Waite2019", "Waite2021", "Kennedy2016", "Eng2019", "Moreira2019", "EPA2020"],
+            references: [
+                "VanMetre2020", 
+                "Stets2025", 
+                "Vörösmarty2010", 
+                "Lin2012", 
+                "Park2018", 
+                "Erickson2025", 
+                "Kaushal2018", 
+                "Waite2019", 
+                "Waite2021", 
+                "Kennedy2016", 
+                "Eng2019", 
+                "Moreira2019", 
+                "EPA2020"],
         },
         {
             page: 3,
@@ -22,7 +35,17 @@ export default {
             mainTitle: 'Unequal access to water',
             shortTitle: 'Socially vulnerable Americans have a higher risk of water limitation',
             keyMessage: 'Water limitation disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water.',
-            references: [ "Census2020", "Drakes2024", "Stets2025", "Meehan2020", "Mueller2021", "Scanlon2023", "Deitz2019", "Flanagan2011", "Erickson2025"]
+            references: [
+                "VanMetre2020",  
+                "Census2020", 
+                "Drakes2024", 
+                "Stets2025", 
+                "Meehan2020", 
+                "Mueller2021", 
+                "Scanlon2023", 
+                "Deitz2019", 
+                "Flanagan2011", 
+                "Erickson2025"]
         },
         {
             page: 4,
@@ -31,6 +54,7 @@ export default {
             shortTitle: 'Limited water supply can cause water imbalance',
             keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation and exacerbating water quality issues' ,
             references: [
+                "VanMetre2020", 
                 "Gorski2025",
                 "Stets2025",
                 "Medalie2025",
@@ -45,7 +69,17 @@ export default {
             mainTitle: 'Nutrients in the water',
             shortTitle: 'Natural and human sources of nutrients degrade water quality',
             keyMessage: 'Sources of nutrients in our water vary across the United States. Common sources of nutrients such as nitrogen and phosphorus include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.',
-            references: ["Erickson2025", "Shoda2019", "Wurtsbaugh2019", "Ator2019", "Hoos2019", "Robertson2019", "Wise2019a", "Wise2019b", "Martinez2024"]
+            references: [
+                "VanMetre2020", 
+                "Erickson2025", 
+                "Shoda2019", 
+                "Wurtsbaugh2019", 
+                "Ator2019", 
+                "Hoos2019", 
+                "Robertson2019", 
+                "Wise2019a", 
+                "Wise2019b", 
+                "Martinez2024"]
         },
         {
             page: 6,
@@ -54,7 +88,7 @@ export default {
             shortTitle: 'Water quality issues can potentially affect human and aquatic health',
             keyMessage: 'Drinking water, fish consumption, and recreational water use face different water quality threats.',
             references: [
-                "Erickson2025",
+                "VanMetre2020", "Erickson2025",
                 "EPA2023",
                 "Vareda2019",
                 "Canedo2013",
@@ -86,27 +120,7 @@ export default {
             mainTitle: 'From sea to shining sea',
             shortTitle: 'How we use water varies across the country',
             keyMessage: 'Regionally, crop irrigation is the primary water use in the Western and High Plains areas of the U.S., while the eastern half of the country uses water primarily for public supply or thermoelectric power.',
-            references: ["Medalie2025", "Galanter2023", "Luukkonen2023", "Martin2023", "Haynes2024"]
-        },
-        {
-            page: 9,
-            route: '/09Consumption',
-            mainTitle: 'Gone but not forgotten',
-            shortTitle: 'Not all the water withdrawn for human water use returns to the local environment',
-            keyMessage: 'Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across CONUS, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power.',
-            references: ["Medalie2025", "Martin2023", "Haynes2023", "Harris2019", "Galanter2023", "Luukkonen2023"],
-        },
-        {
-            page: 10,
-            route: '/10Future',
-            mainTitle: 'Future water availability',
-            shortTitle: 'The water cycle is shifting due to climate change',
-            keyMessage: 'The top impacts to water availability in the U.S. in the future vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
-            references: [
-                "Crimmins2023",
-                "IPCC2022",
-                "Scholl2025"
-            ]
+            references: ["VanMetre2020", "Medalie2025", "Galanter2023", "Luukkonen2023", "Martin2023", "Haynes2024"]
         }
     ]
 };

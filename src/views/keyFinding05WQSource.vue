@@ -6,28 +6,31 @@
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
               <div class="caption-container">
-              <div class="checkbox_item">
               <!-- Nutrient Toggle -->
               <ToggleSwitch 
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
               />
-            </div>
 
-                <div class="checkbox_item">
                   <!-- Scale Toggle -->
                   <ToggleSwitch 
                     v-model="scaleLoad" 
                     leftLabel="Percent load" 
                     rightLabel="Total load" 
+                    rightColor="black"
+                    leftColor="black"
+                    inactiveColor="grey"
                   />
-                </div>
               </div>
           <div class="viz-container">
                 <div id="barplot-container">    
                 </div>
             </div>
+          
+
             <div class="caption-container">
                 <div class="caption-legend-child">
                 <div class="legend_item" id="legend-wq-agriculture" >
@@ -67,20 +70,21 @@
                 </div>
               </div>
               <div class="caption-text-child">
-                <p>A bar chart showing the source of nutrients for hydrologic regions in CONUS. Use the toggle to show either nitrogen or phosphorus. Use the toggle to see the total load (Mg/year) or the percent of the total load</p>
+                <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States (cite van meter). Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
             </div> 
             <div class="text-container">
               <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
-            <div class="checkbox_item">
+            <div class="image-container">
               <ToggleSwitch 
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
               />
-            </div>
             <RegionMap 
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
@@ -99,9 +103,15 @@
               layerY="-11"
 
             />
+            <HistogramLegend 
+              :layerPaths="legendConfig"
+              :data="legendData"
+              :regionName="selectedRegion"
+            />
+          </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>These maps show total nutrient load in kilograms per year for each watershed (HUC12). Use the button to toggle between total nitrogen load and phosphorus load.</p>
+                <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the lower 48 United States. Select a region on the map to view histograms for that region. Toggle to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
               </div>
             <div class="text-container">
@@ -112,8 +122,6 @@
             <References :theseReferences="referenceList"></References>
         </div>
 
-
-         
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
     </section>
@@ -132,6 +140,7 @@ import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
+import HistogramLegend from '../components/HistogramLegend.vue';
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -140,78 +149,58 @@ const route = useRoute();
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
+
+// Chart dimensions
+let svg;
+const containerWidth = 700; 
+const maxHeight = 900; 
+const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+const width = containerWidth + margin.left + margin.right;
+const height = Math.min(window.innerHeight * 0.7, maxHeight) - margin.top - margin.bottom;
+let chartBounds, rectGroup;
+let nutrientScale;
+
+// Reactive data elements
+const scaleLoad = ref(true);
+const showNitrogen = ref(true);
+const legendData = ref([]);
+const rawData = ref([]);
 const dataSet1 = ref([]); 
 const dataSet2 = ref([]); 
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
-let svg;
-const containerWidth = Math.min(window.innerWidth * 0.9, 1200); 
-const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
-const maxHeight = 900; 
-const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { top: 100, right: 100, bottom: 40, left: 300 };
-const width = containerWidth - margin.left - margin.right;
-const height = containerHeight - margin.top - margin.bottom;
-let chartBounds, rectGroup;
-let nutrientScale;
+const selectedRegion = ref('United States'); // default region
 
-const scaleLoad = ref(true);
-const showNitrogen = ref(true);
-
-
-//////// references array //
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of references for this page
-const filteredReferences = filteredMessages[0].references;
-
-// Sort references
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID))
-
-// add numbers
-theseReferences.forEach((item, index) => {
-  item.referenceNumber = `${index + 1}`;
-});
-
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
 
-/////////
-
-
-function getImgURL(id) {
-  return `${baseURL}${id}.png`;
-}
-
-function toggleNutMap() {
-    if(imgSrc.value === getImgURL(tnImageID)) {
-        imgSrc.value = getImgURL(tpImageID);
-        buttonText = "phosporus load";
-
-    } else {
-        imgSrc.value = getImgURL(tnImageID);
-        buttonText = "nitrogen load";
-
-    }
-}
-
+// Define layers and data mappings for RegionMap component
 const layers = reactive({
   nitrogen: {
     visible: true,
     path: '05_tn_map.png',
+    order: 1,
+    colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-high)',
-    order: 1
+    data: 'wq_loads_Reg_tn.csv',
   },
   phosphorus: {
     visible: false,
     path: '05_tp_map.png',
+    order: 2,
+    colors: ['#F0EAF9', '#E8CDE3', '#DFABC9', '#D485AA', '#BC6892', '#93658F', '#71608C', '#534C7A', '#3E2E5E', '#260C3F'],
     color: 'var(--wq-mod)',
-    order: 2
+    data: 'wq_loads_Reg_tp.csv',
   }
 });
 
+// WQ source bar chart configs
 const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevada", "Southwest Desert", "Central Rockies", "Northern High Plains", 
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
 "Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
@@ -225,22 +214,23 @@ const categoryColors = {
         'Wastewater': 'var(--wq-wastewater)'
       }; 
 
+      // run of show
 onMounted(async () => {
-  // sync initial state with toggles
+
+  // set initial toggle state 
   layers.nitrogen.visible = showNitrogen.value;
   layers.phosphorus.visible = !showNitrogen.value;
 
+  // load data that draws histogram based on nutrient toggle
+  loadRegionData(); 
+
     try {
-        await loadDatasets();
+        await loadSourceData();
         data.value = selectedDataSet.value === 'dataSet1' ? dataSet1.value : dataSet2.value;
         if (data.value.length > 0) {
-            initBarChart({
-              containerWidth: containerWidth,
-              containerHeight: containerHeight,
-              margin: margin,
-              width: width,
-              height: height
-            });
+
+          // create svg for WQ source bar chart
+            initBarChart();
             createBarChart({
               dataset: data.value,
               scaleLoad: scaleLoad.value
@@ -253,16 +243,7 @@ onMounted(async () => {
     }
 });
 
-async function loadDatasets() {
-  try {
-    dataSet1.value = await loadData('wq_sources_tn.csv');
-    dataSet2.value = await loadData('wq_sources_tp.csv');
-    console.log('data in');
-  } catch (error) {
-    console.error('Error loading datasets', error);
-  }
-};
-
+// general file loading fxn
 async function loadData(fileName) {
   try {
     const data = await d3.csv(publicPath + fileName, d => { 
@@ -274,36 +255,58 @@ async function loadData(fileName) {
     return [];
   }
 };
+async function loadSourceData() {
+    dataSet1.value = await loadData('wq_sources_tn.csv');
+    dataSet2.value = await loadData('wq_sources_tp.csv');
+};
+// load in region data for map paired chart and filter to selected region
+async function loadRegionData() {
+  const activeLayer = showNitrogen.value ? layers.nitrogen : layers.phosphorus; // select layer
+  rawData.value = await loadData(activeLayer.data); // Load data only once and store it
+  filterRegionData(); // Filter based on the current selected region
+}
 
-function initBarChart({
-  containerWidth,
-  containerHeight,
-  margin
-}) {
+function filterRegionData() {
+  if (!rawData.value) return; // Ensure rawData is loaded
+  legendData.value = rawData.value
+    .filter(d => d.Region_nam === selectedRegion.value)
+    .map(d => ({
+      category: d.d3_category, 
+      value: +d.prop_sqkm,
+    }));
+}
+
+function updateSelectedRegion(regionName) {
+  selectedRegion.value = regionName;
+}
+
+/////// WQ source bar chart
+// init chart svg
+function initBarChart() {
+    // remove any existing SVG before redrawing
+    d3.select('#barplot-container').select('svg').remove();
 
     // draw svg canvas for barplot
     svg = d3.select('#barplot-container')
       .append('svg')
       .attr('class', 'barplotSVG')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
-      .style('width', containerWidth)
-      .style('height', containerHeight)
-      .style('max-height', `${maxHeight}px`);
+      .attr('viewBox', `0 0 ${containerWidth+margin.right} ${maxHeight}`)
+      .style('width', '100%')
+      .style('max-height', `${maxHeight}px`)
+      .style('height', 'auto');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
-      .style("transform", `translate(${margin.left}px, ${margin.top}px)`)
+      .style("transform", `translate(${margin.left}px, 70px)`)
 
     // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = chartBounds.append('g')
       .attr('id', 'rectangle_group')
 
 }
-function createBarChart({
-  dataset,
-  scaleLoad
-}) {
+// build initial chart
+function createBarChart({ dataset, scaleLoad}) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
@@ -333,7 +336,6 @@ function createBarChart({
     .select("text")
     .attr("x", -80) // shift text to the left to make space for the mini maps
     .attr("dy", "0.32em")
-    //.attr("font-weight", "bold");
 
     // load SVG and add it to each tick
     d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
@@ -366,35 +368,39 @@ function createBarChart({
   // x-axis at the bottom
   chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
+    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
   // x-axis at the top
   chartBounds.append('g')
     .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
-    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
+    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
-  // updating x-axis label
+  // updating title
+  svg.select('.chart-title').remove();
   svg.append("text")
-    .attr("class", "upper-right-label")
-    .attr("x", containerWidth - margin.right-100) 
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "end") // anchor to the end of the text
-    .style("font-size", "2.5rem")
-    .style("font-weight", "bold")
-    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus"); 
+    .attr("class", "chart-title")
+    .attr('x', margin.left) 
+    .attr("y", 20)
+    .attr("text-anchor", "start") // anchor to the end of the text
+    .text(`Sources of ${showNitrogen.value ? "Nitrogen" : "Phosphorus"}`); 
 
-  // italic units label
+  svg.select('.chart-text').remove();
   svg.append("text")
-    .attr("class", "upper-right-label-explained")
-    .attr("x", containerWidth - margin.right) 
-    .attr("y", margin.top / 2) 
-    .attr("text-anchor", "end")
-    .style("font-size", "2.5rem")
-    .style("font-style", "italic")
-    .style("font-weight", "300")
-    .text(scaleLoad.value ? "Percent" : "Mg/year");
+    .attr("class", "chart-text")
+    .attr("x", margin.left) 
+    .attr("y", 40) 
+    .attr("text-anchor", "start")
+    .text(scaleLoad.value ? "As a percent of total load" : "Total load in kg/year");
+
+  svg.append("text")
+    .attr("class", "chart-subtitle")
+    .attr('x', margin.left)
+    //.attr("x", containerWidth - margin.right-100) 
+    .attr("y", (margin.top/2) + 10)
+    .attr("text-anchor", "start") // anchor to the end of the text
+    .text("Bars show what portion of the region's nutrient loads come from varying sources"); 
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -437,43 +443,23 @@ function createBarChart({
     );
 }
 
-// update x-axis labels
+// update x-axis labels with toggles
 function updateLabels() {
 
-  const label = svg.selectAll(".upper-right-label")
-    .data([null]); // Use a dummy data binding to handle enter/update/exit
-
-  label.enter()
-    .append("text")
-    .attr("class", "upper-right-label")
-    .attr("x", containerWidth - margin.right -100)
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "end")
-    .style("font-size", "2rem")
-    .style("font-weight", "bold")
-    .merge(label) 
-    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus");
-
-  label.exit().remove(); // Ensure old labels are removed
-
-  const explainedLabel = svg.selectAll(".upper-right-label-explained")
-    .data([null]); 
-
-  explainedLabel.enter()
-    .append("text")
-    .attr("class", "upper-right-label-explained")
-    .attr("x", containerWidth - margin.right)
-    .attr("y", margin.top / 2 )
-    .attr("text-anchor", "end")
-    .style("font-size", "2rem")
-    .style("font-style", "italic")
-    .style("font-weight", "300")
-    .merge(explainedLabel) 
-    .text(scaleLoad.value ? "Mg/year" : "Percent");
-
-  explainedLabel.exit().remove(); 
+  svg.select(".chart-text")
+    .text(scaleLoad.value ? "Total load in kg/year" : "As a percent of total load");
 }
 
+// COMPUTED VARIABLES 
+// compute legendConfig dynamically based on the toggle
+const legendConfig = computed(() => {
+  return showNitrogen.value
+    ? { colors: layers.nitrogen.colors, name: 'Nitrogen' }
+    : { colors: layers.phosphorus.colors, name: 'Phosphorus' };
+    
+});
+
+// WATCHERS
 // watch for changes to scaleLoad
 watch(scaleLoad, (newValue) => {
   // update the chart based on the new scale
@@ -481,27 +467,31 @@ watch(scaleLoad, (newValue) => {
     dataset: data.value,
     scaleLoad: newValue // dynamically pass the toggle state
   });
+  updateLabels()
 
-  // update chart labels to match scale
-  updateLabels();
+
 });
+
 // watch for changes to showNitrogen
-watch(showNitrogen, (newValue) => {
+watch(showNitrogen, async (newValue) => {
   // update the chart based on the nutrient type
   data.value = newValue ? dataSet1.value : dataSet2.value;
+  await loadRegionData(); // reload data when the toggle changes
 
   createBarChart({
     dataset: data.value,
     scaleLoad: scaleLoad.value 
   });
 
-  // update chart labels
-  updateLabels();
+  updateLabels()
 
   // toggle map layer visibility based on the nutrient selected
-  layers.nitrogen.visible = newValue;          // show nitrogen layer
-  layers.phosphorus.visible = !newValue;      // hide phosphorus layer
+  layers.nitrogen.visible = newValue;   // show nitrogen layer
+  layers.phosphorus.visible = !newValue; // hide phosphorus layer
 });
+
+watch([selectedRegion], filterRegionData)
+
 </script>
 
 <style scoped lang="scss">
@@ -509,6 +499,13 @@ watch(showNitrogen, (newValue) => {
 #barplot-container {
   width: 100%; 
   max-height: 900px;
+}
+.image-container {
+  position: relative;
+  width: 100%; 
+  max-width: 1800px;
+  margin: auto; 
+  overflow: hidden;
 }
 
 @media only screen and (max-width: 768px) {

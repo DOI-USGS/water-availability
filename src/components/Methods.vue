@@ -3,7 +3,7 @@
     <div class="methods-container"
       v-for="method in thisMethod">
         <button class="accordion">
-          <span v-html="method.header"></span><span class="symbol">+</span>
+          <h4 v-html="method.header"></h4><span class="symbol">+</span>
         </button>
         <div class="panel">
             <p v-html="method.description"></p>
@@ -12,14 +12,11 @@
 </template>
   
 <script setup>
-import { computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import SubPages from './SubPages';
 import Methods from './../assets/text/methods.js';
 
 const route = useRoute();
-
-const path = computed(() => route.path)
 
 // filter to this page's key message
 const methodArray = Methods.key.filter(message => message.route === route.path);

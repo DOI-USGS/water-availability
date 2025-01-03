@@ -36,7 +36,7 @@
           </div>
           <div class="key-message-item-text">
             <h3>{{ message.mainTitle }}</h3>
-            <h4>{{ message.shortTitle }}</h4>
+            <h4 class="kf-text" >{{ message.shortTitle }}</h4>
           </div>
         </div>
       </div>
@@ -71,9 +71,8 @@
 </template>
 
 <script setup>
-  import { reactive, inject } from 'vue';
+  import { inject } from 'vue';
   import SubPages from '@/components/SubPages.js';
-
 
   const featureToggles = inject('featureToggles');
 
@@ -97,9 +96,9 @@
   z-index: -1;
 }
 #main-title {
-  max-width: 700px;
-  font-size: 8rem;
+  max-width: 700px;;
   line-height: 1.2;
+  font-size: 5rem;
   word-wrap: break-word;
 }
 @media only screen and (max-width: 768px) {
@@ -140,8 +139,8 @@
 .key-message-item-text {
   color: var(--blue-dark);
   width: 100%;
-  font-size: 3rem;
   text-align: left;
+  line-height: 1.2;
 }
 
 .raindrop {
@@ -165,7 +164,6 @@
   shape-outside: ellipse(65% 95% at 50% 25%);
   clip-path: ellipse(65% 95% at 50% 25%);
 }
-
 
 .raindrop:hover {
   cursor: pointer;

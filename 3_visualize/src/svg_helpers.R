@@ -18,7 +18,7 @@ create_svg_for_web <- function(in_sf,
   
   p <- ggplot(in_sf) + geom_sf(fill = color_scheme$svg_fill_default, 
                                color = color_scheme$svg_col_default,
-                               linewidth = 1.4) + theme_void()
+                               linewidth = 0.2) + theme_void()
   
   # gridSVG approach modified from 
   # https://gist.github.com/jimjam-slam/1d988451ae15882c889f49cf20b99a64

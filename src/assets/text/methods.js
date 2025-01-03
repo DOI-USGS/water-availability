@@ -7,11 +7,11 @@ export default {
         method: [
           {
             header: "Calculating supply and demand",
-            description: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020. ",
+            description: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020 [cite Stets, Medalie, Gorksi, MillerDataRelease]. Water supply was calculated as the sum of annual runoff for all watersheds (HUC12) in the region divided by the area of the region. Consumptive use was calculated as the sum of water consumed for crop irrigation, thermoelectric power, and public supply within all watersheds (HUC8) in the region divided by the area of the region. Hydrologic regions are based on Van Metre et al. (2020) river basins [cite VM].",
           },
           {
             header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
+            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the lower 48 United States for water years 2010 through 2020. The surface water-supply and use index was calculated from the balance of water supply and consumptive use at a monthly timestep on a watershed (HUC12) basis (Stets and others, in prep.)."
           }
         ]
         },      {
@@ -19,17 +19,12 @@ export default {
         route: '/02SUI',
         method: [
           {
-            header: "Determining impacts of water quantity",
-            description: "The impact of water quantity on water availablity was determined by analyzing the water supply and use index, which expresses the imbalance between surface water-supply and consumptive uses was used."
-          }, {
-            header: "Determining impacts of surface water quality",
-            description: "For the surface water-quality indicator, surface water total nitrogen and total phosphorus were compared to the NRSA Good benchmark (U.S. Environmental Protection Agency, 2020; Erickson et al. 2025)."
-          }, {
-            header: "Determining impacts of groundwater quality",
-            description: "For the groundwater-quality indicator, predicted nitrate and arsenic concentrations were compared to the regulatory enforceable drinking water maximum contaminant levels."
-          }, {
-            header: "Determining impacts of ecoflows",
-            description: "For the flows indicator, predicted alteration of different aspects of the flow regime were compared to those aspects of the flow regime that have been shown to affect regional ecological health."
+            header: "Determining impacts on water availability",
+            description: "Integrated water availability was characterized using indices for four indicators of water availability: water quantity, surface-water quality, groundwater quality, and ecological flows. For each indicator, values were aggregated by hydrologic region and then ranked to create a relative value of water stress. The hydrologic regions were assigned an index value from 1 to 5 based on their ranking and natural breaks in the distribution. <ol><li>Water quantity impact assessment categories were based on the surface water-supply and use index, which was calculated from the balance of water supply and consumptive use at a monthly timestep on a 12-digit hydrologic unit code (HUC12) basis (Stets and others, in prep.). Regional SUI rankings were based on the percentage of area with high or severe SUI, corresponding to greater than (>) 60 percent depletion of normal water supply (Stets and others, in prep.).</li><li>Surface-water quality impact assessment categories were based on the combined results of SPAtially Referenced Regressions On Watershed attributes model estimates of surface-water total nitrogen and total phosphorus (Cashman and others, in prep.; chap. C, Erickson and others, 202X). Hydrologic regions were ranked based on the percentage of area having total nitrogen or total phosphorus concentrations >4 times higher than the Environmental Protection Agency National Rivers and Streams Assessment (EPA NRSA) regional “Good” standard (chap. C, Erickson and others,202X). </li><li>Groundwater quality impact assessment categories were based on CONUS models for nitrate and arsenic (Lombard and others, 2021; Ransom and others, 2022). The hydrologic regions were assigned index values from 1 to 5 for nitrate and arsenic based on their concentrations for each.</li><li>Ecological water availability impact assessment categories were based on a combination of the regional flow-ecology relationships established by Carlisle and others (2019) with machine-learning predictions of flow regime at the National Hydrography Dataset Plus v2.1 stream reach scale. Alteration status (in other words, altered or unaltered) was determined for high- and low-flow magnitude, duration, and variability metrics by Carlisle (2019).</li></ol>"
+          },
+          {
+            header: "Determining future impacts",
+            description: "The impacts to future water availability were determined by a review of recent literature in peer-reviewed journals and synthesis of information in the Intergovernmental Panel on Climate Change Sixth Assessment Report (IPCC AR6) (Intergovernmental Panel on Climate Change, 2021) and Fifth National Climate Assessment (U.S. Global Change Research Program, 2023). The framework of climatic impact drivers outlined in the (IPCC AR6) was used to show primary drivers of physical changes in water cycle processes and to explain projected changes in future water availability.",
           }
         ]
       },      {
@@ -59,7 +54,7 @@ export default {
           },
           {
             header: "Comparing water supply to normal",
-            description: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region. Then, the monthly values were compared to the average to calculate a normalized deviation from the average for each month and region.",
+            description: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region [cite VM]. Then, the monthly values were compared to the average to calculate a normalized deviation from the average for each month and region.",
           }
         ]
       },      {
@@ -67,12 +62,8 @@ export default {
         route: '/05WQSource',
         method: [
           {
-            header: "Modeling nutrient sources",
-            description: "Total and source-specific nutrient loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise et al., 2019). Common sources across regions were generalized to enable a simple comparison.",
-          },
-          {
-            header: "Mapping nutrient loads",
-            description: "Predicted total nitrogen and phosphorus loads were modeled from 2012 mean annual 'Spatially referenced regressions on watershed' attributes models (Schwarz et al., 2006). Loads were merged spatially with watershed (HUC12) locations for mapping.",
+            header: "Modeling nutrient loads",
+            description: "Total and source-specific nutrient loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise et al., 2019). Predicted total nitrogen and phosphorus loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources (Ator, 2019; Hoos and Roland, 2019; Robertson and Saad, 2019; Wise, 2019; Wise et al., 2019). Sources were generalized to enable a simple comparison.",
           }
         ]
       },      {
@@ -85,7 +76,7 @@ export default {
           },
           {
             header: "Calculating aquifer quality",
-            description: "Colored pie charts indicate the percentage of the area studied that contained a constituent in untreated groundwater at a concentration that exceeds a human-health benchmark for drinking water (high) or one-half of that value (moderate). Data from Belitz and others (2022).",
+            description: "Pie charts display the percentage of the area studied that contained a constituent in untreated groundwater at a concentration that exceeds a human-health benchmark for drinking water (high) or one-half of that value (moderate) [cite Belitz and others (2022), chapter]. For this analysis, 16 drinking water contaminants were analyzed, including arsenic, manganese, lead, and nitrate. ",
           }
         ]
       },      {
@@ -93,8 +84,13 @@ export default {
         route: '/07WaterUse',
         method: [
           {
-            header: "Calculating water use by year",
-            description: "Total water used for crop irrigation, public supply, and thermoelectric water use for the conterminous United States was calculated for water years 2010 through 2020. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
+            header: "Modeling water use by year",
+            description: "Total water used for crop irrigation, public supply, and thermoelectric power for the conterminous United States was modeled for water years 2010 through 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
+          },
+
+          {
+            header: "Calculating consumptive use",
+            description: "For this analysis, the percent of consumptive use for each use category (public supply, irrigation, and thermoelectric water use) was calculated as the amount of water consumed divided by the total water withdrawn. The amount of water withdrawn or consumed were calculated based on average annual values for the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024).",
           }
         ]
       },      {
@@ -102,30 +98,8 @@ export default {
         route: '/08WaterUseRegional',
         method: [
           {
-            header: "Spatial patterns in water use",
-            description: "The proportion of use by category (public supply, irrigation, and thermoelectric water use) were calculated based on annual average withdrawals for each watershed (HUC12) in the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024).",
-          },
-          {
-            header: "Comparing water sources by use",
-            description: "The total water withdrawn from groundwater versus surface water was compared by use category and across all uses. The values for each watershed (HUC12) were calculated as average annual withdrawals for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024).",
-          }
-        ]
-      },      {
-        page: 9,
-        route: '/09Consumption',
-        method: [
-          {
-            header: "Calculating consumptive use",
-            description: "For this analysis, the percent of consumptive use for each use category (public supply, irrigation, and thermoelectric water use) was calculated as the amount of water consumed divided by the total water withdrawn. The amount of water withdrawn or consumed were calculated based on average annual values for the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024).",
-          }
-        ]
-      },      {
-        page: 10,
-        route: '/10Future',
-        method: [
-          {
-            header: "Determining future impacts",
-            description: "The impacts to future water availability were determined by a review of recent literature in peer-reviewed journals and synthesis of information in the Intergovernmental Panel on Climate Change Sixth Assessment Report (IPCC AR6) (Intergovernmental Panel on Climate Change, 2021) and Fifth National Climate Assessment (U.S. Global Change Research Program, 2023). The framework of climatic impact drivers outlined in the (IPCC AR6) was used to show primary drivers of physical changes in water cycle processes and to explain projected changes in future water availability.",
+            header: "Modeling water use",
+            description: "Total water used for crop irrigation, public supply, and thermoelectric power for the conterminous United States was modeled water year 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (Galanter et al., 2023; Luukkonen et al., 2023; Martin et al., 2023; Haynes et al., 2024). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
           }
         ]
       }

@@ -111,6 +111,24 @@ p2_targets <- list(
                inner_join(p2_CONUS_crosswalk_HUC12_df, by = "HUC12") |>
                filter(! is.na(Region_nam)) 
   ),
+  # Shapefiles for plotting
+  tar_target(p2_mainstem_HUC8_simple_sf,
+             p1_mainstem_HUC8_raw_sf |> 
+               dplyr::mutate(
+                 HUC2 = str_sub(HUC, 1, 2),
+                 region_group = case_when(
+                   HUC2 == "19" ~ "AK",
+                   HUC2 == "20" ~ "HI",
+                   HUC2 == "21" ~ "PR",
+                   HUC2 == "22" ~ "other",
+                   .default = "CONUS"
+                 )
+               ) |> 
+               rename(HUC8 = HUC) |>
+               # remove everything outside of CONUS for now
+               filter(region_group == "CONUS") 
+  ),
+  
   # simplified for small inset maps
   tar_target(
     p2_State_sf,
@@ -140,7 +158,7 @@ p2_targets <- list(
                dplyr::left_join(p2_wu_ternary_df,
                                 by = "HUC12") |>
                # add in mean water use data 
-               dplyr::left_join(p2_wu_te_saline_mean2000to2020_HUC12 |>
+               dplyr::left_join(p2_wu_te_saline_2020_HUC12 |>
                                   select(HUC12, te_saline),
                                 by = "HUC12")
   ),
@@ -243,13 +261,17 @@ p2_targets <- list(
   tarchetypes::tar_map(
     values = tibble::tibble(nutrient = c("tn", "tp")),
     tar_target(p2_states_wq_csv,
-               summary_wq_by_state(in_sf = p2_HUC12_join_wq_sf,
+               summary_wq_by_area(in_sf = p2_HUC12_join_wq_sf,
                                    nutrient = nutrient,
-                                   out_csv = sprintf("public/wq_loads_state_%s.csv", nutrient))),
+                                   out_csv = sprintf("public/wq_loads_state_%s.csv", nutrient),
+                                   by = "state"),
+               format = 'file'),
     tar_target(p2_Reg_wq_csv,
-               summary_wq_by_region(in_sf = p2_HUC12_join_wq_sf,
+               summary_wq_by_area(in_sf = p2_HUC12_join_wq_sf,
                                    nutrient = nutrient,
-                                   out_csv = sprintf("public/wq_loads_Reg_%s.csv", nutrient))),
+                                   out_csv = sprintf("public/wq_loads_Reg_%s.csv", nutrient),
+                                   by = "region"),
+               format = 'file'),
     names = nutrient
   ),
 
@@ -362,9 +384,9 @@ p2_targets <- list(
              format = "file"),
   # needed for dumbbell charts
   tar_target(p2_wu_ternary_df,
-             total_wu_proportions(ps_in = p2_wu_ps_mean2000to2020_HUC12,
-                                  ir_in = p2_wu_ir_mean2000to2020_HUC12,
-                                  te_in = p2_wu_te_mean2000to2020_HUC12,
+             total_wu_proportions(ps_in = p2_wu_ps_2020_HUC12,
+                                  ir_in = p2_wu_ir_2020_HUC12,
+                                  te_in = p2_wu_te_2020_HUC12,
                                   color_scheme = p3_colors_wu)),
   
   # Public water supply
@@ -383,11 +405,11 @@ p2_targets <- list(
                           use_type = "ps",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_ps_mean2000to2020_HUC12,
+  tar_target(p2_wu_ps_2020_HUC12,
              mean_wu_HUC12(p2_wu_ps_gw_raw,
                            p2_wu_ps_sw_raw,
                            p2_wu_ps_tot_raw,
-                           min_year = 2010,
+                           min_year = 2020,
                            max_year = 2020) 
   ),
   # Irrigation
@@ -406,11 +428,11 @@ p2_targets <- list(
                           use_type = "ir",
                           source_type = "total") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_ir_mean2000to2020_HUC12,
+  tar_target(p2_wu_ir_2020_HUC12,
              mean_wu_HUC12(p2_wu_ir_gw_raw,
                           p2_wu_ir_sw_raw,
                           p2_wu_ir_tot_raw,
-                          min_year = 2010,
+                          min_year = 2020,
                           max_year = 2020) 
   ),
   # Thermoelectric
@@ -434,16 +456,16 @@ p2_targets <- list(
                           use_type = "te",
                           source_type = "saline") |>
                filter(AggRegion_nam != "NULL")),
-  tar_target(p2_wu_te_mean2000to2020_HUC12,
+  tar_target(p2_wu_te_2020_HUC12,
              mean_wu_HUC12(p2_wu_te_gw_raw,
                           p2_wu_te_sw_raw,
                           p2_wu_te_tot_raw,
-                          min_year = 2010,
+                          min_year = 2020,
                           max_year = 2020) 
   ),
-  tar_target(p2_wu_te_saline_mean2000to2020_HUC12,
+  tar_target(p2_wu_te_saline_2020_HUC12,
              mean_wu_HUC12(p2_wu_te_tot_saline_raw,
-                           min_year = 2010,
+                           min_year = 2020,
                            max_year = 2020) 
   ),
   
@@ -456,13 +478,16 @@ p2_targets <- list(
              readr::read_csv(p1_sui_csv,
                              show_col_types = FALSE)),
 
-  # By HUC12 and Year
+  # Average annual water limitation
   tar_target(p2_sui_2020_HUC12,
              mean_sui(data_in = p2_sui_raw,
                       HUC_level = 12,
                       min_year = 2010, 
                       max_year = 2020,
                       by_yearL = FALSE)),
+  # Monthly water limitation, national basis
+  tar_target(p2_sui_monthly_CONUS,
+             monthly_sui(data_in = p2_sui_raw)),
   # water supply and demand for each region from Ted
   tar_target(p2_supply_v_demand_df,
              process_supply_v_demand(data_path = p1_supply_v_demand_csv)),
@@ -504,7 +529,9 @@ p2_targets <- list(
   tar_target(p2_sui_popn_df,
              join_popn_to_sui(sui_in = p2_sui_2020_HUC12,
                               popn_in = p2_popn_HUC12_df)),
-  tar_target(p2_popn_bar_df,
-             popn_for_bar(in_df = p2_sui_popn_df))
+  tar_target(p2_popn_bubbles_df,
+             popn_for_bubbles(in_df = p2_sui_popn_df,
+                              in_svi = p2_svi_mean_HUC12,
+                              in_sf = p2_mainstem_HUC8_simple_sf))
   
 )

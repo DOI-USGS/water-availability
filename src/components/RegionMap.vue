@@ -145,7 +145,7 @@ watch(
   
 
       // draw region boundaries
-      const paths = svg.append('g')
+      svg.append('g')
         .selectAll('path')
         .data(geoRegions.features)
         .join('path')
@@ -183,7 +183,7 @@ watch(
             .attr('stroke-width', '1.2px');
 
             // reset bar chart to default aggregated data
-            emit('regionSelected', 'United States');
+            emit('regionSelected', 'lower 48 United States');
         })
         .on('click', (event, d) => {
           d3.selectAll('.region')

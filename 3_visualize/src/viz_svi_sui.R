@@ -1,45 +1,26 @@
 map_svi_sui <- function(in_sf,
-                        dry_onlyL,
-                        color_scheme){
+                        color_scheme, png_out, width, height){
   
   plot_sf <- in_sf |>
     filter( ! is.na(sui_category_3), ! is.na(svi_category)) |>
-    mutate(join_category = sprintf("%s-%s", sui_category_3, svi_category),
-           join_factor = factor(join_category,
-                                levels = c(
-                                  "High SUI-High SVI",
-                                  "High SUI-Moderate SVI",
-                                  "High SUI-Low SVI",
-                                  "Medium SUI-High SVI",
-                                  "Medium SUI-Moderate SVI",
-                                  "Medium SUI-Low SVI",
-                                  "Low SUI-High SVI",
-                                  "Low SUI-Moderate SVI",
-                                  "Low SUI-Low SVI")))
-  
-  conditional_palette <- c(
-    color_scheme$dry_red_vdark,
-    color_scheme$dry_red_dark,
-    color_scheme$dry_red_light,
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$mid_vdark),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$mid_dark),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$mid_cream),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_dark),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_light),
-    ifelse(dry_onlyL, color_scheme$svg_col_default, color_scheme$wet_blue_vlight))
+    mutate(svi_factor = factor(svi_category,
+                               levels = c("Severe SVI", "High SVI", "Moderate SVI", "Low SVI"),
+                               labels = c("Severe", "High", "Moderate", "Low")))
   
   map <- ggplot(plot_sf) +
-    geom_sf(aes(fill = join_factor),
+    geom_sf(aes(fill = svi_factor),
             color = NA, size = 0)  +
-    scale_fill_manual(values = conditional_palette) +
-    theme_void() +
-    theme(legend.position = "none")
+    scico::scale_fill_scico_d(palette = "glasgow", begin  = 0.25, end = 0.6) +
+    theme_void() 
   
-  return(map)
+  
+  ggsave(plot = map,
+         filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
   
 }
 
-map_stress <- function(in_sf,
+map_sui <- function(in_sf,
                        in_regions,
                        color_scheme,
                        png_out,
@@ -47,11 +28,11 @@ map_stress <- function(in_sf,
                        height){
   
   plot_sf <- in_sf |>
-    mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$wet_blue_dark,
-                                 sui_category_5 == "Low" ~ color_scheme$wet_blue_light,
-                                 sui_category_5 == "Moderate" ~ color_scheme$svg_col_default,
-                                 sui_category_5 == "High" ~ color_scheme$dry_red_light,
-                                 sui_category_5 == "Severe" ~ color_scheme$dry_red_dark))
+    mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$sui_none,
+                                 sui_category_5 == "Low" ~ color_scheme$sui_low,
+                                 sui_category_5 == "Moderate" ~ color_scheme$sui_mod,
+                                 sui_category_5 == "High" ~ color_scheme$sui_high,
+                                 sui_category_5 == "Severe" ~ color_scheme$sui_severe))
   
   map <- ggplot(plot_sf) +
     geom_sf(data = in_regions, 
@@ -67,6 +48,40 @@ map_stress <- function(in_sf,
          filename = png_out, device = "png", bg = "transparent",
          dpi = 300, units = "in", width = width, height = height)
   
+}
+
+plot_monthly_sui <- function(in_df, 
+                             color_scheme,
+                             png_out,
+                             width,
+                             height) {
+  
+  plot_df <- in_df |>
+    mutate(
+      year = substr(year_month, 1, 4),
+      month = substr(year_month, 6, 7),
+      date = as_date(paste(year, month, '01', sep = '-')))
+  
+  ggplot(data = plot_df, aes(x = date,
+                           y = n_hucs, 
+                           fill = sui_category)) +
+           geom_bar(position = "fill",
+                    stat = "identity", width = 32) +
+    scale_fill_manual(values = c(color_scheme$sui_none,
+                                 color_scheme$sui_low,
+                                 color_scheme$sui_mod,
+                                 color_scheme$sui_high,
+                                 color_scheme$sui_severe)) +
+    scale_x_date(breaks = "1 year", date_labels = "%Y",
+                 limits = c(as.Date("2010-01-01"), as.Date("2020-01-01"))) +
+    theme_void(base_size = 11) +
+    theme(legend.position = "none",
+          panel.grid.major.x = element_line(color = color_scheme$shadow, linewidth = 0.1),
+          axis.text.x = element_text(color = color_scheme$shadow, size = 8))
+  
+  
+  ggsave(filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
 }
 
 viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
