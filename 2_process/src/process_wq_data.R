@@ -31,7 +31,7 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
                                  TRUE ~ Parameter)) |>
     mutate(Category = case_when(Category == "Metals and Physical" ~ "Metals",
                                 TRUE ~ Category)) |>
-    mutate(Parameter = case_when(Parameter == "Metals Other than Mercury" ~ "Other Metals",
+    mutate(Parameter = case_when(Parameter == "Metals Other than Mercury" ~ "Non-Mercury Metals",
                                  TRUE ~ Parameter)) |>
     mutate(d3parameterMatch = stringr::str_replace_all(Parameter, " ", ""),
            d3parameterMatch = stringr::str_replace_all(d3parameterMatch, "/", "")) |>

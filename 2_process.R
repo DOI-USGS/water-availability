@@ -324,7 +324,9 @@ p2_targets <- list(
     values = tibble(useType = c("DW", "Fish", "Rec")),
     tar_target(p2_wq_threats_csv,
                {path_out = sprintf("public/wq_threats_%s.csv", useType)
-                 readr::write_csv(p2_wq_threats_df |> dplyr::filter(UseAbbr == useType),
+                 readr::write_csv(p2_wq_threats_df |> 
+                                    dplyr::filter(UseAbbr == useType) |>
+                                    mutate(sortOrder = row_number()),
                                 file = path_out)
                  return(path_out)},
                format = "file")),

@@ -5,67 +5,25 @@
           <div class="viz-container">
             <div ref="heatmapSVG" id="heatmap-svg"></div>
           </div>
+                    <!-- Category of use -->
+          
             <div class="caption-container">
+              <div class="checkbox_item">
+                  <div class="checkbox_wrap">
+                    <label>
+                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking water
+                    </label>
+                    <label>
+                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish consumption
+                    </label>
+                    <label>
+                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreation
+                    </label>
+                  </div>
+                </div>
+
               <div class="caption-text-child">
-                <p>These visualizations show the number of river miles that are threatened by different categories of contamination (left side), plus those that are considered unimpaired (XXX). Each larger threat is broken down into its consituents (right side). The threats are sorted on each side by the number of river miles, with the largest categories toward the top.</p>
-              </div>
-              <div class="caption-legend-child">
-                <div class="legend_item" id="legend-wq-unimpaired" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Unimpaired water
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-biotic" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Biotic
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-nutrients" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Nutrients
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-organics" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Organics
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-metal" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Metals
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-sediment" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Sediment
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-salinity" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Salinity
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-temp" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Temperature
-                  </label>
-                </div>
+                <p>Heatmap showing the proportion of river miles that are threatened by different categories of contamination. Darker fills represent a higher proportion of river miles threatened by that source. Select a column name to short the rectangles from highest proportion to lowest for that category of use.</p>
               </div>
             </div>
             <div class="text-container">
@@ -316,8 +274,8 @@ onMounted(async () => {
                     margin: {
                         top: mobileView ? 60 : 50,
                         right: mobileView ? 10 : 10,
-                        bottom: mobileView ? 15 : 10,
-                        left: mobileView ? 130 : 130
+                        bottom: mobileView ? 5 : 5,
+                        left: mobileView ? 145 : 145
                     },
                 }
                 chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
@@ -366,6 +324,16 @@ async function loadData(fileName) {
   }
 };
 
+function toggleUse(value) {
+  
+  data.value = showNitrogen.value ? dataSet1.value : dataSet2.value;
+  createBarChart({
+    dataset: data.value,
+    scaleLoad: scaleLoad.value
+  });
+  updateLabels(); // update the labels when the nutrient changes
+}
+
 
 
 // create svg only once
@@ -376,6 +344,7 @@ function setupSVG() {
     .attr('height', chartDimensions.height)
     .attr('viewBox', `0 0 ${chartDimensions.width} ${chartDimensions.height}`);
 }
+
 // Initialize Legend
 function initHeatmap({dataset}) {
 
@@ -399,28 +368,28 @@ function initHeatmap({dataset}) {
    const bar = svg.append("g")
       .attr("fill", "steelblue")
       .selectAll("rect")
-      .data(dataset)
-      .join("rect")
-      .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
-      .attr("x", d => xScale(d.Use))
-      .attr("y", d => yScale(d.Parameter))
-      .attr("width", d => xScale.bandwidth())
-      .attr("height", yScale.bandwidth())
-      .style("fill", d => colorScale(d.percentMiles))
+        .data(dataset)
+        .join("rect")
+          .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
+          .attr("x", d => xScale(d.Use))
+          .attr("y", d => yScale(d.Parameter))
+          .attr("width", d => xScale.bandwidth())
+          .attr("height", yScale.bandwidth())
+          .style("fill", d => colorScale(d.percentMiles))
 
-        // Append a label for each letter.
+        // Append a label for each rect
     svg.append("g")
       .attr("fill", "black")
       .attr("text-anchor", "end")
       .selectAll()
       .data(dataset)
-      .join("text")
-      .attr("class", "chart-text")
-      .attr("x", (d) => xScale(d.Use) + xScale.bandwidth())
-      .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
-      .attr("dy", "0.35em")
-      .attr("dx", -4)
-      .text((d) => d.percentMiles + '%')
+        .join("text")
+          .attr("class", "chart-text")
+          .attr("x", (d) => xScale(d.Use) + xScale.bandwidth())
+          .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
+          .attr("dy", "0.35em")
+          .attr("dx", -4)
+          .text((d) => d.percentMiles + '%')
 
       // Create the axes.
     svg.append("g")
@@ -512,6 +481,5 @@ function mouseleaveWrapper() {
   height: 100%;
   fill-opacity: 0;
 }
-
 
 </style>
