@@ -37,7 +37,7 @@
         <div class="text-container">
           <h2>Regional patterns of water limitation</h2>
         <p>
-          Although there is enough water supply to meet demand overall, many regions face local water limitation, which means there not enough water available locally to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country. These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
+          Although there is enough water supply to meet demand overall, many regions face local water limitation, which means there not enough water available locally to meet human and ecosystem needs. Between 2010 and 2020, the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert had the most widespread exposure to local water limitation in the country.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> These competing needs are projected to increase because of future global population growth and increasing food demands, as well as climatic changes, which could further aggravate the imbalance between human water uses and environmental flow requirements. 
         </p>
         </div>
         <!-- Regional SUI map with updating stacked bar chart -->
@@ -175,10 +175,11 @@ const animateTime = inject('animateTime')
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 const filteredReferences = filteredMessages[0].references;// extract list of references for this page
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
-theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(theseReferences);
+const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
+// sort by order listed on page, reflected in list on subpages.js
+const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
+sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(sortedReferences);
 
 // global vars
 const mobileView = isMobile;

@@ -111,10 +111,11 @@ const featureToggles = inject('featureToggles');
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 const filteredReferences = filteredMessages[0].references;// extract list of references for this page
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
-theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(theseReferences);
+const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
+// sort by order listed on page, reflected in list on subpages.js
+const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
+sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(sortedReferences);
 
 // Methods
 function getImgURL(id) {
