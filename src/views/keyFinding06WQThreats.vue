@@ -47,25 +47,26 @@
               </div>
             </div>
             <div class="chart-title-container">
-            <p class="chart-title">Threats to surface water</p>
-            <p class="chart-subtitle">The top threats to surface water used for drinking water, fish consumption, or recreational use by the proportion of total river miles</p>
+            <p class="chart-title">Top threats to surface water</p>
+            <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired (CITE data)</p>
           </div>
           <div class="viz-container">
-            <div ref="heatmapSVG" id="heatmap-svg"></div>
+            <div id="heatmap-svg"></div>
           </div>
                     <!-- Category of use -->
           
             <div class="caption-container">
               <div class="checkbox_item">
                   <div class="checkbox_wrap">
+                    <p class="toggle-text">Sort chart by:</p>
                     <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking water
+                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water Use
                     </label>
                     <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish consumption
+                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption Use
                     </label>
                     <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreation
+                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreational Use
                     </label>
                   </div>
                 </div>
@@ -99,7 +100,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, inject, watch  } from 'vue';
+import { onMounted, ref, inject  } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
@@ -137,14 +138,11 @@ const referenceList = ref(theseReferences);
 const dataDW = ref([]);
 const dataRec = ref([]);
 const dataFish = ref([]);
-const selectedUse = ref('Drinking Water'); // default region
 
-const chartSVG = ref(null);
+
 let chartDimensions;
-let chartBounds;
 let rectGroup;
 
-const heatmapSVG = ref(null);
 let svg;
 
 // chart dimensions
@@ -217,7 +215,6 @@ async function loadData(fileName) {
 };
 
 function toggleUse(value) {
-  console.log(value)
   initHeatmap({
     dataset: dataDW.value.concat(dataFish.value, dataRec.value),
     sortBy: value
