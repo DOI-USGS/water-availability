@@ -129,18 +129,6 @@ export default {
             shortTitle: 'Not all the water withdrawn for human water use returns to the local environment',
             keyMessage: 'Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across CONUS, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power.',
             references: ["Medalie2025", "Martin2023", "Haynes2023", "Harris2019", "Galanter2023", "Luukkonen2023"],
-        },
-        {
-            page: 10,
-            route: '/10Future',
-            mainTitle: 'Future water availability',
-            shortTitle: 'The water cycle is shifting due to climate change',
-            keyMessage: 'The top impacts to water availability in the U.S. in the future vary regionally and include increases in drought, flooding, and heavy precipitation along with declines in snow and ice.',
-            references: [
-                "Crimmins2023",
-                "IPCC2022",
-                "Scholl2025"
-            ]
         }
     ]
 };

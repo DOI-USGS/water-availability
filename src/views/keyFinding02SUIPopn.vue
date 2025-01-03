@@ -62,6 +62,10 @@
             <h3>Water availability for ecosystems is limited by altered natural flows</h3>
             <p>Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces. Ecological communities often rely on  local, natural flow conditions (Lennox and others, 2019; Freeman and others, 2022). Alterations to the natural flow regime therefore have the potential to limit ecological water availability. Limitations include direct stress on organisms (Bipa and others, 2024), mismatches to life-history requirements (Arthington and Balcombe, 2011; Amtstaetter and others, 2021), and changes to the functional flows necessary to create and sustain required habitats (Wharton and others, 2017; Lennox and others, 2019; Hitt and others, 2020; Comte and others, 2021; Kemp and Kemp, 2023; Cashman and others, in prep.). </p>
           </div>
+          <div class="text-container">
+            <h3>Future water availability</h3>
+            <p>The steady rise in global temperature as a result of human activity is causing changes in Earth's water cycle. The amount of water stored within and moving between vapor, liquid and frozen components of the water cycle is shifting, with significant consequences for water availability. Examples of potential threats to the quantity and quality of water available for humans and ecosystems in North America include increases in drought, aridification, and fire weather; heavy precipitation and flooding; cryosphere decline; rising surface-water temperatures; and saltwater intrusion in coastal areas. [cite IPCC, Ranasinghe and others (2021) , and Scholl 2025]</p>
+          </div>
           <Methods></Methods>
           <References :theseReferences="referenceList"></References>
         </div>
