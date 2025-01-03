@@ -8,7 +8,6 @@ import page5 from '../views/keyFinding05WQSource.vue'
 import page6 from '../views/keyFinding06WQThreats.vue'
 import page7 from '../views/keyFinding07WaterUse.vue'
 import page8 from '../views/keyFinding08WaterUseRegional.vue'
-import page9 from '../views/keyFinding09WaterUseConsumption.vue'
 import glossary from '../views/glossaryPage.vue'
 import credits from '../views/creditsPage.vue'
 
@@ -65,11 +64,6 @@ const router = createRouter({
       path: '/08WaterUseRegional',
       name: 'Page 8',
       component: page8
-    },
-    {
-      path: '/09Consumption',
-      name: 'Page 9',
-      component: page9
     },
     {
       path: '/glossary',

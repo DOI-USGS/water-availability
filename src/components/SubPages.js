@@ -121,14 +121,6 @@ export default {
             shortTitle: 'How we use water varies across the country',
             keyMessage: 'Regionally, crop irrigation is the primary water use in the Western and High Plains areas of the U.S., while the eastern half of the country uses water primarily for public supply or thermoelectric power.',
             references: ["VanMetre2020", "Medalie2025", "Galanter2023", "Luukkonen2023", "Martin2023", "Haynes2024"]
-        },
-        {
-            page: 9,
-            route: '/09Consumption',
-            mainTitle: 'Gone but not forgotten',
-            shortTitle: 'Not all the water withdrawn for human water use returns to the local environment',
-            keyMessage: 'Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across CONUS, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power.',
-            references: ["Medalie2025", "Martin2023", "Haynes2023", "Harris2019", "Galanter2023", "Luukkonen2023"],
         }
     ]
 };
