@@ -3,6 +3,7 @@ export default {
       // Journal article with single author
       {
         refID: "Canedo2013",
+        label: "Cañedo-Argüelles et al. 2013",
         authors: "Cañedo-Argüelles, M., Kefford, B.J., Piscart, C., ..., and Schulz, C.-J.",
         year: "2013",
         title: "Salinisation of rivers: An urgent ecological issue",
@@ -15,6 +16,7 @@ export default {
       },
       {
         refID: "Kaushal2018",
+        label: "Kaushal et al. 2018",
         authors: "Kaushal, S.S., Likens, G.E., Pace, M.L., ..., and Grese, M.",
         year: "2018",
         title: "Freshwater salinization syndrome on a continental scale",
@@ -27,6 +29,7 @@ export default {
       },
       {
         refID: "Wentz2014",
+        label: "Wentz et al. 2014",
         authors: "Wentz, D.A., Brigham, M.E., Chasar, L.C., ..., and Krabbenhoft, D.P.",
         year: "2014",
         title: "Mercury in the nation's streams - Levels, trends and implications [Report]",
@@ -39,6 +42,7 @@ export default {
       },
       {
         refID: "Harris2019",
+        label: "Harris et al. 2019",
         authors: "Harris, M.A. and Diehl, T.H.",
         year: "2019",
         title: "Withdrawal and consumption of water by thermoelectric power plants in the United States, 2015 [USGS Scientific Investigation Report]",
@@ -51,6 +55,7 @@ export default {
       },
       {
         refID: "Ngoubeyou2022",
+        label: "Ngoubeyou et al. 2022",
         authors: "Ngoubeyou, P.S.K., Wolkersdorfer, C., Ndibewu, P.P., and Augustyn, W.",
         year: "2022",
         title: "Toxicity of polychlorinated biphenyls in aquatic environments – A review",
@@ -64,6 +69,7 @@ export default {
       {
         
         refID: "EPA2023",
+        label: "EPA 2023",
         authors: "United States Environmental Protection Agency (US EPA)",
         year: "2023",
         title: "Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS)",
@@ -77,6 +83,7 @@ export default {
       {
         
         refID: "Vareda2019",
+        label: "Vareda et al. 2019",
         authors: "Vareda, J.P., Valente, A.J.M., and Durães, L.",
         year: "2019",
         title: "Assessment of heavy metal pollution from anthropogenic activities and remediation strategies: A review:",
@@ -89,6 +96,7 @@ export default {
       },
       {
         refID: "Bell2015",
+        label: "Bell et al. 2015",
         authors: "Bell, J.E., Leeper, R.D., Palecki, M.A., ..., and Embler, S.",
         year: "2015",
         title: "Evaluation of the 2012 Drought with a Newly Established National Soil Monitoring Network",
@@ -101,6 +109,7 @@ export default {
       },
     {
         refID: "Hoerling2014",
+        label: "Hoerling et al. 2014",
         authors: "Hoerling, M., Eischeid, J., Kumar, A., ..., and Seager, R.",
         year: "2014",
         title: "Causes and Predictability of the 2012 Great Plains Drought",
@@ -113,6 +122,7 @@ export default {
       },
       {
         refID: "Legates2011", 
+        label: "Legates et al. 2011",
         authors: "Legates, D.R., Mahmood, R., Levia, D.F., ..., and Nelson, F.E.",
         year: "2011",
         title: "Soil moisture: A central and unifying theme in physical geography",
@@ -125,6 +135,7 @@ export default {
       },
       {
         refID: "Azadpour2024", 
+        label: "Azadpour et al. 2024",
         authors: "Azadpour, E., Clarke A., Carr, A., ..., and Nell, C.",
         year: "2024",
         title: "Unequal access to water: how societal factors shape vulnerability to water insecurity, U.S. [USGS Website]",
@@ -137,6 +148,7 @@ export default {
       },
       {
         refID: "Arias2021", 
+        label: "Arias et al. 2021",
         authors: "Arias, P.A., Bellouin, N., ..., and Zickfeld, K.",
         year: "2021",
         title: "Technical Summary, in Masson-Delmotte, V., Zhai, P., ... and Zhou, B., Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change",
@@ -149,6 +161,7 @@ export default {
       },
       {
         refID: "Hicke2022", 
+        label: "Hicke et al. 2022",
         authors: "Hicke, J.A., Lucatello, S., ... and Miller, K.A.",
         year: "2022",
         title: "North America, in Pörtner, H.O., Roberts, D.C., ... and Rama, B., Sixth Assessment Report of the Intergovernmental Panel on Climate Change: Cambridge, United Kingdom and New York, NY, USA, Intergovernmental Panel on Climate Change, v. Working Group II: Impacts, Adaptation and Vulnerability",
@@ -161,6 +174,7 @@ export default {
       },
       {
         refID: "IPCC2022", 
+        label: "IPCC 2022",
         authors: "IPCC-AR6-WG-II",
         year: "2022",
         title: "Climate Change 2022: Impacts, Adaptation, and Vulnerability, in Pörtner, H.-O., Roberts, D.C., ... and Rama, B., Contribution of Working Group II to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change Cambridge, UK and New York, NY, USA, Cambridge University Press",
@@ -173,6 +187,7 @@ export default {
       },
       {
         refID: "Ranasinghe2021", 
+        label: "Ranasinghe et al. 2021",
         authors: "Ranasinghe, R., Ruane, A.C., ... and Zaaboul, R.",
         year: "2021",
         title: "Climate Change Information for Regional Impact and for Risk Assessment, in Masson-Delmotte, V., Zhai, P., ... and Zhou, B., Climate Change 2021: The Physical Science Basis, Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change: Cambridge, UK and New York, USA, Cambridge University Press",
@@ -185,6 +200,7 @@ export default {
       },
       {
         refID: "Dettingher2005", 
+        label: "Dettingher 2005",
         authors: "Dettinger, M.",
         year: "2005",
         title: "Changes in streamflow timing in the western United States in recent decades: U.S. Geological Survey Fact Sheet 2005–3018",
@@ -197,6 +213,7 @@ export default {
       },
       {
         refID: "Belitz2022", 
+        label: "Belitz et al. 2022",
         authors: "Belitz, K., Fram, M., Lindsey, B.D., ..., and Dubrovsky, N.M.",
         year: "2022",
         title: "The quality of groundwater used for public supply in the continental United States—A comprehensive assessment",
@@ -209,6 +226,7 @@ export default {
       },
       {
         refID: "Liu2022", 
+        label: "Liu et al. 2022",
         authors: "Liu, N., Dobbs, G.R., Caldwell, P.V., ..., and Carlson, C.P.",
         year: "2022",
         title: "Inter-basin transfers extend the benefits of water from forests to population centers across the conterminous U.S",
@@ -220,7 +238,8 @@ export default {
         doi: "10.1029/2021WR031537"
       },
       {
-        refID: "Gorski2025", 
+        refID: "Gorski2025",
+        label: "Gorski et al. 2025",
         authors: "Gorski, G., Stets, E., Scholl, M., ..., and Shapiro, A.",
         year: "2025",
         title: "Chapter B: National Water Supply",
@@ -233,6 +252,7 @@ export default {
       },
       {
         refID: "Erickson2025", 
+        label: "Erickson et al. 2025",
         authors: "Erickson, M., Miller, O., Cashman, M., ..., and Azadpour, E.",
         year: "2025",
         title: "Chapter C: Status of Water Quality Conditions in the United States, 2010-2020",
@@ -245,6 +265,7 @@ export default {
       },
       {
         refID: "Medalie2025", 
+        label: "Medalie et al. 2025",
         authors: "Medalie, L., Galanter, A.E., Martinez, A.J., ..., and Haynes, J.V.",
         year: "2025",
         title: "Chapter D: Water Use Across the Conterminous United States, Water Years 2010-20",
@@ -257,6 +278,7 @@ export default {
       },
       {
         refID: "Scholl2025", 
+        label: "Scholl et al. 2025",
         authors: "Scholl, M.A., McCabe, G.J., Olson, C.G., and Powlen, K.A.",
         year: "2025",
         title: "Chapter E: Climate change and future water availability in the United States ",
@@ -269,6 +291,7 @@ export default {
       },
       {
         refID: "Census2020",
+        label: "Census 2020",
         authors: "U.S. Census Bureau",
         year: "2020",
         title: "2020 Census Demographic Profile",
@@ -294,6 +317,7 @@ export default {
       },
       {
         refID: "Drakes2024", 
+        label: "Drakes et al. 2024",
         authors: "Drakes, O., Restrepo-Osorio, D.L., Powlen, K.A. and Hines, M.K.",
         year: "2024",
         title: "Social vulnerability and water insecurity in the western United States: A systematic review of framings, indicators, and uncertainty",
@@ -306,6 +330,7 @@ export default {
       },
       {
         refID: "CDC2022", 
+        label: "CDC 2022",
         authors: "Centers for Disease Control",
         year: "2022",
         title: "CDC SVI documentation 2020",
@@ -318,6 +343,7 @@ export default {
       },
       {
         refID: "Flanagan2011", 
+        label: "Flanagan et al. 2011",
         authors: "Flanagan, B.E., Gregory, E.W., Hallisey, E.J., ..., and Lewis, B.",
         year: "2011",
         title: "A social vulnerability index for disaster management",
@@ -330,6 +356,7 @@ export default {
       },
       {
         refID: "AMAP2009",
+        label: "AMAP 2009",
         authors: "Arctic Monitoring and Assessment Programme",
         year: "2009",
         title: "AMAP assessment 2009: Human Health in the Arctic",
@@ -342,6 +369,7 @@ export default {
       },
       {
         refID: "Lauber2017",
+        label: "Lauber et al. 2017",
         authors: "Bruce Lauber, T., Connelly, N.A., Niederdeppe, J., and Knuth, B.A.",
         year: "2017",
         title: "Urban anglers in the Great Lakes region—Fish consumption patterns, influences, and responses to advisory messages",
@@ -354,6 +382,7 @@ export default {
       },
       {
         refID: "Cabral2010",
+        label: "Cabral 2010",
         authors: "Cabral, J.P.S.",
         year: "2010",
         title: "Water microbiology. Bacterial pathogens and water",
@@ -366,6 +395,7 @@ export default {
       },
       {
         refID: "Chini2020",
+        label: "Chini et al. 2020",
         authors: "Chini, C.M., Logan, L.H., and Stillwell, A.S.",
         year: "2020",
         title: "Grey water footprints of U.S. thermoelectric power plants from 2010–2016",
@@ -378,6 +408,7 @@ export default {
       },
       {
         refID: "Deitz2019",
+        label: "Deitz et al. 2019",
         authors: "Deitz, S. and Meehan, K.",
         year: "2019",
         title: "Plumbing poverty—Mapping hot spots of racial and geographic inequality in US household water insecurity",
@@ -390,6 +421,7 @@ export default {
       },
       {
         refID: "Diehl2014",
+        label: "Diehl et al. 2014",
         authors: "Diehl, T.H. and Harris, M.A.",
         year: "2014",
         title: "Withdrawal and consumption of water by thermoelectric power plants in the United States, 2010 [USGS Scientific Investigation Report]",
@@ -402,6 +434,7 @@ export default {
       },
       {
         refID: "Eng2019",
+        label: "Eng et al. 2019",
         authors: "Eng, K., Carlisle, D., Grantham, T.E., ..., and Eng, R.L.",
         year: "2019",
         title: "Severity and extent of alterations to natural streamflow regimes based on hydrologic metrics in the conterminous United States, 1980–2014 [USGS Scientific Investigation Report]",
@@ -414,6 +447,7 @@ export default {
       },
       {
         refID: "Eppehimer2021",
+        label: "Eppehimer et al. 2021",
         authors: "Eppehimer, D.E., Enger, B.J., Ebenal, A.E., ..., and Bogan, M.T.",
         year: "2021",
         title: "Daily flow intermittence in an effluent-dependent river—Impacts of flow duration and recession rate on fish stranding",
@@ -426,6 +460,7 @@ export default {
       },
       {
         refID: "Gillespie2018",
+        label: "Gillespie et al. 2018",
         authors: "Gillespie, N., Epstein, J., Alexander, S., ..., and Thoms, A.",
         year: "2018",
         title: "Socioeconomic benefits of recreational, commercial, and subsistence fishing associated with national forests",
@@ -438,6 +473,7 @@ export default {
       },
       {
         refID: "Haynes2024",
+        label: "Haynes et al. 2024",
         authors: "Haynes, J.V., Read, A.L., Chan, A.Y., ..., and Stewart, J.S.",
         year: "2024",
         title: "Monthly crop irrigation withdrawals and efficiencies by HUC12 watershed for years 2000–2020 within the conterminous United States",
@@ -450,6 +486,7 @@ export default {
       },
       {
         refID: "Kennedy2016",
+        label: "Kennedy et al. 2016",
         authors: "Kennedy, T.A., Muehlbauer, J.D., Yackulic, C.B., ..., and Baxter, C.V.",
         year: "2016",
         title: "Flow management for hydropower extirpates aquatic insects, undermining river food webs",
@@ -462,6 +499,7 @@ export default {
       },
       {
         refID: "Konar2020",
+        label: "Konar et al. 2020",
         authors: "Konar, M. and Marston, L.",
         year: "2020",
         title: "The water footprint of the United States",
@@ -474,6 +512,7 @@ export default {
       },
       {
         refID: "Lin2012",
+        label: "Lin et al. 2012",
         authors: "Lin, Y. and Garcia, L.A.",
         year: "2012",
         title: "Assessing the impact of irrigation return flow on river salinity for Colorado’s Arkansas River Valley",
@@ -486,6 +525,7 @@ export default {
       },
       {
         refID: "Martin2023",
+        label: "Martin et al. 2023",
         authors: "Martin, D.J., Regan, R.S., Haynes, J.V., ..., and Niswonger, R.G.",
         year: "2023",
         title: "Irrigation water use reanalysis for the 2000–20 period by HUC12, month, and year for the conterminous United States",
@@ -498,6 +538,7 @@ export default {
       },
       {
         refID: "Meehan2020",
+        label: "Meehan et al. 2020",
         authors: "Meehan, K., Jurjevich, J.R., Chun, N.M., and Sherrill, J.",
         year: "2020",
         title: "Geographies of insecure water access and the housing–water nexus in US cities",
@@ -510,6 +551,7 @@ export default {
       },
       {
         refID: "Moreira2019",
+        label: "Moreira et al. 2019",
         authors: "Moreira, M., Hayes, D.S., Boavida, I., ..., and Pinheiro, A.",
         year: "2019", 
         title: "Ecologically-based criteria for hydropeaking mitigation: A review",
@@ -522,6 +564,7 @@ export default {
       },
       {
         refID: "Mueller2021",
+        label: "Mueller et al. 2021",
         authors: "Mueller, J.T. and Gasteyer, S.",
         year: "2021",
         title: "The widespread and unjust drinking water and clean water crisis in the United States",
@@ -534,6 +577,7 @@ export default {
       },
       {
         refID: "Murphy2024",
+        label: "Murphy et al. 2024",
         authors: "Murphy, S.F., Runkel, R.L., Stets, E.G., ..., and Repert, D.A.",
         year: "2024", 
         title: "Urbanization and water management control stream water quality along a mountain to plains transition",
@@ -546,6 +590,7 @@ export default {
       },
       {
         refID: "Park2018",
+        label: "Park et al. 2018",
         authors: "Park, Y., Kim, Y., Park, S.-K., ..., and Lee, K.-S.",
         year: "2018",
         title: "Water quality impacts of irrigation return flow on stream and groundwater in an intensive agricultural watershed",
@@ -558,6 +603,7 @@ export default {
       },
       {
         refID: "Pastor2019",
+        label: "Pastor et al. 2019",
         authors: "Pastor, A.V., Palazzo, A., Havlik, P., ..., and Ludwig, F.",
         year: "2019",
         title: "The global nexus of food–trade–water sustaining environmental flows by 2050",
@@ -570,6 +616,7 @@ export default {
       },
       {
         refID: "Raptis2016",
+        label: "Raptis et al. 2016",
         authors: "Raptis, C.E., van Vliet, M.T.H., and Pfister, S.",
         year: "2016",
         title: "Global thermal pollution of rivers from thermoelectric power plants",
@@ -582,6 +629,7 @@ export default {
       },
       {
         refID: "Rice2017",
+        label: "Rice et al. 2017",
         authors: "Rice, J. and Westerhoff, P.",
         year: "2017", 
         title: "High levels of endocrine pollutants in US streams during low flow due to insufficient wastewater dilution",
@@ -594,6 +642,7 @@ export default {
       },
       {
         refID: "Scanlon2023",
+        label: "Scanlon et al. 2023",
         authors: "Scanlon, B.R., Reedy, R.C., Fakhreddine, S., ..., and Pierce, G.",
         year: "2023",
         title: "Drinking water quality and social vulnerability linkages at the system level in the United States",
@@ -606,6 +655,7 @@ export default {
       },
       {
         refID: "Shoda2019",
+        label: "Shoda et al. 2019",
         authors: "Shoda, M.E., Sprague, L.A., Murphy, J.C., and Riskin, M.L.",
         year: "2019",
         title: "Water-quality trends in U.S. rivers, 2002 to 2012: Relations to levels of concern",
@@ -618,6 +668,7 @@ export default {
       },
       {
         refID: "Stets2020",
+        label: "Stets et al. 2020",
         authors: "Stets, E.G., Sprague, L.A., Oelsner, G.P., ..., and Riskin, M.L.",
         year: "2020",
         title: "Landscape drivers of dynamic change in water quality of U.S. rivers",
@@ -630,6 +681,7 @@ export default {
       },
       {
         refID: "Symonds2015",
+        label: "Symonds et al. 2015",
         authors: "Symonds, E.M., Cook, M.M., McQuaig, S.M., ..., and Breitbart, M.",
         year: "2015",
         title: "Reduction of nutrients, microbes and personal care products in domestic wastewater by a benchtop electrocoagulation unit",
@@ -642,6 +694,7 @@ export default {
       },
       {
        refID: "Tesoriero2013",
+       label: "Tesoriero et al. 2013",
        authors: "Tesoriero, A.J., Duff, J.H., Saad, D.A., ..., and Wolock, D.M.",
        year: "2013",
        title: "Vulnerability of streams to legacy nitrate sources",
@@ -654,6 +707,7 @@ export default {
       },
       {
         refID: "EPA2020",
+        label: "EPA 2020",
         authors: "U.S. environmental Protection Agency",
         year: "2020",
         title: "National Rivers and Streams Assessment 2013–2014—A collaborative survey",
@@ -666,6 +720,7 @@ export default {
       }, 
       {
         refID: "Crimmins2023",
+        label: "Crimmins et al. 2023",
         authors: "Crimmins, A.R., Avery, C.W., Easterling, D.R., ..., and Maycock, T.K.",
         year: "2023",
         title: "Fifth National Climate Assessment [U.S. Global Change Research Program]",      
@@ -678,6 +733,7 @@ export default {
       }, 
       {
         refID: "Verhougstraete2015",
+        label: "Verhougstraete et al. 2015",
         authors: "Verhougstraete, M.P., Martin, S.L., Kendall, A.D., ..., and Rose, J.B.",
         year: "2015",
         title: "Linking fecal bacteria in rivers to landscape, geochemical, and hydrologic factors and sources at the basin scale",
@@ -690,6 +746,7 @@ export default {
       },
       {
         refID: "Vörösmarty2010",
+        label: "Vörösmarty et al. 2010",
         authors: "Vörösmarty, C.J., McIntyre, P.B., Gessner, M.O., ..., and Davies, P.M.",
         year: "2010",
         title: "Global threats to human water security and river biodiversity",
@@ -702,6 +759,7 @@ export default {
       },
       {
         refID: "Waite2019",
+        label: "Waite et al. 2019",
         authors: "Waite, I.R., Munn, M.D., Moran, P.W., ..., and Carlisle, D.M.",
         year: "2019",
         title: "Effects of urban multi-stressors on three stream biotic assemblages",
@@ -714,6 +772,7 @@ export default {
       },
       {
         refID: "Waite2021",
+        label: "Waite et al. 2021",
         authors: "Waite, I.R., Van Metre, P.C., Moran, P.W., ..., and Mahler, B.J.",
         year: "2021",
         title: "Multiple in-stream stressors degrade biological assemblages in five U.S. regions",
@@ -726,6 +785,7 @@ export default {
       },
       {
         refID: "Wurtsbaugh2019",
+        label: "Wurtsbaugh et al. 2019",
         authors: "Wurtsbaugh, W.A., Paerl, H.W., and Dodds, W.K.",
         year: "2019",
         title: "Nutrients, eutrophication and harmful algal blooms along the freshwater to marine continuum",
@@ -738,6 +798,7 @@ export default {
       },
       {
         refID: "Harris2024",
+        label: "Harris et al. 2024",
         authors: "Harris, M.A., Diehl, T.H., Gorman-Sanisaca, L.E., ..., and Valseth, K.J.",
         year: "2024",
         title: "Automating physics-based models to estimate thermoelectric-power water use",
@@ -750,6 +811,7 @@ export default {
       },
       {
         refID: "Masson-Delmotte2021",
+        label: "Masson-Delmotte et al. 2021",
         authors: "Masson-Delmotte, V., Zhai, P., Pirani, A., ..., and Zhou, B.",
         year: "2021",
         title: "Climate change 2021—The physical science basis-Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change",
@@ -762,6 +824,7 @@ export default {
       },
       {
         refID: "Morris1995",
+        label: "Morris et al. 1995",
         authors: "Morris, R.D. and Levine, R.",
         year: "1995",
         title: "Estimating the incidence of waterborne infectious disease related to drinking water in the United States",
@@ -774,6 +837,7 @@ export default {
       } ,
       {
         refID: "Foks2025a",
+        label: "Foks et al. 2025a",
         authors: "Foks, S.S., LaFontaine, J.H., McDonald, R.M., ..., and Viger, R.J.",
         year: "In Prep",
         title: "Monthly twelve-digit hydrologic unit code aggregations of the National Hydrologic Model Precipitation-Runoff Modeling System (version 1.1) forced with CONUS404-BA, 1980–2021",
@@ -786,6 +850,7 @@ export default {
       } ,
       {
         refID: "Foks2025b",
+        label: "Foks et al. 2025b",
         authors: "Foks, S.S., LaMotte, A.E., LaFontaine, J.H., and Viger, R.J.",
         year: "In Prep",
         title: "Monthly twelve-digit hydrologic unit code aggregations of the CONUS404 bias adjusted application, 1979–2021",
@@ -798,6 +863,7 @@ export default {
       } ,
       {
         refID: "Sampson2025",
+        label: "Sampson et al. 2025",
         authors: "Sampson, K., Dugger, A., RafieeiNasab, A., ..., and Viger, R.J.",
         year: "In Prep",
         title: "Monthly twelve-digit hydrologic unit code aggregations of the WRF-Hydro application with CONUS404BA atmospheric forcings, 2009–21",
@@ -810,6 +876,7 @@ export default {
       } ,
       {
         refID: "Ator2019",
+        label: "Ator 2019",
         authors: "Ator, S.W.",
         year: "2019",
         title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment loads in streams of the northeastern United States",
@@ -822,6 +889,7 @@ export default {
       } ,
       {
         refID: "Hoos2019",
+        label: "Hoos et al. 2019",
         authors: "Hoos, A.B. and Roland, II, V.L.",
         year: "2019",
         title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment loads in the Southeastern United States",
@@ -834,6 +902,7 @@ export default {
       } ,
       {
         refID: "Robertson2019",
+        label: "Robertson et al. 2019",
         authors: "Robertson, D.M., and Saad, D.A.",
         year: "2019",
         title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment loads in streams of the midwestern United States",
@@ -846,6 +915,7 @@ export default {
       } ,
       {
         refID: "Wise2019a",
+        label: "Wise 2019a",
         authors: "Wise, D.R.",
         year: "2019",
         title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment loads in streams of the Pacific region of the United States",
@@ -858,6 +928,7 @@ export default {
       } ,
       {
         refID: "Wise2019b",
+        label: "Wise et al. 2019b",
         authors: "Wise, D.R., Anning, D.W., and Miller, O.L.",
         year: "2019",
         title: "Spatially referenced models of streamflow and nitrogen, phosphorus, and suspended-sediment transport in streams of the southwestern United States",
@@ -870,6 +941,7 @@ export default {
       } ,
       {
         refID: "Martinez2024",
+        label: "Martinez et al. 2024",
         authors: "Martinez A.J., Azadpour E., Padilla J.A., Cashman M.J., and Miller O.L.",
         year: "2024",
         title: "Water quality across the conterminous United States using SPARROW 2012 simulated nutrient load estimates",
@@ -882,6 +954,7 @@ export default {
       } ,
       {
         refID: "VanMetre2020",
+        label: "Van Metre er al. 2020",
         authors: "Van Metre, P.C., Qi, S., Deacon, J., ..., and Wolock, D.",
         year: "2024",
         title: "Prioritizing river basins for intensive monitoring and assessment by the US Geological Survey",
@@ -894,6 +967,7 @@ export default {
       } ,
       {
         refID: "Dieter2018",
+        label: "Dieter et al. 2018",
         authors: "Dieter, C.A., Linsey, K.S., Caldwell, R.R., ..., Barber, N.L.",
         year: "2018",
         title: "Estimated use of water in the United States county-level data for 2015 (ver. 2.0, June 2018)",
@@ -906,6 +980,7 @@ export default {
       },
       {
         refID: "Galanter2023",
+        label: "Galanter et al. 2023",
         authors: "Galanter, A.E., Gorman Sanisaca, L.E., Skinner, K.D., ..., Worland, S.",
         year: "2023",
         title: "Thermoelectric-power water use reanalysis for the 2008–2020 period by power plant, month, and year for the conterminous United States",
@@ -918,6 +993,7 @@ export default {
       },
       {
         refID: "Luukkonen2023",
+        label: "Luukkonen et al. 2023",
         authors: "Luukkonen, C.L., Alzraiee, A.H., Larsen, J.D., ..., Miller, O.L.",
         year: "2023",
         title: "Public supply water use reanalysis for the 2000–2020 period by HUC12, month, and year for the conterminous United States",
