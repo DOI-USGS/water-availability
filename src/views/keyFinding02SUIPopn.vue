@@ -64,24 +64,24 @@
           </div>
           <div class="text-container">
             <h3>Future water availability</h3>
-            <p>The steady rise in global temperature as a result of human activity is causing changes in Earth's water cycle. The amount of water stored within and moving between vapor, liquid and frozen components of the water cycle is shifting, with significant consequences for water availability. Examples of potential threats to the quantity and quality of water available for humans and ecosystems in North America include increases in drought, aridification, and fire weather; heavy precipitation and flooding; cryosphere decline; rising surface-water temperatures; and saltwater intrusion in coastal areas. [cite IPCC, Ranasinghe and others (2021) , and Scholl 2025]</p>
+            <p>The continuing rise in global temperature as a result of human activity is causing changes in Earth's water cycle. The amount of water stored within and moving between vapor, liquid and frozen components of the water cycle is shifting, with significant consequences for water availability. Examples of potential threats to the quantity and quality of water available for humans and ecosystems in North America include increases in drought, aridification, and fire weather; increases in heavy precipitation and flooding; cryosphere decline; rising surface-water temperatures; and saltwater intrusion in coastal areas. [cite IPCC, Ranasinghe and others (2021) , and Scholl 2025]</p>
             <h4>Potential future impacts to water quantity</h4>
             <ul class="tab-content-list">
-                    <li>Temperature impacts, including amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing</li>
-                    <li>Snow and ice impacts, including reduced snow cover extent and duration, decreased glaciers and increasing meltwater, thawing permafrost, and altered rain and snow patterns</li>
-                    <li>Other impacts, including stronger hurricanes, rising sea levels, and increased storm surges and coastal flooding</li>
+                    <li>Temperature is rising, with amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing.</li>
+                    <li>Snow and ice are diminishing, including reduced snow cover extent and duration, decreased glaciers and increasing meltwater, thawing permafrost, and altered rain and snow patterns.</li>
+                    <li>Sea level rise exacerbates impacts of stronger hurricanes, infrastructure damage, and increased storm surges and coastal flooding.</li>
                   </ul>
                 <h4>Potential future impacts to water quality</h4>
                   <ul class="tab-content-list">
-                    <li>Temperature impacts, including temperature pollution, amplified drought events, and increased groundwater demand</li>
-                    <li>Snow and ice impacts, including thawing permafrost, decreased glaciers and increasing meltwater, warmer and shorter winter seasons</li>
-                    <li>Other impacts, including increased erosion, increased sand and dust storms, increased saltwater intrusion, and impacts to agriculture</li>
+                    <li>Temperature impacts, including thermal habitat degradation, lower dissolved oxygen in natural waters, , increases in harmful algal blooms, evaporative concentration of salts, and increased irrigation with nutrients and agricultural chemicals mobilized.</li>
+                    <li>Snow and ice impacts, including thawing permafrost, erosion and turbidity from increased melt rates, warmer and shorter winter seasons allow pathogen survival.</li>
+                    <li>Other impacts, including increased sediment from extreme rainfall, wildfires, more frequent sand and dust storms, and increased salinity from evaporation of surface waters and saltwater intrusion in coastal aquifers.</li>
                   </ul>
                 <h4>Potential future impacts to natural flows</h4>
                   <ul class="tab-content-list">
-                    <li>Temperature impacts, including amplified drought events, increased groundwater demand, decreased cold-water fish populations and habitat, and changes in streamflow amount and timing</li>
-                    <li>Snow and ice impacts, changes in snowmelt timing and amount, decreased lake and river ice extent, reduced snow cover extent and duration, and thawing permafrost</li>
-                    <li>Other impacts, including stronger hurricanes, stronger severe wind storms, increased erosion, increased storm surge and coastal flooding, and increased saltwater intrusion</li>
+                    <li>Temperature-driven impacts, including heat-amplified drought events, stream baseflow decline from increased groundwater demand, decreased cold-water fish populations and habitat, and changes in streamflow amount and timing.</li>
+                    <li>Snow and ice decline impacts include, changes in snowmelt timing and amount, decreased lake and river ice extent, reduced snow cover extent and duration, and thawing permafrost.</li>
+                    <li>Other impacts, including stronger hurricanes, increased storm surge and coastal flooding, and increased saltwater intrusion will affect coastal ecosystems, while erosion and particulates from extreme rainfall and wildfires affect stream habitat quality.</li>
                   </ul>
           </div>
           <Methods></Methods>
