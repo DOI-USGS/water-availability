@@ -117,7 +117,7 @@ const mobileView = isMobile; // Detect mobile view for responsive design
 // Global variables to hold chart elements and data
 let svg, chartBounds, rectGroup, xAxisGroup;
 let categoryGroups, yearGroups, dataStacked, data;
-let yearScale, useScale, categoryRectGroups, totalHeight, adjustedHeight;
+let yearScale, useScale, categoryRectGroups, totalHeight, adjustedHeight, facetHeights;
 const containerWidth = 700; 
 const containerHeight = 600;
 const padding = 30;
@@ -175,9 +175,9 @@ async function loadDatasets() {
       d3.max(data_in.filter(d => d.Use === group), d => +d.mgd)
     );
     const totalMaxValue = d3.sum(groupMaxValues);
-    const facetHeights = groupMaxValues.map(max => (max / totalMaxValue) * height);
+    facetHeights = groupMaxValues.map(max => (max / totalMaxValue) * (height-90));
     totalHeight = facetHeights.reduce((sum, h) => sum + h, 0);
-    adjustedHeight = totalHeight + (facetHeights.length * 30) + margin.top;
+    adjustedHeight = totalHeight + (facetHeights.length * padding) + margin.bottom;
 
     data = data_in // store raw data in long form 
 
@@ -357,11 +357,6 @@ function transitionToFaceted() {
   xAxisGroup.selectAll('.tick text')
     .attr('class', 'chart-text')
     .style('text-anchor', 'middle'); // ensure labels are styled
-
-  const diff = totalHeight-height
-
-    // dynamically resize the SVG height to fit all groups and x-axis
-  svg.transition(t).attr('viewBox', `0 0 ${containerWidth} ${containerHeight+diff}`); 
 
 }
 
