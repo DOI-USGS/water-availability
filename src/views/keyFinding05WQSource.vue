@@ -6,23 +6,24 @@
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
               <div class="caption-container">
-              <div class="checkbox_item">
               <!-- Nutrient Toggle -->
               <ToggleSwitch 
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
               />
-            </div>
 
-                <div class="checkbox_item">
                   <!-- Scale Toggle -->
                   <ToggleSwitch 
                     v-model="scaleLoad" 
                     leftLabel="Percent load" 
                     rightLabel="Total load" 
+                    rightColor="black"
+                    leftColor="black"
+                    inactiveColor="grey"
                   />
-                </div>
               </div>
           <div class="viz-container">
                 <div id="barplot-container">    
@@ -75,13 +76,13 @@
                 </p>
             </div>
             <div class="image-container">
-            <div class="checkbox_item">
               <ToggleSwitch 
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
               />
-            </div>
             <RegionMap 
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
@@ -149,12 +150,11 @@ const publicPath = import.meta.env.BASE_URL;
 
 // Chart dimensions
 let svg;
-const containerWidth = Math.min(window.innerWidth * 0.9, 1200); 
-const containerHeight = Math.max(window.innerHeight * 0.9, 600); // Min height 600px
+const containerWidth = 700; 
 const maxHeight = 900; 
-const margin = mobileView ? { top: 60, right: 50, bottom: 20, left: 100 } : { top: 100, right: 100, bottom: 40, left: 300 };
-const width = containerWidth - margin.left - margin.right;
-const height = containerHeight - margin.top - margin.bottom;
+const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+const width = containerWidth + margin.left + margin.right;
+const height = Math.min(window.innerHeight * 0.7, maxHeight) - margin.top - margin.bottom;
 let chartBounds, rectGroup;
 let nutrientScale;
 
@@ -228,13 +228,7 @@ onMounted(async () => {
         if (data.value.length > 0) {
 
           // create svg for WQ source bar chart
-            initBarChart({
-              containerWidth: containerWidth,
-              containerHeight: containerHeight,
-              margin: margin,
-              width: width,
-              height: height
-            });
+            initBarChart();
             createBarChart({
               dataset: data.value,
               scaleLoad: scaleLoad.value
@@ -286,23 +280,23 @@ function updateSelectedRegion(regionName) {
 
 /////// WQ source bar chart
 // init chart svg
-function initBarChart({ containerWidth, containerHeight, margin }) {
-
+function initBarChart() {
+    // remove any existing SVG before redrawing
     d3.select('#barplot-container').select('svg').remove();
 
     // draw svg canvas for barplot
     svg = d3.select('#barplot-container')
       .append('svg')
       .attr('class', 'barplotSVG')
-      .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
-      .style('width', containerWidth)
-      .style('height', containerHeight)
-      .style('max-height', `${maxHeight}px`);
+      .attr('viewBox', `0 0 ${containerWidth+margin.right} ${maxHeight}`)
+      .style('width', '100%')
+      .style('max-height', `${maxHeight}px`)
+      .style('height', 'auto');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
-      .style("transform", `translate(${margin.left}px, ${margin.top}px)`)
+      .style("transform", `translate(${margin.left}px, 70px)`)
 
     // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = chartBounds.append('g')
@@ -312,7 +306,6 @@ function initBarChart({ containerWidth, containerHeight, margin }) {
 // build initial chart
 function createBarChart({ dataset, scaleLoad}) {
   const categoryGroups = [...new Set(dataset.map(d => d.category))];
-  console.log(scaleLoad)
 
   const expressed = scaleLoad ? 'load_1kMg' : 'percent_load';
   const stackedData = d3.stack()
@@ -373,33 +366,31 @@ function createBarChart({ dataset, scaleLoad}) {
   // x-axis at the bottom
   chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
+    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
   // x-axis at the top
   chartBounds.append('g')
     .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
-    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'k' : d + "%"))
+    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
-  // updating x-axis label
+  // updating title
+  svg.select('.chart-title').remove();
   svg.append("text")
     .attr("class", "chart-title")
-    .attr('x', margin.left)
-    //.attr("x", containerWidth - margin.right-100) 
-    .attr("y", margin.top / 2)
+    .attr('x', margin.left) 
+    .attr("y", 20)
     .attr("text-anchor", "start") // anchor to the end of the text
-    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus"); 
+    .text(`Sources of ${showNitrogen.value ? "Nitrogen" : "Phosphorus"}`); 
 
-  // italic units label
+  svg.select('.chart-text').remove();
   svg.append("text")
-    .attr("class", "axis-units chart-title")
-    .attr("x", containerWidth - margin.right) 
-    .attr("y", margin.top / 2) 
-    .attr("text-anchor", "end")
-    .style("font-style", "italic")
-    .style("font-weight", "300")
-    .text(scaleLoad.value ? "Percent" : "kg/year");
+    .attr("class", "chart-text")
+    .attr("x", margin.left) 
+    .attr("y", 40) 
+    .attr("text-anchor", "start")
+    .text(scaleLoad.value ? "As a percent of total load" : "Total load in kg/year");
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -445,38 +436,8 @@ function createBarChart({ dataset, scaleLoad}) {
 // update x-axis labels with toggles
 function updateLabels() {
 
-  const label = svg.selectAll(".chart-title")
-    .data([null]); // Use a dummy data binding to handle enter/update/exit
-
-  label.enter()
-    .append("text")
-    .attr("class", "chart-title")
-    .attr("x", containerWidth - margin.right -100)
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "end")
-    .style("font-size", "2rem")
-    .style("font-weight", "bold")
-    .merge(label) 
-    .text(showNitrogen.value ? "Nitrogen" : "Phosphorus");
-
-  label.exit().remove(); // Ensure old labels are removed
-
-  const explainedLabel = svg.selectAll(".axis-units")
-    .data([null]); 
-
-  explainedLabel.enter()
-    .append("text")
-    .attr("class", "axis-units")
-    .attr("x", containerWidth - margin.right)
-    .attr("y", margin.top / 2 )
-    .attr("text-anchor", "end")
-    .style("font-size", "2rem")
-    .style("font-style", "italic")
-    .style("font-weight", "300")
-    .merge(explainedLabel) 
-    .text(scaleLoad.value ? "kg/year" : "Percent");
-
-  explainedLabel.exit().remove(); 
+  svg.select(".chart-text")
+    .text(scaleLoad.value ? "Total load in kg/year" : "As a percent of total load");
 }
 
 // COMPUTED VARIABLES 
@@ -496,9 +457,9 @@ watch(scaleLoad, (newValue) => {
     dataset: data.value,
     scaleLoad: newValue // dynamically pass the toggle state
   });
+  updateLabels()
 
-  // update chart labels to match scale
-  updateLabels();
+
 });
 
 // watch for changes to showNitrogen
@@ -512,8 +473,7 @@ watch(showNitrogen, async (newValue) => {
     scaleLoad: scaleLoad.value 
   });
 
-  // update chart labels
-  updateLabels();
+  updateLabels()
 
   // toggle map layer visibility based on the nutrient selected
   layers.nitrogen.visible = newValue;   // show nitrogen layer
