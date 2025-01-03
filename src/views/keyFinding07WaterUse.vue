@@ -51,11 +51,7 @@
         </div>
       </div> 
       <div class="viz-container">
-        <WaterUseChart
-          :isFaceted="isFaceted"
-          :dataSet="dataSet"
-          :mobileView="mobileView"
-        />
+        <div id="barplot-container"></div>
       </div>
       <div class="text-container">
         <p>
@@ -87,7 +83,6 @@ import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
-import WaterUseChart from '../components/WaterUseChart.vue';
 
 // dependency injections
 const featureToggles = inject('featureToggles');
@@ -109,11 +104,11 @@ const isFaceted = ref(false); // Track the current view state (stacked or facete
 const mobileView = isMobile; // Detect mobile view for responsive design
 
 // Global variables to hold chart elements and data
-let svg, chartBounds, rectGroup, useAxis, yearAxis;
+let svg, chartBounds, rectGroup, useAxis, yearAxis, xAxisGroup;
 let categoryGroups, yearGroups, stackedData;
 let yearScale, useScale, categoryRectGroups;
 const containerWidth = 700; // Constrain to 700px max
-const containerHeight = 700;
+const containerHeight = 600;
 
 const margin = mobileView
   ? { top: 60, right: 10, bottom: 50, left: 40 } // Increased bottom margin for mobile
@@ -174,6 +169,10 @@ function initBarChart() {
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
   rectGroup = chartBounds.append('g').attr('id', 'rectangle_group');
+
+  xAxisGroup = chartBounds.append('g')
+    .attr('class', 'x-axis') 
+    .attr('transform', `translate(0, ${height})`); 
 }
 
 // Function to create the initial bar chart in stacked form
@@ -265,12 +264,99 @@ function createBarChart({ dataset }) {
     .attr("text-anchor", "start")
     .text("Millions of gallons of water used per day");
 }
-
-
 function transitionToFaceted() {
-  const facetPadding = 30; // padding between facets
-  const totalPadding = (categoryGroups.length - 1) * facetPadding; 
-  const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
+  const t = d3.transition().duration(animateTime); // animation transition
+
+  const padding = 30; // padding between facets
+
+  // calculate max values for each group and total max for scaling
+  const groupMaxValues = categoryGroups.map(group =>
+    d3.max(data.value.filter(d => d.Use === group), d => +d.mgd)
+  );
+
+  // calculate proportional heights for each group
+  const totalMaxValue = d3.sum(groupMaxValues);
+  const facetHeights = groupMaxValues.map(max => (max / totalMaxValue) * height);
+
+  // dynamically compute exact positions based on scaled heights
+  let facetPositions = [];
+  let currentPosition = 0;
+
+  categoryGroups.forEach((group, i) => {
+    // get dataset for the group
+    const groupData = data.value.filter(d => d.Use === group);
+    const groupMaxMgd = groupMaxValues[i];
+
+    // compute y-scale for the group
+    const groupScale = d3.scaleLinear()
+      .domain([0, groupMaxMgd])
+      .range([facetHeights[i], 0]);
+
+    yearScale = d3.scaleBand()
+      .domain(yearGroups) 
+      .range([0, width]) 
+      .padding(0.02); 
+
+
+    // set position accounting for actual height and padding
+    facetPositions.push(currentPosition);
+    currentPosition += facetHeights[i] + padding; // add padding between groups
+
+    // update y-axis position
+    d3.select(`.y-axis-${i}`)
+      .transition(t)
+      .attr('transform', `translate(0, ${facetPositions[i]})`)
+      .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")))
+      .selectAll('.tick text')
+      .attr('class', 'chart-text');
+
+    // update bar group position
+    d3.select(`g #${sanitizeSelector(group)}`)
+      .transition(t)
+      .attr('transform', `translate(0, ${facetPositions[i]})`);
+
+    // update bars
+    d3.select(`g #${sanitizeSelector(group)}`)
+      .selectAll('rect')
+      .data(groupData)
+      .transition(t)
+      .attr('x', d => yearScale(d.water_year))
+      .attr('width', yearScale.bandwidth() - 5)
+      .attr('y', d => groupScale(+d.mgd))
+      .attr('height', d => facetHeights[i] - groupScale(+d.mgd))
+      .style('fill', categoryColors[group]);
+
+    // add group label
+    chartBounds.append('text')
+      .attr("class", "facet-label chart-text")
+      .attr('x', 5)
+      .attr('y', facetPositions[i] - 10) // place label above each group
+      .attr('text-anchor', 'start')
+      .text(group);
+  });
+
+  // resize the SVG height dynamically based on the total height
+  // compute the total height needed for the facets
+const totalHeight = facetPositions[facetPositions.length - 1] + facetHeights[facetHeights.length - 1];
+
+// update x-axis position dynamically
+xAxisGroup.transition(t)
+  .attr('transform', `translate(0, ${totalHeight})`) // move to the new position
+  .call(d3.axisBottom(yearScale).tickSize(0)) // redraw axis
+  .selectAll('.tick text')
+  .attr('class', 'axis-text')
+  .style('text-anchor', 'middle'); // ensure labels are styled
+
+
+  // dynamically resize the SVG height to fit all groups and x-axis
+svg.transition(t).attr('viewBox', `-40 0 ${containerWidth + 20} ${containerHeight + 100}`); // add 50px padding below x-axis
+
+}
+
+/* function transitionToFaceted() {
+  //const facetPadding = 30; // padding between facets
+  //const totalPadding = (categoryGroups.length - 1) * facetPadding; 
+  //const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
 
   const t = d3.transition().duration(animateTime);
 
@@ -330,7 +416,7 @@ function transitionToFaceted() {
   });
 
 }
-
+ */
 // transition the chart back to a stacked view
 function transitionToStacked() {
   const t = d3.transition().duration(animateTime);
@@ -376,6 +462,13 @@ function transitionToStacked() {
     .transition(t)
     .style('opacity', 0) 
     .remove();
+
+  xAxisGroup.transition(t)
+  .attr('transform', `translate(0, ${height})`) // move back to bottom
+  .call(d3.axisBottom(yearScale).tickSize(0))
+  .selectAll('.tick text')
+  .attr('class', 'axis-text')
+  .style('text-anchor', 'middle');
   
 }
 
