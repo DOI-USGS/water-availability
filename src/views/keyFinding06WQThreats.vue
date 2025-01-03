@@ -3,6 +3,19 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
 
+          <SortingHeatMap 
+            categoricalVariable="Parameter"
+            colorVariable="Category"
+            continuousRaw="riverMiles"
+            :layerPaths="{
+                OtherMetals: { path: layers.OtherMetals.path, color: layers.OtherMetals.color, orderDW: layers.OtherMetals.orderDW },
+                Ammonia: { path: layers.Ammonia.path, color: layers.Ammonia.color, order: layers.Ammonia.orderDW }
+              }"
+            :dataDW="dataDW"
+            :dataRec="dataRec"
+            :dataFish="dataFish"
+            :useName="selectedUse"
+            />
             
             <div class="text-container">
               <p id="category-label"> Hover to view category names </p>
@@ -139,17 +152,27 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject } from 'vue';
+import { onMounted, ref, reactive, inject, watch  } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
+import SortingHeatMap from '../components/SortingHeatMap.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
 import treemapSVGmobile from '@/assets/svgs/treemap_mobile.svg';
+const publicPath = import.meta.env.BASE_URL;
+
+
+
+// Reactive data bindings 
+const dataDW = ref([]);
+const dataRec = ref([]);
+const dataFish = ref([]);
+const selectedUse = ref('Drinking Water'); // default region
 
 // aquifer map settings
 const defaultRegionID = "overview";
@@ -172,22 +195,147 @@ const referenceList = ref(theseReferences);
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
-const categoryColors = {
-  'Biotic': 'var(--wq-biotic)',
-  'Nutrients':  'var(--wq-nutrients)',
-  'Organics':  'var(--wu-organics)', 
-  'Metals':  'var(--wq-metal)',
-  'Sediment': 'var(--wu-sediment)',
-  'Salinity': 'var(--wq-salinity)',
-  'Temperature': 'var(--wq-temp)',
-  'Unimpaired': 'var(--wq-unimpaired)',
-}; 
+// props for regionMap with toggleable layers
+const layers = reactive({
+  OtherMetals: {
+    color: 'var(--wq-metals)', // css color for layer variable
+    orderDW: 1, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 4, //
+    orderFish: 5
+  },  
+  Salinity: {
+    color: 'var(--wq-salinity)', // css color for layer variable
+    orderDW: 2, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 10, //
+    orderFish: 14
+  },
+  Sediment: {
+    color: 'var(--wq-sediment)', // css color for layer variable
+    orderDW: 3, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 6, //
+    orderFish: 10
+  },
+  Temperature: {
+    color: 'var(--wq-temp)', // css color for layer variable
+    orderDW: 4, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 7, //
+    orderFish: 7
+  },
+  Pathogens: {
+    color: 'var(--wq-biotic)', // css color for layer variable
+    orderDW: 5, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 1, //
+    orderFish: 3
+  },
+  OxygenDepletion: {
+    color: 'var(--wq-metals)', // css color for layer variable
+    orderDW: 6, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 3, //
+    orderFish: 6
+  },
+  OtherNutrients: {
+    color: 'var(--wq-nutrients)', // css color for layer variable
+    orderDW: 7, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 2, //
+    orderFish: 9
+  },
+  Turbidity: {
+    color: 'var(--wq-sediment)', // css color for layer variable
+    orderDW: 8, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 8, //
+    orderFish: 11
+  },
+  AciditypH: {
+    color: 'var(--wq-metals)', // css color for layer variable
+    orderDW: 9, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 12, //
+    orderFish: 8
+  },
+  Pesticides: {
+    color: 'var(--wq-organics)', // css color for layer variable
+    orderDW: 10, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 11, //
+    orderFish: 4
+  },
+  Mercury: {
+    color: 'var(--wq-metals)', // css color for layer variable
+    orderDW: 11, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 9, //
+    orderFish: 2
+  },
+  PCBs: {
+    color: 'var(--wq-metals)', // css color for layer variable
+    orderDW: 12, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 5, //
+    orderFish: 1
+  },
+  Biotoxins: {
+    color: 'var(--wq-biotic)', // css color for layer variable
+    orderDW: 13, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 13, //
+    orderFish: 18
+  },
+  AlgalGrowth: {
+    color: 'var(--wq-biotic)', // css color for layer variable
+    orderDW: 14, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 14, //
+    orderFish: 16
+  },
+  Dioxins: {
+    color: 'var(--wq-organics)', // css color for layer variable
+    orderDW: 15, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 15, //
+    orderFish: 12
+  },
+  ToxicOrganics: {
+    color: 'var(--wq-organics)', // css color for layer variable
+    orderDW: 16, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 17, //
+    orderFish: 13
+  },
+  Ammonia: {
+    color: 'var(--wq-nutrients)', // css color for layer variable
+    orderDW: 17, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 16, //
+    orderFish: 15
+  },
+  OilandGrease: {
+    color: 'var(--wq-organics)', // css color for layer variable
+    orderDW: 18, // order of color in stacked bar chart when drinking water is selected
+    orderRec: 18, //
+    orderFish: 17
+  },
+});
+
+// data for D3 charts
+const csvDW = 'wq_threats_DW.csv' // stacked bar chart data
+const csvRec = 'wq_threats_Rec.csv'
+const csvFish = 'wq_threats_Fish.csv'
+
 
 // Run of show
 onMounted(async () => {
+
+    // first load the data
+    dataDW.value = await loadData(csvDW); // drinking water data
+    dataRec.value = await loadData(csvRec);  // recreation data
+    dataFish.value = await loadData(csvFish) // fish data
+
+    // for aquifer pie chart
     addInteractions()
 });
 
+// METHODS
+// general data loading fxn
+async function loadData(fileName) {
+    try {
+        const data = await d3.csv(publicPath + fileName, d => d);
+        return data;
+    } catch (error) {
+        console.error(`Error loading data from ${fileName}`, error);
+        return [];
+    }
+}
 
 // Methods
 function addInteractions() {
