@@ -10,7 +10,16 @@ map_ir_or_ps <- function(in_sf,
     plot_sf <- in_sf |> 
       dplyr::filter(ir_prop > 0) |>
       rename(prop_use = ir_prop,
-             mgd = ir_total)
+             mgd = ir_total) 
+    
+    mgd_values <- plot_sf$mgd
+    
+    plot_sf <- plot_sf |>
+      mutate(alpha = case_when(mgd < quantile(mgd_values, probs = 0.25) ~ 0.1,
+                               mgd < quantile(mgd_values, probs = 0.50) ~ 0.4,
+                               mgd < quantile(mgd_values, probs = 0.75) ~ 0.7,
+                               mgd < quantile(mgd_values, probs = 1.00) ~ 1.0)) |>
+      filter(mgd > 0)
     
     color_fill = color_scheme$ir_gw_main
   } else {
@@ -19,6 +28,14 @@ map_ir_or_ps <- function(in_sf,
       rename(prop_use = ps_prop,
              mgd = ps_total)
     
+    mgd_values <- plot_sf$mgd
+    
+    plot_sf <- plot_sf |>
+      mutate(alpha = case_when(mgd < quantile(mgd_values, probs = 0.25) ~ 0.1,
+                               mgd < quantile(mgd_values, probs = 0.50) ~ 0.4,
+                               mgd < quantile(mgd_values, probs = 0.75) ~ 0.7,
+                               mgd < quantile(mgd_values, probs = 1.00) ~ 1.0)) |>
+      filter(mgd > 0)
     color_fill = color_scheme$ps_gw_main
   }
  
@@ -26,7 +43,7 @@ map_ir_or_ps <- function(in_sf,
   map <- ggplot(in_regions) +
     geom_sf(fill = NA,
             color = NA, linewidth = 0.1) +
-    geom_sf(data = plot_sf, fill = color_fill, aes(alpha = mgd),
+    geom_sf(data = plot_sf, fill = color_fill, aes(alpha = alpha),
             color = NA, size = 0)  +
     scale_alpha_identity() +
     theme_void() +

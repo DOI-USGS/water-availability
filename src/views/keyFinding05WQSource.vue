@@ -381,36 +381,18 @@ function createBarChart({ dataset, scaleLoad}) {
   svg.select('.chart-title').remove();
   svg.append("text")
     .attr("class", "chart-title")
-<<<<<<< HEAD
-    .attr('x', margin.left)
-    //.attr("x", containerWidth - margin.right-100) 
-    .attr("y", (margin.top/2) - 10)
-    .attr("text-anchor", "start") // anchor to the end of the text
-    .text(showNitrogen.value ? "Nitrogen by source and region" : "Phosphorus by source and region"); 
-=======
     .attr('x', margin.left) 
     .attr("y", 20)
     .attr("text-anchor", "start") // anchor to the end of the text
     .text(`Sources of ${showNitrogen.value ? "Nitrogen" : "Phosphorus"}`); 
->>>>>>> c2abeb0e15fd72471dbcf0242850d709641c8389
 
   svg.select('.chart-text').remove();
   svg.append("text")
-<<<<<<< HEAD
-    .attr("class", "axis-units chart-title")
-    .attr("x", containerWidth - margin.right) 
-    .attr("y",  (margin.top/2) - 10) 
-    .attr("text-anchor", "end")
-    .style("font-style", "italic")
-    .style("font-weight", "300")
-    .text(scaleLoad.value ? "Percent" : "kg/year");
-=======
     .attr("class", "chart-text")
     .attr("x", margin.left) 
     .attr("y", 40) 
     .attr("text-anchor", "start")
     .text(scaleLoad.value ? "As a percent of total load" : "Total load in kg/year");
->>>>>>> c2abeb0e15fd72471dbcf0242850d709641c8389
 
   svg.append("text")
     .attr("class", "chart-subtitle")
@@ -464,43 +446,8 @@ function createBarChart({ dataset, scaleLoad}) {
 // update x-axis labels with toggles
 function updateLabels() {
 
-<<<<<<< HEAD
-  const label = svg.selectAll(".chart-title")
-    .data([null]); // Use a dummy data binding to handle enter/update/exit
-
-  label.enter()
-    .append("text")
-    .attr("class", "chart-title")
-    .attr("x", containerWidth - margin.right -100)
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "end")
-    .style("font-size", "2rem")
-    .style("font-weight", "bold")
-    .merge(label) 
-    .text(showNitrogen.value ? "Nitrogen by source and region" : "Phosphorus by source and region");
-
-  label.exit().remove(); // Ensure old labels are removed
-
-  const explainedLabel = svg.selectAll(".axis-units")
-    .data([null]); 
-
-  explainedLabel.enter()
-    .append("text")
-    .attr("class", "axis-units")
-    .attr("x", containerWidth - margin.right)
-    .attr("y", margin.top / 2 )
-    .attr("text-anchor", "end")
-    .style("font-size", "2rem")
-    .style("font-style", "italic")
-    .style("font-weight", "300")
-    .merge(explainedLabel) 
-    .text(scaleLoad.value ? "kg/year" : "Percent");
-
-  explainedLabel.exit().remove(); 
-=======
   svg.select(".chart-text")
     .text(scaleLoad.value ? "Total load in kg/year" : "As a percent of total load");
->>>>>>> c2abeb0e15fd72471dbcf0242850d709641c8389
 }
 
 // COMPUTED VARIABLES 

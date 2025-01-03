@@ -7,6 +7,10 @@
           An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for crop irrigation followed by fresh water used in the process of creating energy from thermoelectric power plants. Along with public supply, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. Thermoelectric power (from saline water) uses another approximately 21,000 million gallons per day. 
         </p>
       </div>
+
+      <div class="viz-container">
+        <div id="barplot-container"></div>
+      </div>
       <div class="caption-container">
         <div class="caption-text-child">
           <p>This chart shows water use from 2010 through 2020. Use the buttons to switch between viewing the total annual use to viewing the annual use by category. Note that the y-scale is not constant for each use when viewing use by category.</p>
@@ -249,11 +253,7 @@ function createBarChart({ dataset }) {
     .attr("x", margin.left / 2) 
     .attr("y", margin.top / 2)
     .attr("text-anchor", "start")
-<<<<<<< HEAD
     .text("Average daily water use");
-=======
-    .text("Total annual water withdrawals");
->>>>>>> c2abeb0e15fd72471dbcf0242850d709641c8389
 
   // chart subtitle
   svg.append("text")
@@ -261,11 +261,7 @@ function createBarChart({ dataset }) {
     .attr("x", margin.left/2) 
     .attr("y", margin.top-20)
     .attr("text-anchor", "start")
-<<<<<<< HEAD
     .text("Bars show average daily water use (million gallons per day) for the lower 48 United States by use type");
-=======
-    .text("Millions of gallons of water used per day");
->>>>>>> c2abeb0e15fd72471dbcf0242850d709641c8389
 }
 
 
