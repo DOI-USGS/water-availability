@@ -13,7 +13,7 @@
       v-if="featureToggles.showAlternativeWarning && buttonText === 'I understand'"
       class="warning-open"
     >
-      <strong>Welcome!</strong> This is a preview of a website about the upcoming Integrated Water Availability Assessments. It is under active development and may not represent the final version, any content is subject to change.
+      <strong>Welcome!</strong> This is a preview of a website about the upcoming National Water Availability Assessment. It is under active development and may not represent the final version, any content is subject to change.
     </p>
     <button @click="toggleWarning">
       {{ buttonText }}
