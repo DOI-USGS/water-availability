@@ -5,92 +5,34 @@
           <div class="text-container">
                 <p>How we use water varies across the country, including the type of use (for example, crop irrigation, public supply, and thermoelectric power) and the source of water (groundwater versus surface water). Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some urban areas, and withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. </p>
           </div>
-          <div class="viz-container">
-          <HorizontalBar 
-            categoricalVariable="d3_category"
-            continuousRaw="total_use"
-            continuousPercent="d3_percentage"
-            :layerPaths="{
-              ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order, label: layers.ir_total.label },
-              ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order, label: layers.ps_total.label },
-              te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order, label: layers.te_total.label },
-              te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order, label: layers.te_saline.label },
-            }"
-            :data="csvData"
-            :regionName="selectedRegion"
-          
-          />
-          </div>
-          <div class="viz-container">
-          <RegionMap 
-          @regionSelected="updateSelectedRegion"
-          :layerVisibility="{
-            ir_total: layers.ir_total.visible,
-            ps_total: layers.ps_total.visible,
-            te_total: layers.te_total.visible,
-            te_saline: layers.te_saline.visible,
-          }"
-          :layerPaths="{
-            ir_total: { path: layers.ir_total.path, color: layers.ir_total.color, order: layers.ir_total.order },
-            ps_total: { path: layers.ps_total.path, color: layers.ps_total.color, order: layers.ps_total.order },
-            te_total: { path: layers.te_total.path, color: layers.te_total.color, order: layers.te_total.order },
-            te_saline: { path: layers.te_saline.path, color: layers.te_saline.color, order: layers.te_saline.order },
-          }"
-          regionsDataUrl="assets/Regions.topojson"
-          usOutlineUrl="assets/USoutline.topojson"
-          regionsVar="Region_nam_nospace"
-          layerMag="1.2"
-          layerX="-80"
-          layerY="-55"
-
-        />
-        </div>
-        <div class="caption-container">
-              <div class="caption-legend-child">
-                <div class="checkbox_item" id="checkbox-ir" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleCategory('ir_total')">
-                  <span class="checkbox_mark"></span>
-                    Crop irrigation
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-ps" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleCategory('ps_total')">
-                  <span class="checkbox_mark"></span>
-                    Public supply
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-te-fresh" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleCategory('te_total')">
-                  <span class="checkbox_mark"></span>
-                    Thermoelectric (fresh)
-                  </label>
-                </div>
-                <div class="checkbox_item" id="checkbox-te-saline" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleCategory('te_saline')">
-                  <span class="checkbox_mark"></span>
-                    Thermoelectric (saline)
-                  </label>
-                </div>
-              </div>
+          <div class="caption-container">
               <div class="caption-text-child">
                 <p>Map showing the distribution of modeled water use by category for each watershed (HUC12) in the lower 48 United States. Crop irrigation and public supply are shaded by daily withdrawal for each watershed. The thermoelectric points are scaled to represent daily withdrawals for each watershed where thermoelectric water withdrawal occurs. The bar graph shows the total daily water use for that category for the lower 48 United States. Select a region on the map to view bar graphs for that region [cite VM].  Toggle each category of use on or off from the map.</p>
               </div>
+              <<ToggleSwitch 
+                v-model="layers.ir_total.visible" 
+                :label="layers.ir_total.label"
+                :rightColor="layers.ir_total.color"
+              />
+
+              <ToggleSwitch 
+                v-model="layers.ps_total.visible" 
+                :label="layers.ps_total.label"
+                :rightColor="layers.ps_total.color"
+              />
+
+              <ToggleSwitch 
+                v-model="layers.te_total.visible" 
+                :label="layers.te_total.label"
+                :rightColor="layers.te_total.color"
+              />
+
+              <ToggleSwitch 
+                v-model="layers.te_saline.visible" 
+                :label="layers.te_saline.label"
+                :rightColor="layers.te_saline.color"
+              />
+
           </div> 
           <div class="text-container">
             <h3>Water from above and below</h3>
@@ -152,6 +94,7 @@ import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import RegionMap from '../components/RegionMap.vue';
 import HorizontalBar from '../components/HorizontalBar.vue';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
 // global variables
 const publicPath = import.meta.env.BASE_URL;

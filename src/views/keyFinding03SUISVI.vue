@@ -82,25 +82,20 @@
                   </label>
                 </div>
                 <br/>
-                <div class="checkbox_item" id="checkbox-svi" >
-                  <label class="checkbox_wrap">
-                  <input type="checkbox" 
-                  name="checkbox" 
-                  class="checkbox_inp" 
-                  @click="toggleViz">
-                  <span class="checkbox_mark"></span>
-                  {{ buttonText }}
-                  </label>
-                </div>
+              
+                <ToggleSwitch 
+                  v-model="showHighLevelsOnly" 
+                  label="Only high water limitation"
+                />
               </div>
             </div> 
             <div class="viz-container">
                 <img 
-                        id="first-image" 
-                        class="viz-placeholder" 
-                        :src="imgSrc" 
-                        alt="xxx"
-                    >
+                  id="first-image" 
+                  class="viz-placeholder" 
+                  :src="imgSrc" 
+                  alt="Map showing water limitation levels"
+                >
             </div>
             <div class="text-container">
                 <h3>Water quality also disproportionately limits water availability in socially vulnerable households</h3>
@@ -115,7 +110,7 @@
 </template>
 
 <script setup>
-import { inject, ref } from 'vue';
+import { inject, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -123,12 +118,16 @@ import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
 const defaultImageID = "03_sui_svi_map";
 const stressImageID = "03_sui_svi_dry_map";
 let imgSrc = ref(getImgURL(defaultImageID));
+
+// toggle state
+const showHighLevelsOnly = ref(false);
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
@@ -142,24 +141,19 @@ const theseReferences = refArray.filter((item) => filteredReferences.includes(it
 theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
 
-let buttonText = "all levels";
-
 // Methods
 function getImgURL(id) {
   return `${baseURL}${id}.png`;
 }
 
-function toggleViz() {
-    if(imgSrc.value === getImgURL(defaultImageID)) {
-        imgSrc.value = getImgURL(stressImageID);
-        buttonText = "Only high levels";
-
+watch(showHighLevelsOnly, (newValue) => {
+    if (newValue) {
+        imgSrc.value = getImgURL(stressImageID); // switch to high levels image
     } else {
-        imgSrc.value = getImgURL(defaultImageID);
-        buttonText = "View all levels";
-
+        imgSrc.value = getImgURL(defaultImageID); // switch back to all levels image
     }
-}
+});
+
 
 </script>
 
