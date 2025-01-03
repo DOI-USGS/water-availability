@@ -3,28 +3,11 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
 
-          <SortingHeatMap 
-            categoricalVariable="Parameter"
-            colorVariable="Category"
-            continuousRaw="riverMiles"
-            :layerPaths="{
-                OtherMetals: { path: layers.OtherMetals.path, color: layers.OtherMetals.color, orderDW: layers.OtherMetals.orderDW },
-                Ammonia: { path: layers.Ammonia.path, color: layers.Ammonia.color, order: layers.Ammonia.orderDW }
-              }"
-            :dataDW="dataDW"
-            :dataRec="dataRec"
-            :dataFish="dataFish"
-            :useName="selectedUse"
-            />
+          <div class="viz-container">
+            <div ref="heatmapSVG" id="heatmap-svg"></div>
+          </div>
             
-            <div class="text-container">
-              <p id="category-label"> Hover to view category names </p>
-            </div>
-            <div class="viz-container">
-              <div class="treemap-container-mobile" >
-                <treemapSVGmobile id="treemap-svg"></treemapSVGmobile>
-              </div>
-            </div>
+            
             <div class="caption-container">
               <div class="caption-text-child">
                 <p>These visualizations show the number of river miles that are threatened by different categories of contamination (left side), plus those that are considered unimpaired (XXX). Each larger threat is broken down into its consituents (right side). The threats are sorted on each side by the number of river miles, with the largest categories toward the top.</p>
@@ -169,16 +152,10 @@ import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
-import treemapSVGmobile from '@/assets/svgs/treemap_mobile.svg';
+
+// global objects
+const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
 const publicPath = import.meta.env.BASE_URL;
-
-
-
-// Reactive data bindings 
-const dataDW = ref([]);
-const dataRec = ref([]);
-const dataFish = ref([]);
-const selectedUse = ref('Drinking Water'); // default region
 
 // aquifer map settings
 const defaultRegionID = "overview";
@@ -197,8 +174,11 @@ const theseReferences = refArray.filter((item) => filteredReferences.includes(it
 theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
 
-// global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+// Reactive data bindings 
+const dataDW = ref([]);
+const dataRec = ref([]);
+const dataFish = ref([]);
+const selectedUse = ref('Drinking Water'); // default region
 
 // Colors for threat categories, Needs to be updated with CSS for text legend
 // props for regionMap with toggleable layers
@@ -318,7 +298,6 @@ const csvDW = 'wq_threats_DW.csv' // stacked bar chart data
 const csvRec = 'wq_threats_Rec.csv'
 const csvFish = 'wq_threats_Fish.csv'
 
-
 // Run of show
 onMounted(async () => {
 
@@ -343,7 +322,7 @@ async function loadData(fileName) {
     }
 }
 
-// Methods
+// Methods for aquifer map
 function addInteractions() {
         // set viewbox for svg with wedges
         const aquiferSVG = d3.select("#aquifer-svg")
@@ -378,7 +357,6 @@ function getImgURL(id) {
   return new URL(`${baseURL}06_wq_gw_${id}.png`);
 }
 
-
 function mouseoverMap(event) {
   const regionID = event.target.id;
   imgSrc.value = getImgURL(regionID)
@@ -398,41 +376,14 @@ function mouseoverTreemap(event) {
     .style("opacity", 1)
 }
 
-
 function mouseoutMap(event) {
   const regionID = event.target.id;
   imgSrc.value = getImgURL(defaultRegionID)
 };
 
-function mouseoutTreemap(event) {
-  const categoryID = event.target.id;
-
-  const paragraphOut = document.getElementById("category-label");
-  paragraphOut.innerHTML = "Hover to view category names";
-  d3.select("#treemap-svg").selectAll('rect').style("opacity", 1)
-};
-
-
-function mouseleaveWrapper() {
-    // Show the default map
-    const defaultMap = document.querySelector('#region-map-default');
-    defaultMap.classList.remove("hide");
-
-    // Make all wedges transparent
-    d3.selectAll(".wedge").selectAll('polygon')
-        .style("fill-opacity", 0)
-};
-
 </script>
 
 <style scoped>
-.treemap-container-mobile {
-  width: 400px;
-  height: 600px;
-}
-.treemap-container-desktop {
-  width: 800px;
-}
 
 
 .map-container {
@@ -459,33 +410,4 @@ function mouseleaveWrapper() {
 }
 
 
-
-#DW-container, #fish-container, #rec-container {
-  width: 100%;
-  height: 100%;
-  max-width: 800px;
-}
-
-.sankey-container {
-  width: 80%;
-  min-width: 600px;
-  margin: 0 auto;
-  padding-top: 20px;
-}
-@media only screen and (max-width: 768px) {
-  .sankey-container {
-    width: 90%;
-    min-width: 200px;
-  }
-}
-.sankey-tab-container {
-  width: 90%;
-  margin: 0 auto;
-}
-
-</style>
-<style lang="scss">
-  .axis-value {
-    fill-opacity: 0.7;
-  }
 </style>
