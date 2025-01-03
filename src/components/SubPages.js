@@ -13,7 +13,7 @@ export default {
             route: '/02SUI',
             mainTitle: 'Limits on water availability',
             shortTitle: 'Water availability is affected by water quantity, quality, and flow',
-            keyMessage: 'Many areas of the US show high or severe limitation in multiple aspects of water availability.',
+            keyMessage: 'Many areas of the lower 48 United States show high or severe limitation in multiple aspects of water availability.',
             references: [
                 "VanMetre2020", 
                 "Stets2025", 
