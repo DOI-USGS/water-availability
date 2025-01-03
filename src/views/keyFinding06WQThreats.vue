@@ -3,8 +3,8 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="chart-title-container">
-            <p class="chart-title">Threats to water use</p>
-            <p class="chart-subtitle">The top threats to river miles uses for drinking water, fish consumption, or recreational use.</p>
+            <p class="chart-title">Threats to surface water</p>
+            <p class="chart-subtitle">The top threats to surface water used for drinking water, fish consumption, or recreational use by the proportion of total river miles</p>
           </div>
           <div class="viz-container">
             <div ref="heatmapSVG" id="heatmap-svg"></div>
@@ -28,13 +28,11 @@
 
               <div class="caption-text-child">
                 <p>Heatmap showing the proportion of river miles that are threatened by different categories of contamination. Darker fills represent a higher proportion of river miles threatened by that source. Select a column name to short the rectangles from highest proportion to lowest for that category of use.</p>
+                <br>
               </div>
             </div>
             <div class="text-container">
-              <h3>Surface water quality</h3>
               <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
-            </div>
-            <div class="text-container">
               <h4>Threats to surface water from metals</h4>
               <p>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels.</p>
               <br>
