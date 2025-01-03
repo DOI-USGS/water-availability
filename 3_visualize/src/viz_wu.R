@@ -9,13 +9,15 @@ map_ir_or_ps <- function(in_sf,
   if(layer == "ir") {
     plot_sf <- in_sf |> 
       dplyr::filter(ir_prop > 0) |>
-      rename(prop_use = ir_prop)
+      rename(prop_use = ir_prop,
+             mgd = ir_total)
     
     color_fill = color_scheme$ir_gw_main
   } else {
     plot_sf <- in_sf |> 
       dplyr::filter(ps_prop > 0) |>
-      rename(prop_use = ps_prop)
+      rename(prop_use = ps_prop,
+             mgd = ps_total)
     
     color_fill = color_scheme$ps_gw_main
   }
@@ -24,7 +26,7 @@ map_ir_or_ps <- function(in_sf,
   map <- ggplot(in_regions) +
     geom_sf(fill = NA,
             color = NA, linewidth = 0.1) +
-    geom_sf(data = plot_sf, fill = color_fill, aes(alpha = prop_use),
+    geom_sf(data = plot_sf, fill = color_fill, aes(alpha = mgd),
             color = NA, size = 0)  +
     scale_alpha_identity() +
     theme_void() +
