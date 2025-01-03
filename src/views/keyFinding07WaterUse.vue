@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, watch } from 'vue';
+import { onMounted, ref, inject, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -260,20 +260,6 @@ function createBarChart({ dataset }) {
     .text("Millions of gallons of water used per day");
 }
 
-// Toggle between stacked and faceted views
-function toggleFacetedView() {
-  isFaceted.value = !isFaceted.value;
-  updateChart();
-}
-
-// Update the chart view based on the current state
-function updateChart() {
-  if (isFaceted.value) {
-    transitionToFaceted();
-  } else {
-    transitionToStacked();
-  }
-}
 
 function transitionToFaceted() {
   const facetPadding = 30; // padding between facets
@@ -394,8 +380,21 @@ onMounted(async () => {
     data.value = dataSet.value;
     initBarChart();
     createBarChart({ dataset: data.value });
+
+    // watch toggle AFTER initialization
+    watch(isFaceted, (newValue) => {
+      // ensure DOM updates complete first
+      nextTick(() => {
+        if (newValue) {
+          transitionToFaceted(); // trigger faceted transition
+        } else {
+          transitionToStacked(); // trigger stacked transition
+        }
+      });
+    });
   }
 });
+
 </script>
 
 <style scoped>
