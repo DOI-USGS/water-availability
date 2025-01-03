@@ -45,7 +45,7 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
                                Use == "Recreational Use" ~ "Rec",
                                Use == "Fish Consumption Use" ~ "Fish",
                                Use == "Other Use" ~ "Other")) |>
-    arrange(-riverMiles) |>
+    arrange(riverMiles) |>
     filter(Parameter != "Unimpaired")
   
   

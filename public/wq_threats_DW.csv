@@ -1,19 +1,19 @@
 Use,Category,Parameter,riverMiles,d3parameterMatch,percentMiles,UseAbbr
-Drinking Water Use,Metals,Other Metals,90943,OtherMetals,19.7,DW
-Drinking Water Use,Salinity,Salinity,43046,Salinity,9.3,DW
-Drinking Water Use,Sediment,Sediment,28631,Sediment,6.2,DW
-Drinking Water Use,Temperature,Temperature,27253,Temperature,5.9,DW
-Drinking Water Use,Biotic,Pathogens,20973,Pathogens,4.5,DW
-Drinking Water Use,Metals,Oxygen Depletion,15641,OxygenDepletion,3.4,DW
-Drinking Water Use,Nutrients,Other Nutrients,15112,OtherNutrients,3.3,DW
-Drinking Water Use,Sediment,Turbidity,9333,Turbidity,2,DW
-Drinking Water Use,Metals,Acidity/pH,6888,AciditypH,1.5,DW
-Drinking Water Use,Organics,Pesticides,6365,Pesticides,1.4,DW
-Drinking Water Use,Metals,Mercury,5748,Mercury,1.2,DW
-Drinking Water Use,Organics,PCBs,1998,PCBs,0.4,DW
-Drinking Water Use,Biotic,Biotoxins,1638,Biotoxins,0.4,DW
-Drinking Water Use,Biotic,Algal Growth,1499,AlgalGrowth,0.3,DW
-Drinking Water Use,Organics,Dioxins,845,Dioxins,0.2,DW
-Drinking Water Use,Organics,Toxic Organics,427,ToxicOrganics,0.1,DW
-Drinking Water Use,Nutrients,Ammonia,381,Ammonia,0.1,DW
 Drinking Water Use,Organics,Oil and Grease,91,OilandGrease,0,DW
+Drinking Water Use,Nutrients,Ammonia,381,Ammonia,0.1,DW
+Drinking Water Use,Organics,Toxic Organics,427,ToxicOrganics,0.1,DW
+Drinking Water Use,Organics,Dioxins,845,Dioxins,0.2,DW
+Drinking Water Use,Biotic,Algal Growth,1499,AlgalGrowth,0.3,DW
+Drinking Water Use,Biotic,Biotoxins,1638,Biotoxins,0.4,DW
+Drinking Water Use,Organics,PCBs,1998,PCBs,0.4,DW
+Drinking Water Use,Metals,Mercury,5748,Mercury,1.2,DW
+Drinking Water Use,Organics,Pesticides,6365,Pesticides,1.4,DW
+Drinking Water Use,Metals,Acidity/pH,6888,AciditypH,1.5,DW
+Drinking Water Use,Sediment,Turbidity,9333,Turbidity,2,DW
+Drinking Water Use,Nutrients,Other Nutrients,15112,OtherNutrients,3.3,DW
+Drinking Water Use,Metals,Oxygen Depletion,15641,OxygenDepletion,3.4,DW
+Drinking Water Use,Biotic,Pathogens,20973,Pathogens,4.5,DW
+Drinking Water Use,Temperature,Temperature,27253,Temperature,5.9,DW
+Drinking Water Use,Sediment,Sediment,28631,Sediment,6.2,DW
+Drinking Water Use,Salinity,Salinity,43046,Salinity,9.3,DW
+Drinking Water Use,Metals,Other Metals,90943,OtherMetals,19.7,DW

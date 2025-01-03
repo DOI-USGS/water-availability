@@ -386,7 +386,7 @@ function initHeatmap({dataset}) {
 
 
   const xScale = d3.scaleLinear()
-    .domain([0, d3.max(dataset, d => d.percentMiles)])
+    .domain([0, 30])
     .range([0, chartDimensions.boundedWidth - chartDimensions.margin.right])
 
   const yScale = d3.scaleBand()
@@ -410,21 +410,31 @@ function initHeatmap({dataset}) {
       .attr("height", yScale.bandwidth());
 
         // Append a label for each letter.
-  svg.append("g")
+    svg.append("g")
       .attr("fill", "white")
       .attr("text-anchor", "end")
-    .selectAll()
-    .data(dataset)
-    .join("text")
+      .selectAll()
+      .data(dataset)
+      .join("text")
       .attr("x", (d) => xScale(d.percentMiles))
       .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
       .attr("dy", "0.35em")
       .attr("dx", -4)
-      .text((d) => d.percentMiles)
-    .call((text) => text.filter(d => xScale(d.percentMiles) - xScale(0) < 20) // short bars
+      .text((d) => d.percentMiles + '%')
+      .call((text) => text.filter(d => xScale(d.percentMiles) - xScale(0) < 20) // short bars
       .attr("dx", +4)
       .attr("fill", "black")
       .attr("text-anchor", "start"));
+
+      // Create the axes.
+    svg.append("g")
+        .attr("transform", `translate(0,${marginTop})`)
+        .call(d3.axisTop(xScale).ticks(5))
+        .call(g => g.select(".domain").remove());
+
+    svg.append("g")
+        .attr("transform", `translate(${chartDimensions.margin.left},0)`)
+        .call(d3.axisLeft(yScale).tickSizeOuter(0));
 }
 // Enter update for sorting
 function updateHeatmap() {
