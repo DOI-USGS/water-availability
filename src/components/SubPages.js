@@ -2,15 +2,15 @@ export default {
     SubPages: [
         {
             page: 1,
-            route: '/01Budget',
+            route: '/01-water-limitation',
             mainTitle: 'Do we have enough water? Yes, and no',
             shortTitle: 'The U.S. has enough water, but not everywhere and not at all times',
             keyMessage: 'At the national scale, water supply is much higher than our demand for water. However, this pattern is not true for all regions or times.',
-            references: ["Stets2025", "VanMetre2020", "Medalie2025", "Gorski2025"]
+            references: ["Stets2025", "VanMetre2020", "Gorski2025", "Medalie2025"]
         },
         {
             page: 2,
-            route: '/02SUI',
+            route: '/02-water-availability',
             mainTitle: 'Limits on water availability',
             shortTitle: 'Water availability is affected by water quantity, quality, and flow',
             keyMessage: 'Many areas of the US show high or severe limitation in multiple aspects of water availability.',
@@ -31,7 +31,7 @@ export default {
         },
         {
             page: 3,
-            route: '/03SVI',
+            route: '/03-vulnerability',
             mainTitle: 'Unequal access to water',
             shortTitle: 'Socially vulnerable Americans have a higher risk of water limitation',
             keyMessage: 'Water limitation disproportionately affects socially vulnerable populations in the U.S., creating problems for equitable access to clean water.',
@@ -49,7 +49,7 @@ export default {
         },
         {
             page: 4,
-            route: '/04Drought',
+            route: '/04-water-supply',
             mainTitle: 'Not enough rain and snow',
             shortTitle: 'Limited water supply can cause water imbalance',
             keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation and exacerbating water quality issues' ,
@@ -65,7 +65,7 @@ export default {
         },
         {
             page: 5,
-            route: '/05WQSource',
+            route: '/05-nutrients',
             mainTitle: 'Nutrients in the water',
             shortTitle: 'Natural and human sources of nutrients degrade water quality',
             keyMessage: 'Sources of nutrients in our water vary across the United States. Common sources of nutrients such as nitrogen and phosphorus include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.',
@@ -83,7 +83,7 @@ export default {
         },
         {
             page: 6,
-            route: '/06WQThreats',
+            route: '/06-water-quality',
             mainTitle: 'Threats to water quality',
             shortTitle: 'Water quality issues can potentially affect human and aquatic health',
             keyMessage: 'Drinking water, fish consumption, and recreational water use face different water quality threats.',
@@ -108,7 +108,7 @@ export default {
         },
         {
             page: 7,
-            route: '/07WaterUse',
+            route: '/07-water-use',
             mainTitle: 'For farm, home, and energy',
             shortTitle: 'The largest demands for water are for crop irrigation, public supply, and thermoelectric power',
             keyMessage: 'About 224,000 million gallons of freshwater are used every day for irrigation (48%), public supply (16%), and thermoelectric power (36%).',
@@ -116,7 +116,7 @@ export default {
         },
         {
             page: 8,
-            route: '/08WaterUseRegional',
+            route: '/08-regional-wu',
             mainTitle: 'From sea to shining sea',
             shortTitle: 'How we use water varies across the country',
             keyMessage: 'Regionally, crop irrigation is the primary water use in the Western and High Plains areas of the U.S., while the eastern half of the country uses water primarily for public supply or thermoelectric power.',
