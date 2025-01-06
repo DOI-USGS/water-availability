@@ -51,6 +51,7 @@
           <br>
           <br>
             <div class="text-container">
+              <h3>Where do nutrients come from?</h3>
               <p>Nutrients are added to our waterways through natural sources and human activities. Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
@@ -79,7 +80,7 @@
                   />
 
             </div>
-          <div class="viz-container">
+          <div class="image-container">
                 <div id="barplot-container">    
                 </div>
             </div>
@@ -101,8 +102,8 @@
             <br>
             
             <div class="text-container">
-              <h3>Effects of nutrients in the water</h3>
-              <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely phosphorus dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
+              <h3>But, aren't nutrients good for us?</h3>
+              <p>Nutrients are important for all living organisms, but only in the right amounts and at the right times. Excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, but indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely phosphorus dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
             <br>
             <Methods></Methods>
@@ -480,8 +481,11 @@ watch([selectedRegion], filterRegionData)
 <style scoped lang="scss">
 
 #barplot-container {
+  position: relative;
   width: 100%; 
   max-height: 900px;
+  max-width: 1800px;
+  margin: auto;
 }
 .image-container {
   position: relative;
