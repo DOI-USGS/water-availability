@@ -7,11 +7,9 @@
           An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for crop irrigation followed by fresh water used in the process of creating energy from thermoelectric power plants. Along with public supply, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. Thermoelectric power (from saline water) uses another approximately 21,000 million gallons per day. 
         </p>
       </div>
-
-      <div class="viz-container">
-        <div id="barplot-container"></div>
-      </div>
-      <div class="caption-container">
+      <div class="chart-title-container">
+            <p class="chart-title">Average daily water use</p>
+            <p class="chart-subtitle">Millions of gallons used per day by use type</p>
         <!-- Scale toggle -->
         <ToggleSwitch 
           v-model="isFaceted"
@@ -20,6 +18,11 @@
           leftColor="black"
           rightColor="black"
         />
+        </div>
+      <div class="viz-container">
+        <div id="barplot-container"></div>
+      </div>
+      <div class="caption-container">
         <div class="caption-legend-child">
           <div class="legend_item" id="legend-wu-ir" >
             <label class="legend_wrap">
@@ -118,15 +121,15 @@ const mobileView = isMobile; // Detect mobile view for responsive design
 let svg, chartBounds, rectGroup, xAxisGroup;
 let categoryGroups, yearGroups, dataStacked, data;
 let yearScale, useScale, categoryRectGroups, totalHeight, adjustedHeight, facetHeights;
-const containerWidth = 700; 
+const containerWidth = 800; 
 const containerHeight = 600;
 const padding = 30;
 const barSpace = 5;
 
 // chart dimensions
 const margin = mobileView
-  ? { top: 100, right: 10, bottom: 50, left: 40 } //  mobile
-  : { top: 100, right: 10, bottom: 50, left: 40 }; // desktop
+  ? { top: 10, right: 10, bottom: 50, left: 40 } //  mobile
+  : { top: 10, right: 10, bottom: 50, left: 40 }; // desktop
 
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
@@ -277,21 +280,6 @@ function createBarChart(dataStacked) {
       .attr('width', yearScale.bandwidth() - barSpace)
       .style('fill', d => colorScale(d.key)));
 
-  // chart title
-  svg.append("text")
-    .attr("class", "chart-title")
-    .attr("x", margin.left / 2) 
-    .attr("y", margin.top -60)
-    .attr("text-anchor", "start")
-    .text("Average daily water use");
-
-  // chart subtitle
-  svg.append("text")
-    .attr("class", "chart-subtitle")
-    .attr("x", margin.left/2) 
-    .attr("y", margin.top-40)
-    .attr("text-anchor", "start")
-    .text("Million gallons per day by use type for the lower 48 United States");
 }
 function transitionToFaceted() {
   const t = d3.transition().duration(animateTime); // animation transition
