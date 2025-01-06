@@ -5,87 +5,20 @@
           <div class="text-container">
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
-              <div class="caption-container">
-              <!-- Nutrient Toggle -->
-              <ToggleSwitch 
+              <div class="chart-title-container">
+            <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
+            <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
+            <ToggleSwitch 
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
                 rightColor="black"
                 leftColor="black"
               />
-
-                  <!-- Scale Toggle -->
-                  <ToggleSwitch 
-                    v-model="scaleLoad" 
-                    leftLabel="Percent load" 
-                    rightLabel="Total load" 
-                    rightColor="black"
-                    leftColor="black"
-                    inactiveColor="grey"
-                  />
-              </div>
-          <div class="viz-container">
-                <div id="barplot-container">    
-                </div>
             </div>
-          
-
-            <div class="caption-container">
-                <div class="caption-legend-child">
-                <div class="legend_item" id="legend-wq-agriculture" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Agriculture
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-air" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Air pollution
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-wastewater" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Wastewater
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-human" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Other human sources
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-natural" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Natural sources
-                  </label>
-                </div>
-              </div>
-              <div class="caption-text-child">
-                <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States (cite van meter). Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
-              </div>
-            </div> 
-            <div class="text-container">
-              <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
-                </p>
-            </div>
-            <div class="image-container">
-              <ToggleSwitch 
-                v-model="showNitrogen" 
-                leftLabel="Phosphorus" 
-                rightLabel="Nitrogen" 
-                rightColor="black"
-                leftColor="black"
-              />
+              <div class="image-container">
             <RegionMap 
+            class="region-map"
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
                 nitrogen: layers.nitrogen.visible,
@@ -103,6 +36,7 @@
               layerY="-11"
 
             />
+
             <HistogramLegend 
               :layerPaths="legendConfig"
               :data="legendData"
@@ -113,11 +47,64 @@
               <div class="caption-text-child">
                 <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the lower 48 United States. Select a region on the map to view histograms for that region. Toggle to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
+            </div>
+          <br>
+          <br>
+            <div class="text-container">
+              <p>Nutrients are added to our waterways through natural sources and human activities. Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
+                </p>
+            </div>
+            <br>
+
+              <div class="chart-title-container">
+            <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} in regions of the lower 48 United States</p>
+            <p class="chart-subtitle">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
+            <!-- Nutrient Toggle -->
+            <ToggleSwitch 
+                v-model="showNitrogen" 
+                leftLabel="Phosphorus" 
+                rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
+              />
+
+                  <!-- Scale Toggle -->
+                  <ToggleSwitch 
+                    v-model="scaleLoad" 
+                    leftLabel="Percent load" 
+                    rightLabel="Total load" 
+                    rightColor="black"
+                    leftColor="black"
+                    inactiveColor="grey"
+                  />
+
+            </div>
+          <div class="viz-container">
+                <div id="barplot-container">    
+                </div>
+            </div>
+          
+            <div class="caption-container-flex caption-container">
+              <div class="legend-group">
+                  <ColorLegend legend-id="legend-wq-agriculture" label="Agriculture" color="var(--wq-agriculture)" />
+                  <ColorLegend legend-id="legend-wq-air" label="Air pollution" color="var(--wq-air)" />
+                  <ColorLegend legend-id="legend-wq-wastewater" label="Wastewater" color="var(--wq-wastewater)" />
+                  <ColorLegend legend-id="legend-wq-human" label="Other human sources" color="var(--wu-ps)" />
+                  <ColorLegend legend-id="legend-wq-natural" label="Natural sources" color="var(--wq-natural)" />
+                        </div>
+              <div class="caption-text-flex caption-text-child">
+                <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States (cite van meter). Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
+            </div> 
+
+            <br>
+            <br>
+            
             <div class="text-container">
               <h3>Effects of nutrients in the water</h3>
               <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely phosphorus dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
+            <br>
             <Methods></Methods>
             <References :theseReferences="referenceList"></References>
         </div>
@@ -141,6 +128,7 @@ import { isMobile } from 'mobile-device-detect';
 import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import HistogramLegend from '../components/HistogramLegend.vue';
+import ColorLegend from '../components/ColorLegend.vue';
 
 // use for mobile logic
 const mobileView = isMobile;
@@ -151,14 +139,11 @@ const route = useRoute();
 const publicPath = import.meta.env.BASE_URL;
 
 // Chart dimensions
-let svg;
 const containerWidth = 700; 
 const maxHeight = 900; 
-const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-const width = containerWidth + margin.left + margin.right;
-const height = Math.min(window.innerHeight * 0.7, maxHeight) - margin.top - margin.bottom;
-let chartBounds, rectGroup;
-let nutrientScale;
+const margin = { top: 20, right: 20, bottom: 20, left: 250 };
+let svg, chartBounds, rectGroup, nutrientScale;
+let width, height;
 
 // Reactive data elements
 const scaleLoad = ref(true);
@@ -169,7 +154,8 @@ const dataSet1 = ref([]);
 const dataSet2 = ref([]); 
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
-const selectedRegion = ref('United States'); // default region
+const selectedRegion = ref('lower 48 United States'); // default region
+
 
 // References logic
 // filter to this page's key message
@@ -235,6 +221,7 @@ onMounted(async () => {
               dataset: data.value,
               scaleLoad: scaleLoad.value
             });
+            observeResize();
         } else {
             console.error('Error loading data');
         }
@@ -283,6 +270,12 @@ function updateSelectedRegion(regionName) {
 /////// WQ source bar chart
 // init chart svg
 function initBarChart() {
+
+  const container = document.getElementById('barplot-container');
+  const containerWidth = container.clientWidth;
+  width = containerWidth - margin.left - margin.right;
+  height = Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
+
     // remove any existing SVG before redrawing
     d3.select('#barplot-container').select('svg').remove();
 
@@ -290,15 +283,16 @@ function initBarChart() {
     svg = d3.select('#barplot-container')
       .append('svg')
       .attr('class', 'barplotSVG')
-      .attr('viewBox', `0 0 ${containerWidth+margin.right} ${maxHeight}`)
+      .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
       .style('width', '100%')
-      .style('max-height', `${maxHeight}px`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      //.style('max-height', `${maxHeight}px`)
       .style('height', 'auto');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
-      .style("transform", `translate(${margin.left}px, 70px)`)
+      .style("transform", `translate(${margin.left}, ${margin.top})`)
 
     // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = chartBounds.append('g')
@@ -317,25 +311,25 @@ function createBarChart({ dataset, scaleLoad}) {
 
   const regionScale = d3.scaleBand()
     .domain(orderedRegions)
-    .range([height, 0])
+    .range([height, margin.top])
     .padding(0.1);
 
   nutrientScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-    .range([0, width]);
+    .range([margin.left, width]);
 
   chartBounds.selectAll(".axis-text").remove();
 
   // region axis
   const regionAxis = chartBounds.append('g')
     .call(d3.axisLeft(regionScale))
-    .attr('class', 'axis-text');
+    .attr('class', 'axis-text')
+    .attr('transform', `translate(${margin.left}, 0)`);
 
   // adding maps
   regionAxis.selectAll(".tick")
     .select("text")
     .attr("x", -80) // shift text to the left to make space for the mini maps
-    .attr("dy", "0.32em")
 
     // load SVG and add it to each tick
     d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
@@ -373,34 +367,9 @@ function createBarChart({ dataset, scaleLoad}) {
 
   // x-axis at the top
   chartBounds.append('g')
-    .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
+    .attr('transform', `translate(0, ${margin.top})`) // positioned at y = 0 (top of the chart)
     .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
-
-  // updating title
-  svg.select('.chart-title').remove();
-  svg.append("text")
-    .attr("class", "chart-title")
-    .attr('x', margin.left) 
-    .attr("y", 20)
-    .attr("text-anchor", "start") // anchor to the end of the text
-    .text(`Sources of ${showNitrogen.value ? "Nitrogen" : "Phosphorus"}`); 
-
-  svg.select('.chart-text').remove();
-  svg.append("text")
-    .attr("class", "chart-text")
-    .attr("x", margin.left) 
-    .attr("y", 40) 
-    .attr("text-anchor", "start")
-    .text(scaleLoad.value ? "As a percent of total load" : "Total load in kg/year");
-
-  svg.append("text")
-    .attr("class", "chart-subtitle")
-    .attr('x', margin.left)
-    //.attr("x", containerWidth - margin.right-100) 
-    .attr("y", (margin.top/2) + 10)
-    .attr("text-anchor", "start") // anchor to the end of the text
-    .text("Bars show what portion of the region's nutrient loads come from varying sources"); 
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -443,12 +412,28 @@ function createBarChart({ dataset, scaleLoad}) {
     );
 }
 
-// update x-axis labels with toggles
-function updateLabels() {
+// dynamic scaling based on container width
+const resizeChart = () => {
+  const container = document.getElementById('barplot-container');
+  const containerWidth = container.clientWidth;
 
-  svg.select(".chart-text")
-    .text(scaleLoad.value ? "Total load in kg/year" : "As a percent of total load");
-}
+  // dynamically adjust width and height
+  width = containerWidth - margin.left - margin.right;
+  height = Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
+
+  // update svg viewBox
+  svg.attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
+     .attr('preserveAspectRatio', 'xMidYMid meet');
+
+  // redraw chart
+  createBarChart({ dataset: dataset.value, scaleLoad: scaleLoad.value });
+};
+// handle resize
+const observeResize = () => {
+  const resizeObserver = new ResizeObserver(() => resizeChart());
+  resizeObserver.observe(document.getElementById('barplot-container'));
+};
+
 
 // COMPUTED VARIABLES 
 // compute legendConfig dynamically based on the toggle
@@ -467,7 +452,6 @@ watch(scaleLoad, (newValue) => {
     dataset: data.value,
     scaleLoad: newValue // dynamically pass the toggle state
   });
-  updateLabels()
 
 
 });
@@ -483,7 +467,6 @@ watch(showNitrogen, async (newValue) => {
     scaleLoad: scaleLoad.value 
   });
 
-  updateLabels()
 
   // toggle map layer visibility based on the nutrient selected
   layers.nitrogen.visible = newValue;   // show nitrogen layer
@@ -507,7 +490,9 @@ watch([selectedRegion], filterRegionData)
   margin: auto; 
   overflow: hidden;
 }
-
+.region-map {
+  height: 600px;
+}
 @media only screen and (max-width: 768px) {
   #barplot-container {
     width: 100%; 
