@@ -47,6 +47,20 @@
             <div class="chart-title-container">
             <p class="chart-title">Top threats to surface water</p>
             <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired (CITE data)</p>
+            <div class="checkbox_item">
+                  <div class="checkbox_wrap">
+                    <p class="chart-text">Sort chart by:</p>
+                    <label class="chart-text">
+                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water Use
+                    </label>
+                    <label class="chart-text">
+                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption Use
+                    </label>
+                    <label class="chart-text">
+                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreational Use
+                    </label>
+                  </div>
+                </div>
           </div>
           <div class="viz-container">
             <div id="heatmap-svg"></div>
@@ -54,21 +68,6 @@
                     <!-- Category of use -->
           
             <div class="caption-container">
-              <div class="checkbox_item">
-                  <div class="checkbox_wrap">
-                    <p class="toggle-text">Sort chart by:</p>
-                    <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water Use
-                    </label>
-                    <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption Use
-                    </label>
-                    <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreational Use
-                    </label>
-                  </div>
-                </div>
-
               <div class="caption-text-child">
                 <p>Heatmap showing the proportion of river miles that are threatened by different categories of contamination. Darker fills represent a higher proportion of river miles threatened by that source. Select a column name to short the rectangles from highest proportion to lowest for that category of use.</p>
                 <br>
@@ -145,7 +144,7 @@ let svg;
 
 // chart dimensions
 const width = mobileView ? 400 : 700;
-const height = 700;
+const height = 650;
 
 // Run of show
 onMounted(async () => {
@@ -159,7 +158,7 @@ onMounted(async () => {
                     width: width,
                     height: height,
                     margin: {
-                        top: mobileView ? 60 : 50,
+                        top: mobileView ? 30 : 30,
                         right: mobileView ? 10 : 10,
                         bottom: mobileView ? 0 : 0,
                         left: mobileView ? 145 : 145
@@ -193,7 +192,7 @@ async function loadDatasets() { // Created from R pipeline
     dataDW.value = await loadData('wq_threats_DW.csv');
     dataRec.value = await loadData('wq_threats_Rec.csv');
     dataFish.value = await loadData('wq_threats_Fish.csv');
-    console.log('data in');
+
   } catch (error) {
     console.error('Error loading datasets', error);
   }
@@ -252,7 +251,7 @@ function initHeatmap({dataset, sortBy}) {
 
   const yScale = d3.scaleBand()
     .domain(sortRank.map(d => d.Parameter)) // uses rank based on selected use
-    .range([chartDimensions.boundedHeight, chartDimensions.margin.top])
+    .range([chartDimensions.height-chartDimensions.margin.bottom, chartDimensions.margin.top])
     .padding(0.1);
 
   const yAxis = d3.axisLeft(yScale)
@@ -318,7 +317,8 @@ function initHeatmap({dataset, sortBy}) {
         .attr("transform", `translate(0,${chartDimensions.margin.top})`)
         .call(d3.axisTop(xScale).ticks(3))
         .call(g => g.select(".domain").remove())
-        .attr("class", "chart-text");
+        .attr("class", "chart-text")
+        .style('font-weight', '700');
 
     svg.select("#y-axis").remove();
 
