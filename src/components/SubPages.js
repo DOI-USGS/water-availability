@@ -85,7 +85,7 @@ export default {
             page: 6,
             route: '/06WQThreats',
             mainTitle: 'Threats to water quality',
-            shortTitle: 'Water quality issues can potentially affect human and aquatic health',
+            shortTitle: 'Water quality issues can affect human and aquatic health',
             keyMessage: 'Drinking water, fish consumption, and recreational water use face different water quality threats.',
             references: [
                 "VanMetre2020", "Erickson2025",

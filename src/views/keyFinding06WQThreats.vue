@@ -2,6 +2,10 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
+          <div  class="text-container">
+              <h2>Naturally occurring contaminants in groundwater</h2>
+              <p>Geogenics are the most common contaminants found in drinking water aquifers at elevated or high-concentrations, affecting more than 30 million people in the contiguous United States (Belitz and others, 2022). What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic constituents in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
+            </div>
           <div class="chart-title-container">
               <p class="chart-title">Groundwater drinking contamination levels</p>
               <p class="chart-subtitle">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
@@ -40,10 +44,7 @@
                 <p>Groundwater quality relative to the human-health benchmark for drinking water. For each principal aquifer in the lower 48 United States (cite chapter), a pie chart shows the proportion of the aquifer with contaminant levels for 16 total contaminants (including arsenic, manganese, lead, and nitrate). To explore individual constituents see these online maps (link).</p>
               </div>
             </div>
-            <div  class="text-container">
-              <h2>Groundwater quality</h2>
-              <p>Water availability for human and ecological use may be limited by elevated concentrations of various contaminants in surface water and groundwater. The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic nutrient concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
-            </div>
+
             <div class="chart-title-container">
             <p class="chart-title">Top threats to surface water</p>
             <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired (CITE data)</p>
