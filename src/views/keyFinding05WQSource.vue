@@ -5,6 +5,56 @@
           <div class="text-container">
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
+              <div class="image-container">
+            <RegionMap 
+            class="region-map"
+              @regionSelected="updateSelectedRegion"
+              :layerVisibility="{
+                nitrogen: layers.nitrogen.visible,
+                phosphorus: layers.phosphorus.visible
+              }"
+              :layerPaths="{
+                nitrogen: { path: layers.nitrogen.path, color: layers.nitrogen.color, order: layers.nitrogen.order },
+                phosphorus: { path: layers.phosphorus.path, color: layers.phosphorus.color, order: layers.phosphorus.order }
+              }"
+              regionsDataUrl="assets/Regions.topojson"
+              usOutlineUrl="assets/USoutline.topojson"
+              regionsVar="Region_nam_nospace"
+              layerMag="1.11"
+              layerX="-44"
+              layerY="-11"
+
+            />
+            <div class="chart-title-container">
+            <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
+            <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
+            <ToggleSwitch 
+                v-model="showNitrogen" 
+                leftLabel="Phosphorus" 
+                rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
+              />
+            </div>
+            <HistogramLegend 
+              :layerPaths="legendConfig"
+              :data="legendData"
+              :regionName="selectedRegion"
+            />
+          </div>
+            <div class="caption-container">
+              <div class="caption-text-child">
+                <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the lower 48 United States. Select a region on the map to view histograms for that region. Toggle to switch the view between nitrogen versus phosphorus loads.</p>
+              </div>
+              </div>
+              <br>
+              <br>
+              <div class="text-container">
+              <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
+                </p>
+            </div>
+            <br>
+
               <div class="chart-title-container">
             <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }}</p>
             <p class="chart-subtitle">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
@@ -76,56 +126,14 @@
                 <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States (cite van meter). Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
             </div> 
-            <div class="text-container">
-              <p>Nutrients are added to our waterways through natural sources and human activities. Humans modify water quality by...  Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
-                </p>
-            </div>
-            <div class="image-container">
-            <RegionMap 
-            class="region-map"
-              @regionSelected="updateSelectedRegion"
-              :layerVisibility="{
-                nitrogen: layers.nitrogen.visible,
-                phosphorus: layers.phosphorus.visible
-              }"
-              :layerPaths="{
-                nitrogen: { path: layers.nitrogen.path, color: layers.nitrogen.color, order: layers.nitrogen.order },
-                phosphorus: { path: layers.phosphorus.path, color: layers.phosphorus.color, order: layers.phosphorus.order }
-              }"
-              regionsDataUrl="assets/Regions.topojson"
-              usOutlineUrl="assets/USoutline.topojson"
-              regionsVar="Region_nam_nospace"
-              layerMag="1.11"
-              layerX="-44"
-              layerY="-11"
-
-            />
-            <div class="chart-title-container">
-            <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
-            <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
-            <ToggleSwitch 
-                v-model="showNitrogen" 
-                leftLabel="Phosphorus" 
-                rightLabel="Nitrogen" 
-                rightColor="black"
-                leftColor="black"
-              />
-            </div>
-            <HistogramLegend 
-              :layerPaths="legendConfig"
-              :data="legendData"
-              :regionName="selectedRegion"
-            />
-          </div>
-            <div class="caption-container">
-              <div class="caption-text-child">
-                <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the lower 48 United States. Select a region on the map to view histograms for that region. Toggle to switch the view between nitrogen versus phosphorus loads.</p>
-              </div>
-              </div>
+            <br>
+            <br>
+            
             <div class="text-container">
               <h3>Effects of nutrients in the water</h3>
               <p>Increased water demands can increase the release of previously trapped contaminants into the water supply. Although excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely phosphorus dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
+            <br>
             <Methods></Methods>
             <References :theseReferences="referenceList"></References>
         </div>
