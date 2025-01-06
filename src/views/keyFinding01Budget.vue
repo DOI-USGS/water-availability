@@ -141,12 +141,16 @@
           <h2>When supply decreases, demand increases</h2>
           <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation. Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its' highest<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. As a result, water limitation may be increased for local watersheds.</p>
         </div>
+        <div class="chart-title-container">
+            <p class="chart-title">A decade of water limitation</p>
+            <p class="chart-subtitle">The proportion of the lower 48 states in each water limitation category through time</p>
+          </div>
         <div class="viz-container">
           <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >
         </div>
         <div class="caption-container">
           <div class="caption-text-child">
-            <p>Water limitation across the lower 48 by month from January 2010 through January 2020. The bars show the proportion of each water limitation category.</p>
+            <p>Water limitation across the lower 48 by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Each step in the chart represents one month of time. </p>
           </div>
         </div>  
         <Methods></Methods>
