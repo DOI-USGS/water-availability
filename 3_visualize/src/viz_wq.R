@@ -145,15 +145,15 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
   plot_geofacet_color <- ggplot(data = subplot_df,
                           aes(x = "", y = ratio, fill = bins)) +
     geom_col(show.legend = TRUE, width = 1, color = "black", linewidth = 0.1) +
-    geom_text(
-      aes(x = 1.2,  
-          label = round(ratio * 100),
-          color = bins),
-      position = position_stack(vjust = 0.5),
-      size = 3,
-      show.legend = FALSE,
-      fontface = "italic"
-    ) +
+    # geom_text(
+    #   aes(x = 1.2,  
+    #       label = round(ratio * 100),
+    #       color = bins),
+    #   position = position_stack(vjust = 0.5),
+    #   size = 3,
+    #   show.legend = FALSE,
+    #   fontface = "italic"
+    # ) +
     coord_polar(theta = "y", start = 0) +
     scale_fill_manual(values = c(color_scheme$very_low_col, 
                                  color_scheme$moderate_col, 
@@ -201,9 +201,35 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
     draw_plot(plot_states, x = 0, y = 0, width = 1) +
     # add geofacetted plot
     draw_plot(plot_geofacet_grey, x = 0, y = 0.1, height = 0.75) +
-    draw_plot(plot_geofacet_color, x = 0, y = 0.1, height = 0.75) +
-    # add label
-    draw_label(aquifer_label, x = 0.05, y = 0.95, hjust = 0, size = 12)
+    draw_plot(plot_geofacet_color, x = 0, y = 0.1, height = 0.75) 
+  
+  # add bigger pie chart when one is selected
+  if(aquifer_abbr != "overview"){
+    minipie <- ggplot(data = subplot_df,
+                                  aes(x = "", y = ratio, fill = bins)) +
+      geom_col(show.legend = TRUE, width = 1, color = "black", linewidth = 0.1) +
+      geom_text(
+        aes(x = 2,
+            label = round(ratio * 100)),
+        position = position_stack(vjust = 0.5),
+        size = 6, color = "black",
+        show.legend = FALSE,
+        fontface = "italic"
+      ) +
+      coord_polar(theta = "y", start = 0) +
+      scale_fill_manual(values = c(color_scheme$very_low_col, 
+                                   color_scheme$moderate_col, 
+                                   color_scheme$very_high_col)) +
+      theme_void() +
+      theme(
+        legend.position = "none",
+        strip.text.x = element_blank()
+      )
+    out_plot <- out_plot +
+      # add extra pie chart
+      draw_plot(minipie, x = 0.25, y = 0.8, height = 0.2) 
+    
+  }
   
   ggsave(plot = out_plot,
          filename = png_out, device = "png", bg = "transparent",
