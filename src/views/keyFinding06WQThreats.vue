@@ -176,7 +176,6 @@ onMounted(async () => {
                   dataset: dataDW.value.concat(dataFish.value, dataRec.value),
                   sortBy: 'DW'
                 });
-                updateHeatmap();
 
               } else {
                 console.error('Error loading data');
@@ -335,11 +334,6 @@ function initHeatmap({dataset, sortBy}) {
     
 
 }
-// Enter update for sorting
-function updateHeatmap() {
-  console.log("update called")
-}
-
 
 // Methods for aquifer map
 function addInteractions() {
