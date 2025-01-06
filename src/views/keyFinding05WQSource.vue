@@ -5,6 +5,17 @@
           <div class="text-container">
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
+              <div class="chart-title-container">
+            <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
+            <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
+            <ToggleSwitch 
+                v-model="showNitrogen" 
+                leftLabel="Phosphorus" 
+                rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
+              />
+            </div>
               <div class="image-container">
             <RegionMap 
             class="region-map"
@@ -25,17 +36,7 @@
               layerY="-11"
 
             />
-            <div class="chart-title-container">
-            <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
-            <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
-            <ToggleSwitch 
-                v-model="showNitrogen" 
-                leftLabel="Phosphorus" 
-                rightLabel="Nitrogen" 
-                rightColor="black"
-                leftColor="black"
-              />
-            </div>
+
             <HistogramLegend 
               :layerPaths="legendConfig"
               :data="legendData"
@@ -46,10 +47,10 @@
               <div class="caption-text-child">
                 <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the lower 48 United States. Select a region on the map to view histograms for that region. Toggle to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
-              </div>
-              <br>
-              <br>
-              <div class="text-container">
+            </div>
+          <br>
+          <br>
+            <div class="text-container">
               <p>Nutrients are added to our waterways through natural sources and human activities. Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or air pollution, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streamfphosphorus and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
@@ -83,19 +84,19 @@
                 </div>
             </div>
           
-
-            <div class="caption-container">
-                <div class="caption-legend-child">
+            <div class="caption-container-flex caption-container">
+              <div class="legend-group">
                   <ColorLegend legend-id="legend-wq-agriculture" label="Agriculture" color="var(--wq-agriculture)" />
                   <ColorLegend legend-id="legend-wq-air" label="Air pollution" color="var(--wq-air)" />
                   <ColorLegend legend-id="legend-wq-wastewater" label="Wastewater" color="var(--wq-wastewater)" />
                   <ColorLegend legend-id="legend-wq-human" label="Other human sources" color="var(--wu-ps)" />
                   <ColorLegend legend-id="legend-wq-natural" label="Natural sources" color="var(--wq-natural)" />
-              </div>
-              <div class="caption-text-child">
+                        </div>
+              <div class="caption-text-flex caption-text-child">
                 <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States (cite van meter). Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
             </div> 
+
             <br>
             <br>
             

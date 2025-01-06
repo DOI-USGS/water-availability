@@ -47,11 +47,12 @@
         </p>
         </div>
         <!-- Regional SUI map with updating stacked bar chart -->
-        <div class="image-container">
-          <div class="chart-title-container">
+        <div class="chart-title-container">
             <p class="chart-title">Water limitation in {{ selectedRegion !== 'lower 48 United States' ? selectedRegion + ' Region' : selectedRegion }}</p>
             <p class="chart-subtitle">Bars show the percent of the region with very low, low, moderate, high, and severe water limitation</p>
           </div>
+        <div class="image-container">
+
           <StackedBar 
             categoricalVariable="d3_category"
             continuousRaw="stress_by_reg"

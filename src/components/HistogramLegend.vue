@@ -126,7 +126,7 @@ function initLegend(data) {
     .attr('transform', `translate(0, ${rectHeight})`)
     .call(axisBottom)
     .selectAll('text') // select axis labels
-    .style('text-anchor', 'middle') // align to the start (left)
+    .style('text-anchor', 'middle') // align to the middle
     .attr('x', 0)
     .style('font-size', '14px'); 
 
@@ -138,7 +138,10 @@ function initLegend(data) {
 
 
 // add y-axis
- const axisRight = d3.axisRight(yScale).ticks(3).tickFormat(d => `${d * 100}%`).tickSize(3);
+ const axisRight = d3.axisRight(yScale)
+  .ticks(3)
+  .tickFormat(d => `${d * 100}%`)
+  .tickSize(3);
 
   svg.append('g')
     .attr('class', 'y-axis')

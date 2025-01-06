@@ -22,17 +22,18 @@
       <div class="viz-container">
         <div id="barplot-container"></div>
       </div>
-      <div class="caption-container">
-        <div class="caption-legend-child color-legend-single">
+
+      <div class="caption-container-flex caption-container">
+          <div class="legend-group">
           <ColorLegend legend-id="legend-wu-ir" label="Crop irrigation" color="var(--wu-agriculture)" />
           <ColorLegend legend-id="legend-wu-ps" label="Public supply" color="var(--wu-ps)" />
           <ColorLegend legend-id="legend-wu-te-fresh" label="Thermoelectric (fresh)" color="var(--wu-te-fresh)" />
           <ColorLegend legend-id="legend-wu-te-saline" label="Thermoelectric (saline)" color="var(--wu-te-saline)" />
+                    </div>
+          <div class="caption-text-flex caption-text-child">
+            <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. Note that the y-scale is not constant across use categories when viewing use by category.</p>
           </div>
-          <div class="caption-text-child">
-          <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. Note that the y-scale is not constant across use categories when viewing use by category.</p>
-        </div>
-      </div>
+        </div> 
       <br>
       <br>
       <div class="text-container">

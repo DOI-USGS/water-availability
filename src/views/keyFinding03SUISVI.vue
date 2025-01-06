@@ -6,7 +6,7 @@
               <p>About 8% of the CONUS population, or 26.7 million people, live in areas of high or severe water limitation. The availability of clean water for our communities is affected by hydrologic factors like water quantity, quality, and flow, to social factors like water infrastructure, access, and rights.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> Socioeconomic status and access to resources and public services can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
             </div>
 
-            <div class="text-container">
+            <div class="chart-title-container">
               <p class="chart-title">Social vulnerability and water limitation</p>
               <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
@@ -31,7 +31,7 @@
                 <h2>Social vulnerability is disproportionately high in areas of water limitation</h2>
                 <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). </p>
             </div>
-            <div class="text-container">
+            <div class="chart-title-container">
               <p class="chart-title">Social vulnerability and water limitation</p>
               <p class="chart-subtitle">Bars show the proportion of the population living in varying levels of water limitation by social vulnerability classification. </p>
             </div>

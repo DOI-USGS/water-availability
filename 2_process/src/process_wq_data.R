@@ -122,14 +122,14 @@ summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state
   # add total row for the United States 
   category_total <- category_sf |>
     summarize(
-      !!sym(group_col) := "United States",
+      !!sym(group_col) := "lower 48 United States",
       total_hucs = length(unique(HUC12)),
       total_sqkm = sum(Area_sqkm, na.rm = TRUE)) 
   
   us_total <- category_sf |> 
     group_by(load_level) |> 
     summarize(
-      !!sym(group_col) := "United States",
+      !!sym(group_col) := "lower 48 United States",
       category_hucs = length(unique(HUC12)),
       category_sqkm = sum(Area_sqkm, na.rm = TRUE)) |>
     left_join(category_total) |>

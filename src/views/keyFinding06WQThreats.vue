@@ -15,16 +15,17 @@
               :src="imgSrc">
               <aquiferWedges id="aquifer-svg" />
             </div>
-            <div class="caption-container">
-              <div class="caption-legend-child">
+            <div class="caption-container-flex caption-container">
+              <div class="legend-group">
                 <ColorLegend legend-id="legend-wq-high" label="Above human-health benchmark" color="var(--wq-high)" />
                 <ColorLegend legend-id="legend-wq-mod" label="Exceeds half of the benchmark" color="var(--wq-mod)" />
                 <ColorLegend legend-id="legend-wq-low" label="Normal levels" color="var(--wq-low)" />
-              </div>
-              <div class="caption-text-child">
+                        </div>
+              <div class="caption-text-flex caption-text-child">
                 <p>Groundwater quality relative to the human-health benchmark for drinking water. For each principal aquifer in the lower 48 United States (cite chapter), a pie chart shows the proportion of the aquifer with contaminant levels for 16 total contaminants (including arsenic, manganese, lead, and nitrate). To explore individual constituents see these online maps (link).</p>
               </div>
-            </div>
+            </div> 
+
             <div class="text-container" >
               <h2 class="spacer" style="padding-top:50px">Surface water impairment varies by use</h2>
               <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
@@ -35,15 +36,15 @@
             <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired</p>
             <div class="checkbox_item">
                   <div class="checkbox_wrap">
-                    <p class="chart-text">Sort chart by:</p>
-                    <label class="chart-text">
-                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water
+                    <b class="toggle-text">Sort chart by: </b>
+                    <label class="toggle-text">
+                      <input type="radio" name="threats" class="radio-button" @click="toggleUse('DW')" checked="checked"> Drinking Water
                     </label>
-                    <label class="chart-text">
-                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption
+                    <label class="toggle-text">
+                      <input type="radio" name="threats" class="radio-button" @click="toggleUse('Fish')"> Fish Consumption
                     </label>
-                    <label class="chart-text">
-                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreational Use
+                    <label class="toggle-text">
+                      <input type="radio" name="threats" class="radio-button" @click="toggleUse('Rec')"> Recreational Use
                     </label>
                   </div>
                 </div>
