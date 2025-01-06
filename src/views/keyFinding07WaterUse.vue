@@ -16,7 +16,7 @@
         <p>These three uses add up to 224,000 million gallons of water per day. In addition, thermoelectric power from saline water uses another approximately 21,000 million gallons of water per day. </p>
       </div>
       <div class="chart-title-container">
-            <p class="chart-title">Average daily water use</p>
+            <p class="chart-title">Average daily water use from 2010 to 2020</p>
             <p class="chart-subtitle">Millions of gallons used per day by use type</p>
         <!-- Scale toggle -->
         <ToggleSwitch 
@@ -41,29 +41,30 @@
           <div class="caption-text-flex caption-text-child">
             <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. Note that the y-scale is not constant across use categories when viewing use by category.</p>
           </div>
-        </div> 
-      <br>
-      <br>
-      <div class="text-container">
+        </div>       
+          <br>
+          <br>
+        <div class="text-container">
+        <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
+
+        <h3>How does water use affect water availability?</h3>
         <p>
           Water use affects water availability in two ways. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Therefore, areas with more intensive water demands have a higher potential to degrade the resource than areas with less intense water demands. 
         </p>
       </div>
       
-      <div class="text-container">
-        <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
-      </div>
+
       <br>
       <br>
       <div class="text-container">
-        <h2>Not all the water withdrawn for human water use returns to the local environment</h2>
+        <h2>Not all is lost</h2>
       </div>
       <div class="viz-container">
         <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/07_consumptive_labels.png"/>
       </div>
       <br>
       <div class="text-container">
-        <p>Water that does not return to local water bodies or groundwater is called "consumptive loss." Consumptive loss includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Only 28% of water used for irrigation returns to the environment, because much of the water is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) returned to the local environment eventually. </p>
+        <p>Not all of the water used for humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive loss." Consumptive loss includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive loss is highest for crop irrigation: Only 28% of water used for irrigation returns to the environment. Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment. </p>
       </div>
       <br>
       <br>
