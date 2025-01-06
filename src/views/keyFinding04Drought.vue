@@ -37,25 +37,16 @@
                 </div>
                 <div class="caption-container">
                   <div class="caption-legend-child">
-                    <div class="legend_item" id="legend-ws-low" >
-                      <label class="legend_wrap">
-                      <input type="legend" name="legend" class="legend-inp">
-                      <span class="legend_mark"></span>
-                        Abnormally low water
-                      </label>
-                    </div>
-                    <div class="legend_item" id="legend-ws-high" >
-                      <label class="legend_wrap">
-                      <input type="legend" name="legend" class="legend-inp">
-                      <span class="legend_mark"></span>
-                        Abnormally high water
-                      </label>
-                    </div>
+                    <ColorLegend legend-id="legend-ws-low" label="Abnormally low water" color="var(--ws-demand)" />
+                    <ColorLegend legend-id="legend-ws-high" label="Abnormally high water" color="var(--ws-supply)" />
                   </div>
+                  <br>
                   <div class="caption-text-child">
                     <p>Bar chart showing monthly values of precipitation, evapotranspiration, soil moisture, and streamflow as compared to normal conditions for each hydrologic region (cite Van Meter) in the lower 48 United States. The values are normalized for comparison from 2010 through 2020, and thus do not have units. Select a region on the map to view bar charts for that region.</p>
                   </div>
                 </div> 
+                <br>
+                <br>
             <Methods></Methods>
             <References :theseReferences="referenceList"></References>
         </div>
@@ -75,6 +66,7 @@ import Methods from '../components/Methods.vue';
 import references from '../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages.js';
+import ColorLegend from '../components/ColorLegend.vue';
 
 // global variables
 const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_";
