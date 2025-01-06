@@ -31,11 +31,11 @@
         </div>
         <div class="page-title-container">
             <h1>{{ message.mainTitle }}</h1>
-            <h3> {{ message.shortTitle }}</h3>
+            <h2> {{ message.shortTitle }}</h2>
         </div>   
     </div>
     <div class="content-container" v-for="(message, index) in filteredMessages" :key="index">
-        <div class="text-container">
+        <div class="kf-container">
             <h4 class="subheading"> {{ message.keyMessage }}</h4>
         </div>
     </div>

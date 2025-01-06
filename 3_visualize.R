@@ -16,9 +16,9 @@ p3_targets <- list(
   tar_target(p3_colors_website,
              tibble(
                # elements for website components, not category specific
-               svg_fill_default = "#d1cdc0",
-               svg_col_default = "#edeadf", # background color of page
-               shadow = "#926c68"
+               svg_fill_default = "#ACB6BE",
+               svg_col_default = "#ffffff", # background color of page
+               shadow = "#5E686D"
              )),
   tar_target(p3_colors_wu,
              p3_colors_website |> bind_cols(
@@ -37,8 +37,8 @@ p3_targets <- list(
                  #tern_6 = "#53697A",
                  #tern_7 = "#637B73",
                  #tern_8 = "#F9D689",
-                 dumbbell_sw = "#065867",
-                 dumbbell_gw = "#F09300"))),
+                 dumbbell_sw = "#1687A5",
+                 dumbbell_gw = "#355b65"))),
   tar_target(p3_colors_balance,
              p3_colors_website |> bind_cols(
                tibble(
@@ -52,29 +52,41 @@ p3_targets <- list(
                  dry_red_vdark = "#492525",
                  dry_red_dark = "#965a5b",
                  dry_red_light = "#CFACAB",
-                 drier_than_normal = "#965a5b",
-                 wetter_than_normal = "#1687A5"
+                 ws_demand = "#965a5b",
+                 ws_supply = "#1687A5"
+               ))),
+  tar_target(p3_colors_sui,
+             p3_colors_website |> bind_cols(
+               tibble(
+                 # Water balance (wet/dry) (scico nuuk palette)
+                 sui_severe = "#FEFEB2",
+                 sui_high = "#C3C284",
+                 sui_mod = "#A0A597",
+                 sui_low = "#527685",
+                 sui_none = "#05598C" 
                ))),
   tar_target(p3_colors_wq,
              p3_colors_website |> bind_cols(
                tibble(
-                 # Wq loads 
-                 very_low_col = "#E7CAE1",
-                 low_col = "#D585A9", 
-                 moderate_col = "#93658E", 
+                 # Wq loads (acton from scico)
+                 very_low_col = "#E8CDE3",
+                 low_col = "#D485AA", 
+                 moderate_col = "#93658F", 
                  high_col = "#554C7A",
                  very_high_col = "#270C3F",
                  # wq pie charts - greyed out
                  low_grey = "#d6ced9",
                  mod_grey = "#b0a0b5",
-                 high_grey = "#897292"
+                 high_grey = "#897292",
+                 unimpaired = "#6591d3",
+                 biotic = "#85a457",
+                 organics = "#822734",
+                 sediment = "#d7ccc9",
+                 salinity = "#418692",
+                 temp = "#ffb0b0",
+                 nutrients = "#93658f",
+                 metals = "#7a7f80"
                ))),
-  tar_target(p3_popn_colors,
-             col_pal <- c("Severe" = p3_colors_balance$dry_red_dark, 
-                          "High" = p3_colors_balance$dry_red_light, 
-                          "Moderate" = p3_colors_balance$svg_col_default, 
-                          "Low" = p3_colors_balance$wet_blue_light, 
-                          "Very low/\nnone" = p3_colors_balance$wet_blue_dark)),
   
   tar_target(p3_fonts_website,
              tibble(
@@ -95,14 +107,18 @@ p3_targets <- list(
              create_svg_for_web(in_sf = p2_AggReg_sf,
                                 identifier = "AggReg_nam_nospace",
                                 width = 6, height = 9,
-                                file_out = "src/assets/svgs/AggReg.svg",
+                                file_out = "3_visualize/out/AggReg.svg",
+                                # changed where this is saved to keep manual
+                                # remove of the svggrid timestamp 
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_svg,
              create_svg_for_web(in_sf = p2_Reg_sf,
                                 identifier = "Region_nam_nospace",
                                 width = 6, height = 9,
-                                file_out = "src/assets/svgs/Regions.svg",
+                                file_out = "3_visualize/out/Regions.svg",
+                                # changed where this is saved to keep manual
+                                # remove of the svggrid timestamp 
                                 color_scheme = p3_colors_website),
              format = "file"),
   tar_target(p3_Reg_json,
@@ -128,8 +144,8 @@ p3_targets <- list(
   #
   ## National water stress map
   tar_target(p3_map_stress_png,
-             map_stress(in_sf = p2_HUC12_join_sui_svi_sf,
-                        color_scheme = p3_colors_balance,
+             map_sui(in_sf = p2_HUC12_join_sui_svi_sf,
+                        color_scheme = p3_colors_sui,
                         in_regions = p2_Reg_sf,
                         png_out = "src/assets/images/R/01_stress_map.png",
                         width = 8, height = 6)),
@@ -137,15 +153,20 @@ p3_targets <- list(
   tarchetypes::tar_map( 
     values = tibble::tibble(level = c("low", "very_low_none", "moderate", "severe", "high")),
     tar_target(p3_map_stress_levels_png,
-               map_stress(in_sf = p2_HUC12_join_sui_svi_sf |>
+               map_sui(in_sf = p2_HUC12_join_sui_svi_sf |>
                             dplyr::filter(sui_cat_clean == level),
                           in_regions = p2_Reg_sf,
-                          color_scheme = p3_colors_balance,
+                          color_scheme = p3_colors_sui,
                           png_out = sprintf("src/assets/images/R/01_stress_map_%s.png", level),
                           width = 8, height = 6)),
     names = level
           ),
-  
+  ## National water limitation timeline
+  tar_target(p3_sui_monthly_bars,
+             plot_monthly_sui(in_df = p2_sui_monthly_CONUS,
+                              color_scheme = p3_colors_sui,
+                              png_out = "src/assets/images/R/01_monthly_sui_bars.png",
+                              width = 8, height = 4)),
   
   ##############################################
   # 
@@ -154,32 +175,7 @@ p3_targets <- list(
   #             high/severe water imbalance
   #
   #
-    tar_target(p3_popn_circles_png,
-               viz_popn_circles(in_df = p2_sui_popn_df,
-                                color_scheme = p3_popn_colors,
-                                png_out = "src/assets/images/R/02_sui_popn_CONUS.png",
-                                width = 6,
-                                height = 6),
-               format = "file"
-  ),
-  tar_target(p3_popn_bar_vert_png,
-             viz_popn_bar_vert(in_df = p2_popn_bar_df, 
-                               color_scheme = p3_popn_colors, 
-                               fonts = p3_fonts_website,
-                               png_out = "src/assets/images/R/02_sui_popn_vert_bar.png",
-                               width = 2,
-                               height = 6),
-             format = "file"
-  ),
-  tar_target(p3_popn_bar_hori_png,
-             viz_popn_bar_hori(in_df = p2_popn_bar_df, 
-                               color_scheme = p3_popn_colors, 
-                               fonts = p3_fonts_website,
-                               png_out = "src/assets/images/R/02_sui_popn_hori_bar.png",
-                               width = 6,
-                               height = 2),
-             format = "file"
-  ),
+  
   tar_map(
     values = tibble::tibble(wa_types = c("wa_sw_wq", "wa_sui", "wa_gw_wq", "wa_ecoflow")),
     tar_target(p3_water_avail_png,
@@ -201,43 +197,21 @@ p3_targets <- list(
   #             are considered to be socially vulnerable.
   #
   #
-  tar_target(p3_map_sui_svi_grob,
-             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
-                         dry_onlyL = FALSE,
-                         color_scheme = p3_colors_balance)),
-  tar_target(p3_map_dry_sui_svi_grob,
-             map_svi_sui(in_sf = p2_HUC12_join_sui_svi_sf,
-                         dry_onlyL = TRUE,
-                         color_scheme = p3_colors_balance)),
-  tar_target(p3_legend_n_grob,
-             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
-                                legend_type = "Number",
-                                color_scheme = p3_colors_balance)),
-  tar_target(p3_legend_prop_grob,
-             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
-                                legend_type = "Proportion",
-                                color_scheme = p3_colors_balance)),
-  tar_target(p3_legend_explainer_grob,
-             viz_svi_sui_legend(in_df = p2_sui_svi_HUC12_df,
-                                legend_type = "Explainer",
-                                color_scheme = p3_colors_balance)),
-  tar_target(p3_map_sui_svi_png,
-             compose_svi_plot(in_map = p3_map_sui_svi_grob,
-                              legend_n = p3_legend_n_grob,
-                              legend_prop = p3_legend_prop_grob,
-                              legend_explain = p3_legend_explainer_grob,
-                              png_out = "src/assets/images/R/03_sui_svi_map.png",
-                              width = 6, 
-                              height = 5),
-             format = "file"),
-  tar_target(p3_map_dry_sui_svi_png,
-             compose_svi_plot(in_map = p3_map_dry_sui_svi_grob,
-                              legend_n = p3_legend_n_grob,
-                              legend_prop = p3_legend_prop_grob,
-                              legend_explain = p3_legend_explainer_grob,
-                              png_out = "src/assets/images/R/03_sui_svi_dry_map.png",
-                              width = 6,
-                              height = 5),
+  tar_target(p3_popn_circles_png,
+             viz_popn_circles(in_sf = p2_popn_bubbles_df,
+                              color_scheme = p3_colors_sui,
+                              png_out = "src/assets/images/R/03_sui_popn_CONUS.png",
+                              width = 9,
+                              height = 6),
+             format = "file"
+  ),
+  tar_target(p3_popn_circles_barchart_png,
+             viz_popn_barchart(in_sf = p2_popn_bubbles_df,
+                               color_scheme = p3_colors_sui,
+                               png_out = "src/assets/images/R/03_sui_popn_bar.png",
+                               width = 7,
+                               height = 1.5
+                               ),
              format = "file"),
   
   
@@ -283,16 +257,33 @@ p3_targets <- list(
     tar_target(p3_wq_map_HUC12_png,
                map_wq(in_sf = p2_HUC12_join_wq_sf,
                       nutrient = nutrient,
-                      color_scheme = p3_colors_wq, 
                       regions_sf = p2_Reg_sf,
-                      regions_fill = p3_colors_website,
-                      plot_margin = 0.0009, 
-                      bkgd_color = "transparent",
-                      leg_title = title,
+                      color_scheme = p3_colors_wq,
                       png_out = sprintf("src/assets/images/R/05_%s_map.png", nutrient),
                       width = 9, height = 6),
                format = "file"),
     names = nutrient
+  ),
+  ## Create treemaps for Drinking water, fish consumption, and recreation
+  tar_map(
+    values = tibble(useAbbr = c("DW", "Fish", "Rec")),
+    tar_target(p2_wq_treemap_png,
+               wq_treemap(in_df = p2_wq_threats_df,
+                          useAbbr = useAbbr,
+                          color_scheme = p3_colors_wq,
+                          png_out = sprintf("src/assets/images/R/06_wq_treemap_%s.pdf", useAbbr),
+                          width = 3,
+                          height = 4),
+               format = "file"),
+    tar_target(p2_wq_treemap_mobile_png,
+               wq_treemap(in_df = p2_wq_threats_df,
+                          useAbbr = useAbbr,
+                          color_scheme = p3_colors_wq,
+                          png_out = sprintf("src/assets/images/R/06_wq_treemap_mobile_%s.pdf", useAbbr),
+                          width = 4,
+                          height = 2),
+               format = "file"),
+    names = useAbbr
   ),
   
   
@@ -378,45 +369,25 @@ p3_targets <- list(
   
   # Dumbbells
   tar_map(
-    values = tibble::tibble(reg = c("Western", "High Plains", "Southeast", "Northeast through Midwest", "CONUS"),
-                            reg_noname = c("Western", "High_Plains", "Southeast", "Northeast_through_Midwest", "CONUS")),
-    tar_target(p3_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
-                                agg_reg = reg,
-                                wu_type = "all", 
-                                color_scheme = p3_colors_wu,
-                                width = 6,
-                                height = 4,
-                                png_out = sprintf("src/assets/images/R/08_allWU_gw_sw_dumbbell_%s.png", reg_noname)),
-               format = "file"),
-    tar_target(p3_te_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
-                                agg_reg = reg,
-                                wu_type = "te", #"te", "ir", "ps"
-                                color_scheme = p3_colors_wu,
-                                width = 6,
-                                height = 4,
-                                png_out = sprintf("src/assets/images/R/08_TE_gw_sw_dumbbell_%s.png", reg_noname)),
-               format = "file"),
+    values = tibble::tibble(reg = c("Northeast", "Atlantic Coast", "Florida", 
+                                    "Great Lakes", "Midwest", "Tennessee-Missouri",  
+                                    "Mississippi Embayment", "Gulf Coast",   
+                                    "Souris-Red-Rainy", "Northern High Plains",
+                                    "Central High Plains", "Southern High Plains",
+                                    "Texas", "Columbia-Snake",
+                                    "Central Rockies", "Southwest Desert",
+                                    "Pacific Northwest", "California-Nevada", "CONUS"),
+                            reg_noSpace = stringr::str_replace_all(reg, " ", "_")),
     tar_target(p3_ps_dumbbell_png,
                dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
-                                agg_reg = reg,
+                                region = reg,
                                 wu_type = "ps", #"te", "ir", "ps"
                                 color_scheme = p3_colors_wu,
                                 width = 6,
                                 height = 4,
-                                png_out = sprintf("src/assets/images/R/08_PS_gw_sw_dumbbell_%s.png", reg_noname)),
+                                png_out = sprintf("src/assets/images/R/08_PS_gw_sw_dumbbell_%s.png", reg_noSpace)),
                format = "file"),
-    tar_target(p3_ir_dumbbell_png,
-               dumbbell_gw_v_sw(in_sf = p2_HUC12_join_wu_sf, 
-                                agg_reg = reg,
-                                wu_type = "ir", #"te", "ir", "ps"
-                                color_scheme = p3_colors_wu,
-                                width = 6,
-                                height = 4,
-                                png_out = sprintf("src/assets/images/R/08_IR_gw_sw_dumbbell_%s.png", reg_noname)),
-               format = "file"),
-    names = reg
+    names = reg_noSpace
   )
   
   ##############################################

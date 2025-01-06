@@ -7,7 +7,7 @@ mean_sui <- function(data_in,
   # Clean data
   raw <- data_in |>
     rename(HUC12 = huc) |>
-    mutate(year = as.numeric(substr(year_month, 1, 4)),
+    mutate(year = as.numeric(substr(wy_month, 1, 4)),
            HUC8 = substr(HUC12, 1, 8)) 
   
   # Filter by year if min_year and max_year are provided
@@ -44,6 +44,24 @@ mean_sui <- function(data_in,
                                       TRUE ~ NA)) 
 
   return(out_categorized)
+}
+
+### for timeline, calculate number of hucs in each sui category by month
+monthly_sui <- function(data_in){
+
+  monthly <- data_in |>
+    rename(HUC12 = huc) |>
+    # group by month, SUI category
+    group_by(year_month, wy_month, SUIclass) |>
+    summarize(n_hucs = n()) |>
+    # factor categories for plotting
+    mutate(sui_category = factor(SUIclass, 
+                                 levels = c("Very low/none",
+                                            "Low",
+                                            "Moderate",
+                                            "High",
+                                            "Severe")))
+  
 }
 
 process_supply_v_demand <- function(data_path){
@@ -89,8 +107,8 @@ create_stats <- function(in_sf, out_csv){
   expand_data <- expand.grid(sui_category_5 = unique(join_data$sui_category_5), 
               Region_nam = unique(join_data$Region_nam)) |>
     left_join(join_data) |>
-    mutate(d3_percentage = ifelse(is.na(percentage_stress), 0, percentage_stress),
-           stress_by_reg = ifelse(is.na(stress_by_reg), 0, stress_by_reg),
+    mutate(d3_percentage = ifelse(is.na(percentage_stress), 0, round(percentage_stress,4)),
+           stress_by_reg = ifelse(is.na(stress_by_reg), 0, round(stress_by_reg,4)),
            total_hucs = ifelse(is.na(total_hucs), 0, total_hucs)) |>
     rename(d3_category = sui_category_5)
   
@@ -120,5 +138,5 @@ summary_sui_by_state <- function(in_sf){
     mutate(prop_cat_sui = (n_cat_sui / total_hucs)) |>
     mutate(d3_percentage = prop_cat_sui,
            d3_category = sui_category_5)
-    
+  
 }

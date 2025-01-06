@@ -138,7 +138,7 @@ p1_targets <- list(
   #     run with `targets::tar_make(starts_with("p2_load"))`
   # https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/-/blob/initial-upload/01_fetch.R?ref_type=heads
   
-  # TP processing to calculate loads from sources
+  # WQ processing to calculate loads from sources
   tarchetypes::tar_map( 
     values = tibble::tibble(nutrient = c("tn", "tp")),
     tar_target( # need to find a way to download p2_load target output from iwaas-sparrow-figures pipeline

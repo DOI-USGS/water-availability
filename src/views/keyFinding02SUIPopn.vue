@@ -3,37 +3,89 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-            <p>The availability of clean water for our communities is affected by interrelated issues from hydrological (water quantity, quality, and flow) to social (water infrastructure, access, and rights). Physical infrastructure, such as public-supply (or self-supply) facilities, household-level plumbing, wells, dams, reservoirs, and diversions, are critical for meeting local water demands. Treaties, water compacts, and other legal agreements also determine access at multiple scales from household and municipal to internationally shared water resources. Additionally, characteristics of a community, such as socioeconomic status or access to resources and public services, can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
+            <p>The conditions that limit water availability often occur together. For example, areas with limited water supply can be more vulnerable to water quality issues and alterations to ecological flow. The relative impact of these factors varies from region to region, and regions that have water limitation arising from more than one indicator may pose the greatest challenges to resource managers.</p>
             <br>
-            <p>These circles each represent one watershed (HUC8) in the U.S., and the size corresponds to the population living within that watershed (U.S. Census Bureau, 2020). Levels of water limitation are <span class="highlight" id="very_low_none"> very low or none </span>, <span class="highlight" id="low"> low </span>, <span class="highlight" id="moderate"> moderate </span>, <span class="highlight" id="high"> high </span>, and <span class="highlight" id="severe"> severe </span>.     </p>
-          </div>
+            <p>
+            To understand water availability, USGS considers four core indicators: </p>
+            <ol>
+                <li>The amount of water (water quantity)</li>
+                <li>The quality of surface-water</li>
+                <li>The quality of groundwater</li>
+                <li>Alterations to natural flow (ecoflows)</li>
+              </ol>
+              <br>
 
-          <div class="viz-container">
-            <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_sui_popn_CONUS.png">
+            <p>Within each indicator, high limitation indicates areas where water quality or quantity conditions exceed the requirements, or sensitivity, for a particular use.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
+          </div>
+          <div class="chart-title-container">
+            <p class="chart-title">Impacts on water availability</p>
+            <p class="chart-subtitle">Darker colors indicate were aspects of water availability are more limited</p>
           </div>
           <div class="text-container">
-            <p>The conditions that limit water availability, often occur together. For example, areas with limited water supply can be more vulnerable to water quality issues and alterations to ecological flow. The relative impact of these factors varies from region to region, and regions that have water limitation arising from more than one indicator may pose the greatest challenges to resource managers.</p>
-          </div>
-          <div class="viz-container">
-              <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
-                <tabItem 
-                v-for="tab in impactTabs" 
-                :name="tab.tabTitle" 
-                :key="tab.tabTitleID" 
-                :prefix="getIconImgHTML(tab.tabTitleIDname)"> 
-                  <div class="tab-container-text-img-legend">
-                    <h3 class="tab-content-title">
-                      {{ tab.tabSubtitle }}
-                    </h3>
-                    <img class="tab-content-img" :src="getMapURL(tab.tabTitleIDname)">
-                    <img class="tab-content-legend" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_legend.png">
-                    <p class="tab-content-text" v-html="tab.tabText" />
-                  </div>
-                </tabItem>
-              </tabsGroup>
+            <div class="availability-container">
+              <div class="wa-map" id="sui-map">
+                <h4>Water quantity</h4>
+                <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_sui.png">
+              </div>
+              <div class="wa-map" id="sw-map">
+                <h4>Surface water quality</h4>
+                <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_sw_wq.png">
+              </div>
+              <div  id="gw-map">
+                <h4>Groundwater quality</h4>
+                <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_gw_wq.png">
+              </div>
+              <div id="eco-map">
+                <h4>Altered natural flows</h4>
+                <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_ecoflow.png">
+              </div>
             </div>
+          </div>
+          <div class="caption-container">
+              <div class="caption-text-child">
+                <p>Maps showing the relative impacts on water availability from water quantity, quality, and altered flows for each hydrologic region in the lower 48 United States (cite van meter) (cite budget chapter). Darker colors in each map indicate regions with higher impacts on water availability from that component.</p>
+              </div>
+          </div>  
+          <div class="text-container">
+            <h3>Water availability is limited by water quantity</h3>
+            <p>The overall balance between water supply and use is a primary consideration in water availability studies. Globally, the factors affecting human water security are highly correlated; the infrastructure that allows elevated water use also promotes water-quality degradation and decreases biotic integrity. (vorosmorty xxx) Areas of the country with high water availability stress from water limitation are primarily located in the central U.S. (lin park xxx). Learn more about water balance effects on water availability in <a href="#/01-water-limitation" target="_blank">Key Finding 1</a> and <a href="#/04-water-supply" target="_blank">Key Finding 4</a>. Learn more about water use effects on water availability in <a href="#/07-water-use" target="_blank">Key Finding 7</a> and <a href="#/08-regional-wu" target="_blank">Key Finding 8</a>.</p>
+          </div>
+          <div class="text-container">
+            <h3>Water availability is limited by surface water quality</h3>
+            <p>Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, and pesticides. Sources of water quality contaminants include agriculture, wastewater, air pollution, other human sources such as mining and land-use change, and natural sources such as springs and streamflow. Areas of the country that strongly indicate surface water quality issues include the High Plains, Souris-Red-Rainy, and the Midwest regions, largely due to the application of fertilizer and manure for agriculture. (erickson2025 xxx) Learn more about surface water quality effects on water availability in <a href="#/05-nutrients" target="_blank">Key Finding 5</a> and <a href="#/06-water-quality" target="_blank">Key Finding 6</a> </p>
+          </div>
+          <div class="text-container">
+            <h3>Water availability is limited by groundwater quality</h3>
+            <p>Groundwater-derived drinking water can be affected by high concentrations of constituents from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, and lithium, as well as salinity and nitrogen. Mixtures of multiple groundwater contaminants can also have compounding effects, because different users may have elevated sensitivity when exposed to multiple water-quality issues at once. ("Kaushal2018", "Waite2019", "Waite2021" xxx) Threats to human health, corrosion of infrastructure, reduced crop yields, poor taste, impeded navigation, and economic impacts can all result from poor water quality (erickson2025 xxx) Learn more about groundwater quality effects on water availability in <a href="#/06-water-quality" target="_blank">Key Finding 6</a> </p>
+          </div>
+          <div class="text-container">
+            <h3>Water availability for ecosystems is limited by altered natural flows</h3>
+            <p>Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces. Ecological communities often rely on  local, natural flow conditions (Lennox and others, 2019; Freeman and others, 2022). Alterations to the natural flow regime therefore have the potential to limit ecological water availability. Limitations include direct stress on organisms (Bipa and others, 2024), mismatches to life-history requirements (Arthington and Balcombe, 2011; Amtstaetter and others, 2021), and changes to the functional flows necessary to create and sustain required habitats (Wharton and others, 2017; Lennox and others, 2019; Hitt and others, 2020; Comte and others, 2021; Kemp and Kemp, 2023; Cashman and others, in prep.). </p>
+          </div>
+          <div class="text-container">
+            <h3>Future water availability</h3>
+            <p>The continuing rise in global temperature as a result of human activity is causing changes in Earth's water cycle. The amount of water stored within and moving between vapor, liquid and frozen components of the water cycle is shifting, with significant consequences for water availability. Examples of potential threats to the quantity and quality of water available for humans and ecosystems in North America include increases in drought, aridification, and fire weather; increases in heavy precipitation and flooding; cryosphere decline; rising surface-water temperatures; and saltwater intrusion in coastal areas. [cite IPCC, Ranasinghe and others (2021) , and Scholl 2025]</p>
+            <h4>Potential future impacts to water quantity</h4>
+            <ul class="tab-content-list">
+                    <li>Temperature is rising, with amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing.</li>
+                    <li>Snow and ice are diminishing, including reduced snow cover extent and duration, decreased glaciers and increasing meltwater, thawing permafrost, and altered rain and snow patterns.</li>
+                    <li>Sea level rise exacerbates impacts of stronger hurricanes, infrastructure damage, and increased storm surges and coastal flooding.</li>
+                  </ul>
+                <h4>Potential future impacts to water quality</h4>
+                  <ul class="tab-content-list">
+                    <li>Temperature impacts, including thermal habitat degradation, lower dissolved oxygen in natural waters, , increases in harmful algal blooms, evaporative concentration of salts, and increased irrigation with nutrients and agricultural chemicals mobilized.</li>
+                    <li>Snow and ice impacts, including thawing permafrost, erosion and turbidity from increased melt rates, warmer and shorter winter seasons allow pathogen survival.</li>
+                    <li>Other impacts, including increased sediment from extreme rainfall, wildfires, more frequent sand and dust storms, and increased salinity from evaporation of surface waters and saltwater intrusion in coastal aquifers.</li>
+                  </ul>
+                <h4>Potential future impacts to natural flows</h4>
+                  <ul class="tab-content-list">
+                    <li>Temperature-driven impacts, including heat-amplified drought events, stream baseflow decline from increased groundwater demand, decreased cold-water fish populations and habitat, and changes in streamflow amount and timing.</li>
+                    <li>Snow and ice decline impacts include, changes in snowmelt timing and amount, decreased lake and river ice extent, reduced snow cover extent and duration, and thawing permafrost.</li>
+                    <li>Other impacts, including stronger hurricanes, increased storm surge and coastal flooding, and increased saltwater intrusion will affect coastal ecosystems, while erosion and particulates from extreme rainfall and wildfires affect stream habitat quality.</li>
+                  </ul>
+          </div>
           <Methods></Methods>
-          <References></References>
+          <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
@@ -41,76 +93,48 @@
 </template>
 
 <script setup>
-import {inject} from 'vue';
+import {inject, ref} from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
-import References from "../components/References.vue";
+import references from './../assets/text/references.js';
+import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
-import { isMobile } from 'mobile-device-detect';
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
 
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-
-// extract list of tab items for this page
-const impactTabs = filteredMessages[0].tabData;
-console.log(impactTabs)
-
-// global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
-
-
-function getMapURL(suffix) {
-    return isMobile ? baseURL + `02_water_avail_wa_${suffix}.png` : baseURL + `02_water_avail_wa_${suffix}.png`
-}
-function getIconURL(suffix) {
-    return baseURL + `02_icon_${suffix}.png`
-}
-function getIconImgHTML(image_name) {
-    const imgURL = getIconURL(image_name);
-    return `<img class='tab-image' src=${imgURL}>`
-}
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(theseReferences);
 
 </script>
 
 <style scoped>
+.availability-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+.wa-map {
+  max-height: 200px;
+  padding-bottom: 15px;
+}
 
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-
-
-  &#very_low_none {
-    background-color: #39424f;
-  }
-
-  &#low {
-    background-color: #80909D;
-    color: black;
-  }
-
-  &#moderate {
-    background-color: #edeadf;
-    color: black;
-  }
-
-  &#high {
-    background-color: #Cfacab;
-    color: black;
-  }
-
-  &#severe {
-    background-color: #965a6b;
-  }
+@media only screen and (max-width: 768px) {
+  .availability-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto auto;
+}
 }
 
 </style>

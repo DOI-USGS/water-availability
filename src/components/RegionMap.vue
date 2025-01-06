@@ -24,6 +24,18 @@ const props = defineProps({
     type: Object,
     required: true
   },
+  layerMag: {
+    type: String,
+    required: true
+  },
+  layerX: {
+    type: String,
+    required: true
+  },
+  layerY: {
+    type: String,
+    required: true
+  },
   regionsDataUrl: {
     type: String,
     required: true
@@ -52,10 +64,10 @@ const updateLayers = () => {
     .join(
       enter => enter.append('image')
         .attr('xlink:href', d => 'https://labs.waterdata.usgs.gov/visualizations/images/water-availability/' + d.path)
-        .attr('x', -80)
-        .attr('y', -55)
-        .attr('width', 800 * 1.2)
-        .attr('height', 550 * 1.2)
+        .attr('x', props.layerX)
+        .attr('y', props.layerY)
+        .attr('width', 800 * props.layerMag)
+        .attr('height', 550 * props.layerMag)
         .style('opacity', d => (d.visible ? 1 : 0))
         .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
       update => update
@@ -133,7 +145,7 @@ watch(
   
 
       // draw region boundaries
-      const paths = svg.append('g')
+      svg.append('g')
         .selectAll('path')
         .data(geoRegions.features)
         .join('path')
@@ -171,7 +183,7 @@ watch(
             .attr('stroke-width', '1.2px');
 
             // reset bar chart to default aggregated data
-            emit('regionSelected', 'United States');
+            emit('regionSelected', 'lower 48 United States');
         })
         .on('click', (event, d) => {
           d3.selectAll('.region')

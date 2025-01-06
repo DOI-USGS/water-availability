@@ -1,20 +1,19 @@
-Use,Category,Parameter,riverMiles,UseAbbr
-Drinking Water Use,Unimpaired,Unimpaired,184652,DW
-Drinking Water Use,Metals,Other Metals,90943,DW
-Drinking Water Use,Salinity,Salinity,43046,DW
-Drinking Water Use,Sediment,Sediment,28631,DW
-Drinking Water Use,Temperature,Temperature,27253,DW
-Drinking Water Use,Biotic,Pathogens,20973,DW
-Drinking Water Use,Metals,Oxygen Depletion,15641,DW
-Drinking Water Use,Nutrients,Other Nutrients,15112,DW
-Drinking Water Use,Sediment,Turbidity,9333,DW
-Drinking Water Use,Metals,Acidity/pH,6888,DW
-Drinking Water Use,Organics,Pesticides,6365,DW
-Drinking Water Use,Metals,Mercury,5748,DW
-Drinking Water Use,Organics,PCBs,1998,DW
-Drinking Water Use,Biotic,Biotoxins,1638,DW
-Drinking Water Use,Biotic,Algal Growth,1499,DW
-Drinking Water Use,Organics,Dioxins,845,DW
-Drinking Water Use,Organics,Toxic Organics,427,DW
-Drinking Water Use,Nutrients,Ammonia,381,DW
-Drinking Water Use,Organics,Oil and Grease,91,DW
+Use,Category,Parameter,riverMiles,d3parameterMatch,percentMiles,UseAbbr,sortOrder
+Drinking Water,Organics,Oil and Grease,91,OilandGrease,0,DW,1
+Drinking Water,Nutrients,Ammonia,381,Ammonia,0.1,DW,2
+Drinking Water,Organics,Toxic Organics,427,ToxicOrganics,0.1,DW,3
+Drinking Water,Organics,Dioxins,845,Dioxins,0.2,DW,4
+Drinking Water,Biotic,Algal Growth,1499,AlgalGrowth,0.3,DW,5
+Drinking Water,Biotic,Biotoxins,1638,Biotoxins,0.4,DW,6
+Drinking Water,Organics,PCBs,1998,PCBs,0.4,DW,7
+Drinking Water,Metals,Mercury,5748,Mercury,1.2,DW,8
+Drinking Water,Organics,Pesticides,6365,Pesticides,1.4,DW,9
+Drinking Water,Metals,Acidity/pH,6888,AciditypH,1.5,DW,10
+Drinking Water,Sediment,Turbidity,9333,Turbidity,2,DW,11
+Drinking Water,Nutrients,Other Nutrients,15112,OtherNutrients,3.3,DW,12
+Drinking Water,Metals,Oxygen Depletion,15641,OxygenDepletion,3.4,DW,13
+Drinking Water,Biotic,Pathogens,20973,Pathogens,4.5,DW,14
+Drinking Water,Temperature,Temperature,27253,Temperature,5.9,DW,15
+Drinking Water,Sediment,Sediment,28631,Sediment,6.2,DW,16
+Drinking Water,Salinity,Salinity,43046,Salinity,9.3,DW,17
+Drinking Water,Metals,Non-Mercury Metals,90943,Non-MercuryMetals,19.7,DW,18

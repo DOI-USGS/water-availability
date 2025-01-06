@@ -4,45 +4,78 @@
     <div class="content-container">
       <div class="text-container">
         <p>
-          An understanding of where, when, why, and how much water is extracted for human use is fundamental to the evaluation of the Nation’s water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for <span class="highlight" id="Irrigation">crop irrigation </span> followed by fresh water used in the process of creating energy from <span class="highlight" id="Thermoelectric_fresh"> Thermoelectric power</span> plants. Along with <span class="highlight" id="Public_Supply"> public supply </span>, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. <span class="highlight" id="Thermoelectric_saline"> Thermoelectric power (from saline water)</span> uses another approximately 21,000 million gallons per day.
+          An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for crop irrigation followed by fresh water used in the process of creating energy from thermoelectric power plants. Along with public supply, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. Thermoelectric power (from saline water) uses another approximately 21,000 million gallons per day. 
         </p>
       </div>
-      
-      <!-- Dropdown for selecting view mode -->
-      <div class="dropdown-container">
-        <select v-model="selectedView" @change="handleViewChange">
-          <option value="stacked">Show total annual use</option>
-          <option value="faceted">Show by use type</option>
-        </select>
-      </div>
-      
+
       <div class="viz-container">
         <div id="barplot-container"></div>
       </div>
-      
+      <div class="caption-container">
+        <!-- Scale toggle -->
+        <ToggleSwitch 
+          v-model="isFaceted"
+          leftLabel="Total use"
+          rightLabel="Use by category"
+          leftColor="black"
+          rightColor="black"
+        />
+        <div class="caption-legend-child">
+          <div class="legend_item" id="legend-wu-ir" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Crop irrigation
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-ps" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Public supply
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-te-fresh" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Thermoelectric (fresh)
+            </label>
+          </div>
+          <div class="legend_item" id="legend-wu-te-saline" >
+            <label class="legend_wrap">
+            <input type="legend" name="legend" class="legend-inp">
+            <span class="legend_mark"></span>
+              Thermoelectric (saline)
+            </label>
+          </div>
+          </div>
+          <div class="caption-text-child">
+          <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. Note that the y-scale is not constant across use categories when viewing use by category.</p>
+        </div>
+      </div>
       <div class="text-container">
         <p>
-          Water use reflects human dependence on freshwater resources and has dual effects on water availability. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Therefore, areas with more intensive water demands have a higher potential to degrade the resource than areas with less intense water demands. 
+          Water use affects water availability in two ways. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Therefore, areas with more intensive water demands have a higher potential to degrade the resource than areas with less intense water demands. 
         </p>
       </div>
+      
+      <div class="text-container">
+        <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
+      </div>
+
+      <div class="text-container">
+        <h3>Not all the water withdrawn for human water use returns to the local environment</h3>
+      </div>
       <div class="viz-container">
-        <tabsGroup class="tab-group" :options="{ useUrlFragment: false }">
-                <tabItem 
-                v-for="tab in impactTabs" 
-                :name="tab.tabTitle" 
-                :key="tab.tabTitleID" 
-                :prefix="getIconImgHTML(tab.tabTitleID)"> 
-                  <div class="tab-container-text-img">
-                    <h3> {{ tab.tabSubtitle }}</h3>
-                    <img class="tab-content-img" :src="getPhotoURL(tab.tabTitleIDname)">
-                    <p class="tab-content-text" v-html="tab.tabText" />
-                  </div>
-                </tabItem>
-              </tabsGroup>
+        <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/07_consumptive_labels.png"/>
+      </div>
+      <div class="text-container">
+        <p>Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across the lower 48 United States, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power. </p>
       </div>
       
       <Methods></Methods>
-      <References></References>
+      <References :theseReferences="referenceList"></References>
     </div>
     <!-- conditionally render PageCarousel for preview site -->
       <PageCarousel v-if="featureToggles.showPageCarousel"></PageCarousel>
@@ -50,108 +83,113 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, computed } from 'vue';
+import { onMounted, ref, inject, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
+import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
+import ToggleSwitch from '../components/ToggleSwitch.vue';
 
-
+// dependency injections
 const featureToggles = inject('featureToggles');
+const animateTime = inject('animateTime')
 
 const route = useRoute();
-const path = computed(() => route.path)
+
+// References logic
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-// extract list of tab items for this page
-const impactTabs = filteredMessages[0].tabData;
+const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(theseReferences);
+
 // global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
-
-// tab functions
-function getPhotoURL(suffix) {
-    return baseURL + `07_${suffix}_photo.png`
-}
-function getIconURL(suffix) {
-    return baseURL + `07_icon_${suffix}.png`
-}
-function getIconImgHTML(image_name) {
-    const imgURL = getIconURL(image_name);
-    return `<img class='tab-image' src=${imgURL}>`
-}
-
-
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
-const selectedView = ref("stacked"); // Tracks the dropdown selection
 const mobileView = isMobile; // Detect mobile view for responsive design
 
 // Global variables to hold chart elements and data
-let svg, chartBounds, rectGroup, useAxis, yearAxis;
-let categoryGroups, yearGroups, stackedData;
-let yearScale, useScale, categoryRectGroups;
+let svg, chartBounds, rectGroup, xAxisGroup;
+let categoryGroups, yearGroups, dataStacked, data;
+let yearScale, useScale, categoryRectGroups, totalHeight, adjustedHeight, facetHeights;
+const containerWidth = 700; 
+const containerHeight = 600;
+const padding = 30;
+const barSpace = 5;
 
-// Adjust margins to equalize space
-const labelWidth = 30; // Estimated width of the "mgd" label
-const containerWidth = Math.min(window.innerWidth * 0.8, 800); // Constrain to 700px max
-const containerHeight = mobileView ? window.innerHeight * 0.85 : 700;
-
+// chart dimensions
 const margin = mobileView
-  ? { top: 60, right: 10, bottom: 50, left: 40 } // Increased bottom margin for mobile
-  : { top: 80, right: labelWidth + 20, bottom: 60, left: 100 }; // Increased bottom margin for desktop
+  ? { top: 100, right: 10, bottom: 50, left: 40 } //  mobile
+  : { top: 100, right: 10, bottom: 50, left: 40 }; // desktop
 
 const width = containerWidth - margin.left - margin.right;
 const height = containerHeight - margin.top - margin.bottom;
 
-// Define toggle functions for switching between
-function toggleToFaceted() {
-  if (!isFaceted.value) {
-    isFaceted.value = true;
-    transitionToFaceted();
-  }
-}
-
-function toggleToStacked() {
-  if (isFaceted.value) {
-    isFaceted.value = false;
-    transitionToStacked();
-  }
-}
-
-// Handle dropdown selection change
-function handleViewChange() {
-  if (selectedView.value === "faceted") {
-    toggleToFaceted();
-  } else {
-    toggleToStacked();
-  }
-}
-
 // Define colors for each category group
 const categoryColors = {
-  'Public Supply': '#A04747',
-  'Irrigation': '#E8B86D',
-  'Thermoelectric (fresh)': '#0B2F9F',
-  'Thermoelectric (saline)': '#6CBEC7',
+  'Public Supply': 'var(--wu-ps)',
+  'Irrigation': 'var(--wu-agriculture)',
+  'Thermoelectric (fresh)': 'var(--wu-te-fresh)',
+  'Thermoelectric (saline)': 'var(--wu-te-saline)',
 };
 
+const facetOrder = ['Irrigation', 'Public Supply', 'Thermoelectric (saline)', 'Thermoelectric (fresh)']; 
+
+// Watcher to handle toggle changes
+watch(isFaceted, (newValue) => {
+  if (newValue) {
+    transitionToFaceted();
+  } else {
+    transitionToStacked();
+  }
+});
+
+// METHODS
 // Helper function to create valid CSS selectors by replacing special characters
 function sanitizeSelector(str) {
   return str.replace(/[ ()]/g, '_');
 }
 
-// Data references
-const dataSet = ref([]);
-const data = ref([]);
-
-// Function to load the datasets
+// Load the datasets and prep the data
 async function loadDatasets() {
   try {
-    const result = await d3.csv('wu_yearly.csv', d => d);
-    dataSet.value = result;
+    const data_in = await d3.csv('wu_yearly.csv', d => d);
+
+    // extract unique categories and years, but enforce custom order
+    categoryGroups = facetOrder.filter(order => 
+      data_in.some(d => d.Use === order) // only include categories in the data
+    );
+
+    yearGroups = d3.union(data_in.map(d => d.water_year));
+
+    // Stack the data for the stacked bar chart
+    dataStacked = d3.stack()
+      .keys(facetOrder)
+      .value(([, D], key) => D.get(key)['mgd'])
+      (d3.index(data_in, d => d.water_year, d => d.Use));
+
+      dataStacked.sort((a, b) => {
+        return facetOrder.indexOf(a.key) - facetOrder.indexOf(b.key);
+      });
+
+
+    // calculate heights before initializing chart
+    const groupMaxValues = facetOrder.map(group =>
+      d3.max(data_in.filter(d => d.Use === group), d => +d.mgd)
+    );
+    const totalMaxValue = d3.sum(groupMaxValues);
+    facetHeights = groupMaxValues.map(max => (max / totalMaxValue) * (height-90));
+    totalHeight = facetHeights.reduce((sum, h) => sum + h, 0);
+    adjustedHeight = totalHeight + (facetHeights.length * padding) + margin.bottom;
+
+    data = data_in // store raw data in long form 
+
   } catch (error) {
     console.error('Error loading data:', error);
   }
@@ -171,19 +209,14 @@ function initBarChart() {
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
   rectGroup = chartBounds.append('g').attr('id', 'rectangle_group');
+
+  xAxisGroup = chartBounds.append('g')
+    .attr('class', 'x-axis') 
+    .attr('transform', `translate(0, ${height})`); 
 }
 
 // Function to create the initial bar chart in stacked form
-function createBarChart({ dataset }) {
-  // Extract unique categories and years
-  categoryGroups = [...new Set(dataset.map(d => d.Use))];
-  yearGroups = d3.union(dataset.map(d => d.water_year));
-
-  // Stack the data for the stacked bar chart
-  stackedData = d3.stack()
-    .keys(categoryGroups)
-    .value(([, D], key) => D.get(key)['mgd'])
-    (d3.index(dataset, d => d.water_year, d => d.Use));
+function createBarChart(dataStacked) {
 
   // X-axis (year scale)
   yearScale = d3.scaleBand()
@@ -191,49 +224,49 @@ function createBarChart({ dataset }) {
     .range([0, width])
     .padding(0.02);
 
-  // y-axis (water use scale)
-  useScale = d3.scaleLinear()
-    .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-    .range([height, 0]);
-
   // Custom x-axis tick format: show every other year on mobile, all years on desktop
   const xAxisTickFormat = (year) => {
     return mobileView ? (year % 2 === 0 ? year : '') : year;
   };
 
-// Create x-axis and apply the custom tick format
-  chartBounds.append('g')
-  .attr('class', 'x-axis')
-  .attr('transform', `translate(0, ${height})`)
-  .call(d3.axisBottom(yearScale)
-    .tickFormat(xAxisTickFormat) // Apply custom format based on mobile view
-    .tickSize(0)
-  )
-  .attr('font-size', mobileView ? '1.4rem' : '1.4rem')
-  .selectAll('.tick text')
-  .style('text-anchor', 'middle') // Center align the labels
-  .attr('dx', '-0.2em'); // Move labels slightly to the left
+  // select x-axis and apply the custom tick format
+  xAxisGroup.append('g')
+    .call(d3.axisBottom(yearScale)
+      .tickFormat(xAxisTickFormat) // Apply custom numbering format in mobile view
+      .tickSize(0)
+    )
+    .selectAll('.tick text')
+    .attr('class', 'chart-text')
+    .style('text-anchor', 'middle')
+    .attr('text-align', 'center') 
 
-// Remove tick lines
-  chartBounds.selectAll('.x-axis .tick line').remove();
+  // Remove tick lines from x-axis
+  xAxisGroup.selectAll('.x-axis .tick line').remove();
 
   // y-axis (water use scale)
+  useScale = d3.scaleLinear()
+    .domain([0, d3.max(dataStacked, d => d3.max(d, d => d[1]))])
+    .range([height, 0]);
+
+  // add axis to chart for each use group
   categoryGroups.forEach((group, i) => {
     chartBounds.append('g')
       .attr('class', `y-axis y-axis-${i}`)
       .call(d3.axisLeft(useScale).ticks(4).tickFormat(d3.format("~s")))
-      .attr('font-size', mobileView ? '1.4rem' : '1.4rem');
+      .selectAll('.tick text')
+      .attr('class', 'chart-text');
   });
 
-  // Create color scale for the bars
+  // Create categorical color scale for the bars
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
     .range(categoryGroups.map(item => categoryColors[item]));
 
-  // Create grouped bars for each category
+  // Create groups for each category
   categoryRectGroups = rectGroup.selectAll('g')
-    .data(stackedData, d => d.key)
-    .join(enter => enter.append('g').attr('id', d => sanitizeSelector(d.key)));
+    .data(dataStacked, d => d.key)
+    .join(enter => enter.append('g')
+    .attr('id', d => sanitizeSelector(d.key)));
 
   categoryRectGroups.selectAll('rect')
     .data(D => D.map(d => (d.key = D.key, d)))
@@ -241,117 +274,109 @@ function createBarChart({ dataset }) {
       .attr('x', d => yearScale(d.data[0]))
       .attr('y', d => useScale(d[1]))
       .attr('height', d => useScale(d[0]) - useScale(d[1]))
-      .attr('width', yearScale.bandwidth() - 5)
+      .attr('width', yearScale.bandwidth() - barSpace)
       .style('fill', d => colorScale(d.key)));
 
-  // mgd label
+  // chart title
   svg.append("text")
-    .attr("class", "y-axis-label")
-    .attr("x", margin.left / 2) // position to the upper left
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "left")
-    .style("font-size", "2.5rem")
-    .style("font-weight", "bold")
-    .text("mgd");
+    .attr("class", "chart-title")
+    .attr("x", margin.left / 2) 
+    .attr("y", margin.top -60)
+    .attr("text-anchor", "start")
+    .text("Average daily water use");
 
-  // written out mgd label
+  // chart subtitle
   svg.append("text")
-    .attr("class", "y-axis-label-explained")
-    .attr("x", (margin.left / 2) + labelWidth*2) 
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "left")
-    .style("font-size", "2.5rem")
-    .style("font-style", "italic")
-    .style('font-weight', "300")
-    .text("million gallons per day");
+    .attr("class", "chart-subtitle")
+    .attr("x", margin.left/2) 
+    .attr("y", margin.top-40)
+    .attr("text-anchor", "start")
+    .text("Million gallons per day by use type for the lower 48 United States");
 }
-
-// Toggle between stacked and faceted views
-function toggleFacetedView() {
-  isFaceted.value = !isFaceted.value;
-  updateChart();
-}
-
-// Update the chart view based on the current state
-function updateChart() {
-  if (isFaceted.value) {
-    transitionToFaceted();
-  } else {
-    transitionToStacked();
-  }
-}
-
 function transitionToFaceted() {
-  const facetPadding = 30; // padding between facets
-  const totalPadding = (categoryGroups.length - 1) * facetPadding; 
-  const facetHeight = (height - totalPadding) / categoryGroups.length; // adjust facet height to include padding
+  const t = d3.transition().duration(animateTime); // animation transition
 
-  const t = d3.transition().duration(1000);
+  // calculate max values for each group and total max for scaling
+  const groupMaxValues = categoryGroups.map(group =>
+    d3.max(data.filter(d => d.Use === group), d => +d.mgd)
+  );
 
-  // move each category to its own facet along the y-axis
-  categoryGroups.forEach((group, i) => {
-    // use the original dataset
-    const groupData = data.value.filter(d => d.Use === group);
+  // dynamically compute exact positions based on scaled heights
+  let facetPositions = [];
+  let currentPosition = 0;
 
-    // find max mgd by group
-    const groupMaxMgd = d3.max(groupData, d => +d.mgd);
+  facetOrder.forEach((group, i) => {
+    const groupIndex = facetOrder.indexOf(group); // enforce custom order
 
-    // get group-specific y-scale using max mgd
+    // get dataset for the group
+    const groupData = data.filter(d => d.Use === group);
+    const groupMaxMgd = groupMaxValues[i];
+
+    // compute y-scale for the group
     const groupScale = d3.scaleLinear()
       .domain([0, groupMaxMgd])
-      .nice(3)
-      .range([facetHeight, 0]);
+      .range([facetHeights[i], 0]);
 
-    // transition the y-axis into place for each category group
+    yearScale = d3.scaleBand()
+      .domain(yearGroups) 
+      .range([0, width]) 
+      .padding(0.02); 
+
+    // set position accounting for actual height and padding
+    facetPositions[groupIndex] = currentPosition;
+    currentPosition += facetHeights[i] + padding; // add padding between groups
+
+    // update y-axis position
     d3.select(`.y-axis-${i}`)
       .transition(t)
-      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`)
-      .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")));
+      .attr('transform', `translate(0, ${facetPositions[i]})`)
+      .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")))
+      .selectAll('.tick text')
+      .attr('class', 'chart-text');
 
-       // transition the x-axis into place for each category group
-    d3.select(`.x-axis-${i}`)
+    // update bar group position
+    d3.select(`g #${sanitizeSelector(group)}`)
       .transition(t)
-      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding) + facetHeight})`)
-      .call(d3.axisBottom(yearScale).tickSize(0))
-      .selectAll('.tick line').remove();
-      
-    // move group to its own facet
-    const groupSelection = d3.select(`g #${sanitizeSelector(group)}`)
-      .transition(t)
-      .attr('transform', `translate(0, ${i * (facetHeight + facetPadding)})`);
+      .attr('transform', `translate(0, ${facetPositions[facetOrder.indexOf(group)]})`);
 
-    // ensure the data is properly bound to each rect
-    d3.select(`g #${sanitizeSelector(group)}`).selectAll('rect')
+    // update bars
+    d3.select(`g #${sanitizeSelector(group)}`)
+      .selectAll('rect')
       .data(groupData)
-      //.join(enter => enter.append('rect')) 
       .transition(t)
-      .attr('x', d => yearScale(d.water_year)) 
-      .attr('width', yearScale.bandwidth() - 5)
-      .attr('y', d => groupScale(+d.mgd)) 
-      .attr('height', d => facetHeight - groupScale(+d.mgd)) 
-      .style('fill', categoryColors[group]); 
+      .attr('x', d => yearScale(d.water_year))
+      .attr('width', yearScale.bandwidth() - barSpace)
+      .attr('y', d => groupScale(+d.mgd))
+      .attr('height', d => facetHeights[i] - groupScale(+d.mgd))
+      .style('fill', categoryColors[group]);
 
-    // add label for grouping
+    // add group label
     chartBounds.append('text')
-      .attr("class", "facet-label")
-      .attr('x', 5)       
-      .attr('y', i * (facetHeight + facetPadding + 5))  
-      .attr('text-anchor', 'start')  
-      .attr('font-weight', '600')
-      .style('font-size', '1.5rem')   
-      .text(group);       
-
+      .attr("class", "facet-label chart-text")
+      .attr('x', 5)
+      .attr('y', facetPositions[i] - 10) // place label above each group
+      .attr('text-anchor', 'start')
+      .text(group);
   });
+
+  // update x-axis position dynamically
+  xAxisGroup.select('.x-axis')
+    .transition(t)
+    .attr('transform', `translate(0, ${adjustedHeight})`) // move to the new position
+   //.call(d3.axisBottom(yearScale).tickSize(0)) // redraw axis
+  xAxisGroup.selectAll('.tick text')
+    .attr('class', 'chart-text')
+    .style('text-anchor', 'middle'); // ensure labels are styled
 
 }
 
 // transition the chart back to a stacked view
 function transitionToStacked() {
-  const t = d3.transition().duration(1000);
+  const t = d3.transition().duration(animateTime);
 
    // transition the bars back to the stacked position
    categoryRectGroups 
-    .data(stackedData) // bind stacked data to groups
+    .data(dataStacked) // bind stacked data to groups
     .transition(t) 
     .attr('transform', 'translate(0, 0)'); // reset facet-specific transforms
 
@@ -361,7 +386,7 @@ function transitionToStacked() {
     .attr('x', d => yearScale(d.data[0])) // re-position x
     .attr('y', d => useScale(d[1])) // stacked y-position (top of bar)
     .attr('height', d => useScale(d[0]) - useScale(d[1])) 
-    .attr('width', yearScale.bandwidth() - 5); 
+    .attr('width', yearScale.bandwidth() - barSpace); 
 
   // transition the 4 y-axes back to overlap on top of each other
   categoryGroups.forEach((group, i) => {
@@ -371,8 +396,11 @@ function transitionToStacked() {
       .call(d3.axisLeft(useScale)
         .ticks(4)
         .tickFormat(d3.format("~s"))
-      );
+      )
+      .selectAll('.tick text')
+      .attr('class', 'chart-text');
   });
+  
 
   // transition the 4 x-axes back to overlap on top of each other
   categoryGroups.forEach((group, i) => {
@@ -380,75 +408,64 @@ function transitionToStacked() {
       .transition(t)
       .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(yearScale).tickSize(0))
-      .selectAll('.tick line').remove();
+      .selectAll('.tick line')
+      .remove();
   });
 
-  d3.selectAll('text.facet-label') 
+// remove facet labels
+ chartBounds.selectAll('.facet-label') 
     .transition(t)
     .style('opacity', 0) 
     .remove();
+
+  xAxisGroup.select('.x-axis')
+   .transition(t)
+    .attr('transform', `translate(0, ${height})`) // move back to bottom
+    .call(d3.axisBottom(yearScale).tickSize(0))
+    .selectAll('.tick text')
+    .attr('class', 'chart-text')
+    .style('text-anchor', 'middle');
   
 }
 
 // On mounted loads data and initializes the chart
 onMounted(async () => {
+
+  // load the data
   await loadDatasets();
-  if (dataSet.value.length > 0) {
-    data.value = dataSet.value;
+
+  // once it's in
+  if (data.length > 0) {
+
+    // init the bar chart svg and g elements
     initBarChart();
-    createBarChart({ dataset: data.value });
+
+    // and add data to the chart
+    createBarChart(dataStacked);
+
+    // then watch the y-axis/facet toggle for any changes
+    watch(isFaceted, (newValue) => {
+      // if the toggle changes update the y-axi,s facets, and bar positions
+      nextTick(() => {
+        if (newValue) {
+          transitionToFaceted(); // trigger faceted transition
+        } else {
+          transitionToStacked(); // trigger stacked transition
+        }
+      });
+    });
   }
 });
+
 </script>
 
 <style scoped>
 #barplot-container {
-  max-width: 800px;
+  max-width: 100%;
   width: 100%;
   margin: auto;
   display: flex;
   justify-content: center;
 }
 
-.dropdown-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  width: 100%;
-  text-align: center;
-}
-
-.dropdown-container select {
-  padding: 10px 20px;
-  font-size: 2rem;
-  font-weight: 300;
-  color: rgb(54, 53, 53);
-  border: 1px solid rgb(54, 53, 53);
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: transparent;
-  display: inline-block;
-}
-
-.highlight {
-  color: white;
-  padding: 0.25px 5px;
-  border-radius: 10px;
-  white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s;
-  &#Public_Supply {
-    background-color: #A04747;
-  }
-  &#Irrigation {
-    background-color: #E8B86D;
-  }
-  &#Thermoelectric_fresh {
-    background-color: #0B2F9F;
-  }
-  &#Thermoelectric_saline {
-    background-color: #6CBEC7;
-  }
-}
 </style>
