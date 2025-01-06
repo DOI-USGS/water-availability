@@ -28,7 +28,7 @@
 
             <div class="text-container" >
               <h2 class="spacer" style="padding-top:50px">Surface water impairment varies by use</h2>
-              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
+              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides many benefits from sourcing fish for food to providing recreational benefit. </p>
             </div>
 
             <div class="chart-title-container">
