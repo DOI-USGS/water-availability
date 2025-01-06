@@ -8,6 +8,10 @@
             </div>
   
         <!-- Supply and Demand dumbell chart -->
+        <div class="chart-title-container">
+            <p class="chart-title">Water supply vs demand</p>
+            <p class="chart-subtitle">Regional estimates in mm/year</p>
+          </div>
           <DumbellChart 
             :data="data" 
             :animateTime="animateTime"
