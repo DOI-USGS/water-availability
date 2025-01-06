@@ -106,29 +106,10 @@
               <aquiferWedges id="aquifer-svg" />
             </div>
             <div class="caption-container">
-
               <div class="caption-legend-child">
-                <div class="legend_item" id="legend-wq-high" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Exceeds benchmark
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-mod" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Exceeds half of the benchmark
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-low" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Does not exceed benchmark
-                  </label>
-                </div>
+                <ColorLegend legend-id="legend-wq-high" label="Above human-health benchmark" color="var(--wq-high)" />
+                <ColorLegend legend-id="legend-wq-mod" label="Exceeds half of the benchmark" color="var(--wq-mod)" />
+                <ColorLegend legend-id="legend-wq-low" label="Normal levels" color="var(--wq-low)" />
               </div>
               <div class="caption-text-child">
                 <p>Pie charts showing the overall groundwater quality in principal aquifers of the lower 48 United States (cite chapter). The values shown in the pie chart represent the proportion of the aquifer under three categories of water quality relative to the human-health benchmark for drinking water. For this analysis, 16 contaminants were analyzed, including arsenic, manganese, lead, and nitrate. (cite chapter). Results for selected individual constituents are also accessible in an interactive searchable map (link).</p>
@@ -156,6 +137,7 @@ import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
 import treemapSVGmobile from '@/assets/svgs/treemap_mobile.svg';
+import ColorLegend from '../components/ColorLegend.vue';
 
 // aquifer map settings
 const defaultRegionID = "overview";
