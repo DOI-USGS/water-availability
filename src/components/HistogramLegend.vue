@@ -55,7 +55,7 @@ function setupSVG() {
   svg = d3.select(legendSvg.value)
     .attr('width', width)
     .attr('height', height)
-    .attr('viewBox', `-20 0 ${width+20} ${height}`);
+    .attr('viewBox', `-20 0 ${width+20} ${height+20}`);
 }
 
 // Initialize Legend
@@ -63,6 +63,12 @@ function initLegend(data) {
 
   // Sort data
   const sortedData = processData(data);
+  const uniqueCategories = Array.from(new Set(sortedData.map(d => d.category)));
+  const dummyData = uniqueCategories.map(category => ({
+    category: category, 
+    value: 0.2 // assign a fixed value
+  }));
+
 
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
@@ -82,8 +88,19 @@ function initLegend(data) {
   svg.selectAll('rect')
     .data(sortedData, d => cleanLabel(d.category))
     .join('rect')
+    .attr('class','main')
     .attr('x', d => xScale(cleanLabel(d.category)))
     .attr('y', d => yScale(d.value))
+    .attr('width', xScale.bandwidth())
+    .attr('height', d => rectHeight - yScale(d.value))
+    .style('fill', d => colorScale(d.category));
+
+    svg.selectAll('rect.static')
+    .data(dummyData, d => cleanLabel(d.category))
+    .join('rect')
+    .attr('class','static')
+    .attr('x', d => xScale(cleanLabel(d.category)))
+    .attr('y', d => height-25)
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
     .style('fill', d => colorScale(d.category));
@@ -123,6 +140,11 @@ function initLegend(data) {
 function updateLegend(data) {
  
   const sortedData = processData(data);
+  const uniqueCategories = Array.from(new Set(sortedData.map(d => d.category)));
+  const dummyData = uniqueCategories.map(category => ({
+    category: category, 
+    value: 0.25 // assign a fixed value
+  }));
 
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
@@ -138,11 +160,12 @@ function updateLegend(data) {
     .domain(sortedData.map(d => d.category))
     .range(props.layerPaths.colors)
 
-  svg.selectAll('rect')
+  svg.selectAll('rect.main')
     .data(sortedData, d => cleanLabel(d.category))
     .join(
       enter => enter.append('rect')
       .attr('x', d => xScale(cleanLabel(d.category)))
+      .attr('class','main')
         .attr('y', d => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
@@ -164,6 +187,16 @@ function updateLegend(data) {
         .attr('height', 0) // Shrink height
         .remove()
     );
+
+    svg.selectAll('rect.static')
+    .data(dummyData, d => cleanLabel(d.category))
+    .join('rect')
+    .attr('class','static')
+    .attr('x', d => xScale(cleanLabel(d.category)))
+    .attr('y', d => height-25)
+    .attr('width', xScale.bandwidth())
+    .attr('height', d => rectHeight - yScale(d.value))
+    .style('fill', d => colorScale(d.category));
 
   const axisBottom = d3.axisBottom(xScale)
    .tickFormat(d => d)
