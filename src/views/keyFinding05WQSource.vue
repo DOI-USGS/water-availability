@@ -5,9 +5,11 @@
           <div class="text-container">
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.</p>
               </div>
-              <div class="caption-container">
-              <!-- Nutrient Toggle -->
-              <ToggleSwitch 
+              <div class="chart-title-container">
+            <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }}</p>
+            <p class="chart-subtitle">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
+            <!-- Nutrient Toggle -->
+            <ToggleSwitch 
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
                 rightLabel="Nitrogen" 
@@ -24,10 +26,7 @@
                     leftColor="black"
                     inactiveColor="grey"
                   />
-              </div>
-              <div class="chart-title-container">
-            <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }}</p>
-            <p class="chart-subtitle">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
+
             </div>
           <div class="viz-container">
                 <div id="barplot-container">    
@@ -157,7 +156,7 @@ const publicPath = import.meta.env.BASE_URL;
 // Chart dimensions
 const containerWidth = 700; 
 const maxHeight = 900; 
-const margin = { top: 50, right: 50, bottom: 50, left: 250 };
+const margin = { top: 20, right: 20, bottom: 20, left: 250 };
 let svg, chartBounds, rectGroup, nutrientScale;
 let width, height;
 
