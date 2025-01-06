@@ -119,7 +119,7 @@ export default {
             route: '/08-regional-wu',
             mainTitle: 'From sea to shining sea',
             shortTitle: 'How we use water varies across the country',
-            keyMessage: 'Regionally, crop irrigation is the primary water use in the Western and High Plains areas of the U.S., while the eastern half of the country uses water primarily for public supply or thermoelectric power.',
+            keyMessage: 'Regionally, the Western and High Plains areas of the U.S. uses water primarily for crop irrigation, while the eastern half of the country uses water primarily for public supply or thermoelectric power.',
             references: ["VanMetre2020", "Medalie2025", "Galanter2023", "Luukkonen2023", "Martin2023", "Haynes2024"]
         }
     ]
