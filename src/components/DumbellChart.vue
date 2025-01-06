@@ -31,7 +31,7 @@ let svg, chartBounds, xScale, originalXScaleDomain, dotGroup;
 const publicPath = import.meta.env.BASE_URL;
 
 // dynamic dimensions
-const margin = { top: 20, right: 50, bottom: 30, left: 200 }; // increase left margin for y-axis labels
+const margin = { top: 20, right: 50, bottom: 30, left: 250 }; // increase left margin for y-axis labels
 let width, height;
   
 // initialize chart

@@ -48,7 +48,7 @@
         <div class="image-container">
           <div class="chart-title-container">
             <p class="chart-title">Water limitation in {{ selectedRegion !== 'lower 48 United States' ? selectedRegion + ' Region' : selectedRegion }}</p>
-            <p class="chart-subtitle">Bars show what percent of the region has very low, low, moderate, high, and severe water limitation</p>
+            <p class="chart-subtitle">Bars show the percent of the region with very low, low, moderate, high, and severe water limitation</p>
           </div>
           <StackedBar 
             categoricalVariable="d3_category"
