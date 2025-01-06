@@ -5,11 +5,11 @@
           <div class="text-container">
                 <p>How we use water varies across the country, including the type of use (for example, crop irrigation, public supply, and thermoelectric power) and the source of water (groundwater versus surface water). Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some urban areas, and withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. </p>
           </div>
-          <div class="image-container">
-            <div class="chart-title-container">
+          <div class="chart-title-container">
             <p class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
             <p class="chart-subtitle">Daily water use in 2020, in million gallons per day</p>
-            </div>
+          </div>
+          <div class="image-container">
           <HorizontalBar 
             categoricalVariable="d3_category"
             continuousRaw="total_use"
@@ -91,7 +91,7 @@
             <p class="chart-subtitle">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
           </div>
           <div class="viz-container">
-            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
+            <Reg class="dumbbell-reg-svg reg-svg" id="svg-style"></Reg>
             <img
                 class="viz-half"
                 id="dumbbells"
@@ -265,7 +265,5 @@ function mouseoutMap(event) {
 
 
 <style scoped>
-.region-map {
-  max-height: 600px;
-}
+
 </style>

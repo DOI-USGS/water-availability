@@ -57,7 +57,7 @@
             <br>
 
               <div class="chart-title-container">
-            <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }}</p>
+            <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} in regions of the lower 48 United States</p>
             <p class="chart-subtitle">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
             <!-- Nutrient Toggle -->
             <ToggleSwitch 
