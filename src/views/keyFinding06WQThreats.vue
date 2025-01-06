@@ -56,10 +56,10 @@
                   <div class="checkbox_wrap">
                     <p class="chart-text">Sort chart by:</p>
                     <label class="chart-text">
-                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water Use
+                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water
                     </label>
                     <label class="chart-text">
-                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption Use
+                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption
                     </label>
                     <label class="chart-text">
                       <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreational Use
