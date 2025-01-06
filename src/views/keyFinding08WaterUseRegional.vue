@@ -47,7 +47,7 @@
               <div class="caption-text-child">
                 <p>Map showing the distribution of modeled water use by category for each watershed (HUC12) in the lower 48 United States. Crop irrigation and public supply are shaded by daily withdrawal for each watershed. The thermoelectric points are scaled to represent daily withdrawals for each watershed where thermoelectric water withdrawal occurs. The bar graph shows the total daily water use for that category for the lower 48 United States. Select a region on the map to view bar graphs for that region [cite VM].  Toggle each category of use on or off from the map.</p>
               </div>
-              <<ToggleSwitch 
+              <ToggleSwitch 
                 v-model="layers.ir_total.visible" 
                 :label="layers.ir_total.label"
                 :rightColor="layers.ir_total.color"

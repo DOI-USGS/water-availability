@@ -6,11 +6,23 @@
                 <p>Water limitation is the balance between supply and demand (water use)<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Annually, water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
-  
         <!-- Supply and Demand dumbell chart -->
         <div class="chart-title-container">
             <p class="chart-title">Water supply vs demand</p>
             <p class="chart-subtitle">Regional estimates in mm/year</p>
+            <!-- Supply and Demand dumbell toggles -->
+             <div class="toggle-group">
+              <ToggleSwitch 
+                v-model="demandEnabled" 
+                rightLabel="Water demand" 
+                :rightColor="'var(--ws-demand)'"
+              />
+              <ToggleSwitch 
+                v-model="supplyEnabled" 
+                rightLabel="Water supply" 
+                :rightColor="'var(--ws-demand)'"
+              />
+            </div>
           </div>
           <DumbellChart 
             :data="data" 
@@ -18,24 +30,14 @@
             v-model:supplyEnabled="supplyEnabled" 
             v-model:demandEnabled="demandEnabled"
           /> 
-          <!-- Supply and Demand dumbell toggles -->
-          <ToggleSwitch 
-            v-model="demandEnabled" 
-            rightLabel="Water demand" 
-            :rightColor="'var(--ws-demand)'"
-          />
-          <ToggleSwitch 
-            v-model="supplyEnabled" 
-            rightLabel="Water supply" 
-            :rightColor="'var(--ws-demand)'"
-          />
-
         <div class="caption-container">
-          <!-- Supply and Demand capation -->
+          <!-- Supply and Demand caption -->
           <div class="caption-text-child">
             <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
           </div>
         </div>
+        <br>
+        <br>
 
         <!-- Regional SUI section -->
         <div class="text-container">
@@ -90,8 +92,9 @@
         />
         </div>
         <!-- SUI category on and off toggles -->
-        <div class="caption-container">
-          <b>Water limitation:</b> 
+        <div class="caption-container-flex caption-container">
+          <div class="toggle-group">
+          <b>Water limitation</b> 
               <!-- Very Low -->
               <ToggleSwitch 
                 v-model="veryLowEnabled" 
@@ -131,11 +134,14 @@
                 :rightColor="layers.severe.color"
                 @update:modelValue="toggleLayer('severe')" 
               />
-              <br/>
-              <div class="caption-text-child">
+              </div>
+              <div class="caption-text-flex caption-text-child">
+                <br>
                 <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
               </div>
         </div>    
+        <br>
+        <br>
          <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>When supply decreases, demand increases</h2>

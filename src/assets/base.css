@@ -274,7 +274,6 @@ a:visited {
   width: 55%;
   min-width: 400px;
   margin: 0 auto;
-  padding-top: 20px;
 }
 /* caption div */
 .caption-text-child {
@@ -283,13 +282,22 @@ a:visited {
   font-weight: 400;
   font-style: italic
 }
+.caption-container-flex {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+.caption-text-flex {
+  flex-grow: 1;
+  max-width: 600px;
+}
 @media only screen and (max-width: 768px) {
   .caption-container {
     display: grid;
     width: 55%;
     min-width: 400px;
     margin: 0 auto;
-    padding-top: 20px;
     grid-gap: 5px;
     grid-template-columns: 1fr;
   }
@@ -316,7 +324,16 @@ a:visited {
     text-align: center;
   }
 }
+.toggle-container {
+  display: flex;
+  align-items: left;
 
+}
+.toggle-group {
+  display: flex;
+  flex-direction : column;
+  flex-shrink: 0;
+}
 .checkbox_wrap {
   display: flex;
   align-items: center;
