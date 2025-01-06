@@ -7,7 +7,7 @@
               <p>Geogenics are the most common contaminants found in drinking water aquifers at elevated or high-concentrations, affecting more than 30 million people in the contiguous United States (Belitz and others, 2022). What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic constituents in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
             </div>
           <div class="chart-title-container">
-              <p class="chart-title">Groundwater drinking contamination levels</p>
+              <p class="chart-title">Groundwater quality in {{ aquiferLabel }}</p>
               <p class="chart-subtitle">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
           </div>
             <div class="map-container">
@@ -114,6 +114,33 @@ const mobileView = isMobile;
 // aquifer map settings
 const defaultRegionID = "overview";
 const imgSrc = ref(getImgURL(defaultRegionID)); 
+let aquiferLabel = "principal aquifers of the lower 48 United States";
+const aquiferCrosswalk = [
+  { abbr: "cacb", name: "CA Coastal Basins"},
+  { abbr: "cval", name: "Central Valley"},
+  { abbr: "clpt", name: "Colorado Plateau"},
+  { abbr: "bnrf", name: "Basin and Range Fill"},
+  { abbr: "bnrc", name: "Basin and Range Carbonates"},
+  { abbr: "copl", name: "Columbia Plateau Basalts"},
+  { abbr: "hpaq", name: "High Plains"},
+  { abbr: "strv1", name: "Stream Valley West"},
+  { abbr: "rgaq", name: "Rio Grande"},
+  { abbr: "edtr", name: "Edwards Trinity"},
+  { abbr: "ozrk", name: "Ozarks"},
+  { abbr: "metx", name: "MS Embayment, TX Coastal Uplands"},
+  { abbr: "secp", name: "Southeast Coastal Plain"},
+  { abbr: "strv2", name: "Stream Valley East"},
+  { abbr: "cmor", name: "Cambrian Ordovician"},
+  { abbr: "glac", name: "Glacial"},
+  { abbr: "vpdc", name: "Valley and Ridge, Piedmont and Blue Ridge"},
+  { abbr: "pied", name: "Piedmont Blue Ridge Crystalline"},
+  { abbr: "nacp", name: "North Atlantic Coastal Plain"},
+  { abbr: "surf", name: "Surficial"},
+  { abbr: "bisc", name: "Biscayne"},
+  { abbr: "flor", name: "Floridan"},
+  { abbr: "clow", name: "Coastal Lowlands"}
+];
+        
 
 // for preview site toggle
 const featureToggles = inject('featureToggles');
@@ -356,12 +383,15 @@ function getImgURL(id) {
 
 function mouseoverMap(event) {
   const regionID = event.target.id;
-  imgSrc.value = getImgURL(regionID)
+  imgSrc.value = getImgURL(regionID);
+  const matchAquifer = aquiferCrosswalk.find(element => element.abbr === regionID)
+  aquiferLabel = "the " + matchAquifer.name + " Aquifer"
 };
 
 function mouseoutMap(event) {
   const regionID = event.target.id;
-  imgSrc.value = getImgURL(defaultRegionID)
+  imgSrc.value = getImgURL(defaultRegionID);
+  aquiferLabel = "principal aquifers of the lower 48 United States"
 };
 
 function mouseleaveWrapper() {
