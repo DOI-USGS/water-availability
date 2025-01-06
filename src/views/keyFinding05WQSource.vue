@@ -25,6 +25,10 @@
                     inactiveColor="grey"
                   />
               </div>
+              <div class="chart-title-container">
+            <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }}</p>
+            <p class="chart-subtitle">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
+            </div>
           <div class="viz-container">
                 <div id="barplot-container">    
                 </div>
@@ -298,7 +302,7 @@ function initBarChart() {
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
-      .style("transform", `translate(${margin.left}px, 70px)`)
+      .style("transform", `translate(${margin.left}px, 0px)`)
 
     // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = chartBounds.append('g')
@@ -335,7 +339,6 @@ function createBarChart({ dataset, scaleLoad}) {
   regionAxis.selectAll(".tick")
     .select("text")
     .attr("x", -80) // shift text to the left to make space for the mini maps
-    .attr("dy", "0.32em")
 
     // load SVG and add it to each tick
     d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
@@ -376,31 +379,6 @@ function createBarChart({ dataset, scaleLoad}) {
     .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
     .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
-
-  // updating title
-  svg.select('.chart-title').remove();
-  svg.append("text")
-    .attr("class", "chart-title")
-    .attr('x', margin.left) 
-    .attr("y", 20)
-    .attr("text-anchor", "start") // anchor to the end of the text
-    .text(`Sources of ${showNitrogen.value ? "Nitrogen" : "Phosphorus"}`); 
-
-  svg.select('.chart-text').remove();
-  svg.append("text")
-    .attr("class", "chart-text")
-    .attr("x", margin.left) 
-    .attr("y", 40) 
-    .attr("text-anchor", "start")
-    .text(scaleLoad.value ? "As a percent of total load" : "Total load in kg/year");
-
-  svg.append("text")
-    .attr("class", "chart-subtitle")
-    .attr('x', margin.left)
-    //.attr("x", containerWidth - margin.right-100) 
-    .attr("y", (margin.top/2) + 10)
-    .attr("text-anchor", "start") // anchor to the end of the text
-    .text("Bars show what portion of the region's nutrient loads come from varying sources"); 
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
