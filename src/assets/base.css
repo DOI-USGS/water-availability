@@ -334,11 +334,7 @@ a:visited {
   flex-direction : column;
   flex-shrink: 0;
 }
-.checkbox_wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+
   .checkbox_item .checkbox_wrap{
     cursor: pointer;
   }
@@ -352,24 +348,12 @@ a:visited {
 	opacity: 0;
 	z-index: 1;
 }
-.legend_item .legend_wrap .legend_mark,
-.checkbox_item .checkbox_wrap .checkbox_mark{
-	display: inline-block;
-	position: relative;
-}
-
-.checkbox_item .checkbox_wrap .checkbox_mark:before,
-.checkbox_item .checkbox_wrap .checkbox_mark:after{
-	content: "";
-	position: absolute;
-	transition: all 0.5s ease;
-}
 /* flat styles */
 .legend_item .legend_wrap .legend_mark,
 .checkbox_item .checkbox_wrap .checkbox_mark{  /* when layer is on */
   border: 2px solid cyan;
-	width: 40px;
-	height: 22px;
+	width: 30px;
+	height: 30px;
 	padding: 1px;
 }
 .checkbox_item .checkbox_wrap .checkbox_mark:before{ /* when layer is on */
@@ -378,6 +362,14 @@ a:visited {
   width: 16px;
   height: 16px;
   border-radius: 16px;
+}
+.color-legend-single {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
 }
   .legend_item .legend_wrap .legend_mark {
     border-radius: 1px;
