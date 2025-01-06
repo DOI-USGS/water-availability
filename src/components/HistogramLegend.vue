@@ -60,14 +60,13 @@ function setupSVG() {
 
 // Initialize Legend
 function initLegend(data) {
-  const { colors } = props.layerPaths;
 
   // Sort data
   const sortedData = processData(data);
 
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
-    .range(colors)
+    .range(props.layerPaths.colors)
 
     const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
@@ -122,9 +121,8 @@ function initLegend(data) {
 
 // Update Legend
 function updateLegend(data) {
-  
-  const { colors } = props.layerPaths;
-  const sortedData = data;
+ 
+  const sortedData = processData(data);
 
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
@@ -138,7 +136,7 @@ function updateLegend(data) {
 
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
-    .range(colors)
+    .range(props.layerPaths.colors)
 
   svg.selectAll('rect')
     .data(sortedData, d => cleanLabel(d.category))
