@@ -2,15 +2,13 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-          
-            <div  class="text-container">
-              <h2>Groundwater quality</h2>
-              <p>Water availability for human and ecological use may be limited by elevated concentrations of various contaminants in surface water and groundwater. The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic nutrient concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
+          <div  class="text-container">
+              <h2>Naturally occurring contaminants in groundwater</h2>
+              <p>Geogenics are the most common contaminants found in drinking water aquifers at elevated or high-concentrations, affecting more than 30 million people in the contiguous United States (Belitz and others, 2022). What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic constituents in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
             </div>
-            
           <div class="chart-title-container">
               <p class="chart-title">Groundwater drinking contamination levels</p>
-              <p class="chart-subtitle">Pie charts show the proportion of each aquifer with levels that exceed human-health guidelines for 16 drinking water contaminants</p>
+              <p class="chart-subtitle">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
           </div>
             <div class="map-container">
               <img class="map-overlay" 
@@ -43,12 +41,31 @@
                 </div>
               </div>
               <div class="caption-text-child">
-                <p>Pie charts showing the overall groundwater quality in principal aquifers of the lower 48 United States (cite chapter). The values shown in the pie chart represent the proportion of the aquifer under three categories of water quality relative to the human-health benchmark for drinking water. For this analysis, 16 contaminants were analyzed, including arsenic, manganese, lead, and nitrate. (cite chapter). Results for selected individual constituents are also accessible in an interactive searchable map (link).</p>
+                <p>Groundwater quality relative to the human-health benchmark for drinking water. For each principal aquifer in the lower 48 United States (cite chapter), a pie chart shows the proportion of the aquifer with contaminant levels for 16 total contaminants (including arsenic, manganese, lead, and nitrate). To explore individual constituents see these online maps (link).</p>
               </div>
             </div>
+            <div class="text-container" >
+              <h2 class="spacer" style="padding-top:50px">Surface water impairment varies by use</h2>
+              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
+            </div>
+
             <div class="chart-title-container">
             <p class="chart-title">Top threats to surface water</p>
-            <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired (CITE data)</p>
+            <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired</p>
+            <div class="checkbox_item">
+                  <div class="checkbox_wrap">
+                    <p class="chart-text">Sort chart by:</p>
+                    <label class="chart-text">
+                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water Use
+                    </label>
+                    <label class="chart-text">
+                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption Use
+                    </label>
+                    <label class="chart-text">
+                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreational Use
+                    </label>
+                  </div>
+                </div>
           </div>
           <div class="viz-container">
             <div id="heatmap-svg"></div>
@@ -56,38 +73,15 @@
                     <!-- Category of use -->
           
             <div class="caption-container">
-              <div class="checkbox_item">
-                  <div class="checkbox_wrap">
-                    <p class="toggle-text">Sort chart by:</p>
-                    <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water Use
-                    </label>
-                    <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption Use
-                    </label>
-                    <label class="toggle-text">
-                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreational Use
-                    </label>
-                  </div>
-                </div>
-
               <div class="caption-text-child">
-                <p>Heatmap showing the proportion of river miles that are threatened by different categories of contamination. Darker fills represent a higher proportion of river miles threatened by that source. Select a column name to short the rectangles from highest proportion to lowest for that category of use.</p>
+                <p>Heatmap of the top threats to drinking water, fish consumption, and recreational use. Chart fill and percentages show the percent of river miles that are threatened by each contaminant. Darker fill indicates a higher degree of threat by that source. Data are from (CITE DATA).</p>
                 <br>
               </div>
             </div>
             <div class="text-container">
-              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
-              <h4>Threats to surface water from metals</h4>
-              <p>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels.</p>
-              <br>
-              <p>Mercury can harm aquatic organisms and limit the amount of fish and other aquatic species that are safe for humans to eat. Mercury has geogenic sources (volcanoes, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. Young children and developing fetuses are particularly vulnerable to mercury exposure through fish consumption. </p>
-              <h4>Threats to surface water from salinity</h4>
-              <p>Salinity is sourced from natural sources, such as groundwater, saline springs, and rock formations, as well as by human sources, such as irrigation, urbanization, pasture, and road deicers. Salinity can cause considerable local issues for human beneficial uses and ecosystem needs. Over one-third of the drainage area of the lower 48 states has experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal et al., 2018; Cañedo-Argüelles, 2020). Trend assessments at many sites across the United States show increasing salinity over time, particularly in urban areas, and at concentrations that indicate potential corrosion of drinking-water infrastructure (Stets et al. 2020).</p>
-              <h4>Threats to surface water from PCBs</h4>
-              <p>PCBs are endocrine-disrupting compounds that were once commonly used in industry and commercial products and are associated a wide range of human-health risks. PCBs are persistent in the environment and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou et al., 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption. Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites and hydrologically connected locations. About 30% of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou et al., 2022).</p>
-              <h4>Threats to surface water from pathogens</h4>
-              <p>Microbial pathogens like bacteria primarily threaten human health through ingestion and recreational activities like swimming (U.S. Environmental Protection Agency, 2023c). Bacteria can originate from natural or human activities that cause contamination including wastewater treatment plant discharge, leaky septic systems, stormwater runoff, animal waste, and runoff from animal pastures, feedlots, or manure storage (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Each year in the United States, an estimated 560,000 people suffer from moderate-to-severe waterborne infection and an estimated 1,200 people die from waterborne infections (Morris and Levine, 1995). Young children are particularly vulnerable to waterborne diseases.</p>
+              
+              <p>Surface water quality faces threats from metals, salinity, chemicals, and pathogens. Metals like iron, arsenic, and mercury come from natural sources such as rocks and soil but can also enter water through mining, farming, and industry (US EPA, 2023). Too much salt, caused by natural processes and human activities (like irrigation and road deicers) can harm ecosystems and damage water pipes (Stets et al. 2020). Harmful chemicals called PCBs were banned years ago, however they still remain in rivers and lakes. PCBs build up in aquatic organisms, through food webs, accumulate in fish, and pose health risks to humans through fish consumption (Ngoubeyou et al., 2022). Pathogens from wastewater, animal waste, and storm runoff can cause illnesses (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Protecting surface water is important for safe drinking water, healthy ecosystems, and public health.</p>
+          
             </div>
               <Methods></Methods>
               <References :theseReferences="referenceList"></References>
@@ -147,7 +141,7 @@ let svg;
 
 // chart dimensions
 const width = mobileView ? 400 : 700;
-const height = 700;
+const height = 650;
 
 // Run of show
 onMounted(async () => {
@@ -161,7 +155,7 @@ onMounted(async () => {
                     width: width,
                     height: height,
                     margin: {
-                        top: mobileView ? 60 : 50,
+                        top: mobileView ? 30 : 30,
                         right: mobileView ? 10 : 10,
                         bottom: mobileView ? 0 : 0,
                         left: mobileView ? 145 : 145
@@ -176,7 +170,6 @@ onMounted(async () => {
                   dataset: dataDW.value.concat(dataFish.value, dataRec.value),
                   sortBy: 'DW'
                 });
-                updateHeatmap();
 
               } else {
                 console.error('Error loading data');
@@ -196,7 +189,7 @@ async function loadDatasets() { // Created from R pipeline
     dataDW.value = await loadData('wq_threats_DW.csv');
     dataRec.value = await loadData('wq_threats_Rec.csv');
     dataFish.value = await loadData('wq_threats_Fish.csv');
-    console.log('data in');
+
   } catch (error) {
     console.error('Error loading datasets', error);
   }
@@ -255,7 +248,7 @@ function initHeatmap({dataset, sortBy}) {
 
   const yScale = d3.scaleBand()
     .domain(sortRank.map(d => d.Parameter)) // uses rank based on selected use
-    .range([chartDimensions.boundedHeight, chartDimensions.margin.top])
+    .range([chartDimensions.height-chartDimensions.margin.bottom, chartDimensions.margin.top])
     .padding(0.1);
 
   const yAxis = d3.axisLeft(yScale)
@@ -321,7 +314,8 @@ function initHeatmap({dataset, sortBy}) {
         .attr("transform", `translate(0,${chartDimensions.margin.top})`)
         .call(d3.axisTop(xScale).ticks(3))
         .call(g => g.select(".domain").remove())
-        .attr("class", "chart-text");
+        .attr("class", "chart-text")
+        .style('font-weight', '700');
 
     svg.select("#y-axis").remove();
 
@@ -335,11 +329,6 @@ function initHeatmap({dataset, sortBy}) {
     
 
 }
-// Enter update for sorting
-function updateHeatmap() {
-  console.log("update called")
-}
-
 
 // Methods for aquifer map
 function addInteractions() {
