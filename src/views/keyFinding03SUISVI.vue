@@ -3,15 +3,15 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-              <p>About 8% of the CONUS population, or 26.7 million people, live in areas of high or severe water limitation. The availability of clean water for our communities is affected by hydrologic factors like water quantity, quality, and flow, to social factors like water infrastructure, access, and rights.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> Socioeconomic status and access to resources and public services can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
+              <p>About 26.7 million people, or 8% of the population, live in areas of high or severe water limitation. The availability of clean water for our communities is affected by hydrologic factors like water quantity, quality, and flow, as well as social factors like water infrastructure, access, and rights.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> Socioeconomic status and access to resources and public services can determine a community's adaptive capacity, and ultimately how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
             </div>
 
             <div class="chart-title-container">
-              <p class="chart-title">Social vulnerability and water limitation</p>
+              <p class="chart-title">How does social vulnerability compare to water limitation?</p>
               <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
             <div class="viz-container">
-              <img class="viz-portrait viz-scaled" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_CONUS.png">
+              <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_CONUS.png">
             </div>
             <div class="caption-container-flex caption-container">
               <div class="legend-group">
@@ -29,11 +29,11 @@
             <br>
             <div class="text-container">
                 <h2>Social vulnerability is disproportionately high in areas of water limitation</h2>
-                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities, where societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). </p>
+                <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities. Societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses (Drakes et al., 2024; Meehan et al., 2020; Mueller and Gasteyer, 2021; Scanlon et al., 2023). </p>
             </div>
             <div class="chart-title-container">
               <p class="chart-title">Social vulnerability and water limitation</p>
-              <p class="chart-subtitle">Bars show the proportion of the population living in varying levels of water limitation by social vulnerability classification. </p>
+              <p class="chart-subtitle">Bars show the proportion of the population living in varying levels of water limitation for each social vulnerability classification. </p>
             </div>
             <div class="text-container">
               <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_bar.png">
@@ -46,7 +46,7 @@
             <br>
             <div class="text-container">
                 <h2>Water quality also disproportionately limits water availability in socially vulnerable households</h2>
-                <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable (Erickson2025xxx). For example, the proportion of individuals with the highest levels of social vulnerability increases as the concentrations of total nitrogen and total phosphorus in streams goes up. While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain higher proportions of socially vulnerable individuals. These areas are relatively limited in spatial extent and have high population density, which emphasizes the impacts of highly developed, human-dominated watersheds to human health and wellbeing.</p>
+                <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable (Erickson2025xxx). For example, the proportion of individuals with the highest levels of social vulnerability increases as the concentrations of total nitrogen and total phosphorus in streams goes up. While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain higher proportions of socially vulnerable individuals. </p>
             </div>
             <br>
         <Methods></Methods>
