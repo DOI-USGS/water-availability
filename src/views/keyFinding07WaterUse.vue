@@ -4,8 +4,16 @@
     <div class="content-container">
       <div class="text-container">
         <p>
-          An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability. Around 90% of daily water use in the United States goes toward public supply, agriculture, and thermoelectric power generation. Most of our daily water use is for crop irrigation followed by fresh water used in the process of creating energy from thermoelectric power plants. Along with public supply, where water is withdrawn or purchased by a water supplier and delivered to many users, these three uses of water add up to 224,000 million gallons of water used per day in the United States. Thermoelectric power (from saline water) uses another approximately 21,000 million gallons per day. 
-        </p>
+          An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability.</p>
+          <br>
+          <b>Around 90% of daily water use in the United States goes toward:</b>
+          <ul>
+            <li>Crop irrigation</li>
+            <li>Freshwater used in the process of creating energy from thermoelectric power plants</li>
+            <li>Public supply, where water is withdrawn or purchased by a water supplier and delivered to many users</li>
+          </ul>
+          <br>
+        <p>These three uses add up to 224,000 million gallons of water per day. In addition, thermoelectric power from saline water uses another approximately 21,000 million gallons of water per day. </p>
       </div>
       <div class="chart-title-container">
             <p class="chart-title">Average daily water use</p>
@@ -55,7 +63,7 @@
       </div>
       <br>
       <div class="text-container">
-        <p>Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across the lower 48 United States, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power. </p>
+        <p>Water that does not return to local water bodies or groundwater is called "consumptive loss." Consumptive loss includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Only 28% of water used for irrigation returns to the environment, because much of the water is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) returned to the local environment eventually. </p>
       </div>
       <br>
       <br>
