@@ -41,7 +41,7 @@ export default {
           },
           {
             header: "Calculating social vulnerability",
-            description: "The Centers for Disease Control 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water limitation (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan et al., 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were defined such that values less than 0.4 indicate low vulnerability, values between 0.4 and 0.6 indicate medium vulnerability, and values greater than 0.6 indicate high vulnerability.",
+            description: "The Centers for Disease Control 2020 Social Vulnerability Index (SVI) was used to examine the relationship between socioeconomic factors and water limitation (Centers for Disease Control, 2022). The SVI includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan et al., 2011). The SVI provides a percentile ranking of all census tracts on a scale from 0 to 1 where higher values across all rankings indicate higher vulnerability. Categories of social vulnerability were defined such that values less than 0.25 indicate low vulnerability, values between 0.25 and 0.5 indicate moderate vulnerability, values between 0.5 and 0.75 indicate high social vulnerability, and values greater than 0.75 indicate high vulnerability.",
           }
         ]
       },      {

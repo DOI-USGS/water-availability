@@ -23,7 +23,7 @@
           <ToggleSwitch 
             v-model="supplyEnabled" 
             rightLabel="Water supply" 
-            :rightColor="'var(--ws-supply)'"
+            :rightColor="'var(--ws-demand)'"
           />
 
         <div class="caption-container">
@@ -87,7 +87,7 @@
               <!-- Very Low -->
               <ToggleSwitch 
                 v-model="veryLowEnabled" 
-                rightLabel="Very low" 
+                rightLabel="Very low (0 - 0.2)" 
                 :rightColor="layers.very_low_none.color"
                 @update:modelValue="toggleLayer('very_low_none')" 
               />
@@ -95,7 +95,7 @@
               <!-- Low -->
               <ToggleSwitch 
                 v-model="lowEnabled" 
-                rightLabel="Low" 
+                rightLabel="Low (0.2 - 0.4)" 
                 :rightColor="layers.low.color"
                 @update:modelValue="toggleLayer('low')" 
               />
@@ -103,7 +103,7 @@
               <!-- Moderate -->
               <ToggleSwitch 
                 v-model="moderateEnabled" 
-                rightLabel="Moderate" 
+                rightLabel="Moderate (0.4 - 0.6)" 
                 :rightColor="layers.moderate.color"
                 @update:modelValue="toggleLayer('moderate')" 
               />
@@ -111,7 +111,7 @@
               <!-- High -->
               <ToggleSwitch 
                 v-model="highEnabled" 
-                rightLabel="High" 
+                rightLabel="High (0.6 - 0.8)" 
                 :rightColor="layers.high.color"
                 @update:modelValue="toggleLayer('high')" 
               />
@@ -119,7 +119,7 @@
               <!-- Severe -->
               <ToggleSwitch 
                 v-model="severeEnabled" 
-                rightLabel="Severe" 
+                rightLabel="Severe (0.8 - 1.0)" 
                 :rightColor="layers.severe.color"
                 @update:modelValue="toggleLayer('severe')" 
               />

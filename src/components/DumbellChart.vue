@@ -168,7 +168,7 @@ const drawChart = () => {
     .attr('cx', d => xScale(d.supply_mean))
     .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
     .attr('r', 5)
-    .attr('fill', 'var(--ws-supply)');
+    .attr('fill', 'var(--ws-demand)');
 
   // circles for demand
   chartBounds.selectAll('.circle-demand')
