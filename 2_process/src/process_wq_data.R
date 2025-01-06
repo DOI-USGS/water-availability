@@ -54,7 +54,10 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
                                Use == "Fish Consumption Use" ~ "Fish",
                                Use == "Other Use" ~ "Other")) |>
     filter(Parameter != "Unimpaired") |>
-    arrange(riverMiles) 
+    arrange(riverMiles) |>
+    mutate(Use = case_when(Use == "Drinking Water Use" ~ "Drinking Water",
+                           Use == "Fish Consumption Use" ~ "Fish Consumption",
+                           TRUE ~ Use))
   
   return(out_data)
   
