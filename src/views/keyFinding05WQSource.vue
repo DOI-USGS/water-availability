@@ -81,14 +81,8 @@
                 </p>
             </div>
             <div class="image-container">
-              <ToggleSwitch 
-                v-model="showNitrogen" 
-                leftLabel="Phosphorus" 
-                rightLabel="Nitrogen" 
-                rightColor="black"
-                leftColor="black"
-              />
             <RegionMap 
+            class="region-map"
               @regionSelected="updateSelectedRegion"
               :layerVisibility="{
                 nitrogen: layers.nitrogen.visible,
@@ -109,6 +103,13 @@
             <div class="chart-title-container">
             <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
             <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
+            <ToggleSwitch 
+                v-model="showNitrogen" 
+                leftLabel="Phosphorus" 
+                rightLabel="Nitrogen" 
+                rightColor="black"
+                leftColor="black"
+              />
             </div>
             <HistogramLegend 
               :layerPaths="legendConfig"
@@ -509,7 +510,9 @@ watch([selectedRegion], filterRegionData)
   margin: auto; 
   overflow: hidden;
 }
-
+.region-map {
+  height: 600px;
+}
 @media only screen and (max-width: 768px) {
   #barplot-container {
     width: 100%; 
