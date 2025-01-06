@@ -13,7 +13,7 @@ export default {
             route: '/02-water-availability',
             mainTitle: 'Limits on water availability',
             shortTitle: 'Water availability is affected by water quantity, quality, and flow',
-            keyMessage: 'Many areas of the US show high or severe limitation in multiple aspects of water availability.',
+            keyMessage: 'Many areas of the lower 48 United States show high or severe limitation in multiple aspects of water availability.',
             references: [
                 "VanMetre2020", 
                 "Stets2025", 
@@ -85,7 +85,7 @@ export default {
             page: 6,
             route: '/06-water-quality',
             mainTitle: 'Threats to water quality',
-            shortTitle: 'Water quality issues can potentially affect human and aquatic health',
+            shortTitle: 'Water quality issues can affect human and aquatic health',
             keyMessage: 'Drinking water, fish consumption, and recreational water use face different water quality threats.',
             references: [
                 "VanMetre2020", "Erickson2025",

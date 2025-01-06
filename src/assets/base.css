@@ -191,13 +191,8 @@ a:visited {
   font-weight: 700;
   fill: var(--color-text);
 }
-.chart-subtitle {
-  font-size: 1.25rem;
-  font-family: var(--default-font);
-  font-weight: 400;
-  fill: var(--color-text);
-}
-.chart-text, .category-label, .value-label {
+
+.chart-text, .category-label, .value-label, .chart-subtitle {
   font-size: 1rem; /* same as regular text */
   font-family: var(--default-font);
   font-weight: 400;

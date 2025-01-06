@@ -31,19 +31,36 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
                                  TRUE ~ Parameter)) |>
     mutate(Category = case_when(Category == "Metals and Physical" ~ "Metals",
                                 TRUE ~ Category)) |>
-    mutate(Parameter = case_when(Parameter == "Metals Other than Mercury" ~ "Other Metals",
+    mutate(Parameter = case_when(Parameter == "Metals Other than Mercury" ~ "Non-Mercury Metals",
                                  TRUE ~ Parameter)) |>
+    mutate(d3parameterMatch = stringr::str_replace_all(Parameter, " ", ""),
+           d3parameterMatch = stringr::str_replace_all(d3parameterMatch, "/", "")) |>
     # order the columns -- 
     #     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #     NOTE: Changing these can affect the sankey plot in keyfinding06WQThreats.vue
-    select(Use, Category, Parameter, riverMiles) |>
+    select(Use, Category, Parameter, riverMiles, d3parameterMatch, percentMiles) |>
+    bind_rows(tibble(
+      Use = "Fish Consumption Use",
+      Parameter = "Biotoxins",
+      Category = "Biotics",
+      riverMiles = 0,
+      percentMiles = 0,
+      d3parameterMatch = "Biotics"
+    )) |>
     # add abbreviation for split() function to write to csv
     mutate(UseAbbr = case_when(Use == "Drinking Water Use" ~ "DW",
                                Use == "Ecological Use" ~ "Eco",
                                Use == "Recreational Use" ~ "Rec",
                                Use == "Fish Consumption Use" ~ "Fish",
                                Use == "Other Use" ~ "Other")) |>
-    arrange(-riverMiles)
+    filter(Parameter != "Unimpaired") |>
+    arrange(riverMiles) |>
+    mutate(Use = case_when(Use == "Drinking Water Use" ~ "Drinking Water",
+                           Use == "Fish Consumption Use" ~ "Fish Consumption",
+                           TRUE ~ Use))
+  
+  return(out_data)
+  
 }
 
 summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state")){

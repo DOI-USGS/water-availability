@@ -3,7 +3,7 @@
     <div class="wavy-container">
       <div class="title-message-container">
         <h2 id="main-title">Water availability in the United States</h2>
-        <p class="byline">Powered by the <a class="byline-a" href="https://labs.waterdata.usgs.gov/visualizations" target="_blank">USGS Vizlab</a></p>
+        <p class="byline">Powered by the <a class="byline-a" href="https://labs.waterdata.usgs.gov/visualizations/" target="_blank">USGS Vizlab</a></p>
       </div>
       <section>
         <div class="waves">
