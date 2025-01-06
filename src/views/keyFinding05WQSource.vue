@@ -106,6 +106,10 @@
               layerY="-11"
 
             />
+            <div class="chart-title-container">
+            <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
+            <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
+            </div>
             <HistogramLegend 
               :layerPaths="legendConfig"
               :data="legendData"
@@ -169,7 +173,7 @@ const dataSet1 = ref([]);
 const dataSet2 = ref([]); 
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
-const selectedRegion = ref('United States'); // default region
+const selectedRegion = ref('lower 48 United States'); // default region
 
 
 // References logic

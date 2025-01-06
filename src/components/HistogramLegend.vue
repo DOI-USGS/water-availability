@@ -109,14 +109,6 @@ function initLegend(data) {
     return `translate(${xScale(d)}, 0)`;
   });
 
-  // add x-axis title below chart title
-  svg.append('text')
-    .attr('class', 'chart-subtitle')
-    .attr('x', -5) 
-    .attr('y', 40) 
-    .attr('text-anchor', 'start') 
-    .text(`Total nutrient load (kg/yr) by area`); 
-
 
 // add y-axis
  const axisRight = d3.axisRight(yScale).ticks(3).tickFormat(d => `${d * 100}%`).tickSize(3);
@@ -126,16 +118,6 @@ function initLegend(data) {
     .attr('transform', `translate(${width-40}, 0)`)
     .call(axisRight) 
 
-  const displayTitle = props.regionName === 'lower 48 United States' ? props.regionName : `${props.regionName} Region`;
-
-  svg.selectAll('.chart-title')
-    .data([displayTitle])
-    .join(
-      enter => enter.append('text')
-        .attr('class', 'chart-title')
-        .attr('x', -5)
-        .attr('y', 20)
-        .text(`${props.layerPaths.name} concentrations in the ${displayTitle}`))
 }
 
 // Update Legend
@@ -208,27 +190,6 @@ function updateLegend(data) {
     });
 
 
-  // update chart title
-  const displayTitle = props.regionName === 'lower 48 United States' ? props.regionName : `${props.regionName} Region`;
-
-  svg.selectAll('text.chart-title')
-    .data([displayTitle])
-    .join(
-      enter => enter.append('text')
-        .attr('class', 'chart-title')
-        .attr('x', -5)
-        .attr('y', 20)
-        .text(`${props.layerPaths.name} concentrations in the ${displayTitle}`),
-      update => update.transition().duration(750).text(`${props.layerPaths.name} concentrations in the ${displayTitle}`)
-    );
-    d3.select('.chart-text').remove()
-  // add x-axis title below chart title
-  svg.append('text')
-    .attr('class', 'chart-text')
-    .attr('x', -5) 
-    .attr('y', 40) 
-    .attr('text-anchor', 'start') 
-    .text(`Total nutrient load (kg/yr) by area`); 
 }
 
 // Process Data
