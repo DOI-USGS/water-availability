@@ -86,41 +86,11 @@
 
             <div class="caption-container">
                 <div class="caption-legend-child">
-                <div class="legend_item" id="legend-wq-agriculture" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Agriculture
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-air" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Air pollution
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-wastewater" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Wastewater
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-human" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Other human sources
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-natural" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Natural sources
-                  </label>
-                </div>
+                  <ColorLegend legend-id="legend-wq-agriculture" label="Agriculture" color="var(--wq-agriculture)" />
+                  <ColorLegend legend-id="legend-wq-air" label="Air pollution" color="var(--wq-air)" />
+                  <ColorLegend legend-id="legend-wq-wastewater" label="Wastewater" color="var(--wq-wastewater)" />
+                  <ColorLegend legend-id="legend-wq-human" label="Other human sources" color="var(--wu-ps)" />
+                  <ColorLegend legend-id="legend-wq-natural" label="Natural sources" color="var(--wq-natural)" />
               </div>
               <div class="caption-text-child">
                 <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States (cite van meter). Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
@@ -157,6 +127,7 @@ import { isMobile } from 'mobile-device-detect';
 import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import HistogramLegend from '../components/HistogramLegend.vue';
+import ColorLegend from '../components/ColorLegend.vue';
 
 // use for mobile logic
 const mobileView = isMobile;
