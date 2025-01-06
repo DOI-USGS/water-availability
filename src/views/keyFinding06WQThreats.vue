@@ -44,6 +44,10 @@
                 <p>Groundwater quality relative to the human-health benchmark for drinking water. For each principal aquifer in the lower 48 United States (cite chapter), a pie chart shows the proportion of the aquifer with contaminant levels for 16 total contaminants (including arsenic, manganese, lead, and nitrate). To explore individual constituents see these online maps (link).</p>
               </div>
             </div>
+            <div  class="text-container">
+              <h2>Surface water impairment varies by use</h2>
+              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
+            </div>
 
             <div class="chart-title-container">
             <p class="chart-title">Top threats to surface water</p>
@@ -75,17 +79,9 @@
               </div>
             </div>
             <div class="text-container">
-              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
-              <h4>Threats to surface water from metals</h4>
-              <p>Iron, selenium, arsenic, lead, and copper are the top non-mercury metals impairing rivers and streams across the United States (US EPA, 2023). These types of metals occur naturally in surface water from geogenic sources such as rock weathering and soil erosion. Human activities like mining, urban runoff, wastewater, fertilizer and pesticide use, fuel combustion, and nuclear reactions can also add substantial volumes of metals to the environment above background levels.</p>
-              <br>
-              <p>Mercury can harm aquatic organisms and limit the amount of fish and other aquatic species that are safe for humans to eat. Mercury has geogenic sources (volcanoes, hot springs, geologic deposits, and the ocean) and anthropogenic sources (industrial processes, mining, and coal combustion). Dispersion of mercury through the atmosphere has resulted in widespread occurrence of mercury in the environment. Young children and developing fetuses are particularly vulnerable to mercury exposure through fish consumption. </p>
-              <h4>Threats to surface water from salinity</h4>
-              <p>Salinity is sourced from natural sources, such as groundwater, saline springs, and rock formations, as well as by human sources, such as irrigation, urbanization, pasture, and road deicers. Salinity can cause considerable local issues for human beneficial uses and ecosystem needs. Over one-third of the drainage area of the lower 48 states has experienced salinization, primarily in the populated Northeast through Midwest aggregated hydrologic regions (Kaushal et al., 2018; Cañedo-Argüelles, 2020). Trend assessments at many sites across the United States show increasing salinity over time, particularly in urban areas, and at concentrations that indicate potential corrosion of drinking-water infrastructure (Stets et al. 2020).</p>
-              <h4>Threats to surface water from PCBs</h4>
-              <p>PCBs are endocrine-disrupting compounds that were once commonly used in industry and commercial products and are associated a wide range of human-health risks. PCBs are persistent in the environment and can bioaccumulate in aquatic organisms and food webs (Ngoubeyou et al., 2022), leading to concerns for ecological and recreational uses and hazards to human health through fish consumption. Although PCBs were prohibited decades ago, PCB contamination can be common in industrial sites and hydrologically connected locations. About 30% of the historical worldwide production of PCBs is still present in aquatic ecosystems, sediments, and aquatic food webs (Ngoubeyou et al., 2022).</p>
-              <h4>Threats to surface water from pathogens</h4>
-              <p>Microbial pathogens like bacteria primarily threaten human health through ingestion and recreational activities like swimming (U.S. Environmental Protection Agency, 2023c). Bacteria can originate from natural or human activities that cause contamination including wastewater treatment plant discharge, leaky septic systems, stormwater runoff, animal waste, and runoff from animal pastures, feedlots, or manure storage (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Each year in the United States, an estimated 560,000 people suffer from moderate-to-severe waterborne infection and an estimated 1,200 people die from waterborne infections (Morris and Levine, 1995). Young children are particularly vulnerable to waterborne diseases.</p>
+              
+              <p>Surface water quality faces threats from metals, salinity, chemicals, and pathogens. Metals like iron, arsenic, and mercury come from natural sources such as rocks and soil but can also enter water through mining, farming, and industry (US EPA, 2023). Too much salt, caused by natural processes and human activities (like irrigation and road deicers) can harm ecosystems and damage water pipes (Stets et al. 2020). Harmful chemicals called PCBs were banned years ago, however they still remain in rivers and lakes. PCBs build up in aquatic organisms, through food webs, accumulate in fish, and pose health risks to humans through fish consumption (Ngoubeyou et al., 2022). Pathogens from wastewater, animal waste, and storm runoff can cause illnesses (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Protecting surface water is important for safe drinking water, healthy ecosystems, and public health.</p>
+          
             </div>
               <Methods></Methods>
               <References :theseReferences="referenceList"></References>
