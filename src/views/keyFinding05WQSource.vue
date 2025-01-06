@@ -155,14 +155,11 @@ const route = useRoute();
 const publicPath = import.meta.env.BASE_URL;
 
 // Chart dimensions
-let svg;
 const containerWidth = 700; 
 const maxHeight = 900; 
-const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-const width = containerWidth + margin.left + margin.right;
-const height = Math.min(window.innerHeight * 0.7, maxHeight) - margin.top - margin.bottom;
-let chartBounds, rectGroup;
-let nutrientScale;
+const margin = { top: 50, right: 50, bottom: 50, left: 250 };
+let svg, chartBounds, rectGroup, nutrientScale;
+let width, height;
 
 // Reactive data elements
 const scaleLoad = ref(true);
@@ -174,6 +171,7 @@ const dataSet2 = ref([]);
 const selectedDataSet = ref('dataSet1');
 const data = ref([]);
 const selectedRegion = ref('United States'); // default region
+
 
 // References logic
 // filter to this page's key message
@@ -239,6 +237,7 @@ onMounted(async () => {
               dataset: data.value,
               scaleLoad: scaleLoad.value
             });
+            observeResize();
         } else {
             console.error('Error loading data');
         }
@@ -287,6 +286,12 @@ function updateSelectedRegion(regionName) {
 /////// WQ source bar chart
 // init chart svg
 function initBarChart() {
+
+  const container = document.getElementById('barplot-container');
+  const containerWidth = container.clientWidth;
+  width = containerWidth - margin.left - margin.right;
+  height = Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
+
     // remove any existing SVG before redrawing
     d3.select('#barplot-container').select('svg').remove();
 
@@ -294,15 +299,16 @@ function initBarChart() {
     svg = d3.select('#barplot-container')
       .append('svg')
       .attr('class', 'barplotSVG')
-      .attr('viewBox', `0 0 ${containerWidth+margin.right} ${maxHeight}`)
+      .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
       .style('width', '100%')
-      .style('max-height', `${maxHeight}px`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      //.style('max-height', `${maxHeight}px`)
       .style('height', 'auto');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
       .attr('id', 'wrapper')
-      .style("transform", `translate(${margin.left}px, 0px)`)
+      .style("transform", `translate(${margin.left}, ${margin.top})`)
 
     // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = chartBounds.append('g')
@@ -321,19 +327,20 @@ function createBarChart({ dataset, scaleLoad}) {
 
   const regionScale = d3.scaleBand()
     .domain(orderedRegions)
-    .range([height, 0])
+    .range([height, margin.top])
     .padding(0.1);
 
   nutrientScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-    .range([0, width]);
+    .range([margin.left, width]);
 
   chartBounds.selectAll(".axis-text").remove();
 
   // region axis
   const regionAxis = chartBounds.append('g')
     .call(d3.axisLeft(regionScale))
-    .attr('class', 'axis-text');
+    .attr('class', 'axis-text')
+    .attr('transform', `translate(${margin.left}, 0)`);
 
   // adding maps
   regionAxis.selectAll(".tick")
@@ -376,7 +383,7 @@ function createBarChart({ dataset, scaleLoad}) {
 
   // x-axis at the top
   chartBounds.append('g')
-    .attr('transform', 'translate(0, 0)') // positioned at y = 0 (top of the chart)
+    .attr('transform', `translate(0, ${margin.top})`) // positioned at y = 0 (top of the chart)
     .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
@@ -421,12 +428,28 @@ function createBarChart({ dataset, scaleLoad}) {
     );
 }
 
-// update x-axis labels with toggles
-function updateLabels() {
+// dynamic scaling based on container width
+const resizeChart = () => {
+  const container = document.getElementById('barplot-container');
+  const containerWidth = container.clientWidth;
 
-  svg.select(".chart-text")
-    .text(scaleLoad.value ? "Total load in kg/year" : "As a percent of total load");
-}
+  // dynamically adjust width and height
+  width = containerWidth - margin.left - margin.right;
+  height = Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
+
+  // update svg viewBox
+  svg.attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
+     .attr('preserveAspectRatio', 'xMidYMid meet');
+
+  // redraw chart
+  createBarChart({ dataset: dataset.value, scaleLoad: scaleLoad.value });
+};
+// handle resize
+const observeResize = () => {
+  const resizeObserver = new ResizeObserver(() => resizeChart());
+  resizeObserver.observe(document.getElementById('barplot-container'));
+};
+
 
 // COMPUTED VARIABLES 
 // compute legendConfig dynamically based on the toggle
@@ -445,7 +468,6 @@ watch(scaleLoad, (newValue) => {
     dataset: data.value,
     scaleLoad: newValue // dynamically pass the toggle state
   });
-  updateLabels()
 
 
 });
@@ -461,7 +483,6 @@ watch(showNitrogen, async (newValue) => {
     scaleLoad: scaleLoad.value 
   });
 
-  updateLabels()
 
   // toggle map layer visibility based on the nutrient selected
   layers.nitrogen.visible = newValue;   // show nitrogen layer
