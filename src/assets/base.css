@@ -504,7 +504,10 @@ a:visited {
   text-align: center;
   z-index:9999;
 }
-
+.home-link-container {
+  text-align: center;
+  z-index:9999;
+}
 .report-link {
   display: inline-block;
   padding: 20px 40px;
@@ -514,6 +517,15 @@ a:visited {
   text-decoration: none;
   border-radius: 10px;
   transition: background-color 0.3s, color 0.3s;
+}
+.home-link {
+  padding: 10px 10px;
+  margin: 5px ;
+  color: var(--teal-dark);
+  text-decoration: none;
+}
+.home-link:hover {
+  color: var(--blue-dark)
 }
 
 .report-link:hover {

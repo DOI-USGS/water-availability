@@ -35,6 +35,10 @@
           </a>
         </div>
     </div>
+    <div class="home-link-container">
+          <a href="index.html" target="_blank" rel="noopener noreferrer" class="home-link">
+            <h3> Return Home</h3></a>     
+        </div>
 </template>
   
 <script setup>
