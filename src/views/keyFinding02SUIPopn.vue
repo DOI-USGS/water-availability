@@ -111,6 +111,15 @@ const referenceList = ref(theseReferences);
   width: 100%;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto auto;
+  }
+  .wa-map-text-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr;
+  grid-template:
+    "title"
+    "map"
+    "text"
 }
 }
 
