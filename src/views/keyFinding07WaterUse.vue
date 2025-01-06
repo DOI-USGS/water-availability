@@ -57,6 +57,8 @@
           <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. Note that the y-scale is not constant across use categories when viewing use by category.</p>
         </div>
       </div>
+      <br>
+      <br>
       <div class="text-container">
         <p>
           Water use affects water availability in two ways. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Therefore, areas with more intensive water demands have a higher potential to degrade the resource than areas with less intense water demands. 
@@ -200,6 +202,9 @@ async function loadDatasets() {
 
 // Initialize the SVG canvas and groups
 function initBarChart() {
+  // Remove any existing SVG to prevent duplicates
+  d3.select('#barplot-container').select('svg').remove();
+  
   svg = d3.select('#barplot-container')
     .append('svg')
     .attr('class', 'barplotSVG')

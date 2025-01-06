@@ -28,17 +28,12 @@ onMounted(() => {
   if (!svgBar) {
     svgBar = d3.select(barContainer.value)
       .append('svg')
-      .attr('viewBox', `0 0 700 150`)
+      .attr('viewBox', `0 0 700 100`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .classed('bar-chart-svg', true);
 
     svgBar.append('g'); // add a <g> container
 
-    svgBar.select('g').append('text')
-      .attr('class', 'chart-subtitle')
-      .attr('x', 0)
-      .attr('y', 45)
-      .text(`Daily water use (million gallons per day) in 2020`)
   }
 
   const aggregatedData = aggregateData(props.data);
@@ -77,17 +72,17 @@ const updateBarChart = (data, regionName) => {
   });
 
   /// Define dimensions and scales
-  const chartHeight = 140; 
+  const chartHeight = 100; 
 
    const yScale = d3.scaleBand()
     .domain(data.map(d => d[props.categoricalVariable]))
-    .range([45, chartHeight])
+    .range([0, chartHeight])
     .padding(0.6); // between bars
 
   // Currently using a static max for x-axis
   const xScale = d3.scaleLinear()
     .domain([0, 125000])
-    .range([0, 700-160]);
+    .range([0, 700]);
 
   const getColor = (category) => {
     const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
@@ -120,22 +115,7 @@ const updateBarChart = (data, regionName) => {
             .remove())
     );
 
-  // update chart title
-  const displayTitle = regionName === 'lower 48 United States' ? regionName : `${regionName} Region`;
-  g.selectAll('text.chart-title')
-    .data([regionName])
-    .join(
-      enter => enter.append('text')
-        .attr('class', 'chart-title')
-        .attr('x', 0)
-        .attr('y', 25)
-        .text(`Water use in the ${displayTitle}`),
-      update => update
-        .transition()
-        .duration(animateTime)
-        .text(`Water use in the ${displayTitle}`)
-    );
-
+  
     g.selectAll('.category-label')
     .data(completeData, d => d[props.categoricalVariable])
         .join(
