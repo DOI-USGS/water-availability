@@ -2,15 +2,9 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-          
-            <div  class="text-container">
-              <h2>Groundwater quality</h2>
-              <p>Water availability for human and ecological use may be limited by elevated concentrations of various contaminants in surface water and groundwater. The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic nutrient concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
-            </div>
-            
           <div class="chart-title-container">
               <p class="chart-title">Groundwater drinking contamination levels</p>
-              <p class="chart-subtitle">Pie charts show the proportion of each aquifer with levels that exceed human-health guidelines for 16 drinking water contaminants</p>
+              <p class="chart-subtitle">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
           </div>
             <div class="map-container">
               <img class="map-overlay" 
@@ -43,8 +37,12 @@
                 </div>
               </div>
               <div class="caption-text-child">
-                <p>Pie charts showing the overall groundwater quality in principal aquifers of the lower 48 United States (cite chapter). The values shown in the pie chart represent the proportion of the aquifer under three categories of water quality relative to the human-health benchmark for drinking water. For this analysis, 16 contaminants were analyzed, including arsenic, manganese, lead, and nitrate. (cite chapter). Results for selected individual constituents are also accessible in an interactive searchable map (link).</p>
+                <p>Groundwater quality relative to the human-health benchmark for drinking water. For each principal aquifer in the lower 48 United States (cite chapter), a pie chart shows the proportion of the aquifer with contaminant levels for 16 total contaminants (including arsenic, manganese, lead, and nitrate). To explore individual constituents see these online maps (link).</p>
               </div>
+            </div>
+            <div  class="text-container">
+              <h2>Groundwater quality</h2>
+              <p>Water availability for human and ecological use may be limited by elevated concentrations of various contaminants in surface water and groundwater. The contaminants that are most commonly found at elevated or high-concentration in drinking-water aquifers are "geogenic," or sourced from geologic sources like bedrock. Elevated geogenic nutrient concentrations affect more than 30 million people. Five geogenic constituents (arsenic, manganese, strontium, radium, and radionuclides) each have a substantially larger area and larger population affected by elevated concentration than nitrate. The largest affected groundwater-dependent populations rely on three aquifers: the California Coastal Basin, Basin and Range basin-fill, and the Glacial aquifer (Belitz and others, 2022).</p>
             </div>
             <div class="chart-title-container">
             <p class="chart-title">Top threats to surface water</p>
