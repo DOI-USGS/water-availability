@@ -44,8 +44,8 @@
                 <p>Groundwater quality relative to the human-health benchmark for drinking water. For each principal aquifer in the lower 48 United States (cite chapter), a pie chart shows the proportion of the aquifer with contaminant levels for 16 total contaminants (including arsenic, manganese, lead, and nitrate). To explore individual constituents see these online maps (link).</p>
               </div>
             </div>
-            <div  class="text-container">
-              <h2>Surface water impairment varies by use</h2>
+            <div class="text-container" >
+              <h2 class="spacer" style="padding-top:50px">Surface water impairment varies by use</h2>
               <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
             </div>
 
