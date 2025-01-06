@@ -43,15 +43,24 @@
     
  // Watch for updates in data or region name
 watch(
-  () => [props.data, props.regionName],
-  ([newData, newRegion]) => {
-    updateLegend(newData, newRegion);
+  () => props.data,
+  () => {
+    updateLegend(props.data);
   },
   { deep: true }
+);
+watch(
+  () => props.layerPaths, // watch layerPaths for changes
+  () => {
+    setupSVG(); // clear and reinitialize the SVG
+    initLegend(props.data); // rerun initLegend with updated data
+  },
+  { deep: true } // deep watch in case layerPaths contains nested objects
 );
 
 // create svg only once
 function setupSVG() {
+  d3.select(legendSvg.value).selectAll('*').remove();
   svg = d3.select(legendSvg.value)
     .attr('width', width)
     .attr('height', height)
@@ -63,6 +72,8 @@ function initLegend(data) {
 
   // Sort data
   const sortedData = processData(data);
+  
+  // for adding legend below histogram
   const uniqueCategories = Array.from(new Set(sortedData.map(d => d.category)));
   const dummyData = uniqueCategories.map(category => ({
     category: category, 
