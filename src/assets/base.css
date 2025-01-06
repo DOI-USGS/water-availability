@@ -324,20 +324,21 @@ a:visited {
     text-align: center;
   }
 }
-.toggle-container {
-  display: flex;
-  align-items: left;
 
-}
 .toggle-group {
   display: flex;
   flex-direction : column;
   flex-shrink: 0;
 }
+.legend-group {
+  display: flex;
+  flex-direction : column;
+  flex-shrink: 0;
+}
 
-  .checkbox_item .checkbox_wrap{
-    cursor: pointer;
-  }
+.checkbox_item .checkbox_wrap{
+  cursor: pointer;
+}
 .legend_item:last-child .legend_wrap,
 .checkbox_item:last-child .checkbox_wrap{
 	margin-bottom: 0;

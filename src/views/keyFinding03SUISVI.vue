@@ -13,19 +13,19 @@
             <div class="viz-container">
               <img class="viz-portrait viz-scaled" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_CONUS.png">
             </div>
-            <div class="caption-container">
-              <div class="caption-legend-child">
-                <ColorLegend legend-id="legend-sui-none" label="Very low water limitation (0 - 0.2)" color="var(--sui-none)" />
-                <ColorLegend legend-id="legend-sui-low" label="Low water limitation (0.2 - 0.4)" color="var(--sui-low)" />
-                <ColorLegend legend-id="legend-sui-mod" label="Moderate water limitation (0.4 - 0.6)" color="var(--sui-mod)" />
-                <ColorLegend legend-id="legend-sui-high" label="High water limitation (0.6 - 0.8)" color="var(--sui-high)" />
-                <ColorLegend legend-id="legend-sui-severe" label="Severe water limitation (0.8 - 1.0)" color="var(--sui-severe)" />
+            <div class="caption-container-flex caption-container">
+              <div class="legend-group">
+                <b>Water limitation:</b>
+                <ColorLegend legend-id="legend-sui-none" label="Very low (0 - 0.2)" color="var(--sui-none)" />
+                <ColorLegend legend-id="legend-sui-low" label="Low (0.2 - 0.4)" color="var(--sui-low)" />
+                <ColorLegend legend-id="legend-sui-mod" label="Moderate (0.4 - 0.6)" color="var(--sui-mod)" />
+                <ColorLegend legend-id="legend-sui-high" label="High (0.6 - 0.8)" color="var(--sui-high)" />
+                <ColorLegend legend-id="legend-sui-severe" label="Severe (0.8 - 1.0)" color="var(--sui-severe)" />
                         </div>
-              <div class="caption-text-child">
+              <div class="caption-text-flex caption-text-child">
                 <p>Map showing circles for each hydrologic unit (HUC8). The color of the circle is the level of water limitation, and the size of the bubble represents the social vulnerability score, with larger bubbles representing more social vulnerability.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
               </div>
             </div> 
-            <br>
             <br>
             <div class="text-container">
                 <h2>Social vulnerability is disproportionately high in areas of water limitation</h2>
@@ -43,7 +43,6 @@
                 <p>Bar charts showing the proportion of the population of the lower 48 United States living in varying categories of social vulnerability and water limitation. The color is the level of water limitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span></p>
               </div>
             </div> 
-            <br>
             <br>
             <div class="text-container">
                 <h2>Water quality also disproportionately limits water availability in socially vulnerable households</h2>

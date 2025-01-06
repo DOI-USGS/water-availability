@@ -50,7 +50,7 @@
         </div>
         <div class="caption-container-flex caption-container">
           <div class="toggle-group">
-          <b>Toggle map layers:</b> 
+            <b>Toggle map layers:</b> 
               <ToggleSwitch 
                 v-model="layers.ir_total.visible" 
                 :label="layers.ir_total.label"
@@ -99,25 +99,12 @@
                 alt=""
             >    
           </div>
-          <div class="caption-container">
-
-              <div class="caption-legend-child">
-                <div class="legend_item" id="legend-wu-sw" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Surface water
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wu-gw" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Groundwater
-                  </label>
-                </div>
-              </div>
-              <div class="caption-text-child">
+          <div class="caption-container-flex caption-container">
+              <div class="legend-group">
+                <ColorLegend legend-id="legend-wu-sw" label="Surface water" color="var(--wu-sw)" />
+                <ColorLegend legend-id="legend-wu-gw" label="Groundwater" color="var(--wu-gw)" />
+              </div> 
+              <div class="caption-text-flex caption-text-child">
                 <p>Bar charts showing the relative amount of modeled water withdrawn for public supply that comes from surface water (bars that go up) or from groundwater (bars that go down) for the lower 48 United States (cite van meter). The bars are placed from west to east based on the longitude (easting) of the center of each watershed. The watershed with the largest daily water use in that region are labeled for each source. Select a region on the map to view bar charts for that region.</p>
               </div>
           </div>
@@ -143,6 +130,8 @@ import SubPages from '../components/SubPages';
 import RegionMap from '../components/RegionMap.vue';
 import HorizontalBar from '../components/HorizontalBar.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
+import ColorLegend from '../components/ColorLegend.vue';
+
 
 // global variables
 const publicPath = import.meta.env.BASE_URL;

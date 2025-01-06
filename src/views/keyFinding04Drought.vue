@@ -35,13 +35,13 @@
                         alt=""
                     >    
                 </div>
-                <div class="caption-container">
-                  <div class="caption-legend-child">
+                <br>
+                <div class="caption-container-flex caption-container">
+                  <div class="legend-group">
                     <ColorLegend legend-id="legend-ws-low" label="Abnormally low water" color="var(--ws-demand)" />
                     <ColorLegend legend-id="legend-ws-high" label="Abnormally high water" color="var(--ws-supply)" />
-                  </div>
-                  <br>
-                  <div class="caption-text-child">
+                            </div>
+                  <div class="caption-text-flex caption-text-child">
                     <p>Bar chart showing monthly values of precipitation, evapotranspiration, soil moisture, and streamflow as compared to normal conditions for each hydrologic region (cite Van Meter) in the lower 48 United States. The values are normalized for comparison from 2010 through 2020, and thus do not have units. Select a region on the map to view bar charts for that region.</p>
                   </div>
                 </div> 

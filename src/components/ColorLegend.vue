@@ -1,11 +1,11 @@
 <template>
-    <div class="legend_item" :id="legendId">
-      <label class="legend_wrap chart-text">
-        <input type="legend" name="legend" class="legend-inp">
+    <div class="legend_wrap" :id="legendId">
+      <label class="legend_item">
         <span class="legend_mark" :style="{ backgroundColor: color }"></span>
         {{ label }}
       </label>
     </div>
+
   </template>
   
   <script setup>
@@ -29,11 +29,11 @@
   </script>
   
   <style scoped>
-  .legend_item {
-  margin: 0 10px; /* Add horizontal margin between items */
+.legend_item {
   display: flex;
   align-items: center;
   white-space: nowrap; /* Prevent wrapping inside each item */
+  padding-bottom: 4px;
 }
 
 .legend_wrap {
@@ -42,8 +42,8 @@
 }
 
 .legend_mark {
-  width: 16px;
-  height: 16px;
+  width: 30px;
+  height: 30px;
   display: inline-block;
   margin-right: 8px;
   border-radius: 2px;

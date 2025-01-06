@@ -9,7 +9,7 @@
         <!-- Supply and Demand dumbell chart -->
         <div class="chart-title-container">
             <p class="chart-title">Water supply vs demand</p>
-            <p class="chart-subtitle">Regional estimates in mm/year</p>
+            <p class="chart-subtitle">Regional estimates in mm/year for supply (solid circle) and demand (hollow circle)</p>
             <!-- Supply and Demand dumbell toggles -->
              <div class="toggle-group">
               <ToggleSwitch 
