@@ -7,7 +7,7 @@
 
           </div>
           <div class="text-container">
-            <p>The conditions that limit water availability often occur together, including water quantity, quality, and natural flows. For example, areas with limited water supply can be more vulnerable to water quality issues and flow alterations. These maps show four conditions that affect water availability, and the darker the region is, the more that area's water availability is limited.</p>
+            <p>The conditions that limit water availability often occur together, including water quantity, quality, and natural flows. For example, areas with limited water supply can be more vulnerable to water quality issues or flow alterations. These maps show four conditions that affect water availability. The darker regions indicate areas that are more limited by that aspect of water availability.</p>
           </div>
           <div class="text-container">
 
@@ -20,29 +20,29 @@
               <div class="wa-map-text-container" id="sw-map">
                 <h4 class="wa-title">Surface water quality</h4>
                 <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_sw_wq.png">
-                <p class="wa-text">Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, and pesticides. Areas of the country that face surface water quality issues include the central and midwest U.S., largely due to the application of fertilizer and manure for agriculture. (erickson2025 xxx). Learn more about surface water quality effects on water availability in <a href="#/05-nutrients" target="_blank">Key Finding 5</a> and <a href="#/06-water-quality" target="_blank">Key Finding 6</a>.</p>
+                <p class="wa-text">Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, or pesticides. Areas of the country that face surface water quality issues include the central and midwest U.S., largely due to the application of fertilizer and manure for agriculture. (erickson2025 xxx). Learn more about surface water quality effects on water availability in <a href="#/05-nutrients" target="_blank">Key Finding 5</a> and <a href="#/06-water-quality" target="_blank">Key Finding 6</a>.</p>
               </div>
               <div class="wa-map-text-container" id="gw-map">
                 <h4 class="wa-title">Groundwater quality</h4>
                 <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_gw_wq.png">
-                <p class="wa-text">Groundwater-derived drinking water can be affected by high concentrations of constituents from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, and lithium, as well as salinity and nitrogen. Areas of the country with challenges to maintaining groundwater quality include the central and southwestern U.S. Learn more about groundwater quality and water availability in <a href="#/06-water-quality" target="_blank">Key Finding 6</a>.</p>
+                <p class="wa-text">Groundwater can be affected by high concentrations of contaminants from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, or lithium, as well as salinity and nitrogen. Areas of the country with challenges to groundwater quality include the central and southwestern U.S. Learn more about groundwater quality and water availability in <a href="#/06-water-quality" target="_blank">Key Finding 6</a>.</p>
               </div>
               <div class="wa-map-text-container" id="eco-map">
                 <h4 class="wa-title">Altered natural flows</h4>
                 <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_ecoflow.png">
-                <p class="wa-text">Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces. Ecological communities often rely on  local, natural flow conditions (Lennox and others, 2019; Freeman and others, 2022). Altered flows primarily limit water availability in the Northeast, Florida, Texas, and Central High Plains regions.</p>
+                <p class="wa-text">Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces. Altered flows primarily limit water availability in the Northeast, Florida, Texas, and Central High Plains regions.</p>
               </div>
             </div>
           </div>
           
           <div class="text-container">
             <h3>What about in the future?</h3>
-            <p>The continuing rise in global temperature as a result of human activity is causing changes in Earth's water cycle. The amount of water stored within and moving between vapor, liquid and frozen components of the water cycle is shifting, with significant consequences for water availability. </p>
+            <p>The continuing rise in global temperature as a result of human activity is causing changes in Earth's water cycle, with significant consequences for water availability. </p>
             <ul class="tab-content-list">
-                    <li>Temperature is rising, with amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing.</li>
-                    <li>Snow and ice are diminishing, including reduced snow cover extent and duration, decreased glaciers and increasing meltwater, thawing permafrost, erosion and turbidity from increased melt rates, and altered rain and snow patterns.</li>
-                    <li>Sea levels are rising, exacerbating the impacts of stronger hurricanes, infrastructure damage, and increased storm surges and coastal flooding.</li>
-                    <li>There will be additional impacts, including increased sediment from extreme rainfall, wildfires, more frequent sand and dust storms, and increased salinity from evaporation of surface waters and saltwater intrusion in coastal aquifers.</li>
+                    <li><b>Temperature is rising</b>, with amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing.</li>
+                    <li><b>Snow and ice are diminishing</b>, including reduced snow cover extent and duration, decreased glaciers and increasing meltwater, thawing permafrost, erosion and turbidity from increased melt rates, and altered rain and snow patterns.</li>
+                    <li><b>Sea levels are rising</b>, exacerbating the impacts of stronger hurricanes, infrastructure damage, and increased storm surges and coastal flooding.</li>
+                    <li><b>There will be additional impacts</b>, including increased sediment from extreme rainfall, wildfires, more frequent sand and dust storms, and increased salinity from evaporation of surface waters and saltwater intrusion in coastal aquifers.</li>
                   </ul>
                 
           </div>
