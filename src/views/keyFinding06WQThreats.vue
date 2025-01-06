@@ -47,7 +47,7 @@
 
             <div class="chart-title-container">
             <p class="chart-title">Top threats to surface water</p>
-            <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired (CITE data)</p>
+            <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired</p>
             <div class="checkbox_item">
                   <div class="checkbox_wrap">
                     <p class="chart-text">Sort chart by:</p>
@@ -70,7 +70,7 @@
           
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>Heatmap showing the proportion of river miles that are threatened by different categories of contamination. Darker fills represent a higher proportion of river miles threatened by that source. Select a column name to short the rectangles from highest proportion to lowest for that category of use.</p>
+                <p>Heatmap of the top threats to drinking water, fish consumption, and recreational use. Chart fill and percentages show the percent of river miles that are threatened by each contaminant. Darker fill indicates a higher degree of threat by that source. Data are from (CITE DATA).</p>
                 <br>
               </div>
             </div>
