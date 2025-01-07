@@ -177,10 +177,10 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
       theme_void() 
   } else {
     plot_states <- ggplot(in_states) + 
-      geom_sf(data = aquifers, fill = "grey90", color = "white") +
-      geom_sf(data = sub_aquifers, fill = color_scheme$high_col, 
-              color = color_scheme$high_col, linewidth = 1.4) +
       geom_sf(fill = "transparent", color = "#d1cdc0") +
+      geom_sf(data = aquifers, fill = "grey90", color = "white") +
+      geom_sf(data = sub_aquifers, fill = "#857BAD", 
+              color = "#857BAD", linewidth = 1) +
       theme_void() 
   }
   
