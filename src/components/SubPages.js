@@ -52,7 +52,7 @@ export default {
             route: '/04-water-supply',
             mainTitle: 'Not enough rain and snow',
             shortTitle: 'Limited water supply can cause water imbalance',
-            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation and exacerbating water quality issues' ,
+            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation' ,
             references: [
                 "VanMetre2020", 
                 "Gorski2025",
