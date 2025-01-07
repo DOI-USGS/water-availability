@@ -30,7 +30,7 @@
               <div class="wa-map-text-container" id="eco-map">
                 <h4 class="wa-title">Altered natural flows</h4>
                 <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_ecoflow.png">
-                <p class="wa-text">Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces. Altered flows primarily limit water availability in the Northeast, Florida, Texas, and Central High Plains regions.</p>
+                <p class="wa-text">Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces (cite Stets). Altered flows primarily limit water availability in the Northeast, Florida, Texas, and Central High Plains regions.</p>
               </div>
             </div>
           </div>
