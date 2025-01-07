@@ -84,7 +84,7 @@
           <br>
           <div class="text-container">
             <h2>Do we use more surface water or groundwater?</h2>
-            <p>Across the U.S., this depends on the availability of each source, the category of use, local and federal water use ordinances, and water rights. On average during water years 2010-2020, about 62% of water used for crop irrigation, public supply, and thermoelectric was sourced from surface water rather than groundwater. However, these proportions vary widely across the country: The largest water withdrawals in the Southwest Desert region for public supply are from groundwater, whereas the largest withdrawals in the Northeast region are from surface water.</p>
+            <p>Across the U.S., this depends on the availability of each source, the category of use, local and federal water use ordinances, and water rights. On average during water years 2010-2020, about 62% of water used for crop irrigation, public supply, and thermoelectric was sourced from surface water rather than groundwater. However, these proportions vary widely across the country: the largest water withdrawals in the Southwest Desert region for public supply are from groundwater, whereas the largest withdrawals in the Northeast region are from surface water.</p>
           </div>
           <div class="chart-title-container">
             <p class="chart-title">Source of public supply water in the {{ regionTitle }}</p>
