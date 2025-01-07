@@ -5,6 +5,10 @@
           <div class="text-container">
                 <p>How we use water varies across the country, including the type of use (for example, crop irrigation, public supply, and thermoelectric power) and the source of water (groundwater versus surface water). Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some urban areas, and withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. </p>
           </div>
+          <div class="chart-title-container">
+            <p class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
+            <p class="chart-subtitle">Daily water use in 2020, in million gallons per day</p>
+          </div>
           <div class="image-container">
           <HorizontalBar 
             categoricalVariable="d3_category"
@@ -21,6 +25,7 @@
           
           />
           <RegionMap 
+          class="region-map"
           @regionSelected="updateSelectedRegion"
           :layerVisibility="{
             ir_total: layers.ir_total.visible,
@@ -43,11 +48,10 @@
 
         />
         </div>
-          <div class="caption-container">
-              <div class="caption-text-child">
-                <p>Map showing the distribution of modeled water use by category for each watershed (HUC12) in the lower 48 United States. Crop irrigation and public supply are shaded by daily withdrawal for each watershed. The thermoelectric points are scaled to represent daily withdrawals for each watershed where thermoelectric water withdrawal occurs. The bar graph shows the total daily water use for that category for the lower 48 United States. Select a region on the map to view bar graphs for that region [cite VM].  Toggle each category of use on or off from the map.</p>
-              </div>
-              <<ToggleSwitch 
+        <div class="caption-container-flex caption-container">
+          <div class="toggle-group">
+            <b>Toggle map layers:</b> 
+              <ToggleSwitch 
                 v-model="layers.ir_total.visible" 
                 :label="layers.ir_total.label"
                 :rightColor="layers.ir_total.color"
@@ -70,10 +74,16 @@
                 :label="layers.te_saline.label"
                 :rightColor="layers.te_saline.color"
               />
+              </div>
+              <div class="caption-text-flex caption-text-child">
+                <p>Map showing the distribution of modeled water use by category for each watershed (HUC12) in the lower 48 United States. Crop irrigation and public supply are shaded by daily withdrawal for each watershed. The thermoelectric points are scaled to represent daily withdrawals for each watershed where thermoelectric water withdrawal occurs. The bar graph shows the total daily water use for the selected region [cite VM].</p>
+              </div>
 
           </div> 
+          <br>
+          <br>
           <div class="text-container">
-            <h3>Water from above and below</h3>
+            <h2>Water from above and below</h2>
             <p>Across the U.S., the source of water, whether from  groundwater or from surface water typically depends on the availability of these sources and on the category of use. On average during water years 2010-2020, about 62% of water withdrawals for the combination of public supply, crop irrigation, and thermoelectric power across the country were from surface water and 38% of withdrawals were from groundwater. However, these proportions vary widely across the country, and are affected by water use type as well as local and federal water use ordinances and water rights.</p>
           </div>
           <div class="chart-title-container">
@@ -81,7 +91,7 @@
             <p class="chart-subtitle">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
           </div>
           <div class="viz-container">
-            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
+            <Reg class="dumbbell-reg-svg reg-svg" id="svg-style"></Reg>
             <img
                 class="viz-half"
                 id="dumbbells"
@@ -89,25 +99,12 @@
                 alt=""
             >    
           </div>
-          <div class="caption-container">
-
-              <div class="caption-legend-child">
-                <div class="legend_item" id="legend-wu-sw" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Surface water
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wu-gw" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Groundwater
-                  </label>
-                </div>
-              </div>
-              <div class="caption-text-child">
+          <div class="caption-container-flex caption-container">
+              <div class="legend-group">
+                <ColorLegend legend-id="legend-wu-sw" label="Surface water" color="var(--wu-sw)" />
+                <ColorLegend legend-id="legend-wu-gw" label="Groundwater" color="var(--wu-gw)" />
+              </div> 
+              <div class="caption-text-flex caption-text-child">
                 <p>Bar charts showing the relative amount of modeled water withdrawn for public supply that comes from surface water (bars that go up) or from groundwater (bars that go down) for the lower 48 United States (cite van meter). The bars are placed from west to east based on the longitude (easting) of the center of each watershed. The watershed with the largest daily water use in that region are labeled for each source. Select a region on the map to view bar charts for that region.</p>
               </div>
           </div>
@@ -133,6 +130,8 @@ import SubPages from '../components/SubPages';
 import RegionMap from '../components/RegionMap.vue';
 import HorizontalBar from '../components/HorizontalBar.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
+import ColorLegend from '../components/ColorLegend.vue';
+
 
 // global variables
 const publicPath = import.meta.env.BASE_URL;
@@ -165,7 +164,7 @@ const layers = reactive({
     path: '08_wu_ir_map.png',
     color: 'var(--wu-agriculture)',
     order: 1,
-    label: "Irrigation"
+    label: "Crop irrigation"
   },
   ps_total: {
     visible: true,

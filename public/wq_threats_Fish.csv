@@ -1,19 +1,19 @@
-Use,Category,Parameter,riverMiles,UseAbbr
-Fish Consumption Use,Unimpaired,Unimpaired,98021,Fish
-Fish Consumption Use,Organics,PCBs,72915,Fish
-Fish Consumption Use,Metals,Mercury,61058,Fish
-Fish Consumption Use,Biotic,Pathogens,37528,Fish
-Fish Consumption Use,Organics,Pesticides,10481,Fish
-Fish Consumption Use,Metals,Other Metals,9238,Fish
-Fish Consumption Use,Metals,Oxygen Depletion,8997,Fish
-Fish Consumption Use,Temperature,Temperature,6606,Fish
-Fish Consumption Use,Metals,Acidity/pH,6127,Fish
-Fish Consumption Use,Nutrients,Other Nutrients,5622,Fish
-Fish Consumption Use,Sediment,Sediment,5591,Fish
-Fish Consumption Use,Sediment,Turbidity,5028,Fish
-Fish Consumption Use,Organics,Dioxins,4879,Fish
-Fish Consumption Use,Organics,Toxic Organics,2279,Fish
-Fish Consumption Use,Salinity,Salinity,2055,Fish
-Fish Consumption Use,Nutrients,Ammonia,1997,Fish
-Fish Consumption Use,Biotic,Algal Growth,1732,Fish
-Fish Consumption Use,Organics,Oil and Grease,137,Fish
+Use,Category,Parameter,riverMiles,d3parameterMatch,percentMiles,UseAbbr,sortOrder
+Fish Consumption,Biotics,Biotoxins,0,Biotics,0,Fish,1
+Fish Consumption,Organics,Oil and Grease,137,OilandGrease,0,Fish,2
+Fish Consumption,Biotic,Algal Growth,1732,AlgalGrowth,0.5,Fish,3
+Fish Consumption,Nutrients,Ammonia,1997,Ammonia,0.6,Fish,4
+Fish Consumption,Salinity,Salinity,2055,Salinity,0.6,Fish,5
+Fish Consumption,Organics,Toxic Organics,2279,ToxicOrganics,0.7,Fish,6
+Fish Consumption,Organics,Dioxins,4879,Dioxins,1.4,Fish,7
+Fish Consumption,Sediment,Turbidity,5028,Turbidity,1.5,Fish,8
+Fish Consumption,Sediment,Sediment,5591,Sediment,1.6,Fish,9
+Fish Consumption,Nutrients,Other Nutrients,5622,OtherNutrients,1.7,Fish,10
+Fish Consumption,Metals,Acidity/pH,6127,AciditypH,1.8,Fish,11
+Fish Consumption,Temperature,Temperature,6606,Temperature,1.9,Fish,12
+Fish Consumption,Metals,Oxygen Depletion,8997,OxygenDepletion,2.6,Fish,13
+Fish Consumption,Metals,Non-Mercury Metals,9238,Non-MercuryMetals,2.7,Fish,14
+Fish Consumption,Organics,Pesticides,10481,Pesticides,3.1,Fish,15
+Fish Consumption,Biotic,Pathogens,37528,Pathogens,11,Fish,16
+Fish Consumption,Metals,Mercury,61058,Mercury,17.9,Fish,17
+Fish Consumption,Organics,PCBs,72915,PCBs,21.4,Fish,18

@@ -21,51 +21,40 @@
     }
 });
 
+// reactive chart data
 const supplyEnabled = defineModel('supplyEnabled', { type: Boolean, default: true });
 const demandEnabled = defineModel('demandEnabled', { type: Boolean, default: true });
-
-// reactive chart data
 const dataset = ref([]);
 
 // chart dimensions etc
 let svg, chartBounds, xScale, originalXScaleDomain, dotGroup;
 const publicPath = import.meta.env.BASE_URL;
-const containerWidth = 700;
-const maxHeight = 700;
-const margin = { top: 50, right: 50, bottom: 30, left: 50 };
-const width = containerWidth + margin.left + margin.right;
-const height = Math.min(window.innerHeight * 0.7, maxHeight) - margin.top - margin.bottom;
+
+// dynamic dimensions
+const margin = { top: 20, right: 100, bottom: 30, left: 250 }; // increase left margin for y-axis labels
+let width, height;
   
 // initialize chart
-const initChart = () => {
+const initChart = (containerWidth) => {
+
+  // calculate responsive dimensions
+  width = containerWidth - margin.left - margin.right;
+  height = Math.min(window.innerHeight * 0.7, 700) - margin.top - margin.bottom;
+
   // remove any existing SVG before redrawing
   d3.select('#dotplot-container').select('svg').remove();
 
   svg = d3.select('#dotplot-container')
     .append('svg')
-    .attr('viewBox', `0 0 ${containerWidth+margin.right} ${maxHeight}`)
+    .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet')
     .style('width', '100%')
-    .style('max-height', `${maxHeight}px`)
+    //.style('max-height', `${height}px`)
     .style('height', 'auto');
-
-  // add chart title
-  svg.select('.chart-title').remove(); 
-  svg.append('text')
-    .attr('class', 'chart-title')
-    .attr('x', margin.left) 
-    .attr('y', 30) 
-    .text('Water supply and demand'); // title text
-
- svg.select('.chart-text').remove(); 
-  svg.append('text')
-    .attr('class', 'chart-text')
-    .attr('x', margin.left) 
-    .attr('y', 60) 
-    .text('Regional estimates in mm/year'); // title text
 
   // add chart area group
   chartBounds = svg.append('g')
-    .attr('transform', `translate(${margin.left}, 90)`); // leave space for the title
+    .attr('transform', `translate(${margin.left}, ${margin.top})`); 
 
     dotGroup = chartBounds.append('g');
 };
@@ -120,8 +109,7 @@ const drawChart = () => {
       .selectAll(".tick")
       .select("text")
       .attr('class', 'chart-text')
-      .attr("x", -44)
-      .attr("dy", "0.32em");
+      .attr("x", -50);
 
     d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
       const svgNode = xml.documentElement;
@@ -134,10 +122,10 @@ const drawChart = () => {
 
           const insertedSvg = d3.select(this)
             .insert(() => svgClone, "text")
-            .attr("x", -40)
-            .attr("y", -20)
-            .attr("width", 40)
-            .attr("height", 40)
+            .attr("x", -46)
+            .attr("y", -25)
+            .attr("width", 50)
+            .attr("height", 50)
             .attr("fill", "var(--inactive-grey)");
 
           insertedSvg.selectAll(`g.${regionClass} path`)
@@ -167,8 +155,8 @@ const drawChart = () => {
     .attr('class', 'circle-supply')
     .attr('cx', d => xScale(d.supply_mean))
     .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-    .attr('r', 5)
-    .attr('fill', 'var(--ws-supply)');
+    .attr('r', 6)
+    .attr('fill', 'var(--ws-demand)');
 
   // circles for demand
   chartBounds.selectAll('.circle-demand')
@@ -177,7 +165,7 @@ const drawChart = () => {
     .attr('class', 'circle-demand')
     .attr('cx', d => xScale(d.demand_mean))
     .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
-    .attr('r', 4)
+    .attr('r', 5)
     .attr('stroke', 'var(--ws-demand)')
     .attr('stroke-width', '2px')
     .attr('fill', 'white');
@@ -240,13 +228,24 @@ const togglePoints = () => {
     .style('opacity', supplyEnabled.value && demandEnabled.value ? 0.4 : 0);
 };
 
+// resize chart dynamically
+const resizeChart = () => {
+  const containerWidth = document.getElementById('dotplot-container').clientWidth;
+  initChart(containerWidth);
+  drawChart();
+};
 
 // initialize chart when mounted
 onMounted(() => {
     dataset.value = props.data; // initialize data
-    initChart();
-    drawChart();
+    resizeChart();
     togglePoints();
+    // observe resizing
+  const resizeObserver = new ResizeObserver(() => {
+    resizeChart();
+  });
+
+  resizeObserver.observe(document.getElementById('dotplot-container'));
 });
 
 // watch toggles for updates
@@ -256,8 +255,7 @@ watch([supplyEnabled, demandEnabled], () => {
 // watch data updates
 watch(() => props.data, (newData) => {
   dataset.value = newData; // update reactive data
-  initChart();
-  drawChart();
+  resizeChart();
   togglePoints();
 });
 

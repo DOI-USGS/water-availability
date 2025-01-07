@@ -26,17 +26,11 @@ onMounted(() => {
   if (!svgBar) {
     svgBar = d3.select(barContainer.value)
       .append('svg')
-      .attr('viewBox', `0 -30 700 100`)
+      .attr('viewBox', `0 0 700 60`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .classed('bar-chart-svg', true);
 
     svgBar.append('g'); // add a <g> container
-
-    svgBar.select('g').append('text')
-      .attr('class', 'chart-subtitle')
-      .attr('x', 0)
-      .attr('y', 10)
-      .text(`Bars show what percent of the region has very low, low, moderate, high, and severe water limitation.`)
   }
 
   const aggregatedData = aggregateData(props.data);
@@ -91,7 +85,7 @@ const updateBarChart = (data, regionName) => {
     .join(
       enter => enter.append('rect')
         .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
-        .attr('y', 20)
+        .attr('y', 5)
         .attr('width', 0)
         .attr('height', 30)
         .attr('fill', d => getColor(d[props.categoricalVariable]))
@@ -115,23 +109,6 @@ const updateBarChart = (data, regionName) => {
             .remove())
     );
 
-  // update chart title
-  const displayTitle = regionName === 'lower 48 United States' ? regionName : `${regionName} Region`;
-
-    g.selectAll('text.chart-title')
-    .data([regionName])
-    .join(
-      enter => enter.append('text')
-        .attr('class', 'chart-title')
-        .attr('x', 0)
-        .attr('y', -10)
-        .text(`Water limitation in the ${displayTitle}`),
-        //.text(displayTitle),
-      update => update.transition()
-        .duration(750)
-        .text(`Water limitation in the ${displayTitle}`)
-    );
-
     const formatPercentage = d3.format('.0f');
   
       // percent labels on bar chart 
@@ -142,7 +119,7 @@ const updateBarChart = (data, regionName) => {
             const enteringText = enter.append('text')
                 .attr('class', 'percent-label')
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
-                .attr('y', 65)
+                .attr('y', 50)
                 .attr('text-anchor', 'middle')
                 .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
                 .style('opacity', 0); // start invisible
@@ -167,8 +144,6 @@ const updateBarChart = (data, regionName) => {
                   .remove(); // fade out and remove
             }
         );
-
-
 };
 
 // watch for changes in data or regionName

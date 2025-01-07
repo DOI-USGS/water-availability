@@ -1,20 +1,19 @@
-Use,Category,Parameter,riverMiles,UseAbbr
-Recreational Use,Unimpaired,Unimpaired,323983,Rec
-Recreational Use,Biotic,Pathogens,200090,Rec
-Recreational Use,Nutrients,Other Nutrients,36698,Rec
-Recreational Use,Metals,Oxygen Depletion,32085,Rec
-Recreational Use,Metals,Other Metals,27457,Rec
-Recreational Use,Organics,PCBs,26710,Rec
-Recreational Use,Sediment,Sediment,24352,Rec
-Recreational Use,Temperature,Temperature,23334,Rec
-Recreational Use,Sediment,Turbidity,20619,Rec
-Recreational Use,Metals,Mercury,19026,Rec
-Recreational Use,Salinity,Salinity,12387,Rec
-Recreational Use,Organics,Pesticides,11005,Rec
-Recreational Use,Metals,Acidity/pH,8127,Rec
-Recreational Use,Biotic,Biotoxins,6389,Rec
-Recreational Use,Biotic,Algal Growth,3638,Rec
-Recreational Use,Organics,Dioxins,2495,Rec
-Recreational Use,Nutrients,Ammonia,1736,Rec
-Recreational Use,Organics,Toxic Organics,1157,Rec
-Recreational Use,Organics,Oil and Grease,525,Rec
+Use,Category,Parameter,riverMiles,d3parameterMatch,percentMiles,UseAbbr,sortOrder
+Recreational Use,Organics,Oil and Grease,525,OilandGrease,0.1,Rec,1
+Recreational Use,Organics,Toxic Organics,1157,ToxicOrganics,0.1,Rec,2
+Recreational Use,Nutrients,Ammonia,1736,Ammonia,0.2,Rec,3
+Recreational Use,Organics,Dioxins,2495,Dioxins,0.3,Rec,4
+Recreational Use,Biotic,Algal Growth,3638,AlgalGrowth,0.5,Rec,5
+Recreational Use,Biotic,Biotoxins,6389,Biotoxins,0.8,Rec,6
+Recreational Use,Metals,Acidity/pH,8127,AciditypH,1,Rec,7
+Recreational Use,Organics,Pesticides,11005,Pesticides,1.4,Rec,8
+Recreational Use,Salinity,Salinity,12387,Salinity,1.6,Rec,9
+Recreational Use,Metals,Mercury,19026,Mercury,2.4,Rec,10
+Recreational Use,Sediment,Turbidity,20619,Turbidity,2.6,Rec,11
+Recreational Use,Temperature,Temperature,23334,Temperature,3,Rec,12
+Recreational Use,Sediment,Sediment,24352,Sediment,3.1,Rec,13
+Recreational Use,Organics,PCBs,26710,PCBs,3.4,Rec,14
+Recreational Use,Metals,Non-Mercury Metals,27457,Non-MercuryMetals,3.5,Rec,15
+Recreational Use,Metals,Oxygen Depletion,32085,OxygenDepletion,4.1,Rec,16
+Recreational Use,Nutrients,Other Nutrients,36698,OtherNutrients,4.7,Rec,17
+Recreational Use,Biotic,Pathogens,200090,Pathogens,25.6,Rec,18
