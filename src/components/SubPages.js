@@ -13,7 +13,7 @@ export default {
             route: '/02-water-availability',
             mainTitle: 'Limits on water availability',
             shortTitle: 'Water availability is affected by water quantity, quality, and flow',
-            keyMessage: 'Many areas of the lower 48 United States show high or severe limitation in multiple aspects of water availability.',
+            keyMessage: 'Every region in the lower 48 United States faces limitations to water availability from at least one aspect of water quantity, quality, or flow.',
             references: [
                 "VanMetre2020", 
                 "Stets2025", 
@@ -52,7 +52,7 @@ export default {
             route: '/04-water-supply',
             mainTitle: 'Not enough rain and snow',
             shortTitle: 'Limited water supply can cause water imbalance',
-            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation and exacerbating water quality issues' ,
+            keyMessage: 'Periods of low precipitation can have cascading effects throughout the water cycle, expanding areas of water limitation' ,
             references: [
                 "VanMetre2020", 
                 "Gorski2025",
@@ -119,7 +119,7 @@ export default {
             route: '/08-regional-wu',
             mainTitle: 'From sea to shining sea',
             shortTitle: 'How we use water varies across the country',
-            keyMessage: 'Regionally, crop irrigation is the primary water use in the Western and High Plains areas of the U.S., while the eastern half of the country uses water primarily for public supply or thermoelectric power.',
+            keyMessage: 'The Western and High Plains regions use water primarily for crop irrigation, while the eastern half of the country uses water primarily for public supply or thermoelectric power.',
             references: ["VanMetre2020", "Medalie2025", "Galanter2023", "Luukkonen2023", "Martin2023", "Haynes2024"]
         }
     ]

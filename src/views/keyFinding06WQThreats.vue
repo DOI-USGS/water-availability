@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div  class="text-container">
-              <h2>Naturally occurring contaminants in groundwater</h2>
+              <h2>Groundwater quality varies regionally</h2>
               <p>Geogenics are the most common contaminants found in drinking water aquifers at elevated or high-concentrations, affecting more than 30 million people in the contiguous United States (Belitz and others, 2022). What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic constituents in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
             </div>
           <div class="chart-title-container">
@@ -27,8 +27,8 @@
             </div> 
 
             <div class="text-container" >
-              <h2 class="spacer" style="padding-top:50px">Surface water impairment varies by use</h2>
-              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
+              <h2 class="spacer" style="padding-top:50px">Surface water quality varies by use</h2>
+              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides many benefits from sourcing fish for food to providing recreational benefit. </p>
             </div>
 
             <div class="chart-title-container">
@@ -156,6 +156,8 @@ const height = 650;
 // Run of show
 onMounted(async () => {
 
+  window.scrollTo(0, 0);
+  
   try {
         await loadDatasets();
 

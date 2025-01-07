@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div class="text-container">
-                <p>How we use water varies across the country, including the type of use (for example, crop irrigation, public supply, and thermoelectric power) and the source of water (groundwater versus surface water). Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some urban areas, and withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. </p>
+                <p>How we use water varies widely across the country, from the type of use (for example, crop irrigation, public supply, and thermoelectric power) to the source of water (groundwater versus surface water). Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some urban areas, and withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. </p>
           </div>
           <div class="chart-title-container">
             <p class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
@@ -83,8 +83,8 @@
           <br>
           <br>
           <div class="text-container">
-            <h2>Water from above and below</h2>
-            <p>Across the U.S., the source of water, whether from  groundwater or from surface water typically depends on the availability of these sources and on the category of use. On average during water years 2010-2020, about 62% of water withdrawals for the combination of public supply, crop irrigation, and thermoelectric power across the country were from surface water and 38% of withdrawals were from groundwater. However, these proportions vary widely across the country, and are affected by water use type as well as local and federal water use ordinances and water rights.</p>
+            <h2>Do we use more surface water or groundwater?</h2>
+            <p>Across the U.S., this depends on the availability of each source, the category of use, local and federal water use ordinances, and water rights. On average during water years 2010-2020, about 62% of water used for crop irrigation, public supply, and thermoelectric was sourced from surface water rather than groundwater. However, these proportions vary widely across the country: the largest water withdrawals in the Southwest Desert region for public supply are from groundwater, whereas the largest withdrawals in the Northeast region are from surface water.</p>
           </div>
           <div class="chart-title-container">
             <p class="chart-title">Source of public supply water in the {{ regionTitle }}</p>
@@ -197,6 +197,9 @@ function updateSelectedRegion(regionName) {
 
 // functions called here
 onMounted(async() => {
+
+  window.scrollTo(0, 0);
+
   try {
     const data = await d3.csv(`${publicPath}${csvWU}`);
     csvData.value = data;
