@@ -315,6 +315,13 @@ p3_targets <- list(
                format = "file"),
     names = aquifer_abbr
   ),
+  tar_target(p3_aquifer_basemap_png,
+           aquifer_map(in_sf = p1_aquifers_sf,
+                       in_states = p2_State_detailed_sf,
+                       color_scheme = p3_colors_wq,
+                       png_out = "src/assets/images/R/06_wq_aquifers.png",
+                       width = 9, height = 6),
+           format = "file"),
   
   
   ##############################################

@@ -145,15 +145,6 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
   plot_geofacet_color <- ggplot(data = subplot_df,
                           aes(x = "", y = ratio, fill = bins)) +
     geom_col(show.legend = TRUE, width = 1, color = "black", linewidth = 0.1) +
-    # geom_text(
-    #   aes(x = 1.2,  
-    #       label = round(ratio * 100),
-    #       color = bins),
-    #   position = position_stack(vjust = 0.5),
-    #   size = 3,
-    #   show.legend = FALSE,
-    #   fontface = "italic"
-    # ) +
     coord_polar(theta = "y", start = 0) +
     scale_fill_manual(values = c(color_scheme$very_low_col, 
                                  color_scheme$moderate_col, 
@@ -178,9 +169,9 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
   } else {
     plot_states <- ggplot(in_states) + 
       geom_sf(fill = "transparent", color = "#d1cdc0") +
-      geom_sf(data = aquifers, fill = "grey90", color = "white") +
-      geom_sf(data = sub_aquifers, fill = "#857BAD", 
-              color = "#857BAD", linewidth = 1) +
+      geom_sf(data = aquifers, fill = "grey90", color = "white", alpha = 0.8) +
+      geom_sf(data = sub_aquifers, fill = color_scheme$high_col, 
+              color = color_scheme$high_col, linewidth = 1, alpha = 0.8) +
       theme_void() 
   }
   
@@ -232,6 +223,29 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
   }
   
   ggsave(plot = out_plot,
+         filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
+  
+  return(png_out)
+}
+
+aquifer_map <- function(in_sf, 
+                        in_states, 
+                        width, height, 
+                        png_out, 
+                        color_scheme){
+  #### match projections between states and aquifers
+  aquifers <- in_sf |>
+    sf::st_transform(crs = sf::st_crs(in_states)) |>
+    rename(full_name = LABEL) 
+  
+  plot_states <- ggplot(in_states) + 
+    geom_sf(fill = "transparent", color = "#d1cdc0") +
+    geom_sf(data = aquifers, fill = color_scheme$high_col, 
+            color = color_scheme$high_col, linewidth = 0.4, alpha=0.8) +
+    theme_void() 
+  
+  ggsave(plot = plot_states,
          filename = png_out, device = "png", bg = "transparent",
          dpi = 300, units = "in", width = width, height = height)
   
