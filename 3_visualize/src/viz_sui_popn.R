@@ -47,35 +47,32 @@ viz_popn_circles <- function(in_sf,
   return(png_out)
 }
 
-viz_popn_barchart <- function(in_sf, width, height, color_scheme, png_out){
+viz_popn_barchart <- function(in_sf, svi_break, svi_label, width, height, color_scheme, png_out){
   
-  plot_sf <- in_sf |>
+  raw_sf <- in_sf |>
     mutate(color_hex = case_when(sui_category_5 == "Very low/\nnone" ~ color_scheme$sui_none,
                                  sui_category_5 == "Low" ~ color_scheme$sui_low,
                                  sui_category_5 == "Moderate" ~ color_scheme$sui_mod,
                                  sui_category_5 == "High" ~ color_scheme$sui_high,
                                  sui_category_5 == "Severe" ~ color_scheme$sui_severe))
   
-  plot_sf <- plot_sf |>
-    mutate(svi_category = case_when(mean_svi < 0.25 ~ "Low social vulnerability",
-                                    mean_svi < 0.5 ~ "Moderate social vulnerability",
-                                    mean_svi < 0.75 ~ "High social vulnerability",
-                                    mean_svi < 1 ~ "Severe social vulnerability"),
-           svi_factor = factor(svi_category, 
-                               levels = c("Low social vulnerability",
-                                          "Moderate social vulnerability",
-                                          "High social vulnerability",
-                                          "Severe social vulnerability"))) |>
-    group_by(svi_factor, sui_category_5, color_hex) |>
+  plot_sf <- raw_sf |>
+    filter(mean_svi >= (svi_break - 0.25),
+           mean_svi < svi_break) |>
+    mutate(svi_category = sprintf("%s social vulnerability", svi_label)) |>
+    group_by(svi_category, sui_category_5, color_hex) |>
     summarize(n = n(),
-              total_popn = sum(total_popn, na.rm = TRUE))
+              total_popn = sum(total_popn, na.rm = TRUE),
+              svi_max = max(mean_svi),
+              svi_min = min(mean_svi))
   
-  ggplot(plot_sf, aes(y = svi_factor, x = total_popn,
+  ggplot(plot_sf, aes(y = svi_category, x = total_popn,
                       fill = color_hex)) +
-    geom_bar(position = "fill", stat = "identity", orientation = "y", width = 0.8) +
+    geom_bar(position = "fill", stat = "identity", 
+             orientation = "y", width = 0.8, color = "black", 
+             linewidth = 0.1) +
     scale_fill_identity() +
-    theme_void() +
-    theme(axis.text.y = element_text(hjust = 0))
+    theme_void() 
   
   ggsave(filename = png_out, 
          width = width, height = height, dpi = 300, bg = "transparent")
