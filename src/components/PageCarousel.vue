@@ -51,20 +51,24 @@
 
   
 
-  <script setup>
-  import { ref } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';  // access the active route
-  import SubPages from '@/components/SubPages.js';
-  
-  const route = useRoute(); // access the current route
-  const router = useRouter(); // programmatically navigate
-  const currentIndex = ref(SubPages.SubPages.findIndex((page) => page.route === route.path));
+<script setup>
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';  // access the active route
+import SubPages from '@/components/SubPages.js';
 
-  // check if a route is the active route
-  const isActivePage = (routeName) => {
-    return route.path === routeName;
-  };
+const route = useRoute(); // access the current route
+const router = useRouter(); // programmatically navigate
+const currentIndex = ref(SubPages.SubPages.findIndex((page) => page.route === route.path));
+
+
+
+// check if a route is the active route
+const isActivePage = (routeName) => {
+  return route.path === routeName;
+};
   
+
+
 // navigate to the previous page
 const navigateLeft = () => {
   if (currentIndex.value > 0) {

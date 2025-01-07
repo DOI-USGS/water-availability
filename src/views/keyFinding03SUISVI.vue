@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { inject, ref, watch } from 'vue';
+import { inject, ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -102,6 +102,9 @@ watch(showHighLevelsOnly, (newValue) => {
     }
 });
 
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
 
 </script>
 

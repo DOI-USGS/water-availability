@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import {inject, ref} from 'vue';
+import {inject, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -63,6 +63,8 @@ import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
+
+
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
@@ -76,6 +78,10 @@ const theseReferences = refArray.filter((item) => filteredReferences.includes(it
 theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(theseReferences);
 
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
 </script>
 
 <style scoped>

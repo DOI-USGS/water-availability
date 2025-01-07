@@ -414,6 +414,10 @@ function transitionToStacked() {
 // On mounted loads data and initializes the chart
 onMounted(async () => {
 
+
+  window.scrollTo(0, 0)
+
+  
   // load the data
   await loadDatasets();
 

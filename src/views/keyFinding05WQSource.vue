@@ -204,6 +204,8 @@ const categoryColors = {
       // run of show
 onMounted(async () => {
 
+  window.scrollTo(0,0);
+  
   // set initial toggle state 
   layers.nitrogen.visible = showNitrogen.value;
   layers.phosphorus.visible = !showNitrogen.value;

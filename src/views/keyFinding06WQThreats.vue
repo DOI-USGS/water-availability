@@ -156,6 +156,8 @@ const height = 650;
 // Run of show
 onMounted(async () => {
 
+  window.scrollTo(0, 0);
+  
   try {
         await loadDatasets();
 

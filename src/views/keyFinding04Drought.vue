@@ -94,6 +94,9 @@ const referenceList = ref(theseReferences);
 
 // functions called here
 onMounted(() => {
+
+  window.scrollTo(0, 0);
+
   addInteractions();
 
   // select default region to start

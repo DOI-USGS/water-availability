@@ -258,9 +258,12 @@ const csvSupplyDemand = 'wa_supply_demand.csv'
 
 // run of show
 onMounted(async () => {
-      // first load the data
-        data.value = await loadData(csvSupplyDemand); // supply and demand data
-        csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
+
+  window.scrollTo(0,0);
+  
+  // first load the data
+  data.value = await loadData(csvSupplyDemand); // supply and demand data
+  csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
 });
 
 // METHODS

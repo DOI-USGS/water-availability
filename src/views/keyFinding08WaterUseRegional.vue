@@ -197,6 +197,9 @@ function updateSelectedRegion(regionName) {
 
 // functions called here
 onMounted(async() => {
+
+  window.scrollTo(0, 0);
+
   try {
     const data = await d3.csv(`${publicPath}${csvWU}`);
     csvData.value = data;
