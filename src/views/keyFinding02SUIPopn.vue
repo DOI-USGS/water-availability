@@ -7,7 +7,7 @@
 
           </div>
           <div class="text-container">
-            <p>The conditions that limit water availability often occur together, including water quantity, quality, and natural flows. For example, areas with limited water supply can be more vulnerable to water quality issues or flow alterations. These maps show four conditions that affect water availability. The darker regions indicate areas that are more limited by that aspect of water availability.</p>
+            <p>The conditions that impact water availability often occur together, including water quantity, quality, and natural flows. For example, areas with limited water supply can be more vulnerable to water quality issues or flow alterations. These maps show four conditions that affect water availability. The darker regions indicate more severe impacts from that particular aspect of water availability.</p>
           </div>
           <div class="text-container">
 
@@ -25,7 +25,7 @@
               <div class="wa-map-text-container" id="gw-map">
                 <h4 class="wa-title">Groundwater quality</h4>
                 <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_gw_wq.png">
-                <p class="wa-text">Groundwater can be affected by high concentrations of contaminants from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, or lithium, as well as salinity and nitrogen. Areas of the country with challenges to groundwater quality include the central and southwestern U.S. Learn more about groundwater quality and water availability in <a href="#/06-water-quality" target="_blank">Key Finding 6</a>.</p>
+                <p class="wa-text">Groundwater can be affected by high concentrations of contaminants from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, or lithium, as well as salinity and nitrogen. Areas of the country with challenges to groundwater quality include the central and southwestern U.S. Learn more about groundwater quality effects on water availability from excess geologic contaminants (<a href="#/06-water-quality" target="_blank">link</a>).</p>
               </div>
               <div class="wa-map-text-container" id="eco-map">
                 <h4 class="wa-title">Altered natural flows</h4>
@@ -34,6 +34,23 @@
               </div>
             </div>
           </div>
+          <div class="caption-container">
+              <div class="caption-text-child">
+                <p> </p>
+              </div>
+            </div> 
+            <div class="caption-container-flex caption-container">
+              <div class="legend-group">
+                <ColorLegend legend-id="legend-wa-none" label="Very low impact" color="var(--wa-none)" />
+                <ColorLegend legend-id="legend-wa-low" label="Low impact" color="var(--wa-low)" />
+                <ColorLegend legend-id="legend-wa-mod" label="Moderate impact" color="var(--wa-mod)" />
+                <ColorLegend legend-id="legend-wa-high" label="High impact" color="var(--wa-high)" />
+                <ColorLegend legend-id="legend-wa-severe" label="Severe impact" color="var(--wa-severe)" />
+                        </div>
+              <div class="caption-text-flex caption-text-child">
+                <p>Maps showing the severity of impacts from water quantity, quality, and altered flows on water availability for each hydrologic region in the lower 48 United States (cite vm). Darker colors indicate more severe impacts to water availability.</p>
+              </div>
+            </div> 
           
           <div class="text-container">
             <h3>What about in the future?</h3>
@@ -63,6 +80,7 @@ import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
+import ColorLegend from '../components/ColorLegend.vue';
 
 
 
