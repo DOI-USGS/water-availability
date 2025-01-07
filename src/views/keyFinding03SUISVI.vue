@@ -35,8 +35,24 @@
               <p class="chart-title">Social vulnerability and water limitation</p>
               <p class="chart-subtitle">Bars show the proportion of the population living in varying levels of water limitation for each social vulnerability classification. </p>
             </div>
-            <div class="text-container">
-              <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_bar.png">
+            <div class="svi-bar-container">
+              <div class="svi-bar-child">
+                <p class="chart-text">Severe social vulnerability </p>
+                <img class="svi-image" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_svi_bar_Severe.png">
+              </div>
+              <div class="svi-bar-child">
+                <p class="chart-text">High social vulnerability </p>
+                <img class="svi-image" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_svi_bar_High.png">
+              </div>
+              <div class="svi-bar-child">
+                <p class="chart-text">Moderate social vulnerability </p>
+                <img class="svi-image" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_svi_bar_Moderate.png">
+              </div>
+              <div class="svi-bar-child">
+                <p class="chart-text">Low social vulnerability </p>
+                <img class="svi-image" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_svi_bar_Low.png">
+              </div>
+              
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
@@ -111,5 +127,23 @@ onMounted(() => {
 <style scoped>
 .viz-scaled {
   max-height: 500px;
+}
+
+.svi-bar-container {
+  width: 65%;
+  min-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.svi-bar-child {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 250px auto;
+  justify-items: right;
+}
+.svi-image {
+  max-width: 600px;
 }
 </style>
