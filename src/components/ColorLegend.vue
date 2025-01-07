@@ -46,7 +46,11 @@
   height: 30px;
   display: inline-block;
   margin-right: 8px;
-  border-radius: 2px;
+  border-radius: 4px;
+   box-shadow:0 0 0 0px #000, 0 0 0 1px #000 inset;
+  -khtml-box-shadow: 0 0 0 0px #000, 0 0 0 1px #000 inset;
+  -moz-box-shadow: 0 0 0 0px #000, 0 0 0 1px #000 inset;
+  -webkit-box-shadow: 0 0 0 0px #000, 0 0 0 1px #000 inset;
 }
   </style>
   
