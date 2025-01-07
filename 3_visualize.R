@@ -205,14 +205,20 @@ p3_targets <- list(
                               height = 6),
              format = "file"
   ),
-  tar_target(p3_popn_circles_barchart_png,
-             viz_popn_barchart(in_sf = p2_popn_bubbles_df,
-                               color_scheme = p3_colors_sui,
-                               png_out = "src/assets/images/R/03_sui_popn_bar.png",
-                               width = 7,
-                               height = 1.5
-                               ),
-             format = "file"),
+  tar_map(
+    values = tibble(svi_break = c(0.25, 0.5, 0.75, 1),
+               svi_label = c("Low", "Moderate", "High", "Severe")),
+    tar_target(p3_popn_barchart_png,
+               viz_popn_barchart(in_sf = p2_popn_bubbles_df,
+                                 color_scheme = p3_colors_sui,
+                                 svi_break = svi_break,
+                                 svi_label = svi_label,
+                                 png_out = sprintf("src/assets/images/R/03_svi_bar_%s.png", svi_label),
+                                 width = 5,
+                                 height = 0.5),
+               format = "file"),
+    names = svi_label
+  ),
   
   
   ##############################################
