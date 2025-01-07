@@ -105,7 +105,7 @@
                 <ColorLegend legend-id="legend-wu-gw" label="Groundwater" color="var(--wu-gw)" />
               </div> 
               <div class="caption-text-flex caption-text-child">
-                <p>Bar charts showing the relative amount of modeled water withdrawn for public supply that comes from surface water (bars that go up) or from groundwater (bars that go down) for the lower 48 United States (cite van meter). The bars are placed from west to east based on the longitude (easting) of the center of each watershed. The watershed with the largest daily water use in that region are labeled for each source. Select a region on the map to view bar charts for that region.</p>
+                <p>Bar charts showing the relative amount of modeled water withdrawn for public supply that comes from surface water (bars that go up) or from groundwater (bars that go down) for the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> The bars are placed from west to east based on the longitude (easting) of the center of each watershed. The watershed with the largest daily water use in that region are labeled for each source. Select a region on the map to view bar charts for that region.</p>
               </div>
           </div>
           <Methods></Methods>
