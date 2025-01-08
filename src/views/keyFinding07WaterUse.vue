@@ -13,7 +13,7 @@
             <li>Public supply, where water is withdrawn or purchased by a water supplier and delivered to many users</li>
           </ul>
           <br>
-        <p>These three uses add up to 224,000 million gallons of water per day.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> In addition, thermoelectric power from saline water uses another approximately 21,000 million gallons of water per day. </p>
+        <p>These three uses add up to 224,000 million gallons of water per day.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In addition, thermoelectric power from saline water uses another approximately 21,000 million gallons of water per day. </p>
       </div>
       <div class="chart-title-container">
             <p class="chart-title">Average daily water use from 2010 to 2020</p>
@@ -64,7 +64,7 @@
       </div>
       <br>
       <div class="text-container">
-        <p>Not all of the water used for humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive loss." Consumptive loss includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive loss is highest for crop irrigation: Only 28% of water used for irrigation returns to the environment.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span> Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment. </p>
+        <p>Not all of the water used for humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive loss." Consumptive loss includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive loss is highest for crop irrigation: Only 28% of water used for irrigation returns to the environment.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment. </p>
       </div>
       <br>
       <br>
