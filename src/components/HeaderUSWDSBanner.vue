@@ -110,23 +110,24 @@
     padding: 0;
   }
   .usa-banner__inner {
-    margin-left: 1rem;
-    padding-left: 0.5rem;
+    margin-left: 10px;
+    padding-left: 5px;
   }
   .usa-banner__header--expanded .usa-banner__inner {
-    margin-left: 1rem;
-    padding-left: 0.5rem;
+    margin-left: 10px;
+    padding-left: 5px;
   }
   .usa-banner__header-flag {
-    width: 1.6rem;
-    margin-right: 0.75rem;
+    width: 16px;
+    margin-right: 7.5px;
   }
   .usa-banner__header-text {
-    font-size: 1.4rem;
+    font-size: 14px;
   }
   .usa-banner__button {
-    font-size: 1.4rem;
+    font-size: 14px;
     color: #78B4E8;
+    margin-left: 5px;
   }
   .usa-banner__button::after {
     background-color: #78B4E8;
@@ -147,17 +148,29 @@
     background-color: #A2CCF1;
   }
   .usa-banner .grid-row.grid-gap-lg {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .usa-media-block__img {
-    margin-right: 0.75rem;
+    margin-right: 7.5px;
   }
   .usa-banner__content {
-    font-size: 1.6rem;
-    max-width: 100rem;
+    font-size: 16px;
+    max-width: 1000px;
+    padding-bottom: 10px;
+    padding-top: 2.5px;
+    padding-right: 10px;
+    padding-left: 5px;
+    @media only screen and (min-width: 40em) {
+      padding-bottom: 15px;
+      padding-top: 15px;
+    }
+    @media only screen and (min-width: 64em) {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
   }
   .usa-banner__icon {
-    width: 4rem;
+    width: 40px;
   }
 </style>
