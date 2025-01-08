@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water limitation is the balance between supply and demand (water use)<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Annually, water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
+                <p>Water limitation is the balance between supply and demand (water use)<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Annually, water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
   
@@ -131,7 +131,7 @@
          <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>When supply decreases, demand increases</h2>
-          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation. Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its' highest<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. As a result, water limitation may be increased for local watersheds.</p>
+          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation. Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its' highest<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. As a result, water limitation may be increased for local watersheds.</p>
         </div>
         <div class="viz-container">
           <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
@@ -150,7 +150,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, inject, watch } from 'vue';
+import { onMounted, ref, reactive, inject } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
@@ -161,7 +161,6 @@ import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import Methods from '../components/Methods.vue';
 import { useRoute } from 'vue-router';
-import { isMobile } from 'mobile-device-detect';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import DumbellChart from '../components/DumbellChart.vue';
 
@@ -184,7 +183,6 @@ theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`
 const referenceList = ref(theseReferences);
 
 // global vars
-const mobileView = isMobile;
 const publicPath = import.meta.env.BASE_URL;
 
 // Reactive data bindings 

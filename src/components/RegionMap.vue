@@ -205,11 +205,11 @@
         });
   
     // selection effects and filtering with interaction
-      function highlightRegionAndUpdateChart(event, d) {
-        // update bar chart with regional data
-        const regionClassFilter = d.properties.Region_nam;
-        emit('regionSelected', regionClassFilter); // send region_nam to parent
-      }
+      // function highlightRegionAndUpdateChart(event, d) {
+      //   // update bar chart with regional data
+      //   const regionClassFilter = d.properties.Region_nam;
+      //   emit('regionSelected', regionClassFilter); // send region_nam to parent
+      // }
 
     // add double outline for CONUS
     svg.append('g')
@@ -235,9 +235,16 @@
       console.error('Error loading TopoJSON:', error);
     }
   });
-  </script>
+
+  // selection effects and filtering with interaction
+  function highlightRegionAndUpdateChart(event, d) {
+    // update bar chart with regional data
+    const regionClassFilter = d.properties.Region_nam;
+    emit('regionSelected', regionClassFilter); // send region_nam to parent
+  }
+</script>
   
-  <style>
+<style>
   .map-container {
     display: flex;
     justify-content: center;
@@ -261,5 +268,5 @@
   .outline-conus {
     filter: drop-shadow(0px 0px 10px rgba(2, 2, 2, 0.5));
   }
-  </style>
+</style>
   

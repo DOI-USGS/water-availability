@@ -137,13 +137,11 @@ import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
-import { isMobile } from 'mobile-device-detect';
 import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import HistogramLegend from '../components/HistogramLegend.vue';
 
 // use for mobile logic
-const mobileView = isMobile;
 const featureToggles = inject('featureToggles');
 const route = useRoute();
 

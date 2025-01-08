@@ -281,7 +281,7 @@ function initHeatmap({dataset, sortBy}) {
     .range([chartDimensions.height-chartDimensions.margin.bottom, chartDimensions.margin.top])
     .padding(0.1);
 
-  const yAxis = d3.axisLeft(yScale)
+  d3.axisLeft(yScale)
     .tickSizeOuter(0)
 
   const colorScale = d3.scaleLinear()
@@ -293,7 +293,7 @@ function initHeatmap({dataset, sortBy}) {
   const t = d3.transition().duration(dur);
 
    // Create a bar for each category.
-   const bar = rectGroup.append("g")
+   rectGroup.append("g")
       .selectAll("rect")
         .data(sortedDataset)
         .join(
@@ -372,7 +372,7 @@ function addInteractions() {
         // Add interaction to wedges
         aquiferSVG.selectAll('.st0')
             .on("mouseover", (event) => mouseoverMap(event))
-            .on("mouseout", (event) => mouseoutMap(event))
+            .on("mouseout", mouseoutMap)
 
         // Add mouseleave to wrapper, which is a group that contains the wedges
         aquiferSVG.selectAll('#wrapper')
@@ -391,8 +391,7 @@ function mouseoverMap(event) {
   aquiferLabel = "the " + matchAquifer.name + " Aquifer"
 };
 
-function mouseoutMap(event) {
-  const regionID = event.target.id;
+function mouseoutMap() {
   imgSrc.value = getImgURL(defaultRegionID);
   aquiferLabel = "principal aquifers of the lower 48 United States"
 };

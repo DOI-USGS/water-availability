@@ -85,53 +85,30 @@
 </template>
 
 <script setup>
-import { inject, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import PageCarousel from '../components/PageCarousel.vue';
-import KeyMessages from '../components/KeyMessages.vue';
-import Methods from '../components/Methods.vue';
-import references from './../assets/text/references.js';
-import References from '../components/References.vue';
-import SubPages from '../components/SubPages';
-import ToggleSwitch from '../components/ToggleSwitch.vue';
+  import { inject, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import PageCarousel from '../components/PageCarousel.vue';
+  import KeyMessages from '../components/KeyMessages.vue';
+  import Methods from '../components/Methods.vue';
+  import references from './../assets/text/references.js';
+  import References from '../components/References.vue';
+  import SubPages from '../components/SubPages';
 
-// S3 resource sourcing
-const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+  // S3 resource sourcing
+  const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
-// global variables
-const baseURL = s3ProdURL + "images/water-availability/";
-const defaultImageID = "03_sui_svi_map";
-const stressImageID = "03_sui_svi_dry_map";
-let imgSrc = ref(getImgURL(defaultImageID));
+  // global variables
+  const route = useRoute();
+  const featureToggles = inject('featureToggles');
 
-// toggle state
-const showHighLevelsOnly = ref(false);
-
-const route = useRoute();
-const featureToggles = inject('featureToggles');
-
-// References logic
-// filter to this page's key message
-const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
-const filteredReferences = filteredMessages[0].references;// extract list of references for this page
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
-theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(theseReferences);
-
-// Methods
-function getImgURL(id) {
-  return `${baseURL}${id}.png`;
-}
-
-watch(showHighLevelsOnly, (newValue) => {
-    if (newValue) {
-        imgSrc.value = getImgURL(stressImageID); // switch to high levels image
-    } else {
-        imgSrc.value = getImgURL(defaultImageID); // switch back to all levels image
-    }
-});
-
+  // References logic
+  // filter to this page's key message
+  const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
+  const filteredReferences = filteredMessages[0].references;// extract list of references for this page
+  const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
+  const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
+  theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+  const referenceList = ref(theseReferences);
 
 </script>
 

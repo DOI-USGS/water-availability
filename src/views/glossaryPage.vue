@@ -28,7 +28,7 @@
     <div class="glossary-container">
         <div id="text-container">
             <h1>Key Definitions</h1>
-            <div class="key-term" v-for="terms in termArray">
+            <div class="key-term" v-for="terms, index in termArray" :key="index">
                 <div class="key-message-item-text">
                     <h3 class="glossary-term"> {{ terms.term }} </h3>
                     <p class="glossary-def"> {{ terms.definition }}</p>
@@ -41,7 +41,7 @@
     </div>
     <div class="references-container">
         <h2>References</h2>
-      <div  v-for="reference in theseReferences">
+      <div v-for="reference in theseReferences" :key="reference.refID">
           <p>
               <span v-html="reference.authors" /> (<span v-html="reference.year" />). <a
               :href="reference.link"
@@ -69,7 +69,6 @@
 <script setup>
 import { ref } from 'vue';
 import glossaryTerms from '@/assets/text/glossaryTerms.js';
-import KeyMessages from '../components/KeyMessages.vue';
 import References from './../assets/text/references.js';
 let menuOpen = ref(false);
 
