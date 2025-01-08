@@ -33,7 +33,7 @@ export default {
         method: [
           {
             header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the conterminous United States for water years 2010 through 2020 (1). Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
+            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the lower 48 United States for water years 2010 through 2020 (1). Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
           },
           {
             header: "Mapping Census Data",
@@ -50,7 +50,7 @@ export default {
         method: [
           {
             header: "Modeling the national water cycle",
-            description: "The annual average hydrologic fluxes and components across the conterminous United States were calculated for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States and evapotranspiration, soil moisture, and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System and the Weather Research and Forecasting model hydrologic modeling system (2, 3, 4). Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation (6).",
+            description: "The annual average hydrologic fluxes and components across the lower 48 United States were calculated for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the lower 48 United States and evapotranspiration, soil moisture, and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System and the Weather Research and Forecasting model hydrologic modeling system (2, 3, 4). Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation (6).",
           },
           {
             header: "Comparing water supply to normal",
@@ -85,12 +85,12 @@ export default {
         method: [
           {
             header: "Modeling water use by year",
-            description: "Total water used for crop irrigation, public supply, and thermoelectric power for the conterminous United States was modeled for water years 2010 through 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (2, 3, 4, 5). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
+            description: "Total water used for crop irrigation, public supply, and thermoelectric power for the lower 48 United States was modeled for water years 2010 through 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (2, 3, 4, 5). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
           },
 
           {
             header: "Calculating consumptive use",
-            description: "For this analysis, the percent of consumptive use for each use category (public supply, irrigation, and thermoelectric water use) was calculated as the amount of water consumed divided by the total water withdrawn. The amount of water withdrawn or consumed were calculated based on average annual values for the conterminous United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (2, 3, 4, 5).",
+            description: "For this analysis, the percent of consumptive use for each use category (public supply, irrigation, and thermoelectric water use) was calculated as the amount of water consumed divided by the total water withdrawn. The amount of water withdrawn or consumed were calculated based on average annual values for the lower 48 United States for water years 2010 through 2020. Water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (2, 3, 4, 5).",
           }
         ]
       },      {
@@ -99,7 +99,7 @@ export default {
         method: [
           {
             header: "Modeling water use",
-            description: "Total water used for crop irrigation, public supply, and thermoelectric power for the conterminous United States was modeled water year 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (3, 4, 5, 6). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
+            description: "Total water used for crop irrigation, public supply, and thermoelectric power for the lower 48 United States was modeled water year 2020 and averaged to a daily value. Thermoelectric water withdrawals were classified as saline or freshwater. All water use data were obtained from newly available output from three water-use models for the categories of public supply, crop irrigation, and thermoelectric power (3, 4, 5, 6). Estimates of water use from models are made at places of use rather than where the withdrawals occur. For example, estimates are made for areas served by public suppliers, for fields that are irrigated, and for thermoelectric facilities. This distinction can be important in places where water is transported from one place in a canal, tunnel, pipe, or aqueduct for use in another place.",
           }
         ]
       }

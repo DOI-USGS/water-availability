@@ -983,7 +983,7 @@ export default {
         label: "Galanter et al., 2023",
         authors: "Galanter, A.E., Gorman Sanisaca, L.E., Skinner, K.D., ..., Worland, S.",
         year: "2023",
-        title: "Thermoelectric-power water use reanalysis for the 2008–2020 period by power plant, month, and year for the conterminous United States",
+        title: "Thermoelectric-power water use reanalysis for the 2008-2020 period by power plant, month, and year for the conterminous United States",
         journal: false,
         journal_name: "",
         journal_issue: "",
