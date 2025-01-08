@@ -203,13 +203,6 @@
                 .raise(); // bring the selected region to the front
           highlightRegionAndUpdateChart(event, d);
         });
-  
-    // selection effects and filtering with interaction
-      // function highlightRegionAndUpdateChart(event, d) {
-      //   // update bar chart with regional data
-      //   const regionClassFilter = d.properties.Region_nam;
-      //   emit('regionSelected', regionClassFilter); // send region_nam to parent
-      // }
 
     // add double outline for CONUS
     svg.append('g')
