@@ -5,7 +5,7 @@
 </template>
   
   <script setup>
-  import { onMounted, ref, watch, defineProps, inject } from 'vue';
+  import { onMounted, ref, watch, inject } from 'vue';
   import * as d3 from 'd3';
 
   const animateTime = inject('animateTime')
@@ -37,7 +37,7 @@ onMounted(() => {
   }
 
   const aggregatedData = aggregateData(props.data);
-  updateBarChart(aggregatedData, 'lower 48 United States');
+  updateBarChart(aggregatedData);
 });
 
 //  aggregate data for the US
@@ -54,7 +54,7 @@ const aggregateData = (data) => {
   }));
 };
 
-const updateBarChart = (data, regionName) => {
+const updateBarChart = (data) => {
   if (!data.length) {
     console.warn('No data provided for the bar chart.');
     return;
@@ -178,7 +178,7 @@ watch(
         ? data
         : data.filter(d => d.Region_nam === regionName)
 
-  updateBarChart(filteredData, regionName);
+  updateBarChart(filteredData);
 });
 </script>
 

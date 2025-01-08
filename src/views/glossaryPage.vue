@@ -41,7 +41,7 @@
     </div>
     <div class="glossary-references-container">
       <h3>References</h3>
-          <div  v-for="reference in theseReferences">
+          <div  v-for="reference in theseReferences" :key="reference.refID" >
             <p>
               <ul>
                 <li><span v-html="reference.authors" /> (<span v-html="reference.year" />). 
@@ -74,12 +74,7 @@
 <script setup>
 import { ref } from 'vue';
 import glossaryTerms from '@/assets/text/glossaryTerms.js';
-<<<<<<< HEAD
-import References from './../assets/text/references.js';
-=======
-import KeyMessages from '../components/KeyMessages.vue';
 import references from './../assets/text/references.js';
->>>>>>> ed72bcb877e076c51371feba5d32a1f04b03ed79
 let menuOpen = ref(false);
 
   // Sort terms
@@ -91,9 +86,7 @@ const filteredReferences = glossaryTerms.references;
 const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
 // sort by order listed on page, reflected in list on subpages.js
 const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
-console.log(sortedReferences)
 sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(sortedReferences);
 
 // global objects
 // S3 resource sourcing

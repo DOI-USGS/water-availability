@@ -120,12 +120,12 @@
 import { ref, onMounted, inject, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
-import Reg from "../../public/assets/Regions.svg";
+import Reg from "../assets/svgs/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import Methods from '../components/Methods.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';
 import RegionMap from '../components/RegionMap.vue';
 import HorizontalBar from '../components/HorizontalBar.vue';

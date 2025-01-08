@@ -176,7 +176,7 @@ import StackedBar from '../components/StackedBar.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import SubPages from '../components/SubPages';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import Methods from '../components/Methods.vue';
 import { useRoute } from 'vue-router';
 import ToggleSwitch from '../components/ToggleSwitch.vue';

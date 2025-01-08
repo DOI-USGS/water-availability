@@ -78,7 +78,7 @@ import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';
 import ColorLegend from '../components/ColorLegend.vue';
 

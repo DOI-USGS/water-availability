@@ -63,12 +63,12 @@
 import { ref, onMounted, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3Base from 'd3';
-import Reg from "../../public/assets/Regions.svg";
+import Reg from "../assets/svgs/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/Methods.vue';
 import references from '../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages.js';
 import ColorLegend from '../components/ColorLegend.vue';
 

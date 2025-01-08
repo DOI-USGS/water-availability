@@ -3,7 +3,7 @@
 </template>
   
 <script setup>
-  import { onMounted, ref, watch, defineProps } from 'vue'
+  import { onMounted, ref, watch } from 'vue'
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
 

@@ -7,7 +7,7 @@
       </button>
       <div class="panel-references">
         <div class="references-container">
-          <div  v-for="reference in theseReferences">
+          <div v-for="reference in theseReferences" :key="reference.refID" >
             <p>
               <span v-html="reference.referenceNumber"/>.   
               <span v-html="reference.authors" /> (<span v-html="reference.year" />). 
