@@ -50,7 +50,7 @@ export default {
         method: [
           {
             header: "Modeling the national water cycle",
-            description: "The annual average hydrologic fluxes across the conterminous United States was calculated for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States and evapotranspiration and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System and the Weather Research and Forecasting model hydrologic modeling system (2, 3, 4). Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation (6).",
+            description: "The annual average hydrologic fluxes and components across the conterminous United States were calculated for water years 2010 through 2020. Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the conterminous United States and evapotranspiration, soil moisture, and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System and the Weather Research and Forecasting model hydrologic modeling system (2, 3, 4). Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation (6).",
           },
           {
             header: "Comparing water supply to normal",

@@ -988,7 +988,7 @@ export default {
         journal_name: "",
         journal_issue: "",
         data_release: true,
-        link: "https://10.5066/P9ZE2FVM",
+        link: "https://doi.org/10.5066/P9ZE2FVM",
         doi: "10.5066/P9ZE2FVM"
       },
       {
@@ -1001,7 +1001,7 @@ export default {
         journal_name: "",
         journal_issue: "",
         data_release: true,
-        link: "https://10.5066/P9FUL880",
+        link: "https://doi.org/10.5066/P9FUL880",
         doi: "10.5066/P9FUL880"
       }
     ]
