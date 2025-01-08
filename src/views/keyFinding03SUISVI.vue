@@ -78,7 +78,7 @@ import { inject, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import references from './../assets/text/references.js';
 import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';

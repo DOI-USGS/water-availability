@@ -177,7 +177,7 @@ import KeyMessages from '../components/KeyMessages.vue';
 import SubPages from '../components/SubPages';
 import references from './../assets/text/references.js';
 import References from '../components/ReferencesSection.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import { useRoute } from 'vue-router';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import DumbellChart from '../components/DumbellChart.vue';

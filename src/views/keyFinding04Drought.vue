@@ -66,7 +66,7 @@ import * as d3Base from 'd3';
 import Reg from "../assets/svgs/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import references from '../assets/text/references.js';
 import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages.js';

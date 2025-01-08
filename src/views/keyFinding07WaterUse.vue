@@ -82,7 +82,7 @@ import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import references from './../assets/text/references.js';
 import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';
