@@ -1,6 +1,6 @@
 [
   {
-    "name": "vizlab-water-availability",
+    "name": "water-availability",
     "organization": "U.S. Geological Survey",
     "description": "{project_description}",
     "version": "main",
