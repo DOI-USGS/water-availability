@@ -7,7 +7,7 @@ export default {
         method: [
           {
             header: "Calculating supply and demand",
-            description: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020 (1, 3, 4). Water supply was calculated as the sum of annual runoff for all watersheds (HUC12) in the region divided by the area of the region. Consumptive use was calculated as the sum of water consumed for crop irrigation, thermoelectric power, and public supply within all watersheds (HUC8) in the region divided by the area of the region. Hydrologic regions are based on Van Metre et al. (2020) river basins (2).",
+            description: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020 (1, 3, 4). Water supply was calculated as the sum of annual runoff for all watersheds (HUC12) in the region divided by the area of the region. Consumptive use was calculated as the sum of water consumed for crop irrigation, thermoelectric power, and public supply within all watersheds (HUC12) in the region divided by the area of the region. Hydrologic regions are based on Van Metre et al. (2020) river basins (2).",
           },
           {
             header: "Calculating water limitation",
@@ -33,7 +33,7 @@ export default {
         method: [
           {
             header: "Calculating water limitation",
-            description: "Water limitation was calculated as an average supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the lower 48 United States for water years 2010 through 2020 (1). Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
+            description: "Water limitation was calculated as an average surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive uses in the lower 48 United States for water years 2010 through 2020 (1). Water limitation is expressed as the proportion of the natural supply that is consumed for human uses, on average during 2010-2020. Categories of water limitation included very low, which was between 0 and 0.2, low between 0.2 and 0.4, moderate between 0.4 and 0.6, high between 0.6 and 0.8, and severe, which was above 0.8."
           },
           {
             header: "Mapping Census Data",

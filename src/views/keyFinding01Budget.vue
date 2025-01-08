@@ -43,7 +43,7 @@
         <div class="text-container">
           <h2>Does this mean we have enough water?</h2>
         <p>
-          When demand approaches supply, water becomes limited. At local and regional scales, water limitation impacts human and ecosystem needs. Between 2010 and 2020, significant portions of the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert regions had widespread local water limitation. Future global population growth, increasing food demands, and climatic changes could drive further imbalance between supply and demand, exacerbating water limitation across the Nation. 
+          When demand approaches supply, water becomes limited. At local and regional scales, water limitation impacts human and ecosystem needs. Between 2010 and 2020, significant portions of the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert regions had widespread local water limitation. Future population growth, increasing food demands, and climatic changes could drive further imbalance between supply and demand, exacerbating water limitation across the Nation. 
         </p>
         </div>
         <!-- Regional SUI map with updating stacked bar chart -->
