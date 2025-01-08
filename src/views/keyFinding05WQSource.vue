@@ -103,7 +103,7 @@
             
             <div class="text-container">
               <h3>But, aren't nutrients good for us?</h3>
-              <p>Nutrients are important for all living organisms, but only in the right amounts and at the right times. Excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, but indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely phosphorus dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
+              <p>Nutrients are important for all living organisms, but only in the right amounts and at the right times. Excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, but indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
             <br>
             <Methods></Methods>
