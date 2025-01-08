@@ -39,29 +39,34 @@
             </div>
         </div>
     </div>
-    <div class="references-container">
-        <h2>References</h2>
-      <div v-for="reference in theseReferences" :key="reference.refID">
-          <p>
-              <span v-html="reference.authors" /> (<span v-html="reference.year" />). <a
-              :href="reference.link"
-              target="_blank"
-              ><span v-html="reference.title" :class="{ report: reference.report }"/></a>
-              <span v-if="reference.data_release">: U.S. Geological Survey data release</span>.
-              <span v-if="reference.publication_info"> {{ reference.publication_info }}. </span>
-              <span v-if="reference.journal">
-              <span v-html="reference.journal_name" class="journal-name"></span>
-              <span v-if="reference.journal_issue">, {{ reference.journal_issue }}</span>.
-              </span>
-              <span v-if="reference.doi">DOI: {{ reference.doi }}</span>
-          </p>
-      </div>
-    </div>
+    <div class="glossary-references-container">
+      <h3>References</h3>
+          <div  v-for="reference in theseReferences">
+            <p>
+              <ul>
+                <li><span v-html="reference.authors" /> (<span v-html="reference.year" />). 
+                <a
+                :href="reference.link"
+                target="_blank"
+                ><span v-html="reference.title" :class="{ report: reference.report }"/></a>
+                <span v-if="reference.data_release">: U.S. Geological Survey data release</span>.
+                <span v-if="reference.publication_info"> {{ reference.publication_info }}. </span>
+                <span v-if="reference.journal">
+                <span v-html="reference.journal_name" class="journal-name"></span>
+                <span v-if="reference.journal_issue">, {{ reference.journal_issue }}</span>.
+                </span>
+                <span v-if="reference.doi">DOI: {{ reference.doi }}</span>
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
     <div class="report-link-container">
           <a href="index.html" rel="noopener noreferrer" class="report-link">
             <h3> Return Home</h3>
           </a>       
     </div>
+    
   </section>
   </section>
 </template>
@@ -69,23 +74,26 @@
 <script setup>
 import { ref } from 'vue';
 import glossaryTerms from '@/assets/text/glossaryTerms.js';
+<<<<<<< HEAD
 import References from './../assets/text/references.js';
+=======
+import KeyMessages from '../components/KeyMessages.vue';
+import references from './../assets/text/references.js';
+>>>>>>> ed72bcb877e076c51371feba5d32a1f04b03ed79
 let menuOpen = ref(false);
 
   // Sort terms
 const termArray = glossaryTerms.key.sort((a, b) => a.term.localeCompare(b.term));
 
-// extract list of references for this page
+// References logic
+// filter to this page's key message
 const filteredReferences = glossaryTerms.references;
-console.log(filteredReferences)
-
-
-const refArray = References.key.sort((a, b) => a.authors.localeCompare(b.authors));
-
-// extract references that match the refID from global list
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID));
-
-console.log(theseReferences)
+const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
+// sort by order listed on page, reflected in list on subpages.js
+const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
+console.log(sortedReferences)
+sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(sortedReferences);
 
 // global objects
 // S3 resource sourcing
@@ -114,7 +122,16 @@ function getIconURL(suffix) {
     width: 90vw;
   }
 }
-
+.glossary-references-container {
+  width: 60vw;
+  margin: 0 auto;
+  padding: 30px 0 10px 30px;
+}
+@media only screen and (max-width: 768px) {
+  .glossary-references-container{
+    width: 90vw;
+  }
+}
 
 
 .key-message-item {

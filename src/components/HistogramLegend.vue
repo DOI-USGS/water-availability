@@ -43,31 +43,47 @@
     
  // Watch for updates in data or region name
 watch(
-  () => [props.data, props.regionName],
-  ([newData, newRegion]) => {
-    updateLegend(newData, newRegion);
+  () => props.data,
+  () => {
+    updateLegend(props.data);
   },
   { deep: true }
+);
+watch(
+  () => props.layerPaths, // watch layerPaths for changes
+  () => {
+    setupSVG(); // clear and reinitialize the SVG
+    initLegend(props.data); // rerun initLegend with updated data
+  },
+  { deep: true } // deep watch in case layerPaths contains nested objects
 );
 
 // create svg only once
 function setupSVG() {
+  d3.select(legendSvg.value).selectAll('*').remove();
   svg = d3.select(legendSvg.value)
     .attr('width', width)
     .attr('height', height)
-    .attr('viewBox', `-20 0 ${width+20} ${height}`);
+    .attr('viewBox', `-20 0 ${width+20} ${height+20}`);
 }
 
 // Initialize Legend
 function initLegend(data) {
-  const { colors } = props.layerPaths;
 
   // Sort data
   const sortedData = processData(data);
+  
+  // for adding legend below histogram
+  const uniqueCategories = Array.from(new Set(sortedData.map(d => d.category)));
+  const dummyData = uniqueCategories.map(category => ({
+    category: category, 
+    value: 0.2 // assign a fixed value
+  }));
+
 
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
-    .range(colors)
+    .range(props.layerPaths.colors)
 
     const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
@@ -83,8 +99,19 @@ function initLegend(data) {
   svg.selectAll('rect')
     .data(sortedData, d => cleanLabel(d.category))
     .join('rect')
+    .attr('class','main')
     .attr('x', d => xScale(cleanLabel(d.category)))
     .attr('y', d => yScale(d.value))
+    .attr('width', xScale.bandwidth())
+    .attr('height', d => rectHeight - yScale(d.value))
+    .style('fill', d => colorScale(d.category));
+
+    svg.selectAll('rect.static')
+    .data(dummyData, d => cleanLabel(d.category))
+    .join('rect')
+    .attr('class','static')
+    .attr('x', d => xScale(cleanLabel(d.category)))
+    .attr('y', d => height-25)
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
     .style('fill', d => colorScale(d.category));
@@ -99,7 +126,7 @@ function initLegend(data) {
     .attr('transform', `translate(0, ${rectHeight})`)
     .call(axisBottom)
     .selectAll('text') // select axis labels
-    .style('text-anchor', 'middle') // align to the start (left)
+    .style('text-anchor', 'middle') // align to the middle
     .attr('x', 0)
     .style('font-size', '14px'); 
 
@@ -109,40 +136,29 @@ function initLegend(data) {
     return `translate(${xScale(d)}, 0)`;
   });
 
-  // add x-axis title below chart title
-  svg.append('text')
-    .attr('class', 'chart-subtitle')
-    .attr('x', -5) 
-    .attr('y', 40) 
-    .attr('text-anchor', 'start') 
-    .text(`Total nutrient load (kg/yr) by area`); 
-
 
 // add y-axis
- const axisRight = d3.axisRight(yScale).ticks(3).tickFormat(d => `${d * 100}%`).tickSize(3);
+ const axisRight = d3.axisRight(yScale)
+  .ticks(3)
+  .tickFormat(d => `${d * 100}%`)
+  .tickSize(3);
 
   svg.append('g')
     .attr('class', 'y-axis')
     .attr('transform', `translate(${width-40}, 0)`)
     .call(axisRight) 
 
-  const displayTitle = props.regionName === 'lower 48 United States' ? props.regionName : `${props.regionName} Region`;
-
-  svg.selectAll('.chart-title')
-    .data([displayTitle])
-    .join(
-      enter => enter.append('text')
-        .attr('class', 'chart-title')
-        .attr('x', -5)
-        .attr('y', 20)
-        .text(`${props.layerPaths.name} concentrations in the ${displayTitle}`))
 }
 
 // Update Legend
 function updateLegend(data) {
-  
-  const { colors } = props.layerPaths;
-  const sortedData = data;
+ 
+  const sortedData = processData(data);
+  const uniqueCategories = Array.from(new Set(sortedData.map(d => d.category)));
+  const dummyData = uniqueCategories.map(category => ({
+    category: category, 
+    value: 0.25 // assign a fixed value
+  }));
 
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
@@ -156,13 +172,14 @@ function updateLegend(data) {
 
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
-    .range(colors)
+    .range(props.layerPaths.colors)
 
-  svg.selectAll('rect')
+  svg.selectAll('rect.main')
     .data(sortedData, d => cleanLabel(d.category))
     .join(
       enter => enter.append('rect')
       .attr('x', d => xScale(cleanLabel(d.category)))
+      .attr('class','main')
         .attr('y', d => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
@@ -184,6 +201,16 @@ function updateLegend(data) {
         .attr('height', 0) // Shrink height
         .remove()
     );
+
+    svg.selectAll('rect.static')
+    .data(dummyData, d => cleanLabel(d.category))
+    .join('rect')
+    .attr('class','static')
+    .attr('x', d => xScale(cleanLabel(d.category)))
+    .attr('y', d => height-25)
+    .attr('width', xScale.bandwidth())
+    .attr('height', d => rectHeight - yScale(d.value))
+    .style('fill', d => colorScale(d.category));
 
   const axisBottom = d3.axisBottom(xScale)
    .tickFormat(d => d)
@@ -208,27 +235,6 @@ function updateLegend(data) {
     });
 
 
-  // update chart title
-  const displayTitle = props.regionName === 'lower 48 United States' ? props.regionName : `${props.regionName} Region`;
-
-  svg.selectAll('text.chart-title')
-    .data([displayTitle])
-    .join(
-      enter => enter.append('text')
-        .attr('class', 'chart-title')
-        .attr('x', -5)
-        .attr('y', 20)
-        .text(`${props.layerPaths.name} concentrations in the ${displayTitle}`),
-      update => update.transition().duration(750).text(`${props.layerPaths.name} concentrations in the ${displayTitle}`)
-    );
-    d3.select('.chart-text').remove()
-  // add x-axis title below chart title
-  svg.append('text')
-    .attr('class', 'chart-text')
-    .attr('x', -5) 
-    .attr('y', 40) 
-    .attr('text-anchor', 'start') 
-    .text(`Total nutrient load (kg/yr) by area`); 
 }
 
 // Process Data

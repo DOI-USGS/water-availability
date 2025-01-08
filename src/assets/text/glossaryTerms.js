@@ -2,15 +2,15 @@ export default {
     key: [
         {
             term: "Water supply",
-            definition: "Water supply includes all of the ways in which water enters a watershed. Water supply includes precipitation as rain, sleet, snow, etc., streamflow, and melting snow and ice. Water supply can also come from reservoirs of water such as soil moisture, lakes and streams, groundwater, and human-made reservoirs and dams."
+            definition: "Water supply includes all of the ways in which water enters a watershed (Gorski et al., 2025) Water supply includes precipitation as rain, sleet, snow, etc., streamflow, and melting snow and ice. Water supply can also come from reservoirs of water such as soil moisture, lakes and streams, groundwater, and human-made reservoirs and dams."
         },   
         {
             term: "Water demand",
-            definition: "Water demand represents the ways in which we use water from a given watershed, including for human-uses like thermoelectric power generation, crop irrigation, or public supply. Other natural demands on water include plant uptake and loss, which is called transpiration, water evaporation off surfaces, streamflow out of watersheds, and consumptive use which includes uptake by living organisms including plants and animals."
+            definition: "Water demand represents the ways in which we use water from a given watershed, including for human-uses like thermoelectric power generation, crop irrigation, or public supply (Medalie et al., 2025). Other natural demands on water include plant uptake and loss, which is called transpiration, water evaporation off surfaces, streamflow out of watersheds, and consumptive use which includes uptake by living organisms including plants and animals."
         },
         {
             term: "Water limitation",
-            definition: "Water limitation was calculated as an average surface water-supply and use index (SUI), which expresses the imbalance between surface water-supply and consumptive uses The SUI metric was developed to express surface water-supply and use imbalances within 12-digit hydrologic unit code (HUC12) catchments arising from climatic variability and human consumptive uses. It compares long-term average surface-water supply with monthly water supply, which varies over time because of climatic conditions and human consumptive water use. A high index value indicates that a high proportion of the average supply is either consumed by human use or unavailable because of climatic variation, leading to high water stress (Stets and others, in prep.)."
+            definition: "Water limitation was calculated as an average surface water-supply and use index (SUI), which expresses the imbalance between surface water-supply and consumptive uses (Stets et al., 2025). The SUI metric was developed to express surface water-supply and use imbalances within 12-digit hydrologic unit code (HUC12) catchments arising from climatic variability and human consumptive uses. It compares long-term average surface-water supply with monthly water supply, which varies over time because of climatic conditions and human consumptive water use. A high index value indicates that a high proportion of the average supply is either consumed by human use or unavailable because of climatic variation, leading to high water stress."
         },
         {
             term: "Water year",
@@ -39,6 +39,9 @@ export default {
     ],
     references: [
         "CDC2022",
-        "Flanagan2011"
+        "Flanagan2011",
+        "Medalie2025",
+        "Stets2025",
+        "Gorski2025"
     ]
 }

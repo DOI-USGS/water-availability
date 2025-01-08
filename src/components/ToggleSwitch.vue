@@ -83,8 +83,7 @@ defineEmits(['update:modelValue']);
 
 .toggle-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
   gap: 10px;
 }
 
@@ -121,11 +120,13 @@ defineEmits(['update:modelValue']);
 
 /* toggle slider styles */
 .toggle-slider {
+  flex-shrink: 0;
   position: relative;
   width: 40px;
   height: 20px;
   border-radius: 20px;
   transition: background-color 0.3s ease;
+  border: 1px solid var(--black-soft);
 }
 
 .toggle-slider::before {
@@ -135,18 +136,16 @@ defineEmits(['update:modelValue']);
   height: 16px;
   background-color: white;
   border-radius: 50%;
-  top: 2px;
-  left: 2px;
+  top: 1px;
+  left: 1%;
   transition: transform 0.3s ease;
+  border: 1px solid var(--black-soft); 
 }
 
 /* move slider to the right when checked */
 .toggle-input:checked + .toggle-slider::before {
   transform: translateX(20px);
+  border: 1px solid var(--black-soft); 
 }
 
-/* change slider background when checked */
-.toggle-input:checked + .toggle-slider {
-  background-color: var(--blue-bright);
-}
 </style>

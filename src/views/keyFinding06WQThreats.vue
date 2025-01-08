@@ -3,8 +3,8 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
           <div  class="text-container">
-              <h2>Naturally occurring contaminants in groundwater</h2>
-              <p>Geogenics are the most common contaminants found in drinking water aquifers at elevated or high-concentrations, affecting more than 30 million people in the contiguous United States (Belitz and others, 2022). What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic constituents in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
+              <h2>Groundwater quality varies regionally</h2>
+              <p>Geogenics are the most common contaminants found in drinking water aquifers at elevated or high-concentrations, affecting more than 30 million people in the contiguous United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'Belitz2022')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic constituents in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
             </div>
           <div class="chart-title-container">
               <p class="chart-title">Groundwater quality in {{ aquiferLabel }}</p>
@@ -15,38 +15,20 @@
               :src="imgSrc">
               <aquiferWedges id="aquifer-svg" />
             </div>
-            <div class="caption-container">
+            <div class="caption-container-flex caption-container">
+              <div class="legend-group">
+                <ColorLegend legend-id="legend-wq-high" label="Above human-health benchmark" color="var(--wq-high)" />
+                <ColorLegend legend-id="legend-wq-mod" label="Exceeds half of the benchmark" color="var(--wq-mod)" />
+                <ColorLegend legend-id="legend-wq-low" label="Normal levels" color="var(--wq-low)" />
+                        </div>
+              <div class="caption-text-flex caption-text-child">
+                <p>Groundwater quality relative to the human-health benchmark for drinking water. For each principal aquifer in the lower 48 United States<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span>, a pie chart shows the proportion of the aquifer with contaminant levels for 16 total contaminants (including arsenic, manganese, lead, and nitrate). To explore individual constituents see these online maps (link).</p>
+              </div>
+            </div> 
 
-              <div class="caption-legend-child">
-                <div class="legend_item" id="legend-wq-high" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Exceeds benchmark
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-mod" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Exceeds half of the benchmark
-                  </label>
-                </div>
-                <div class="legend_item" id="legend-wq-low" >
-                  <label class="legend_wrap">
-                  <input type="legend" name="legend" class="legend-inp">
-                  <span class="legend_mark"></span>
-                    Does not exceed benchmark
-                  </label>
-                </div>
-              </div>
-              <div class="caption-text-child">
-                <p>Groundwater quality relative to the human-health benchmark for drinking water. For each principal aquifer in the lower 48 United States (cite chapter), a pie chart shows the proportion of the aquifer with contaminant levels for 16 total contaminants (including arsenic, manganese, lead, and nitrate). To explore individual constituents see these online maps (link).</p>
-              </div>
-            </div>
             <div class="text-container" >
-              <h2 class="spacer" style="padding-top:50px">Surface water impairment varies by use</h2>
-              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides important ecosystem services for humans, including sourcing fish for consumption and providing recreational benefit. </p>
+              <h2 class="spacer" style="padding-top:50px">Surface water quality varies by use</h2>
+              <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides many benefits from sourcing fish for food to providing recreational benefit. </p>
             </div>
 
             <div class="chart-title-container">
@@ -54,15 +36,15 @@
             <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired</p>
             <div class="checkbox_item">
                   <div class="checkbox_wrap">
-                    <p class="chart-text">Sort chart by:</p>
-                    <label class="chart-text">
-                      <input type="radio" name="threats" @click="toggleUse('DW')" checked="checked"> Drinking Water
+                    <b class="toggle-text">Sort chart by: </b>
+                    <label class="toggle-text">
+                      <input type="radio" name="threats" class="radio-button" @click="toggleUse('DW')" checked="checked"> Drinking Water
                     </label>
-                    <label class="chart-text">
-                      <input type="radio" name="threats" @click="toggleUse('Fish')"> Fish Consumption
+                    <label class="toggle-text">
+                      <input type="radio" name="threats" class="radio-button" @click="toggleUse('Fish')"> Fish Consumption
                     </label>
-                    <label class="chart-text">
-                      <input type="radio" name="threats" @click="toggleUse('Rec')"> Recreational Use
+                    <label class="toggle-text">
+                      <input type="radio" name="threats" class="radio-button" @click="toggleUse('Rec')"> Recreational Use
                     </label>
                   </div>
                 </div>
@@ -74,13 +56,13 @@
           
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>Heatmap of the top threats to drinking water, fish consumption, and recreational use. Chart fill and percentages show the percent of river miles that are threatened by each contaminant. Darker fill indicates a higher degree of threat by that source. Data are from (CITE DATA).</p>
+                <p>Heatmap of the top threats to drinking water, fish consumption, and recreational use. Chart fill and percentages show the percent of river miles that are threatened by each contaminant. Darker fill indicates a higher degree of threat by that source.<span v-for="reference in theseReferences.filter(item => item.refID === 'EPA2023')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
                 <br>
               </div>
             </div>
             <div class="text-container">
               
-              <p>Surface water quality faces threats from metals, salinity, chemicals, and pathogens. Metals like iron, arsenic, and mercury come from natural sources such as rocks and soil but can also enter water through mining, farming, and industry (US EPA, 2023). Too much salt, caused by natural processes and human activities (like irrigation and road deicers) can harm ecosystems and damage water pipes (Stets et al. 2020). Harmful chemicals called PCBs (polychlorinated biphenyls) were banned years ago, however they still remain in rivers and lakes. PCBs build up in aquatic organisms, through food webs, accumulate in fish, and pose health risks to humans through fish consumption (Ngoubeyou et al., 2022). Pathogens from wastewater, animal waste, and storm runoff can cause illnesses (Cabral, 2010; Verhougstraete et al., 2015; U.S. Environmental Protection Agency, 2020). Protecting surface water is important for safe drinking water, healthy ecosystems, and public health.</p>
+              <p>Surface water quality faces threats from metals, salinity, chemicals, and pathogens. Metals like iron, arsenic, and mercury come from natural sources such as rocks and soil but can also enter water through mining, farming, and industry.<span v-for="reference in theseReferences.filter(item => item.refID === 'EPA2023')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Too much salt, caused by natural processes and human activities (like irrigation and road deicers) can harm ecosystems and damage water pipes.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Harmful chemicals called PCBs (polychlorinated biphenyls) were banned years ago, however they still remain in rivers and lakes. PCBs build up in aquatic organisms, through food webs, accumulate in fish, and pose health risks to humans through fish consumption <span v-for="reference in theseReferences.filter(item => item.refID === 'Ngoubeyou2022')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span>. Pathogens from wastewater, animal waste, and storm runoff can cause illnesses <span v-for="reference in theseReferences.filter(item => item.refID === 'Cabral2010')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span>. Protecting surface water is important for safe drinking water, healthy ecosystems, and public health.</p>
           
             </div>
               <Methods></Methods>
@@ -104,6 +86,7 @@ import references from './../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
+import ColorLegend from '../components/ColorLegend.vue';
 import { isMobile } from 'mobile-device-detect';
 
 // S3 resource sourcing
@@ -153,10 +136,11 @@ const route = useRoute();
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 const filteredReferences = filteredMessages[0].references;// extract list of references for this page
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
-theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(theseReferences);
+const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
+// sort by order listed on page, reflected in list on subpages.js
+const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
+sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(sortedReferences);
 
 // Reactive data bindings 
 const dataDW = ref([]);
@@ -176,6 +160,8 @@ const height = 650;
 // Run of show
 onMounted(async () => {
 
+  window.scrollTo(0, 0);
+  
   try {
         await loadDatasets();
 

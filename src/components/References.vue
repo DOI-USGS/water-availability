@@ -35,6 +35,10 @@
           </a>
         </div>
     </div>
+    <div class="home-link-container">
+          <a href="index.html" target="_blank" rel="noopener noreferrer" class="home-link">
+            <h3> Return Home</h3></a>     
+        </div>
 </template>
   
 <script setup>
@@ -53,7 +57,8 @@ onMounted(() => {
   const acc = document.getElementsByClassName("references-accordion");
   for (let i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function () {
-      this.classList.toggle("references-active");
+      // toggle class
+      this.classList.toggle("active");
       const referencesPanel = this.nextElementSibling;
       const symbol = this.querySelector('.symbol');
       if (referencesPanel.style.display === "block") {

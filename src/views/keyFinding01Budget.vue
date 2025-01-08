@@ -3,44 +3,54 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water limitation is the balance between supply and demand (water use)<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Annually, water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
+                <p>Water limitation is the balance between supply and demand (water use).<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
-  
         <!-- Supply and Demand dumbell chart -->
+        <div class="chart-title-container">
+            <p class="chart-title">Water supply vs demand</p>
+            <p class="chart-subtitle">Regional estimates in mm/year for supply (solid circle) and demand (hollow circle)</p>
+            <!-- Supply and Demand dumbell toggles -->
+             <div class="toggle-group">
+              <ToggleSwitch 
+                v-model="demandEnabled" 
+                rightLabel="Water demand" 
+                :rightColor="'var(--ws-demand)'"
+              />
+              <ToggleSwitch 
+                v-model="supplyEnabled" 
+                rightLabel="Water supply" 
+                :rightColor="'var(--ws-demand)'"
+              />
+            </div>
+          </div>
           <DumbellChart 
             :data="data" 
             :animateTime="animateTime"
             v-model:supplyEnabled="supplyEnabled" 
             v-model:demandEnabled="demandEnabled"
           /> 
-          <!-- Supply and Demand dumbell toggles -->
-          <ToggleSwitch 
-            v-model="demandEnabled" 
-            rightLabel="Water demand" 
-            :rightColor="'var(--ws-demand)'"
-          />
-          <ToggleSwitch 
-            v-model="supplyEnabled" 
-            rightLabel="Water supply" 
-            :rightColor="'var(--ws-demand)'"
-          />
-
         <div class="caption-container">
-          <!-- Supply and Demand capation -->
+          <!-- Supply and Demand caption -->
           <div class="caption-text-child">
-            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
+            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
           </div>
         </div>
+        <br>
+        <br>
 
         <!-- Regional SUI section -->
         <div class="text-container">
           <h2>Does this mean we have enough water?</h2>
         <p>
-          When demand approaches supply water becomes limited. At local and regional scales, water limitation impacts human and ecosystem needs. Between 2010 and 2020, significant portions of the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert regions had widespread local water limitation. Future global population growth, increasing food demands, and climatic changes could drive further imbalance between supply and demand, and water limitation across the Nation. 
+          When demand approaches supply, water becomes limited. At local and regional scales, water limitation impacts human and ecosystem needs. Between 2010 and 2020, significant portions of the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert regions had widespread local water limitation. Future global population growth, increasing food demands, and climatic changes could drive further imbalance between supply and demand, exacerbating water limitation across the Nation. 
         </p>
         </div>
         <!-- Regional SUI map with updating stacked bar chart -->
+        <div class="chart-title-container">
+            <p class="chart-title">Water limitation in {{ selectedRegion !== 'lower 48 United States' ? selectedRegion + ' Region' : selectedRegion }}</p>
+            <p class="chart-subtitle">Bars show the percent of the region with very low, low, moderate, high, and severe water limitation</p>
+          </div>
         <div class="image-container">
           <StackedBar 
             categoricalVariable="d3_category"
@@ -82,8 +92,9 @@
         />
         </div>
         <!-- SUI category on and off toggles -->
-        <div class="caption-container">
-          <b>Water limitation:</b> 
+        <div class="caption-container-flex caption-container">
+          <div class="toggle-group">
+          <b>Water limitation</b> 
               <!-- Very Low -->
               <ToggleSwitch 
                 v-model="veryLowEnabled" 
@@ -123,22 +134,29 @@
                 :rightColor="layers.severe.color"
                 @update:modelValue="toggleLayer('severe')" 
               />
-              <br/>
-              <div class="caption-text-child">
-                <p>Water limitation across the lower 48, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. When regions are selected on the map the bar chart reflects water limitation for that region.</p>
+              </div>
+              <div class="caption-text-flex caption-text-child">
+                <br>
+                <p>Water limitation across the lower 48 United States, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Select regions on the map to view the proportions of water limitation levels for that region.</p>
               </div>
         </div>    
+        <br>
+        <br>
          <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>When supply decreases, demand increases</h2>
-          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation. Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its' highest<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. As a result, water limitation may be increased for local watersheds.</p>
+          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
         </div>
+        <div class="chart-title-container">
+            <p class="chart-title">A decade of water limitation</p>
+            <p class="chart-subtitle">The proportion of the lower 48 United States in each water limitation category through time</p>
+          </div>
         <div class="viz-container">
           <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
         </div>
         <div class="caption-container">
           <div class="caption-text-child">
-            <p>Water limitation across the lower 48 by month from January 2010 through January 2020. The bars show the proportion of each water limitation category.</p>
+            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Each step in the chart represents one month of time. </p>
           </div>
         </div>  
         <Methods></Methods>
@@ -177,10 +195,12 @@ const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 const filteredReferences = filteredMessages[0].references;// extract list of references for this page
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
-theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(theseReferences);
+const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
+// sort by order listed on page, reflected in list on subpages.js
+const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
+console.log(sortedReferences)
+sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(sortedReferences);
 
 // global vars
 const publicPath = import.meta.env.BASE_URL;
@@ -241,9 +261,12 @@ const csvSupplyDemand = 'wa_supply_demand.csv'
 
 // run of show
 onMounted(async () => {
-      // first load the data
-        data.value = await loadData(csvSupplyDemand); // supply and demand data
-        csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
+
+  window.scrollTo(0,0);
+  
+  // first load the data
+  data.value = await loadData(csvSupplyDemand); // supply and demand data
+  csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
 });
 
 // METHODS
