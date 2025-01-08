@@ -281,13 +281,13 @@ export default {
         label: "Scholl et al., 2025",
         authors: "Scholl, M.A., McCabe, G.J., Olson, C.G., and Powlen, K.A.",
         year: "2025",
-        title: "Chapter E: Climate change and future water availability in the United States ",
-        journal: false,
-        journal_name: "",
-        journal_issue: "",
+        title: "Climate change and future water availability in the United States, chap. E of U.S. Geological Survey integrated water availability assessment—2010–20",
+        journal: true,
+        journal_name: "U.S. Geological Survey Professional Paper",
+        journal_issue: "1894–E",
         data_release: false,
-        link: "https://doi.org/xxx",
-        doi: "xx"
+        link: "https://doi.org/10.3133/pp1894E",
+        doi: "10.3133/pp1894E"
       },
       {
         refID: "Census2020",
