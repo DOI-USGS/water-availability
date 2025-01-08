@@ -134,7 +134,7 @@
           <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation. Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its' highest<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. As a result, water limitation may be increased for local watersheds.</p>
         </div>
         <div class="viz-container">
-          <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >
+          <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
         </div>
         <div class="caption-container">
           <div class="caption-text-child">
@@ -170,6 +170,9 @@ import DumbellChart from '../components/DumbellChart.vue';
 const route = useRoute();
 const featureToggles = inject('featureToggles');
 const animateTime = inject('animateTime')
+
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
 // References logic
 // filter to this page's key message
