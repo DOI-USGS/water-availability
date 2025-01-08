@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water limitation is the balance between supply and demand (water use)<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. Water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
+                <p>Water limitation is the balance between supply and demand (water use).<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
         <!-- Supply and Demand dumbell chart -->
@@ -33,7 +33,7 @@
         <div class="caption-container">
           <!-- Supply and Demand caption -->
           <div class="caption-text-child">
-            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown to VanMetre regions [citaiton needed]. </p>
+            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
           </div>
         </div>
         <br>
@@ -145,7 +145,7 @@
          <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>When supply decreases, demand increases</h2>
-          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation. Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its highest<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.refID }}</span></span>. As a result, water limitation may be increased for local watersheds.</p>
+          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
         </div>
         <div class="chart-title-container">
             <p class="chart-title">A decade of water limitation</p>
@@ -193,10 +193,12 @@ const animateTime = inject('animateTime')
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 const filteredReferences = filteredMessages[0].references;// extract list of references for this page
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
-theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(theseReferences);
+const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
+// sort by order listed on page, reflected in list on subpages.js
+const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
+console.log(sortedReferences)
+sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(sortedReferences);
 
 // global vars
 const mobileView = isMobile;

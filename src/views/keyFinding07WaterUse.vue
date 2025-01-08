@@ -13,7 +13,7 @@
             <li>Public supply, where water is withdrawn or purchased by a water supplier and delivered to many users</li>
           </ul>
           <br>
-        <p>These three uses add up to 224,000 million gallons of water per day. In addition, thermoelectric power from saline water uses another approximately 21,000 million gallons of water per day. </p>
+        <p>These three uses add up to 224,000 million gallons of water per day.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In addition, thermoelectric power from saline water uses another approximately 21,000 million gallons of water per day. </p>
       </div>
       <div class="chart-title-container">
             <p class="chart-title">Average daily water use from 2010 to 2020</p>
@@ -39,7 +39,7 @@
           <ColorLegend legend-id="legend-wu-te-saline" label="Thermoelectric (saline)" color="var(--wu-te-saline)" />
                     </div>
           <div class="caption-text-flex caption-text-child">
-            <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. Note that the y-scale is not constant across use categories when viewing use by category.</p>
+            <p>Bar chart showing modeled total daily water use averaged by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total annual use versus the annual use by category. </p>
           </div>
         </div>       
           <br>
@@ -64,7 +64,7 @@
       </div>
       <br>
       <div class="text-container">
-        <p>Not all of the water used for humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive loss." Consumptive loss includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive loss is highest for crop irrigation: Only 28% of water used for irrigation returns to the environment. Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment. </p>
+        <p>Not all of the water used for humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive loss." Consumptive loss includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive loss is highest for crop irrigation: Only 28% of water used for irrigation returns to the environment.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment. </p>
       </div>
       <br>
       <br>
@@ -100,10 +100,11 @@ const route = useRoute();
 // filter to this page's key message
 const filteredMessages = SubPages.SubPages.filter(message => message.route === route.path);
 const filteredReferences = filteredMessages[0].references;// extract list of references for this page
-const refArray = references.key.sort((a, b) => a.authors.localeCompare(b.authors)); // Sort references
-const theseReferences = refArray.filter((item) => filteredReferences.includes(item.refID)) // extract references that match the refID from global list
-theseReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(theseReferences);
+const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
+// sort by order listed on page, reflected in list on subpages.js
+const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
+sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
+const referenceList = ref(sortedReferences);
 
 // global objects
 const isFaceted = ref(false); // Track the current view state (stacked or faceted)
