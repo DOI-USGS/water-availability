@@ -1,91 +1,94 @@
 <template>
     <div ref="mapContainer" class="map-container"></div>
-  </template>
+</template>
   
-  <script setup>
+<script setup>
   import { onMounted, ref, watch, defineProps } from 'vue'
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
 
   const publicPath = import.meta.env.BASE_URL; // this gets the base url for the site
+
+  // S3 resource sourcing
+  const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
   
   const mapContainer = ref(null)
   let mapLayers;
 
   const emit = defineEmits(['regionSelected']); 
 
-// props definition, allowing customized paths and datasets
-const props = defineProps({
-  layerVisibility: {
-    type: Object,
-    required: true
-  },
-  layerPaths: {
-    type: Object,
-    required: true
-  },
-  layerMag: {
-    type: String,
-    required: true
-  },
-  layerX: {
-    type: String,
-    required: true
-  },
-  layerY: {
-    type: String,
-    required: true
-  },
-  regionsDataUrl: {
-    type: String,
-    required: true
-  },
-  regionsVar: {
-    type: String,
-    required: true
-  },
-  usOutlineUrl: {
-    type: String,
-    required: true
+  // props definition, allowing customized paths and datasets
+  const props = defineProps({
+    layerVisibility: {
+      type: Object,
+      required: true
+    },
+    layerPaths: {
+      type: Object,
+      required: true
+    },
+    layerMag: {
+      type: String,
+      required: true
+    },
+    layerX: {
+      type: String,
+      required: true
+    },
+    layerY: {
+      type: String,
+      required: true
+    },
+    regionsDataUrl: {
+      type: String,
+      required: true
+    },
+    regionsVar: {
+      type: String,
+      required: true
+    },
+    usOutlineUrl: {
+      type: String,
+      required: true
+    }
+  })
+
+  const updateLayers = () => {
+    if (!mapLayers) return 
+
+    const visibleLayers = Object.entries(props.layerVisibility).map(([key, value]) => ({
+      key,
+      path: props.layerPaths[key]?.path,
+      visible: value
+    }))
+
+    mapLayers.selectAll('image')
+      .data(visibleLayers, d => d.key) // use key as the identifier
+      .join(
+        enter => enter.append('image')
+          .attr('xlink:href', d => s3ProdURL + 'images/water-availability/' + d.path)
+          .attr('x', props.layerX)
+          .attr('y', props.layerY)
+          .attr('width', 800 * props.layerMag)
+          .attr('height', 550 * props.layerMag)
+          .style('opacity', d => (d.visible ? 1 : 0))
+          .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
+        update => update
+          .style('opacity', d => (d.visible ? 1 : 0))
+          .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
+        exit => exit.remove()
+      )
+      
   }
-})
 
-const updateLayers = () => {
-  if (!mapLayers) return 
-
-  const visibleLayers = Object.entries(props.layerVisibility).map(([key, value]) => ({
-    key,
-    path: props.layerPaths[key]?.path,
-    visible: value
-  }))
-
-  mapLayers.selectAll('image')
-    .data(visibleLayers, d => d.key) // use key as the identifier
-    .join(
-      enter => enter.append('image')
-        .attr('xlink:href', d => 'https://labs.waterdata.usgs.gov/visualizations/images/water-availability/' + d.path)
-        .attr('x', props.layerX)
-        .attr('y', props.layerY)
-        .attr('width', 800 * props.layerMag)
-        .attr('height', 550 * props.layerMag)
-        .style('opacity', d => (d.visible ? 1 : 0))
-        .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
-      update => update
-        .style('opacity', d => (d.visible ? 1 : 0))
-        .style('display', d => (d.visible ? 'block' : 'none')), // ensure full hiding
-      exit => exit.remove()
-    )
-    
-}
-
-// watch layerVisibility for changes
-watch(
-  () => props.layerVisibility,
-  () => {
-    updateLayers(); // Trigger layer updates
-  },
-  { deep: true }
-);
+  // watch layerVisibility for changes
+  watch(
+    () => props.layerVisibility,
+    () => {
+      updateLayers(); // Trigger layer updates
+    },
+    { deep: true }
+  );
 
   
   onMounted(async () => {

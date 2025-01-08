@@ -116,6 +116,9 @@ import * as d3 from 'd3';
 import { isMobile } from 'mobile-device-detect';
 import authorList from '@/assets/text/authors.js';
 
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+
 const authorLeads = authorList.leads;
 
 const authorDevs = authorList.devs;
@@ -217,7 +220,7 @@ function createChart({ container, data, team }) {
 
     node
         .append('image')
-        .attr('xlink:href', d => d.headshot)
+        .attr('xlink:href', d => s3ProdURL + d.headshot)
         .attr('width', radius * 2.1)
         .attr('height', radius * 2.1)
         .attr('x', -1.05 * radius)

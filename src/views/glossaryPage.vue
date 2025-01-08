@@ -89,7 +89,9 @@ const theseReferences = refArray.filter((item) => filteredReferences.includes(it
 console.log(theseReferences)
 
 // global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+const baseURL = s3ProdURL + "images/water-availability/"
 
 
 function getIconURL(suffix) {
