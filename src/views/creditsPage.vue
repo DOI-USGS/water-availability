@@ -77,12 +77,12 @@
         </p>
     </div>
     <div class="authors-container">
-        <h2>Meet the National IWAAs Authors</h2>
+        <h2>Meet the National Water Availability Assessment Authors</h2>
         <div class="chart-container">
             <div ref="chartSME" class="chart"></div>
         </div>
         <p>
-            Collaborators from the <a href="https://www.usgs.gov/iwaas" target="_blank">National Integrated Water Availability Assessment</a> Report include
+            Collaborators from the <a href="https://www.usgs.gov/iwaas" target="_blank">National Water Availability Assessment</a> Report include
           <span id="primary-author-statment">
             <span
               v-for="(author, index) in authorSMEs" 
@@ -101,8 +101,8 @@
           </span>
         </p>
       </div>
-    <div class="report-link-container">
-          <a href="index.html" rel="noopener noreferrer" class="report-link">
+      <div class="home-link-container">
+          <a href="index.html" rel="noopener noreferrer" class="home-link">
             <h3> Return Home</h3>
           </a>       
     </div>

@@ -61,8 +61,8 @@
             </p>
           </div>
         </div>
-    <div class="report-link-container">
-          <a href="index.html" rel="noopener noreferrer" class="report-link">
+    <div class="home-link-container">
+          <a href="index.html" rel="noopener noreferrer" class="home-link">
             <h3> Return Home</h3>
           </a>       
     </div>

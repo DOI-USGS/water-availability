@@ -17,8 +17,8 @@
     <div class="dropdown-menu" v-if="menuOpen">
         <ul>
             <li><router-link to="/">Home</router-link></li>
-            <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Read the Report</a></li>
-            <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Access the Data</a></li>
+            <li><a href="https://www.usgs.gov/iwaas" target="_blank">Read the Report</a></li>
+            <li><a href="https://www.water.usgs.gov/nwaa-data" target="_blank">Access the Data</a></li>
             <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">USGS Vizlab</a></li>
             <li><router-link to="/glossary"> Glossary of Terms</router-link></li>
             <li><router-link to="/credits"> Website Credits</router-link></li>
