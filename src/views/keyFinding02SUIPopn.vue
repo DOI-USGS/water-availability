@@ -57,7 +57,7 @@
             <p>The continuing rise in global temperature as a result of human activity is causing changes in Earth's water cycle, with significant consequences for water availability.<span v-for="reference in theseReferences.filter(item => item.refID === 'Scholl2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
             <ul class="tab-content-list">
                     <li><b>Temperature is rising</b>, with amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing.</li>
-                    <li><b>Snow and ice are diminishing</b>, including reduced snow cover extent and duration, decreased glaciers and increasing meltwater, thawing permafrost, erosion and turbidity from increased melt rates, and altered rain and snow patterns.</li>
+                    <li><b>Snow and ice are diminishing</b>, including reduced snow cover extent and duration, decreased glaciers and increased meltwater, thawing permafrost, erosion and turbidity from increased melt rates, and altered rain and snow patterns.</li>
                     <li><b>Sea levels are rising</b>, exacerbating the impacts of stronger hurricanes, infrastructure damage, and increased storm surges and coastal flooding.</li>
                     <li><b>There will be additional impacts</b>, including increased sediment from extreme rainfall, wildfires, more frequent sand and dust storms, and increased salinity from evaporation of surface waters and saltwater intrusion in coastal aquifers.</li>
                   </ul>
