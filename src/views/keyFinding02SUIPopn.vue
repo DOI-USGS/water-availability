@@ -25,19 +25,19 @@
             <div class="availability-container">
               <div class="wa-map" id="sui-map">
                 <h4>Water quantity</h4>
-                <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_sui.png">
+                <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_sui.png`">
               </div>
               <div class="wa-map" id="sw-map">
                 <h4>Surface water quality</h4>
-                <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_sw_wq.png">
+                <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_sw_wq.png`">
               </div>
               <div  id="gw-map">
                 <h4>Groundwater quality</h4>
-                <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_gw_wq.png">
+                <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_gw_wq.png`">
               </div>
               <div id="eco-map">
                 <h4>Altered natural flows</h4>
-                <img class="wa-map" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/02_water_avail_wa_ecoflow.png">
+                <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_ecoflow.png`">
               </div>
             </div>
           </div>
@@ -104,6 +104,9 @@ import SubPages from '../components/SubPages';
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
+
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
 // References logic
 // filter to this page's key message

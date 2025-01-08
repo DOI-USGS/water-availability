@@ -106,8 +106,11 @@ import SubPages from '../components/SubPages';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
 import { isMobile } from 'mobile-device-detect';
 
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+
 // global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+const baseURL = s3ProdURL + "images/water-availability/"
 const publicPath = import.meta.env.BASE_URL;
 const mobileView = isMobile;
 

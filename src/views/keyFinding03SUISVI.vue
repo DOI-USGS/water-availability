@@ -11,7 +11,7 @@
               <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
             <div class="viz-container">
-              <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_CONUS.png">
+              <img class="viz-portrait" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`">
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
@@ -65,7 +65,7 @@
               <p class="chart-subtitle">Bars show the proportion of the population living in varying levels of water limitation by social vulnerability classification. </p>
             </div>
             <div class="text-container">
-              <img class="viz-portrait" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_bar.png">
+              <img class="viz-portrait" :src="`${s3ProdURL}images/water-availability/03_sui_popn_bar.png`">
             </div>
             <div class="caption-container">
               <div class="caption-text-child">
@@ -95,8 +95,11 @@ import References from '../components/References.vue';
 import SubPages from '../components/SubPages';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+
 // global variables
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
+const baseURL = s3ProdURL + "images/water-availability/";
 const defaultImageID = "03_sui_svi_map";
 const stressImageID = "03_sui_svi_dry_map";
 let imgSrc = ref(getImgURL(defaultImageID));

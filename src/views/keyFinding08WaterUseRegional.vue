@@ -134,9 +134,12 @@ import RegionMap from '../components/RegionMap.vue';
 import HorizontalBar from '../components/HorizontalBar.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+
 // global variables
 const publicPath = import.meta.env.BASE_URL;
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
+const baseURL = s3ProdURL + "images/water-availability/";
 const defaultRegionID = "CONUS";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');

@@ -68,7 +68,7 @@
         <h3>Not all the water withdrawn for human water use returns to the local environment</h3>
       </div>
       <div class="viz-container">
-        <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/07_consumptive_labels.png"/>
+        <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"/>
       </div>
       <div class="text-container">
         <p>Water that does not return to local water bodies or groundwater is lost to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Across the lower 48 United States, the proportion of water use consumed in these ways is 72% for irrigation, 12% for public supply, and 4% for thermoelectric power. </p>
@@ -100,6 +100,9 @@ const featureToggles = inject('featureToggles');
 const animateTime = inject('animateTime')
 
 const route = useRoute();
+
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
 // References logic
 // filter to this page's key message

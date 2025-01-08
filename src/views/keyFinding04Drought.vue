@@ -7,7 +7,7 @@
                 <p>The water cycle describes how water moves through natural and human-modified landscapes. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.</p>
                 </div>
                 <div class="viz-container">
-                    <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_watercycle.png">
+                    <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`">
                 </div>
                 <div class="caption-container">
                   <div class="caption-text-child">
@@ -76,8 +76,11 @@ import references from '../assets/text/references.js';
 import References from '../components/References.vue';
 import SubPages from '../components/SubPages.js';
 
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+
 // global variables
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/04_ws_2010_";
+const baseURL = s3ProdURL + "images/water-availability/04_ws_2010_";
 const defaultRegionID = "Northern_High_Plains";
 const imgSrc = ref(getImgURL(defaultRegionID)); 
 const featureToggles = inject('featureToggles');
