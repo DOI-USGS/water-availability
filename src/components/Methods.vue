@@ -7,7 +7,22 @@
         </button>
         <div class="panel">
             <span v-for="description in method.description">
-              <p v-html="description.text"></p>
+              <p>
+                <span v-html="description.text"></span>
+                  <span v-for="reference, index in theseReferences.filter(item => `${description.refs}`.includes(item.refID))" :key="index" class="tooltip">   
+                          <sup class="in-text-number">{{ reference.referenceNumber }} </sup> 
+                          <span class="tooltiptext">
+                            <span v-html="reference.label" />
+                          </span>
+                          <span v-if="index < theseReferences.filter(item => `${description.refs}`.includes(item.refID)).length - 1">
+                            <sup class="in-text-number">,&nbsp;
+                            </sup>
+                          </span>
+
+                  </span>
+              </p>
+              
+              
             </span>
         </div>
     </div>
@@ -23,6 +38,13 @@ const route = useRoute();
 // filter to this page's key message
 const methodArray = Methods.key.filter(message => message.route === route.path);
 const thisMethod = methodArray[0].method;
+
+defineProps({
+  theseReferences: {
+    type: Array,
+    required: true
+  }
+});
 
 // Accordion click handler
 onMounted(() => {

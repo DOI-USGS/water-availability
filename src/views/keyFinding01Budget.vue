@@ -159,7 +159,7 @@
             <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Each step in the chart represents one month of time. </p>
           </div>
         </div>  
-        <Methods></Methods>
+        <Methods :theseReferences="referenceList"></Methods>
       <References :theseReferences="referenceList"></References>
       </div>
       <!-- conditionally render PageCarousel for preview site -->
