@@ -815,7 +815,7 @@ section .waves .wave#wave4{
 
 .panel, .panel-references {
   display: none; 
-  overflow: hidden;
+  overflow: visible;
   margin-bottom: -15px;
   margin-top: -15px;
 }
