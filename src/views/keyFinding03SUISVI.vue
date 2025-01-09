@@ -65,7 +65,7 @@
                 <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain relatively higher proportions of socially vulnerable individuals. </p>
             </div>
             <br>
-        <Methods></Methods>
+        <Methods :theseReferences="referenceList"></Methods>
         <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->

@@ -51,7 +51,7 @@
             </div>
             <br>
             <br>
-            <Methods></Methods>
+            <Methods :theseReferences="referenceList"></Methods>
             <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->

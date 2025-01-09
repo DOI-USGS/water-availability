@@ -108,7 +108,7 @@
                 <p>Bar charts showing the relative amount of modeled water withdrawn for public supply that comes from surface water (bars that go up) or from groundwater (bars that go down) for the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The bars are placed from west to east based on the longitude (easting) of the center of each watershed. The watershed with the largest daily water use in that region are labeled for each source. Select a region on the map to view bar charts for that region.</p>
               </div>
           </div>
-          <Methods></Methods>
+          <Methods :theseReferences="referenceList"></Methods>
           <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->
