@@ -6,7 +6,9 @@
           <h4 v-html="method.header"></h4><span class="symbol">+</span>
         </button>
         <div class="panel">
-            <p v-html="method.description"></p>
+            <span v-for="description in method.description">
+              <p v-html="description.text"></p>
+            </span>
         </div>
     </div>
 </template>

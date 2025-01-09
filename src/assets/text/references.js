@@ -70,7 +70,7 @@ export default {
         
         refID: "EPA2023",
         label: "EPA 2023",
-        authors: "United States Environmental Protection Agency (US EPA)",
+        authors: "United States Environmental Protection Agency",
         year: "2023",
         title: "Total Maximum Daily Load (TMDL) Tracking and Implementation System (ATTAINS)",
         journal: false,
