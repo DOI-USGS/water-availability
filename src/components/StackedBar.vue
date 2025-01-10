@@ -5,7 +5,7 @@
 </template>
   
   <script setup>
-  import { onMounted, ref, watch, defineProps } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import * as d3 from 'd3';
   
   // props to configure the bar chart
@@ -34,7 +34,7 @@ onMounted(() => {
   }
 
   const aggregatedData = aggregateData(props.data);
-  updateBarChart(aggregatedData, 'lower 48 United States');
+  updateBarChart(aggregatedData);
 });
 
 //  aggregate data for the US
@@ -53,7 +53,7 @@ const aggregateData = (data) => {
   }));
 };
 
-const updateBarChart = (data, regionName) => {
+const updateBarChart = (data) => {
   if (!data.length) {
     console.warn('No data provided for the bar chart.');
     return;
@@ -97,7 +97,7 @@ const updateBarChart = (data, regionName) => {
         .duration(750)
         .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
         .attr('fill', d => getColor(d[props.categoricalVariable]))
-        .attrTween('width', function(d, i) {
+        .attrTween('width', function(d) {
                 const previousWidth = d3.select(this).attr('width') || 0; // fallback to 0 if no prior value
                 const interpolator = d3.interpolate(previousWidth, xScale(d[props.continuousPercent]));
                 return t => interpolator(t);
@@ -155,7 +155,7 @@ watch(
         ? aggregateData(data)
         : data.filter(d => d.Region_nam === regionName)
 
-  updateBarChart(filteredData, regionName);
+  updateBarChart(filteredData);
 });
 </script>
 

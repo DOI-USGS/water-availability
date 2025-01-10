@@ -7,7 +7,7 @@
   
   <script setup>
   import * as d3 from 'd3';
-  import { onMounted, watch, defineProps, defineModel, ref } from 'vue';
+  import { onMounted, watch, defineModel, ref } from 'vue';
   
   // props
  const props = defineProps({
@@ -63,7 +63,7 @@ const initChart = (containerWidth) => {
 const drawChart = () => {
   //const dataset = props.data;
 
-  if (!dataset || dataset.length === 0) {
+  if (!dataset.value || dataset.value.length === 0) {
     console.warn('No data available to draw the chart.');
     return; // exit if no data
   }
@@ -175,7 +175,7 @@ const drawChart = () => {
 const togglePoints = () => {
   //const dataset = props.data;
 
-  if (!dataset || dataset.length === 0) {
+  if (!dataset.value || dataset.value.length === 0) {
     console.warn('No data available to toggle points.');
     return;
   }

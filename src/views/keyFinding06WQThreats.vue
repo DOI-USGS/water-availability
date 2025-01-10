@@ -81,16 +81,19 @@ import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';
 import aquiferWedges from '@/assets/svgs/aquifers.svg';
 import ColorLegend from '../components/ColorLegend.vue';
 import { isMobile } from 'mobile-device-detect';
 
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+
 // global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+const baseURL = s3ProdURL + "images/water-availability/"
 const publicPath = import.meta.env.BASE_URL;
 const mobileView = isMobile;
 
@@ -264,7 +267,7 @@ function initHeatmap({dataset, sortBy}) {
     .range([chartDimensions.height-chartDimensions.margin.bottom, chartDimensions.margin.top])
     .padding(0.1);
 
-  const yAxis = d3.axisLeft(yScale)
+  d3.axisLeft(yScale)
     .tickSizeOuter(0)
 
   const colorScale = d3.scaleLinear()
@@ -276,7 +279,7 @@ function initHeatmap({dataset, sortBy}) {
   const t = d3.transition().duration(dur);
 
    // Create a bar for each category.
-   const bar = rectGroup.append("g")
+   rectGroup.append("g")
       .selectAll("rect")
         .data(sortedDataset)
         .join(
@@ -355,7 +358,7 @@ function addInteractions() {
         // Add interaction to wedges
         aquiferSVG.selectAll('.st0')
             .on("mouseover", (event) => mouseoverMap(event))
-            .on("mouseout", (event) => mouseoutMap(event))
+            .on("mouseout", mouseoutMap)
 
         // Add mouseleave to wrapper, which is a group that contains the wedges
         aquiferSVG.selectAll('#wrapper')
@@ -374,8 +377,7 @@ function mouseoverMap(event) {
   aquiferLabel = "the " + matchAquifer.name + " Aquifer"
 };
 
-function mouseoutMap(event) {
-  const regionID = event.target.id;
+function mouseoutMap() {
   imgSrc.value = getImgURL(defaultRegionID);
   aquiferLabel = "principal aquifers of the lower 48 United States"
 };

@@ -28,7 +28,7 @@
     <div class="glossary-container">
         <div id="text-container">
             <h1>Key Definitions</h1>
-            <div class="key-term" v-for="terms in termArray">
+            <div class="key-term" v-for="terms, index in termArray" :key="index">
                 <div class="key-message-item-text">
                     <h3 class="glossary-term"> {{ terms.term }} </h3>
                     <p class="glossary-def"> {{ terms.definition }}</p>
@@ -41,7 +41,7 @@
     </div>
     <div class="glossary-references-container">
       <h3>References</h3>
-          <div  v-for="reference in theseReferences">
+          <div  v-for="reference in theseReferences" :key="reference.refID" >
             <p>
               <ul>
                 <li><span v-html="reference.authors" /> (<span v-html="reference.year" />). 
@@ -74,7 +74,6 @@
 <script setup>
 import { ref } from 'vue';
 import glossaryTerms from '@/assets/text/glossaryTerms.js';
-import KeyMessages from '../components/KeyMessages.vue';
 import references from './../assets/text/references.js';
 let menuOpen = ref(false);
 
@@ -87,12 +86,12 @@ const filteredReferences = glossaryTerms.references;
 const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
 // sort by order listed on page, reflected in list on subpages.js
 const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
-console.log(sortedReferences)
 sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
-const referenceList = ref(sortedReferences);
 
 // global objects
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/"
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+const baseURL = s3ProdURL + "images/water-availability/"
 
 
 function getIconURL(suffix) {

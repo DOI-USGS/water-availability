@@ -328,6 +328,17 @@ p3_targets <- list(
                        png_out = "src/assets/images/R/06_wq_aquifers.png",
                        width = 9, height = 6),
            format = "file"),
+  tar_target(p3_wq_gw_geofacet_nobaselayer_png,
+             wq_geofacet_nobase(in_df = p1_wq_gw_exceedences_df,
+                                in_states = p2_State_detailed_sf,
+                                in_sf = p1_aquifers_sf,
+                                in_geogrid = p2_aquifer_name_xwalk,
+                                aquifer_abbr = "overview",
+                                color_scheme = p3_colors_wq,
+                                png_out = "src/assets/images/R/06_wq_pies_only.png",
+                                width = 9, height = 6
+             ),
+             format = "file"),
   
   
   ##############################################
