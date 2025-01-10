@@ -41,7 +41,7 @@
                 <ColorLegend legend-id="legend-ws-low" label="Abnormally low" color="var(--ws-demand)" />
                         </div>
               <div class="caption-text-flex caption-text-child">
-                <p>Bar chart showing monthly values of precipitation, evapotranspiration, soil moisture, and streamflow as compared to normal conditions for each hydrologic region<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> in the lower 48 United States. The values are normalized for comparison from 2010 through 2020, and thus do not have units. Select a region on the map to view bar charts for that region.</p>
+                <p>Bar chart showing monthly values of precipitation, evapotranspiration, soil moisture, and streamflow as compared to normal conditions for each hydrologic region<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> in the lower 48 United States. The values are normalized for comparison from 2010 through 2020, and thus do not have units. <b>Select a region on the map</b> to view bar charts for that region.</p>
               </div>
             </div> 
             <br>

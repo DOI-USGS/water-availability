@@ -45,7 +45,7 @@
           </div>
             <div class="caption-container">
               <div class="caption-text-child">
-                <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12). The histogram shows the distribution of total load across the lower 48 United States. Select a region on the map to view histograms for that region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Toggle to switch the view between nitrogen versus phosphorus loads.</p>
+                <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12).<span v-for="reference in theseReferences.filter(item => item.refID === 'Martinez2024sparrow')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The histogram shows the distribution of total load across the lower 48 United States. <b>Select a region on the map</b> to view histograms for that region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the choices</b> to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
             </div>
           <br>
@@ -94,7 +94,7 @@
                   <ColorLegend legend-id="legend-wq-natural" label="Natural sources" color="var(--wq-natural)" />
                         </div>
               <div class="caption-text-flex caption-text-child">
-                <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Toggle to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
+                <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Martinez2024sparrow')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the choices</b> to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
             </div> 
 

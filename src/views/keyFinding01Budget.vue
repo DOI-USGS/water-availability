@@ -137,7 +137,7 @@
               </div>
               <div class="caption-text-flex caption-text-child">
                 <br>
-                <p>Water limitation across the lower 48 United States, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Select regions on the map to view the proportions of water limitation levels for that region.</p>
+                <p>Water limitation across the lower 48 United States, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. <b>Select regions on the map</b> to view the proportions of water limitation levels for that region.</p>
               </div>
         </div>    
         <br>
@@ -156,7 +156,7 @@
         </div>
         <div class="caption-container">
           <div class="caption-text-child">
-            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Each step in the chart represents one month of time. </p>
+            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.Each step in the chart represents one month of time. </p>
           </div>
         </div>  
         <Methods :theseReferences="referenceList"></Methods>

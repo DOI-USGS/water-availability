@@ -13,8 +13,11 @@ export default {
                   text: "Supply and demand were calculated as average annual runoff (supply) and consumptive water use (demand) on a per-area basis for water years 2010 through 2020.",
                   refs: ["Stets2025", "Gorski2025", "Medalie2025"]},
                 { id: 2,
-                  text: "Water supply was calculated as the sum of annual runoff for all watersheds (HUC12) in the region divided by the area of the region. Consumptive use was calculated as the sum of water consumed for crop irrigation, thermoelectric power, and public supply within all watersheds (HUC12) in the region divided by the area of the region.",
-                  refs: ["VanMetre2020"]}
+                  text: "Water supply was calculated as the sum of annual runoff for all watersheds (HUC12) in the region divided by the area of the region.",
+                  refs: ["Martinez2025supply"]},
+                  { id: 2,
+                    text: "Consumptive use was calculated as the sum of water consumed for crop irrigation, thermoelectric power, and public supply within all watersheds (HUC12) in the region divided by the area of the region.",
+                    refs: ["VanMetre2020"]}
                 ]
           },
           {
@@ -26,7 +29,7 @@ export default {
                 refs: ["Stets2025"]},
               { id: 2,
                 text: "The surface water-supply and use index was calculated from the balance of water supply and consumptive use at a monthly timestep on a watershed (HUC12) basis.",
-                refs: []}
+                refs: ["Miller2024sui"]}
               ]
           }
         ]
@@ -75,7 +78,7 @@ export default {
                 refs: ["Stets2025"]},
               { id: 2,
                 text: "The surface water-supply and use index was calculated from the balance of water supply and consumptive use at a monthly timestep on a watershed (HUC12) basis.",
-                refs: []}
+                refs: ["Miller2024sui"]}
               ]
             },
           {
@@ -84,7 +87,7 @@ export default {
               {
                 id: 1,
                 text: "The population estimate within each HUC12 catchment was calculated using the 2020 U.S. Census Bureau tract-level population counts and merged with water limitation data by watershed (HUC12).",
-                refs: ["CDC2020"]
+                refs: ["Census2020"]
               }
             ]
           },
@@ -116,7 +119,7 @@ export default {
                 refs: ["Gorski2025"]},
               { id: 2, 
                 text: "Precipitation data were from the bias-adjusted 4-kilometer, 40-year long-term regional hydroclimate reanalysis over the lower 48 United States and evapotranspiration, soil moisture, and streamflow data were ensembled from the National Hydrologic Model Precipitation-Runoff Modeling System and the Weather Research and Forecasting model hydrologic modeling system.", 
-                refs: ["Foks2025a","Foks2025b","Sampson2025"]},
+                refs: ["Foks2025a","Foks2025b","Sampson2025","Martinez2025supply"]},
               { id: 3, 
                 text: "Consumptive use includes the sum of all consumptive use for crop irrigation, public supply, and thermoelectric power generation.", 
                 refs: ["Medalie2025"]}
@@ -127,7 +130,7 @@ export default {
             description: [
               { id: 1,
                 text: "The average monthly amounts of precipitation (mm), evapotranspiration (mm), soil moisture (%), and streamflow (cfs) were calculated for each hydrologic region.",
-                refs: ["VanMetre2020"]
+                refs: ["VanMetre2020","Martinez2025supply"]
               },
               { id: 2,
                 text: "Then, the monthly values were compared to the average to calculate a normalized deviation from the average for each month and region.",
@@ -145,11 +148,11 @@ export default {
             header: "Modeling nutrient loads",
             description: [
               { id: 1,
-                text: "otal and source-specific nutrient loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources.",
-                refs: ["Ator2019", "Hoos2019", "Robertson2019", "Wise2019a", "Wise2019b"]
+                text: "Total and source-specific nitrogen and phosphorus loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources.",
+                refs: ["Martinez2024sparrow", "Ator2019", "Hoos2019", "Robertson2019", "Wise2019a", "Wise2019b"]
               },
               { id: 2,
-                text: "Predicted total nitrogen and phosphorus loads from five spatially explicit modeling studies were integrated to assess CONUS spatial patterns in loads and sources. Sources were generalized to enable a simple comparison.",
+                text: "Sources were generalized to enable a simple comparison.",
                 refs: []
               }
             ]
@@ -165,7 +168,7 @@ export default {
             description: [
               { id: 1,
                 text: "Pie charts display the percentage of the area studied that contained a constituent in untreated groundwater at a concentration that exceeds a human-health benchmark for drinking water (high) or one-half of that value (moderate).",
-                refs: ["Erickson2025", "Belitz2022"]
+                refs: ["Erickson2025", "Belitz2022", "Azadpour2025"]
               },
               { id: 2,
                 text: "For this analysis, 16 drinking water contaminants were analyzed, including arsenic, manganese, lead, and nitrate.",
