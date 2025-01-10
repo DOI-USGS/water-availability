@@ -39,7 +39,7 @@
           <ColorLegend legend-id="legend-wu-te-saline" label="Thermoelectric (saline)" color="var(--wu-te-saline)" />
                     </div>
           <div class="caption-text-flex caption-text-child">
-            <p>Bar chart showing model estimates for total daily water use from these categories by year from 2010 through 2020 for the lower 48 United States. Toggle between viewing the total use versus the use by category. </p>
+            <p>Bar chart showing model estimates for total daily water use from these categories by year from 2010 through 2020 for the lower 48 United States. <b>Toggle the options</b> to switch between viewing the total use versus the use by category. </p>
           </div>
         </div>       
           <br>
