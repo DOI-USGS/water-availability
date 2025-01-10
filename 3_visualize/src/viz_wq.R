@@ -285,6 +285,82 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
   return(png_out)
 }
 
+wq_geofacet_nobase <- function(in_df, in_sf, in_states, in_geogrid, 
+                        aquifer_abbr, color_scheme,
+                        png_out, width, height){
+  
+  aquifer_label <- in_geogrid$full_name[in_geogrid$abbr == aquifer_abbr]
+  
+  
+  #### process data for plotting
+  plot_df <- in_df |>
+    mutate(bins = factor(bins, levels = c("low", "moderate", "high")))
+  
+  #### match projections between states and aquifers
+  aquifers <- in_sf |>
+    sf::st_transform(crs = sf::st_crs(in_states)) |>
+    rename(full_name = LABEL) |>
+    left_join(in_geogrid, by = "full_name")
+  
+  #### subset data for plotting focal areas
+  if(aquifer_abbr != "overview") {
+    # only for focal maps
+    subplot_df <- plot_df |> 
+      mutate(ratio = case_when(study_unit_abbreviation == aquifer_abbr ~ ratio,
+                               TRUE ~ NA))
+    sub_aquifers <- aquifers |> filter(abbr == aquifer_abbr)
+  } else {
+    subplot_df <- plot_df
+  }
+  
+  #### select just fields that geofacet requires
+  geofacet_grid_prepped <- in_geogrid |>
+    rename(name = abbr) |>
+    select(code, name, row, col)
+  
+  plot_geofacet_color <- ggplot(data = subplot_df,
+                                aes(x = "", y = ratio, fill = bins)) +
+    geom_col(show.legend = TRUE, width = 1, color = "black", linewidth = 0.1) +
+    coord_polar(theta = "y", start = 0) +
+    scale_fill_manual(values = c(color_scheme$very_low_col, 
+                                 color_scheme$moderate_col, 
+                                 color_scheme$very_high_col)) +
+    scale_color_manual(values = c("black", "black", "white")) +
+    facet_geo(~ study_unit_abbreviation, 
+              grid = geofacet_grid_prepped, 
+              label = "name") +
+    theme_void() +
+    theme(
+      legend.position = "none",
+      strip.text.x = element_blank()
+    )
+  
+  
+  
+  
+  #### prep canvas for cowplot
+  canvas <- grid::rectGrob(     
+    x = 0, y = 0,     
+    width = width, height = height,
+    gp = grid::gpar(fill = "transparent", alpha = 1, col = "transparent"))
+  
+  #### Final plot
+  out_plot <- 
+    # set up composition
+    ggdraw(ylim = c(0,1), xlim = c(0,1)) +     
+    # add canvas background     
+    draw_grob(canvas, x = 0, y = 1, height = height, width = width, hjust = 0, vjust = 1) +  
+    # add geofacetted plot
+    draw_plot(plot_geofacet_color, x = 0, y = 0.1, height = 0.75) 
+  
+  
+  ggsave(plot = out_plot,
+         filename = png_out, device = "png", bg = "transparent",
+         dpi = 300, units = "in", width = width, height = height)
+  
+  return(png_out)
+}
+
 aquifer_map <- function(in_sf, 
                         in_states, 
                         width, height, 
