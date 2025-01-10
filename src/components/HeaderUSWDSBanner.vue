@@ -43,7 +43,7 @@
           <div class="usa-banner__guidance tablet:grid-col-6">
             <img
               class="usa-banner__icon usa-media-block__img"
-              src="../../node_modules/@uswds/uswds/dist/img/icon-dot-gov.svg"
+              src="../../node_modules/@uswds/uswds/dist/img/icon-dot-gov.svg?url"
               role="img"
               alt=""
               aria-hidden="true"
@@ -59,7 +59,7 @@
           <div class="usa-banner__guidance tablet:grid-col-6">
             <img
               class="usa-banner__icon usa-media-block__img"
-              src="../../node_modules/@uswds/uswds/dist/img/icon-https.svg"
+              src="../../node_modules/@uswds/uswds/dist/img/icon-https.svg?url"
               role="img"
               alt=""
               aria-hidden="true"
@@ -107,24 +107,27 @@
   }
   .usa-banner p, text {
     color: #F0F0F0;
+    padding: 0;
   }
   .usa-banner__inner {
-    margin-left: 1rem;
-    padding-left: 0.5rem;
+    margin-left: 10px;
+    padding-left: 5px;
   }
   .usa-banner__header--expanded .usa-banner__inner {
-    margin-left: 1rem;
-    padding-left: 0.5rem;
+    margin-left: 10px;
+    padding-left: 5px;
   }
-  .usa-banner__header-flag[data-v-e71764b8] {
-    width: 1.6rem;
+  .usa-banner__header-flag {
+    width: 16px;
+    margin-right: 7.5px;
   }
   .usa-banner__header-text {
-    font-size: 1.3rem;
+    font-size: 14px;
   }
   .usa-banner__button {
-    font-size: 1.3rem;
+    font-size: 14px;
     color: #78B4E8;
+    margin-left: 5px;
   }
   .usa-banner__button::after {
     background-color: #78B4E8;
@@ -144,15 +147,30 @@
   .usa-banner__button[aria-expanded=true]:hover::after {
     background-color: #A2CCF1;
   }
-  .usa-banner .grid-row.grid-gap-lg > *[data-v-e71764b8] {
-      padding-left: 2rem;
-      padding-right: 2rem;
+  .usa-banner .grid-row.grid-gap-lg {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .usa-media-block__img {
+    margin-right: 7.5px;
   }
   .usa-banner__content {
-    font-size: 2rem;
-    max-width: 105rem;
+    font-size: 16px;
+    max-width: 1000px;
+    padding-bottom: 10px;
+    padding-top: 2.5px;
+    padding-right: 10px;
+    padding-left: 5px;
+    @media only screen and (min-width: 40em) {
+      padding-bottom: 15px;
+      padding-top: 15px;
+    }
+    @media only screen and (min-width: 64em) {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
   }
-  .usa-banner__icon[data-v-e71764b8] {
-    width: 6rem;
+  .usa-banner__icon {
+    width: 40px;
   }
 </style>

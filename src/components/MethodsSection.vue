@@ -1,7 +1,6 @@
 <template>
-   
     <div class="methods-container"
-      v-for="method in thisMethod">
+      v-for="method, index in thisMethod" :key="index">
         <button class="accordion">
           <h4 v-html="method.header"></h4><span class="symbol">+</span>
         </button>
@@ -14,7 +13,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import Methods from './../assets/text/methods.js';
+import Methods from '../assets/text/methods.js';
 
 const route = useRoute();
 

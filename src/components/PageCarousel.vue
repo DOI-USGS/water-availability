@@ -1,7 +1,7 @@
 <template>
   <div class="nav-container">
     <div class="nav-page-button-wrapper">
-      <button class="nav-page-button" @click="navigateLeft">&#9664</button>
+      <button class="nav-page-button" @click="navigateLeft">&#9664;</button>
       <div class="nav-wrapper">
         <div class="nav-carousel" data-target="carousel">
           <!-- Previous card -->
@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-      <button class="nav-page-button" @click="navigateRight">&#9654</button>
+      <button class="nav-page-button" @click="navigateRight">&#9654;</button>
     </div>
   </div>
 </template>

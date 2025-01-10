@@ -9,10 +9,9 @@
   </template>
   
   <script setup>
-  import { defineProps } from 'vue';
   
   // define props
-  const props = defineProps({
+  defineProps({
     legendId: {
       type: String,
       required: true

@@ -1,6 +1,6 @@
 # water-availability
 
-This repository builds the Water Availability in the U.S. website at [https://labs.waterdata.usgs.gov/visualizations/water-availability/](https://labs.waterdata.usgs.gov/visualizations/water-availability). This website is powered by the USGS Vizlab ([portfolio link](https://labs.waterdata.usgs.gov/visualizations/vizlab-home/)).
+This repository builds the Water Availability in the U.S. website at [https://water.usgs.gov/vizlab/water-availability/](https://water.usgs.gov/vizlab/water-availability). This website is powered by the USGS Vizlab ([portfolio link](https://labs.waterdata.usgs.gov/visualizations/vizlab-home/)).
 
 ### Required Software
 - [node.js](http://nodejs.org)

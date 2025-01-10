@@ -121,18 +121,16 @@ import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';
-import { isMobile } from 'mobile-device-detect';
 import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import HistogramLegend from '../components/HistogramLegend.vue';
 import ColorLegend from '../components/ColorLegend.vue';
 
 // use for mobile logic
-const mobileView = isMobile;
 const featureToggles = inject('featureToggles');
 const route = useRoute();
 
@@ -140,8 +138,6 @@ const route = useRoute();
 const publicPath = import.meta.env.BASE_URL;
 
 // Chart dimensions
-const containerWidth = 700; 
-const maxHeight = 900; 
 const margin = { top: 20, right: 20, bottom: 20, left: 250 };
 let svg, chartBounds, rectGroup, nutrientScale;
 let width, height;
@@ -430,7 +426,7 @@ const resizeChart = () => {
      .attr('preserveAspectRatio', 'xMidYMid meet');
 
   // redraw chart
-  createBarChart({ dataset: dataset.value, scaleLoad: scaleLoad.value });
+  createBarChart({ dataset: data.value, scaleLoad: scaleLoad.value });
 };
 // handle resize
 const observeResize = () => {

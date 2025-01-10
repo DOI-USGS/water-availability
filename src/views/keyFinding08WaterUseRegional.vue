@@ -120,12 +120,12 @@
 import { ref, onMounted, inject, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
-import Reg from "../../public/assets/Regions.svg";
+import Reg from "../assets/svgs/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';
 import RegionMap from '../components/RegionMap.vue';
 import HorizontalBar from '../components/HorizontalBar.vue';
@@ -133,9 +133,12 @@ import ToggleSwitch from '../components/ToggleSwitch.vue';
 import ColorLegend from '../components/ColorLegend.vue';
 
 
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
+
 // global variables
 const publicPath = import.meta.env.BASE_URL;
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
+const baseURL = s3ProdURL + "images/water-availability/";
 const defaultRegionID = "CONUS";
 const imgSrc = ref(getImgURL(defaultRegionID));
 const featureToggles = inject('featureToggles');
@@ -212,30 +215,6 @@ onMounted(async() => {
     console.error("Error loading CSV data:", error);
   }
 });
-
-function toggleCategory(category) {
-  layers[category].visible = !layers[category].visible;
-  addClassToImage(category);
-}
-
-function addClassToImage(category) {
-	var useImage = document.getElementById(category);
-  var useButton = document.getElementById(category + "Button");
-  if(useImage) {
-  	if(useImage.classList.contains('visible')) {
-      useImage.classList.remove('visible');
-      useImage.classList.add('hidden');
-      useButton.classList.add('active');
-      useButton.classList.remove('inactive-toggle');
-    }
-    else {
-  		useImage.classList.add('visible');
-      useImage.classList.remove('hidden');
-      useButton.classList.add('inactive-toggle');
-      useButton.classList.remove('active');
-    }
-  }
-}
 
 function getImgURL(id) {
   return new URL(`${baseURL}08_PS_gw_sw_dumbbell_${id}.png`);

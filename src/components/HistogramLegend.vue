@@ -5,7 +5,7 @@
   </template>
   
   <script setup>
-  import { onMounted, ref, defineProps, watch } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import * as d3 from 'd3';
   
   // define props
@@ -32,8 +32,6 @@
   const width = 700;
   const height = 120;
   const rectHeight = 80;
-  const marginTop = 20;
-
 
   // render legend initially and watch for changes
   onMounted(() => {
@@ -111,7 +109,7 @@ function initLegend(data) {
     .join('rect')
     .attr('class','static')
     .attr('x', d => xScale(cleanLabel(d.category)))
-    .attr('y', d => height-25)
+    .attr('y', height - 25)
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
     .style('fill', d => colorScale(d.category));
@@ -207,7 +205,7 @@ function updateLegend(data) {
     .join('rect')
     .attr('class','static')
     .attr('x', d => xScale(cleanLabel(d.category)))
-    .attr('y', d => height-25)
+    .attr('y', height - 25)
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
     .style('fill', d => colorScale(d.category));

@@ -3,7 +3,7 @@
         <KeyMessages></KeyMessages>
         <div class="content-container">
             <div class="text-container">
-                <p>Water limitation is the balance between supply and demand (water use).<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
+                <p>Water limitation is the balance between supply and demand (water use).<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Water supply is typically much higher than demand, with more than enough water available to meet our needs. In some drier parts of the U.S., like the Southwest and the High Plains, the differences between water supply and demand are smaller.  
                   </p>
             </div>
         <!-- Supply and Demand dumbell chart -->
@@ -33,7 +33,7 @@
         <div class="caption-container">
           <!-- Supply and Demand caption -->
           <div class="caption-text-child">
-            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
+            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
           </div>
         </div>
         <br>
@@ -145,14 +145,14 @@
          <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>When supply decreases, demand increases</h2>
-          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
+          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
         </div>
         <div class="chart-title-container">
             <p class="chart-title">A decade of water limitation</p>
             <p class="chart-subtitle">The proportion of the lower 48 United States in each water limitation category through time</p>
           </div>
         <div class="viz-container">
-          <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/01_monthly_sui_bars.png" >
+          <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
         </div>
         <div class="caption-container">
           <div class="caption-text-child">
@@ -168,7 +168,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, inject, watch } from 'vue';
+import { onMounted, ref, reactive, inject } from 'vue';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
@@ -176,10 +176,9 @@ import StackedBar from '../components/StackedBar.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import SubPages from '../components/SubPages';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
-import Methods from '../components/Methods.vue';
+import References from '../components/ReferencesSection.vue';
+import Methods from '../components/MethodsSection.vue';
 import { useRoute } from 'vue-router';
-import { isMobile } from 'mobile-device-detect';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import DumbellChart from '../components/DumbellChart.vue';
 
@@ -188,6 +187,9 @@ import DumbellChart from '../components/DumbellChart.vue';
 const route = useRoute();
 const featureToggles = inject('featureToggles');
 const animateTime = inject('animateTime')
+
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
 // References logic
 // filter to this page's key message
@@ -201,7 +203,6 @@ sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}
 const referenceList = ref(sortedReferences);
 
 // global vars
-const mobileView = isMobile;
 const publicPath = import.meta.env.BASE_URL;
 
 // Reactive data bindings 

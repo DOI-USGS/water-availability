@@ -11,7 +11,7 @@
               <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
             <div class="viz-container">
-              <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_sui_popn_CONUS.png">
+              <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`">
             </div>
             <div class="caption-container-flex caption-container">
               <div class="legend-group">
@@ -38,19 +38,19 @@
             <div class="svi-bar-container">
               <div class="svi-bar-child">
                 <p class="chart-text">Severe social vulnerability </p>
-                <img class="svi-image" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_svi_bar_Severe.png">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Severe.png`">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text">High social vulnerability </p>
-                <img class="svi-image" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_svi_bar_High.png">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_High.png`">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text">Moderate social vulnerability </p>
-                <img class="svi-image" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_svi_bar_Moderate.png">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Moderate.png`">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text">Low social vulnerability </p>
-                <img class="svi-image" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/03_svi_bar_Low.png">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Low.png`">
               </div>
               
             </div>
@@ -74,24 +74,18 @@
 </template>
 
 <script setup>
-import { inject, ref, watch, onMounted } from 'vue';
+import { inject, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';
 import ColorLegend from '../components/ColorLegend.vue';
 
-// global variables
-const baseURL = "https://labs.waterdata.usgs.gov/visualizations/images/water-availability/";
-const defaultImageID = "03_sui_svi_map";
-const stressImageID = "03_sui_svi_dry_map";
-let imgSrc = ref(getImgURL(defaultImageID));
-
-// toggle state
-const showHighLevelsOnly = ref(false);
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
 const route = useRoute();
 const featureToggles = inject('featureToggles');
@@ -105,19 +99,6 @@ const theseReferences = references.key.filter((item) => filteredReferences.inclu
 const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
 sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(sortedReferences);
-
-// Methods
-function getImgURL(id) {
-  return `${baseURL}${id}.png`;
-}
-
-watch(showHighLevelsOnly, (newValue) => {
-    if (newValue) {
-        imgSrc.value = getImgURL(stressImageID); // switch to high levels image
-    } else {
-        imgSrc.value = getImgURL(defaultImageID); // switch back to all levels image
-    }
-});
 
 onMounted(() => {
   window.scrollTo(0, 0)

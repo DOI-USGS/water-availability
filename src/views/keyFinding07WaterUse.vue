@@ -60,7 +60,7 @@
         <h2>Not all is lost</h2>
       </div>
       <div class="viz-container">
-        <img class="viz-placeholder" src="https://labs.waterdata.usgs.gov/visualizations/images/water-availability/07_consumptive_labels.png"/>
+        <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"/>
       </div>
       <br>
       <div class="text-container">
@@ -82,9 +82,9 @@ import { useRoute } from 'vue-router';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
-import Methods from '../components/Methods.vue';
+import Methods from '../components/MethodsSection.vue';
 import references from './../assets/text/references.js';
-import References from '../components/References.vue';
+import References from '../components/ReferencesSection.vue';
 import SubPages from '../components/SubPages';
 import { isMobile } from 'mobile-device-detect';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
@@ -95,6 +95,9 @@ const featureToggles = inject('featureToggles');
 const animateTime = inject('animateTime')
 
 const route = useRoute();
+
+// S3 resource sourcing
+const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
 // References logic
 // filter to this page's key message
