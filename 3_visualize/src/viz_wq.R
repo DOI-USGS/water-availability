@@ -162,17 +162,73 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
   
   #### make map of states & aquifers to underlay geofacet
   if(aquifer_abbr == "overview"){
+    outline <- in_states |>
+      st_union() 
+    
+    aquifers <- aquifers |>
+      mutate(pattern = ifelse(AQ_NAME %in% c('GlacialExtent_NAWQA_C3', 'Floridan'), 'yes','no'))
+    
+    
     plot_states <- ggplot(in_states) + 
-      geom_sf(data = aquifers, fill = "grey90", color = "white") +
+      geom_sf_pattern(
+        data = aquifers,
+        aes(fill = pattern, color = pattern, pattern = pattern, pattern_fill = pattern),    
+        pattern_angle = 45,  
+        pattern_spacing = 0.01,    
+        pattern_density = 0.01,    
+        pattern_background = NA,
+        pattern_color = '#d1cdc0'
+      ) +
+      scale_pattern_manual(values = c("yes" = "stripe", "no" = "none")) +
+      scale_pattern_fill_manual(values = c("yes" = "grey90", "no" = NA)) +
       geom_sf(fill = "transparent", color = "#d1cdc0") +
-      theme_void() 
+      geom_sf(data = outline, fill = 'transparent', color = "black", linewidth = 0.25) +
+      scale_fill_manual(
+        values = c("yes" = "transparent", "no" = "grey90"),
+        guide = "none"  # Remove legend for fill
+      ) +
+      scale_color_manual(
+        values = c("yes" = "#d1cdc0", "no" = "white"),  
+        guide = "none"  # Remove legend for color
+      ) +
+      theme_void() +
+      theme(legend.position = 'none')
   } else {
+    
+    outline <- in_states |>
+      st_union() 
+    
+    aquifers <- aquifers |>
+      mutate(pattern = ifelse(AQ_NAME %in% c('GlacialExtent_NAWQA_C3', 'Floridan'), 'yes','no'))
+    
+    
     plot_states <- ggplot(in_states) + 
+      geom_sf_pattern(
+        data = aquifers,
+        aes(fill = pattern, color = pattern, pattern = pattern, pattern_fill = pattern),    
+        pattern_angle = 45,  
+        pattern_spacing = 0.01,    
+        pattern_density = 0.01,    
+        pattern_background = NA,
+        pattern_color = '#d1cdc0'
+      ) +
+      scale_pattern_manual(values = c("yes" = "stripe", "no" = "none")) +
+      scale_pattern_fill_manual(values = c("yes" = "grey90", "no" = NA)) +
       geom_sf(fill = "transparent", color = "#d1cdc0") +
-      geom_sf(data = aquifers, fill = "grey90", color = "white", alpha = 0.8) +
+      geom_sf(data = outline, fill = 'transparent', color = "black", linewidth = 0.25) +
       geom_sf(data = sub_aquifers, fill = color_scheme$high_col, 
-              color = color_scheme$high_col, linewidth = 1, alpha = 0.8) +
-      theme_void() 
+              color = color_scheme$high_col, linewidth = 0.3, alpha = 0.8) +
+      scale_fill_manual(
+        values = c("yes" = "transparent", "no" = "grey90"),
+        guide = "none"  # Remove legend for fill
+      ) +
+      scale_color_manual(
+        values = c("yes" = "#d1cdc0", "no" = "white"),  
+        guide = "none"  # Remove legend for color
+      ) +
+      theme_void() +
+      theme(legend.position = 'none')
+
   }
   
   
@@ -239,11 +295,37 @@ aquifer_map <- function(in_sf,
     sf::st_transform(crs = sf::st_crs(in_states)) |>
     rename(full_name = LABEL) 
   
+  outline <- in_states |>
+    st_union() 
+  
+  aquifers <- aquifers |>
+    mutate(pattern = ifelse(AQ_NAME %in% c('GlacialExtent_NAWQA_C3', 'Floridan'), 'yes','no'))
+    
+  
   plot_states <- ggplot(in_states) + 
+    geom_sf_pattern(
+      data = aquifers,
+      aes(fill = pattern, color = pattern, pattern = pattern, pattern_fill = pattern),    
+      pattern_angle = 45,  
+      pattern_spacing = 0.01,    
+      pattern_density = 0.01,    
+      pattern_background = NA,
+      pattern_color = '#d1cdc0'
+    ) +
+    scale_pattern_manual(values = c("yes" = "stripe", "no" = "none")) +
+    scale_pattern_fill_manual(values = c("yes" = "grey90", "no" = NA)) +
     geom_sf(fill = "transparent", color = "#d1cdc0") +
-    geom_sf(data = aquifers, fill = color_scheme$high_col, 
-            color = color_scheme$high_col, linewidth = 0.4, alpha=0.8) +
-    theme_void() 
+    geom_sf(data = outline, fill = 'transparent', color = "black", linewidth = 0.25) +
+    scale_fill_manual(
+      values = c("yes" = "transparent", "no" = "grey90"),
+      guide = "none"  # Remove legend for fill
+    ) +
+    scale_color_manual(
+      values = c("yes" = "#d1cdc0", "no" = "white"),  
+      guide = "none"  # Remove legend for color
+    ) +
+    theme_void() +
+    theme(legend.position = 'none')
   
   ggsave(plot = plot_states,
          filename = png_out, device = "png", bg = "transparent",

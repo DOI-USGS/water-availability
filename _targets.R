@@ -27,6 +27,7 @@ tar_option_set(packages = c(
   "cowplot",
   "packcircles",
   "ggtern",
+  "ggpattern",
   "geojsonio",
   "tigris",
   "geofacet",
