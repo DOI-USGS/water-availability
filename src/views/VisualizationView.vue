@@ -2,7 +2,7 @@
   <section>
     <div class="wavy-container">
       <div class="title-message-container">
-        <h2 id="main-title">Water availability in the United States</h2>
+        <h1 id="main-title">Water availability in the United States</h1>
         <p class="byline">Powered by the <a class="byline-a" href="https://labs.waterdata.usgs.gov/visualizations/" target="_blank">USGS Vizlab</a></p>
       </div>
       <section>
@@ -96,10 +96,12 @@
   z-index: -1;
 }
 #main-title {
-  max-width: 700px;;
+  max-width: 700px;
   line-height: 1.2;
-  font-size: 5rem;
   word-wrap: break-word;
+  font-size: 5rem;
+  font-weight: 800;
+  color: var(--blue-dark);
 }
 @media only screen and (max-width: 768px) {
   .title-message-container {
@@ -108,7 +110,9 @@
   }
   
   #main-title {
-    font-size: 4rem;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blue-dark);
   }
 }
 
