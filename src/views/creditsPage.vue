@@ -307,7 +307,7 @@ function createChart({ container, data, team }) {
   margin: 0 auto;
   padding: 10px 0 10px 0;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .authors-container{
     width: 90vw;
   }

@@ -103,7 +103,7 @@
   font-weight: 800;
   color: var(--blue-dark);
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .title-message-container {
     padding: 80px 10px;
     width: 95vw;

@@ -109,7 +109,7 @@ function getIconURL(suffix) {
   margin: 0 auto;
   padding: 10px 0 10px 0;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .glossary-container{
     width: 90vw;
   }
@@ -119,7 +119,7 @@ function getIconURL(suffix) {
   margin: 0 auto;
   padding: 30px 0 10px 30px;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .glossary-references-container{
     width: 90vw;
   }
@@ -169,7 +169,7 @@ function getIconURL(suffix) {
   z-index: -1;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .title-message-container {
     padding: 80px 10px;
     width: 95vw;

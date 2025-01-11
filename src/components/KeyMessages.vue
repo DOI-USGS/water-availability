@@ -79,7 +79,7 @@ export default {
     align-items: center;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .key-message-container {
     width: 90vw;
     grid-template-columns: 50px auto;

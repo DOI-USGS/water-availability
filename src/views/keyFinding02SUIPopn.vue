@@ -133,7 +133,7 @@ onMounted(() => {
   padding-bottom: 15px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .availability-container {
   display: grid;
   width: 100%;
