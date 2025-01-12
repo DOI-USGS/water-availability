@@ -36,8 +36,6 @@
             <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the layers</b> of supply and demand on and off to view them individually</p>
           </div>
         </div>
-        <br>
-        <br>
 
         <!-- Regional SUI section -->
         <div class="text-container">
@@ -136,12 +134,9 @@
               />
               </div>
               <div class="caption-text-flex caption-text-child">
-                <br>
                 <p>Water limitation across the lower 48 United States, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. <b>Select a region on the map</b> to view the proportions of water limitation levels for that region.</p>
               </div>
         </div>    
-        <br>
-        <br>
          <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>When supply decreases, demand increases</h2>

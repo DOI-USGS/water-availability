@@ -26,7 +26,6 @@
                 <p>Map showing circles for each hydrologic unit (HUC8). The color of the circle is the level of water limitation. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. The size of the bubble represents the social vulnerability score, with larger bubbles representing more social vulnerability.<span v-for="reference in theseReferences.filter(item => item.refID === 'CDC2022')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
               </div>
             </div> 
-            <br>
             <div class="text-container">
                 <h2>Water insecurity</h2>
                 <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities. Societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses.<span v-for="reference in theseReferences.filter(item => item.refID === 'Drakes2024')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
@@ -59,12 +58,10 @@
                 <p>Bar charts showing the proportion of the population<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> of the lower 48 United States living in varying categories of social vulnerability. The color represents the level of water limitation as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. </p>
               </div>
             </div> 
-            <br>
             <div class="text-container">
                 <h2>Access to clean water</h2>
                 <p>Exposure to drinking-water contamination occurs at higher rates for low-income communities, minority-dominated communities, and those who depend on domestic wells as their drinking water source, compared to communities who are not socially vulnerable.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> While nitrogen and phosphorus pollution are problems for most communities in the U.S., watersheds with the highest levels of nitrogen and phosphorus contamination contain relatively higher proportions of socially vulnerable individuals. </p>
             </div>
-            <br>
         <Methods :theseReferences="referenceList"></Methods>
         <References :theseReferences="referenceList"></References>
         </div>

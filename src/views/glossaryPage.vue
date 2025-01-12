@@ -29,7 +29,7 @@
             <h1>Key Definitions</h1>
             <div class="key-term" v-for="terms, index in termArray" :key="index">
                 <div class="key-message-item-text">
-                    <h3 class="glossary-term"> {{ terms.term }} </h3>
+                    <h2 class="glossary-term"> {{ terms.term }} </h2>
                     <p class="glossary-def"> {{ terms.definition }}</p>
                     <div v-if="terms.visualLogic" class="viz-container">
                       <img class="viz-portrait" :src="getIconURL(terms.visual)">

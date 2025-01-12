@@ -30,7 +30,7 @@
         </div>
         <div class="page-title-container">
             <h1>{{ message.mainTitle }}</h1>
-            <h2> {{ message.shortTitle }}</h2>
+            <h2 class="h2-nospacer"> {{ message.shortTitle }}</h2>
         </div>   
     </div>
     <div class="content-container" v-for="(message, index) in filteredMessages" :key="index">

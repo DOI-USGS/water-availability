@@ -105,6 +105,10 @@ h2 {
   font-size: 2.25rem;
   font-weight: 600;
   color: var(--blue-dark);
+  padding-top: 15px;
+}
+.h2-nospacer {
+  padding-top: 0;
 }
 h3 {
   font-size: 1.9rem;
@@ -138,6 +142,7 @@ a:visited {
     font-weight: 600;
     color: var(--blue-dark);
     line-height: 2.0rem;
+    padding-top: 10px
   }
   h3 {
     font-size: 1.4rem;
@@ -151,7 +156,9 @@ a:visited {
     color: var(--soft-black);
   }
 }
-
+li {
+  padding-top: 10px;
+}
 /* containers for different page elements */
 .content-container {
   width: 80vw;
@@ -318,6 +325,8 @@ a:visited {
   width: 55%;
   min-width: 400px;
   margin: 0 auto;
+  padding-top: 25px;
+  padding-bottom: 15px;
 }
 /* caption div */
 .caption-text-child {

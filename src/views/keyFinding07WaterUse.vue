@@ -5,12 +5,11 @@
       <div class="text-container">
         <p>
           An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability.</p>
-          <br>
-          <b>Around 90% of daily water use in the United States goes toward:</b>
+          <h3>Around 90% of daily water use in the United States goes toward:</h3>
           <ul>
-            <li>Crop irrigation</li>
-            <li>Freshwater used in the process of creating energy at thermoelectric power plants</li>
-            <li>Public supply, where water is withdrawn or purchased by a water supplier and delivered to many users</li>
+            <li><b>Crop irrigation</b></li>
+            <li><b>Thermoelectric power plants</b>, where freshwater is used in the process of creating energy</li>
+            <li><b>Public supply</b>, where water is withdrawn or purchased by a water supplier and delivered to many users</li>
           </ul>
           <br>
         <p>These three uses add up to 224,000 million gallons of freshwater per day.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In addition, saline water used at thermoelectric power plants adds another approximately 21,000 million gallons of water per day. </p>
@@ -42,32 +41,22 @@
             <p>Bar chart showing model estimates for total daily water use from these categories by year from 2010 through 2020 for the lower 48 United States. <b>Toggle the options</b> to switch between viewing the total use versus the use by category. </p>
           </div>
         </div>       
-          <br>
-          <br>
         <div class="text-container">
         <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
 
-        <h3>How does water use affect water availability?</h3>
+        <h2>How does water use affect water availability?</h2>
         <p>
           Water use affects water availability in three ways. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Return flows to streams or groundwater after use can have implications for water quality and stream ecology.  Therefore, areas with more intensive water demands have a higher potential to degrade water quality and flows than areas with less intense water demands. 
         </p>
       </div>
       
-
-      <br>
-      <br>
       <div class="text-container">
         <h2>Not all is lost</h2>
+        <p>Not all of the water used by humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive use." Consumptive use includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive use is highest for crop irrigation: Only 28% of water used for irrigation returns to the local environment.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment, although this amount varies widely depending on the type of cooling system used at the plant. </p>
       </div>
       <div class="viz-container">
         <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"/>
       </div>
-      <br>
-      <div class="text-container">
-        <p>Not all of the water used by humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive use." Consumptive use includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive use is highest for crop irrigation: Only 28% of water used for irrigation returns to the local environment.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment, although this amount varies widely depending on the type of cooling system used at the plant. </p>
-      </div>
-      <br>
-      <br>
       <Methods :theseReferences="referenceList"></Methods>
       <References :theseReferences="referenceList"></References>
     </div>

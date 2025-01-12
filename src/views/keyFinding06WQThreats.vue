@@ -27,7 +27,7 @@
             </div> 
 
             <div class="text-container" >
-              <h2 class="spacer" style="padding-top:50px">Surface water quality varies by use</h2>
+              <h2>Surface water quality varies by use</h2>
               <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides many benefits from sourcing fish for food to providing recreation. </p>
             </div>
 
@@ -57,7 +57,6 @@
             <div class="caption-container">
               <div class="caption-text-child">
                 <p>Heatmap of the top threats to drinking water, fish consumption, and recreational use. Chart fill and percentages show the percent of assessed river miles that are threatened by each contaminant. Darker fill indicates a higher degree of threat by that source.<span v-for="reference in theseReferences.filter(item => item.refID === 'EPA2023')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the options</b> to sort the chart by one of the three columns.</p>
-                <br>
               </div>
             </div>
             <div class="text-container">

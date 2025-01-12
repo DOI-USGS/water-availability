@@ -48,14 +48,11 @@
                 <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12).<span v-for="reference in theseReferences.filter(item => item.refID === 'Martinez2024sparrow')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The histogram shows the distribution of total load across the lower 48 United States. <b>Select a region on the map</b> to view histograms for that region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the choices</b> to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
             </div>
-          <br>
-          <br>
             <div class="text-container">
-              <h3>Where do nutrients come from?</h3>
+              <h2>Where do nutrients come from?</h2>
               <p>Nutrients are added to our waterways through natural sources and human activities. Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or atmospheric deposition, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streams and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
-            <br>
 
               <div class="chart-title-container">
             <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} </p>
@@ -97,15 +94,10 @@
                 <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Martinez2024sparrow')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the choices</b> to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
             </div> 
-
-            <br>
-            <br>
-            
             <div class="text-container">
-              <h3>But, aren't nutrients good for us?</h3>
+              <h2>But, aren't nutrients good for us?</h2>
               <p>Nutrients are important for all living organisms, but only in the right amounts and at the right times. Excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, but indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
-            <br>
             <Methods :theseReferences="referenceList"></Methods>
             <References :theseReferences="referenceList"></References>
         </div>

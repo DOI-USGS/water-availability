@@ -2,33 +2,30 @@
     <section class="main-container">
         <KeyMessages></KeyMessages>
         <div class="content-container">
-          <div class="chart-title-container">
-            <h3>Where is water availability limited, and why?</h3>
-
-          </div>
           <div class="text-container">
+            <h2>Where is water availability limited, and why?</h2>
             <p>The conditions that impact water availability often occur together, including water quantity, quality, and natural flows.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> For example, areas with limited water supply can be more vulnerable to water quality issues or flow alterations. These maps show four conditions that affect water availability. The darker regions indicate more severe impacts from that particular aspect of water availability.</p>
           </div>
           <div class="text-container">
 
             <div class="availability-container">
               <div class="wa-map-text-container" id="sui-map">
-                <h4 class="wa-title">Water quantity</h4>
+                <h3 class="wa-title">Water quantity</h3>
                 <p class="wa-text">Impacts to water availability from water quantity are related to the balance between water supply and demand.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Areas of the country with high water quantity limitation are primarily located in the central U.S. and Mississippi Embayment. Learn more about water limitation (<a href="#/01-water-limitation" target="_blank">link</a>) and water supply at a national level (<a href="#/04-water-supply" target="_blank">link</a>), and how they relate to social vulnerability (<a href="#/03-vulnerability" target="_blank">link</a>). Learn more about water use effects on water availability at a national scale (<a href="#/07-water-use" target="_blank">link</a>) and regionally (<a href="#/08-regional-wu" target="_blank">link</a>). </p>
                 <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_sui.png`">
               </div>
               <div class="wa-map-text-container" id="sw-map">
-                <h4 class="wa-title">Surface water quality</h4>
+                <h3 class="wa-title">Surface water quality</h3>
                 <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_sw_wq.png`">
                 <p class="wa-text">Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, or pesticides.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The central and midwest U.S., have the most widespread water quality issues due to the application of fertilizer and manure for agriculture. Learn more about surface water quality effects on water availability from excess nutrients (<a href="#/05-nutrients" target="_blank">link</a>) and other human-health contaminants (<a href="#/06-water-quality" target="_blank">link</a>).</p>
               </div>
               <div class="wa-map-text-container" id="gw-map">
-                <h4 class="wa-title">Groundwater quality</h4>
+                <h3 class="wa-title">Groundwater quality</h3>
                 <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_gw_wq.png`">
                 <p class="wa-text">Groundwater can be affected by high concentrations of contaminants from geologic sources, including arsenic, manganese, strontium, radionuclides, fluoride, or lithium, as well as salinity and nitrogen.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Areas of the country with challenges to groundwater quality include the central and southwestern U.S. Learn more about groundwater quality effects on water availability from excess geologic contaminants (<a href="#/06-water-quality" target="_blank">link</a>).</p>
               </div>
               <div class="wa-map-text-container" id="eco-map">
-                <h4 class="wa-title">Altered natural flows</h4>
+                <h3 class="wa-title">Altered natural flows</h3>
                 <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_ecoflow.png`">
                 <p class="wa-text">Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Altered flows primarily limit water availability in the Northeast, Florida, Texas, and Central High Plains regions.</p>
               </div>
@@ -53,7 +50,7 @@
             </div> 
           
           <div class="text-container">
-            <h3>What about in the future?</h3>
+            <h2>What about in the future?</h2>
             <p>The continuing rise in global temperature as a result of human activity is causing changes in Earth's water cycle, with significant consequences for water availability.<span v-for="reference in theseReferences.filter(item => item.refID === 'Scholl2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
             <ul class="tab-content-list">
                     <li><b>Temperature is rising</b>, with amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing.</li>
