@@ -89,14 +89,14 @@ body {
   font-family:
     Source Sans Pro,
     sans-serif;
-  font-size: 18px;
+  font-size: 1.15rem;
   font-weight: 400;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1 { /* defined differently on landing page in VisualizationVue.vue */
+h1 { /* defined differently "main-title" on landing page in VisualizationVue.vue */
   font-size: 3rem;
   font-weight: 800;
   color: var(--blue-dark);
@@ -147,7 +147,7 @@ a:visited {
   }
   h4 {
     font-size: 1.2rem;
-    font-weight: 400;
+    font-weight: 700;
     color: var(--soft-black);
   }
 }
@@ -215,32 +215,44 @@ a:visited {
   padding-bottom: 0px;
 }
 .chart-title {
-  font-size: 1.5rem; /* same as H4 */
+  font-size: 1.6rem; /* same as H4 */
   font-family: var(--default-font);
   font-weight: 700;
   fill: var(--color-text);
 }
 
 .chart-text, .category-label, .value-label, .chart-subtitle {
-  font-size: 1rem; /* same as regular text */
+  font-size: 1.15rem; /* same as regular text */
   font-family: var(--default-font);
   font-weight: 400;
   fill: var(--color-text);
 }
 /* Text for d3 chart axes, etc */
 .axis-title {
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   font-family: var(--default-font);
   font-weight: 900;
   fill: var(--color-text);
   user-select: none;
   @media screen and (max-width: 600px) {
-      font-size: 1.2rem;
+      font-size: 0.9rem;
   }
 }
 .axis-text{
   font-family: var(--default-font);
-  font-size: 0.9rem;
+  font-size: 0.75rem;
+}
+@media only screen and (max-width: 600px) {
+  .chart-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .axis-text{
+    font-family:
+      Source Sans Pro,
+      sans-serif;
+    font-size: 0.75rem;
+  }
 }
 .kf-container {
   width: 65%;
@@ -520,9 +532,9 @@ section .waves .wave#wave4{
   }
 }
 
-
+/* reference number */
 .in-text-number {
-  font-size: 14px;
+  font-size: 0.8rem;
   color: var(--blue-bright)
 }
 /* Tooltip container */
@@ -597,14 +609,7 @@ section .waves .wave#wave4{
   }
 }
 
-@media only screen and (max-width:490px) {
-  .axis-text{
-    font-family:
-      Source Sans Pro,
-      sans-serif;
-    font-size: 1.6rem;
-  }
-}
+
 
 .viz-placeholder{
   width:80%;
@@ -626,7 +631,7 @@ section .waves .wave#wave4{
   width: 30%;
   margin: 10px;
 }
-@media only screen and (max-width:490px) {
+@media only screen and (max-width: 600px) {
   .viz-double-portrait{
     width: 80%;
   }
@@ -644,7 +649,7 @@ section .waves .wave#wave4{
   margin-right: 20px;
 }
 
-@media only screen and (max-width:490px) {
+@media only screen and (max-width: 600px) {
   .agg-reg-svg {
   width: 40%;
   height: auto;
@@ -768,7 +773,7 @@ section .waves .wave#wave4{
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
   color: white;
-  font-size: 80px;
+  font-size: 5rem;
   font-weight: bold;
 }
 
@@ -778,7 +783,7 @@ section .waves .wave#wave4{
         height: 40px;
     }
     .raindrop-static-text{
-        font-size: 30px;
+        font-size: 2.2rem;
     }
     .hamburger-menu {
     top: 10px;
@@ -835,11 +840,15 @@ section .waves .wave#wave4{
 
 .panel p, .references-panel {
   margin: 20px 25px 0px 25px;
-  font-size: 18px;
+  font-size: 1.15rem;
 }
   
 .symbol {
   font-size: 32px;
   font-weight: bold;
 }
-
+@media only screen and (max-width: 600px) {
+  .panel p, .references-panel {
+    font-size: 1rem;
+  }
+}

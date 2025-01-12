@@ -125,7 +125,7 @@ const updateBarChart = (data) => {
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .attr('dy', '0.35em') // Vertical alignment
             .attr('text-anchor', 'end') 
-            .attr('font-size', '1.5rem')
+            .attr('font-size', '1.15rem')
             .text(d => {
                 const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
                 return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
@@ -150,7 +150,7 @@ const updateBarChart = (data) => {
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .attr('dy', '0.35em') 
             .attr('text-anchor', 'start') 
-            .attr('font-size', '1.5rem')
+            .attr('font-size', '1.15rem')
             .attr('fill', 'black')
             .text(d => formatValue(d[props.continuousRaw])), 
             update => update.transition().duration(animateTime)

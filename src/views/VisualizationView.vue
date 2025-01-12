@@ -186,7 +186,7 @@
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
   color: var(--cream-background);
-  font-size: 40px;
+  font-size: 3rem;
   font-weight: bold;
 }
 .disabled {
@@ -202,7 +202,7 @@
 }
 
 .byline {
-  font-size: 15px;
+  font-size: 1.15rem;
 }
 .byline-a {
   color: var(--blue-dark);

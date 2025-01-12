@@ -171,7 +171,7 @@ const navigateRight = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
-  font-size: 20px;
+  font-size: 1.4rem;
   font-weight: bold;
   color: var(--blue-dark);
 }
