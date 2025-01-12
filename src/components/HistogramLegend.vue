@@ -126,7 +126,7 @@ function initLegend(data) {
     .selectAll('text') // select axis labels
     .style('text-anchor', 'middle') // align to the middle
     .attr('x', 0)
-    .style('font-size', '0.75rem'); 
+    .style('font-size', '0.9rem'); 
 
   svg.selectAll('.x-axis .tick') // select all ticks
   .attr('transform', function(d) {

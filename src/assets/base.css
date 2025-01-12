@@ -229,18 +229,18 @@ a:visited {
 }
 /* Text for d3 chart axes, etc */
 .axis-title {
-  font-size: 0.9rem;
+  font-size: 1.15rem;
   font-family: var(--default-font);
-  font-weight: 900;
+  font-weight: 700;
   fill: var(--color-text);
   user-select: none;
   @media screen and (max-width: 600px) {
-      font-size: 0.9rem;
+      font-size: 1.15rem;
   }
 }
 .axis-text{
   font-family: var(--default-font);
-  font-size: 0.75rem;
+  font-size: 0.9rem;
 }
 @media only screen and (max-width: 600px) {
   .chart-title {
@@ -251,7 +251,7 @@ a:visited {
     font-family:
       Source Sans Pro,
       sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
   }
 }
 .kf-container {
