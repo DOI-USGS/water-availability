@@ -443,8 +443,8 @@ li {
 .home-link-container {
   text-align: center;
   z-index:9999;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 5px auto  0px auto;
+  max-width: 200px;
 }
 .report-link {
   display: inline-block;
