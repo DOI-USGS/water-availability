@@ -102,7 +102,7 @@ const navigateRight = () => {
   justify-content: space-between;
   align-items: center;
 }
-@media only screen and (max-width:490px) {
+@media only screen and (max-width: 600px) {
   .nav-page-button-wrapper {
   width: 100%;
   }
@@ -117,9 +117,9 @@ const navigateRight = () => {
   align-items: center;
   justify-content: center;
 }
-@media only screen and (max-width:490px) {
+@media only screen and (max-width:600px) {
   .nav-container {
-  height: 160px; 
+  height: 70px; 
   } 
 }
 

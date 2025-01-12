@@ -105,8 +105,8 @@
 }
 @media only screen and (max-width: 600px) {
   .title-message-container {
-    padding: 80px 10px;
-    width: 95vw;
+    padding: 80px 0px;
+    width: 100vw;
   }
   
   #main-title {

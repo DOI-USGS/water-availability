@@ -28,16 +28,16 @@
       </div>
     <div class="report-link-container" v-if="featureToggles.showReportLinks">
           <a href="https://www.usgs.gov/iwaas" target="_blank" rel="noopener noreferrer" class="report-link">
-          <h2> Read the report</h2>
+          <h3 class="h3-nospacer"> Read the report</h3>
           </a>        
           <a href="https://www.water.usgs.gov/nwaa-data" target="_blank" rel="noopener noreferrer" class="report-link">
-          <h2> Access the data</h2>
+          <h3 class="h3-nospacer"> Access the data</h3>
           </a>
         </div>
     </div>
     <div class="home-link-container">
           <a href="index.html" rel="noopener noreferrer" class="home-link">
-            <h3> Return Home</h3></a>     
+            <h3 class="h3-nospacer"> Return Home</h3></a>     
         </div>
 </template>
   
