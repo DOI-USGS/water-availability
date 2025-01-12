@@ -55,7 +55,7 @@
         <p>Not all of the water used by humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive use." Consumptive use includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive use is highest for crop irrigation: Only 28% of water used for irrigation returns to the local environment.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment, although this amount varies widely depending on the type of cooling system used at the plant. </p>
       </div>
       <div class="viz-container">
-        <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"/>
+        <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"/>
       </div>
       <Methods :theseReferences="referenceList"></Methods>
       <References :theseReferences="referenceList"></References>

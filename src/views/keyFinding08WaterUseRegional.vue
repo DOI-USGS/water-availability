@@ -91,7 +91,7 @@
           <div class="viz-container">
             <Reg class="dumbbell-reg-svg reg-svg" id="svg-style"></Reg>
             <img
-                class="viz-half"
+                class="viz-landscape"
                 id="dumbbells"
                 :src="imgSrc"
                 alt=""

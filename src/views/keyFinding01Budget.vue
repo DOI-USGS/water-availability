@@ -147,7 +147,7 @@
             <p class="chart-subtitle">The proportion of the lower 48 United States in each water limitation category through time</p>
           </div>
         <div class="viz-container">
-          <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
+          <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
         </div>
         <div class="caption-container">
           <div class="caption-text-child">

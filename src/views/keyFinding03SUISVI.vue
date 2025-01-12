@@ -11,7 +11,7 @@
               <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
             <div class="viz-container">
-              <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`">
+              <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`">
             </div>
             <div class="caption-container-flex caption-container">
               <div class="legend-group">

@@ -639,29 +639,20 @@ section .waves .wave#wave4{
 
 
 
-.viz-placeholder{
-  width:80%;
-}
-.viz-portrait{
+/* styling for images when placed on page */
+.viz-portrait{ 
   max-width: 100%;
   max-height: 75vh;
 }
 .viz-landscape{
   width: 80%;
 }
-.viz-half {
-  width: 50%;
-}
-.viz-double-portrait{
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  border-radius: 15px;
-  background-color: white;
-  width: 30%;
-  margin: 10px;
-}
 @media only screen and (max-width: 600px) {
-  .viz-double-portrait{
-    width: 80%;
+  .viz-portrait {
+    width: 90%;
+  }
+  .viz-landscape {
+    width: 100%;
   }
 }
 

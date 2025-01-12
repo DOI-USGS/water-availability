@@ -7,7 +7,7 @@
                 <p>The water cycle describes how water moves through natural and human-modified landscapes. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
                 </div>
                 <div class="viz-container">
-                    <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`">
+                    <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`">
                 </div>
                 <div class="caption-container">
                   <div class="caption-text-child">
