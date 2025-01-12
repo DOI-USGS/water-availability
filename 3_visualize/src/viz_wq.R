@@ -81,7 +81,7 @@ map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
     ) +
     theme_void() +
     theme(
-      legend.position = "bottom") 
+      legend.position = "none") 
 
   
   ggsave(plot = map,

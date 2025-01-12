@@ -650,6 +650,7 @@ section .waves .wave#wave4{
 @media only screen and (max-width: 600px) {
   .viz-portrait {
     width: 90%;
+    max-height: 75vh;
   }
   .viz-landscape {
     width: 100%;
