@@ -10,8 +10,8 @@
   import { isMobile } from 'mobile-device-detect';
   
   const mobileView = isMobile;
-  let width;
-  let height;
+  let histogramWidth;
+  let histogramHeight;
   let rectHeight;
   let marginLeft;
   let marginRight;
@@ -43,8 +43,8 @@
 
       // chart dimensions
     const containerWidth = document.getElementById('bar-container').clientWidth;
-    width = mobileView ? containerWidth : 700;
-    height = 120;
+    histogramWidth = mobileView ? containerWidth : 700;
+    histogramHeight = 120;
     rectHeight = 80;
     marginLeft = mobileView ? -4 : -30;
     marginRight = mobileView ? 40 : 80;
@@ -74,9 +74,9 @@ watch(
 function setupSVG() {
   d3.select(legendSvg.value).selectAll('*').remove();
   svg = d3.select(legendSvg.value)
-    .attr('width', width)
-    .attr('height', height)
-    .attr('viewBox', `${marginLeft} 0 ${width + marginRight} ${height}`);
+    .attr('width', histogramWidth)
+    .attr('height', histogramHeight)
+    .attr('viewBox', `${marginLeft} 0 ${histogramWidth + marginRight} ${histogramHeight}`);
 }
 
 // Initialize Legend
@@ -99,7 +99,7 @@ function initLegend(data) {
 
     const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
-    .range([0, width])
+    .range([0, histogramWidth])
     .paddingInner(0) 
     .paddingOuter(0);
   
@@ -124,7 +124,7 @@ function initLegend(data) {
         .join('rect')
         .attr('class','static')
         .attr('x', d => xScale(cleanLabel(d.category)))
-        .attr('y', mobileView ? height - 20 : height - 15)
+        .attr('y', mobileView ? histogramHeight - 20 : histogramHeight - 15)
         .attr('width', xScale.bandwidth())
         .attr('height', d => rectHeight - yScale(d.value))
         .style('fill', d => colorScale(d.category));
@@ -160,7 +160,7 @@ function initLegend(data) {
   svg.append('g')
     .attr('id', 'y-axis')
     .attr('class', 'axis-text')
-    .attr('transform', `translate(${width}, 0)`)
+    .attr('transform', `translate(${histogramWidth}, 0)`)
     .call(axisRight) 
 
 }
@@ -177,7 +177,7 @@ function updateLegend(data) {
 
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
-    .range([0, width])
+    .range([0, histogramWidth])
     .paddingInner(0) 
     .paddingOuter(0);
 
@@ -224,7 +224,7 @@ function updateLegend(data) {
     .join('rect')
     .attr('class','static')
     .attr('x', d => xScale(cleanLabel(d.category)))
-    .attr('y', mobileView ? height - 20 : height - 15)
+    .attr('y', mobileView ? histogramHeight - 20 : histogramHeight - 15)
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
     .style('fill', d => colorScale(d.category));

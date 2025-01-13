@@ -133,7 +133,7 @@ const publicPath = import.meta.env.BASE_URL;
 
 // Chart dimensions
 const margin = { 
-  top: isMobile ? 0 : 20, 
+  top: isMobile ? 30 : 20, 
   right: isMobile ? 0 : 20, 
   bottom: isMobile ? 20 : 20, 
   left: isMobile ? 175 : 250 };
@@ -269,9 +269,12 @@ function updateSelectedRegion(regionName) {
 function initBarChart() {
 
   const container = document.getElementById('barplot-container');
-  const containerWidth = container.clientWidth;
-  width = containerWidth - margin.left - margin.right;
-  height = mobileView ? 500 - margin.top - margin.bottom : Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
+  containerWidth = container.clientWidth;
+  width = containerWidth - margin.left - margin.right; // width of bars
+  console.log(containerWidth)
+  console.log(width)
+  console.log(margin.left + margin.right)
+  height = mobileView ? 600 - margin.top - margin.bottom : Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
 
     // remove any existing SVG before redrawing
     d3.select('#barplot-container').select('svg').remove();
@@ -313,7 +316,7 @@ function createBarChart({ dataset, scaleLoad}) {
 
   nutrientScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-    .range([margin.left, width]);
+    .range([margin.left, containerWidth]);
 
   chartBounds.selectAll(".axis-text").remove();
 
@@ -326,6 +329,7 @@ function createBarChart({ dataset, scaleLoad}) {
   // adding maps
   regionAxis.selectAll(".tick")
     .select("text")
+    .attr('class', 'axis-text')
     .attr("x", mobileView ? -70 : -80) // shift text to the left to make space for the mini maps
 
     // load SVG and add it to each tick
@@ -359,13 +363,13 @@ function createBarChart({ dataset, scaleLoad}) {
   // x-axis at the bottom
   chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
+    .call(d3.axisBottom(nutrientScale).ticks(mobileView ? 3 : 4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
   // x-axis at the top
   chartBounds.append('g')
     .attr('transform', `translate(0, ${margin.top})`) // positioned at y = 0 (top of the chart)
-    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
+    .call(d3.axisTop(nutrientScale).ticks(mobileView ? 3 : 4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
   const colorScale = d3.scaleOrdinal()
