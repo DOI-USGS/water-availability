@@ -355,7 +355,6 @@ function addInteractions() {
         // set viewbox for svg with wedges
         const aquiferSVG = d3.select("#aquifer-svg")
             .attr("viewBox", "0 0 " + 2700 + " " + 1800)
-            .attr("preserveAspectRatio", "xMidYMid meet")
             .attr("width", '100%')
             .attr("height", '100%')
         

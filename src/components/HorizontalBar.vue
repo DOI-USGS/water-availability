@@ -1,5 +1,5 @@
 <template>
-    <div class="chart-container">
+    <div class="chart-container" >
       <div ref="barContainer" class="bar-container" id="bar-container"></div>
     </div>  
 </template>
@@ -7,8 +7,11 @@
   <script setup>
   import { onMounted, ref, watch, inject } from 'vue';
   import * as d3 from 'd3';
+  import { isMobile, mobileVendor } from 'mobile-device-detect';
 
   const animateTime = inject('animateTime')
+  const mobileView = isMobile;
+  let width, height, marginLeft, marginRight;
 
   // props to configure the bar chart
   const props = defineProps({
@@ -25,12 +28,19 @@
   
 onMounted(() => {
   // create the SVG if it doesn't exist
+  width = mobileView ? 320 : 600;
+  height = 100;
+  marginLeft = mobileView ? 120 : 100;
+  marginRight = mobileView ? 10 : 100;
+
   if (!svgBar) {
     svgBar = d3.select(barContainer.value)
       .append('svg')
-      .attr('viewBox', `0 0 700 100`)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
-      .classed('bar-chart-svg', true);
+        .attr('width', width)
+        .attr('height', height)
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet')
+        .attr('class', 'bar-chart-svg')
 
     svgBar.append('g'); // add a <g> container
 
@@ -71,18 +81,15 @@ const updateBarChart = (data) => {
     return current ? current : category; // Use current data if it exists, otherwise use default
   });
 
-  /// Define dimensions and scales
-  const chartHeight = 100; 
-
    const yScale = d3.scaleBand()
     .domain(data.map(d => d[props.categoricalVariable]))
-    .range([0, chartHeight])
+    .range([0, height])
     .padding(0.6); // between bars
 
   // Currently using a static max for x-axis
   const xScale = d3.scaleLinear()
     .domain([0, 125000])
-    .range([0, 700]);
+    .range([marginLeft, width - marginLeft - marginRight]);
 
   const getColor = (category) => {
     const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
@@ -96,8 +103,8 @@ const updateBarChart = (data) => {
     .data(completeData, d => d[props.categoricalVariable])
     .join(
       enter => enter.append('rect')
-      .attr('y', d => yScale(d[props.categoricalVariable]))
-        .attr('x', 160) 
+        .attr('y', d => yScale(d[props.categoricalVariable]))
+        .attr('x', marginLeft) 
         .attr('height', yScale.bandwidth())
         .attr('width', 0) 
         .attr('fill', d => getColor(d[props.categoricalVariable]))
@@ -106,7 +113,7 @@ const updateBarChart = (data) => {
         ),
       update => update.transition().duration(animateTime)
         .attr('y', d => yScale(d[props.categoricalVariable]))
-        .attr('x', 160)
+        .attr('x', marginLeft)
         .attr('width', d => xScale(d[props.continuousRaw]))
         .attr('fill', d => getColor(d[props.categoricalVariable])),
         exit => exit
@@ -116,50 +123,51 @@ const updateBarChart = (data) => {
     );
 
   
-    g.selectAll('.category-label')
+    g.selectAll('#category-label')
     .data(completeData, d => d[props.categoricalVariable])
         .join(
         enter => enter.append('text')
-            .attr('class', 'category-label')
-            .attr('x', 150) // Adjust for left alignment
+            .attr('id', 'category-label')
+            .attr('class', 'axis-text')
+            .attr('x', marginLeft - 10) // Adjust for left alignment
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .attr('dy', '0.35em') // Vertical alignment
             .attr('text-anchor', 'end') 
-            .attr('font-size', '1.15rem')
             .text(d => {
                 const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
                 return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
             }),
-        update => update.transition().duration(animateTime)
+          update => update.transition().duration(animateTime)
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .text(d => {
                 const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
                 return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
             }),
-        exit => exit.transition().duration(animateTime) 
+          exit => exit.transition().duration(animateTime) 
             .style('opacity', 0)
             .remove()
-        );
+          );
 
-    g.selectAll('.value-label')
+    g.selectAll('#value-label')
         .data(completeData, d => d[props.categoricalVariable]) // Bind data with a unique key
         .join(
             enter => enter.append('text')
-            .attr('class', 'value-label')
-            .attr('x', d => xScale(d[props.continuousRaw]) + 165) 
-            .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
-            .attr('dy', '0.35em') 
-            .attr('text-anchor', 'start') 
-            .attr('font-size', '1.15rem')
-            .attr('fill', 'black')
-            .text(d => formatValue(d[props.continuousRaw])), 
+              .attr('id', 'value-label')
+              .attr('class', 'axis-text')
+              .attr('x', d => xScale(d[props.continuousRaw]) + marginLeft + 10) 
+              .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
+              .attr('dy', '0.35em') 
+              .attr('text-anchor', 'start') 
+              .attr('fill', 'black')
+              .text(d => formatValue(d[props.continuousRaw])), 
             update => update.transition().duration(animateTime)
-            .attr('x', d => xScale(d[props.continuousRaw]) + 165) 
-            .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
-            .text(d => formatValue(d[props.continuousRaw])), 
+              .attr('class', 'axis-text')
+              .attr('x', d => xScale(d[props.continuousRaw]) + marginLeft + 10) 
+              .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
+              .text(d => formatValue(d[props.continuousRaw])), 
             exit => exit.transition().duration(animateTime) 
-            .style('opacity', 0)
-            .remove()
+              .style('opacity', 0)
+              .remove()
         );
 
 
@@ -185,8 +193,12 @@ watch(
 <style>
 .bar-chart-svg {
     width: 100%;
-    height: auto;
-    max-height: 100%;
     overflow: visible;
+}
+@media only screen and (max-width: 600px) {
+  .bar-chart-svg {
+    width: 95vw;
+    max-width: 95vw;
   }
+} 
   </style>

@@ -76,7 +76,8 @@ function setupSVG() {
   svg = d3.select(legendSvg.value)
     .attr('width', histogramWidth)
     .attr('height', histogramHeight)
-    .attr('viewBox', `${marginLeft} 0 ${histogramWidth + marginRight} ${histogramHeight}`);
+    .attr('viewBox', `${marginLeft} 0 ${histogramWidth + marginRight} ${histogramHeight}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet');
 }
 
 // Initialize Legend

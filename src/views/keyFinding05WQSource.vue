@@ -136,7 +136,7 @@ const margin = {
   top: isMobile ? 30 : 20, 
   right: isMobile ? 5 : 20, 
   bottom: isMobile ? 20 : 20, 
-  left: isMobile ? 175 : 250 };
+  left: isMobile ? 180 : 250 };
 let svg, chartBounds, rectGroup, nutrientScale;
 let width, height, containerWidth;
 
@@ -271,9 +271,6 @@ function initBarChart() {
   const container = document.getElementById('barplot-container');
   containerWidth = container.clientWidth;
   width = containerWidth - margin.left - margin.right; // width of bars
-  console.log(containerWidth)
-  console.log(width)
-  console.log(margin.left + margin.right)
   height = mobileView ? 600 - margin.top - margin.bottom : Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
 
     // remove any existing SVG before redrawing
@@ -287,7 +284,7 @@ function initBarChart() {
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .style('width', containerWidth)
       //.style('max-height', `${height}px`)
-      .style('height', 'auto');
+      .style('height', height + margin.top + margin.bottom);
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
@@ -330,7 +327,7 @@ function createBarChart({ dataset, scaleLoad}) {
   regionAxis.selectAll(".tick")
     .select("text")
     .attr('class', 'axis-text')
-    .attr("x", mobileView ? -70 : -80) // shift text to the left to make space for the mini maps
+    .attr("x", mobileView ? -60 : -80) // shift text to the left to make space for the mini maps
 
     // load SVG and add it to each tick
     d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
@@ -346,11 +343,11 @@ function createBarChart({ dataset, scaleLoad}) {
         // add the map at each tick
         const insertedSvg = d3.select(this)
           .insert(() => svgClone, "text") 
-          .attr("x", -66) 
-          .attr("y", -30) 
-          .attr("width", 60) 
-          .attr("height", 60)
-          .attr("fill", "lightgrey"); 
+            .attr("x", -46)
+            .attr("y", -25)
+          .attr("width", 50) 
+          .attr("height", 50)
+          .attr("fill", "var(--inactive-grey)"); 
 
         // select the <g> element with the region name
         insertedSvg.selectAll(`g.${regionClass} path`) // grab the path

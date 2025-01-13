@@ -112,7 +112,7 @@ const barSpace = 5;
 
 // chart dimensions
 const margin = mobileView
-  ? { top: 30, right: 30, bottom: 30, left: 40 } //  mobile
+  ? { top: 30, right: 30, bottom: 30, left: 30 } //  mobile
   : { top: 30, right: 100, bottom: 30, left: 140 }; // desktop
 
 
@@ -189,6 +189,7 @@ function initBarChart() {
     .append('svg')
     .attr('class', 'barplotSVG')
     .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet')
     .style('width', containerWidth)
     .style('height', containerHeight);
 

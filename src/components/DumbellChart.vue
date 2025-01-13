@@ -33,11 +33,11 @@ let svg, chartBounds, xScale, originalXScaleDomain, dotGroup;
 const publicPath = import.meta.env.BASE_URL;
 
 // dynamic dimensions
-const margin = { 
-  top: 20, 
-  right: mobileView ? 40 : 100, 
-  bottom: 30, 
-  left: mobileView ? 175 : 250 }; // increase left margin for y-axis labels
+const margin = {  
+  top: isMobile ? 30 : 20, 
+  right: isMobile ? 5 : 20, 
+  bottom: isMobile ? 20 : 20, 
+  left: isMobile ? 180 : 250 }; // increase left margin for y-axis labels
 let width, height;
 
 // initialize chart
@@ -45,7 +45,7 @@ const initChart = (containerWidth) => {
 
   // calculate responsive dimensions
   width = containerWidth - margin.left - margin.right;
-  height = Math.min(window.innerHeight * 0.7, 700) - margin.top - margin.bottom;
+  height = mobileView ? 600 - margin.top - margin.bottom : Math.min(window.innerHeight * 0.7, 700) - margin.top - margin.bottom;
 
   // remove any existing SVG before redrawing
   d3.select('#dotplot-container').select('svg').remove();
@@ -54,9 +54,9 @@ const initChart = (containerWidth) => {
     .append('svg')
     .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
     .attr('preserveAspectRatio', 'xMidYMid meet')
-    .style('width', '100%')
+    .style('width', containerWidth)
     //.style('max-height', `${height}px`)
-    .style('height', 'auto');
+    .style('height', height + margin.top + margin.bottom);
 
   // add chart area group
   chartBounds = svg.append('g')
@@ -115,7 +115,7 @@ const drawChart = () => {
       .selectAll(".tick")
       .select("text")
       .attr('class', mobileView ? 'axis-text' : 'chart-text')
-      .attr("x", -50);
+      .attr("x", mobileView ? -60 : -80);
 
     d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
       const svgNode = xml.documentElement;

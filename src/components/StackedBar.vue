@@ -124,12 +124,13 @@ const updateBarChart = (data) => {
     const formatPercentage = d3.format('.0f');
   
       // percent labels on bar chart 
-      g.selectAll('.chart-text')
+      g.selectAll('#chart-text')
         .data(sortedData, d => d[props.categoricalVariable]) // unique key
         .join(
             enter => {
             const enteringText = enter.append('text')
-                .attr('class', 'axis-text')
+                .attr('id', 'chart-text')
+                .attr('class', mobileView ? 'axis-text' : 'chart-text')
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 50)
                 .attr('text-anchor', 'middle')
@@ -176,10 +177,13 @@ watch(
     width: 100%;
     height: auto;
     max-height: 100%;
-  }
-  @media only screen and (max-width: 600px) {
+}
+@media only screen and (max-width: 600px) {
   .bar-chart-svg {
     max-width: 90vw;
   }
-}
+  .bar-container {
+    width: 90vw;
+  }
+} 
   </style>

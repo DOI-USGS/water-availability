@@ -105,7 +105,8 @@
     const svg = d3.select(mapContainer.value)
       .append('svg')
       .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .attr('width', width)
+      .attr('height', height)
       .classed('responsive-svg', true);
 
     mapLayers = svg.append('g').attr('class', 'map-layers')
