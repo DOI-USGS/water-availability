@@ -134,7 +134,7 @@ const publicPath = import.meta.env.BASE_URL;
 // Chart dimensions
 const margin = { 
   top: isMobile ? 30 : 20, 
-  right: isMobile ? 0 : 20, 
+  right: isMobile ? 5 : 20, 
   bottom: isMobile ? 20 : 20, 
   left: isMobile ? 175 : 250 };
 let svg, chartBounds, rectGroup, nutrientScale;
@@ -316,7 +316,7 @@ function createBarChart({ dataset, scaleLoad}) {
 
   nutrientScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-    .range([margin.left, containerWidth]);
+    .range([margin.left, containerWidth - margin.right]);
 
   chartBounds.selectAll(".axis-text").remove();
 

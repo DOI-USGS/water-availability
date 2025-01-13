@@ -178,7 +178,7 @@ onMounted(async () => {
                         top: mobileView ? 30 : 0,
                         right: mobileView ? 10 : 10,
                         bottom: mobileView ? 0 : 0,
-                        left: mobileView ? 145 : 200
+                        left: mobileView ? 125 : 200
                     },
                 }
                 chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
@@ -410,6 +410,12 @@ function mouseleaveWrapper() {
   grid-template-rows:  minmax(20vh, 600px);
   grid-template-areas:
       "overlay-maps";
+} 
+@media only screen and (max-width: 600px) {
+  .map-container {
+    grid-template-columns: minmax(50vw, 100%);
+    grid-template-rows: auto;
+  }
 }
 .map-overlay {
   grid-area: overlay-maps;

@@ -106,18 +106,15 @@ const mobileView = isMobile; // Detect mobile view for responsive design
 let svg, chartBounds, rectGroup, xAxisGroup;
 let categoryGroups, yearGroups, dataStacked, data;
 let yearScale, useScale, categoryRectGroups, totalHeight, adjustedHeight, facetHeights;
-const containerWidth = 800; 
-const containerHeight = 600;
+let containerWidth, containerHeight, width, height;
 const padding = 30;
 const barSpace = 5;
 
 // chart dimensions
 const margin = mobileView
-  ? { top: 30, right: 10, bottom: 50, left: 40 } //  mobile
-  : { top: 30, right: 10, bottom: 50, left: 40 }; // desktop
+  ? { top: 30, right: 30, bottom: 30, left: 40 } //  mobile
+  : { top: 30, right: 100, bottom: 30, left: 140 }; // desktop
 
-const width = containerWidth - margin.left - margin.right;
-const height = containerHeight - margin.top - margin.bottom;
 
 // Define colors for each category group
 const categoryColors = {
@@ -243,7 +240,7 @@ function createBarChart(dataStacked) {
   categoryGroups.forEach((group, i) => {
     chartBounds.append('g')
       .attr('class', `y-axis y-axis-${i}`)
-      .call(d3.axisLeft(useScale).ticks(4).tickFormat(d3.format("~s")))
+      .call(d3.axisLeft(useScale).ticks(mobileView ? 3 : 4).tickFormat(d3.format("~s")))
       .selectAll('.tick text')
       .attr('class', 'chart-text');
   });
@@ -306,7 +303,7 @@ function transitionToFaceted() {
     d3.select(`.y-axis-${i}`)
       .transition(t)
       .attr('transform', `translate(0, ${facetPositions[i]})`)
-      .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")))
+      .call(d3.axisLeft(groupScale).ticks(mobileView ? 2 : 3).tickFormat(d3.format("~s")))
       .selectAll('.tick text')
       .attr('class', 'chart-text');
 
@@ -339,7 +336,6 @@ function transitionToFaceted() {
   xAxisGroup.select('.x-axis')
     .transition(t)
     .attr('transform', `translate(0, ${adjustedHeight})`) // move to the new position
-   //.call(d3.axisBottom(yearScale).tickSize(0)) // redraw axis
   xAxisGroup.selectAll('.tick text')
     .attr('class', 'chart-text')
     .style('text-anchor', 'middle'); // ensure labels are styled
@@ -370,7 +366,7 @@ function transitionToStacked() {
       .transition(t)
       .attr('transform', 'translate(0, 0)')
       .call(d3.axisLeft(useScale)
-        .ticks(4)
+        .ticks(mobileView ? 3 : 4)
         .tickFormat(d3.format("~s"))
       )
       .selectAll('.tick text')
@@ -410,7 +406,13 @@ onMounted(async () => {
 
   window.scrollTo(0, 0)
 
-  
+  const container = document.getElementById('barplot-container');
+  containerWidth = container.clientWidth;
+  containerHeight = mobileView ? 400 : 600;
+
+  width = containerWidth - margin.left - margin.right;
+  height = containerHeight - margin.top - margin.bottom;
+
   // load the data
   await loadDatasets();
 
@@ -441,7 +443,7 @@ onMounted(async () => {
 
 <style scoped>
 #barplot-container {
-  max-width: 100%;
+  max-width: 1000px;
   width: 100%;
   margin: auto;
   display: flex;
