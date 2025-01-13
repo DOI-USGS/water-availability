@@ -57,7 +57,7 @@
         <div 
           v-if="featureToggles.showReportLinks" 
           class="report-link-container">
-          <a href="labs.waterdata.usgs.gov/visualizations" target="_blank" rel="noopener noreferrer" class="report-link">
+          <a href="https://www.usgs.gov/iwaas" target="_blank" rel="noopener noreferrer" class="report-link">
             <h3> Read the report</h3></a>        
           <a href="https://water.usgs.gov/nwaa-data/" target="_blank" rel="noopener noreferrer" class="report-link">
             <h3> Access the data</h3>
