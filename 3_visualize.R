@@ -266,7 +266,7 @@ p3_targets <- list(
                       regions_sf = p2_Reg_sf,
                       color_scheme = p3_colors_wq,
                       png_out = sprintf("src/assets/images/R/05_%s_map.png", nutrient),
-                      width = 9, height = 6),
+                      width = 8, height = 6),
                format = "file"),
     names = nutrient
   ),

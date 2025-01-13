@@ -31,9 +31,9 @@
               regionsDataUrl="assets/Regions.topojson"
               usOutlineUrl="assets/USoutline.topojson"
               regionsVar="Region_nam_nospace"
-              layerMag="1.11"
-              layerX="-44"
-              layerY="-11"
+              layerMag="1.2"
+              layerX="-80"
+              layerY="-55"
 
             />
 
