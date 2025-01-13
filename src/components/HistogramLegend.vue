@@ -12,6 +12,7 @@
   const mobileView = isMobile;
   let width;
   let height;
+  let rectHeight;
 
   // define props
   const props = defineProps({
