@@ -223,8 +223,6 @@ li {
 
 /* chart styling */
 .chart-container {
-  width: 65%;
-  min-width: 700px;
   margin: 0 auto;
   padding-bottom: 0px;
 }

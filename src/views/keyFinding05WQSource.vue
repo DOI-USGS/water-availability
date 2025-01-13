@@ -213,7 +213,6 @@ onMounted(async () => {
               dataset: data.value,
               scaleLoad: scaleLoad.value
             });
-            observeResize();
         } else {
             console.error('Error loading data');
         }
