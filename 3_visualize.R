@@ -149,6 +149,12 @@ p3_targets <- list(
                         in_regions = p2_Reg_sf,
                         png_out = "src/assets/images/R/01_stress_map.png",
                         width = 8, height = 6)),
+  tar_target(p3_map_stress_highRes_png,
+             map_sui(in_sf = p2_HUC12_join_sui_svi_sf,
+                     color_scheme = p3_colors_sui,
+                     in_regions = p2_Reg_sf,
+                     png_out = "src/assets/images/R/01_sui_map_highRes.png",
+                     width = 16, height = 12)),
   ## Replicate maps for each water stress category
   tarchetypes::tar_map( 
     values = tibble::tibble(level = c("low", "very_low_none", "moderate", "severe", "high")),
