@@ -16,32 +16,32 @@
                 leftColor="black"
               />
             </div>
-              <div class="image-container">
-            <RegionMap 
-            class="region-map"
-              @regionSelected="updateSelectedRegion"
-              :layerVisibility="{
-                nitrogen: layers.nitrogen.visible,
-                phosphorus: layers.phosphorus.visible
-              }"
-              :layerPaths="{
-                nitrogen: { path: layers.nitrogen.path, color: layers.nitrogen.color, order: layers.nitrogen.order },
-                phosphorus: { path: layers.phosphorus.path, color: layers.phosphorus.color, order: layers.phosphorus.order }
-              }"
-              regionsDataUrl="assets/Regions.topojson"
-              usOutlineUrl="assets/USoutline.topojson"
-              regionsVar="Region_nam_nospace"
-              layerMag="1.2"
-              layerX="-80"
-              layerY="-55"
+              <div class="viz-container">
+              <RegionMap 
+              class="region-map"
+                @regionSelected="updateSelectedRegion"
+                :layerVisibility="{
+                  nitrogen: layers.nitrogen.visible,
+                  phosphorus: layers.phosphorus.visible
+                }"
+                :layerPaths="{
+                  nitrogen: { path: layers.nitrogen.path, color: layers.nitrogen.color, order: layers.nitrogen.order },
+                  phosphorus: { path: layers.phosphorus.path, color: layers.phosphorus.color, order: layers.phosphorus.order }
+                }"
+                regionsDataUrl="assets/Regions.topojson"
+                usOutlineUrl="assets/USoutline.topojson"
+                regionsVar="Region_nam_nospace"
+                layerMag="1.2"
+                layerX="-80"
+                layerY="-55"
 
-            />
+              />
 
-            <HistogramLegend 
-              :layerPaths="legendConfig"
-              :data="legendData"
-              :regionName="selectedRegion"
-            />
+              <HistogramLegend 
+                :layerPaths="legendConfig"
+                :data="legendData"
+                :regionName="selectedRegion"
+              />
           </div>
             <div class="caption-container">
               <div class="caption-text-child">
@@ -77,7 +77,7 @@
                   />
 
             </div>
-          <div class="image-container">
+          <div class="viz-container">
                 <div id="barplot-container">    
                 </div>
             </div>
@@ -478,13 +478,7 @@ watch([selectedRegion], filterRegionData)
   max-width: 1800px;
   margin: auto;
 }
-.image-container {
-  position: relative;
-  width: 100%; 
-  max-width: 1800px;
-  margin: auto; 
-  overflow: hidden;
-}
+
 .region-map {
   height: 600px;
 }

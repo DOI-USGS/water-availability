@@ -179,9 +179,11 @@ li {
 /* this is where each page's viz will go */
 .viz-container { 
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column; 
   align-items: center;
   justify-content: center;
+  max-width: 1800px;
+  max-height: 90vh;
   min-height: 20vh;
   width: 100%;
   padding: 10px 0 10px 0;
@@ -214,6 +216,7 @@ li {
 .text-container {
   width: 65%;
   min-width: 600px;
+  max-width: 1800px;
   margin: 0 auto;
   padding-bottom: 10px;
 }
@@ -665,9 +668,9 @@ section .waves .wave#wave4{
 
 /* Settings for the interactive svgs with hover effects */
 .reg-svg {
-  width: 40%;
+  width: 60%;
+  min-width: 200px;
   height: auto;
-  margin-right: 20px;
 }
 .dumbbell-reg-svg{
   width: 50%;

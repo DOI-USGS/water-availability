@@ -10,11 +10,13 @@
               <p class="chart-title">Groundwater quality in {{ aquiferLabel }}</p>
               <p class="chart-subtitle">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
           </div>
+          <div class="viz-container">
             <div class="map-container">
               <img class="map-overlay" 
               :src="imgSrc">
               <aquiferWedges id="aquifer-svg" />
             </div>
+          </div>
             <div class="caption-container-flex caption-container">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-wq-high" label="Above human-health benchmark" color="var(--wq-high)" />
@@ -159,7 +161,7 @@ onMounted(async () => {
 
   // chart dimensions
   const containerWidth = document.getElementById('heatmap-container').clientWidth;
-  const width = containerWidth;
+  const width = mobileView ? containerWidth : 600;
   const height = mobileView ? 400 : 650;
 
   window.scrollTo(0, 0);
@@ -176,7 +178,7 @@ onMounted(async () => {
                         top: mobileView ? 30 : 0,
                         right: mobileView ? 10 : 10,
                         bottom: mobileView ? 0 : 0,
-                        left: mobileView ? 145 : 0
+                        left: mobileView ? 145 : 200
                     },
                 }
                 chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,

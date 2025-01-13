@@ -9,7 +9,7 @@
             <p class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
             <p class="chart-subtitle">Daily water use in 2020, in million gallons per day</p>
           </div>
-          <div class="image-container">
+          <div class="viz-container">
           <HorizontalBar 
             categoricalVariable="d3_category"
             continuousRaw="total_use"
