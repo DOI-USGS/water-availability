@@ -683,6 +683,10 @@ section .waves .wave#wave4{
   .viz-landscape {
     max-width: 95vw;
   }
+  .viz-mini {
+    max-width: 100%;
+    width: 90vw;
+  }
 }
 
 /* Settings for the interactive svgs with hover effects */
