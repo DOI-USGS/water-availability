@@ -36,19 +36,19 @@
             </div>
             <div class="svi-bar-container">
               <div class="svi-bar-child">
-                <p class="chart-text">Severe social vulnerability </p>
+                <p class="chart-text svi-text">Severe social vulnerability </p>
                 <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Severe.png`">
               </div>
               <div class="svi-bar-child">
-                <p class="chart-text">High social vulnerability </p>
+                <p class="chart-text svi-text">High social vulnerability </p>
                 <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_High.png`">
               </div>
               <div class="svi-bar-child">
-                <p class="chart-text">Moderate social vulnerability </p>
+                <p class="chart-text svi-text">Moderate social vulnerability </p>
                 <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Moderate.png`">
               </div>
               <div class="svi-bar-child">
-                <p class="chart-text">Low social vulnerability </p>
+                <p class="chart-text svi-text">Low social vulnerability </p>
                 <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Low.png`">
               </div>
               
@@ -125,5 +125,21 @@ onMounted(() => {
 }
 .svi-image {
   max-width: 600px;
+}
+@media only screen and (max-width: 600px) {
+  .svi-bar-container {
+    width: 100%;
+    min-width: 100vw;
+  }
+  .svi-bar-child {
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: right;
+    margin: 0px;
+  }
+  .svi-image {
+    max-width: 50vw;
+  }
 }
 </style>
