@@ -49,7 +49,7 @@
                   </div>
                 </div>
           </div>
-          <div class="viz-container">
+          <div class="viz-container" id="heatmap-container">
             <div id="heatmap-svg"></div>
           </div>
                     <!-- Category of use -->
@@ -152,12 +152,15 @@ let rectGroup;
 
 let svg;
 
-// chart dimensions
-const width = mobileView ? 400 : 700;
-const height = 650;
+
 
 // Run of show
 onMounted(async () => {
+
+  // chart dimensions
+  const containerWidth = document.getElementById('heatmap-container').clientWidth;
+  const width = containerWidth;
+  const height = mobileView ? 400 : 650;
 
   window.scrollTo(0, 0);
   
@@ -170,10 +173,10 @@ onMounted(async () => {
                     width: width,
                     height: height,
                     margin: {
-                        top: mobileView ? 30 : 30,
+                        top: mobileView ? 30 : 0,
                         right: mobileView ? 10 : 10,
                         bottom: mobileView ? 0 : 0,
-                        left: mobileView ? 145 : 145
+                        left: mobileView ? 145 : 0
                     },
                 }
                 chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
@@ -263,7 +266,7 @@ function initHeatmap({dataset, sortBy}) {
 
   const yScale = d3.scaleBand()
     .domain(sortRank.map(d => d.Parameter)) // uses rank based on selected use
-    .range([chartDimensions.height-chartDimensions.margin.bottom, chartDimensions.margin.top])
+    .range([chartDimensions.height - chartDimensions.margin.bottom, chartDimensions.margin.top])
     .padding(0.1);
 
   d3.axisLeft(yScale)
@@ -305,7 +308,7 @@ function initHeatmap({dataset, sortBy}) {
       .data(sortedDataset)
         .join(
           enter => enter.append("text")
-            .attr("class", "chart-text")
+            .attr("class", "axis-text")
             .attr("id", "percent-labels")
             .attr("x", (d) => xScale(d.Use) + xScale.bandwidth())
             .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
@@ -329,7 +332,7 @@ function initHeatmap({dataset, sortBy}) {
         .attr("transform", `translate(0,${chartDimensions.margin.top})`)
         .call(d3.axisTop(xScale).ticks(3))
         .call(g => g.select(".domain").remove())
-        .attr("class", "chart-text")
+        .attr("class", "axis-text")
         .style('font-weight', '700');
 
     svg.select("#y-axis").remove();
@@ -337,7 +340,7 @@ function initHeatmap({dataset, sortBy}) {
     svg.append("g")
         .attr("transform", `translate(${chartDimensions.margin.left},0)`)
         .call(d3.axisLeft(yScale).tickSizeOuter(0))
-        .attr("class", "chart-text")
+        .attr("class", "axis-text")
         .attr("id", "y-axis");
   
 

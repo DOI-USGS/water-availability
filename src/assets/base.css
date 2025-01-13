@@ -198,7 +198,7 @@ li {
 @media only screen and (max-width: 600px) {
   .viz-container {
       flex-direction: column;
-      padding: 0 5px;
+      padding: 0;
       width: 100vw;
       max-width: none;
       justify-content: flex-start;
@@ -265,7 +265,7 @@ li {
     font-family:
       Source Sans Pro,
       sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 .kf-container {
@@ -645,11 +645,10 @@ section .waves .wave#wave4{
   max-height: 75vh;
 }
 .viz-landscape{
-  width: 80%;
+  max-width: 80%;
 }
 @media only screen and (max-width: 600px) {
   .viz-portrait {
-    width: 90%;
     max-height: 75vh;
   }
   .viz-landscape {

@@ -24,12 +24,15 @@
               />
             </div>
           </div>
-          <DumbellChart 
+      <div class="viz-container">
+        <DumbellChart 
             :data="data" 
             :animateTime="animateTime"
             v-model:supplyEnabled="supplyEnabled" 
             v-model:demandEnabled="demandEnabled"
           /> 
+      </div>
+
         <div class="caption-container">
           <!-- Supply and Demand caption -->
           <div class="caption-text-child">
