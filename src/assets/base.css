@@ -658,32 +658,29 @@ section .waves .wave#wave4{
 }
 
 /* Settings for the interactive svgs with hover effects */
-.agg-reg-svg {
-  width: 20%;
+.reg-svg {
+  width: 40%;
   height: auto;
   margin-right: 20px;
 }
-.reg-svg {
-  width: 20%;
+.dumbbell-reg-svg{
+  width: 50%;
   height: auto;
-  margin-right: 20px;
+  margin-right: 0px;
 }
 
 @media only screen and (max-width: 600px) {
-  .agg-reg-svg {
-  width: 40%;
-  height: auto;
-  margin-right: 0px;
-  margin-bottom: -80px;
-  margin-top: -50px;
-  }
   .reg-svg {
-    width: 40%;
+    width: 60%;
     height: auto;
-    margin-right: 0px;
-    margin-bottom: -80px;
-    margin-top: -50px;
+    margin-bottom: -40px;
+    margin-top: -40px;
     }
+  .dumbbell-reg-svg{
+    width: 60%;
+    margin-bottom: -60px;
+    margin-top: -40px;
+  }
 }
 /* animated waves */
 .wavy-container {

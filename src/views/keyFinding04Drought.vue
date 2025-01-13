@@ -25,7 +25,7 @@
                 <p class="chart-subtitle">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
             </div>
             <div class="viz-container">
-                <Reg class="reg-svg"></Reg>
+                <Reg class="reg-svg"></Reg> 
                 <img
                     class="viz-portrait"
                     id="cascades"

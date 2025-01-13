@@ -89,7 +89,7 @@
             <p class="chart-subtitle">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
           </div>
           <div class="viz-container">
-            <Reg class="dumbbell-reg-svg reg-svg" id="svg-style"></Reg>
+            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
             <img
                 class="viz-landscape"
                 id="dumbbells"
