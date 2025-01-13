@@ -121,18 +121,24 @@ import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import HistogramLegend from '../components/HistogramLegend.vue';
 import ColorLegend from '../components/ColorLegend.vue';
+import { isMobile } from 'mobile-device-detect';
 
 // use for mobile logic
 const featureToggles = inject('featureToggles');
 const route = useRoute();
+const mobileView = isMobile;
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
 
 // Chart dimensions
-const margin = { top: 20, right: 20, bottom: 20, left: 250 };
+const margin = { 
+  top: isMobile ? 0 : 20, 
+  right: isMobile ? 0 : 20, 
+  bottom: isMobile ? 20 : 20, 
+  left: isMobile ? 175 : 250 };
 let svg, chartBounds, rectGroup, nutrientScale;
-let width, height;
+let width, height, containerWidth;
 
 // Reactive data elements
 const scaleLoad = ref(true);
@@ -265,7 +271,7 @@ function initBarChart() {
   const container = document.getElementById('barplot-container');
   const containerWidth = container.clientWidth;
   width = containerWidth - margin.left - margin.right;
-  height = Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
+  height = mobileView ? 500 - margin.top - margin.bottom : Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
 
     // remove any existing SVG before redrawing
     d3.select('#barplot-container').select('svg').remove();
@@ -275,9 +281,9 @@ function initBarChart() {
       .append('svg')
       .attr('class', 'barplotSVG')
       .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
-      .style('width', '100%')
       .attr('preserveAspectRatio', 'xMidYMid meet')
-      //.style('max-height', `${maxHeight}px`)
+      .style('width', containerWidth)
+      //.style('max-height', `${height}px`)
       .style('height', 'auto');
 
     // add group for bar chart bounds, translating by chart margins
@@ -320,7 +326,7 @@ function createBarChart({ dataset, scaleLoad}) {
   // adding maps
   regionAxis.selectAll(".tick")
     .select("text")
-    .attr("x", -80) // shift text to the left to make space for the mini maps
+    .attr("x", mobileView ? -70 : -80) // shift text to the left to make space for the mini maps
 
     // load SVG and add it to each tick
     d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
@@ -403,28 +409,6 @@ function createBarChart({ dataset, scaleLoad}) {
     );
 }
 
-// dynamic scaling based on container width
-const resizeChart = () => {
-  const container = document.getElementById('barplot-container');
-  const containerWidth = container.clientWidth;
-
-  // dynamically adjust width and height
-  width = containerWidth - margin.left - margin.right;
-  height = Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
-
-  // update svg viewBox
-  svg.attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
-     .attr('preserveAspectRatio', 'xMidYMid meet');
-
-  // redraw chart
-  createBarChart({ dataset: dataset.value, scaleLoad: scaleLoad.value });
-};
-// handle resize
-const observeResize = () => {
-  const resizeObserver = new ResizeObserver(() => resizeChart());
-  resizeObserver.observe(document.getElementById('barplot-container'));
-};
-
 
 // COMPUTED VARIABLES 
 // compute legendConfig dynamically based on the toggle
@@ -479,7 +463,8 @@ watch([selectedRegion], filterRegionData)
 }
 @media only screen and (max-width: 600px) {
   #barplot-container {
-    width: 100%; 
+    width: 90vw;
+    max-height: 80vh;
   }
 }
 
