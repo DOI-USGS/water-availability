@@ -206,7 +206,7 @@ li {
   .chart-title-container {
     flex-direction: column;
     padding: 0 5px;
-    width: 100vw;
+    width: 90vw;
     max-width: none;
     justify-content: flex-start;
   }
@@ -352,8 +352,8 @@ li {
 @media only screen and (max-width: 600px) {
   .caption-container {
     display: grid;
-    width: 90vw;
-    max-width: 100vw;
+    width: 100%;
+    max-width: 90vw;
     margin: 0 auto;
     grid-gap: 5px;
     grid-template-columns: 1fr;
@@ -362,7 +362,12 @@ li {
   .caption-text-child {
     font-size: 0.9rem;
     font-weight: 400;
-    font-style: italic
+    font-style: italic;
+    max-width: 90vw;
+  }
+  .caption-text-flex {
+    flex-grow: 1;
+    max-width: 90vw;
   }
 }
 /* legend div */
@@ -650,6 +655,7 @@ section .waves .wave#wave4{
 @media only screen and (max-width: 600px) {
   .viz-portrait {
     max-height: 75vh;
+    max-width: 85vw;
   }
   .viz-landscape {
     width: 100%;

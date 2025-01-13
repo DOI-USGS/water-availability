@@ -24,12 +24,12 @@
         </ul>
     </div>
   <section>    
-    <div class="glossary-container">
+    <div class="content-container">
         <div id="text-container">
             <h1>Key Definitions</h1>
             <div class="key-term" v-for="terms, index in termArray" :key="index">
                 <div class="key-message-item-text">
-                    <h2 class="glossary-term"> {{ terms.term }} </h2>
+                    <h3 class="glossary-term"> {{ terms.term }} </h3>
                     <p class="glossary-def"> {{ terms.definition }}</p>
                     <div v-if="terms.visualLogic" class="viz-container">
                       <img class="viz-portrait" :src="getIconURL(terms.visual)">
@@ -37,11 +37,10 @@
                 </div>
             </div>
         </div>
-    </div>
     <div class="glossary-references-container">
       <h3>References</h3>
           <div  v-for="reference in theseReferences" :key="reference.refID" >
-            <p>
+            <p class="chart-text">
               <ul>
                 <li><span v-html="reference.authors" /> (<span v-html="reference.year" />). 
                 <a
@@ -60,12 +59,12 @@
             </p>
           </div>
         </div>
+    </div>
     <div class="home-link-container">
           <a href="index.html" rel="noopener noreferrer" class="home-link">
             <h3> Return Home</h3>
           </a>       
     </div>
-    
   </section>
   </section>
 </template>
