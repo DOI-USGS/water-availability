@@ -18,9 +18,8 @@
     <div class="dropdown-menu" v-if="menuOpen">
         <ul>
           <li><router-link to="/">Home</router-link></li>
-          <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Read the Report</a></li>
-          <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">Access the Data</a></li>
-          <li><a href="https://labs.waterdata.usgs.gov/visualizations/index.html" target="_blank">USGS Vizlab</a></li>
+          <li><a href="https://www.usgs.gov/iwaas" target="_blank">Read the Report</a></li>
+          <li><a href="https://water.usgs.gov/nwaa-data/" target="_blank">Access the Data</a></li>
           <li><router-link to="/credits"> Website Credits</router-link></li>
         </ul>
     </div>
@@ -61,8 +60,8 @@
             </p>
           </div>
         </div>
-    <div class="report-link-container">
-          <a href="index.html" rel="noopener noreferrer" class="report-link">
+    <div class="home-link-container">
+          <a href="index.html" rel="noopener noreferrer" class="home-link">
             <h3> Return Home</h3>
           </a>       
     </div>

@@ -6,7 +6,7 @@ export default {
             mainTitle: 'Do we have enough water? Yes, and no',
             shortTitle: 'The U.S. has enough water, but not everywhere and not at all times',
             keyMessage: 'At the national scale, water supply is much higher than our demand for water. However, this pattern is not true for all regions or times.',
-            references: ["Stets2025", "VanMetre2020", "Gorski2025", "Medalie2025"]
+            references: ["Stets2025", "VanMetre2020", "Gorski2025", "Medalie2025", "Martinez2025supply","Miller2024sui"]
         },
         {
             page: 2,
@@ -33,7 +33,8 @@ export default {
                 "CDC2022",
                 "Drakes2024", 
                 "Census2020", 
-                "Erickson2025"]
+                "Erickson2025",
+                "Miller2024sui"]
         },
         {
             page: 4,
@@ -47,6 +48,7 @@ export default {
                 "Foks2025b",
                 "Sampson2025",
                 "VanMetre2020",
+                "Martinez2025supply",
                 "Medalie2025"
             ]
         },
@@ -58,6 +60,7 @@ export default {
             keyMessage: 'Sources of nutrients in our water vary across the United States. Common sources of nutrients such as nitrogen and phosphorus include fertilizer and manure, atmospheric deposition, wastewater treatment plants, urban land, and a range of natural sources including stream channel and geologic sources.',
             references: [
                 "Erickson2025", 
+                "Martinez2024sparrow",
                 "VanMetre2020", 
                 "Ator2019", 
                 "Hoos2019", 
@@ -74,6 +77,7 @@ export default {
             references: [
                 "Erickson2025",
                 "Belitz2022", 
+                "Azadpour2025",
                 "EPA2023",
                 "Stets2020",
                 "Ngoubeyou2022",

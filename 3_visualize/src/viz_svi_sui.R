@@ -74,10 +74,14 @@ plot_monthly_sui <- function(in_df,
                                  color_scheme$sui_severe)) +
     scale_x_date(breaks = "1 year", date_labels = "%Y",
                  limits = c(as.Date("2010-01-01"), as.Date("2020-01-01"))) +
+    scale_y_continuous(labels = scales::percent) +
     theme_void(base_size = 11) +
     theme(legend.position = "none",
-          panel.grid.major.x = element_line(color = color_scheme$shadow, linewidth = 0.1),
-          axis.text.x = element_text(color = color_scheme$shadow, size = 8))
+          panel.grid.major = element_line(color = color_scheme$shadow, linewidth = 0.1),
+          axis.text.x = element_text(color = color_scheme$shadow, size = 14,
+                                   margin=margin(0,0,0,0)),
+          axis.text.y = element_text(color = color_scheme$shadow, size = 14,
+                                     margin=margin(0,0,0,30)))
   
   
   ggsave(filename = png_out, device = "png", bg = "transparent",

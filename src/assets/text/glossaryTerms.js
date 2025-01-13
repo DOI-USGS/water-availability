@@ -35,6 +35,14 @@ export default {
         {
             term: "Social vulnerability",
             definition: "'Social vulnerability refers to the demographic and socioeconomic factors (such as poverty, lack of access to transportation, and crowded housing) that adversely affect communities that encounter hazards and other community-level stressors. These stressors can include natural or human-caused disasters (such as tornadoes or chemical spills) or disease outbreaks (such as COVID-19).' The Centers for Disease Control (CDC) Social Vulnerability Index (SVI; Centers for Disease Control, 2022) includes indicators reflecting community characteristics and composition that may lead to differential effects from hazard exposures (Flanagan and others, 2011).",
+        },
+        { 
+            term: "Geogenic contamination",
+            definition: "Geogenic contaminants are elements found in groundwater that have come from geologic sources, such as soil and bedrock. Because water is such an excellent solvent, it can contain lots of dissolved chemicals. And since groundwater moves through rocks and subsurface soil, it has a lot of opportunity to dissolve substances as it moves. For that reason, groundwater will often have more dissolved geogenic substances than surface water will.Because groundwater moves slowly in the subsurface and many contaminants stick to the sediments, restoration of a contaminated aquifer is difficult and may require years, decades, centuries, or even millennia."
+        },
+        {
+            term: "Eutrophication",
+            definition: "Eutrophication occurs when a body of water receives an excessive nutrient load, particularly phosphorus or nitrogen. This often results in an overgrowth of algae. As the algae die and decompose, oxygen is depleted from the water, and this lack of oxygen in the water causes the death of aquatic animals, like fish."
         }
     ],
     references: [

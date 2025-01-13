@@ -20,7 +20,7 @@
               <div class="wa-map-text-container" id="sw-map">
                 <h4 class="wa-title">Surface water quality</h4>
                 <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_sw_wq.png`">
-                <p class="wa-text">Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, or pesticides.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Areas of the country that face surface water quality issues include the central and midwest U.S., largely due to the application of fertilizer and manure for agriculture. Learn more about surface water quality effects on water availability from excess nutrients (<a href="#/05-nutrients" target="_blank">link</a>) and other human-health contaminants (<a href="#/06-water-quality" target="_blank">link</a>).</p>
+                <p class="wa-text">Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, or pesticides.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The central and midwest U.S., have the most widespread water quality issues due to the application of fertilizer and manure for agriculture. Learn more about surface water quality effects on water availability from excess nutrients (<a href="#/05-nutrients" target="_blank">link</a>) and other human-health contaminants (<a href="#/06-water-quality" target="_blank">link</a>).</p>
               </div>
               <div class="wa-map-text-container" id="gw-map">
                 <h4 class="wa-title">Groundwater quality</h4>
@@ -57,13 +57,13 @@
             <p>The continuing rise in global temperature as a result of human activity is causing changes in Earth's water cycle, with significant consequences for water availability.<span v-for="reference in theseReferences.filter(item => item.refID === 'Scholl2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
             <ul class="tab-content-list">
                     <li><b>Temperature is rising</b>, with amplified drought events, increased evaporative water loss, increased groundwater demand, and changes in streamflow amount and timing.</li>
-                    <li><b>Snow and ice are diminishing</b>, including reduced snow cover extent and duration, decreased glaciers and increasing meltwater, thawing permafrost, erosion and turbidity from increased melt rates, and altered rain and snow patterns.</li>
+                    <li><b>Snow and ice are diminishing</b>, including reduced snow cover extent and duration, decreased glaciers and increased meltwater, thawing permafrost, erosion and turbidity from increased melt rates, and altered rain and snow patterns.</li>
                     <li><b>Sea levels are rising</b>, exacerbating the impacts of stronger hurricanes, infrastructure damage, and increased storm surges and coastal flooding.</li>
                     <li><b>There will be additional impacts</b>, including increased sediment from extreme rainfall, wildfires, more frequent sand and dust storms, and increased salinity from evaporation of surface waters and saltwater intrusion in coastal aquifers.</li>
                   </ul>
                 
           </div>
-          <Methods></Methods>
+          <Methods :theseReferences="referenceList"></Methods>
           <References :theseReferences="referenceList"></References>
         </div>
       <!-- conditionally render PageCarousel for preview site -->

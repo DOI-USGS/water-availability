@@ -33,7 +33,7 @@
         <div class="caption-container">
           <!-- Supply and Demand caption -->
           <div class="caption-text-child">
-            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
+            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the layers</b> of supply and demand on and off to view them individually</p>
           </div>
         </div>
         <br>
@@ -43,7 +43,7 @@
         <div class="text-container">
           <h2>Does this mean we have enough water?</h2>
         <p>
-          When demand approaches supply, water becomes limited. At local and regional scales, water limitation impacts human and ecosystem needs. Between 2010 and 2020, significant portions of the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert regions had widespread local water limitation. Future global population growth, increasing food demands, and climatic changes could drive further imbalance between supply and demand, exacerbating water limitation across the Nation. 
+          When demand approaches supply, water becomes limited. At local and regional scales, water limitation impacts human and ecosystem needs. Between 2010 and 2020, significant portions of the Southern High Plains, Central High Plains, Texas, Mississippi Embayment, and Southwest Desert regions had widespread local water limitation. Future population growth, increasing food demands, and climatic changes could drive further imbalance between supply and demand, exacerbating water limitation across the Nation. 
         </p>
         </div>
         <!-- Regional SUI map with updating stacked bar chart -->
@@ -137,7 +137,7 @@
               </div>
               <div class="caption-text-flex caption-text-child">
                 <br>
-                <p>Water limitation across the lower 48 United States, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Select regions on the map to view the proportions of water limitation levels for that region.</p>
+                <p>Water limitation across the lower 48 United States, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. <b>Select a region on the map</b> to view the proportions of water limitation levels for that region.</p>
               </div>
         </div>    
         <br>
@@ -145,7 +145,7 @@
          <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>When supply decreases, demand increases</h2>
-          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought [CITE], and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
+          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought, and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
         </div>
         <div class="chart-title-container">
             <p class="chart-title">A decade of water limitation</p>
@@ -156,10 +156,10 @@
         </div>
         <div class="caption-container">
           <div class="caption-text-child">
-            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Each step in the chart represents one month of time. </p>
+            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.Each step in the chart represents one month of time. </p>
           </div>
         </div>  
-        <Methods></Methods>
+        <Methods :theseReferences="referenceList"></Methods>
       <References :theseReferences="referenceList"></References>
       </div>
       <!-- conditionally render PageCarousel for preview site -->
