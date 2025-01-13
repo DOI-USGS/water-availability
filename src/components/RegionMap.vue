@@ -243,8 +243,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: auto;
-    max-height: 700px;
   }
   
   .responsive-svg {
@@ -260,6 +258,11 @@
   }
   .outline-conus {
     filter: drop-shadow(0px 0px 10px rgba(2, 2, 2, 0.5));
+  }
+  @media only screen and (max-width: 600px) {
+    .map-container {
+      max-width: 90vw;
+    }
   }
 </style>
   

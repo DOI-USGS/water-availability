@@ -7,7 +7,12 @@
   <script setup>
   import { onMounted, ref, watch } from 'vue';
   import * as d3 from 'd3';
+  import { isMobile } from 'mobile-device-detect';
   
+  const mobileView = isMobile;
+  let width;
+  let height;
+
   // define props
   const props = defineProps({
     layerPaths: { 
@@ -29,9 +34,9 @@
   let svg;
   
   // chart dimensions
-  const width = 700;
-  const height = 120;
-  const rectHeight = 80;
+  width = 700;
+  height = 120;
+  rectHeight = 80;
 
   // render legend initially and watch for changes
   onMounted(() => {

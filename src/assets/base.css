@@ -268,7 +268,7 @@ li {
     font-family:
       Source Sans Pro,
       sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 .kf-container {
@@ -661,8 +661,7 @@ section .waves .wave#wave4{
     max-width: 85vw;
   }
   .viz-landscape {
-    width: 100%;
-    max-width: 100vw;
+    max-width: 95vw;
   }
 }
 

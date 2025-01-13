@@ -478,11 +478,7 @@ watch([selectedRegion], filterRegionData)
   max-width: 1800px;
   margin: auto;
 }
-
-.region-map {
-  height: 600px;
-}
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   #barplot-container {
     width: 100%; 
   }
