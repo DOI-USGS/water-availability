@@ -188,6 +188,16 @@ li {
   width: 100%;
   padding: 10px 0 10px 0;
 }
+.viz-svg-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1800px;
+  max-height: 90vh;
+  min-height: 20vh;
+  width: 100%;
+  padding: 10px 0 10px 0;
+}
 .chart-title-container {
   display: flex;
   flex-direction: column; 
@@ -204,6 +214,13 @@ li {
       width: 100vw;
       max-width: none;
       justify-content: flex-start;
+  }
+  .viz-svg-container {
+    flex-direction: column;
+    padding: 0;
+    width: 100vw;
+    max-width: none;
+    justify-content: flex-start;
   }
   .chart-title-container {
     flex-direction: column;
@@ -266,7 +283,7 @@ li {
     font-family:
       Source Sans Pro,
       sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
 }
 .kf-container {
@@ -652,6 +669,7 @@ section .waves .wave#wave4{
 }
 .viz-landscape{
   max-width: 80%;
+  width: 60vw;
 }
 @media only screen and (max-width: 600px) {
   .viz-portrait {
@@ -665,7 +683,7 @@ section .waves .wave#wave4{
 
 /* Settings for the interactive svgs with hover effects */
 .reg-svg {
-  width: 60%;
+  width: 30vw;
   min-width: 200px;
   height: auto;
 }
