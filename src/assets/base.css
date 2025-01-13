@@ -668,6 +668,10 @@ section .waves .wave#wave4{
   max-height: 75vh;
 }
 .viz-landscape{
+  max-height: 90vh;
+  max-width: 60vw;
+}
+.viz-mini{
   max-width: 80%;
   width: 60vw;
 }
