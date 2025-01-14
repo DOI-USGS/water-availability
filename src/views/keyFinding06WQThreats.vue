@@ -463,7 +463,7 @@ function mouseleaveWrapper() {
 @media only screen and (max-width: 600px) {
   .map-container {
     grid-template-columns: minmax(50vw, 100%);
-    grid-template-rows: auto;
+    grid-template-rows: minmax(20vh, 80vh);
   }
 }
 .map-overlay {
