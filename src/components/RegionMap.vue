@@ -9,6 +9,7 @@
 
   const publicPath = import.meta.env.BASE_URL; // this gets the base url for the site
 
+  
   // S3 resource sourcing
   const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
   
@@ -25,6 +26,10 @@
     },
     layerPaths: {
       type: Object,
+      required: true
+    },
+    mapChartTitle: {
+      type: String,
       required: true
     },
     layerMag: {
@@ -107,6 +112,7 @@
       .attr('viewBox', `0 0 ${width} ${height}`)
       .attr('width', width)
       .attr('height', height)
+      .attr('aria-label', props.mapChartTitle)
       .classed('responsive-svg', true);
 
     mapLayers = svg.append('g').attr('class', 'map-layers')
@@ -145,7 +151,8 @@
         .attr('x', -80) // nudging png to fit within svg bounds
         .attr('y', -55) // nudging png to fit within svg bounds
         .attr('width', width * scale_size)
-        .attr('height', height * scale_size);
+        .attr('height', height * scale_size)
+        .attr("aria-hidden", true); // hide from screen reader;
   
 
       // draw region boundaries
@@ -159,6 +166,7 @@
         .attr("opacity", 0)
         .attr('stroke', 'white')
         .attr('stroke-width', '1px')
+        .attr("aria-hidden", true) // hide from screen reader
         // add interaction to highlight selected region and update bar chart
         .on('mouseover',function(event, d) {
             d3.selectAll('.region')
@@ -213,7 +221,8 @@
         .attr('d', path)
         .attr('fill', 'none')
         .attr('stroke', 'grey')
-        .attr('stroke-width', '2px');
+        .attr('stroke-width', '2px')
+        .attr("aria-hidden", true); // hide from screen reader;
 
       // add another outline to regions to make it more visible? idk if this looks great
       svg.append('g')
@@ -223,7 +232,8 @@
         .attr('d', path)
         .attr('fill', 'none')
         .attr('stroke', 'white')
-        .attr('stroke-width', '0.75px');
+        .attr('stroke-width', '0.75px')
+        .attr("aria-hidden", true); // hide from screen reader;
   
     } catch (error) {
       console.error('Error loading TopoJSON:', error);

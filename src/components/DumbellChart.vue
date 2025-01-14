@@ -11,6 +11,8 @@ import { onMounted, watch, defineModel, ref } from 'vue';
 import { isMobile } from 'mobile-device-detect';
 const mobileView = isMobile;
 
+const dotChartTitle = "Dot chart comparing water supply versus demand for hydrologic regions in the lower 48 U.S. The regions with the largest supply compared to demand are the Pacific Northwest, Northeast, and Tennessee-Missouri whereas the regions with the lowest supply compared to demand are the central high plains and the southwest desert."
+
 // props
 const props = defineProps({
   data: {
@@ -56,7 +58,8 @@ const initChart = (containerWidth) => {
     .attr('preserveAspectRatio', 'xMidYMid meet')
     .style('width', containerWidth)
     //.style('max-height', `${height}px`)
-    .style('height', height + margin.top + margin.bottom);
+    .style('height', height + margin.top + margin.bottom)
+    .attr('aria-label', dotChartTitle);
 
   // add chart area group
   chartBounds = svg.append('g')
@@ -100,22 +103,26 @@ const drawChart = () => {
   dotGroup.append('g')
     .attr('class', 'x-axis-bottom')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(xScale).ticks(mobileView ? 3 : 5));
+    .call(d3.axisBottom(xScale).ticks(mobileView ? 3 : 5))
+    .attr('aria-hidden', 'true');
 
   dotGroup.append('g')
     .attr('class', 'x-axis-top')
-    .call(d3.axisTop(xScale).ticks(mobileView ? 3 : 5));
+    .call(d3.axisTop(xScale).ticks(mobileView ? 3 : 5))
+    .attr('aria-hidden', 'true');
 
   dotGroup.append('g')
     .attr('class', 'y-axis')
-    .call(d3.axisLeft(yScale));
+    .call(d3.axisLeft(yScale))
+    .attr('aria-hidden', 'true');
 
     // region axis
     dotGroup.select('.y-axis')
       .selectAll(".tick")
       .select("text")
       .attr('class', mobileView ? 'axis-text' : 'chart-text')
-      .attr("x", mobileView ? -60 : -80);
+      .attr("x", mobileView ? -60 : -80)
+      .attr('aria-hidden', 'true');
 
     d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
       const svgNode = xml.documentElement;
@@ -132,12 +139,14 @@ const drawChart = () => {
             .attr("y", -25)
             .attr("width", 50)
             .attr("height", 50)
-            .attr("fill", "var(--inactive-grey)");
+            .attr("fill", "var(--inactive-grey)")
+            .attr('aria-hidden', 'true');
 
           insertedSvg.selectAll(`g.${regionClass} path`)
             .attr("stroke", "black")
             .attr("stroke-width", 3)
-            .attr("fill", "black");
+            .attr("fill", "black")
+            .attr('aria-hidden', 'true');
         });
     });
 
@@ -152,7 +161,8 @@ const drawChart = () => {
     .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
     .style('opacity', 0.4)
     .attr('stroke', 'var(--ws-demand)')
-    .attr('stroke-width', 3);
+    .attr('stroke-width', 3)
+    .attr('aria-hidden', 'true');
 
   // circles for supply
   chartBounds.selectAll('.circle-supply')
@@ -162,7 +172,8 @@ const drawChart = () => {
     .attr('cx', d => xScale(d.supply_mean))
     .attr('cy', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
     .attr('r', 6)
-    .attr('fill', 'var(--ws-demand)');
+    .attr('fill', 'var(--ws-demand)')
+    .attr('aria-hidden', 'true');
 
   // circles for demand
   chartBounds.selectAll('.circle-demand')
@@ -174,7 +185,8 @@ const drawChart = () => {
     .attr('r', 5)
     .attr('stroke', 'var(--ws-demand)')
     .attr('stroke-width', '2px')
-    .attr('fill', 'white');
+    .attr('fill', 'white')
+    .attr('aria-hidden', 'true');
 
 };
 // toggle points on and off
