@@ -151,6 +151,7 @@ const dataFish = ref([]);
 
 let chartDimensions;
 let rectGroup;
+const wrapBuffer = mobileView ? 6 : 10; // vertical spacing for wrapping column names on heatmap
 
 let svg;
 
@@ -175,7 +176,7 @@ onMounted(async () => {
                     width: width,
                     height: height,
                     margin: {
-                        top: mobileView ? 50 : 60,
+                        top: mobileView ? 35 : 50,
                         right: mobileView ? 10 : 10,
                         bottom: mobileView ? 0 : 0,
                         left: mobileView ? 125 : 200
@@ -331,35 +332,59 @@ function initHeatmap({dataset, sortBy}) {
 
       // Create the axes.
         svg.append("text")
-            .attr("class", "chart-text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
             .attr("x", (xScale.bandwidth()/2) + chartDimensions.margin.left ) // match spacing between sankey and labels
-            .attr("y", chartDimensions.margin.top / 2)
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
-            .text("Drinking Water")
-            .call(d => wrap(d))
+            .text("Drinking")
         svg.append("text")
-            .attr("class", "chart-text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Water")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
             .attr("x", (xScale.bandwidth()/2) + xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
-            .attr("y", chartDimensions.margin.top / 2)
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
-            .text("Fish Consumption")
-            .call(d => wrap(d))
+            .text("Fish")
         svg.append("text")
-            .attr("class", "chart-text")
-            .attr("x", (xScale.bandwidth()/2) + 2*xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
-            .attr("y", chartDimensions.margin.top / 2)
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
-            .text("Recreational Use")
-            .call(d => wrap(d))
+            .text("Consumption")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + 2*xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Recreational")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + 2*xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Use")
 
     svg.select("#y-axis").remove();
 
@@ -419,44 +444,7 @@ function mouseleaveWrapper() {
         .style("fill-opacity", 0)
 };
 
-// https://gist.github.com/mbostock/7555321
-function wrap(text) {
-  text.each(function() {
-      var text = d3.select(this),
-      words = text.text().split(/\s|-+/).reverse(),
-      word,
-      line = [],
-      lineNumber = 0,
-      lineHeight = 1.1, // ems
-      width = text.attr("data-width"),
-      x = text.attr("x"),
-      y = text.attr("y"),
-      dy = parseFloat(text.attr("dy")),
-      dx = parseFloat(text.attr("dx")),
-      tspan = text.text(null).append("tspan").attr("y", y).attr("dy", dy + "em");
-      
-      console.log(text.attr("dy"))
 
-      while ((word = words.pop())) {
-      line.push(word);
-      tspan.text(line.join(" "));
-          if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
-          tspan.text(line.join(" "));
-          line = [word];
-          tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dx", dx).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-          }
-      }
-
-      // https://stackoverflow.com/questions/60558291/wrapping-and-vertically-centering-text-using-d3-js
-      if (lineNumber > 0) {
-          const startDy = -(lineNumber * (lineHeight / 2)) * 0.5; // *0.5 for vertically-centered labels
-          text
-              .selectAll("tspan")
-              .attr("dy", (d, i) => startDy + lineHeight * i + "em");
-      }
-  }
-)};
 
 </script>
 
