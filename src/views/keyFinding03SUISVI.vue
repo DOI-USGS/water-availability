@@ -108,6 +108,7 @@ onMounted(() => {
 .svi-bar-container {
   width: 65%;
   min-width: 600px;
+  max-width: 1800px;
   margin: 0 auto;
   padding-bottom: 10px;
   display: grid;
@@ -122,6 +123,7 @@ onMounted(() => {
 }
 .svi-image {
   max-width: 600px;
+  width: 100%;
 }
 @media only screen and (max-width: 600px) {
   .svi-bar-container {

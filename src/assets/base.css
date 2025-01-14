@@ -206,6 +206,8 @@ li {
   align-items: left;
   justify-content: center;
   width: 65%;
+  min-width: 600px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 10px 0 10px 0;
 }
@@ -348,7 +350,8 @@ li {
   justify-content: space-between;
   flex-wrap: wrap;
   width: 55%;
-  min-width: 400px;
+  min-width: 600px;
+  max-width: 1800px;
   margin: 0 auto;
   padding-top: 25px;
   padding-bottom: 15px;
