@@ -378,6 +378,7 @@ li {
   .caption-container {
     display: grid;
     width: 100%;
+    min-width: 90vw;
     max-width: 90vw;
     margin: 0 auto;
     grid-gap: 5px;
