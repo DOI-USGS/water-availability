@@ -80,6 +80,7 @@
 /* core style settings for text */
 body {
   min-height: 100vh;
+  min-width: 100vw;
   color: var(--black-soft);
   background: var(--cream-background);
   transition:

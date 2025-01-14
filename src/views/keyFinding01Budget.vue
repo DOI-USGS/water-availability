@@ -150,12 +150,12 @@
             <p class="chart-title">A decade of water limitation</p>
             <p class="chart-subtitle">The proportion of the lower 48 United States in each water limitation category through time</p>
           </div>
-        <div class="viz-container">
-          <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
+        <div class="viz-container" role="img" aria-label="Dynamics show high water limitation for larger proportion of the U.S. each summer and with an overall larger peak during the 2012-2013 timespan.">
+          <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" alt="Monthly breakdown of water limitation levels from 2010 through 2020 for the lower 48 U.S.">
         </div>
         <div class="caption-container">
           <div class="caption-text-child">
-            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.Each step in the chart represents one month of time. </p>
+            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. Each step in the chart represents one month of time. </p>
           </div>
         </div>  
         <Methods :theseReferences="referenceList"></Methods>
