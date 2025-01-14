@@ -178,6 +178,24 @@
              highlightRegionAndUpdateChart(event, d);
 
         })
+        .on('touchstart',function(event, d) {
+            d3.selectAll('.region')
+                .attr('fill','lightgrey')
+                .attr('opacity', 0.8)
+                .attr('stroke',"black")
+
+            // highlight the selected region with transparent fill
+            d3.select(this)
+                .attr('fill', 'transparent')
+                .attr('opacity', 1)
+                .attr('stroke', 'white')
+                .attr('stroke-width', '1.5px')
+                .raise(); // bring the selected region to the front
+
+            // update the bar chart with the selected region's data
+             highlightRegionAndUpdateChart(event, d);
+
+        })
         .on('mouseout', function () {
             // reset all regions to transparent fill and opacity 0
             d3.selectAll('.region')
