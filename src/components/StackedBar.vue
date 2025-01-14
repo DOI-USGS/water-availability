@@ -29,7 +29,8 @@ onMounted(() => {
   // create the SVG if it doesn't exist
 
   const containerWidth = document.getElementById('bar-container').clientWidth;
-  width = mobileView ? containerWidth : 700;
+  width = mobileView ? containerWidth - 20 : 700; // added buffer on mobile for space for units
+  console.log(containerWidth)
   height = 60;
 
   if (!svgBar) {
