@@ -104,13 +104,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.viz-scaled {
-  max-height: 500px;
-}
 
 .svi-bar-container {
   width: 65%;
   min-width: 600px;
+  max-width: 1800px;
   margin: 0 auto;
   padding-bottom: 10px;
   display: grid;
@@ -125,21 +123,25 @@ onMounted(() => {
 }
 .svi-image {
   max-width: 600px;
+  width: 100%;
 }
 @media only screen and (max-width: 600px) {
   .svi-bar-container {
-    width: 100%;
-    min-width: 100vw;
+      width: 95%;
+      min-width: 300px;
+      max-width: 500px;
   }
   .svi-bar-child {
     align-items: center;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: minmax(20vw, 100px) auto;
     justify-items: right;
     margin: 0px;
+    margin-bottom: 10px;
+    margin-top: 10px;
   }
   .svi-image {
-    max-width: 50vw;
+    max-width: 60vw;
   }
 }
 </style>

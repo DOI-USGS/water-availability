@@ -11,7 +11,7 @@
 
   const animateTime = inject('animateTime')
   const mobileView = isMobile;
-  let width, height, marginLeft, marginRight;
+  let width, height, marginLeft, marginRight;  
 
   // props to configure the bar chart
   const props = defineProps({
@@ -27,10 +27,13 @@
   let svgBar;
   
 onMounted(() => {
+
   // create the SVG if it doesn't exist
-  width = mobileView ? 320 : 600;
+  const container = document.getElementById('bar-container');
+  const containerWidth = container.clientWidth;
+  width = mobileView ? containerWidth : 600;
   height = 100;
-  marginLeft = mobileView ? 120 : 100;
+  marginLeft = mobileView ? 110 : 100;
   marginRight = mobileView ? 10 : 100;
 
   if (!svgBar) {
@@ -89,7 +92,7 @@ const updateBarChart = (data) => {
   // Currently using a static max for x-axis
   const xScale = d3.scaleLinear()
     .domain([0, 125000])
-    .range([marginLeft, width - marginLeft - marginRight]);
+    .range([0, width - marginRight - marginLeft]);
 
   const getColor = (category) => {
     const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
@@ -197,8 +200,8 @@ watch(
 }
 @media only screen and (max-width: 600px) {
   .bar-chart-svg {
-    width: 95vw;
-    max-width: 95vw;
+    width: 100%;
+    max-width: 90vw;
   }
 } 
   </style>

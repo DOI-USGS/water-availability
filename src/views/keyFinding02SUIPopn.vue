@@ -132,10 +132,10 @@ onMounted(() => {
 
 @media only screen and (max-width: 600px) {
   .availability-container {
-  display: grid;
-  width: 100%;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto auto;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
   }
   .wa-map-text-container {
   display: grid;

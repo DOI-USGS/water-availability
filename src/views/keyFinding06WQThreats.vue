@@ -151,6 +151,7 @@ const dataFish = ref([]);
 
 let chartDimensions;
 let rectGroup;
+const wrapBuffer = mobileView ? 6 : 10; // vertical spacing for wrapping column names on heatmap
 
 let svg;
 
@@ -175,7 +176,7 @@ onMounted(async () => {
                     width: width,
                     height: height,
                     margin: {
-                        top: mobileView ? 30 : 0,
+                        top: mobileView ? 35 : 50,
                         right: mobileView ? 10 : 10,
                         bottom: mobileView ? 0 : 0,
                         left: mobileView ? 125 : 200
@@ -330,12 +331,60 @@ function initHeatmap({dataset, sortBy}) {
         );
 
       // Create the axes.
-    svg.append("g")
-        .attr("transform", `translate(0,${chartDimensions.margin.top})`)
-        .call(d3.axisTop(xScale).ticks(3))
-        .call(g => g.select(".domain").remove())
-        .attr("class", "axis-text")
-        .style('font-weight', '700');
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Drinking")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Water")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Fish")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Consumption")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + 2*xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Recreational")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + 2*xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Use")
 
     svg.select("#y-axis").remove();
 
@@ -396,6 +445,7 @@ function mouseleaveWrapper() {
 };
 
 
+
 </script>
 
 <style scoped>
@@ -413,7 +463,7 @@ function mouseleaveWrapper() {
 @media only screen and (max-width: 600px) {
   .map-container {
     grid-template-columns: minmax(50vw, 100%);
-    grid-template-rows: auto;
+    grid-template-rows: minmax(20vh, 40vh);
   }
 }
 .map-overlay {

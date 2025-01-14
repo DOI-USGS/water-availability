@@ -112,7 +112,7 @@ const barSpace = 5;
 
 // chart dimensions
 const margin = mobileView
-  ? { top: 30, right: 30, bottom: 30, left: 30 } //  mobile
+  ? { top: 30, right: 20, bottom: 15, left: 40 } //  mobile
   : { top: 30, right: 100, bottom: 30, left: 140 }; // desktop
 
 
@@ -409,7 +409,7 @@ onMounted(async () => {
 
   const container = document.getElementById('barplot-container');
   containerWidth = container.clientWidth;
-  containerHeight = mobileView ? 400 : 600;
+  containerHeight = mobileView ? 550 : 600;
 
   width = containerWidth - margin.left - margin.right;
   height = containerHeight - margin.top - margin.bottom;

@@ -197,7 +197,7 @@
             // reset bar chart to default aggregated data
             emit('regionSelected', 'lower 48 United States');
         })
-        .on('click', (event, d) => {
+        .on('touchstart', (event, d) => {
           d3.selectAll('.region')
                 .attr('fill','lightgrey')
                 .attr('opacity', 0.8)

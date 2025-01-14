@@ -9,7 +9,7 @@
             <p class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
             <p class="chart-subtitle">Daily water use in 2020, in million gallons per day</p>
           </div>
-          <div class="viz-container">
+          <div class="viz-container" id="bar-size-container">
           <HorizontalBar 
             categoricalVariable="d3_category"
             continuousRaw="total_use"
@@ -144,7 +144,8 @@ const focalFill = "var(--focal-fill)";
 const defaultFill = "var(--inactive-grey)";
 const csvData = ref([]);
 const selectedRegion = ref('lower 48 United States'); // default region
-let regionTitle = "lower 48 United States"
+let regionTitle = "lower 48 United States";
+
 
 const route = useRoute();
 
