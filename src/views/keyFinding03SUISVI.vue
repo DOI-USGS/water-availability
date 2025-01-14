@@ -134,7 +134,7 @@ onMounted(() => {
   .svi-bar-child {
     align-items: center;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: minmax(20vw, 100px) auto;
     justify-items: right;
     margin: 0px;
     margin-bottom: 10px;
