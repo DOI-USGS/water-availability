@@ -7,7 +7,7 @@
   <script setup>
   import { onMounted, ref, watch, inject } from 'vue';
   import * as d3 from 'd3';
-  import { isMobile, mobileVendor } from 'mobile-device-detect';
+  import { isMobile } from 'mobile-device-detect';
 
   const animateTime = inject('animateTime')
   const mobileView = isMobile;

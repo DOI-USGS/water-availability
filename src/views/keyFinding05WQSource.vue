@@ -110,6 +110,7 @@
 <script setup>
 import { onMounted, ref, computed, inject, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -126,6 +127,7 @@ import { isMobile } from 'mobile-device-detect';
 // use for mobile logic
 const featureToggles = inject('featureToggles');
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 const mobileView = isMobile;
 
 // Global variables 
@@ -138,7 +140,7 @@ const margin = {
   bottom: isMobile ? 20 : 20, 
   left: isMobile ? 180 : 250 };
 let svg, chartBounds, rectGroup, nutrientScale;
-let width, height, containerWidth;
+let height, containerWidth;
 
 // Reactive data elements
 const scaleLoad = ref(true);
@@ -225,6 +227,10 @@ onMounted(async () => {
     } catch (error) {
         console.error('Error during component mounting', error);
     }
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
 
 // general file loading fxn
@@ -270,7 +276,6 @@ function initBarChart() {
 
   const container = document.getElementById('barplot-container');
   containerWidth = container.clientWidth;
-  width = containerWidth - margin.left - margin.right; // width of bars
   height = mobileView ? 600 - margin.top - margin.bottom : Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
 
     // remove any existing SVG before redrawing
@@ -451,6 +456,22 @@ watch(showNitrogen, async (newValue) => {
 
 watch([selectedRegion], filterRegionData)
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
 
 <style scoped lang="scss">

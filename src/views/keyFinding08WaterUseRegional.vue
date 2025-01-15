@@ -117,6 +117,7 @@
 <script setup>
 import { ref, onMounted, inject, reactive } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3 from 'd3';
 import Reg from "../assets/svgs/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
@@ -148,6 +149,7 @@ let regionTitle = "lower 48 United States";
 
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 
 // References logic
 // filter to this page's key message
@@ -213,6 +215,10 @@ onMounted(async() => {
   } catch (error) {
     console.error("Error loading CSV data:", error);
   }
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
 
 function getImgURL(id) {
@@ -243,6 +249,22 @@ function mouseoutMap(event) {
   regionTitle = "lower 48 United States";
 };
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
 
 

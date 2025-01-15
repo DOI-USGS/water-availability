@@ -56,6 +56,7 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3Base from 'd3';
 import Reg from "../assets/svgs/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
@@ -79,6 +80,7 @@ const defaultFill = "var(--inactive-grey)";
 let regionTitle = defaultRegionID.replaceAll("_", " ") + " Region"
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 
 // References logic
 // filter to this page's key message
@@ -99,6 +101,10 @@ onMounted(() => {
 
   // select default region to start
   d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
 
 // Methods
@@ -129,6 +135,22 @@ function mouseoutMap(event) {
   regionTitle = defaultRegionID.replaceAll("_", " ") + " Region";
 };
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
 
 <style scoped>
