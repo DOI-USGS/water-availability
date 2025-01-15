@@ -35,7 +35,7 @@
                     <p class="glossary-def"> {{ terms.definition }}</p>
                     <div v-if="terms.visualLogic" class="viz-container">
                       <img class="viz-portrait" :src="getIconURL(terms.visual)"
-                      :aria-label="terms.visualLabel">
+                      :alt="terms.visualLabel">
                     </div>
                 </div>
             </div>

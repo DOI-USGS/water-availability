@@ -37,19 +37,19 @@
             <div class="svi-bar-container">
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Severe social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Severe.png`" aria-label="Stacked bar graph showing nearly half of the people considered to have severe social vulnerability live in areas of moderate, high, or severe water limitation.">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Severe.png`" alt="Stacked bar graph showing nearly half of the people considered to have severe social vulnerability live in areas of moderate, high, or severe water limitation.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">High social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_High.png`" aria-label="Stacked bar graph showing that a smaller proportion (about one-quarter) of the people considered to have high social vulnerability are in moderate, high or severe water limitation areas.">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_High.png`" alt="Stacked bar graph showing that a smaller proportion (about one-quarter) of the people considered to have high social vulnerability are in moderate, high or severe water limitation areas.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Moderate social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Moderate.png`" aria-label="Stacked bar graph showing that a very small proportion of the people considered to have moderate social vulnerability live in moderate, high or severe water limitation areas. They mostly live in low or very low water limitation areas.">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Moderate.png`" alt="Stacked bar graph showing that a very small proportion of the people considered to have moderate social vulnerability live in moderate, high or severe water limitation areas. They mostly live in low or very low water limitation areas.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Low social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Low.png`" aria-label="Stacked bar graph showing that a very small proportion of the people considered to have low social vulnerability live in moderate, high or severe water limitation areas. Like those with moderate social vulnerability, they mostly live in low or very low water limitation areas.">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Low.png`" alt="Stacked bar graph showing that a very small proportion of the people considered to have low social vulnerability live in moderate, high or severe water limitation areas. Like those with moderate social vulnerability, they mostly live in low or very low water limitation areas.">
               </div>
               
             </div>

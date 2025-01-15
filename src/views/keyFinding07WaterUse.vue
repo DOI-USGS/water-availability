@@ -57,7 +57,7 @@
       </div>
       <div class="viz-container">
         <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"
-        aria-label="Illustration of a landscape showing typical ways that water is used for public supply, thermoelectric power, and crop irrigation. Illustration includes a small town, industry, wastewater treatment plants, thermoelectric cooling towers, farm fields, and livestock pens."/>
+        alt="Illustration of a landscape showing typical ways that water is used for public supply, thermoelectric power, and crop irrigation. Illustration includes a small town, industry, wastewater treatment plants, thermoelectric cooling towers, farm fields, and livestock pens."/>
       </div>
       <Methods :theseReferences="referenceList"></Methods>
       <References :theseReferences="referenceList"></References>
