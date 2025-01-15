@@ -393,7 +393,7 @@ li {
   }
   .caption-text-flex {
     flex-grow: 1;
-    max-width: 90vw;
+    max-width: 95%;
   }
 }
 /* legend div */
