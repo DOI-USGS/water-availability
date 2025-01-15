@@ -31,12 +31,8 @@
               </div>
             </div>
           </div>
-          <div class="caption-container">
-              <div class="caption-text-child">
-                <p> </p>
-              </div>
-            </div> 
-            <div class="caption-container-flex caption-container">
+
+            <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-wa-none" label="Very low impact" color="var(--wa-none)" />
                 <ColorLegend legend-id="legend-wa-low" label="Low impact" color="var(--wa-low)" />

@@ -48,7 +48,7 @@
 
         />
         </div>
-        <div class="caption-container-flex caption-container">
+        <div class="caption-container-flex caption-container" aria-hidden="true">
           <div class="toggle-group">
             <b>Toggle map layers:</b> 
               <ToggleSwitch 
@@ -97,7 +97,7 @@
                 alt=""
             >    
           </div>
-          <div class="caption-container-flex caption-container">
+          <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-wu-sw" label="Surface water" color="var(--wu-sw)" />
                 <ColorLegend legend-id="legend-wu-gw" label="Groundwater" color="var(--wu-gw)" />

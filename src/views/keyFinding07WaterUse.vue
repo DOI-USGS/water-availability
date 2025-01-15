@@ -30,7 +30,7 @@
         <div id="barplot-container"></div>
       </div>
 
-      <div class="caption-container-flex caption-container">
+      <div class="caption-container-flex caption-container" aria-hidden="true">
           <div class="legend-group">
           <ColorLegend legend-id="legend-wu-ir" label="Crop irrigation" color="var(--wu-agriculture)" />
           <ColorLegend legend-id="legend-wu-ps" label="Public supply" color="var(--wu-ps)" />

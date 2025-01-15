@@ -13,7 +13,7 @@
             <div class="viz-container">
               <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`">
             </div>
-            <div class="caption-container-flex caption-container">
+            <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                 <b>Water limitation:</b>
                 <ColorLegend legend-id="legend-sui-none" label="Very low (0 - 0.2)" color="var(--sui-none)" />
@@ -53,7 +53,7 @@
               </div>
               
             </div>
-            <div class="caption-container">
+            <div class="caption-container" aria-hidden="true">
               <div class="caption-text-child">
                 <p>Bar charts showing the proportion of the population<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> of the lower 48 United States living in varying categories of social vulnerability. The color represents the level of water limitation as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. </p>
               </div>

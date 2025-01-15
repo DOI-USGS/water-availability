@@ -17,7 +17,7 @@
               <aquiferWedges id="aquifer-svg" />
             </div>
           </div>
-            <div class="caption-container-flex caption-container">
+            <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-wq-high" label="Above human-health benchmark" color="var(--wq-high)" />
                 <ColorLegend legend-id="legend-wq-mod" label="Exceeds half of the benchmark" color="var(--wq-mod)" />
@@ -56,7 +56,7 @@
           </div>
                     <!-- Category of use -->
           
-            <div class="caption-container">
+            <div class="caption-container" aria-hidden="true">
               <div class="caption-text-child">
                 <p>Heatmap of the top threats to drinking water, fish consumption, and recreational use. Chart fill and percentages show the percent of assessed river miles that are threatened by each contaminant. Darker fill indicates a higher degree of threat by that source.<span v-for="reference in theseReferences.filter(item => item.refID === 'EPA2023')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the options</b> to sort the chart by one of the three columns.</p>
               </div>
