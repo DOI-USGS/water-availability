@@ -27,6 +27,7 @@
           <RegionMap 
           class="region-map"
           @regionSelected="updateSelectedRegion"
+          mapChartTitle="Map showing the distribution of water use for public supply, crop irrigation and thermoelectric power in the lower 48 states. Irrigation is a dominant water use in much of the western U.S., the high plains, and the Mississippi embayment. Public supply is dominant in areas of higher population density, such as the eastern u.s., and near major urban centers in western states. Thermoelectric power using freshwater is more common in the eastern U.S., and saline-sourced thermoelectric power occurs along the west and east coasts."
           :layerVisibility="{
             ir_total: layers.ir_total.visible,
             ps_total: layers.ps_total.visible,
@@ -89,12 +90,12 @@
             <p class="chart-subtitle">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
           </div>
           <div class="viz-svg-container">
-            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
+            <Reg class="dumbbell-reg-svg" id="svg-style"  aria-hidden="true"></Reg>
             <img
                 class="viz-mini"
                 id="dumbbells"
                 :src="imgSrc"
-                alt=""
+                aria-label="Bar chart showing the relative amounts of water used for public supply from groundwater sources veruss surface water sources. The general pattern shows that more groundwater is sourced in the western U.S. whereas more surface water is sourced in the eastern U.S. The most surface water withdrawn for a single watershed is in the northeastern hydrologic region, and it is 141 million gallons per day, whereas the largest quantity from groundwater is in the California-Nevada hydrologic region at 94 million gallons per day."
             >    
           </div>
           <div class="caption-container-flex caption-container" aria-hidden="true">

@@ -44,6 +44,8 @@ onMounted(() => {
         .attr('viewBox', `0 0 ${width} ${height}`)
         .attr('preserveAspectRatio', 'xMidYMid meet')
         .attr('class', 'bar-chart-svg')
+        .attr('aria-role', 'image')
+        .attr('aria-label', 'Horizontal bar chart showing total water use in 2020 by category for the lower 48 states. Irrigation water use is over 100,000 million gallons per day, thermoelectric power from freshwater is almost 60,000 million gallons per day, public supply is about 35,000 million gallons per day, and thermoelectric power from saline water is almost 20,000 million gallons per day.')
 
     svgBar.append('g'); // add a <g> container
 
@@ -111,6 +113,7 @@ const updateBarChart = (data) => {
         .attr('height', yScale.bandwidth())
         .attr('width', 0) 
         .attr('fill', d => getColor(d[props.categoricalVariable]))
+        .attr('aria-hidden', 'true')
         .call(enter => enter.transition().duration(animateTime)
           .attr('width', d => xScale(d[props.continuousRaw]))
         ),
@@ -118,7 +121,8 @@ const updateBarChart = (data) => {
         .attr('y', d => yScale(d[props.categoricalVariable]))
         .attr('x', marginLeft)
         .attr('width', d => xScale(d[props.continuousRaw]))
-        .attr('fill', d => getColor(d[props.categoricalVariable])),
+        .attr('fill', d => getColor(d[props.categoricalVariable]))
+        .attr('aria-hidden', 'true'),
         exit => exit
             .call(exit => exit.transition()
             .attr('width', 0) 
@@ -136,6 +140,7 @@ const updateBarChart = (data) => {
             .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
             .attr('dy', '0.35em') // Vertical alignment
             .attr('text-anchor', 'end') 
+            .attr('aria-hidden', 'true')
             .text(d => {
                 const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
                 return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
@@ -145,7 +150,8 @@ const updateBarChart = (data) => {
             .text(d => {
                 const categoryKey = d[props.categoricalVariable].trim().toLowerCase().replace(/[\s/\\]+/g, '_');
                 return props.layerPaths[categoryKey]?.label || d[props.categoricalVariable]; // Fallback to category name
-            }),
+            })
+            .attr('aria-hidden', 'true'),
           exit => exit.transition().duration(animateTime) 
             .style('opacity', 0)
             .remove()
@@ -162,12 +168,14 @@ const updateBarChart = (data) => {
               .attr('dy', '0.35em') 
               .attr('text-anchor', 'start') 
               .attr('fill', 'black')
+              .attr('aria-hidden', 'true')
               .text(d => formatValue(d[props.continuousRaw])), 
             update => update.transition().duration(animateTime)
               .attr('class', 'axis-text')
               .attr('x', d => xScale(d[props.continuousRaw]) + marginLeft + 10) 
               .attr('y', d => yScale(d[props.categoricalVariable]) + yScale.bandwidth() / 2)
-              .text(d => formatValue(d[props.continuousRaw])), 
+              .text(d => formatValue(d[props.continuousRaw]))
+              .attr('aria-hidden', 'true'), 
             exit => exit.transition().duration(animateTime) 
               .style('opacity', 0)
               .remove()
