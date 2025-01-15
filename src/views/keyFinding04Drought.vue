@@ -7,7 +7,7 @@
                 <p>The water cycle describes how water moves through natural and human-modified landscapes. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
                 </div>
                 <div class="viz-container">
-                    <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`">
+                    <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`" aria-label="Stylized illustration of the water cycle of the lower 48 states for an average annual cycle. Water comes down as precipitation, flows through streamflow to other areas, gets stored or uptaken by humans or plants through consumptive use, or returns to the atmosphere through evapotranspiration.">
                 </div>
                 <div class="caption-container" aria-hidden="true">
                   <div class="caption-text-child">
@@ -25,12 +25,13 @@
                 <p class="chart-subtitle">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
             </div>
             <div class="viz-svg-container">
-                <Reg class="reg-svg"></Reg> 
+                <Reg class="reg-svg" aria-hidden="true"></Reg> 
                 <img
                     class="viz-portrait"
                     id="cascades"
                     :src="imgSrc"
-                    alt=""
+                    aria-role="image" 
+                    aria-label="These bar graphs show the time it takes for water to work its way through the water cycle from precipitation to evapotranspiration, then through soil moisture and eventually streamflow."
                 >    
             </div>
             <div class="caption-container-flex caption-container" aria-hidden="true">
