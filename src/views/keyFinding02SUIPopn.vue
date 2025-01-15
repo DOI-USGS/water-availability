@@ -17,7 +17,7 @@
               <div class="wa-map-text-container" id="sw-map">
                 <h3 class="wa-title">Surface water quality</h3>
                 <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_sw_wq.png`">
-                <p class="wa-text">Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, or pesticides.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The central and midwest U.S., have the most widespread water quality issues due to the application of fertilizer and manure for agriculture. Learn more about surface water quality effects on water availability from excess nutrients (<a href="#/05-nutrients" target="_blank">link</a>) and other human-health contaminants (<a href="#/06-water-quality" target="_blank">link</a>).</p>
+                <p class="wa-text">Surface water quality can be degraded by nutrients, sediment, temperature, pathogens, salinity, or pesticides.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The central and midwest U.S., have the most widespread water quality issues due to the application of fertilizer and manure for agriculture. Learn more about surface water quality effects on water availability from excess nutrients (<a href="#/05-nutrients" target="_blank">link</a>) and other human-health contaminants (<a href="#/06-water-quality" target="_blank">link</a>).</p>
               </div>
               <div class="wa-map-text-container" id="gw-map">
                 <h3 class="wa-title">Groundwater quality</h3>
@@ -71,6 +71,7 @@
 <script setup>
 import {inject, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/MethodsSection.vue';
@@ -82,6 +83,7 @@ import ColorLegend from '../components/ColorLegend.vue';
 
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 const featureToggles = inject('featureToggles');
 
 // S3 resource sourcing
@@ -100,7 +102,29 @@ const referenceList = ref(sortedReferences);
 
 onMounted(() => {
   window.scrollTo(0, 0)
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 })
+
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  console.log(tooltip)
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
 
 <style scoped>

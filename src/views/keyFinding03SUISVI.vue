@@ -73,6 +73,7 @@
 <script setup>
 import { inject, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
 import Methods from '../components/MethodsSection.vue';
@@ -85,6 +86,7 @@ import ColorLegend from '../components/ColorLegend.vue';
 const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 const featureToggles = inject('featureToggles');
 
 // References logic
@@ -99,8 +101,29 @@ const referenceList = ref(sortedReferences);
 
 onMounted(() => {
   window.scrollTo(0, 0)
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 })
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  console.log(tooltip)
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
 
 <style scoped>

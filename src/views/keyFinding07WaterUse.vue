@@ -68,6 +68,7 @@
 <script setup>
 import { onMounted, ref, inject, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
@@ -84,6 +85,7 @@ const featureToggles = inject('featureToggles');
 const animateTime = inject('animateTime')
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 
 // S3 resource sourcing
 const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
@@ -438,7 +440,29 @@ onMounted(async () => {
       });
     });
   }
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
+
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  console.log(tooltip)
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 
 </script>
 
