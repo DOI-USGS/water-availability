@@ -80,7 +80,7 @@ function setupSVG() {
     .attr('viewBox', `${marginLeft} 0 ${histogramWidth + marginRight} ${histogramHeight}`)
     .attr('preserveAspectRatio', 'xMidYMid meet')
     .attr('aria-role', 'image')
-    .attr('aria-label', 'Combination legend and histogram showing the distribution of the varying levels of nitrogen or phosphorus loads from lower loads to high loads. Across the U.S., the highest levels of nitrogen and phosphorus loads have the most data, with very few areas across the lower 48 states having low contamination by phosphorus or nitrogen.');
+    .attr('aria-label', 'Combination legend and histogram showing the distribution of the varying levels of nitrogen or phosphorus loads from lower loads to high loads. Across the U.S., most watersheds have relatively high loads of nitrogen (greater than 12,000 kilograms per year) or phosphorus (greater than 1,000 kilograms per year).');
 }
 
 // Initialize Legend
