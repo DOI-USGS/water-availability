@@ -5,7 +5,7 @@
           <h4 v-html="method.header"></h4><span class="symbol">+</span>
         </button>
         <div class="panel">
-            <span v-for="description in method.description">
+            <span v-for="description, index in method.description" :key="index">
               <p>
                 <span v-html="description.text"></span>
                   <span v-for="reference, index in theseReferences.filter(item => `${description.refs}`.includes(item.refID))" :key="index" class="tooltip">   
@@ -30,9 +30,11 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import Methods from '../assets/text/methods.js';
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 
 // filter to this page's key message
 const methodArray = Methods.key.filter(message => message.route === route.path);
@@ -59,12 +61,31 @@ onMounted(() => {
       } else {
         panel.style.display = "block";
         symbol.textContent = "-";
+
+        // re-position tooltips that go off screen
+        let refTooltips = panel.querySelectorAll(".tooltip");
+        refTooltips.forEach(tooltip => position_tooltip(tooltip))
       }
     });
   }
 });
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
 
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
   
 <style scoped lang="scss">

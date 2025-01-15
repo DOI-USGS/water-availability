@@ -50,14 +50,15 @@
     marginRight = mobileView ? 40 : 80;
 
     setupSVG();
-    initLegend(props.data);
+    
+    initLegend(props.data, props.layerPaths.name);
     });
     
  // Watch for updates in data or region name
 watch(
   () => props.data,
   () => {
-    updateLegend(props.data);
+    updateLegend(props.data, props.layerPaths.name);
   },
   { deep: true }
 );
@@ -65,7 +66,7 @@ watch(
   () => props.layerPaths, // watch layerPaths for changes
   () => {
     setupSVG(); // clear and reinitialize the SVG
-    initLegend(props.data); // rerun initLegend with updated data
+    initLegend(props.data, props.layerPaths.name); // rerun initLegend with updated data
   },
   { deep: true } // deep watch in case layerPaths contains nested objects
 );
@@ -83,10 +84,9 @@ function setupSVG() {
 }
 
 // Initialize Legend
-function initLegend(data) {
-
+function initLegend(data, variable) {
   // Sort data
-  const sortedData = processData(data);
+  const sortedData = processData(data, variable);
   
   // for adding legend below histogram
   const uniqueCategories = Array.from(new Set(sortedData.map(d => d.category)));
@@ -100,12 +100,11 @@ function initLegend(data) {
     .domain(sortedData.map(d => d.category))
     .range(props.layerPaths.colors)
 
-    const xScale = d3.scaleBand()
+  const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
     .range([0, histogramWidth])
     .paddingInner(0) 
     .paddingOuter(0);
-  
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
@@ -113,9 +112,9 @@ function initLegend(data) {
 
   // Bars
   svg.selectAll('rect')
-    .data(sortedData, d => cleanLabel(d.category))
+    .data(sortedData, d => d.uniqueIdentifier)
       .join('rect')
-      .attr('class','main')
+      .attr('class', d => 'main' + ' ' + d.uniqueIdentifier)
       .attr('x', d => xScale(cleanLabel(d.category)))
       .attr('y', d => yScale(d.value))
       .attr('width', xScale.bandwidth())
@@ -174,9 +173,8 @@ function initLegend(data) {
 }
 
 // Update Legend
-function updateLegend(data) {
- 
-  const sortedData = processData(data);
+function updateLegend(data, variable) {
+  const sortedData = processData(data, variable);
   const uniqueCategories = Array.from(new Set(sortedData.map(d => d.category)));
   const dummyData = uniqueCategories.map(category => ({
     category: category, 
@@ -190,21 +188,21 @@ function updateLegend(data) {
     .paddingOuter(0);
 
 
-
   const yScale = d3.scaleLinear()
     .domain([0, 1])
     .range([rectHeight, 20]);
 
+  
   const colorScale = d3.scaleOrdinal()
     .domain(sortedData.map(d => d.category))
     .range(props.layerPaths.colors)
 
   svg.selectAll('rect.main')
-    .data(sortedData, d => cleanLabel(d.category))
+    .data(sortedData, d => d.uniqueIdentifier)
     .join(
       enter => enter.append('rect')
-      .attr('x', d => xScale(cleanLabel(d.category)))
-      .attr('class','main')
+        .attr('x', d => xScale(cleanLabel(d.category)))
+        .attr('class', d => 'main' + ' ' + d.uniqueIdentifier)
         .attr('y', d => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
@@ -218,6 +216,8 @@ function updateLegend(data) {
             .attr('aria-hidden', 'true')
         ),
       update => update.transition()
+        .attr('x', d => xScale(cleanLabel(d.category))) // adjust x position immediately
+        .attr('class', d => 'main' + ' ' + d.uniqueIdentifier)
         .duration(300)
         .attr('y', d => yScale(d.value)) // Adjust position
         .attr('height', d => rectHeight - yScale(d.value)) // Adjust height
@@ -230,7 +230,7 @@ function updateLegend(data) {
         .remove()
     );
 
-    svg.selectAll('rect.static')
+  svg.selectAll('rect.static')
     .data(dummyData, d => cleanLabel(d.category))
     .join('rect')
     .attr('class','static')
@@ -271,13 +271,15 @@ function updateLegend(data) {
 }
 
 // Process Data
-function processData(data) {
+function processData(data, variable) {
   return data
     .map(d => {
       // Validate and handle missing or invalid 'category' field
       const category = d.category && typeof d.category === 'string' ? d.category : '0';
+      const identifier = category + variable;
       return {
         ...d,
+        uniqueIdentifier: identifier,
         numericValue: parseFloat(category.match(/\d+/)) || 0 // Extract number or default to 0
       };
     })
