@@ -20,13 +20,15 @@ export default {
             term: "Hydrologic Unit Classification (HUC)",
             definition: "The U.S. Geological Survey uses a depiction and classification scheme for hydrologic units known as hydrologic unit codes (HUCs). HUCs generally represent catchments, and river basins are represented by a unique series of numbers with successively smaller hydrologic units nested inside of larger ones. Digits are added as hydrologic units become smaller, such that a 2-digit HUC encompasses multiple 4-digit HUCs, and a 4-digit HUC encompasses multiple 6-digit HUCs, etc. This assessment uses 12-digit HUCs (HUC12s), which generally range from 50 to 100 square kilometers (km2) in size. The CONUS contains 18 2-digit HUCs and over 93,000 12-digit HUCs. The median HUC12 in the conterminous United States is 90 km2. Although in practice, HUCs represent river basins, they are formally administrative units, and not always natural watersheds. As such, HUCs can depict human-created drainages and diversions or arbitrary breaks in connected flow systems.",
             visual: "glossary_huc",
-            visualLogic: true
+            visualLogic: true,
+            visualLabel: "Diagram showing an example of the different hydrologic units and how they are nested. HUC 2 is most of the southeastern U.S., whereas the HUC 12 is one watershed in Florida that is called the Collier Seminole State Park, which is about 93 square kilometers."
         },
         {
             term: "Streamflow",
             definition: "Streamflow is the flow of water in a natural channel on the land surface. Streamflow can be conceptualized as having two primary components: baseflow and quickflow. Quickflow is the short-term flow of water off the landscape following precipitation or snowmelt events. Quickflow is also often referred to as runoff. Baseflow is subsurface water that enters the stream channel from groundwater. Baseflow can maintain streamflow between precipitation events, if the groundwater level remains high enough to feed the stream.",            
             visual: "glossary_streamflow",
-            visualLogic: true
+            visualLogic: true,
+            visualLabel: "Illustration of streamflow, which is comprised of baseflow and quickflow, represented as a cross section through the stream and the soil and bedrock below it. It is raining on the landscape, so water is flowing across the ground into the stream. This process is quickflow. There is also water in the soil, which is the groundwater. This water fills the stream channel from below, and is called baseflow."
         },
         {
             term: "Watershed",

@@ -78,7 +78,9 @@ function setupSVG() {
     .attr('width', histogramWidth)
     .attr('height', histogramHeight)
     .attr('viewBox', `${marginLeft} 0 ${histogramWidth + marginRight} ${histogramHeight}`)
-    .attr('preserveAspectRatio', 'xMidYMid meet');
+    .attr('preserveAspectRatio', 'xMidYMid meet')
+    .attr('aria-role', 'image')
+    .attr('aria-label', 'Combination legend and histogram showing the distribution of the varying levels of nitrogen or phosphorus loads from lower loads to high loads. Across the U.S., most watersheds have relatively high loads of nitrogen (greater than 12,000 kilograms per year) or phosphorus (greater than 1,000 kilograms per year).');
 }
 
 // Initialize Legend
@@ -117,7 +119,8 @@ function initLegend(data, variable) {
       .attr('y', d => yScale(d.value))
       .attr('width', xScale.bandwidth())
       .attr('height', d => rectHeight - yScale(d.value))
-      .style('fill', d => colorScale(d.category));
+      .style('fill', d => colorScale(d.category))
+      .attr('aria-hidden', 'true');
 
     svg.selectAll('rect.static')
       .data(dummyData, d => cleanLabel(d.category))
@@ -127,7 +130,8 @@ function initLegend(data, variable) {
         .attr('y', mobileView ? histogramHeight - 20 : histogramHeight - 15)
         .attr('width', xScale.bandwidth())
         .attr('height', d => rectHeight - yScale(d.value))
-        .style('fill', d => colorScale(d.category));
+        .style('fill', d => colorScale(d.category))
+        .attr('aria-hidden', 'true');
 
 
   const axisBottom = d3.axisBottom(xScale)
@@ -139,10 +143,12 @@ function initLegend(data, variable) {
     .attr('id', 'x-axis')
     .attr('class', 'axis-text')
     .attr('transform', `translate(0, ${rectHeight})`)
+    .attr('aria-hidden', 'true')
     .call(axisBottom)
       .selectAll('text') // select axis labels
       .style('text-anchor', 'middle') // align to the middle
-      .attr('x', 0); 
+      .attr('x', 0)
+      .attr('aria-hidden', 'true'); 
 
   svg.selectAll('#x-axis .tick') // select all ticks
   .attr('transform', function(d) {
@@ -162,6 +168,7 @@ function initLegend(data, variable) {
     .attr('class', 'axis-text')
     .attr('transform', `translate(${histogramWidth}, 0)`)
     .call(axisRight) 
+    .attr('aria-hidden', 'true')
 
 }
 
@@ -200,11 +207,13 @@ function updateLegend(data, variable) {
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
         .style('fill', d => colorScale(d.category))
+        .attr('aria-hidden', 'true')
         .call(enter => 
             enter.transition()
             .duration(300)
             .attr('y', d => yScale(d.value))
             .attr('height', d => rectHeight - yScale(d.value))
+            .attr('aria-hidden', 'true')
         ),
       update => update.transition()
         .attr('x', d => xScale(cleanLabel(d.category))) // adjust x position immediately
@@ -212,7 +221,8 @@ function updateLegend(data, variable) {
         .duration(300)
         .attr('y', d => yScale(d.value)) // Adjust position
         .attr('height', d => rectHeight - yScale(d.value)) // Adjust height
-        .style('fill', d => colorScale(d.category)),
+        .style('fill', d => colorScale(d.category))
+        .attr('aria-hidden', 'true'),
       exit => exit.transition()
         .duration(300)
         .attr('y', rectHeight) // Collapse downwards
@@ -228,7 +238,8 @@ function updateLegend(data, variable) {
     .attr('y', mobileView ? histogramHeight - 20 : histogramHeight - 15)
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
-    .style('fill', d => colorScale(d.category));
+    .style('fill', d => colorScale(d.category))
+    .attr('aria-hidden', 'true');
 
 
   const axisBottom = d3.axisBottom(xScale)
@@ -243,10 +254,12 @@ function updateLegend(data, variable) {
     .attr('id', 'x-axis')
     .attr('class', 'axis-text')
     .attr('transform', `translate(0, ${rectHeight})`)
+    .attr('aria-hidden', 'true')
     .call(axisBottom)
     .selectAll('text') // select axis labels
     .style('text-anchor', 'middle') // align to the middle
-    .attr('x', 0);
+    .attr('x', 0)
+    .attr('aria-hidden', 'true');
 
   svg.selectAll('#x-axis .tick') // select all ticks
     .attr('transform', function(d) {

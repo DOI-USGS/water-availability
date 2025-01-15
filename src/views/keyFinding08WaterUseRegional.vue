@@ -6,8 +6,8 @@
                 <p>How we use water varies widely across the country, from the type of use (for example, crop irrigation, public supply, and thermoelectric power) to the source of water (groundwater versus surface water).<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some urban areas, and withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. </p>
           </div>
           <div class="chart-title-container">
-            <p class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
-            <p class="chart-subtitle">Daily water use in 2020, in million gallons per day</p>
+            <h4 class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</h4>
+            <p class="chart-subtitle" aria-hidden="true">Daily water use in 2020, in million gallons per day</p>
           </div>
           <div class="viz-container" id="bar-size-container">
           <HorizontalBar 
@@ -27,6 +27,7 @@
           <RegionMap 
           class="region-map"
           @regionSelected="updateSelectedRegion"
+          mapChartTitle="Map showing the distribution of water use for public supply, crop irrigation and thermoelectric power in the lower 48 states. Irrigation is a dominant water use in much of the western U.S., the high plains, and the Mississippi embayment. Public supply is dominant in areas of higher population density, such as the eastern u.s., and near major urban centers in western states. Thermoelectric power using freshwater is more common in the eastern U.S., and saline-sourced thermoelectric power occurs along the west and east coasts."
           :layerVisibility="{
             ir_total: layers.ir_total.visible,
             ps_total: layers.ps_total.visible,
@@ -48,7 +49,7 @@
 
         />
         </div>
-        <div class="caption-container-flex caption-container">
+        <div class="caption-container-flex caption-container" aria-hidden="true">
           <div class="toggle-group">
             <b>Toggle map layers:</b> 
               <ToggleSwitch 
@@ -85,19 +86,19 @@
             <p>Across the U.S., this depends on the availability of each source, the category of use, local and federal water use ordinances, and water rights. On average during water years 2010-2020, about 62% of water used for crop irrigation, public supply, and thermoelectric was sourced from surface water rather than groundwater. However, these proportions vary widely across the country: the largest water withdrawals in the Southwest Desert region for public supply are from groundwater, whereas the largest withdrawals in the Northeast region are from surface water.</p>
           </div>
           <div class="chart-title-container">
-            <p class="chart-title">Source of public supply water in the {{ regionTitle }}</p>
-            <p class="chart-subtitle">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
+            <h4 class="chart-title">Source of public supply water in the {{ regionTitle }}</h4>
+            <p class="chart-subtitle" aria-hidden="true">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
           </div>
           <div class="viz-svg-container">
-            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
+            <Reg class="dumbbell-reg-svg" id="svg-style"  aria-hidden="true"></Reg>
             <img
                 class="viz-mini"
                 id="dumbbells"
                 :src="imgSrc"
-                alt=""
+                alt="Bar chart showing the relative amounts of water used for public supply from groundwater sources veruss surface water sources. The general pattern shows that more groundwater is sourced in the western U.S. whereas more surface water is sourced in the eastern U.S. The most surface water withdrawn for a single watershed is in the northeastern hydrologic region, and it is 141 million gallons per day, whereas the largest quantity from groundwater is in the California-Nevada hydrologic region at 94 million gallons per day."
             >    
           </div>
-          <div class="caption-container-flex caption-container">
+          <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-wu-sw" label="Surface water" color="var(--wu-sw)" />
                 <ColorLegend legend-id="legend-wu-gw" label="Groundwater" color="var(--wu-gw)" />

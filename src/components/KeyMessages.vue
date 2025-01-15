@@ -26,7 +26,7 @@
 
     <div class="key-message-container" v-for="(message, index) in filteredMessages" :key="index">
         <div class="raindrop-static-container">
-            <button class="raindrop-static"><span class="raindrop-static-text"> {{ message.page }}</span></button>    
+            <button class="raindrop-static" aria-hidden="true"><span class="raindrop-static-text"> {{ message.page }}</span></button>    
         </div>
         <div class="page-title-container">
             <h1>{{ message.mainTitle }}</h1>

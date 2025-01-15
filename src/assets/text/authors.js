@@ -7,25 +7,17 @@ export default {
           fullOrder: 1,
           profile_link: 'https://www.usgs.gov/staff-profiles/althea-archer',
           headshot: 'headshots/aaarcher_staff_profile.jpg'
-        },
-        {
-          fullName: 'Amanda (Mandie) Carr',
-          shortName: 'Mandie',
-          initials: 'MC',
-          fullOrder: 2,
-          profile_link: 'https://www.usgs.gov/staff-profiles/amanda-carr',
-          headshot: 'headshots/mandiecarr_oct2022.JPG'
-        },
-        {
-          fullName: 'Cee Nell',
-          shortName: 'Cee',
-          initials: 'CN',
-          fullOrder: 7,
-          profile_link: 'https://www.usgs.gov/staff-profiles/cee-nell',
-          headshot: 'headshots/cee nell resized.png'
         }
     ],
     devs: [
+      {
+        fullName: 'Amanda (Mandie) Carr',
+        shortName: 'Mandie',
+        initials: 'MC',
+        fullOrder: 2,
+        profile_link: 'https://www.usgs.gov/staff-profiles/amanda-carr',
+        headshot: 'headshots/mandiecarr_oct2022.JPG'
+      },
         {
         fullName: 'Hayley Corson-Dosch',
         shortName: 'Hayley',
@@ -65,6 +57,14 @@ export default {
         fullOrder: 8,
         profile_link: 'https://www.usgs.gov/staff-profiles/anthony-martinez',
           headshot: 'headshots/anthony_martinezSquare.jpg'
+        },
+        {
+          fullName: 'Cee Nell',
+          shortName: 'Cee',
+          initials: 'CN',
+          fullOrder: 7,
+          profile_link: 'https://www.usgs.gov/staff-profiles/cee-nell',
+          headshot: 'headshots/cee nell resized.png'
         }
   ],
   scientists: [

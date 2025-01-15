@@ -12,6 +12,8 @@
   let width;
   let height;
 
+  const stackedBarChartTitle = "Across the lower 48 states, 50% of the region has very low water limitation, 38% has low water limitation, 7% has moderate water limitation, and 4% and 1% have high and severe water limitation, respectively."
+
   // props to configure the bar chart
   const props = defineProps({
     categoricalVariable: { type: String, required: true },
@@ -41,7 +43,8 @@ onMounted(() => {
         .attr('height', height)
         .attr('viewBox', `0 0 ${width} ${height}`)
         .attr('preserveAspectRatio', 'xMidYMid meet')
-        .classed('bar-chart-svg', true);
+        .classed('bar-chart-svg', true)
+        .attr('aria-label', stackedBarChartTitle);
 
     svgBar.append('g'); // add a <g> container
   }
@@ -102,6 +105,7 @@ const updateBarChart = (data) => {
         .attr('width', 0)
         .attr('height', 30)
         .attr('fill', d => getColor(d[props.categoricalVariable]))
+        .attr("aria-hidden", true)
         .call(enter => 
             enter.transition()
             .duration(750)
@@ -110,6 +114,7 @@ const updateBarChart = (data) => {
         .duration(750)
         .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i))))
         .attr('fill', d => getColor(d[props.categoricalVariable]))
+        .attr("aria-hidden", true)
         .attrTween('width', function(d) {
                 const previousWidth = d3.select(this).attr('width') || 0; // fallback to 0 if no prior value
                 const interpolator = d3.interpolate(previousWidth, xScale(d[props.continuousPercent]));
@@ -135,6 +140,7 @@ const updateBarChart = (data) => {
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 50)
                 .attr('text-anchor', 'middle')
+                .attr("aria-hidden", true)
                 .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
                 .style('opacity', 0); // start invisible
 
@@ -148,6 +154,7 @@ const updateBarChart = (data) => {
               return update.transition()
                   .duration(750)
                   .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
+                  .attr("aria-hidden", true)
                   .text(d => `${formatPercentage(d[props.continuousPercent])}%`)
                   .style('opacity', d => (d[props.continuousPercent] > 1 ? 1 : 0));;
             },

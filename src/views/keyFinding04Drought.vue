@@ -7,9 +7,9 @@
                 <p>The water cycle describes how water moves through natural and human-modified landscapes. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
                 </div>
                 <div class="viz-container">
-                    <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`">
+                    <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`" alt="Stylized illustration of the water cycle of the lower 48 states for an average annual cycle. Water comes down as precipitation, flows through streamflow to other areas, gets stored or uptaken by humans or plants through consumptive use, or returns to the atmosphere through evapotranspiration.">
                 </div>
-                <div class="caption-container">
+                <div class="caption-container" aria-hidden="true">
                   <div class="caption-text-child">
                     <p>Diagram showing average annual water cycle fluxes in billion gallons per day (bgd) across the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Foks2025a')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }} </span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'Foks2025b')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'Sampson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
                   </div>
@@ -18,22 +18,23 @@
                     <h2>Even short events have longlasting impacts</h2>
                     <p>As water moves through the water cycle it can spend different amounts of time in the various stages. Water that falls as snow could remain on the landscape for months until it melts in the spring. Water that makes its way into groundwater may remain for decades or longer. This means that periods of abnormally low precipitation affect different parts of the water cycle at different times. </p>
                     <br>
-                    <p>For example, in 2012 the Northern High Plains had abnormally low precipitation, which cascaded through the water cycle.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In the monthly fluctuations shown below, this low precipitation is followed by delayed responses in evapotranspiration and soil moisture. both important aspects of water supply. This eventually leads to reduced streamflow. Similarly, periods of rainfall in early 2011 did not show up in the streamflow signature until later in that year. </p>
+                    <p>For example, in 2012 the Northern High Plains had abnormally low precipitation, which cascaded through the water cycle.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In the monthly fluctuations shown below, this low precipitation is followed by delayed responses in evapotranspiration and soil moisture, which are both important aspects of water supply. This eventually leads to reduced streamflow. Similarly, periods of rainfall in early 2011 did not show up in the streamflow signature until later in that year. </p>
                 </div>
             <div class="chart-title-container">
-                <p class="chart-title">Water supply dynamics in the {{ regionTitle }}</p>
-                <p class="chart-subtitle">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
+                <h4 class="chart-title">Water supply dynamics in the {{ regionTitle }}</h4>
+                <p class="chart-subtitle" aria-hidden="true">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
             </div>
             <div class="viz-svg-container">
-                <Reg class="reg-svg"></Reg> 
+                <Reg class="reg-svg" aria-hidden="true"></Reg> 
                 <img
                     class="viz-portrait"
                     id="cascades"
                     :src="imgSrc"
-                    alt=""
+                    aria-role="image" 
+                    alt="These bar graphs show the time it takes for water to work its way through the water cycle from precipitation to evapotranspiration, then through soil moisture and eventually streamflow."
                 >    
             </div>
-            <div class="caption-container-flex caption-container">
+            <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-ws-high" label="Abnormally high" color="var(--ws-supply)" />
                 <ColorLegend legend-id="legend-ws-low" label="Abnormally low" color="var(--ws-demand)" />
