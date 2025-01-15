@@ -69,7 +69,7 @@
             />
           <RegionMap 
           @regionSelected="updateSelectedRegion"
-          mapChartTitle="Map showing the distribution of water limitation levels across the lower 48 states. Areas of high or severe water limitation are present in the central and southern high plains, texas, Mississippi embayment, and California-Nevada hydrologic regions."
+          mapChartTitle="Map showing the distribution of water limitation levels across the lower 48 states. Areas of high or severe water limitation are present in the central and southern high plains, texas, Mississippi embayment, and California-Nevada hydrologic regions. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use."
           :layerVisibility="{
             very_low_none: layers.very_low_none.visible,
             low: layers.low.visible,
