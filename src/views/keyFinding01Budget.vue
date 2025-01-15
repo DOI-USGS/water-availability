@@ -198,7 +198,6 @@ const filteredReferences = filteredMessages[0].references;// extract list of ref
 const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
 // sort by order listed on page, reflected in list on subpages.js
 const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
-console.log(sortedReferences)
 sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(sortedReferences);
 
@@ -298,7 +297,6 @@ const toggleLayer = (layerId) => {
 function position_tooltip(tooltip_group){
   // Get .tooltiptext sibling
   const tooltip = tooltip_group.querySelector(".tooltiptext");
-  console.log(tooltip)
   
   // Get calculated tooltip coordinates and size
   const tooltip_rect = tooltip.getBoundingClientRect();

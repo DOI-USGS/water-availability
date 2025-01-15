@@ -459,7 +459,6 @@ watch([selectedRegion], filterRegionData)
 function position_tooltip(tooltip_group){
   // Get .tooltiptext sibling
   const tooltip = tooltip_group.querySelector(".tooltiptext");
-  console.log(tooltip)
   
   // Get calculated tooltip coordinates and size
   const tooltip_rect = tooltip.getBoundingClientRect();
