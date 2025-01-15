@@ -11,7 +11,7 @@
               <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
             <div class="viz-container">
-              <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`" aria-label="Areas of the lower 48 states that have both high water limitation and social vulnerability are represented with larger circles that are lightly colored. These areas occur in California, Texas, the Southern High Plains, and the Mississippi Embayment regions. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.">
+              <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`" alt="Areas of the lower 48 states that have both high water limitation and social vulnerability are represented with larger circles that are lightly colored. These areas occur in California, Texas, the Southern High Plains, and the Mississippi Embayment regions. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.">
             </div>
             <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
