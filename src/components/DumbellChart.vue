@@ -39,7 +39,7 @@ const margin = {
   top: isMobile ? 30 : 20, 
   right: isMobile ? 5 : 20, 
   bottom: isMobile ? 20 : 20, 
-  left: isMobile ? 180 : 250 }; // increase left margin for y-axis labels
+  left: isMobile ? 180 : 260 }; // increase left margin for y-axis labels
 let width, height;
 
 // initialize chart
@@ -135,7 +135,7 @@ const drawChart = () => {
 
           const insertedSvg = d3.select(this)
             .insert(() => svgClone, "text")
-            .attr("x", -46)
+            .attr("x", mobileView ? -48 : -60)
             .attr("y", -25)
             .attr("width", 50)
             .attr("height", 50)
