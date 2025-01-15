@@ -7,13 +7,13 @@
             </div>
 
             <div class="chart-title-container">
-              <p class="chart-title">How does social vulnerability relate to water limitation?</p>
-              <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
+              <h4 class="chart-title">How does social vulnerability relate to water limitation?</h4>
+              <p class="chart-subtitle" aria-hidden="true">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
             <div class="viz-container">
-              <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`">
+              <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`" alt="Areas of the lower 48 states that have both high water limitation and social vulnerability are represented with larger circles that are lightly colored. These areas occur in California, Texas, the Southern High Plains, and the Mississippi Embayment regions. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.">
             </div>
-            <div class="caption-container-flex caption-container">
+            <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                 <b>Water limitation:</b>
                 <ColorLegend legend-id="legend-sui-none" label="Very low (0 - 0.2)" color="var(--sui-none)" />
@@ -31,29 +31,29 @@
                 <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities. Societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses.<span v-for="reference in theseReferences.filter(item => item.refID === 'Drakes2024')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
             </div>
             <div class="chart-title-container">
-              <p class="chart-title">Social vulnerability and water limitation</p>
-              <p class="chart-subtitle">Bars show the proportion of the population living in varying levels of water limitation for each social vulnerability classification.</p>
+              <h4 class="chart-title">Social vulnerability and water limitation</h4>
+              <p class="chart-subtitle" aria-hidden="true">Bars show the proportion of the population living in varying levels of water limitation for each social vulnerability classification.</p>
             </div>
             <div class="svi-bar-container">
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Severe social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Severe.png`">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Severe.png`" alt="Stacked bar graph showing nearly half of the people considered to have severe social vulnerability live in areas of moderate, high, or severe water limitation.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">High social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_High.png`">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_High.png`" alt="Stacked bar graph showing that a smaller proportion (about one-quarter) of the people considered to have high social vulnerability are in moderate, high or severe water limitation areas.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Moderate social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Moderate.png`">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Moderate.png`" alt="Stacked bar graph showing that a very small proportion of the people considered to have moderate social vulnerability live in moderate, high or severe water limitation areas. They mostly live in low or very low water limitation areas.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Low social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Low.png`">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Low.png`" alt="Stacked bar graph showing that a very small proportion of the people considered to have low social vulnerability live in moderate, high or severe water limitation areas. Like those with moderate social vulnerability, they mostly live in low or very low water limitation areas.">
               </div>
               
             </div>
-            <div class="caption-container">
+            <div class="caption-container" aria-hidden="true">
               <div class="caption-text-child">
                 <p>Bar charts showing the proportion of the population<span v-for="reference in theseReferences.filter(item => item.refID === 'Census2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> of the lower 48 United States living in varying categories of social vulnerability. The color represents the level of water limitation as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. </p>
               </div>

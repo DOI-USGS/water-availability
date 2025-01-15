@@ -8,8 +8,8 @@
             </div>
         <!-- Supply and Demand dumbell chart -->
         <div class="chart-title-container">
-            <p class="chart-title">Water supply vs demand</p>
-            <p class="chart-subtitle">Regional estimates in mm/year for supply (solid circle) and demand (hollow circle)</p>
+            <h4 class="chart-title">Water supply vs demand</h4>
+            <p class="chart-subtitle"  aria-hidden="true">Regional estimates in mm/year for supply (solid circle) and demand (hollow circle)</p>
             <!-- Supply and Demand dumbell toggles -->
              <div class="toggle-group">
               <ToggleSwitch 
@@ -33,7 +33,7 @@
           /> 
       </div>
 
-        <div class="caption-container">
+        <div class="caption-container"   aria-hidden="true">
           <!-- Supply and Demand caption -->
           <div class="caption-text-child">
             <p>The average annual water supply (solid circle) and demand (hollow circle) in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the layers</b> of supply and demand on and off to view them individually</p>
@@ -49,8 +49,8 @@
         </div>
         <!-- Regional SUI map with updating stacked bar chart -->
         <div class="chart-title-container">
-            <p class="chart-title">Water limitation in {{ selectedRegion !== 'lower 48 United States' ? selectedRegion + ' Region' : selectedRegion }}</p>
-            <p class="chart-subtitle">Bars show the percent of the region with very low, low, moderate, high, and severe water limitation</p>
+            <h4 class="chart-title">Water limitation in {{ selectedRegion !== 'lower 48 United States' ? selectedRegion + ' Region' : selectedRegion }}</h4>
+            <p class="chart-subtitle"  aria-hidden="true">Bars show the percent of the region with very low, low, moderate, high, and severe water limitation</p>
           </div>
         <div class="viz-container">
           <StackedBar 
@@ -69,6 +69,7 @@
             />
           <RegionMap 
           @regionSelected="updateSelectedRegion"
+          mapChartTitle="Map showing the distribution of water limitation levels across the lower 48 states. Areas of high or severe water limitation are present in the central and southern high plains, texas, Mississippi embayment, and California-Nevada hydrologic regions. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use."
           :layerVisibility="{
             very_low_none: layers.very_low_none.visible,
             low: layers.low.visible,
@@ -93,7 +94,7 @@
         />
         </div>
         <!-- SUI category on and off toggles -->
-        <div class="caption-container-flex caption-container">
+        <div class="caption-container-flex caption-container"  aria-hidden="true">
           <div class="toggle-group">
           <b>Water limitation</b> 
               <!-- Very Low -->
@@ -136,7 +137,7 @@
                 @update:modelValue="toggleLayer('severe')" 
               />
               </div>
-              <div class="caption-text-flex caption-text-child">
+              <div class="caption-text-flex caption-text-child"  aria-hidden="true">
                 <p>Water limitation across the lower 48 United States, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. <b>Select a region on the map</b> to view the proportions of water limitation levels for that region.</p>
               </div>
         </div>    
@@ -146,15 +147,15 @@
           <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought, and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
         </div>
         <div class="chart-title-container">
-            <p class="chart-title">A decade of water limitation</p>
-            <p class="chart-subtitle">The proportion of the lower 48 United States in each water limitation category through time</p>
+            <h4 class="chart-title">A decade of water limitation</h4>
+            <p class="chart-subtitle" aria-hidden="true">The proportion of the lower 48 United States in each water limitation category through time</p>
           </div>
-        <div class="viz-container">
-          <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
+        <div class="viz-container" role="img" aria-label="Dynamics show high water limitation for larger proportion of the U.S. each summer and with an overall larger peak during the 2012-2013 timespan.">
+          <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" alt="Monthly breakdown of water limitation levels from 2010 through 2020 for the lower 48 U.S.">
         </div>
-        <div class="caption-container">
+        <div class="caption-container"   aria-hidden="true">
           <div class="caption-text-child">
-            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.Each step in the chart represents one month of time. </p>
+            <p>Water limitation across the lower 48 United States by month from January 2010 through January 2020. The bars show the proportion of each water limitation category as shown in the map above. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. Each step in the chart represents one month of time. </p>
           </div>
         </div>  
         <Methods :theseReferences="referenceList"></Methods>

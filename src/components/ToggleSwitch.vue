@@ -1,11 +1,12 @@
 <template>
-  <div class="checkbox_wrap toggle-container">
-    <label class="toggle-label">
+  <div class="checkbox_wrap toggle-container" aria-label="Toggle container">
+    <label class="toggle-label" aria-hidden="true">
       <!-- Left label for either/or use case -->
       <span 
         v-if="leftLabel" 
         class="toggle-text" 
-        :class="{ tactive: !modelValue }"
+        :class="{ tactive: !modelValue }" 
+        aria-hidden="true"
       >
         {{ leftLabel }}
       </span>
@@ -15,11 +16,13 @@
         type="checkbox" 
         class="toggle-input" 
         :checked="modelValue"
-        @change="$emit('update:modelValue', !modelValue)"
+        @change="$emit('update:modelValue', !modelValue)" 
+        aria-hidden="true"
       />
       <span 
        class="toggle-slider"
        :style="{ backgroundColor: modelValue ? rightColor : leftColor }"
+        aria-hidden="true"
        ></span>
 
       <!-- Right label for either/or use case or single toggle label -->
@@ -27,7 +30,7 @@
         v-if="rightLabel" 
         class="toggle-text" 
         :class="{ tactive: modelValue, inactive: !modelValue }"
-      >
+        aria-hidden="true"      >
       {{ rightLabel }}
     </span>
      <!-- Single label -->
@@ -35,6 +38,7 @@
         v-else-if="label" 
         class="toggle-text"
         :class="{ tactive: modelValue, inactive: !modelValue }"
+        aria-hidden="true"
       >
         {{ label }}
       </span>

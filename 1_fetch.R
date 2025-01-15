@@ -163,7 +163,10 @@ p1_targets <- list(
     p1_wq_gw_exceedences_df,
     readRDS("../wq-decadal-change-plots/_targets/objects/p2_overview_inorg_threshold_belitz")
   ),
-  
+  tar_target( 
+    p1_wq_constituent_exceedences_df,
+    readRDS("../wq-decadal-change-plots/_targets/objects/p2_threshold_belitz")
+  ),
   ##############################################
   # 
   #           WATER USE DATA

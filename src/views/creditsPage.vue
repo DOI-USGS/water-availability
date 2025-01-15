@@ -176,6 +176,8 @@ function createChart({ container, data, team }) {
         .attr('width', width + margin.left + margin.right)
         .attr('height', height)
         .attr('viewBox', `0 0 ${width + margin.left + margin.right} ${height}`)
+        .attr('aria-role', 'image')
+        .attr('aria-label', 'Images of all the authors.')
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -200,6 +202,7 @@ function createChart({ container, data, team }) {
         .enter()
         .append("g")
         .attr('class', 'node')
+        .attr('aria-hidden', 'true')
         .on('click', function (event, d) {
         console.log('Clicked:', d.profile_link); // Log to ensure click event is triggered
         });
@@ -208,7 +211,8 @@ function createChart({ container, data, team }) {
         .append('clipPath')
         .attr('id', (d, i) => `clip-${i}`)
         .append('circle')
-        .attr('r', radius);
+        .attr('r', radius)
+        .attr('aria-hidden', 'true');
 
     node
         .append('circle')
@@ -216,7 +220,8 @@ function createChart({ container, data, team }) {
         .attr('r', radius)
         .attr('fill', 'black')
         .attr('stroke-width', '5px')
-        .attr('clip-path', (d, i) => `url(#clip-${i})`);
+        .attr('clip-path', (d, i) => `url(#clip-${i})`)
+        .attr('aria-hidden', 'true');
 
     node
         .append('image')
@@ -225,14 +230,16 @@ function createChart({ container, data, team }) {
         .attr('height', radius * 2.1)
         .attr('x', -1.05 * radius)
         .attr('y', -radius)
-        .attr('clip-path', (d, i) => `url(#clip-${i})`);
+        .attr('clip-path', (d, i) => `url(#clip-${i})`)
+        .attr('aria-hidden', 'true');
 
     node
         .append('circle')
         .attr('class', 'overlay')
         .attr('r', radius)
         .attr('fill', 'rgba(0, 0, 0, 0.5)')
-        .style('opacity', 0);
+        .style('opacity', 0)
+        .attr('aria-hidden', 'true');
 
     node
         .append('text')
@@ -245,7 +252,8 @@ function createChart({ container, data, team }) {
         .attr('fill', 'white')
         .attr('pointer-events', 'none')
         .style('opacity', 0)
-        .text(d => d.shortName);
+        .text(d => d.shortName)
+        .attr('aria-hidden', 'true');
 
     // append link
     node    
@@ -258,7 +266,8 @@ function createChart({ container, data, team }) {
             .attr("height", radius * 2)
             .attr("width", radius * 2)
             .style("fill", "transparent")
-            .attr('clip-path', (d, i) => `url(#clip-${i})`);
+            .attr('clip-path', (d, i) => `url(#clip-${i})`)
+            .attr('aria-hidden', 'true');
 
     node
         .on('mouseover', function () {

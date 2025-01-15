@@ -6,8 +6,8 @@
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
               </div>
               <div class="chart-title-container">
-            <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
-            <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
+            <h4 class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</h4>
+            <p class="chart-subtitle" aria-hidden="true">Total nutrient load (kg/yr) by area</p>
             <ToggleSwitch 
                 v-model="showNitrogen" 
                 leftLabel="Phosphorus" 
@@ -20,6 +20,7 @@
               <RegionMap 
               class="region-map"
                 @regionSelected="updateSelectedRegion"
+                mapChartTitle="Map showing the distribution of areas with elevated nitrogen or phosphorus loads in the lower 48 states. Nitrogen is elevated primarily along the West coast and throughout the midwest, northeast, and southeast of the U.S. Phosphorus shows a similar pattern, however with patches of higher loads throughout the southwest desert."
                 :layerVisibility="{
                   nitrogen: layers.nitrogen.visible,
                   phosphorus: layers.phosphorus.visible
@@ -43,7 +44,7 @@
                 :regionName="selectedRegion"
               />
           </div>
-            <div class="caption-container">
+            <div class="caption-container" aria-hidden="true">
               <div class="caption-text-child">
                 <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12).<span v-for="reference in theseReferences.filter(item => item.refID === 'Martinez2024sparrow')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The histogram shows the distribution of total load across the lower 48 United States. <b>Select a region on the map</b> to view histograms for that region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the choices</b> to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
@@ -55,8 +56,8 @@
             </div>
 
               <div class="chart-title-container">
-            <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} </p>
-            <p class="chart-subtitle">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
+            <h4 class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} </h4>
+            <p class="chart-subtitle" aria-hidden="true">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
             <!-- Nutrient Toggle -->
             <ToggleSwitch 
                 v-model="showNitrogen" 
@@ -82,7 +83,7 @@
                 </div>
             </div>
           
-            <div class="caption-container-flex caption-container">
+            <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                   <ColorLegend legend-id="legend-wq-agriculture" label="Agriculture" color="var(--wq-agriculture)" />
                   <ColorLegend legend-id="legend-wq-air" label="Atmospheric deposition" color="var(--wq-air)" />
@@ -288,8 +289,9 @@ function initBarChart() {
       .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .style('width', containerWidth)
-      //.style('max-height', `${height}px`)
-      .style('height', height + margin.top + margin.bottom);
+      .style('height', height + margin.top + margin.bottom)
+      .attr('aria-role', 'image')
+      .attr('aria-label', 'Stacked bar chart showing the sources of nitrogen or phosphorus for each hydrologic region in the lower 48 states. The largest source for these nutrients is through agriculture followed by atmospheric deposition for nitrogen and natural sources for phosphorus. The regions with the highest loads of phosphorus are the midwest and Tennessee-Missouri regions.');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
@@ -326,12 +328,14 @@ function createBarChart({ dataset, scaleLoad}) {
   const regionAxis = chartBounds.append('g')
     .call(d3.axisLeft(regionScale))
     .attr('class', 'axis-text')
+    .attr('aria-hidden', 'true')
     .attr('transform', `translate(${margin.left}, 0)`);
 
   // adding maps
   regionAxis.selectAll(".tick")
     .select("text")
     .attr('class', 'axis-text')
+    .attr('aria-hidden', 'true')
     .attr("x", mobileView ? -60 : -80) // shift text to the left to make space for the mini maps
 
     // load SVG and add it to each tick
@@ -348,17 +352,19 @@ function createBarChart({ dataset, scaleLoad}) {
         // add the map at each tick
         const insertedSvg = d3.select(this)
           .insert(() => svgClone, "text") 
-            .attr("x", -46)
+            .attr("x", mobileView ? -48 : -60)
             .attr("y", -25)
           .attr("width", 50) 
           .attr("height", 50)
-          .attr("fill", "var(--inactive-grey)"); 
+          .attr("fill", "var(--inactive-grey)")
+          .attr('aria-hidden', 'true'); 
 
         // select the <g> element with the region name
         insertedSvg.selectAll(`g.${regionClass} path`) // grab the path
           .attr("stroke", "black") // apply black outline
           .attr("stroke-width", 3)
-          .attr("fill", "black"); 
+          .attr("fill", "black")
+          .attr('aria-hidden', 'true'); 
       });
   });
 
@@ -366,13 +372,15 @@ function createBarChart({ dataset, scaleLoad}) {
   chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
     .call(d3.axisBottom(nutrientScale).ticks(mobileView ? 3 : 4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
-    .attr('class', 'axis-text');
+    .attr('class', 'axis-text')
+    .attr('aria-hidden', 'true');
 
   // x-axis at the top
   chartBounds.append('g')
     .attr('transform', `translate(0, ${margin.top})`) // positioned at y = 0 (top of the chart)
     .call(d3.axisTop(nutrientScale).ticks(mobileView ? 3 : 4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
-    .attr('class', 'axis-text');
+    .attr('class', 'axis-text')
+    .attr('aria-hidden', 'true');
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -385,7 +393,8 @@ function createBarChart({ dataset, scaleLoad}) {
     .data(stackedData, d => d.key)
     .join(
       enter => enter.append("g")
-        .attr("class", d => d.key.replace(" ", "_")),
+        .attr("class", d => d.key.replace(" ", "_"))
+        .attr('aria-hidden', 'true'),
       update => update,
       exit => exit.remove()
     );
@@ -401,13 +410,15 @@ function createBarChart({ dataset, scaleLoad}) {
         .style("fill", d => colorScale(d.key))
         .style("opacity", 0)
         .transition(t)
-        .style("opacity", 1),
+        .style("opacity", 1)
+        .attr('aria-hidden', 'true'),
 
       update => update.transition(t)
         .attr('x', d => nutrientScale(d[0]))
         .attr('y', d => regionScale(d.data[0]))
         .attr('height', regionScale.bandwidth())
-        .attr('width', d => nutrientScale(d[1]) - nutrientScale(d[0])),
+        .attr('width', d => nutrientScale(d[1]) - nutrientScale(d[0]))
+        .attr('aria-hidden', 'true'),
 
       exit => exit.transition(t)
         .style("opacity", 0)

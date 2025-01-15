@@ -4,20 +4,22 @@
         <div class="content-container">
           <div  class="text-container">
               <h2>Groundwater quality varies regionally</h2>
-              <p>Groundwater is the drinking-water source for about one-third of the Nation's population. Geogenic contaiminants, which come from geologic sources like bedrock and sediment, are the most common contaminants found in drinking water aquifers at elevated or high concentrations. These geogenic contaminants affect more than 30 million people in the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'Belitz2022')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic contaminants in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
+              <p>Groundwater is the drinking-water source for about one-third of the Nation's population. Geogenic contaminants, which come from geologic sources like bedrock and sediment, are the most common contaminants found in drinking water aquifers at elevated or high concentrations. These geogenic contaminants affect more than 30 million people in the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'Belitz2022')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic contaminants in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
             </div>
           <div class="chart-title-container">
-              <p class="chart-title">Groundwater quality in {{ aquiferLabel }}</p>
-              <p class="chart-subtitle">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
+              <h4 class="chart-title">Groundwater quality in {{ aquiferLabel }}</h4>
+              <p class="chart-subtitle" aria-hidden="true">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
           </div>
           <div class="viz-container">
             <div class="map-container">
               <img class="map-overlay" 
-              :src="imgSrc">
+              :src="imgSrc"
+              aria-role="image"
+              aria-label="Pie charts showing the levels of contamination for common groundwater contaminants for each aquifer. The aquifers with the highest proportion of areas that are above human-health benchmarks are the Cambrian-Ordovician aquifer, which is near the great lakes, the high plains aquifer, and the stream valley east aquifer, which is near Ohio and West virginia.">
               <aquiferWedges id="aquifer-svg" />
             </div>
           </div>
-            <div class="caption-container-flex caption-container">
+            <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-wq-high" label="Above human-health benchmark" color="var(--wq-high)" />
                 <ColorLegend legend-id="legend-wq-mod" label="Exceeds half of the benchmark" color="var(--wq-mod)" />
@@ -34,9 +36,9 @@
             </div>
 
             <div class="chart-title-container">
-            <p class="chart-title">Top threats to surface water</p>
-            <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired</p>
-            <div class="checkbox_item">
+            <h4 class="chart-title">Top threats to surface water</h4>
+            <p class="chart-subtitle" aria-hidden="true">Surface water threats based on the percent of total river miles impaired</p>
+            <div class="checkbox_item" aria-hidden="true">
                   <div class="checkbox_wrap">
                     <b class="toggle-text">Sort chart by: </b>
                     <label class="toggle-text">
@@ -56,7 +58,7 @@
           </div>
                     <!-- Category of use -->
           
-            <div class="caption-container">
+            <div class="caption-container" aria-hidden="true">
               <div class="caption-text-child">
                 <p>Heatmap of the top threats to drinking water, fish consumption, and recreational use. Chart fill and percentages show the percent of assessed river miles that are threatened by each contaminant. Darker fill indicates a higher degree of threat by that source.<span v-for="reference in theseReferences.filter(item => item.refID === 'EPA2023')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the options</b> to sort the chart by one of the three columns.</p>
               </div>
@@ -253,11 +255,14 @@ function setupSVG() {
     .append('svg')
     .attr('width', chartDimensions.width)
     .attr('height', chartDimensions.height)
-    .attr('viewBox', `0 0 ${chartDimensions.width} ${chartDimensions.height}`);
+    .attr('viewBox', `0 0 ${chartDimensions.width} ${chartDimensions.height}`)
+    .attr('aria-role', 'image')
+    .attr('aria-label', 'Heatmap that shows threats to river miles that are used for drinking water, fish consumption, or recreational use. The highest threat to drinking water is from non-mercury metals, to fish consumption is from P.C.B.s and mercury, and to recreational use is from pathogens.');
   
   // Add group to chart bounds to hold all chart rectangle groups
     rectGroup = svg.append('g')
       .attr('id', 'rectangle_group')
+      .attr('aria-hidden', 'true')
 }
 
 // Initialize Legend
@@ -300,7 +305,8 @@ function initHeatmap({dataset, sortBy}) {
             .attr('width', xScale.bandwidth())
             .attr('height', yScale.bandwidth())
             .style("fill", d => colorScale(d.percentMiles))
-            .transition(t),
+            .transition(t)
+            .attr('aria-hidden', 'true'),
 
           update => update.transition(t),
 
@@ -323,6 +329,7 @@ function initHeatmap({dataset, sortBy}) {
             .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
             .attr("dy", "0.35em")
             .attr("dx", -4)
+            .attr('aria-hidden', 'true')
             .text((d) => d.percentMiles + '%')
             .style("fill", function(d) {
                     return d.percentMiles > 15 ? "white" : "black";
@@ -343,6 +350,7 @@ function initHeatmap({dataset, sortBy}) {
             .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
+            .attr('aria-hidden', 'true')
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
             .text("Drinking")
@@ -352,6 +360,7 @@ function initHeatmap({dataset, sortBy}) {
             .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
+            .attr('aria-hidden', 'true')
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
             .text("Water")
@@ -361,6 +370,7 @@ function initHeatmap({dataset, sortBy}) {
             .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
+            .attr('aria-hidden', 'true')
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
             .text("Fish")
@@ -370,6 +380,7 @@ function initHeatmap({dataset, sortBy}) {
             .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
+            .attr('aria-hidden', 'true')
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
             .text("Consumption")
@@ -379,6 +390,7 @@ function initHeatmap({dataset, sortBy}) {
             .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
+            .attr('aria-hidden', 'true')
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
             .text("Recreational")
@@ -388,6 +400,7 @@ function initHeatmap({dataset, sortBy}) {
             .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
             .attr("dx", "0em")
             .attr("dy", "0em")
+            .attr('aria-hidden', 'true')
             .attr("data-width", xScale.bandwidth())
             .style("text-anchor", "middle")
             .text("Use")
@@ -398,7 +411,8 @@ function initHeatmap({dataset, sortBy}) {
         .attr("transform", `translate(${chartDimensions.margin.left},0)`)
         .call(d3.axisLeft(yScale).tickSizeOuter(0))
         .attr("class", "axis-text")
-        .attr("id", "y-axis");
+        .attr("id", "y-axis")
+        .attr('aria-hidden', 'true');
   
 
     
@@ -412,6 +426,7 @@ function addInteractions() {
             .attr("viewBox", "0 0 " + 2700 + " " + 1800)
             .attr("width", '100%')
             .attr("height", '100%')
+            .attr('aria-hidden', 'true')
         
         // Add interaction to wedges
         aquiferSVG.selectAll('.st0')
