@@ -38,7 +38,7 @@ export default {
         },
         { 
             term: "Geogenic contamination",
-            definition: "Geogenic contaminants are elements found in groundwater that have come from geologic sources, such as soil and bedrock. Because water is such an excellent solvent, it can contain lots of dissolved chemicals. And since groundwater moves through rocks and subsurface soil, it has a lot of opportunity to dissolve substances as it moves. For that reason, groundwater will often have more dissolved geogenic substances than surface water will.Because groundwater moves slowly in the subsurface and many contaminants stick to the sediments, restoration of a contaminated aquifer is difficult and may require years, decades, centuries, or even millennia."
+            definition: "Geogenic contaminants are elements found in groundwater that have come from geologic sources, such as soil and bedrock. Because water is such an excellent solvent, it can contain lots of dissolved chemicals. And since groundwater moves through rocks and subsurface soil, it has a lot of opportunity to dissolve substances as it moves. For that reason, groundwater will often have more dissolved geogenic substances than surface water will. Because groundwater moves slowly in the subsurface and many contaminants stick to the sediments, restoration of a contaminated aquifer is difficult and may require years, decades, centuries, or even millennia."
         },
         {
             term: "Eutrophication",

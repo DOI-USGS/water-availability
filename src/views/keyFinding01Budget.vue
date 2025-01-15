@@ -24,20 +24,21 @@
               />
             </div>
           </div>
-          <DumbellChart 
+      <div class="viz-container">
+        <DumbellChart 
             :data="data" 
             :animateTime="animateTime"
             v-model:supplyEnabled="supplyEnabled" 
             v-model:demandEnabled="demandEnabled"
           /> 
+      </div>
+
         <div class="caption-container">
           <!-- Supply and Demand caption -->
           <div class="caption-text-child">
-            <p>The average annual water supply and demand in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the layers</b> of supply and demand on and off to view them individually</p>
+            <p>The average annual water supply (solid circle) and demand (hollow circle) in millimeters per year from 2010 to 2020. Data are shown by hydrologic region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the layers</b> of supply and demand on and off to view them individually</p>
           </div>
         </div>
-        <br>
-        <br>
 
         <!-- Regional SUI section -->
         <div class="text-container">
@@ -51,7 +52,7 @@
             <p class="chart-title">Water limitation in {{ selectedRegion !== 'lower 48 United States' ? selectedRegion + ' Region' : selectedRegion }}</p>
             <p class="chart-subtitle">Bars show the percent of the region with very low, low, moderate, high, and severe water limitation</p>
           </div>
-        <div class="image-container">
+        <div class="viz-container">
           <StackedBar 
             categoricalVariable="d3_category"
             continuousRaw="stress_by_reg"
@@ -136,23 +137,20 @@
               />
               </div>
               <div class="caption-text-flex caption-text-child">
-                <br>
                 <p>Water limitation across the lower 48 United States, shown as the average from 2010 to 2020 for each watershed (HUC12). The bar chart shows the proportion of each water limitation category. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use. <b>Select a region on the map</b> to view the proportions of water limitation levels for that region.</p>
               </div>
         </div>    
-        <br>
-        <br>
          <!-- Temporal SUI section -->
         <div class="text-container">
           <h2>When supply decreases, demand increases</h2>
-          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought, and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
+          <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought, and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
         </div>
         <div class="chart-title-container">
             <p class="chart-title">A decade of water limitation</p>
             <p class="chart-subtitle">The proportion of the lower 48 United States in each water limitation category through time</p>
           </div>
         <div class="viz-container">
-          <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
+          <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" >
         </div>
         <div class="caption-container">
           <div class="caption-text-child">
@@ -169,6 +167,7 @@
 
 <script setup>
 import { onMounted, ref, reactive, inject } from 'vue';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import RegionMap from '../components/RegionMap.vue';
@@ -185,6 +184,7 @@ import DumbellChart from '../components/DumbellChart.vue';
 
 // dependency injections
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 const featureToggles = inject('featureToggles');
 const animateTime = inject('animateTime')
 
@@ -198,7 +198,6 @@ const filteredReferences = filteredMessages[0].references;// extract list of ref
 const theseReferences = references.key.filter((item) => filteredReferences.includes(item.refID)) 
 // sort by order listed on page, reflected in list on subpages.js
 const sortedReferences = theseReferences.sort((a, b) => filteredReferences.indexOf(a.refID) - filteredReferences.indexOf(b.refID))
-console.log(sortedReferences)
 sortedReferences.forEach((item, index) => { item.referenceNumber = `${index + 1}`; }); // add numbers
 const referenceList = ref(sortedReferences);
 
@@ -267,6 +266,10 @@ onMounted(async () => {
   // first load the data
   data.value = await loadData(csvSupplyDemand); // supply and demand data
   csvData.value = await loadData(csvSUI);  // stacked bar chart by regions
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
 
 // METHODS
@@ -291,6 +294,23 @@ const toggleLayer = (layerId) => {
   layers[layerId].visible = !layers[layerId].visible;
 };
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
+
 </script>
 
 <style scoped>
@@ -305,13 +325,6 @@ const toggleLayer = (layerId) => {
 }
 .text-container {
   margin: 20px auto;
-}
-.image-container {
-  position: relative;
-  width: 100%; 
-  max-width: 1800px;
-  margin: auto; 
-  overflow: hidden;
 }
 
 .background-image {

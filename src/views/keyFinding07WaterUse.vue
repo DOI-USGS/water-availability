@@ -5,12 +5,11 @@
       <div class="text-container">
         <p>
           An understanding of where, when, why, and how much water is extracted for human use is fundamental to understanding the Nation's water availability.</p>
-          <br>
-          <b>Around 90% of daily water use in the United States goes toward:</b>
+          <h3>Around 90% of daily water use in the United States goes toward:</h3>
           <ul>
-            <li>Crop irrigation</li>
-            <li>Freshwater used in the process of creating energy at thermoelectric power plants</li>
-            <li>Public supply, where water is withdrawn or purchased by a water supplier and delivered to many users</li>
+            <li><b>Crop irrigation</b></li>
+            <li><b>Thermoelectric power plants</b>, where freshwater is used in the process of creating energy</li>
+            <li><b>Public supply</b>, where water is withdrawn or purchased by a water supplier and delivered to many users</li>
           </ul>
           <br>
         <p>These three uses add up to 224,000 million gallons of freshwater per day.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In addition, saline water used at thermoelectric power plants adds another approximately 21,000 million gallons of water per day. </p>
@@ -42,32 +41,22 @@
             <p>Bar chart showing model estimates for total daily water use from these categories by year from 2010 through 2020 for the lower 48 United States. <b>Toggle the options</b> to switch between viewing the total use versus the use by category. </p>
           </div>
         </div>       
-          <br>
-          <br>
         <div class="text-container">
         <p>Other categories of water use such as mining, aquaculture, livestock, and domestic and industrial (from non-public supply sources), that together account for 10% of water use in the country, can also be locally or regionally important.</p>
 
-        <h3>How does water use affect water availability?</h3>
+        <h2>How does water use affect water availability?</h2>
         <p>
           Water use affects water availability in three ways. On the one hand, ensuring safe, sufficient, and reliable sources of water for human needs is a primary objective of water management. On the other hand, water withdrawals may decrease availability for downstream users and local ecosystems and can concentrate water quality contaminants. Return flows to streams or groundwater after use can have implications for water quality and stream ecology.  Therefore, areas with more intensive water demands have a higher potential to degrade water quality and flows than areas with less intense water demands. 
         </p>
       </div>
       
-
-      <br>
-      <br>
       <div class="text-container">
         <h2>Not all is lost</h2>
-      </div>
-      <div class="viz-container">
-        <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"/>
-      </div>
-      <br>
-      <div class="text-container">
         <p>Not all of the water used by humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive use." Consumptive use includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive use is highest for crop irrigation: Only 28% of water used for irrigation returns to the local environment.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment, although this amount varies widely depending on the type of cooling system used at the plant. </p>
       </div>
-      <br>
-      <br>
+      <div class="viz-container">
+        <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"/>
+      </div>
       <Methods :theseReferences="referenceList"></Methods>
       <References :theseReferences="referenceList"></References>
     </div>
@@ -79,6 +68,7 @@
 <script setup>
 import { onMounted, ref, inject, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3 from 'd3';
 import KeyMessages from '../components/KeyMessages.vue';
 import PageCarousel from '../components/PageCarousel.vue';
@@ -95,6 +85,7 @@ const featureToggles = inject('featureToggles');
 const animateTime = inject('animateTime')
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 
 // S3 resource sourcing
 const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
@@ -117,18 +108,15 @@ const mobileView = isMobile; // Detect mobile view for responsive design
 let svg, chartBounds, rectGroup, xAxisGroup;
 let categoryGroups, yearGroups, dataStacked, data;
 let yearScale, useScale, categoryRectGroups, totalHeight, adjustedHeight, facetHeights;
-const containerWidth = 800; 
-const containerHeight = 600;
+let containerWidth, containerHeight, width, height;
 const padding = 30;
 const barSpace = 5;
 
 // chart dimensions
 const margin = mobileView
-  ? { top: 30, right: 10, bottom: 50, left: 40 } //  mobile
-  : { top: 30, right: 10, bottom: 50, left: 40 }; // desktop
+  ? { top: 30, right: 20, bottom: 15, left: 40 } //  mobile
+  : { top: 30, right: 100, bottom: 30, left: 140 }; // desktop
 
-const width = containerWidth - margin.left - margin.right;
-const height = containerHeight - margin.top - margin.bottom;
 
 // Define colors for each category group
 const categoryColors = {
@@ -203,6 +191,7 @@ function initBarChart() {
     .append('svg')
     .attr('class', 'barplotSVG')
     .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet')
     .style('width', containerWidth)
     .style('height', containerHeight);
 
@@ -254,7 +243,7 @@ function createBarChart(dataStacked) {
   categoryGroups.forEach((group, i) => {
     chartBounds.append('g')
       .attr('class', `y-axis y-axis-${i}`)
-      .call(d3.axisLeft(useScale).ticks(4).tickFormat(d3.format("~s")))
+      .call(d3.axisLeft(useScale).ticks(mobileView ? 3 : 4).tickFormat(d3.format("~s")))
       .selectAll('.tick text')
       .attr('class', 'chart-text');
   });
@@ -317,7 +306,7 @@ function transitionToFaceted() {
     d3.select(`.y-axis-${i}`)
       .transition(t)
       .attr('transform', `translate(0, ${facetPositions[i]})`)
-      .call(d3.axisLeft(groupScale).ticks(3).tickFormat(d3.format("~s")))
+      .call(d3.axisLeft(groupScale).ticks(mobileView ? 2 : 3).tickFormat(d3.format("~s")))
       .selectAll('.tick text')
       .attr('class', 'chart-text');
 
@@ -350,7 +339,6 @@ function transitionToFaceted() {
   xAxisGroup.select('.x-axis')
     .transition(t)
     .attr('transform', `translate(0, ${adjustedHeight})`) // move to the new position
-   //.call(d3.axisBottom(yearScale).tickSize(0)) // redraw axis
   xAxisGroup.selectAll('.tick text')
     .attr('class', 'chart-text')
     .style('text-anchor', 'middle'); // ensure labels are styled
@@ -381,7 +369,7 @@ function transitionToStacked() {
       .transition(t)
       .attr('transform', 'translate(0, 0)')
       .call(d3.axisLeft(useScale)
-        .ticks(4)
+        .ticks(mobileView ? 3 : 4)
         .tickFormat(d3.format("~s"))
       )
       .selectAll('.tick text')
@@ -421,7 +409,13 @@ onMounted(async () => {
 
   window.scrollTo(0, 0)
 
-  
+  const container = document.getElementById('barplot-container');
+  containerWidth = container.clientWidth;
+  containerHeight = mobileView ? 550 : 600;
+
+  width = containerWidth - margin.left - margin.right;
+  height = containerHeight - margin.top - margin.bottom;
+
   // load the data
   await loadDatasets();
 
@@ -446,13 +440,34 @@ onMounted(async () => {
       });
     });
   }
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
+
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 
 </script>
 
 <style scoped>
 #barplot-container {
-  max-width: 100%;
+  max-width: 1000px;
   width: 100%;
   margin: auto;
   display: flex;

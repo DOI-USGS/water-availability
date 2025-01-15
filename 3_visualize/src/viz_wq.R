@@ -38,18 +38,6 @@ map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
   
   n_breaks <- 10
   
-  # plot_sf <- in_sf |> 
-  #   filter(!is.na(!!load_column)) |> 
-  #   mutate(load_level = case_when(
-  #     !!load_column <= quantile(!!load_column, probs = 0.20) ~ "Very low",
-  #     !!load_column <= quantile(!!load_column, probs = 0.40) ~ "Low", 
-  #     !!load_column <= quantile(!!load_column, probs = 0.60) ~ "Moderate",
-  #     !!load_column <= quantile(!!load_column, probs = 0.80) ~ "High",
-  #     !!load_column <= quantile(!!load_column, probs = 1.00) ~ "Very high"
-  #   ),
-  #   load_levelf = factor(load_level, levels = c("Very high", "High",
-  #                                               "Moderate", "Low", "Very low")))
-  
   pretty_labels <- function(num) {
     dplyr::case_when(
       num >= 1000000 ~ format(num, scientific = TRUE),
@@ -81,7 +69,7 @@ map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
     ) +
     theme_void() +
     theme(
-      legend.position = "bottom") 
+      legend.position = "none") 
 
   
   ggsave(plot = map,

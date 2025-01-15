@@ -1,13 +1,21 @@
 <template>
-    <div class="chart-container">
-      <svg ref="legendSvg" class="legend-svg"></svg>
+    <div class="chart-container" id="bar-container">
+      <svg ref="legendSvg" class="legend-svg" ></svg>
     </div>
   </template>
   
   <script setup>
   import { onMounted, ref, watch } from 'vue';
   import * as d3 from 'd3';
+  import { isMobile } from 'mobile-device-detect';
   
+  const mobileView = isMobile;
+  let histogramWidth;
+  let histogramHeight;
+  let rectHeight;
+  let marginLeft;
+  let marginRight;
+
   // define props
   const props = defineProps({
     layerPaths: { 
@@ -28,13 +36,19 @@
   const legendSvg = ref(null);
   let svg;
   
-  // chart dimensions
-  const width = 700;
-  const height = 120;
-  const rectHeight = 80;
+
 
   // render legend initially and watch for changes
   onMounted(() => {
+
+      // chart dimensions
+    const containerWidth = document.getElementById('bar-container').clientWidth;
+    histogramWidth = mobileView ? containerWidth : 700;
+    histogramHeight = 120;
+    rectHeight = 80;
+    marginLeft = mobileView ? -4 : -30;
+    marginRight = mobileView ? 40 : 80;
+
     setupSVG();
     initLegend(props.data);
     });
@@ -60,9 +74,10 @@ watch(
 function setupSVG() {
   d3.select(legendSvg.value).selectAll('*').remove();
   svg = d3.select(legendSvg.value)
-    .attr('width', width)
-    .attr('height', height)
-    .attr('viewBox', `-20 0 ${width+20} ${height+20}`);
+    .attr('width', histogramWidth)
+    .attr('height', histogramHeight)
+    .attr('viewBox', `${marginLeft} 0 ${histogramWidth + marginRight} ${histogramHeight}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet');
 }
 
 // Initialize Legend
@@ -85,9 +100,10 @@ function initLegend(data) {
 
     const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
-    .range([0, width - 40])
+    .range([0, histogramWidth])
     .paddingInner(0) 
     .paddingOuter(0);
+  
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
@@ -96,23 +112,24 @@ function initLegend(data) {
   // Bars
   svg.selectAll('rect')
     .data(sortedData, d => cleanLabel(d.category))
-    .join('rect')
-    .attr('class','main')
-    .attr('x', d => xScale(cleanLabel(d.category)))
-    .attr('y', d => yScale(d.value))
-    .attr('width', xScale.bandwidth())
-    .attr('height', d => rectHeight - yScale(d.value))
-    .style('fill', d => colorScale(d.category));
+      .join('rect')
+      .attr('class','main')
+      .attr('x', d => xScale(cleanLabel(d.category)))
+      .attr('y', d => yScale(d.value))
+      .attr('width', xScale.bandwidth())
+      .attr('height', d => rectHeight - yScale(d.value))
+      .style('fill', d => colorScale(d.category));
 
     svg.selectAll('rect.static')
-    .data(dummyData, d => cleanLabel(d.category))
-    .join('rect')
-    .attr('class','static')
-    .attr('x', d => xScale(cleanLabel(d.category)))
-    .attr('y', height - 25)
-    .attr('width', xScale.bandwidth())
-    .attr('height', d => rectHeight - yScale(d.value))
-    .style('fill', d => colorScale(d.category));
+      .data(dummyData, d => cleanLabel(d.category))
+        .join('rect')
+        .attr('class','static')
+        .attr('x', d => xScale(cleanLabel(d.category)))
+        .attr('y', mobileView ? histogramHeight - 20 : histogramHeight - 15)
+        .attr('width', xScale.bandwidth())
+        .attr('height', d => rectHeight - yScale(d.value))
+        .style('fill', d => colorScale(d.category));
+
 
   const axisBottom = d3.axisBottom(xScale)
    .tickFormat(d => d)
@@ -120,15 +137,15 @@ function initLegend(data) {
    .tickPadding(2);
 
    svg.append('g')
-    .attr('class', 'x-axis')
+    .attr('id', 'x-axis')
+    .attr('class', 'axis-text')
     .attr('transform', `translate(0, ${rectHeight})`)
     .call(axisBottom)
-    .selectAll('text') // select axis labels
-    .style('text-anchor', 'middle') // align to the middle
-    .attr('x', 0)
-    .style('font-size', '14px'); 
+      .selectAll('text') // select axis labels
+      .style('text-anchor', 'middle') // align to the middle
+      .attr('x', 0); 
 
-  svg.selectAll('.x-axis .tick') // select all ticks
+  svg.selectAll('#x-axis .tick') // select all ticks
   .attr('transform', function(d) {
     // manually shift tick positions to the left edge of the bars
     return `translate(${xScale(d)}, 0)`;
@@ -142,8 +159,9 @@ function initLegend(data) {
   .tickSize(3);
 
   svg.append('g')
-    .attr('class', 'y-axis')
-    .attr('transform', `translate(${width-40}, 0)`)
+    .attr('id', 'y-axis')
+    .attr('class', 'axis-text')
+    .attr('transform', `translate(${histogramWidth}, 0)`)
     .call(axisRight) 
 
 }
@@ -160,9 +178,11 @@ function updateLegend(data) {
 
   const xScale = d3.scaleBand()
     .domain(sortedData.map(d => cleanLabel(d.category)))
-    .range([0, width - 40])
+    .range([0, histogramWidth])
     .paddingInner(0) 
     .paddingOuter(0);
+
+
 
   const yScale = d3.scaleLinear()
     .domain([0, 1])
@@ -205,10 +225,11 @@ function updateLegend(data) {
     .join('rect')
     .attr('class','static')
     .attr('x', d => xScale(cleanLabel(d.category)))
-    .attr('y', height - 25)
+    .attr('y', mobileView ? histogramHeight - 20 : histogramHeight - 15)
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
     .style('fill', d => colorScale(d.category));
+
 
   const axisBottom = d3.axisBottom(xScale)
    .tickFormat(d => d)
@@ -216,17 +237,18 @@ function updateLegend(data) {
    .tickValues(sortedData.map(d => cleanLabel(d.category)))
    .tickPadding(2);
 
-   d3.select('.x-axis').remove() // clear before updating
+   d3.select('#x-axis').remove() // clear before updating
 
    svg.append('g')
-    .attr('class', 'x-axis')
+    .attr('id', 'x-axis')
+    .attr('class', 'axis-text')
     .attr('transform', `translate(0, ${rectHeight})`)
     .call(axisBottom)
     .selectAll('text') // select axis labels
-    .style('text-anchor', 'middle') // align to the start (left)
+    .style('text-anchor', 'middle') // align to the middle
     .attr('x', 0);
 
-  svg.selectAll('.x-axis .tick') // select all ticks
+  svg.selectAll('#x-axis .tick') // select all ticks
     .attr('transform', function(d) {
       // manually shift tick positions to the left edge of the bars
       return `translate(${xScale(d)}, 0)`;
@@ -257,10 +279,10 @@ function cleanLabel(label) {
 </script>
 
 <style scoped>
-
-.legend-svg {
-  width: 100%;
-  height: auto;
-  max-height: 100%;
-}
+  @media only screen and (max-width: 600px) {
+    .chart-container {
+      width: 90vw;
+      margin: 0 auto;
+    }
+  }
 </style>

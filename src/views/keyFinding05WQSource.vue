@@ -16,46 +16,43 @@
                 leftColor="black"
               />
             </div>
-              <div class="image-container">
-            <RegionMap 
-            class="region-map"
-              @regionSelected="updateSelectedRegion"
-              :layerVisibility="{
-                nitrogen: layers.nitrogen.visible,
-                phosphorus: layers.phosphorus.visible
-              }"
-              :layerPaths="{
-                nitrogen: { path: layers.nitrogen.path, color: layers.nitrogen.color, order: layers.nitrogen.order },
-                phosphorus: { path: layers.phosphorus.path, color: layers.phosphorus.color, order: layers.phosphorus.order }
-              }"
-              regionsDataUrl="assets/Regions.topojson"
-              usOutlineUrl="assets/USoutline.topojson"
-              regionsVar="Region_nam_nospace"
-              layerMag="1.11"
-              layerX="-44"
-              layerY="-11"
+              <div class="viz-container">
+              <RegionMap 
+              class="region-map"
+                @regionSelected="updateSelectedRegion"
+                :layerVisibility="{
+                  nitrogen: layers.nitrogen.visible,
+                  phosphorus: layers.phosphorus.visible
+                }"
+                :layerPaths="{
+                  nitrogen: { path: layers.nitrogen.path, color: layers.nitrogen.color, order: layers.nitrogen.order },
+                  phosphorus: { path: layers.phosphorus.path, color: layers.phosphorus.color, order: layers.phosphorus.order }
+                }"
+                regionsDataUrl="assets/Regions.topojson"
+                usOutlineUrl="assets/USoutline.topojson"
+                regionsVar="Region_nam_nospace"
+                layerMag="1.2"
+                layerX="-80"
+                layerY="-55"
 
-            />
+              />
 
-            <HistogramLegend 
-              :layerPaths="legendConfig"
-              :data="legendData"
-              :regionName="selectedRegion"
-            />
+              <HistogramLegend 
+                :layerPaths="legendConfig"
+                :data="legendData"
+                :regionName="selectedRegion"
+              />
           </div>
             <div class="caption-container">
               <div class="caption-text-child">
                 <p>Maps showing total load of nutrients, nitrogen or phosphorus, in kilograms per year by watershed (HUC12).<span v-for="reference in theseReferences.filter(item => item.refID === 'Martinez2024sparrow')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The histogram shows the distribution of total load across the lower 48 United States. <b>Select a region on the map</b> to view histograms for that region.<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the choices</b> to switch the view between nitrogen versus phosphorus loads.</p>
               </div>
             </div>
-          <br>
-          <br>
             <div class="text-container">
-              <h3>Where do nutrients come from?</h3>
+              <h2>Where do nutrients come from?</h2>
               <p>Nutrients are added to our waterways through natural sources and human activities. Human activities affect water quality through multiple pathways, including application or movement of contaminants like fertilizers or organic chemicals on the land surface from agriculture or atmospheric deposition, which generally has human origins; wastewater treatment plant discharge, and other human sources such as dredging, mining, dams, and urbanization. Natural sources of nutrients include streams and springs, forests, and fixation of atmospheric nitrogen by soil bacteria that is transported to streams, geogenic sources, fixation by aquatic bacteria and algae, and lightning strikes.
                 </p>
             </div>
-            <br>
 
               <div class="chart-title-container">
             <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} </p>
@@ -80,7 +77,7 @@
                   />
 
             </div>
-          <div class="image-container">
+          <div class="viz-container">
                 <div id="barplot-container">    
                 </div>
             </div>
@@ -97,15 +94,10 @@
                 <p>Bar chart showing the load of nutrients, nitrogen or phosphorus, in kilograms per year by source for hydrologic regions in the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Martinez2024sparrow')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the choices</b> to switch the view between nitrogen versus phosphorus loads or between the total load (kg/year) versus the percent (%) of the total load.</p>
               </div>
             </div> 
-
-            <br>
-            <br>
-            
             <div class="text-container">
-              <h3>But, aren't nutrients good for us?</h3>
+              <h2>But, aren't nutrients good for us?</h2>
               <p>Nutrients are important for all living organisms, but only in the right amounts and at the right times. Excess nutrients can affect ecosystems and people directly, such as through impaired drinking water quality and taste, but indirect effects of nutrients are far more common. For example, eutrophication occurs when excess nutrients cause algae and plants to grow overabundant in a body of water. Eutrophication is an important driver of harmful algal blooms and hypoxia (that is, extremely low dissolved oxygen), resulting in fish kills and diminished recreational uses of waterbodies.</p>
             </div>
-            <br>
             <Methods :theseReferences="referenceList"></Methods>
             <References :theseReferences="referenceList"></References>
         </div>
@@ -118,6 +110,7 @@
 <script setup>
 import { onMounted, ref, computed, inject, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -129,18 +122,25 @@ import RegionMap from '../components/RegionMap.vue';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import HistogramLegend from '../components/HistogramLegend.vue';
 import ColorLegend from '../components/ColorLegend.vue';
+import { isMobile } from 'mobile-device-detect';
 
 // use for mobile logic
 const featureToggles = inject('featureToggles');
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
+const mobileView = isMobile;
 
 // Global variables 
 const publicPath = import.meta.env.BASE_URL;
 
 // Chart dimensions
-const margin = { top: 20, right: 20, bottom: 20, left: 250 };
+const margin = { 
+  top: isMobile ? 30 : 20, 
+  right: isMobile ? 5 : 20, 
+  bottom: isMobile ? 20 : 20, 
+  left: isMobile ? 180 : 250 };
 let svg, chartBounds, rectGroup, nutrientScale;
-let width, height;
+let height, containerWidth;
 
 // Reactive data elements
 const scaleLoad = ref(true);
@@ -221,13 +221,16 @@ onMounted(async () => {
               dataset: data.value,
               scaleLoad: scaleLoad.value
             });
-            observeResize();
         } else {
             console.error('Error loading data');
         }
     } catch (error) {
         console.error('Error during component mounting', error);
     }
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
 
 // general file loading fxn
@@ -272,9 +275,8 @@ function updateSelectedRegion(regionName) {
 function initBarChart() {
 
   const container = document.getElementById('barplot-container');
-  const containerWidth = container.clientWidth;
-  width = containerWidth - margin.left - margin.right;
-  height = Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
+  containerWidth = container.clientWidth;
+  height = mobileView ? 600 - margin.top - margin.bottom : Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
 
     // remove any existing SVG before redrawing
     d3.select('#barplot-container').select('svg').remove();
@@ -284,10 +286,10 @@ function initBarChart() {
       .append('svg')
       .attr('class', 'barplotSVG')
       .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
-      .style('width', '100%')
       .attr('preserveAspectRatio', 'xMidYMid meet')
-      //.style('max-height', `${maxHeight}px`)
-      .style('height', 'auto');
+      .style('width', containerWidth)
+      //.style('max-height', `${height}px`)
+      .style('height', height + margin.top + margin.bottom);
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
@@ -316,7 +318,7 @@ function createBarChart({ dataset, scaleLoad}) {
 
   nutrientScale = d3.scaleLinear()
     .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
-    .range([margin.left, width]);
+    .range([margin.left, containerWidth - margin.right]);
 
   chartBounds.selectAll(".axis-text").remove();
 
@@ -329,7 +331,8 @@ function createBarChart({ dataset, scaleLoad}) {
   // adding maps
   regionAxis.selectAll(".tick")
     .select("text")
-    .attr("x", -80) // shift text to the left to make space for the mini maps
+    .attr('class', 'axis-text')
+    .attr("x", mobileView ? -60 : -80) // shift text to the left to make space for the mini maps
 
     // load SVG and add it to each tick
     d3.xml(`${import.meta.env.BASE_URL}assets/USregions.svg`).then(function(xml) {
@@ -345,11 +348,11 @@ function createBarChart({ dataset, scaleLoad}) {
         // add the map at each tick
         const insertedSvg = d3.select(this)
           .insert(() => svgClone, "text") 
-          .attr("x", -66) 
-          .attr("y", -30) 
-          .attr("width", 60) 
-          .attr("height", 60)
-          .attr("fill", "lightgrey"); 
+            .attr("x", -46)
+            .attr("y", -25)
+          .attr("width", 50) 
+          .attr("height", 50)
+          .attr("fill", "var(--inactive-grey)"); 
 
         // select the <g> element with the region name
         insertedSvg.selectAll(`g.${regionClass} path`) // grab the path
@@ -362,13 +365,13 @@ function createBarChart({ dataset, scaleLoad}) {
   // x-axis at the bottom
   chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
+    .call(d3.axisBottom(nutrientScale).ticks(mobileView ? 3 : 4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
   // x-axis at the top
   chartBounds.append('g')
     .attr('transform', `translate(0, ${margin.top})`) // positioned at y = 0 (top of the chart)
-    .call(d3.axisTop(nutrientScale).ticks(4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
+    .call(d3.axisTop(nutrientScale).ticks(mobileView ? 3 : 4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
     .attr('class', 'axis-text');
 
   const colorScale = d3.scaleOrdinal()
@@ -412,28 +415,6 @@ function createBarChart({ dataset, scaleLoad}) {
     );
 }
 
-// dynamic scaling based on container width
-const resizeChart = () => {
-  const container = document.getElementById('barplot-container');
-  const containerWidth = container.clientWidth;
-
-  // dynamically adjust width and height
-  width = containerWidth - margin.left - margin.right;
-  height = Math.min(window.innerHeight * 0.7, 900) - margin.top - margin.bottom;
-
-  // update svg viewBox
-  svg.attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
-     .attr('preserveAspectRatio', 'xMidYMid meet');
-
-  // redraw chart
-  createBarChart({ dataset: dataset.value, scaleLoad: scaleLoad.value });
-};
-// handle resize
-const observeResize = () => {
-  const resizeObserver = new ResizeObserver(() => resizeChart());
-  resizeObserver.observe(document.getElementById('barplot-container'));
-};
-
 
 // COMPUTED VARIABLES 
 // compute legendConfig dynamically based on the toggle
@@ -475,6 +456,22 @@ watch(showNitrogen, async (newValue) => {
 
 watch([selectedRegion], filterRegionData)
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
 
 <style scoped lang="scss">
@@ -486,19 +483,10 @@ watch([selectedRegion], filterRegionData)
   max-width: 1800px;
   margin: auto;
 }
-.image-container {
-  position: relative;
-  width: 100%; 
-  max-width: 1800px;
-  margin: auto; 
-  overflow: hidden;
-}
-.region-map {
-  height: 600px;
-}
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   #barplot-container {
-    width: 100%; 
+    width: 90vw;
+    max-height: 80vh;
   }
 }
 

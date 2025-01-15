@@ -9,7 +9,7 @@
             <p class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
             <p class="chart-subtitle">Daily water use in 2020, in million gallons per day</p>
           </div>
-          <div class="image-container">
+          <div class="viz-container" id="bar-size-container">
           <HorizontalBar 
             categoricalVariable="d3_category"
             continuousRaw="total_use"
@@ -80,8 +80,6 @@
               </div>
 
           </div> 
-          <br>
-          <br>
           <div class="text-container">
             <h2>Do we use more surface water or groundwater?</h2>
             <p>Across the U.S., this depends on the availability of each source, the category of use, local and federal water use ordinances, and water rights. On average during water years 2010-2020, about 62% of water used for crop irrigation, public supply, and thermoelectric was sourced from surface water rather than groundwater. However, these proportions vary widely across the country: the largest water withdrawals in the Southwest Desert region for public supply are from groundwater, whereas the largest withdrawals in the Northeast region are from surface water.</p>
@@ -90,10 +88,10 @@
             <p class="chart-title">Source of public supply water in the {{ regionTitle }}</p>
             <p class="chart-subtitle">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
           </div>
-          <div class="viz-container">
-            <Reg class="dumbbell-reg-svg reg-svg" id="svg-style"></Reg>
+          <div class="viz-svg-container">
+            <Reg class="dumbbell-reg-svg" id="svg-style"></Reg>
             <img
-                class="viz-half"
+                class="viz-mini"
                 id="dumbbells"
                 :src="imgSrc"
                 alt=""
@@ -119,6 +117,7 @@
 <script setup>
 import { ref, onMounted, inject, reactive } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3 from 'd3';
 import Reg from "../assets/svgs/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
@@ -146,9 +145,11 @@ const focalFill = "var(--focal-fill)";
 const defaultFill = "var(--inactive-grey)";
 const csvData = ref([]);
 const selectedRegion = ref('lower 48 United States'); // default region
-let regionTitle = "lower 48 United States"
+let regionTitle = "lower 48 United States";
+
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 
 // References logic
 // filter to this page's key message
@@ -214,6 +215,10 @@ onMounted(async() => {
   } catch (error) {
     console.error("Error loading CSV data:", error);
   }
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
 
 function getImgURL(id) {
@@ -244,6 +249,22 @@ function mouseoutMap(event) {
   regionTitle = "lower 48 United States";
 };
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
 
 

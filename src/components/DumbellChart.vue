@@ -1,24 +1,26 @@
 <template>
-    <div class="viz-container">
-      <!-- Chart container -->
-      <div id="dotplot-container"></div>
-    </div>
-  </template>
-  
-  <script setup>
-  import * as d3 from 'd3';
-  import { onMounted, watch, defineModel, ref } from 'vue';
-  
-  // props
- const props = defineProps({
-    data: {
-      type: Array,
-      required: true
-    },
-    animateTime: {
-      type: Number,
-      default: 500 // animation time in ms
-    }
+  <div class="viz-container">
+    <!-- Chart container -->
+    <div id="dotplot-container"></div>
+  </div>
+</template>
+
+<script setup>
+import * as d3 from 'd3';
+import { onMounted, watch, defineModel, ref } from 'vue';
+import { isMobile } from 'mobile-device-detect';
+const mobileView = isMobile;
+
+// props
+const props = defineProps({
+  data: {
+    type: Array,
+    required: true
+  },
+  animateTime: {
+    type: Number,
+    default: 500 // animation time in ms
+  }
 });
 
 // reactive chart data
@@ -31,15 +33,19 @@ let svg, chartBounds, xScale, originalXScaleDomain, dotGroup;
 const publicPath = import.meta.env.BASE_URL;
 
 // dynamic dimensions
-const margin = { top: 20, right: 100, bottom: 30, left: 250 }; // increase left margin for y-axis labels
+const margin = {  
+  top: isMobile ? 30 : 20, 
+  right: isMobile ? 5 : 20, 
+  bottom: isMobile ? 20 : 20, 
+  left: isMobile ? 180 : 250 }; // increase left margin for y-axis labels
 let width, height;
-  
+
 // initialize chart
 const initChart = (containerWidth) => {
 
   // calculate responsive dimensions
   width = containerWidth - margin.left - margin.right;
-  height = Math.min(window.innerHeight * 0.7, 700) - margin.top - margin.bottom;
+  height = mobileView ? 600 - margin.top - margin.bottom : Math.min(window.innerHeight * 0.7, 700) - margin.top - margin.bottom;
 
   // remove any existing SVG before redrawing
   d3.select('#dotplot-container').select('svg').remove();
@@ -48,9 +54,9 @@ const initChart = (containerWidth) => {
     .append('svg')
     .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
     .attr('preserveAspectRatio', 'xMidYMid meet')
-    .style('width', '100%')
+    .style('width', containerWidth)
     //.style('max-height', `${height}px`)
-    .style('height', 'auto');
+    .style('height', height + margin.top + margin.bottom);
 
   // add chart area group
   chartBounds = svg.append('g')
@@ -94,11 +100,11 @@ const drawChart = () => {
   dotGroup.append('g')
     .attr('class', 'x-axis-bottom')
     .attr('transform', `translate(0, ${height})`)
-    .call(d3.axisBottom(xScale).ticks(5));
+    .call(d3.axisBottom(xScale).ticks(mobileView ? 3 : 5));
 
   dotGroup.append('g')
     .attr('class', 'x-axis-top')
-    .call(d3.axisTop(xScale).ticks(5));
+    .call(d3.axisTop(xScale).ticks(mobileView ? 3 : 5));
 
   dotGroup.append('g')
     .attr('class', 'y-axis')
@@ -108,8 +114,8 @@ const drawChart = () => {
     dotGroup.select('.y-axis')
       .selectAll(".tick")
       .select("text")
-      .attr('class', 'chart-text')
-      .attr("x", -50);
+      .attr('class', mobileView ? 'axis-text' : 'chart-text')
+      .attr("x", mobileView ? -60 : -80);
 
     d3.xml(`${publicPath}assets/USregions.svg`).then(function(xml) {
       const svgNode = xml.documentElement;
@@ -145,7 +151,7 @@ const drawChart = () => {
     .attr('y1', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
     .attr('y2', d => yScale(d.Region_nam) + yScale.bandwidth() / 2)
     .style('opacity', 0.4)
-    .attr('stroke', '#ccc')
+    .attr('stroke', 'var(--ws-demand)')
     .attr('stroke-width', 3);
 
   // circles for supply
@@ -169,63 +175,63 @@ const drawChart = () => {
     .attr('stroke', 'var(--ws-demand)')
     .attr('stroke-width', '2px')
     .attr('fill', 'white');
-  
+
 };
 // toggle points on and off
 const togglePoints = () => {
-  //const dataset = props.data;
+//const dataset = props.data;
 
-  if (!dataset.value || dataset.value.length === 0) {
-    console.warn('No data available to toggle points.');
-    return;
-  }
+if (!dataset.value || dataset.value.length === 0) {
+  console.warn('No data available to toggle points.');
+  return;
+}
 
-  // filter visible points based on toggles
-  const visibleSupply = supplyEnabled.value
-    ? dataset.value.map(d => +d.supply_mean)
-    : [];
-  const visibleDemand = demandEnabled.value
-    ? dataset.value.map(d => +d.demand_mean)
-    : [];
+// filter visible points based on toggles
+const visibleSupply = supplyEnabled.value
+  ? dataset.value.map(d => +d.supply_mean)
+  : [];
+const visibleDemand = demandEnabled.value
+  ? dataset.value.map(d => +d.demand_mean)
+  : [];
 
-  const visiblePoints = [...visibleSupply, ...visibleDemand];
-  const newDomain = visiblePoints.length > 0
-    ? d3.extent(visiblePoints)
-    : originalXScaleDomain;
+const visiblePoints = [...visibleSupply, ...visibleDemand];
+const newDomain = visiblePoints.length > 0
+  ? d3.extent(visiblePoints)
+  : originalXScaleDomain;
 
-  // update x-axis domain
-  xScale.domain(newDomain).nice();
+// update x-axis domain
+xScale.domain(newDomain).nice();
 
-  // update x-axis
-  d3.selectAll('.x-axis-bottom')
-    .transition()
-    .duration(props.animateTime)
-    .call(d3.axisBottom(xScale).ticks(5));
+// update x-axis
+d3.selectAll('.x-axis-bottom')
+  .transition()
+  .duration(props.animateTime)
+  .call(d3.axisBottom(xScale).ticks(mobileView ? 3 : 5));
 
-  d3.selectAll('.x-axis-top')
-    .transition()
-    .duration(props.animateTime)
-    .call(d3.axisTop(xScale).ticks(5));
+d3.selectAll('.x-axis-top')
+  .transition()
+  .duration(props.animateTime)
+  .call(d3.axisTop(xScale).ticks(mobileView ? 3 : 5));
 
-  // update circles for supply
-  chartBounds.selectAll('.circle-supply')
-    .transition()
-    .duration(props.animateTime)
-    .attr('cx', d => xScale(d.supply_mean))
-    .style('opacity', supplyEnabled.value ? 1 : 0);
+// update circles for supply
+chartBounds.selectAll('.circle-supply')
+  .transition()
+  .duration(props.animateTime)
+  .attr('cx', d => xScale(d.supply_mean))
+  .style('opacity', supplyEnabled.value ? 1 : 0);
 
-  // update circles for demand
-  chartBounds.selectAll('.circle-demand')
-    .transition()
-    .duration(props.animateTime)
-    .attr('cx', d => xScale(d.demand_mean))
-    .style('opacity', demandEnabled.value ? 1 : 0);
+// update circles for demand
+chartBounds.selectAll('.circle-demand')
+  .transition()
+  .duration(props.animateTime)
+  .attr('cx', d => xScale(d.demand_mean))
+  .style('opacity', demandEnabled.value ? 1 : 0);
 
-  // update connecting lines
-  chartBounds.selectAll('.line')
-    .transition()
-    .duration(props.animateTime)
-    .style('opacity', supplyEnabled.value && demandEnabled.value ? 0.4 : 0);
+// update connecting lines
+chartBounds.selectAll('.line')
+  .transition()
+  .duration(props.animateTime)
+  .style('opacity', supplyEnabled.value && demandEnabled.value ? 0.4 : 0);
 };
 
 // resize chart dynamically
@@ -237,10 +243,10 @@ const resizeChart = () => {
 
 // initialize chart when mounted
 onMounted(() => {
-    dataset.value = props.data; // initialize data
-    resizeChart();
-    togglePoints();
-    // observe resizing
+  dataset.value = props.data; // initialize data
+  resizeChart();
+  togglePoints();
+  // observe resizing
   const resizeObserver = new ResizeObserver(() => {
     resizeChart();
   });
@@ -262,14 +268,16 @@ watch(() => props.data, (newData) => {
 </script>
 
 <style scoped>
-.viz-container {
-  width: 100%;
-  min-width: 700px;
-  height: auto;
-}
-#dotplot-container {
+
+  #dotplot-container {
     width: 100%;
     margin: auto;
     min-width: 700px;
-}
+  }
+
+  @media only screen and (max-width: 600px) {
+    #dotplot-container {
+      min-width: 90vw;
+    }
+  }
 </style>

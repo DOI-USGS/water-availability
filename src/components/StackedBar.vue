@@ -1,13 +1,17 @@
 <template>
-    <div class="chart-container">
-    <div ref="barContainer" class="bar-container"></div>
-</div>  
+    <div class="chart-container" >
+      <div ref="barContainer" class="bar-container" id="bar-container"></div>
+    </div>  
 </template>
   
   <script setup>
   import { onMounted, ref, watch } from 'vue';
+  import { isMobile } from 'mobile-device-detect';
   import * as d3 from 'd3';
-  
+  const mobileView = isMobile;
+  let width;
+  let height;
+
   // props to configure the bar chart
   const props = defineProps({
     categoricalVariable: { type: String, required: true },
@@ -23,12 +27,21 @@
   
 onMounted(() => {
   // create the SVG if it doesn't exist
+
+  const containerWidth = document.getElementById('bar-container').clientWidth;
+  width = mobileView ? containerWidth - 20 : 700; // added buffer on mobile for space for units
+  console.log(containerWidth)
+  height = 60;
+
   if (!svgBar) {
+
     svgBar = d3.select(barContainer.value)
       .append('svg')
-      .attr('viewBox', `0 0 700 60`)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
-      .classed('bar-chart-svg', true);
+        .attr('width', width)
+        .attr('height', height)
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet')
+        .classed('bar-chart-svg', true);
 
     svgBar.append('g'); // add a <g> container
   }
@@ -70,7 +83,7 @@ const updateBarChart = (data) => {
   const values = sortedData.map(d => +d[props.continuousPercent]);
   const xScale = d3.scaleLinear()
     .domain([0, d3.sum(values)])
-    .range([0, 700]);
+    .range([0, width]);
 
   const getColor = (category) => {
     const normalizedCategory = category.trim().toLowerCase().replace(/[\s/\\]+/g, '_');
@@ -112,12 +125,13 @@ const updateBarChart = (data) => {
     const formatPercentage = d3.format('.0f');
   
       // percent labels on bar chart 
-      g.selectAll('.percent-label')
+      g.selectAll('#chart-text')
         .data(sortedData, d => d[props.categoricalVariable]) // unique key
         .join(
             enter => {
             const enteringText = enter.append('text')
-                .attr('class', 'percent-label')
+                .attr('id', 'chart-text')
+                .attr('class', mobileView ? 'axis-text' : 'chart-text')
                 .attr('x', (d, i) => xScale(d3.sum(values.slice(0, i)) + d[props.continuousPercent] / 2))
                 .attr('y', 50)
                 .attr('text-anchor', 'middle')
@@ -164,5 +178,13 @@ watch(
     width: 100%;
     height: auto;
     max-height: 100%;
+}
+@media only screen and (max-width: 600px) {
+  .bar-chart-svg {
+    max-width: 90vw;
   }
+  .bar-container {
+    width: 90vw;
+  }
+} 
   </style>

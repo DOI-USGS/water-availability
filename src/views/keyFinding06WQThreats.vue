@@ -10,11 +10,13 @@
               <p class="chart-title">Groundwater quality in {{ aquiferLabel }}</p>
               <p class="chart-subtitle">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
           </div>
+          <div class="viz-container">
             <div class="map-container">
               <img class="map-overlay" 
               :src="imgSrc">
               <aquiferWedges id="aquifer-svg" />
             </div>
+          </div>
             <div class="caption-container-flex caption-container">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-wq-high" label="Above human-health benchmark" color="var(--wq-high)" />
@@ -27,7 +29,7 @@
             </div> 
 
             <div class="text-container" >
-              <h2 class="spacer" style="padding-top:50px">Surface water quality varies by use</h2>
+              <h2>Surface water quality varies by use</h2>
               <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides many benefits from sourcing fish for food to providing recreation. </p>
             </div>
 
@@ -49,7 +51,7 @@
                   </div>
                 </div>
           </div>
-          <div class="viz-container">
+          <div class="viz-container" id="heatmap-container">
             <div id="heatmap-svg"></div>
           </div>
                     <!-- Category of use -->
@@ -57,7 +59,6 @@
             <div class="caption-container">
               <div class="caption-text-child">
                 <p>Heatmap of the top threats to drinking water, fish consumption, and recreational use. Chart fill and percentages show the percent of assessed river miles that are threatened by each contaminant. Darker fill indicates a higher degree of threat by that source.<span v-for="reference in theseReferences.filter(item => item.refID === 'EPA2023')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <b>Toggle the options</b> to sort the chart by one of the three columns.</p>
-                <br>
               </div>
             </div>
             <div class="text-container">
@@ -78,6 +79,7 @@
 <script setup>
 import { onMounted, ref, inject  } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3 from 'd3';
 import PageCarousel from '../components/PageCarousel.vue';
 import KeyMessages from '../components/KeyMessages.vue';
@@ -93,6 +95,7 @@ import { isMobile } from 'mobile-device-detect';
 const s3ProdURL = import.meta.env.VITE_APP_S3_PROD_URL;
 
 // global objects
+const windowSizeStore = useWindowSizeStore();
 const baseURL = s3ProdURL + "images/water-availability/"
 const publicPath = import.meta.env.BASE_URL;
 const mobileView = isMobile;
@@ -150,15 +153,19 @@ const dataFish = ref([]);
 
 let chartDimensions;
 let rectGroup;
+const wrapBuffer = mobileView ? 6 : 10; // vertical spacing for wrapping column names on heatmap
 
 let svg;
 
-// chart dimensions
-const width = mobileView ? 400 : 700;
-const height = 650;
+
 
 // Run of show
 onMounted(async () => {
+
+  // chart dimensions
+  const containerWidth = document.getElementById('heatmap-container').clientWidth;
+  const width = mobileView ? containerWidth : 600;
+  const height = mobileView ? 400 : 650;
 
   window.scrollTo(0, 0);
   
@@ -171,10 +178,10 @@ onMounted(async () => {
                     width: width,
                     height: height,
                     margin: {
-                        top: mobileView ? 30 : 30,
+                        top: mobileView ? 35 : 50,
                         right: mobileView ? 10 : 10,
                         bottom: mobileView ? 0 : 0,
-                        left: mobileView ? 145 : 145
+                        left: mobileView ? 125 : 200
                     },
                 }
                 chartDimensions.boundedWidth = chartDimensions.width - chartDimensions.margin.left - chartDimensions.margin.right,
@@ -196,6 +203,10 @@ onMounted(async () => {
 
     // for aquifer pie chart
     addInteractions();
+
+    // re-position tooltips that go off screen
+    let refTooltips = document.querySelectorAll(".tooltip");
+    refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
 
 // METHODS
@@ -264,7 +275,7 @@ function initHeatmap({dataset, sortBy}) {
 
   const yScale = d3.scaleBand()
     .domain(sortRank.map(d => d.Parameter)) // uses rank based on selected use
-    .range([chartDimensions.height-chartDimensions.margin.bottom, chartDimensions.margin.top])
+    .range([chartDimensions.height - chartDimensions.margin.bottom, chartDimensions.margin.top])
     .padding(0.1);
 
   d3.axisLeft(yScale)
@@ -306,7 +317,7 @@ function initHeatmap({dataset, sortBy}) {
       .data(sortedDataset)
         .join(
           enter => enter.append("text")
-            .attr("class", "chart-text")
+            .attr("class", "axis-text")
             .attr("id", "percent-labels")
             .attr("x", (d) => xScale(d.Use) + xScale.bandwidth())
             .attr("y", (d) => yScale(d.Parameter) + yScale.bandwidth() / 2)
@@ -326,19 +337,67 @@ function initHeatmap({dataset, sortBy}) {
         );
 
       // Create the axes.
-    svg.append("g")
-        .attr("transform", `translate(0,${chartDimensions.margin.top})`)
-        .call(d3.axisTop(xScale).ticks(3))
-        .call(g => g.select(".domain").remove())
-        .attr("class", "chart-text")
-        .style('font-weight', '700');
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Drinking")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Water")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Fish")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Consumption")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + 2*xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 - wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Recreational")
+        svg.append("text")
+            .attr("class", mobileView ? "axis-text" : "chart-text")
+            .attr("x", (xScale.bandwidth()/2) + 2*xScale.bandwidth() + chartDimensions.margin.left ) // match spacing between sankey and labels
+            .attr("y", chartDimensions.margin.top / 2 + wrapBuffer)
+            .attr("dx", "0em")
+            .attr("dy", "0em")
+            .attr("data-width", xScale.bandwidth())
+            .style("text-anchor", "middle")
+            .text("Use")
 
     svg.select("#y-axis").remove();
 
     svg.append("g")
         .attr("transform", `translate(${chartDimensions.margin.left},0)`)
         .call(d3.axisLeft(yScale).tickSizeOuter(0))
-        .attr("class", "chart-text")
+        .attr("class", "axis-text")
         .attr("id", "y-axis");
   
 
@@ -351,7 +410,6 @@ function addInteractions() {
         // set viewbox for svg with wedges
         const aquiferSVG = d3.select("#aquifer-svg")
             .attr("viewBox", "0 0 " + 2700 + " " + 1800)
-            .attr("preserveAspectRatio", "xMidYMid meet")
             .attr("width", '100%')
             .attr("height", '100%')
         
@@ -392,6 +450,22 @@ function mouseleaveWrapper() {
         .style("fill-opacity", 0)
 };
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 
 </script>
 
@@ -406,6 +480,12 @@ function mouseleaveWrapper() {
   grid-template-rows:  minmax(20vh, 600px);
   grid-template-areas:
       "overlay-maps";
+} 
+@media only screen and (max-width: 600px) {
+  .map-container {
+    grid-template-columns: minmax(50vw, 100%);
+    grid-template-rows: minmax(20vh, 40vh);
+  }
 }
 .map-overlay {
   grid-area: overlay-maps;

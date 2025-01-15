@@ -2,7 +2,7 @@
   <section>
     <div class="wavy-container">
       <div class="title-message-container">
-        <h2 id="main-title">Water availability in the United States</h2>
+        <h1 id="main-title">Water availability in the United States</h1>
         <p class="byline">Powered by the <a class="byline-a" href="https://labs.waterdata.usgs.gov/visualizations/" target="_blank">USGS Vizlab</a></p>
       </div>
       <section>
@@ -52,15 +52,15 @@
       </section>
 
       <div class="title-message-container">
-        <h2>About the National Water Availability Assessment</h2>
+        <h2 class="h2-nospacer">About the National Water Availability Assessment</h2>
         <p>The <a href="https://www.usgs.gov/iwaas" target="_blank">National Water Availability Assessment Report</a> is the <strong>first nationwide assessment of water availability</strong> that includes the amount of water, quality of water, and use of water for human and ecosystem needs. This assessment uses <strong>state-of-the-art models</strong> to enable a new evaluation of the balance between natural water supply and water demands at fine scales, providing <strong>new insight on areas of the United States with a supply-use imbalance</strong>. In addition, the underlying <strong>modeled water supply and demand data </strong>spanning multiple decades into the past are available in the <a href="https://water.usgs.gov/nwaa-data/" target="_blank">National Water Availability Assessment Data Companion</a>. <a href="https://www.usgs.gov/iwaas" target="_blank">Read more about Water Availability at the USGS</a></p> 
         <div 
           v-if="featureToggles.showReportLinks" 
           class="report-link-container">
           <a href="https://www.usgs.gov/iwaas" target="_blank" rel="noopener noreferrer" class="report-link">
-            <h3> Read the report</h3></a>        
+            <h3 class="h3-nospacer"> Read the report</h3></a>        
           <a href="https://water.usgs.gov/nwaa-data/" target="_blank" rel="noopener noreferrer" class="report-link">
-            <h3> Access the data</h3>
+            <h3 class="h3-nospacer"> Access the data</h3>
           </a>
         </div>
       </div>
@@ -89,26 +89,33 @@
   align-items: center;
   padding: 100px 20px;
   padding-bottom: 100px;
-  max-width: 60vw;
+  max-width: 750px;
   color: var(--blue-dark);
   border-radius: 5px;
   text-align: center;
   z-index: -1;
 }
 #main-title {
-  max-width: 700px;;
+  max-width: 700px;
   line-height: 1.2;
-  font-size: 5rem;
   word-wrap: break-word;
+  font-size: 5rem;
+  font-weight: 800;
+  color: var(--blue-dark);
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .title-message-container {
-    padding: 80px 10px;
-    width: 95vw;
+    padding: 80px 0px;
+    width: 90vw;
+    padding: 100px 20px;
+    padding-bottom: 100px;
+    max-width: 90vw;
   }
   
   #main-title {
-    font-size: 4rem;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blue-dark);
   }
 }
 
@@ -182,7 +189,7 @@
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
   color: var(--cream-background);
-  font-size: 40px;
+  font-size: 3rem;
   font-weight: bold;
 }
 .disabled {
@@ -198,7 +205,7 @@
 }
 
 .byline {
-  font-size: 15px;
+  font-size: 1.15rem;
 }
 .byline-a {
   color: var(--blue-dark);

@@ -24,7 +24,7 @@
         </ul>
     </div>
   <section>    
-    <div class="glossary-container">
+    <div class="content-container">
         <div id="text-container">
             <h1>Key Definitions</h1>
             <div class="key-term" v-for="terms, index in termArray" :key="index">
@@ -37,11 +37,10 @@
                 </div>
             </div>
         </div>
-    </div>
     <div class="glossary-references-container">
       <h3>References</h3>
           <div  v-for="reference in theseReferences" :key="reference.refID" >
-            <p>
+            <p class="chart-text">
               <ul>
                 <li><span v-html="reference.authors" /> (<span v-html="reference.year" />). 
                 <a
@@ -60,12 +59,12 @@
             </p>
           </div>
         </div>
+    </div>
     <div class="home-link-container">
           <a href="index.html" rel="noopener noreferrer" class="home-link">
             <h3> Return Home</h3>
           </a>       
     </div>
-    
   </section>
   </section>
 </template>
@@ -109,7 +108,7 @@ function getIconURL(suffix) {
   margin: 0 auto;
   padding: 10px 0 10px 0;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .glossary-container{
     width: 90vw;
   }
@@ -119,7 +118,7 @@ function getIconURL(suffix) {
   margin: 0 auto;
   padding: 30px 0 10px 30px;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .glossary-references-container{
     width: 90vw;
   }
@@ -169,7 +168,7 @@ function getIconURL(suffix) {
   z-index: -1;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .title-message-container {
     padding: 80px 10px;
     width: 95vw;

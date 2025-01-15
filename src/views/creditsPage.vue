@@ -24,7 +24,8 @@
         </ul>
     </div>
   <section>    
-    <div class="authors-container">
+    <div class="content-container">
+      <div class="authors-container">
         <div id="text-container">
             <h1>Website Credits</h1>
         </div>
@@ -33,10 +34,8 @@
       <p>
           This website was developed by the <a href='https://labs.waterdata.usgs.gov/visualizations/' target='_blank'>USGS Vizlab</a> in collaboration with the <a href="https://www.usgs.gov/iwaas" target="_blank">National Integrated Water Availability Assessment</a> Report team.  
         </p>
-    </div>
-    <div class="authors-container">
       <h2>Meet the Vizlab Team</h2>
-        <div class="chart-container">
+        <div class="portrait-container">
             <div ref="chart" class="chart"></div>
         </div>
         <p>
@@ -77,7 +76,7 @@
     </div>
     <div class="authors-container">
         <h2>Meet the National Water Availability Assessment Authors</h2>
-        <div class="chart-container">
+        <div class="portrait-container">
             <div ref="chartSME" class="chart"></div>
         </div>
         <p>
@@ -100,6 +99,8 @@
           </span>
         </p>
       </div>
+    </div>
+ 
       <div class="home-link-container">
           <a href="index.html" rel="noopener noreferrer" class="home-link">
             <h3> Return Home</h3>
@@ -307,7 +308,7 @@ function createChart({ container, data, team }) {
   margin: 0 auto;
   padding: 10px 0 10px 0;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .authors-container{
     width: 90vw;
   }
@@ -327,7 +328,7 @@ function createChart({ container, data, team }) {
   text-align: left;
 }
 
-.chart-container {
+.portrait-container {
   display: flex;
   justify-content: center;
   align-items: center;

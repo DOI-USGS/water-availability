@@ -105,7 +105,8 @@
     const svg = d3.select(mapContainer.value)
       .append('svg')
       .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .attr('width', width)
+      .attr('height', height)
       .classed('responsive-svg', true);
 
     mapLayers = svg.append('g').attr('class', 'map-layers')
@@ -188,7 +189,7 @@
             // reset bar chart to default aggregated data
             emit('regionSelected', 'lower 48 United States');
         })
-        .on('click', (event, d) => {
+        .on('touchstart', (event, d) => {
           d3.selectAll('.region')
                 .attr('fill','lightgrey')
                 .attr('opacity', 0.8)
@@ -243,8 +244,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: auto;
-    max-height: 700px;
   }
   
   .responsive-svg {
@@ -260,6 +259,11 @@
   }
   .outline-conus {
     filter: drop-shadow(0px 0px 10px rgba(2, 2, 2, 0.5));
+  }
+  @media only screen and (max-width: 600px) {
+    .map-container {
+      max-width: 90vw;
+    }
   }
 </style>
   

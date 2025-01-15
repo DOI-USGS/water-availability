@@ -7,26 +7,25 @@
                 <p>The water cycle describes how water moves through natural and human-modified landscapes. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
                 </div>
                 <div class="viz-container">
-                    <img class="viz-placeholder" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`">
+                    <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`">
                 </div>
                 <div class="caption-container">
                   <div class="caption-text-child">
                     <p>Diagram showing average annual water cycle fluxes in billion gallons per day (bgd) across the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Foks2025a')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }} </span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'Foks2025b')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'Sampson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
                   </div>
                 </div>  
-                <br>
                 <div class="text-container">
-              <h3>Even short events have longlasting impacts</h3>
+                    <h2>Even short events have longlasting impacts</h2>
                     <p>As water moves through the water cycle it can spend different amounts of time in the various stages. Water that falls as snow could remain on the landscape for months until it melts in the spring. Water that makes its way into groundwater may remain for decades or longer. This means that periods of abnormally low precipitation affect different parts of the water cycle at different times. </p>
-                  <br>
+                    <br>
                     <p>For example, in 2012 the Northern High Plains had abnormally low precipitation, which cascaded through the water cycle.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In the monthly fluctuations shown below, this low precipitation is followed by delayed responses in evapotranspiration and soil moisture. both important aspects of water supply. This eventually leads to reduced streamflow. Similarly, periods of rainfall in early 2011 did not show up in the streamflow signature until later in that year. </p>
                 </div>
             <div class="chart-title-container">
                 <p class="chart-title">Water supply dynamics in the {{ regionTitle }}</p>
                 <p class="chart-subtitle">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
             </div>
-            <div class="viz-container">
-                <Reg class="reg-svg"></Reg>
+            <div class="viz-svg-container">
+                <Reg class="reg-svg"></Reg> 
                 <img
                     class="viz-portrait"
                     id="cascades"
@@ -34,7 +33,6 @@
                     alt=""
                 >    
             </div>
-            <br>
             <div class="caption-container-flex caption-container">
               <div class="legend-group">
                 <ColorLegend legend-id="legend-ws-high" label="Abnormally high" color="var(--ws-supply)" />
@@ -44,13 +42,9 @@
                 <p>Bar chart showing monthly values of precipitation, evapotranspiration, soil moisture, and streamflow as compared to normal conditions for each hydrologic region<span v-for="reference in theseReferences.filter(item => item.refID === 'VanMetre2020')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> in the lower 48 United States. The values are normalized for comparison from 2010 through 2020, and thus do not have units. <b>Select a region on the map</b> to view bar charts for that region.</p>
               </div>
             </div> 
-            <br>
-            <br>
             <div class="text-container">
               <p>During periods of low precipitation, less water in streams and rivers can lead to more groundwater use resulting in groundwater declines that may take years to recover. By assessing all parts of the water budget together, we can better understand national water availability now and for the future.</p>
             </div>
-            <br>
-            <br>
             <Methods :theseReferences="referenceList"></Methods>
             <References :theseReferences="referenceList"></References>
         </div>
@@ -62,6 +56,7 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
 import { useRoute } from 'vue-router';
+import { useWindowSizeStore } from '../stores/WindowSizeStore';
 import * as d3Base from 'd3';
 import Reg from "../assets/svgs/Regions.svg";
 import PageCarousel from '../components/PageCarousel.vue';
@@ -85,6 +80,7 @@ const defaultFill = "var(--inactive-grey)";
 let regionTitle = defaultRegionID.replaceAll("_", " ") + " Region"
 
 const route = useRoute();
+const windowSizeStore = useWindowSizeStore();
 
 // References logic
 // filter to this page's key message
@@ -105,6 +101,10 @@ onMounted(() => {
 
   // select default region to start
   d3Base.select('.reg-svg').selectAll(`#${defaultRegionID}`).style("fill", focalFill);
+
+  // re-position tooltips that go off screen
+  let refTooltips = document.querySelectorAll(".tooltip");
+  refTooltips.forEach(tooltip => position_tooltip(tooltip))
 });
 
 // Methods
@@ -135,6 +135,22 @@ function mouseoutMap(event) {
   regionTitle = defaultRegionID.replaceAll("_", " ") + " Region";
 };
 
+function position_tooltip(tooltip_group){
+  // Get .tooltiptext sibling
+  const tooltip = tooltip_group.querySelector(".tooltiptext");
+  
+  // Get calculated tooltip coordinates and size
+  const tooltip_rect = tooltip.getBoundingClientRect();
+  
+  // Corrections if out of window
+  let tipX = 0;
+  if ((tooltip_rect.x + tooltip_rect.width) > windowSizeStore.windowWidth) {// Out on the right
+    tipX = -tooltip_rect.width - 5;  // Simulate a "right: tipX" position
+  }
+
+  // Apply corrected position
+  tooltip.style.left = tipX + 'px';
+}
 </script>
 
 <style scoped>
