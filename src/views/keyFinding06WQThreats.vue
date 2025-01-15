@@ -6,9 +6,9 @@
               <h2>Groundwater quality varies regionally</h2>
               <p>Groundwater is the drinking-water source for about one-third of the Nation's population. Geogenic contaminants, which come from geologic sources like bedrock and sediment, are the most common contaminants found in drinking water aquifers at elevated or high concentrations. These geogenic contaminants affect more than 30 million people in the lower 48 United States.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }}, </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> <span v-for="reference in theseReferences.filter(item => item.refID === 'Belitz2022')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> What are geogenics? Geogenics are naturally occurring contaminants from geologic sources like bedrock and sediment. Five geogenic contaminants in particular (arsenic, manganese, strontium, radium, and radionuclides) affect a substantially large area and part of the population.</p>
             </div>
-          <div class="chart-title-container" aria-hidden="true">
-              <p class="chart-title">Groundwater quality in {{ aquiferLabel }}</p>
-              <p class="chart-subtitle">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
+          <div class="chart-title-container">
+              <h4 class="chart-title">Groundwater quality in {{ aquiferLabel }}</h4>
+              <p class="chart-subtitle" aria-hidden="true">The proportion of each aquifer with contaminant levels that exceed human-health guidelines</p>
           </div>
           <div class="viz-container">
             <div class="map-container">
@@ -35,9 +35,9 @@
               <p>Surface water is the drinking-water source for about two-thirds of the Nation's population. In addition, surface water provides many benefits from sourcing fish for food to providing recreation. </p>
             </div>
 
-            <div class="chart-title-container" aria-hidden="true">
-            <p class="chart-title">Top threats to surface water</p>
-            <p class="chart-subtitle">Surface water threats based on the percent of total river miles impaired</p>
+            <div class="chart-title-container">
+            <h4 class="chart-title">Top threats to surface water</h4>
+            <p class="chart-subtitle" aria-hidden="true">Surface water threats based on the percent of total river miles impaired</p>
             <div class="checkbox_item" aria-hidden="true">
                   <div class="checkbox_wrap">
                     <b class="toggle-text">Sort chart by: </b>

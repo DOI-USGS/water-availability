@@ -7,9 +7,9 @@
                   </p>
             </div>
         <!-- Supply and Demand dumbell chart -->
-        <div class="chart-title-container"  aria-hidden="true">
-            <p class="chart-title">Water supply vs demand</p>
-            <p class="chart-subtitle">Regional estimates in mm/year for supply (solid circle) and demand (hollow circle)</p>
+        <div class="chart-title-container">
+            <h4 class="chart-title">Water supply vs demand</h4>
+            <p class="chart-subtitle"  aria-hidden="true">Regional estimates in mm/year for supply (solid circle) and demand (hollow circle)</p>
             <!-- Supply and Demand dumbell toggles -->
              <div class="toggle-group">
               <ToggleSwitch 
@@ -48,9 +48,9 @@
         </p>
         </div>
         <!-- Regional SUI map with updating stacked bar chart -->
-        <div class="chart-title-container" aria-hidden="true">
-            <p class="chart-title">Water limitation in {{ selectedRegion !== 'lower 48 United States' ? selectedRegion + ' Region' : selectedRegion }}</p>
-            <p class="chart-subtitle">Bars show the percent of the region with very low, low, moderate, high, and severe water limitation</p>
+        <div class="chart-title-container">
+            <h4 class="chart-title">Water limitation in {{ selectedRegion !== 'lower 48 United States' ? selectedRegion + ' Region' : selectedRegion }}</h4>
+            <p class="chart-subtitle"  aria-hidden="true">Bars show the percent of the region with very low, low, moderate, high, and severe water limitation</p>
           </div>
         <div class="viz-container">
           <StackedBar 
@@ -146,9 +146,9 @@
           <h2>When supply decreases, demand increases</h2>
           <p>Water supply shortages happen seasonally when it's hot and dry, and during drought periods when there's limited precipitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Due to reduced supply, water use may also increase to meet demands. For example, water use for crop irrigation peaked in 2012 in response to a year-long drought, and during summer months outdoor water use by the public is at its highest.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> As a result, water limitation may be increased for local watersheds.</p>
         </div>
-        <div class="chart-title-container" aria-hidden="true">
-            <p class="chart-title">A decade of water limitation</p>
-            <p class="chart-subtitle">The proportion of the lower 48 United States in each water limitation category through time</p>
+        <div class="chart-title-container">
+            <h4 class="chart-title">A decade of water limitation</h4>
+            <p class="chart-subtitle" aria-hidden="true">The proportion of the lower 48 United States in each water limitation category through time</p>
           </div>
         <div class="viz-container" role="img" aria-label="Dynamics show high water limitation for larger proportion of the U.S. each summer and with an overall larger peak during the 2012-2013 timespan.">
           <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/01_monthly_sui_bars.png`" alt="Monthly breakdown of water limitation levels from 2010 through 2020 for the lower 48 U.S.">

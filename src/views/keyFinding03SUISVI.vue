@@ -6,9 +6,9 @@
               <p>About 26.7 million people, or 8% of the population, live in areas of high or severe water limitation.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> The availability of clean water for our communities is affected by factors like water quantity, quality, and flow, as well as social factors like water infrastructure, access, and rights. Socioeconomic status, access to resources, and the availability of public services can determine a community's adaptive capacity. The adaptive capacity ultimately affects how vulnerable or resilient a community may be when faced with water-availability limitations.</p>
             </div>
 
-            <div class="chart-title-container" aria-hidden="true">
-              <p class="chart-title">How does social vulnerability relate to water limitation?</p>
-              <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
+            <div class="chart-title-container">
+              <h4 class="chart-title">How does social vulnerability relate to water limitation?</h4>
+              <p class="chart-subtitle" aria-hidden="true">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
             <div class="viz-container">
               <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`" alt="Areas of the lower 48 states that have both high water limitation and social vulnerability are represented with larger circles that are lightly colored. These areas occur in California, Texas, the Southern High Plains, and the Mississippi Embayment regions. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.">
@@ -30,9 +30,9 @@
                 <h2>Water insecurity</h2>
                 <p>Despite tremendous gains throughout the 20th century, limitations to water access and quality persist in the United States. These limitations disproportionately affect <a href="https://labs.waterdata.usgs.gov/visualizations/vulnerability-indicators/index.html#/en" target="_blank">socially vulnerable</a> communities. Societal factors shape exposure to hazards, susceptibility to suffer harm, and ability to cope and recover from losses.<span v-for="reference in theseReferences.filter(item => item.refID === 'Drakes2024')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> </p>
             </div>
-            <div class="chart-title-container" aria-hidden="true">
-              <p class="chart-title">Social vulnerability and water limitation</p>
-              <p class="chart-subtitle">Bars show the proportion of the population living in varying levels of water limitation for each social vulnerability classification.</p>
+            <div class="chart-title-container">
+              <h4 class="chart-title">Social vulnerability and water limitation</h4>
+              <p class="chart-subtitle" aria-hidden="true">Bars show the proportion of the population living in varying levels of water limitation for each social vulnerability classification.</p>
             </div>
             <div class="svi-bar-container">
               <div class="svi-bar-child">
