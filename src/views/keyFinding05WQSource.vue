@@ -20,6 +20,7 @@
               <RegionMap 
               class="region-map"
                 @regionSelected="updateSelectedRegion"
+                mapChartTitle="Map showing the distribution of areas with elevated nitrogen or phosphorus loads in the lower 48 states. Nitrogen is elevated primarily along the West coast and throughout the midwest, northeast, and southeast of the U.S. Phosphorus shows a similar pattern, however with patches of higher loads throughout the southwest desert."
                 :layerVisibility="{
                   nitrogen: layers.nitrogen.visible,
                   phosphorus: layers.phosphorus.visible
@@ -283,8 +284,9 @@ function initBarChart() {
       .attr('viewBox', `0 0 ${containerWidth} ${height + margin.top + margin.bottom}`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .style('width', containerWidth)
-      //.style('max-height', `${height}px`)
-      .style('height', height + margin.top + margin.bottom);
+      .style('height', height + margin.top + margin.bottom)
+      .attr('aria-role', 'image')
+      .attr('aria-label', 'Stacked bar chart showing the sources of nitrogen or phosphorus for each hydrologic region in the lower 48 states. The largest source for these nutrients is through agriculture followed by atmospheric deposition for nitrogen and natural sources for phosphorus. The regions with the highest loads of phosphorus are the midwest and Tennessee-Missouri regions.');
 
     // add group for bar chart bounds, translating by chart margins
     chartBounds = svg.append('g')
@@ -321,12 +323,14 @@ function createBarChart({ dataset, scaleLoad}) {
   const regionAxis = chartBounds.append('g')
     .call(d3.axisLeft(regionScale))
     .attr('class', 'axis-text')
+    .attr('aria-hidden', 'true')
     .attr('transform', `translate(${margin.left}, 0)`);
 
   // adding maps
   regionAxis.selectAll(".tick")
     .select("text")
     .attr('class', 'axis-text')
+    .attr('aria-hidden', 'true')
     .attr("x", mobileView ? -60 : -80) // shift text to the left to make space for the mini maps
 
     // load SVG and add it to each tick
@@ -347,13 +351,15 @@ function createBarChart({ dataset, scaleLoad}) {
             .attr("y", -25)
           .attr("width", 50) 
           .attr("height", 50)
-          .attr("fill", "var(--inactive-grey)"); 
+          .attr("fill", "var(--inactive-grey)")
+          .attr('aria-hidden', 'true'); 
 
         // select the <g> element with the region name
         insertedSvg.selectAll(`g.${regionClass} path`) // grab the path
           .attr("stroke", "black") // apply black outline
           .attr("stroke-width", 3)
-          .attr("fill", "black"); 
+          .attr("fill", "black")
+          .attr('aria-hidden', 'true'); 
       });
   });
 
@@ -361,13 +367,15 @@ function createBarChart({ dataset, scaleLoad}) {
   chartBounds.append('g')
     .attr('transform', `translate(0, ${height})`)
     .call(d3.axisBottom(nutrientScale).ticks(mobileView ? 3 : 4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
-    .attr('class', 'axis-text');
+    .attr('class', 'axis-text')
+    .attr('aria-hidden', 'true');
 
   // x-axis at the top
   chartBounds.append('g')
     .attr('transform', `translate(0, ${margin.top})`) // positioned at y = 0 (top of the chart)
     .call(d3.axisTop(nutrientScale).ticks(mobileView ? 3 : 4).tickFormat(d => scaleLoad ? d + 'M' : d + "%"))
-    .attr('class', 'axis-text');
+    .attr('class', 'axis-text')
+    .attr('aria-hidden', 'true');
 
   const colorScale = d3.scaleOrdinal()
     .domain(categoryGroups)
@@ -380,7 +388,8 @@ function createBarChart({ dataset, scaleLoad}) {
     .data(stackedData, d => d.key)
     .join(
       enter => enter.append("g")
-        .attr("class", d => d.key.replace(" ", "_")),
+        .attr("class", d => d.key.replace(" ", "_"))
+        .attr('aria-hidden', 'true'),
       update => update,
       exit => exit.remove()
     );
@@ -396,13 +405,15 @@ function createBarChart({ dataset, scaleLoad}) {
         .style("fill", d => colorScale(d.key))
         .style("opacity", 0)
         .transition(t)
-        .style("opacity", 1),
+        .style("opacity", 1)
+        .attr('aria-hidden', 'true'),
 
       update => update.transition(t)
         .attr('x', d => nutrientScale(d[0]))
         .attr('y', d => regionScale(d.data[0]))
         .attr('height', regionScale.bandwidth())
-        .attr('width', d => nutrientScale(d[1]) - nutrientScale(d[0])),
+        .attr('width', d => nutrientScale(d[1]) - nutrientScale(d[0]))
+        .attr('aria-hidden', 'true'),
 
       exit => exit.transition(t)
         .style("opacity", 0)

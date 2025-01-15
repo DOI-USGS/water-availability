@@ -77,7 +77,9 @@ function setupSVG() {
     .attr('width', histogramWidth)
     .attr('height', histogramHeight)
     .attr('viewBox', `${marginLeft} 0 ${histogramWidth + marginRight} ${histogramHeight}`)
-    .attr('preserveAspectRatio', 'xMidYMid meet');
+    .attr('preserveAspectRatio', 'xMidYMid meet')
+    .attr('aria-role', 'image')
+    .attr('aria-label', 'Combination legend and histogram showing the distribution of the varying levels of nitrogen or phosphorus loads from lower loads to high loads. Across the U.S., the highest levels of nitrogen and phosphorus loads have the most data, with very few areas across the lower 48 states having low contamination by phosphorus or nitrogen.');
 }
 
 // Initialize Legend
@@ -118,7 +120,8 @@ function initLegend(data) {
       .attr('y', d => yScale(d.value))
       .attr('width', xScale.bandwidth())
       .attr('height', d => rectHeight - yScale(d.value))
-      .style('fill', d => colorScale(d.category));
+      .style('fill', d => colorScale(d.category))
+      .attr('aria-hidden', 'true');
 
     svg.selectAll('rect.static')
       .data(dummyData, d => cleanLabel(d.category))
@@ -128,7 +131,8 @@ function initLegend(data) {
         .attr('y', mobileView ? histogramHeight - 20 : histogramHeight - 15)
         .attr('width', xScale.bandwidth())
         .attr('height', d => rectHeight - yScale(d.value))
-        .style('fill', d => colorScale(d.category));
+        .style('fill', d => colorScale(d.category))
+        .attr('aria-hidden', 'true');
 
 
   const axisBottom = d3.axisBottom(xScale)
@@ -140,10 +144,12 @@ function initLegend(data) {
     .attr('id', 'x-axis')
     .attr('class', 'axis-text')
     .attr('transform', `translate(0, ${rectHeight})`)
+    .attr('aria-hidden', 'true')
     .call(axisBottom)
       .selectAll('text') // select axis labels
       .style('text-anchor', 'middle') // align to the middle
-      .attr('x', 0); 
+      .attr('x', 0)
+      .attr('aria-hidden', 'true'); 
 
   svg.selectAll('#x-axis .tick') // select all ticks
   .attr('transform', function(d) {
@@ -163,6 +169,7 @@ function initLegend(data) {
     .attr('class', 'axis-text')
     .attr('transform', `translate(${histogramWidth}, 0)`)
     .call(axisRight) 
+    .attr('aria-hidden', 'true')
 
 }
 
@@ -202,17 +209,20 @@ function updateLegend(data) {
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
         .style('fill', d => colorScale(d.category))
+        .attr('aria-hidden', 'true')
         .call(enter => 
             enter.transition()
             .duration(300)
             .attr('y', d => yScale(d.value))
             .attr('height', d => rectHeight - yScale(d.value))
+            .attr('aria-hidden', 'true')
         ),
       update => update.transition()
         .duration(300)
         .attr('y', d => yScale(d.value)) // Adjust position
         .attr('height', d => rectHeight - yScale(d.value)) // Adjust height
-        .style('fill', d => colorScale(d.category)),
+        .style('fill', d => colorScale(d.category))
+        .attr('aria-hidden', 'true'),
       exit => exit.transition()
         .duration(300)
         .attr('y', rectHeight) // Collapse downwards
@@ -228,7 +238,8 @@ function updateLegend(data) {
     .attr('y', mobileView ? histogramHeight - 20 : histogramHeight - 15)
     .attr('width', xScale.bandwidth())
     .attr('height', d => rectHeight - yScale(d.value))
-    .style('fill', d => colorScale(d.category));
+    .style('fill', d => colorScale(d.category))
+    .attr('aria-hidden', 'true');
 
 
   const axisBottom = d3.axisBottom(xScale)
@@ -243,10 +254,12 @@ function updateLegend(data) {
     .attr('id', 'x-axis')
     .attr('class', 'axis-text')
     .attr('transform', `translate(0, ${rectHeight})`)
+    .attr('aria-hidden', 'true')
     .call(axisBottom)
     .selectAll('text') // select axis labels
     .style('text-anchor', 'middle') // align to the middle
-    .attr('x', 0);
+    .attr('x', 0)
+    .attr('aria-hidden', 'true');
 
   svg.selectAll('#x-axis .tick') // select all ticks
     .attr('transform', function(d) {
