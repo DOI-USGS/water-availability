@@ -11,7 +11,7 @@
               <p class="chart-subtitle">Map shows each hydrologic unit (HUC8) scaled by social vulnerability score and colored by water limitation category.</p>
             </div>
             <div class="viz-container">
-              <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`">
+              <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/03_sui_popn_CONUS.png`" aria-label="Areas of the lower 48 states that have both high water limitation and social vulnerability are represented with larger circles that are lightly colored. These areas occur in California, Texas, the Southern High Plains, and the Mississippi Embayment regions. Water limitation levels were based on the surface water supply and use index, which expresses the imbalance between surface water-supply and consumptive use.">
             </div>
             <div class="caption-container-flex caption-container" aria-hidden="true">
               <div class="legend-group">
@@ -37,19 +37,19 @@
             <div class="svi-bar-container">
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Severe social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Severe.png`">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Severe.png`" aria-label="Stacked bar graph showing nearly half of the people considered to have severe social vulnerability live in areas of moderate, high, or severe water limitation.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">High social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_High.png`">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_High.png`" aria-label="Stacked bar graph showing that a smaller proportion (about one-quarter) of the people considered to have high social vulnerability are in moderate, high or severe water limitation areas.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Moderate social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Moderate.png`">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Moderate.png`" aria-label="Stacked bar graph showing that a very small proportion of the people considered to have moderate social vulnerability live in moderate, high or severe water limitation areas. They mostly live in low or very low water limitation areas.">
               </div>
               <div class="svi-bar-child">
                 <p class="chart-text svi-text">Low social vulnerability </p>
-                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Low.png`">
+                <img class="svi-image" :src="`${s3ProdURL}images/water-availability/03_svi_bar_Low.png`" aria-label="Stacked bar graph showing that a very small proportion of the people considered to have low social vulnerability live in moderate, high or severe water limitation areas. Like those with moderate social vulnerability, they mostly live in low or very low water limitation areas.">
               </div>
               
             </div>
