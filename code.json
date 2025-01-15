@@ -2,7 +2,7 @@
   {
     "name": "water-availability",
     "organization": "U.S. Geological Survey",
-    "description": "{project_description}",
+    "description": "This website complements the National Water Availability Assessment report and features some key messages of the report in an engaging and accessible way.",
     "version": "main",
     "status": "Development",
     "permissions": {
@@ -19,7 +19,7 @@
     "disclaimerURL": "https://code.usgs.gov/wma/vizlab/water-availability/-/raw/main/DISCLAIMER.md",
     "repositoryURL": "https://code.usgs.gov/wma/vizlab/water-availability.git",
     "vcs": "git",
-    "laborHours": 450,
+    "laborHours": 650,
     "tags": [
       "R",
       "USGS"
@@ -30,11 +30,11 @@
       "JavaScript"
     ],
     "contact": {
-      "name": "Cee Nell",
-      "email": "cnell@usgs.gov"
+      "name": "Althea Archer",
+      "email": "aaarcher@usgs.gov"
     },
     "date": {
-      "metadataLastUpdated": "2024-01-16"
+      "metadataLastUpdated": "2025-01-15"
     }
   }
 ]
