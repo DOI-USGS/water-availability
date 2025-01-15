@@ -20,7 +20,7 @@
                     <br>
                     <p>For example, in 2012 the Northern High Plains had abnormally low precipitation, which cascaded through the water cycle.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In the monthly fluctuations shown below, this low precipitation is followed by delayed responses in evapotranspiration and soil moisture, which are both important aspects of water supply. This eventually leads to reduced streamflow. Similarly, periods of rainfall in early 2011 did not show up in the streamflow signature until later in that year. </p>
                 </div>
-            <div class="chart-title-container">
+            <div class="chart-title-container" aria-hidden="true">
                 <p class="chart-title">Water supply dynamics in the {{ regionTitle }}</p>
                 <p class="chart-subtitle">Monthly fluctuations in four aspects of water supply compared to normal for hydrologic regions of the lower 48 United States</p>
             </div>

@@ -27,7 +27,7 @@
               <div class="wa-map-text-container" id="eco-map">
                 <h3 class="wa-title">Altered natural flows</h3>
                 <p class="wa-text">Humans alter the natural flow of water by building water management structures, such as reservoirs, impoundments, and diversions, and by covering land with impervious surfaces.<span v-for="reference in theseReferences.filter(item => item.refID === 'Stets2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Altered flows primarily limit water availability in the Northeast, Florida, Texas, and Central High Plains regions.</p>
-                <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_ecoflow.png`"  alt="Map showing areas of the lower 48 states with relatively high amounts of natural water flow alteration, including the northeast, central high plains, Texas, and Florida regions.">
+                <img class="wa-map" :src="`${s3ProdURL}images/water-availability/02_water_avail_wa_ecoflow.png`"  alt="Map showing areas of the lower 48 states with relatively high amounts of alterated natural flows, including the northeast, central high plains, Texas, and Florida regions.">
               </div>
             </div>
           </div>

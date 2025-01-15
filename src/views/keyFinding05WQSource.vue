@@ -5,7 +5,7 @@
           <div class="text-container">
               <p>Nutrients are beneficial chemicals that support plant and animal growth. However, in high concentrations they can become pollutants and have harmful effects on human, animal, and ecosystem health.<span v-for="reference in theseReferences.filter(item => item.refID === 'Erickson2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
               </div>
-              <div class="chart-title-container">
+              <div class="chart-title-container" aria-hidden="true">
             <p class="chart-title">{{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} concentrations in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
             <p class="chart-subtitle">Total nutrient load (kg/yr) by area</p>
             <ToggleSwitch 
@@ -55,7 +55,7 @@
                 </p>
             </div>
 
-              <div class="chart-title-container">
+              <div class="chart-title-container" aria-hidden="true">
             <p class="chart-title">Sources of {{ showNitrogen ? 'Nitrogen' : 'Phosphorus' }} </p>
             <p class="chart-subtitle">Nutrient loads by source {{ scaleLoad ? "in kg/year" : "as a percent of total load" }}</p>
             <!-- Nutrient Toggle -->

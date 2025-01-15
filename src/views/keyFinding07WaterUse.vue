@@ -14,7 +14,7 @@
           <br>
         <p>These three uses add up to 224,000 million gallons of freshwater per day.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> In addition, saline water used at thermoelectric power plants adds another approximately 21,000 million gallons of water per day. </p>
       </div>
-      <div class="chart-title-container">
+      <div class="chart-title-container" aria-hidden="true">
             <p class="chart-title">Average daily water use from 2010 to 2020</p>
             <p class="chart-subtitle">Millions of gallons used per day by use type</p>
         <!-- Scale toggle -->

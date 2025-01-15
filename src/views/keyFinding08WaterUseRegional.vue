@@ -5,7 +5,7 @@
           <div class="text-container">
                 <p>How we use water varies widely across the country, from the type of use (for example, crop irrigation, public supply, and thermoelectric power) to the source of water (groundwater versus surface water).<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Crop irrigation is the largest category of use in the western U.S., while thermoelectric power is the largest category of use in the eastern U.S. Public supply accounts for nearly one-half of water withdrawals in some urban areas, and withdrawals for public supply are largest in states with large populations, such as California, Texas, New York, and Florida. </p>
           </div>
-          <div class="chart-title-container">
+          <div class="chart-title-container" aria-hidden="true">
             <p class="chart-title">Water use in the {{ selectedRegion === 'lower 48 United States' ? selectedRegion : `${selectedRegion} Region`}}</p>
             <p class="chart-subtitle">Daily water use in 2020, in million gallons per day</p>
           </div>
@@ -85,7 +85,7 @@
             <h2>Do we use more surface water or groundwater?</h2>
             <p>Across the U.S., this depends on the availability of each source, the category of use, local and federal water use ordinances, and water rights. On average during water years 2010-2020, about 62% of water used for crop irrigation, public supply, and thermoelectric was sourced from surface water rather than groundwater. However, these proportions vary widely across the country: the largest water withdrawals in the Southwest Desert region for public supply are from groundwater, whereas the largest withdrawals in the Northeast region are from surface water.</p>
           </div>
-          <div class="chart-title-container">
+          <div class="chart-title-container" aria-hidden="true">
             <p class="chart-title">Source of public supply water in the {{ regionTitle }}</p>
             <p class="chart-subtitle">Daily water use (million gallons per day) sourced from surface water versus groundwater</p>
           </div>
