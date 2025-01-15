@@ -95,7 +95,7 @@
                 class="viz-mini"
                 id="dumbbells"
                 :src="imgSrc"
-                aria-label="Bar chart showing the relative amounts of water used for public supply from groundwater sources veruss surface water sources. The general pattern shows that more groundwater is sourced in the western U.S. whereas more surface water is sourced in the eastern U.S. The most surface water withdrawn for a single watershed is in the northeastern hydrologic region, and it is 141 million gallons per day, whereas the largest quantity from groundwater is in the California-Nevada hydrologic region at 94 million gallons per day."
+                alt="Bar chart showing the relative amounts of water used for public supply from groundwater sources veruss surface water sources. The general pattern shows that more groundwater is sourced in the western U.S. whereas more surface water is sourced in the eastern U.S. The most surface water withdrawn for a single watershed is in the northeastern hydrologic region, and it is 141 million gallons per day, whereas the largest quantity from groundwater is in the California-Nevada hydrologic region at 94 million gallons per day."
             >    
           </div>
           <div class="caption-container-flex caption-container" aria-hidden="true">
