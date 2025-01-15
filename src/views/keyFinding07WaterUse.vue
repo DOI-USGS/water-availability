@@ -24,6 +24,7 @@
           rightLabel="Use by category"
           leftColor="black"
           rightColor="black"
+          aria-hidden="true"
         />
         </div>
       <div class="viz-container">
@@ -55,7 +56,8 @@
         <p>Not all of the water used by humans is lost, much of it returns to the local environment. Water that does not return to local water bodies or groundwater is called "consumptive use." Consumptive use includes water that is evaporated to the atmosphere, consumed by humans or livestock, or incorporated into products or crops. Consumptive use is highest for crop irrigation: Only 28% of water used for irrigation returns to the local environment.<span v-for="reference in theseReferences.filter(item => item.refID === 'Medalie2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span> Much of the water used for irrigation is uptaken by plants or lost to the atmosphere through evapotranspiration. About 88% of the water used for public supply is returned, and almost all of the water used for thermoelectric power (96%) is eventually returned to the local environment, although this amount varies widely depending on the type of cooling system used at the plant. </p>
       </div>
       <div class="viz-container">
-        <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"/>
+        <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/07_consumptive_labels.png`"
+        aria-label="Illustration of a landscape showing typical ways that water is used for public supply, thermoelectric power, and crop irrigation. Illustration includes a small town, industry, wastewater treatment plants, thermoelectric cooling towers, farm fields, and livestock pens."/>
       </div>
       <Methods :theseReferences="referenceList"></Methods>
       <References :theseReferences="referenceList"></References>
@@ -183,7 +185,8 @@ async function loadDatasets() {
 // Initialize the SVG canvas and groups
 function initBarChart() {
   // Remove any existing SVG to prevent duplicates
-  d3.select('#barplot-container').select('svg').remove();
+  d3.select('#barplot-container')
+    .select('svg').remove();
 
   svg = d3.select('#barplot-container')
     .append('svg')
@@ -191,13 +194,16 @@ function initBarChart() {
     .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
     .attr('preserveAspectRatio', 'xMidYMid meet')
     .style('width', containerWidth)
-    .style('height', containerHeight);
+    .style('height', containerHeight)
+    .attr('aria-role', 'image')
+    .attr('aria-label', 'Stacked bar chart showing annual water use for public supply, irrigation, and thermoelectric power from 2010 through 2020. Water use declined overall, with thermoelectric power water use declining the most notably. Public supply has been constant, regardless of increasing population growth.');
 
   chartBounds = svg.append('g')
     .attr('id', 'wrapper')
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-  rectGroup = chartBounds.append('g').attr('id', 'rectangle_group');
+  rectGroup = chartBounds.append('g')
+    .attr('id', 'rectangle_group');
 
   xAxisGroup = chartBounds.append('g')
     .attr('class', 'x-axis') 
@@ -228,6 +234,7 @@ function createBarChart(dataStacked) {
     .attr('class', 'chart-text')
     .style('text-anchor', 'middle')
     .attr('text-align', 'center') 
+    .attr('aria-hidden', 'true')
 
   // Remove tick lines from x-axis
   xAxisGroup.selectAll('.x-axis .tick line').remove();
@@ -241,9 +248,11 @@ function createBarChart(dataStacked) {
   categoryGroups.forEach((group, i) => {
     chartBounds.append('g')
       .attr('class', `y-axis y-axis-${i}`)
+      .attr('aria-hidden', 'true')
       .call(d3.axisLeft(useScale).ticks(mobileView ? 3 : 4).tickFormat(d3.format("~s")))
       .selectAll('.tick text')
-      .attr('class', 'chart-text');
+      .attr('class', 'chart-text')
+      .attr('aria-hidden', 'true');
   });
 
   // Create categorical color scale for the bars
@@ -264,7 +273,8 @@ function createBarChart(dataStacked) {
       .attr('y', d => useScale(d[1]))
       .attr('height', d => useScale(d[0]) - useScale(d[1]))
       .attr('width', yearScale.bandwidth() - barSpace)
-      .style('fill', d => colorScale(d.key)));
+      .style('fill', d => colorScale(d.key)))
+      .attr('aria-hidden', 'true');
 
 }
 function transitionToFaceted() {
@@ -305,13 +315,16 @@ function transitionToFaceted() {
       .transition(t)
       .attr('transform', `translate(0, ${facetPositions[i]})`)
       .call(d3.axisLeft(groupScale).ticks(mobileView ? 2 : 3).tickFormat(d3.format("~s")))
+      .attr('aria-hidden', 'true')
       .selectAll('.tick text')
-      .attr('class', 'chart-text');
+      .attr('class', 'chart-text')
+      .attr('aria-hidden', 'true');
 
     // update bar group position
     d3.select(`g #${sanitizeSelector(group)}`)
       .transition(t)
-      .attr('transform', `translate(0, ${facetPositions[facetOrder.indexOf(group)]})`);
+      .attr('transform', `translate(0, ${facetPositions[facetOrder.indexOf(group)]})`)
+      .attr('aria-hidden', 'true');
 
     // update bars
     d3.select(`g #${sanitizeSelector(group)}`)
@@ -322,7 +335,8 @@ function transitionToFaceted() {
       .attr('width', yearScale.bandwidth() - barSpace)
       .attr('y', d => groupScale(+d.mgd))
       .attr('height', d => facetHeights[i] - groupScale(+d.mgd))
-      .style('fill', categoryColors[group]);
+      .style('fill', categoryColors[group])
+      .attr('aria-hidden', 'true');
 
     // add group label
     chartBounds.append('text')
@@ -330,16 +344,19 @@ function transitionToFaceted() {
       .attr('x', 5)
       .attr('y', facetPositions[i] - 10) // place label above each group
       .attr('text-anchor', 'start')
-      .text(group);
+      .text(group)
+      .attr('aria-hidden', 'true');
   });
 
   // update x-axis position dynamically
   xAxisGroup.select('.x-axis')
     .transition(t)
     .attr('transform', `translate(0, ${adjustedHeight})`) // move to the new position
+    .attr('aria-hidden', 'true')
   xAxisGroup.selectAll('.tick text')
     .attr('class', 'chart-text')
-    .style('text-anchor', 'middle'); // ensure labels are styled
+    .style('text-anchor', 'middle')
+    .attr('aria-hidden', 'true'); // ensure labels are styled
 
 }
 
@@ -351,7 +368,8 @@ function transitionToStacked() {
    categoryRectGroups 
     .data(dataStacked) // bind stacked data to groups
     .transition(t) 
-    .attr('transform', 'translate(0, 0)'); // reset facet-specific transforms
+    .attr('transform', 'translate(0, 0)')
+    .attr('aria-hidden', 'true'); // reset facet-specific transforms
 
   categoryRectGroups.selectAll('rect') 
     .data(d => d) // re-bind the stacked data to the rects
@@ -359,7 +377,8 @@ function transitionToStacked() {
     .attr('x', d => yearScale(d.data[0])) // re-position x
     .attr('y', d => useScale(d[1])) // stacked y-position (top of bar)
     .attr('height', d => useScale(d[0]) - useScale(d[1])) 
-    .attr('width', yearScale.bandwidth() - barSpace); 
+    .attr('width', yearScale.bandwidth() - barSpace)
+    .attr('aria-hidden', 'true'); 
 
   // transition the 4 y-axes back to overlap on top of each other
   categoryGroups.forEach((group, i) => {
@@ -371,7 +390,8 @@ function transitionToStacked() {
         .tickFormat(d3.format("~s"))
       )
       .selectAll('.tick text')
-      .attr('class', 'chart-text');
+      .attr('class', 'chart-text')
+      .attr('aria-hidden', 'true');
   });
   
 
@@ -397,7 +417,8 @@ function transitionToStacked() {
     .call(d3.axisBottom(yearScale).tickSize(0))
     .selectAll('.tick text')
     .attr('class', 'chart-text')
-    .style('text-anchor', 'middle');
+    .style('text-anchor', 'middle')
+    .attr('aria-hidden', 'true');
   
 }
 
