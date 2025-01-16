@@ -16,6 +16,9 @@
     </div>
 
     <div id="findings-container">
+      <div class="read-more-container" aria-hidden="true" >
+        <p aria-hidden="true" >Click on a key finding to learn more.</p>
+      </div>
       <div class="raindrop-container">
         <div class="key-message-item" v-for="(message, index) in SubPages.SubPages" :key="index">
           <div>
@@ -103,7 +106,20 @@
   font-weight: 800;
   color: var(--blue-dark);
 }
+.read-more-container {
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 5px;
+  color: var(--blue-dark);
+  font-size: 1.5rem;
+  font-weight: 300;
+  font-style: italic;
+}
 @media only screen and (max-width: 600px) {
+  .read-more-container {
+    font-size: 1rem;
+  }
   .title-message-container {
     padding: 80px 0px;
     width: 90vw;
@@ -122,7 +138,7 @@
 .raindrop-container {
   max-width: 1000px;
   width: 90vw;
-  padding-top: 30px;
+  padding-top: 10px;
   padding-bottom: 30px;
   margin: 1rem auto;
   display: grid;
