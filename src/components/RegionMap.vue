@@ -1,5 +1,5 @@
 <template>
-    <div ref="mapContainer" class="map-container" id="map-size-container"></div>
+    <div ref="mapContainer" class="map-container"></div>
 </template>
   
 <script setup>

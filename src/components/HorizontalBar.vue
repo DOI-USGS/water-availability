@@ -202,7 +202,7 @@ watch(
 </script>
 
 <style>
-.chart-conainer {
+.chart-container {
   max-height: 100px;
 }
 .bar-container {

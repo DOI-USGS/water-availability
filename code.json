@@ -2,7 +2,7 @@
   {
     "name": "water-availability",
     "organization": "U.S. Geological Survey",
-    "description": "This website complements the National Water Availability Assessment report and features some key messages of the report in an engaging and accessible way.",
+    "description": "This interactive website highlights key scientific findings of the National Water Availability Assessment report through engaging stories, plain-language explanations, and interactive data visualizations.",
     "version": "main",
     "status": "Development",
     "permissions": {
