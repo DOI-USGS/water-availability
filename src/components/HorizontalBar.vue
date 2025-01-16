@@ -202,6 +202,13 @@ watch(
 </script>
 
 <style>
+.chart-conainer {
+  max-height: 100px;
+}
+.bar-container {
+  min-height: 100px;
+  max-height: 100px;
+}
 .bar-chart-svg {
     width: 100%;
     overflow: visible;

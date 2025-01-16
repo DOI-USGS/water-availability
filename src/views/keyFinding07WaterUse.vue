@@ -432,7 +432,8 @@ onMounted(async () => {
 
   const container = document.getElementById('barplot-container');
   containerWidth = container.clientWidth;
-  containerHeight = mobileView ? 550 : 600;
+  containerHeight = container.clientHeight;
+  //containerHeight = mobileView ? 550 : 600;
 
   width = containerWidth - margin.left - margin.right;
   height = containerHeight - margin.top - margin.bottom;
@@ -488,6 +489,8 @@ function position_tooltip(tooltip_group){
 
 <style scoped>
 #barplot-container {
+  max-height: 80vh;
+  min-height: 500px;
   max-width: 1000px;
   width: 100%;
   margin: auto;
