@@ -30,7 +30,7 @@
           <a href="https://pubs.usgs.gov/publication/pp1894" target="_blank" rel="noopener noreferrer" class="report-link">
           <h3 class="h3-nospacer"> Read the report</h3>
           </a>        
-          <a href="https://www.water.usgs.gov/nwaa-data" target="_blank" rel="noopener noreferrer" class="report-link">
+          <a href="https://water.usgs.gov/nwaa-data" target="_blank" rel="noopener noreferrer" class="report-link">
           <h3 class="h3-nospacer"> Access the data</h3>
           </a>
         </div>
