@@ -2,6 +2,12 @@
 
 This repository builds the Water Availability in the U.S. website at [https://water.usgs.gov/vizlab/water-availability/](https://water.usgs.gov/vizlab/water-availability). This website is powered by the USGS Vizlab ([portfolio link](https://labs.waterdata.usgs.gov/visualizations/vizlab-home/)).
 
+### About the National Water Availability Assessment
+
+The National Water Availability Assessment is the third assessment developed by the USGS in response to the SECURE Water Act, and the first to present a national, comprehensive assessment of water availability that is inclusive of the amount of water (quantity), the quality of that water, and its use. Water quantity, quality, and use are interrelated and therefore need to be considered together to fully assess water availability. This assessment uses state-of-the-art water quantity, quality, and use models to provide an integrated assessment of water stress across the conterminous United States (CONUS). This evaluation provides new insight on areas of the United States with an imbalance between natural water supply and demand.  
+
+This website complements the National Water Availability Assessment report and features some key messages of the report in an engaging and accessible way. This website was created for a public audience and breaks down some of the technical findings from the report into messages and graphics that can be easily understood. 
+
 ### Required Software
 - [node.js](http://nodejs.org)
     - `>=0.10.0` (last used: `20.11.0`)
@@ -32,22 +38,22 @@ git clone https://code.usgs.gov/wma/vizlab/water-availability.git
 
 > Note: You do **not** need to build the R-based figures or datasets to rebuild the website. The repository will build the website using the Vue instructions below. These instructions are for those wanting to reproduce the figures using R directly.
 
-To reproduce the figures in the website that are created in R, you will need to run the targets pipeline. In addition, you do need to run some fetch and processing code from two additional pipelines. 
+To reproduce the figures in the website that are created in R, you will need to run the `targets` pipeline. In addition, you do need to run some fetch and processing code from two additional pipelines. 
 
 ### Step 1: Clone repositories
 
 
-Clone the water quality and water use repositories (may need a development branch, contact Althea Archer for assistance) into a folder that contains this repository's directory as well. Should look something like this:
+Clone the water quality, water supply, and water use repositories into a folder that contains this repository's directory as well. Should look something like this:
 
 - parent_directory/water-availability/ (this repository)
 - parent_directory/iwaas-sparrow-figures/ (water quality repository) 
     - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/iwaas-sparrow-figures/`
 - parent_directory/wq-decadal-change-plots/ (groundwater quality repository)
-    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/wq-decadal-change-plots`
+    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/wq-decadal-change-plots/`
 - parent_directory/water-use-huc12-crosswalk/ (water use repository)
-    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/water-use-huc12-crosswalk/-/tree/1.0.0/`
+    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/nwaa-1a-releases/water-use-huc12-crosswalk/`
 - parent_directory/iwaas-water-supply/ (water supply repository)
-    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/ws-uncertainty-analysis`
+    - available from `https://code.usgs.gov/wma/national-iwaas/NWAA/ws-uncertainty-analysis/`
 
 
 ### Step 2: Run the water quality pipeline. 
@@ -124,6 +130,7 @@ Run server in production environment (after `npm run build`):
 ```bash
 npm run start
 ```
+
 - serves the previously built and optimized version of the site
 
 

@@ -18,7 +18,7 @@
     <div class="dropdown-menu" v-if="menuOpen">
         <ul>
           <li><router-link to="/">Home</router-link></li>
-          <li><a href="https://www.usgs.gov/iwaas" target="_blank">Read the Report</a></li>
+          <li><a href="https://pubs.usgs.gov/publication/pp1894" target="_blank">Read the Report</a></li>
           <li><a href="https://water.usgs.gov/nwaa-data/" target="_blank">Access the Data</a></li>
           <li><router-link to="/glossary"> Glossary of Terms</router-link></li>
         </ul>
@@ -80,7 +80,7 @@
             <div ref="chartSME" class="chart"></div>
         </div>
         <p>
-            Collaborators from the <a href="https://www.usgs.gov/iwaas" target="_blank">National Water Availability Assessment</a> Report include
+            Collaborators from the <a href="https://pubs.usgs.gov/publication/pp1894" target="_blank">National Water Availability Assessment</a> Report include
           <span id="primary-author-statment">
             <span
               v-for="(author, index) in authorSMEs" 

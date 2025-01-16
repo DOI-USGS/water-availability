@@ -102,6 +102,7 @@
       return
     }
   
+
     const width = 800;
     const height = 550;
     const maxHeight = 800;
@@ -254,6 +255,9 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    max-width: 1000px;
+    max-height: 80vh;
+    min-height: 400px;
   }
   
   .responsive-svg {
@@ -273,6 +277,8 @@
   @media only screen and (max-width: 600px) {
     .map-container {
       max-width: 90vw;
+      max-height: 40vh;
+      min-height: 40vh;
     }
   }
 </style>

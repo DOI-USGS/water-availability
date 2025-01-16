@@ -166,8 +166,9 @@ onMounted(async () => {
 
   // chart dimensions
   const containerWidth = document.getElementById('heatmap-container').clientWidth;
+  const containerHeight = document.getElementById('heatmap-container').clientHeight;
   const width = mobileView ? containerWidth : 600;
-  const height = mobileView ? 400 : 650;
+  const height = mobileView ? containerHeight : containerHeight;
 
   window.scrollTo(0, 0);
   
@@ -485,7 +486,10 @@ function position_tooltip(tooltip_group){
 </script>
 
 <style scoped>
-
+#heatmap-container {
+  max-height: 80vh;
+  min-height: 500px;
+}
 
 .map-container {
   position: relative;
