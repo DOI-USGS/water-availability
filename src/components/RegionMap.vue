@@ -257,7 +257,7 @@
     width: 100%;
     max-width: 1000px;
     max-height: 80vh;
-    min-height: 450px;
+    min-height: 400px;
   }
   
   .responsive-svg {
