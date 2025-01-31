@@ -109,10 +109,10 @@ let aquiferLabel = "principal aquifers of the lower 48 United States";
 const aquiferCrosswalk = [
   { abbr: "cacb", name: "CA Coastal Basins"},
   { abbr: "cval", name: "Central Valley"},
-  { abbr: "clpt", name: "Colorado Plateau"},
+  { abbr: "clpt", name: "Columbia Plateau Basalts"},
   { abbr: "bnrf", name: "Basin and Range Fill"},
   { abbr: "bnrc", name: "Basin and Range Carbonates"},
-  { abbr: "copl", name: "Columbia Plateau Basalts"},
+  { abbr: "copl", name: "Colorado Plateau"},
   { abbr: "hpaq", name: "High Plains"},
   { abbr: "strv1", name: "Stream Valley West"},
   { abbr: "rgaq", name: "Rio Grande"},
