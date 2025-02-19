@@ -156,7 +156,7 @@
         .attr('class', d => `region ${d[props.RegionsVar]}`)
         .attr('fill', 'transparent')
         .attr("opacity", 0)
-        .attr('stroke', 'white')
+        .attr('stroke', 'black')
         .attr('stroke-width', '1px')
         // add interaction to highlight selected region and update bar chart
         .on('mouseover',function(event, d) {
@@ -169,7 +169,7 @@
             d3.select(this)
                 .attr('fill', 'transparent')
                 .attr('opacity', 1)
-                .attr('stroke', 'white')
+                .attr('stroke', 'black')
                 .attr('stroke-width', '1.5px')
                 .raise(); // bring the selected region to the front
 
@@ -223,6 +223,19 @@
         .attr('fill', 'none')
         .attr('stroke', 'white')
         .attr('stroke-width', '0.75px');
+
+
+        d3.selectAll('.region')
+                .attr('fill','lightgrey')
+                .attr('opacity', 0.8)
+                .attr('stroke',"black")
+
+        // highlight the selected region with transparent fill
+        d3.select(this)
+            .attr('fill', 'transparent')
+            .attr('opacity', 1)
+            .attr('stroke', 'black')
+            .attr('stroke-width', '1.5px')
   
     } catch (error) {
       console.error('Error loading TopoJSON:', error);
@@ -259,7 +272,7 @@
     max-height: 100%;
   }
   .outline-conus {
-    filter: drop-shadow(0px 0px 10px rgba(2, 2, 2, 0.5));
+    filter: drop-shadow(0px 0px 0px rgba(2, 2, 2, 0.5));
   }
 </style>
   

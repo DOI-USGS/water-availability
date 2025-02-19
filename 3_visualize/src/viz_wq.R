@@ -386,18 +386,18 @@ aquifer_map <- function(in_sf,
       pattern_spacing = 0.01,    
       pattern_density = 0.01,    
       pattern_background = NA,
-      pattern_color = '#d1cdc0'
+      pattern_color = 'grey35'
     ) +
     scale_pattern_manual(values = c("yes" = "stripe", "no" = "none")) +
-    scale_pattern_fill_manual(values = c("yes" = "grey90", "no" = NA)) +
-    geom_sf(fill = "transparent", color = "#d1cdc0") +
+    scale_pattern_fill_manual(values = c("yes" = "grey60", "no" = NA)) +
+    geom_sf(fill = "transparent", color = "grey35") +
     geom_sf(data = outline, fill = 'transparent', color = "black", linewidth = 0.25) +
     scale_fill_manual(
-      values = c("yes" = "transparent", "no" = "grey90"),
+      values = c("yes" = "transparent", "no" = "grey60"),
       guide = "none"  # Remove legend for fill
     ) +
     scale_color_manual(
-      values = c("yes" = "#d1cdc0", "no" = "white"),  
+      values = c("yes" = "grey35", "no" = "white"),  
       guide = "none"  # Remove legend for color
     ) +
     theme_void() +

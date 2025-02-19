@@ -189,6 +189,8 @@ const orderedRegions = ["Pacific Northwest", "Columbia-Snake", "California-Nevad
 "Central High Plains", "Southern High Plains", "Texas", "Gulf Coast", "Mississippi Embayment", "Tennessee-Missouri", "Atlantic Coast", "Florida", 
 "Souris-Red-Rainy","Midwest", "Great Lakes", "Northeast"].reverse()
 
+const newOrder = ["Northeast", "Florida", "Central High Plains", "Texas", "Southern High Plains", "Tennessee-Missouri", "Atlantic Coast", "Great Lakes" , "Pacific Northwest", "Gulf Coast", "Midwest",  "Mississippi Embayment", "Central Rockies", "Northern High Plains",  "California-Nevada", "Columbia-Snake", "Souris-Red-Rainy", "Southwest Desert"].reverse()
+
 // Colors for bar chart (need to be updated along with CSS bephosphorus!)
 const categoryColors = {
         'Agriculture': 'var(--wq-agriculture)',
@@ -310,7 +312,7 @@ function createBarChart({ dataset, scaleLoad}) {
     (d3.index(dataset, d => d.region_nam, d => d.category));
 
   const regionScale = d3.scaleBand()
-    .domain(orderedRegions)
+    .domain(newOrder)
     .range([height, margin.top])
     .padding(0.1);
 

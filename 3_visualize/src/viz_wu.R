@@ -45,9 +45,10 @@ map_ir_or_ps <- function(in_sf,
             color = NA, linewidth = 0.1) +
     geom_sf(data = plot_sf, fill = color_fill, aes(alpha = alpha),
             color = NA, size = 0)  +
-    scale_alpha_identity() +
+    scale_alpha_continuous(name = "mgd", range = c(0, 1), guide = guide_legend(label.position = "bottom")) +
     theme_void() +
-    theme(legend.position = "none")
+    theme(legend.position = 'none')#+
+    #theme(legend.position = "bottom", guide = guide_legend(label.position = "bottom"))
   
   ggsave(plot = map,
          filename = png_out, device = "png", bg = "transparent",
@@ -89,11 +90,12 @@ map_te <- function(in_sf,
     theme_void() +
     geom_point(data = plot_sf, shape = 21,
                aes(geometry = geometry, size = mgd),
-               color = color_dot, fill = color_dot, stroke = 0,
+               fill = color_dot, stroke = 0.2,
+               color = 'white',
                stat = "sf_coordinates") +
     geom_point(data = plot_sf, shape = 21,
                aes(geometry = geometry, size = mgd),
-               color = "white", fill = color_dot, stroke = 0.2, alpha = 0.4,
+               fill = color_dot, stroke = 0, alpha = 1,
                stat = "sf_coordinates") +
     theme_void() +
     theme(legend.position = "none")

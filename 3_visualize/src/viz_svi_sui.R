@@ -22,6 +22,7 @@ map_svi_sui <- function(in_sf,
 
 map_sui <- function(in_sf,
                        in_regions,
+                      more_regions,
                        color_scheme,
                        png_out,
                        width,
@@ -35,11 +36,14 @@ map_sui <- function(in_sf,
                                  sui_category_5 == "Severe" ~ color_scheme$sui_severe))
   
   map <- ggplot(plot_sf) +
-    geom_sf(data = in_regions, 
-            fill = NA,
-            color = NA, linewidth = 0.1) +
     geom_sf(aes(fill = color_hex),
             color = NA, size = 0)  +
+    geom_sf(data = more_regions, 
+            fill = NA,
+            color = 'white', linewidth = 0.3) +
+    geom_sf(data = in_regions |> sf::st_union(), 
+            fill = NA,
+            color = 'black', linewidth = 0.1) +
     scale_fill_identity() +
     theme_void() +
     theme(legend.position = "none")
