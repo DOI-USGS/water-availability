@@ -4,7 +4,7 @@
         <div class="content-container">
             <div class="text-container">
                 <h2>The water cycle of the U.S.</h2>
-                <p>The water cycle describes how water moves through natural and human-modified landscapes. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of Mexico.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
+                <p>The water cycle describes how water moves through natural and human-modified landscapes. In the United States, a quarter of our daily water budget leaves through streamflow to Canada, the Atlantic and Pacific Oceans, or the Gulf of America.<span v-for="reference in theseReferences.filter(item => item.refID === 'Gorski2025')" :key="reference.refID" class="tooltip"> <sup class="in-text-number">{{ reference.referenceNumber }} </sup> <span class="tooltiptext"> {{ reference.label }}</span></span></p>
                 </div>
                 <div class="viz-container">
                     <img class="viz-landscape" :src="`${s3ProdURL}images/water-availability/04_watercycle.png`" alt="Stylized illustration of the water cycle of the lower 48 states for an average annual cycle. Water comes down as precipitation, flows through streamflow to other areas, gets stored or uptaken by humans or plants through consumptive use, or returns to the atmosphere through evapotranspiration.">
