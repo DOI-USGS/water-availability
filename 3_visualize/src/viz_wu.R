@@ -1,3 +1,13 @@
+#' @description Base map for irrigation and public supply
+#'
+#' @param in_sf target of spatial data frame
+#' @param layer irrigation or public supply, using code "ps" or "ir"
+#' @param in_regions regions spatial data frame for plotting
+#' @param aquifer_abbr aquifer abbreviation as defined through tar_map()
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png
 map_ir_or_ps <- function(in_sf,
                          layer,
                          in_regions,
@@ -55,6 +65,16 @@ map_ir_or_ps <- function(in_sf,
   
 }
 
+#' @description Bubble map for thermoelectric
+#'
+#' @param in_sf target of spatial data frame
+#' @param layer saline or fresh
+#' @param in_regions regions spatial data frame for plotting
+#' @param aquifer_abbr aquifer abbreviation as defined through tar_map()
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png
 map_te <- function(in_sf,
                    layer,
                    in_regions,

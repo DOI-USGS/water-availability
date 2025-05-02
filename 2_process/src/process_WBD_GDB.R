@@ -1,4 +1,12 @@
-## Spatial processing
+#' Initialize ScienceBase session and download files (large zipped files only)
+#'
+#' @param gbd_file chr; location of geodatabase
+#' @param layer chr; which layer to convert to sf
+#' @param crs_out chr; crs for output sf
+#' @param exclude_non_plot_hucs  logical, do you want to overwrite file?
+#'
+#' @return sf
+#' 
 prep_sf <- function(gdb_file,
                     layer, #ex "WBDHU8"
                     crs_out,

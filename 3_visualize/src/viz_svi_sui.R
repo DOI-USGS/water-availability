@@ -156,7 +156,15 @@ viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
   return(legend_out)
 }
 
-
+#' @description Put the elements of svi together into 
+#' 
+#' @param in_sf target of spatial data frame
+#' @param region name of the region, defined through tar_map()
+#' @param wu_type chr, code for which map to make. Uses codes in _targets.R
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png 
 compose_svi_plot <- function(in_map,
                              legend_n,
                              legend_prop,
