@@ -1,25 +1,11 @@
-map_svi_sui <- function(in_sf,
-                        color_scheme, png_out, width, height){
-  
-  plot_sf <- in_sf |>
-    filter( ! is.na(sui_category_3), ! is.na(svi_category)) |>
-    mutate(svi_factor = factor(svi_category,
-                               levels = c("Severe SVI", "High SVI", "Moderate SVI", "Low SVI"),
-                               labels = c("Severe", "High", "Moderate", "Low")))
-  
-  map <- ggplot(plot_sf) +
-    geom_sf(aes(fill = svi_factor),
-            color = NA, size = 0)  +
-    scico::scale_fill_scico_d(palette = "glasgow", begin  = 0.25, end = 0.6) +
-    theme_void() 
-  
-  
-  ggsave(plot = map,
-         filename = png_out, device = "png", bg = "transparent",
-         dpi = 300, units = "in", width = width, height = height)
-  
-}
-
+#' @description Map water supply and use index (water limitation)
+#' 
+#' @param in_sf target of spatial data frame
+#' @param in_regions spatial data frame of regions for mapping
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png 
 map_sui <- function(in_sf,
                        in_regions,
                        color_scheme,
@@ -50,6 +36,13 @@ map_sui <- function(in_sf,
   
 }
 
+#' @description Bar chart of monthly water supply and use index (water limitation)
+#' 
+#' @param in_df target of data frame with monthly water limitation
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png 
 plot_monthly_sui <- function(in_df, 
                              color_scheme,
                              png_out,
@@ -88,100 +81,3 @@ plot_monthly_sui <- function(in_df,
          dpi = 300, units = "in", width = width, height = height)
 }
 
-viz_svi_sui_legend <- function(in_df, legend_type, color_scheme){
-  
-  plot_df <- in_df |> 
-    mutate(sui_factor = factor(sui_category_3,
-                               levels = c("Low SUI",
-                                          "Medium SUI",
-                                          "High SUI"),
-                               labels = c("Low", "Med", "High")),
-           join_factor = factor(join_category,
-                                levels = c(
-                                  "High SUI-High SVI",
-                                  "High SUI-Moderate SVI",
-                                  "High SUI-Low SVI",
-                                  "Medium SUI-High SVI",
-                                  "Medium SUI-Moderate SVI",
-                                  "Medium SUI-Low SVI",
-                                  "Low SUI-High SVI",
-                                  "Low SUI-Moderate SVI",
-                                  "Low SUI-Low SVI")))
-  
-  palette <- c(
-    color_scheme$dry_red_vdark,
-    color_scheme$dry_red_dark,
-    color_scheme$dry_red_light,
-    color_scheme$mid_vdark,
-    color_scheme$mid_dark,
-    color_scheme$mid_cream,
-    color_scheme$wet_blue_dark,
-    color_scheme$wet_blue_light,
-    color_scheme$wet_blue_vlight)
-  
-  y_pos <- ifelse(legend_type == "Number", "stack", "fill")
-  legend_label <- ifelse(legend_type == "Explainer", 
-                         "Social Vulnerability", 
-                         legend_type)
-  
-  
-  legend <- ggplot(plot_df,
-                   ggplot2::aes(y = if(legend_type != "Explainer"){n_hucs} else {rep(100, 9)}, 
-                                x = sui_factor, fill = join_factor)) +
-    geom_bar(position = y_pos, stat = "identity") +
-    ylab(legend_label) +
-    xlab("Water limitation") 
-  
-  if(legend_type == "Explainer"){
-    legend_out <- legend + 
-      scale_fill_manual(values = palette) +
-      scale_y_continuous(breaks = c(0.15, 0.5, 0.85),
-                         labels = c("Low", "Med", "High")) +
-      theme_minimal() +
-      theme(legend.position = "none",
-            axis.title.y = element_text(size = 9, angle = 90),
-            axis.title.x = element_text(size = 9),
-            axis.text = element_text(size = 8))
-  } else {
-    legend_out <- legend +
-      # same styles as below
-      scale_fill_manual(values = palette) +
-      theme_minimal() +
-      theme(legend.position = "none",
-            axis.title.y = element_text(size = 9, angle = 90),
-            axis.title.x = element_text(size = 9),
-            axis.text = element_text(size = 8))
-  }
-  
-  return(legend_out)
-}
-
-#' @description Put the elements of svi together into 
-#' 
-#' @param in_sf target of spatial data frame
-#' @param region name of the region, defined through tar_map()
-#' @param wu_type chr, code for which map to make. Uses codes in _targets.R
-#' @param color_scheme named colors defined in a target
-#' @param width The size of the png width
-#' @param height The size of the png height
-#' @param png_out Location to save the png 
-compose_svi_plot <- function(in_map,
-                             legend_n,
-                             legend_prop,
-                             legend_explain,
-                             png_out,
-                             width, 
-                             height){
-  
-  final_plot <- ggdraw() +
-    draw_plot(in_map, x = 0, y = 0.1, width = 1, height = 1) +
-    draw_plot(legend_n, x = 0.4, y = 0.0, width = 0.25, height = 0.25) +
-    draw_plot(legend_prop, x = 0.7, y = 0.0, width = 0.25, height = 0.25) +
-    draw_plot(legend_explain, x = 0, y = 0, width = 0.35, height = 0.35) 
-  
-  ggsave(plot = final_plot,
-         filename = png_out, device = "png", bg = "transparent",
-         dpi = 300, units = "in", width = width, height = height)
-  
-  return(png_out)
-}
