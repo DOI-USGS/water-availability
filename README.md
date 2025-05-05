@@ -1,6 +1,12 @@
-# water-availability
+# {app_long_title}
+
+> _A newer version of the software may be available. See https://code.usgs.gov/wma/vizlab/{app_title}/-/releases to view all releases._
 
 This repository builds the Water Availability in the U.S. website at [https://water.usgs.gov/vizlab/water-availability/](https://water.usgs.gov/vizlab/water-availability). This website is powered by the USGS Vizlab ([portfolio link](https://labs.waterdata.usgs.gov/visualizations/vizlab-home/)).
+
+## Citation
+
+Archer, A.A., Carr, A., Corson-Dosch, H., Jaenicke, M., Azadpour, E., Vaarre-Lamoureux, K., Martinez, A., Nell, C. 2025. Water availability in the United States. U.S. Geological Survey software release. Reston, VA. [https://doi.org/{doi_of official_software_release}](https://doi.org/{doi_of_official_software_release})
 
 ### About the National Water Availability Assessment
 
