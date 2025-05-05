@@ -1,4 +1,7 @@
-# total loads by HUC12
+#' @description fetch water quality data
+#' 
+#' @param in_csv input pathway for raw data
+#' @param in_COMID_xwalk crosswalk to align COMID and HUC12s
 process_wq_HUC12 <- function(in_csv, in_COMID_xwalk){
   
   # read in COMID crosswalk
@@ -26,6 +29,9 @@ process_wq_HUC12 <- function(in_csv, in_COMID_xwalk){
   return(total_load_HUC12)
 }
 
+#' @description process HUC12 water quality data by HUC8
+#' 
+#' @param data_in data that was processed to HUC12
 process_wq_HUC8 <- function(data_in){
   # sum loads up by HUC8
   data_out <- data_in |>
@@ -39,7 +45,10 @@ process_wq_HUC8 <- function(data_in){
 
 
 
-# loads by category
+#' @description Read in loads by nutrient from water quality pipeline
+#' 
+#' @param in_csv input pathway for raw data
+#' @param nutrient nutrient name defined by tar_map()
 process_wq_data <- function(in_csv, nutrient){
   
   # generalize and standardize categories for website
