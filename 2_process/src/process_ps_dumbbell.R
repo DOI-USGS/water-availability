@@ -1,3 +1,8 @@
+#' @description Get water use data ready for dumbbell plots
+#' 
+#' @param raw_gw_in target of raw groundwater data
+#' @param raw_sw_in target of raw surfacewater data 
+#' @param water_year water year for analysis/plotting
 prep_for_dumbbell <- function(raw_gw_in, raw_sw_in, water_year){
   
   # List of the column headers in format YYYY_MM for *water year*

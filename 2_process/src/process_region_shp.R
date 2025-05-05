@@ -1,6 +1,9 @@
 #' @title Prepare the shapefiles into sf for creating svgs/maps
 #' @param in_shp The shapefile pathway that is used to build the sf
 #' 
+#' @description Prepare and simplify region shapefile for plotting
+#' 
+#' @param in_shp in raw shapefile 
 regions_to_sf <- function(in_shp){
   hr <- st_read(in_shp)
   

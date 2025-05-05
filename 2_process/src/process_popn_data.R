@@ -1,3 +1,7 @@
+#' @description prep population data for analysis and plotting
+#' 
+#' @param popn_in raw population data
+#' @param crosswalk_in information to crosswalk between comid and hucs
 clean_popn_data <- function(popn_in,
                             crosswalk_in){
   
@@ -15,7 +19,10 @@ clean_popn_data <- function(popn_in,
   return(popn_join)
 }
 
-
+#' @description Join water limitation and population data
+#' 
+#' @param sui_in target of water limitation data
+#' @param popn_in cleaned population data
 join_popn_to_sui <- function(sui_in, popn_in){
   
   # join data sets
@@ -32,6 +39,11 @@ join_popn_to_sui <- function(sui_in, popn_in){
   
 }
 
+#' @description Prepare population data for circles map
+#' 
+#' @param in_df population data
+#' @param in_svi water limitation data
+#' @param in_sf regions for mapping 
 popn_for_bubbles <- function(in_df, in_svi, in_sf){
   # remove unnecessary columns of in_df
   df_simpler <- in_df |>

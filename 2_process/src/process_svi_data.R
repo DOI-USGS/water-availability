@@ -1,3 +1,8 @@
+#' @description calculate mean social vulnerability index by huc
+#' 
+#' @param data_in raw svi data
+#' @param HUC_level the huc level, either HUC8 or HUC12
+#' @param thresholds The social vulnerability thresholds used for plotting
 mean_svi <- function(data_in,
                      HUC_level,
                      thresholds){
@@ -32,7 +37,11 @@ mean_svi <- function(data_in,
   return(out_categorized)
 }
 
-## Join SVI and SUI by categories for treemap, proportional charts, etc
+#' @description Join SVI and SUI by categories for charts
+#' 
+#' @param svi_in processed/cleaned svi data
+#' @param sui_in processed/cleaned sui data
+#' @param HUC_level the huc level, either HUC8 or HUC12
 join_svi_sui <- function(svi_in, sui_in, HUC_level){
   
   # create joining variables
