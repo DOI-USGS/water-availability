@@ -1,6 +1,6 @@
-# {app_long_title}
+# Water availability in the United States
 
-> _A newer version of the software may be available. See https://code.usgs.gov/wma/vizlab/{app_title}/-/releases to view all releases._
+> _A newer version of the software may be available. See https://code.usgs.gov/wma/vizlab/water-availability/-/releases to view all releases._
 
 This repository builds the Water Availability in the U.S. website at [https://water.usgs.gov/vizlab/water-availability/](https://water.usgs.gov/vizlab/water-availability). This website is powered by the USGS Vizlab ([portfolio link](https://labs.waterdata.usgs.gov/visualizations/vizlab-home/)).
 
@@ -40,7 +40,7 @@ OR
 git clone https://code.usgs.gov/wma/vizlab/water-availability.git
 ```
 
-## To reproduce the figures in the website
+## To reproduce the figures in the website with the R pipeline
 
 > Note: You do **not** need to build the R-based figures or datasets to rebuild the website. The repository will build the website using the Vue instructions below. These instructions are for those wanting to reproduce the figures using R directly.
 
