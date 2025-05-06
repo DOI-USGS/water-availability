@@ -1,4 +1,13 @@
-# Dumbbell chart to show total water use for gw versus sw
+# 
+#' @description Dumbbell chart to show total water use for gw versus sw
+#' 
+#' @param in_sf target of spatial data frame
+#' @param region name of the region, defined through tar_map()
+#' @param wu_type chr, code for which map to make. Uses codes in _targets.R
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png 
 dumbbell_gw_v_sw <- function(in_sf,
                              region,
                              wu_type,

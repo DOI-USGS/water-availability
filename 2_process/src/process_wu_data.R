@@ -1,5 +1,6 @@
-# Pivot water use data from wide format (year-mo columns)
-# to long format
+#' @description pivot water use data from wide format to long format
+#' 
+#' @param data wide format data
 data_pivot_long <- function(data) {
   data %>%
     pivot_longer(cols = starts_with('20'), 
@@ -9,16 +10,21 @@ data_pivot_long <- function(data) {
                  values_to = 'wu_mgd')
 }
 
-# Add Source (gw or sw) and Use (te, ps, or ir)
+#' @description add source (gw or sw) amd type (saline etc)
+#' 
+#' @param data data in 
+#' @param use_type use name
+#' @param source_type source name
 data_add_source_use_type <- function(data, use_type, source_type) {
   data %>%
     mutate(use_type = use_type, source_type = source_type)
 }
 
-#################
-# LOAD
-#
-# Load data and use the functions above for processing
+#' @description load raw data and then pivot, add source, type
+#' 
+#' @param data_path raw data path
+#' @param use_type use name
+#' @param source_type source name
 load_wu_data <- function(data_path, use_type, source_type) {
   readr::read_csv(data_path,
                   show_col_types = FALSE) %>%
@@ -27,10 +33,11 @@ load_wu_data <- function(data_path, use_type, source_type) {
     data_add_source_use_type(use_type = use_type, source_type = source_type)
 }
 
-########################
-#
-#    AVERAGE WU OVER YEARS
-#
+#' @description average water use over years
+#' 
+#' @param ... raw data files
+#' @param min_year minimum year for averaging
+#' @param max_year maximum year for averaging
 mean_wu_HUC12 <- function(..., min_year, max_year) {
   data_in <- bind_rows(...) |>
     rename(HUC12 = HUC)
@@ -86,10 +93,11 @@ mean_wu_HUC12 <- function(..., min_year, max_year) {
 }
 
 
-##############################################################################
-#
-#       total water use by year
-#
+#' @description calculate total water use by year
+#' 
+#' @param ... raw data files
+#' @param min_year minimum year to calculate
+#' @param max_year maximum year to calculate
 total_wu_yearly <- function(...,
                             min_year,
                             max_year){
@@ -142,10 +150,12 @@ total_wu_yearly <- function(...,
   
 }
 
-#################################
-## plotting ternary plot
-##
-# Set up non-spatial data for merging with spatial (total water use, ternary plot, etc)
+#' @description Set up non-spatial data for merging with spatial (total water use, ternary plot, etc)
+#' 
+#' @param ps_in public supply data
+#' @param ir_in crop irrigation data
+#' @param te_in thermoelectric data
+#' @param color_scheme target for named color hex codes
 total_wu_proportions <- function(ps_in, ir_in, te_in, 
                                  color_scheme){
   
@@ -172,7 +182,9 @@ total_wu_proportions <- function(ps_in, ir_in, te_in,
   return(summary)
 }
 
-# create state summaries
+#' @description summarize by state
+#' 
+#' @param in_sf input spatial data 
 summary_wu_by_state <- function(in_sf){
   
   # Expand each HUC to its state (some hucs overlap states)
@@ -202,7 +214,9 @@ summary_wu_by_state <- function(in_sf){
   
 }
 
-# create regional summaries
+#' @description Create spatial summaries by regions for d3
+#' 
+#' @param in_sf spatial data
 summary_wu_by_Reg <- function(in_sf){
   
   # Long form

@@ -28,7 +28,7 @@
 
   // define feature toggles
   // reactive feature toggles
-  const previewSiteLogic = true; // change this one setting to toggle preview site on and off
+  const previewSiteLogic = false; // change this one setting to toggle preview site on and off
   const featureToggles = reactive({
     keyFindingToggles: {
       keyFinding01: true, // always true
@@ -67,3 +67,8 @@
   }
 </script>
 
+<style>
+#window-size-component {
+  width: 200px;
+}
+</style>

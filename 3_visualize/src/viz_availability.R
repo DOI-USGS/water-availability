@@ -1,4 +1,11 @@
-
+#' @description Create maps of integrated water availability
+#' 
+#' @param in_df target of data frame
+#' @param wa_type chr, code for which map to make. Uses codes in _targets.R
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png Location to save the png 
 water_avail_map <- function(in_df, wa_type, color_scheme, png_out, width, height){
   
   plot_data <- in_df |> 

@@ -276,27 +276,6 @@ p3_targets <- list(
                format = "file"),
     names = nutrient
   ),
-  ## Create treemaps for Drinking water, fish consumption, and recreation
-  tar_map(
-    values = tibble(useAbbr = c("DW", "Fish", "Rec")),
-    tar_target(p2_wq_treemap_png,
-               wq_treemap(in_df = p2_wq_threats_df,
-                          useAbbr = useAbbr,
-                          color_scheme = p3_colors_wq,
-                          png_out = sprintf("src/assets/images/R/06_wq_treemap_%s.pdf", useAbbr),
-                          width = 3,
-                          height = 4),
-               format = "file"),
-    tar_target(p2_wq_treemap_mobile_png,
-               wq_treemap(in_df = p2_wq_threats_df,
-                          useAbbr = useAbbr,
-                          color_scheme = p3_colors_wq,
-                          png_out = sprintf("src/assets/images/R/06_wq_treemap_mobile_%s.pdf", useAbbr),
-                          width = 4,
-                          height = 2),
-               format = "file"),
-    names = useAbbr
-  ),
   
   
   ##############################################

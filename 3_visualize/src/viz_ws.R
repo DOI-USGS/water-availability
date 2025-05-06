@@ -1,3 +1,11 @@
+#' @description Bar chart showing deviations from mean for water supply categories
+#'
+#' @param in_data target of water quality data
+#' @param region regions defined through tar_map()
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png
 plot_deviations <- function(data_in, region, width, height, png_out, color_scheme){
   
   # set up factors for plotting

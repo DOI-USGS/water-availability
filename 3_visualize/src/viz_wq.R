@@ -1,27 +1,14 @@
-viz_wq_bars <- function(in_df,
-                        region,
-                        color_scheme,
-                        fonts,
-                        png_out,
-                        width,
-                        height){
-  
-  plot_df <- in_df |> filter(aggregion_nam == region)
-  # stacked bar
-  (bar_plot <- ggplot(data = plot_df, 
-                      aes(x = region_nam, y = total_load, color = category)) +
-     geom_bar(stat = "identity", position = "stack") +
-     ggtitle(region) 
-     
-  )
-  
-  
-  ggsave(filename = png_out, 
-         width = width, height = height, dpi = 300)
-  
-  return(png_out)
-}
 
+
+#' @description map of water quality
+#'
+#' @param in_sf target of spatial data frame
+#' @param nutrient name of the nutrient, defined through tar_map()
+#' @param regions_sf target of spatial regions for mapping
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png
 map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
                    width, height, png_out){
   
@@ -79,6 +66,17 @@ map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
   return(png_out)
 }
 
+#' @description Geofacet map of water quality by aquifer
+#'
+#' @param in_df target of water quality data
+#' @param in_sf target of spatial data frame
+#' @param in_states state boundaries for plotting
+#' @param in_geogrid geofacet grid for plotting
+#' @param aquifer_abbr aquifer abbreviation as defined through tar_map()
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png
 wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid, 
                         aquifer_abbr, color_scheme,
                         png_out, width, height){
@@ -273,6 +271,17 @@ wq_geofacet <- function(in_df, in_sf, in_states, in_geogrid,
   return(png_out)
 }
 
+#' @description Geofacet map of water quality by aquifer, without underlying basemap
+#'
+#' @param in_df target of water quality data
+#' @param in_sf target of spatial data frame
+#' @param in_states state boundaries for plotting
+#' @param in_geogrid geofacet grid for plotting
+#' @param aquifer_abbr aquifer abbreviation as defined through tar_map()
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png
 wq_geofacet_nobase <- function(in_df, in_sf, in_states, in_geogrid, 
                         aquifer_abbr, color_scheme,
                         png_out, width, height){
@@ -349,6 +358,14 @@ wq_geofacet_nobase <- function(in_df, in_sf, in_states, in_geogrid,
   return(png_out)
 }
 
+#' @description Map of the aquifers
+#'
+#' @param in_sf target of spatial data frame
+#' @param in_states state boundaries for plotting
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png
 aquifer_map <- function(in_sf, 
                         in_states, 
                         width, height, 
@@ -394,43 +411,6 @@ aquifer_map <- function(in_sf,
   ggsave(plot = plot_states,
          filename = png_out, device = "png", bg = "transparent",
          dpi = 300, units = "in", width = width, height = height)
-  
-  return(png_out)
-}
-
-wq_treemap <- function(in_df, useAbbr, color_scheme,
-                        png_out, width, height){
-
-  plot_df <- in_df |> filter(UseAbbr == useAbbr)
-  
-  # png(png_out,
-  #     width = width,
-  #     height = height,
-  #     res = 300,
-  #     units = "px")
-  pdf(file = png_out,
-      width = width,
-      height = height)
-  out_plot <- treemap(dtf = plot_df,
-          index = c("Category", "Parameter"),
-          vSize = "riverMiles",
-          vColor = "Category",
-          type = "categorical",
-          border.col = "white",
-          border.lwds = c(0.4,0.4),
-          bg.labels = 255,
-          position.legend = "none",
-          palette = c(color_scheme$biotic,
-                      color_scheme$metals,
-                      color_scheme$nutrients,
-                      color_scheme$organics,
-                      color_scheme$salinity,
-                      color_scheme$sediment,
-                      color_scheme$temp,
-                      color_scheme$unimpaired),
-          fontsize.title = 0,
-          fontsize.labels = 0)
-  dev.off()
   
   return(png_out)
 }

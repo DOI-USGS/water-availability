@@ -1,3 +1,10 @@
+#' @description Compare water supply means to prep for plotting deviations
+#' 
+#' @param data_in water supply data
+#' @param supply_name supply name, like precip or et
+#' @param min_year minimum year to calculate means
+#' @param max_year maximum year to calculate means
+#' @param xwalk information about area size for area weighted means
 compare_ws_mean <- function(data_in, supply_name, min_year, max_year, xwalk){
   
   # read in raw data from csv

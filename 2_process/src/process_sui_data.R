@@ -1,3 +1,10 @@
+#' @description Calculate mean surface water supply and use index by given time span
+#' 
+#' @param data_in raw water limitation data
+#' @param HUC_level HUC8 or HUC12
+#' @param min_year minimum year to average over
+#' @param max_year maximum year to average over
+#' @param by_yearL logical, one mean across years (FALSE), or mean by year (TRUE)
 mean_sui <- function(data_in,
                      HUC_level, 
                      min_year = NULL, 
@@ -46,7 +53,10 @@ mean_sui <- function(data_in,
   return(out_categorized)
 }
 
-### for timeline, calculate number of hucs in each sui category by month
+### 
+#' @description for timeline, calculate number of hucs in each sui category by month
+#' 
+#' @param data_in sui data
 monthly_sui <- function(data_in){
 
   monthly <- data_in |>
@@ -64,6 +74,9 @@ monthly_sui <- function(data_in){
   
 }
 
+#' @description evaluate supply versus demand for plotting
+#' 
+#' @param data_path path of raw data frame
 process_supply_v_demand <- function(data_path){
   
   raw_data <- readr::read_csv(data_path,
@@ -85,6 +98,10 @@ process_supply_v_demand <- function(data_path){
   
 }
 
+#' @description calculate statistics for website
+#' 
+#' @param in_sf target of spatial data frame
+#' @param out_csv location to save csv
 create_stats <- function(in_sf, out_csv){
   
   in_df <- in_sf |> 
@@ -116,6 +133,9 @@ create_stats <- function(in_sf, out_csv){
 }
 
 
+#' @description Calculate summary statistics by state for website 
+#' 
+#' @param in_sf target of spatial data frame
 summary_sui_by_state <- function(in_sf){
   
   # Expand each HUC to its state (some hucs overlap states)

@@ -1,3 +1,10 @@
+#' @description Map with circles showing social vulnerability
+#' 
+#' @param in_sf target of spatial data frame
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png 
 viz_popn_circles <- function(in_sf, 
                              color_scheme,
                              png_out,
@@ -47,6 +54,15 @@ viz_popn_circles <- function(in_sf,
   return(png_out)
 }
 
+#' @description Bar chart to show social vulnerability versus water limitation
+#' 
+#' @param in_sf target of spatial data frame
+#' @param svi_break categorization used for social vulnerability
+#' @param svi_label labels used for social vulnerability
+#' @param color_scheme named colors defined in a target
+#' @param width The size of the png width
+#' @param height The size of the png height
+#' @param png_out Location to save the png 
 viz_popn_barchart <- function(in_sf, svi_break, svi_label, width, height, color_scheme, png_out){
   
   raw_sf <- in_sf |>

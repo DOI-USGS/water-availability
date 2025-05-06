@@ -1,3 +1,7 @@
+#' @description Prepare water quality data for d3
+#' 
+#' @param data_in summary data by use and constituent
+#' @param unimpair_miles total number of unimpaired models (from paper)
 prep_wq_for_sankey <- function(data_in, unimpair_miles){
   raw_data <- readr::read_csv(data_in,
                               show_col_types = FALSE)
@@ -63,6 +67,12 @@ prep_wq_for_sankey <- function(data_in, unimpair_miles){
   
 }
 
+#' @description Summary of water quality by area using custom breaks
+#' 
+#' @param in_sf spatial data 
+#' @param nutrient nutrient abbreviation from tar_map()
+#' @param out_csv csv path to save results
+#' @param by either region or state by which to summarize data
 summary_wq_by_area <- function(in_sf, nutrient, out_csv, by = c("region", "state")){
   by <- match.arg(by)
   
