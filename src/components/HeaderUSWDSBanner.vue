@@ -111,95 +111,20 @@
     padding: 0;
   }
   .usa-banner__inner {
-    margin-left: 1rem;
-    padding-left: 0.5rem;
+    margin-left: 10px;
+    padding-left: 5px;
   }
   .usa-banner__header--expanded .usa-banner__inner {
-    margin-left: 1rem;
-    padding-left: 0.5rem;
-  }
-  .usa-banner__header-flag {
-    width: 1.6rem;
-    margin-right: 0.75rem;
+    margin-left: 10px;
+    padding-left: 5px;
   }
   .usa-banner__button {
     color: #78B4E8;
-  }
-  .usa-accordion__button[aria-expanded=false] {
-    background-size: 2.4rem;
-  }
-  @media (min-width: 600px) {
-    .usa-banner__header {
-      padding-top: 0.4rem;
-      padding-bottom: 0.4rem;
-    }
-    .usa-banner__header-text {
-      font-size: 1.4rem;
-    }
-    .usa-banner__button {
-      font-size: 1.4rem;
-    }
-    .usa-banner__button::after {
-      background-size:1.6rem 1.6rem;
-      height: 1.6rem;
-      width: 1.6rem;
-    }
-    .usa-banner__button[aria-expanded=true]::after {
-      height: 1.6rem;
-      width: 1.6rem;
-    }
-    @supports ((-webkit-mask: url("")) or (mask: url(""))) {
-      .usa-banner__button::after {
-        -webkit-mask-size: 1.6rem 1.6rem;
-        mask-size: 1.6rem 1.6rem;
-      }
-      .usa-banner__button[aria-expanded=true]::after {
-        -webkit-mask-size: 1.6rem 1.6rem;
-        mask-size: 1.6rem 1.6rem;
-      }
-    }
-  }
-  .usa-banner__header-action::after{
-    background-size:1.6rem 1.6rem;
-    height: 1.6rem;
-    width: 1.6rem;
+    margin-left: 5px;
   }
   @supports ((-webkit-mask: url("")) or (mask: url(""))){
     .usa-banner__header-action::after{
-      -webkit-mask-size:1.6rem 1.6rem;
-              mask-size:1.6rem 1.6rem;
       background-color:#78B4E8;
-    }
-  }
-  @media screen and (max-width: 600px) {
-    .usa-banner__header {
-      padding-top: 0.8rem;
-      padding-bottom: 0.8rem;
-    }
-    .usa-banner__header-text {
-      font-size: 1.35rem;
-    }
-    .usa-banner__header-action {
-      font-size: 1.35rem;
-    }
-    .usa-banner__button[aria-expanded=true]::before {
-      background-color: #e6e6e6;
-      height: 4.8rem;
-      width: 4.8rem;
-    }
-    .usa-banner__button[aria-expanded=true]::after {
-      height: 4.8rem;
-      width: 4.8rem;
-    }
-    @supports ((-webkit-mask: url("")) or (mask: url(""))) {
-      .usa-banner__button::after {
-        -webkit-mask-size: 2.4rem 2.4rem;
-        mask-size: 2.4rem 2.4rem;
-      }
-      .usa-banner__button[aria-expanded=true]::after {
-        -webkit-mask-size: 2.4rem 2.4rem;
-        mask-size: 2.4rem 2.4em;
-      }
     }
   }
   .usa-banner__button::after {
@@ -221,20 +146,23 @@
     background-color: #A2CCF1;
   }
   .usa-banner .grid-row.grid-gap-lg {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-  .usa-media-block__img {
-    margin-right: 0.75rem;
+  .usa-banner .grid-row.grid-gap-lg > * {
+    padding-left: 7.5px;
+    padding-right: 7.5px;
   }
-  .usa-banner__content {
-    font-size: 1.6rem;
-    max-width: 100rem;
+  @media (min-width: 40em) {
+    .usa-banner__content {
+      padding-bottom: 15px;
+      padding-top: 15px;
+    }
   }
-  .usa-banner__content p {
-    font-size: 1.6rem;
-  }
-  .usa-banner__icon {
-    width: 4rem;
+  @media (min-width: 64em) {
+    .usa-banner__content[data-v-b844fd4d] {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
   }
 </style>
