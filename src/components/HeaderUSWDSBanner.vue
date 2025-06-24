@@ -29,14 +29,14 @@
             type="button"
             class="usa-accordion__button usa-banner__button"
             aria-expanded="false"
-            aria-controls="gov-banner-default-default"
+            aria-controls="gov-banner-default"
           >
             <span class="usa-banner__button-text">Here’s how you know</span>
           </button>
         </div>
       </header>
       <div
-        id="gov-banner-default-default"
+        id="gov-banner-default"
         class="usa-banner__content usa-accordion__content"
       >
         <div class="grid-row grid-gap-lg">
@@ -68,24 +68,25 @@
               <p>
                 <strong>Secure .gov websites use HTTPS</strong><br>A
                 <strong>lock</strong> (
-                <span class="icon-lock"><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="52"
-                  height="64"
-                  viewBox="0 0 52 64"
-                  class="usa-banner__lock-image"
-                  role="img"
-                  aria-labelledby="banner-lock-description-default"
-                  focusable="false"
-                >
-                  <title id="banner-lock-title-default">Lock</title>
-                  <desc id="banner-lock-description-default">Locked padlock icon</desc>
-                  <path
-                    fill="#000000"
-                    fill-rule="evenodd"
-                    d="M26 0c10.493 0 19 8.507 19 19v9h3a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V32a4 4 0 0 1 4-4h3v-9C7 8.507 15.507 0 26 0zm0 8c-5.979 0-10.843 4.77-10.996 10.712L15 19v9h22v-9c0-6.075-4.925-11-11-11z"
-                  />
-                </svg> </span>) or <strong>https://</strong> means you’ve safely connected to
+                <span class="icon-lock">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="52"
+                    height="64"
+                    viewBox="0 0 52 64"
+                    class="usa-banner__lock-image"
+                    role="img"
+                    aria-labelledby="banner-lock-description-default"
+                    focusable="false"
+                  >
+                    <title id="banner-lock-title-default">Lock</title>
+                    <desc id="banner-lock-description-default">Locked padlock icon</desc>
+                    <path
+                      fill="#000000"
+                      fill-rule="evenodd"
+                      d="M26 0c10.493 0 19 8.507 19 19v9h3a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V32a4 4 0 0 1 4-4h3v-9C7 8.507 15.507 0 26 0zm0 8c-5.979 0-10.843 4.77-10.996 10.712L15 19v9h22v-9c0-6.075-4.925-11-11-11z"
+                    />
+                  </svg> </span>) or <strong>https://</strong> means you’ve safely connected to
                 the .gov website. Share sensitive information only on official,
                 secure websites.
               </p>
@@ -117,23 +118,20 @@
     margin-left: 10px;
     padding-left: 5px;
   }
-  .usa-banner__header-flag {
-    width: 16px;
-    margin-right: 7.5px;
-  }
-  .usa-banner__header-text {
-    font-size: 14px;
-  }
   .usa-banner__button {
-    font-size: 14px;
     color: #78B4E8;
     margin-left: 5px;
+  }
+  @supports ((-webkit-mask: url("")) or (mask: url(""))){
+    .usa-banner__header-action::after{
+      background-color:#78B4E8;
+    }
   }
   .usa-banner__button::after {
     background-color: #78B4E8;
   }
   .usa-banner__button[aria-expanded=true]::before {
-    background-color: #00264C;
+    background-color: transparent; /* #00264C;*/
   }
   .usa-banner__button[aria-expanded=true]::after {
     background-color: #78B4E8;
@@ -151,8 +149,9 @@
     padding-left: 20px;
     padding-right: 20px;
   }
-  .usa-media-block__img {
-    margin-right: 7.5px;
+  .usa-banner .grid-row.grid-gap-lg > * {
+    padding-left: 7.5px;
+    padding-right: 7.5px;
   }
   .usa-banner__content {
     font-size: 16px;
@@ -169,8 +168,5 @@
       padding-right: 20px;
       padding-left: 20px;
     }
-  }
-  .usa-banner__icon {
-    width: 40px;
   }
 </style>

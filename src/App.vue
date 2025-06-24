@@ -8,6 +8,7 @@
       v-if="typeOfEnv !== ''"
     />
     <RouterView />
+    <PreFooterCodeLinks />
     <FooterUSGS />
   </div>
 </template>
@@ -21,6 +22,7 @@
   import WorkInProgressWarning from "./components/WorkInProgressWarning.vue";
   import FooterUSGS from './components/FooterUSGS.vue';
   import { useWindowSizeStore } from './stores/WindowSizeStore';
+  import PreFooterCodeLinks from "@/components/PreFooterCodeLinks.vue";
 
   const windowSizeStore = useWindowSizeStore();
   const typeOfEnv = import.meta.env.VITE_APP_TIER;
