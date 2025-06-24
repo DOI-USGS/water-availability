@@ -153,16 +153,20 @@
     padding-left: 7.5px;
     padding-right: 7.5px;
   }
-  @media (min-width: 40em) {
-    .usa-banner__content {
+  .usa-banner__content {
+    font-size: 16px;
+    max-width: 1000px;
+    padding-bottom: 10px;
+    padding-top: 2.5px;
+    padding-right: 10px;
+    padding-left: 5px;
+    @media only screen and (min-width: 40em) {
       padding-bottom: 15px;
       padding-top: 15px;
     }
-  }
-  @media (min-width: 64em) {
-    .usa-banner__content {
-        padding-left: 20px;
-        padding-right: 20px;
+    @media only screen and (min-width: 64em) {
+      padding-right: 20px;
+      padding-left: 20px;
     }
   }
 </style>
