@@ -160,7 +160,7 @@
     }
   }
   @media (min-width: 64em) {
-    .usa-banner__content[data-v-b844fd4d] {
+    .usa-banner__content {
         padding-left: 20px;
         padding-right: 20px;
     }
