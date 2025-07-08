@@ -36,5 +36,43 @@
     "date": {
       "metadataLastUpdated": "2025-05-05"
     }
+  },
+  {
+    "name": "water-availability",
+    "organization": "U.S. Geological Survey",
+    "description": "This interactive website highlights key scientific findings of the National Water Availability Assessment report through engaging stories, plain-language explanations, and interactive data visualizations.",
+    "version": "1.0.0",
+    "status": "Production",
+    "permissions": {
+      "usageType": "openSource",
+      "licenses": [
+        {
+          "name": "Public Domain, CC0-1.0",
+          "URL": "https://code.usgs.gov/wma/vizlab/water-availability/-/raw/1.0.0/LICENSE.md"
+        }
+      ]
+    },
+    "homepageURL": "https://water.usgs.gov/vizlab/water-availability/",
+    "downloadURL": "https://code.usgs.gov/wma/vizlab/water-availability/-/archive/1.0.0/water-availability-main.zip",
+    "disclaimerURL": "https://code.usgs.gov/wma/vizlab/water-availability/-/raw/1.0.0/DISCLAIMER.md",
+    "repositoryURL": "https://code.usgs.gov/wma/vizlab/water-availability.git",
+    "vcs": "git",
+    "laborHours": 650,
+    "tags": [
+      "R",
+      "USGS"
+    ],
+    "languages": [
+      "R",
+      "Vue",
+      "JavaScript"
+    ],
+    "contact": {
+      "name": "Althea Archer",
+      "email": "aaarcher@usgs.gov"
+    },
+    "date": {
+      "metadataLastUpdated": "2025-07-08"
+    }
   }
 ]
