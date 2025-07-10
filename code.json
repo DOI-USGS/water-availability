@@ -53,7 +53,7 @@
       ]
     },
     "homepageURL": "https://water.usgs.gov/vizlab/water-availability/",
-    "downloadURL": "https://code.usgs.gov/wma/vizlab/water-availability/-/archive/1.0.0/water-availability-main.zip",
+    "downloadURL": "https://code.usgs.gov/wma/vizlab/water-availability/-/archive/1.0.0/water-availability-1.0.0.zip",
     "disclaimerURL": "https://code.usgs.gov/wma/vizlab/water-availability/-/raw/1.0.0/DISCLAIMER.md",
     "repositoryURL": "https://code.usgs.gov/wma/vizlab/water-availability.git",
     "vcs": "git",
