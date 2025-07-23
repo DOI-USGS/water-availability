@@ -33,6 +33,9 @@ map_wq <- function(in_sf, nutrient, regions_sf, color_scheme,
     )
   }
   
+  # need to filter out Florida HUCs where data are actually missing
+  plot_sf <- dplyr::filter(plot_sf, load != 0)
+  
   map <- ggplot(plot_sf) +
     geom_sf(
       data = regions_sf,
