@@ -266,6 +266,11 @@ p3_targets <- list(
     values = tibble::tibble(nutrient = c("tn", "tp"),
                             title = c("Increasing nitrogen load",
                                       "Increasting phosphorus load")),
+    # Note that some areas have no predictions. These areas are southern Florida 
+    # and throughout the Northwest and California. ... In the Southeast, areas 
+    # substantially affected by water diversions were excluded because they may 
+    # not reflect source and transport conditions in the topographic watershed. 
+    # See Hoos and Roland (2019) for more information on the methodologies.
     tar_target(p3_wq_map_HUC12_png,
                map_wq(in_sf = p2_HUC12_join_wq_sf,
                       nutrient = nutrient,
