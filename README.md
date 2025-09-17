@@ -6,7 +6,7 @@ This repository builds the Water Availability in the U.S. website at [https://wa
 
 ## Citation
 
-Archer, A.A., Carr, A., Corson-Dosch, H., Jaenicke, M., Azadpour, E., Vaarre-Lamoureux, K., Martinez, A., Nell, C. 2025. Water availability in the United States. U.S. Geological Survey software release. Reston, VA. [https://doi.org/{doi_of official_software_release}](https://doi.org/{doi_of_official_software_release})
+Archer, A.A., Carr, A., Corson-Dosch, H., Jaenicke, M., Azadpour, E., Vaarre-Lamoureux, K., Martinez, A., Nell, C. 2025. Water availability in the United States. U.S. Geological Survey software release. Reston, VA. [https://doi.org/10.5066/P13OQWZX](https://doi.org/10.5066/P13OQWZX)
 
 ### About the National Water Availability Assessment
 
