@@ -3,6 +3,7 @@
     <WindowSize v-if="typeOfEnv === '-test build-'" />
     <HeaderUSWDSBanner v-if="typeOfEnv !== '-test build-'" />
     <HeaderUSGS />
+    <!-- <ShutdownBanner /> -->
     <!-- Render the WorkInProgressWarning component only if typeOfEnv is not empty -->
     <WorkInProgressWarning
       v-if="typeOfEnv !== ''"
@@ -19,6 +20,7 @@
   import WindowSize from "./components/WindowSize.vue";
   import HeaderUSWDSBanner from "./components/HeaderUSWDSBanner.vue";
   import HeaderUSGS from './components/HeaderUSGS.vue';
+  // import ShutdownBanner from './components/ShutdownBanner.vue';
   import WorkInProgressWarning from "./components/WorkInProgressWarning.vue";
   import FooterUSGS from './components/FooterUSGS.vue';
   import { useWindowSizeStore } from './stores/WindowSizeStore';
