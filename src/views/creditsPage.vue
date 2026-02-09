@@ -32,7 +32,7 @@
     </div>
     <div class="authors-container">
       <p>
-          This website was developed by the <a href='https://labs.waterdata.usgs.gov/visualizations/' target='_blank'>USGS Vizlab</a> in collaboration with the <a href="https://www.usgs.gov/iwaas" target="_blank">National Integrated Water Availability Assessment</a> Report team.  
+          This website was developed by the <a href='https://https://water.usgs.gov/vizlab/' target='_blank'>USGS Vizlab</a> in collaboration with the <a href="https://www.usgs.gov/iwaas" target="_blank">National Integrated Water Availability Assessment</a> Report team.  
         </p>
       <h2>Meet the Vizlab Team</h2>
         <div class="portrait-container">
