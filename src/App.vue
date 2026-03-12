@@ -9,14 +9,14 @@
       v-if="typeOfEnv !== ''"
     />
     <RouterView />
-    <PreFooterCodeLinks />
+    <PreFooterCodeLinks :use-blue-background="isLandingPage" />
     <FooterUSGS />
   </div>
 </template>
 
 <script setup>
-  import { reactive, provide, onMounted } from "vue";
-  import { RouterView } from 'vue-router'
+  import { reactive, provide, onMounted, computed } from "vue";
+  import { RouterView, useRoute } from 'vue-router'; 
   import WindowSize from "./components/WindowSize.vue";
   import HeaderUSWDSBanner from "./components/HeaderUSWDSBanner.vue";
   import HeaderUSGS from './components/HeaderUSGS.vue';
@@ -29,6 +29,12 @@
   const windowSizeStore = useWindowSizeStore();
   const typeOfEnv = import.meta.env.VITE_APP_TIER;
   const animateTime = 400;
+  
+  const route = useRoute();
+
+  const isLandingPage = computed(() =>
+    route.path === '/' || route.path === '/index.html'
+  )
 
   // define feature toggles
   // reactive feature toggles

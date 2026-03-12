@@ -1,5 +1,7 @@
 <template>
-  <div class="pre-footer-links">
+  <div class="pre-footer-links"
+      :class="{ 'pre-footer-links--landing': useBlueBackground }"
+  >
     <div class="pre-footer-links__divider" />
     <div class="pre-footer-links__content">
       <a
@@ -29,6 +31,13 @@
 <script setup>
   import { isMobileOnly } from 'mobile-device-detect';
 
+  defineProps({
+    useBlueBackground: {
+      type: Boolean,
+      default: false,
+    },
+  })
+
   // global variables
   const mobileView = isMobileOnly;
 
@@ -42,6 +51,10 @@
   font-family: 'Noto Sans', sans-serif;
   font-size: 1rem;
   color: #1e1e1e;
+  
+  &--landing {
+    background-color: var(--blue-light);
+  }
 
   &__divider {
     border-top: 1px solid #d4d8dd;
