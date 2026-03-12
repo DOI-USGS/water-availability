@@ -11,6 +11,9 @@
   --page-bkg-col: var(--cream-background);
   --usgs-blue: #00264c;
   --usgs-green: #006F41;
+  --medium-blue: #4365A8;
+
+
 
   /* updated color scheme */
   --blue-dark: #00264C; /* same as usgs header*/
@@ -29,6 +32,9 @@
   --color-text: var(--black-soft);
   --color-USGS-header-footer: var(--usgs-blue);
   --color-link: var(--blue-bright);
+  --color-prefooter-highlight: var(--medium-blue);
+
+
 }
 
 /* variables for this project */
